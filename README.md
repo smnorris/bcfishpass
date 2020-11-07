@@ -8,7 +8,7 @@ Generate a simple model of aquatic habitat connectivity by identifying natural b
 
 On potentially accessible streams, identify known barriers and additional anthropogenic features (primarily road/railway stream crossings, ie culverts) that are potentially barriers. To prioritize these features for assessment or remediation, we can report on how much modelled potentially accessible aquatic habitat the barriers may obstruct.
 
-The model can be refined with known fish observations. Depending on the modelling scenario, all aquatic habitat downstream of a given fish observation can be classified as **'observed accessbile'**, overriding any downstream barriers.
+The model can be refined with known fish observations. Depending on the modelling scenario, all aquatic habitat downstream of a given fish observation can be classified as *'observed accessbile'*, overriding any downstream barriers.
 
 
 ### 1. Generate 'potentially accessible' aquatic habitat
