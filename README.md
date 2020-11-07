@@ -63,29 +63,29 @@ Scripts depend on several environment variables that point your postgres databas
     export PGOGR='host=localhost user=postgres dbname=mydb password=mypwd port=5432'
 
 
-## Running the model
+## Run the model
 
-### 1. Create modelled road-stream crossings
+### Create modelled road-stream crossings
 
 See [`modelled_stream_crossings.md`](modelled_stream_crossings.md).
 
-### 2. Clean PSCIS crossings and reference to stream network
+### Clean PSCIS crossings and reference to stream network
 
 See [`pscis.md`](pscis.md).
 
-### 3. Load CWF dams and reference to stream network
+### Load CWF dams and reference to stream network
 
     ./03_dams.sh
 
-### 4. Create individual barrier tables
+### Create individual barrier tables
 
     ./04_create_barriers.sh
 
-### 5. Segment streams at barriers/observations
+### Segment streams at barriers/observations
 
     ./05_segment_streams.sh
 
-### 6. Create model output
+### Create model output
 
     ./06_model.sh
 
