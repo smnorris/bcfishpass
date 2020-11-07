@@ -63,31 +63,29 @@ Scripts depend on several environment variables that point your postgres databas
     export PGOGR='host=localhost user=postgres dbname=mydb password=mypwd port=5432'
 
 
-## Create modelled road-stream crossings
+## Running the model
 
-See [`modelled_stream_crossings.md`](`modelled_stream_crossings.md`).
+### 1. Create modelled road-stream crossings
 
-## Clean PSCIS crossings and reference to stream network
+See [`modelled_stream_crossings.md`](modelled_stream_crossings.md).
+
+### 2. Clean PSCIS crossings and reference to stream network
 
 See [`pscis.md`](pscis.md).
 
-## Create individual barrier tables
+### 3. Load CWF dams and reference to stream network
+
+    ./03_dams.sh
+
+### 4. Create individual barrier tables
 
     ./04_create_barriers.sh
 
-## Segment the streams at barriers and observations
+### 5. Segment streams at barriers/observations
 
     ./05_segment_streams.sh
 
-This script:
-
-1. initializes a copy of the stream network for segmenting at all features of interest
-2. breaks streams at 'definite' barriers, all streams downstream of these barriers are 'potentiallly accessible'
-3. breaks streams at anthropogenic barriers, all streams upstream of these barriers are 'inaccessible'
-4. breaks streams at fish observations, label all streams downstream of observations
-
-## Label streams according to species model of interest
+### 6. Create model output
 
     ./06_model.sh
-
 

@@ -103,14 +103,14 @@ time psql -t -P border=0,footer=no \
     | sed -e '$d' \
     | parallel --colsep ' ' psql -f sql/01_prep/02_modelled_stream_crossings/06_intersect_railway.sql -v wsg={1}
 
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (transport_line_id);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (ften_road_section_lines_id);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (og_road_segment_permit_id);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (og_petrlm_dev_rd_pre06_pub_id);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (railway_track_id);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (blue_line_key);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings (linear_feature_id);"
-psql -c "CREATE INDEX ON fish_passage.modelled_stream_crossings USING GIST (geom);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (transport_line_id);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (ften_road_section_lines_id);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (og_road_segment_permit_id);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (og_petrlm_dev_rd_pre06_pub_id);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (railway_track_id);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (blue_line_key);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (linear_feature_id);"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings USING GIST (geom);"
 
 # remove duplicate crossings introduced by using multiple sources
 psql -f sql/07_remove_duplicates.sql
