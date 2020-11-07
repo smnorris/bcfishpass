@@ -65,11 +65,11 @@ Scripts depend on several environment variables that point your postgres databas
 
 ## Create modelled road-stream crossings
 
-See [`modelled_road_stream_crossings.md`](`modelled_road_stream_crossings.md`) for more info.
+See [`modelled_stream_crossings.md`](`modelled_stream_crossings.md`).
 
 ## Clean PSCIS crossings and reference to stream network
 
-See [`pscis_events.md`](pscis_events.md) for more info.
+See [`pscis.md`](pscis.md).
 
 ## Create individual barrier tables
 
