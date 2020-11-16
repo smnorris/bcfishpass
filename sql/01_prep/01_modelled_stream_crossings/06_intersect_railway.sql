@@ -74,7 +74,7 @@ intersections_measures AS
 )
 
 -- finally, generate output point from the measure
-INSERT INTO fish_passage.modelled_stream_crossings
+INSERT INTO bcfishpass.modelled_stream_crossings
 (railway_track_id,
   linear_feature_id,
   blue_line_key,

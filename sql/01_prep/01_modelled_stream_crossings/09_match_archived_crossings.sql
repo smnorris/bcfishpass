@@ -140,3 +140,17 @@ ALTER TABLE bcfishpass.modelled_stream_crossings_temp DROP COLUMN temp_id;
 
 ALTER TABLE bcfishpass.modelled_stream_crossings RENAME TO modelled_stream_crossings_bk;  -- drop this table if all goes well
 ALTER TABLE bcfishpass.modelled_stream_crossings_temp RENAME TO modelled_stream_crossings;
+
+-- recreate indexes
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (transport_line_id);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (ften_road_section_lines_id);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (og_road_segment_permit_id);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (og_petrlm_dev_rd_pre06_pub_id);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (railway_track_id);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (blue_line_key);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings (linear_feature_id);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings USING GIST (geom);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.modelled_stream_crossings USING BTREE (localcode_ltree);

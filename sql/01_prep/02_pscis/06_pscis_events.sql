@@ -1,16 +1,14 @@
 -- create pscis events table, linking pscis points to streams
-DROP TABLE IF EXISTS whse_fish.pscis_events_sp;
+DROP TABLE IF EXISTS bcfishpass.pscis_events_sp;
 
-CREATE TABLE whse_fish.pscis_events_sp
+CREATE TABLE bcfishpass.pscis_events_sp
 (
  stream_crossing_id       integer  PRIMARY KEY ,
- model_crossing_id        integer              ,
+ modelled_crossing_id        integer              ,
  distance_to_stream       double precision     ,
  linear_feature_id        bigint               ,
  wscode_ltree             ltree                ,
  localcode_ltree          ltree                ,
- fwa_watershed_code       text                 ,
- local_watershed_code     text                 ,
  blue_line_key            integer              ,
  downstream_route_measure double precision     ,
  watershed_group_code     character varying(4) ,
@@ -26,13 +24,11 @@ CREATE TABLE whse_fish.pscis_events_sp
 WITH referenced AS
 (SELECT
   a.stream_crossing_id,
-  a.model_crossing_id,
+  a.modelled_crossing_id,
   ST_Distance(p.geom, s.geom) as distance_to_stream,
   a.linear_feature_id,
   s.wscode_ltree,
   s.localcode_ltree,
-  s.fwa_watershed_code,
-  s.local_watershed_code,
   s.blue_line_key,
   -- reference the point to the stream, making output measure an integer
   -- (ensuring point measure is between stream's downtream measure and upstream measure)
@@ -47,8 +43,8 @@ WITH referenced AS
     ELSE p.current_pscis_status
   END AS pscis_status,
   p.current_barrier_result_code
-FROM whse_fish.pscis_stream_matching a
-INNER JOIN whse_fish.pscis_points_all p
+FROM bcfishpass.pscis_modelledcrossings_streams_xref a
+INNER JOIN bcfishpass.pscis_points_all p
 ON a.stream_crossing_id = p.stream_crossing_id
 LEFT OUTER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON a.linear_feature_id = s.linear_feature_id
@@ -57,7 +53,7 @@ ON a.stream_crossing_id = hc.stream_crossing_id
 )
 -- ensure that we include points that do not get referenced
 -- (so they are not added later by the automated process)
-INSERT INTO whse_fish.pscis_events_sp
+INSERT INTO bcfishpass.pscis_events_sp
 SELECT r.*, NULL as geom
 FROM referenced r
 WHERE linear_feature_id is NULL
@@ -82,16 +78,14 @@ WHERE r.linear_feature_id is NOT NULL;
 --  - closest source point to stream
 
 
-INSERT INTO whse_fish.pscis_events_sp
+INSERT INTO bcfishpass.pscis_events_sp
 SELECT
   p.stream_crossing_id,
-  p.model_crossing_id,
+  p.modelled_crossing_id,
   p.distance_to_stream,
   p.linear_feature_id,
   p.wscode_ltree,
   p.localcode_ltree,
-  p.fwa_watershed_code,
-  p.local_watershed_code,
   p.blue_line_key,
   p.downstream_route_measure,
   p.watershed_group_code,
@@ -106,13 +100,11 @@ SELECT
 FROM (
   SELECT DISTINCT ON (blue_line_key, m_mid)
       a.stream_crossing_id,
-      a.model_crossing_id,
+      a.modelled_crossing_id,
       a.linear_feature_id,
       a.wscode_ltree,
       a.localcode_ltree,
       a.distance_to_stream,
-      a.fwa_watershed_code,
-      a.local_watershed_code,
       a.blue_line_key,
       a.downstream_route_measure,
       -- find the midpoint between the duplicate crossings so that
@@ -129,13 +121,13 @@ FROM (
       END AS status_idx,
       a.watershed_group_code,
       a.score
-  FROM whse_fish.pscis_events_prelim3 a
+  FROM bcfishpass.pscis_events_prelim3 a
   LEFT OUTER JOIN
   -- Manually remove a handful of crossings from consideration
   -- (the query fails when there are three sites at one location,
   -- this is an easy fix)
     (SELECT *
-       FROM whse_fish.pscis_events_prelim3
+       FROM bcfishpass.pscis_events_prelim3
       WHERE stream_crossing_id NOT IN (1110, 1106, 6817, 124622, 196740)
     ) b
   -- find points on the same stream, measure is within 5m, not the same pt
@@ -144,7 +136,7 @@ FROM (
    AND a.stream_crossing_id != b.stream_crossing_id
   LEFT OUTER JOIN whse_fish.pscis_assessment_svw ass
     ON a.stream_crossing_id = ass.stream_crossing_id
-  LEFT OUTER JOIN whse_fish.pscis_points_all x
+  LEFT OUTER JOIN bcfishpass.pscis_points_all x
     ON a.stream_crossing_id = x.stream_crossing_id
   ORDER BY
     blue_line_key,
@@ -155,20 +147,20 @@ FROM (
 AS p
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON p.linear_feature_id = s.linear_feature_id
-INNER JOIN whse_fish.pscis_points_all pa
+INNER JOIN bcfishpass.pscis_points_all pa
 ON p.stream_crossing_id = pa.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_habitat_confirmation_svw hc
 ON p.stream_crossing_id = hc.stream_crossing_id
 ON CONFLICT DO NOTHING; -- don't re-insert data we've already manually matched
 
 -- now delete crossings that aren't matched to streams
-DELETE FROM whse_fish.pscis_events_sp WHERE linear_feature_id IS NULL;
+DELETE FROM bcfishpass.pscis_events_sp WHERE linear_feature_id IS NULL;
 
-CREATE INDEX ON whse_fish.pscis_events_sp (model_crossing_id);
-CREATE INDEX ON whse_fish.pscis_events_sp (linear_feature_id);
-CREATE INDEX ON whse_fish.pscis_events_sp (blue_line_key);
-CREATE INDEX ON whse_fish.pscis_events_sp USING GIST (wscode_ltree);
-CREATE INDEX ON whse_fish.pscis_events_sp USING BTREE (wscode_ltree);
-CREATE INDEX ON whse_fish.pscis_events_sp USING GIST (localcode_ltree);
-CREATE INDEX ON whse_fish.pscis_events_sp USING BTREE (localcode_ltree);
-CREATE INDEX ON whse_fish.pscis_events_sp USING GIST (geom);
+CREATE INDEX ON bcfishpass.pscis_events_sp (modelled_crossing_id);
+CREATE INDEX ON bcfishpass.pscis_events_sp (linear_feature_id);
+CREATE INDEX ON bcfishpass.pscis_events_sp (blue_line_key);
+CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.pscis_events_sp USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.pscis_events_sp USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (geom);

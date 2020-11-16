@@ -68,8 +68,9 @@ WHERE ST_Intersects(ST_Buffer(x.geom, 10.01), r.geom)
 AND UPPER(r.structure_type) LIKE 'BRIDGE%'
 AND x.railway_track_id IS NOT NULL;
 
--- Because this needs to be run *before* matching PSCIS crossings to streams/modelled crossings,
--- we can't yet pull the CBS/OBS status from PSCIS - that (and defaulting everything else to CBS)
--- comes in a subsequent step
-
+-- default everything else to CBS
+-- (but note that PSCIS will replace many of these with OBS)
+UPDATE fish_passage.modelled_stream_crossings x
+SET modelled_crossing_type = 'CBS'
+WHERE modelled_crossing_type IS NULL;
 

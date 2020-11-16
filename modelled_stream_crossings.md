@@ -57,9 +57,17 @@ Once duplicates have been removed, output crossings are identified/modelled as o
 
 ## Run scripts
 
+If table `bcfishpass.modelled_stream_crossings` already exists from a previous run, archive the table so that the feature IDs can be preserved between runs.
+
+    psql -c "ALTER TABLE bcfishpass.modelled_stream_crossings RENAME TO modelled_stream_crossings_archive"
+
 Download data and run scripts to generate the crossings:
 
     ./01_modelled_stream_crossings.sh
+
+If matching feature IDs to an older run, first create a table `bcfishpass.modelled_stream_crossings_archive` from the older data, then run the matching:
+
+    psql -f sql/01_prep/01_modelled_stream_crossings/09_match_archived_crossings.sql
 
 ## Output
 

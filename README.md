@@ -11,7 +11,7 @@ On potentially accessible streams, identify known barriers and additional anthro
 The model can be refined with known fish observations. Depending on the modelling scenario, all aquatic habitat downstream of a given fish observation can be classified as *'observed accessbile'*, overriding any downstream barriers.
 
 
-### 1. Generate 'potentially accessible' aquatic habitat
+### 1. Generate potentially accessible aquatic habitat
 
 Using the BC Freshwater Atlas as the base for analysis, these 'definite' barrier features are located on the stream network:
 
@@ -22,9 +22,9 @@ Using the BC Freshwater Atlas as the base for analysis, these 'definite' barrier
 
 All aquatic habitat downstream of these points is classified as potentially accessible to fish.  In the absence of any addtional anthropogenic barriers, anadramous species should be able to access all aquatic habitat below these definite barriers. Note that the definite barriers can be customized - for example, not all intermittent flows are barriers to fish passage.
 
-### 2. Generate 'observed accessible' aquatic habitat
+### 2. Generate observed accessible aquatic habitat
 
-Points from bcfishobs are loaded and stream segments below fish observations are identified. A user can then choose a species (or group of species) of interest and classify all aquatic habitat downstream of observations of this species as observed accessible and optionally that downstream definite barriers do not in fact restrict passage to this species.
+Fish observation points from [bcfishobs](https://github.com/smnorris/bcfishobs) are loaded and stream segments below fish observations are identified. A user can then choose a species (or group of species) of interest and either classify all aquatic habitat downstream of observations of this species as observed accessible, or simply note that downstream definite barriers do not in fact restrict passage to this species.
 
 ### 3. Locate/generate anthropogenic barriers (culverts, dams, other)
 
@@ -37,14 +37,12 @@ Based on the above features, we can define potentially accessible / potentially 
 
 ## Requirements
 
-- Postgresql/PostGIS (tested with v12.2/3.0.1)
-- a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg)
-- [bcfishobs](https://github.com/smnorris/bcfishobs) (BC fish observations and obstacles, loaded and processed)
-- gradient barriers at 15/20/30 percent (from FPTWG)
-- Python >=3.7
+- Postgresql/PostGIS (tested with 12.4/3.0.2)
+- Python >= 3.7
 - [bcdata](https://github.com/smnorris/bcdata)
-- [pgdata](https://github.com/smnorris/pgdata)
-- [psql2csv](https://github.com/fphilipe/psql2csv)
+- a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg) >= v0.1.1
+- [bcfishobs](https://github.com/smnorris/bcfishobs) (BC fish observations and obstacles, loaded and processed)
+- gradient barrier points at 15/20/30 percent (data available from FPTWG on request)
 
 
 ## Setup
