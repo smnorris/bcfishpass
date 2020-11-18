@@ -26,7 +26,7 @@ CREATE TABLE bcfishpass.barriers_anthropogenic
 );
 
 -- --------------------------------
--- insert PSCIS barriers first - these have field verified fish passage information
+-- insert PSCIS barriers first because these have field verified fish passage information
 -- --------------------------------
 INSERT INTO bcfishpass.barriers_anthropogenic
 (
@@ -44,24 +44,32 @@ INSERT INTO bcfishpass.barriers_anthropogenic
 
 SELECT
     e.stream_crossing_id,
-    model_crossing_id as modelled_crossing_id,
+    e.modelled_crossing_id as modelled_crossing_id,
     e.pscis_status as barrier_type,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.downstream_route_measure,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.watershed_group_code,
     e.geom
-FROM whse_fish.pscis_events_sp e
-LEFT OUTER JOIN whse_fish.pscis_points_all p
+FROM bcfishpass.pscis_events_sp e
+LEFT OUTER JOIN bcfishpass.pscis_points_all p
 ON e.stream_crossing_id = p.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
-WHERE (e.current_barrier_result_code IN ('BARRIER', 'POTENTIAL')
--- there are a bunch of designs with no barrier result code
--- include them for now, they should be reviewed.
-OR e.current_barrier_result_code IS NULL)
+LEFT OUTER JOIN bcfishpass.pscis_fixes f
+ON e.stream_crossing_id = f.stream_crossing_id
+WHERE (
+  -- assessed barriers/potential barriers
+  e.current_barrier_result_code IN ('BARRIER', 'POTENTIAL')
+  -- designs with no barrier result code - include them for now, they should be reviewed.
+  OR e.current_barrier_result_code IS NULL
+  -- CWF fixes to result code
+  OR f.updated_barrier_result_code IN ('BARRIER', 'POTENTIAL')
+)
+-- remove any evaluated as passable by CWF (mostly fords)
+AND f.updated_barrier_result_code != 'PASSABLE'
 -- only include PSCIS crossings within the watershed groups of interest for now
 -- (there are some in the HARR group that fall on the fraser)
 AND e.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
@@ -138,7 +146,7 @@ ON b.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN whse_fish.pscis_events p
 ON b.modelled_crossing_id = p.model_crossing_id
 WHERE b.blue_line_key = s.watershed_key
--- only OBS
+-- only CBS
 AND b.modelled_crossing_type = 'CBS'
 -- don't include crossings that have been determined to be open bottom/non-existent
 AND b.modelled_crossing_id NOT IN (SELECT modelled_crossing_id FROM bcfishpass.modelled_stream_crossings_fixes)
