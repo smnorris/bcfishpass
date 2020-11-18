@@ -56,8 +56,6 @@ SELECT
 FROM bcfishpass.pscis_events_sp e
 LEFT OUTER JOIN bcfishpass.pscis_points_all p
 ON e.stream_crossing_id = p.stream_crossing_id
-LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
-ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN bcfishpass.pscis_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 WHERE (
