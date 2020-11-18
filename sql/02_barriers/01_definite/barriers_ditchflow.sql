@@ -31,7 +31,7 @@ INSERT INTO bcfishpass.barriers_ditchflow
 )
 SELECT
   s.linear_feature_id,
-  'DITCHFLOW',
+  'DITCH_FLOW',
   s.linear_feature_id,
   s.blue_line_key,
   s.downstream_route_measure,

@@ -35,7 +35,7 @@ INSERT INTO bcfishpass.barriers_other
 
 SELECT
     e.stream_crossing_id,
-    'PSCIS NOT ACCESSIBLE',
+    'PSCIS_NOT_ACCESSIBLE',
     e.linear_feature_id,
     e.blue_line_key,
     e.downstream_route_measure,

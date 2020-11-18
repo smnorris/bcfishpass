@@ -31,7 +31,7 @@ INSERT INTO bcfishpass.barriers_majordams
 )
 SELECT
     dam_id as barriers_majordams_id,
-    'DAM_MAJOR' as barrier_type,
+    'MAJOR_DAM' as barrier_type,
     d.dam_name as barrier_name,
     d.linear_feature_id,
     d.blue_line_key,
