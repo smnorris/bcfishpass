@@ -48,5 +48,4 @@ FROM whse_basemapping.fwa_stream_networks_sp s
 WHERE s.feature_code = 'GA24850150'
 AND s.blue_line_key = s.watershed_key
 AND s.localcode_ltree IS NOT NULL
-AND s.fwa_watershed_code NOT LIKE '999%%'
-AND s.watershed_group_code = 'VICT';
+AND s.fwa_watershed_code NOT LIKE '999%%';

@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS bcfishpass.barriers_falls;
+
 CREATE TABLE bcfishpass.barriers_falls
 (
     barriers_falls_id serial primary key,
@@ -15,9 +17,9 @@ CREATE TABLE bcfishpass.barriers_falls
 );
 
 
-INSERT INTO cwf.barriers_falls
+INSERT INTO bcfishpass.barriers_falls
 (
-    source_id,
+    barriers_falls_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -29,18 +31,21 @@ INSERT INTO cwf.barriers_falls
     geom
 )
 SELECT
-    fish_obstacle_point_id,
+    falls_id as barriers_falls_id,
    'FALLS' as barrier_type,
     NULL as barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM whse_fish.fiss_falls_events_sp
--- these are the only barriers to insert - hard code them for now,
--- at some point we may want to maintain a lookup table
-WHERE fish_obstacle_point_id IN (27481, 27482, 19653, 19565)
+    a.linear_feature_id,
+    a.blue_line_key,
+    a.downstream_route_measure,
+    a.wscode_ltree,
+    a.localcode_ltree,
+    a.watershed_group_code,
+    (ST_Dump(ST_Force2D(ST_locateAlong(b.geom, a.downstream_route_measure)))).geom as geom
+FROM whse_fish.fiss_falls_events a
+INNER JOIN whse_basemapping.fwa_stream_networks_sp b
+ON a.linear_feature_id = b.linear_feature_id
+-- Horsefly known falls
+WHERE a.fish_obstacle_point_ids && ARRAY[27481, 27482, 19653, 19565]
+-- plus everything >= 5m
+OR a.height >= 5
 ON CONFLICT DO NOTHING;

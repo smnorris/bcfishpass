@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS bcfishpass.barriers_dams_major;
+DROP TABLE IF EXISTS bcfishpass.barriers_majordams;
 
-CREATE TABLE bcfishpass.barriers_dams_major
+CREATE TABLE bcfishpass.barriers_majordams
 (
-    barriers_dams_major_id serial primary key,
+    barriers_majordams_id serial primary key,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -16,9 +16,9 @@ CREATE TABLE bcfishpass.barriers_dams_major
     UNIQUE (linear_feature_id, downstream_route_measure)
 );
 
-INSERT INTO bcfishpass.barriers_dams_major
+INSERT INTO bcfishpass.barriers_majordams
 (
-    barriers_dams_major_id,
+    barriers_majordams_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -30,7 +30,7 @@ INSERT INTO bcfishpass.barriers_dams_major
     geom
 )
 SELECT
-    dam_id,
+    dam_id as barriers_majordams_id,
     'DAM_MAJOR' as barrier_type,
     d.dam_name as barrier_name,
     d.linear_feature_id,

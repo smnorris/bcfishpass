@@ -55,5 +55,4 @@ AND s.fwa_watershed_code NOT LIKE '999%%'
 -- The subsurface flow is a side channel, the Chilcotin merges
 -- with the Clusco farther upstream
 AND NOT (s.blue_line_key = 356363411 AND s.downstream_route_measure < 213010)
-AND s.watershed_group_code = 'VICT'
 ON CONFLICT DO NOTHING;

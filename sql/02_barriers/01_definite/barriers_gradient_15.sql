@@ -41,7 +41,6 @@ SELECT DISTINCT ON (blue_line_key, round(downstream_route_measure::numeric, 2))
     ST_Force2D((st_Dump(b.geom)).geom)
 FROM cwf.gradient_barriers b
 WHERE b.threshold = .15
-AND b.watershed_group_code = 'VICT'
 -- spot manual QA of gradient barriers
 AND b.linear_feature_id != 701934669 -- odd point on Salmon River that looks like a data error
 ORDER BY blue_line_key, round(downstream_route_measure::numeric, 2)
