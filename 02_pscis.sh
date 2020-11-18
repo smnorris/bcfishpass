@@ -14,7 +14,7 @@ bcdata bc2pg WHSE_FISH.PSCIS_REMEDIATION_SVW
 # null values indicate that the PSCIS crossing does not match to a FWA stream
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref"
 psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref (stream_crossing_id integer primary key, modelled_crossing_id integer, linear_feature_id integer)"
-psql -c "\copy bcfishpass.pscis_modelledcrossings_streams_xref FROM 'data/pscis/pscis_modelledcrossings_streams_xref.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.pscis_modelledcrossings_streams_xref FROM 'data/pscis_modelledcrossings_streams_xref.csv' delimiter ',' csv header"
 
 
 psql -f sql/01_prep/02_pscis/01_pscis_points_all.sql
