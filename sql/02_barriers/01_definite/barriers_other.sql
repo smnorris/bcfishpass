@@ -50,3 +50,13 @@ WHERE f.updated_barrier_result_code = 'NOT ACCESSIBLE'
 AND e.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY e.stream_crossing_id
 ON CONFLICT DO NOTHING;
+
+
+CREATE INDEX ON bcfishpass.barriers_other (linear_feature_id);
+CREATE INDEX ON bcfishpass.barriers_other (blue_line_key);
+CREATE INDEX ON bcfishpass.barriers_other (watershed_group_code);
+CREATE INDEX ON bcfishpass.barriers_other USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_other USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_other USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_other USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_other USING GIST (geom);

@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS bcfishpass.barriers_gradient_30;
 
 CREATE TABLE bcfishpass.barriers_gradient_30
 (
-    barriers_gradient30 serial primary key,
+    barriers_gradient_30_id serial primary key,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -43,5 +43,15 @@ FROM cwf.gradient_barriers b
 WHERE b.threshold = .30
 -- spot manual QA of gradient barriers
 AND b.linear_feature_id != 701934669 -- odd point on Salmon River that looks like a data error
+AND b.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY blue_line_key, round(downstream_route_measure::numeric, 2)
 ON CONFLICT DO NOTHING;
+
+CREATE INDEX ON bcfishpass.barriers_gradient_30 (linear_feature_id);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 (blue_line_key);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 (watershed_group_code);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (geom);

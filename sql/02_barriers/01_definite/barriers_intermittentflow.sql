@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS bcfishpass.barriers_ditchflow;
+DROP TABLE IF EXISTS bcfishpass.barriers_intermittentflow;
 
-CREATE TABLE bcfishpass.barriers_ditchflow
+CREATE TABLE bcfishpass.barriers_intermittentflow
 (
-    barriers_ditchflow_id serial primary key,
+    barriers_intermittentflow_id serial primary key,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -17,9 +17,9 @@ CREATE TABLE bcfishpass.barriers_ditchflow
 );
 
 
-INSERT INTO bcfishpass.barriers_ditchflow
+INSERT INTO bcfishpass.barriers_intermittentflow
 (
-    barriers_ditchflow_id,
+    barriers_intermittentflow_id,
     barrier_type,
     linear_feature_id,
     blue_line_key,
@@ -30,8 +30,8 @@ INSERT INTO bcfishpass.barriers_ditchflow
     geom
 )
 SELECT
-  s.linear_feature_id,
-  'DITCHFLOW',
+  s.linear_feature_id AS barriers_intermittentflow_id,
+  'INTERMITTENTFLOW',
   s.linear_feature_id,
   s.blue_line_key,
   s.downstream_route_measure,
@@ -45,17 +45,17 @@ SELECT
         0
     ) as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
-WHERE s.feature_code = 'GA08800110'
+WHERE s.feature_code = 'GA24850150'
 AND s.blue_line_key = s.watershed_key
 AND s.localcode_ltree IS NOT NULL
 AND s.fwa_watershed_code NOT LIKE '999%%'
 AND s.watershed_group_code IN ('HORS','LNIC','BULK','ELKR');
 
-CREATE INDEX ON bcfishpass.barriers_ditchflow (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_ditchflow (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_ditchflow (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_ditchflow USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_ditchflow USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_ditchflow USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_ditchflow USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_ditchflow USING GIST (geom);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow (linear_feature_id);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow (blue_line_key);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow (watershed_group_code);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_intermittentflow USING GIST (geom);

@@ -16,7 +16,7 @@ psql -f sql/02_barriers/01_definite/barriers_falls.sql
 psql -f sql/02_barriers/01_definite/barriers_gradient_15.sql
 psql -f sql/02_barriers/01_definite/barriers_gradient_20.sql
 psql -f sql/02_barriers/01_definite/barriers_gradient_30.sql
-psql -f sql/02_barriers/01_definite/barriers_intermittent.sql
+psql -f sql/02_barriers/01_definite/barriers_intermittentflow.sql
 psql -f sql/02_barriers/01_definite/barriers_subsurfaceflow.sql
 psql -f sql/02_barriers/01_definite/barriers_other.sql
 
@@ -28,4 +28,4 @@ psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM 'data/modelled_st
 
 # create a single tables of anthropogenic barriers / potential barriers for prioritization
 # (smaller dams / pscis crossings / modelled culverts / other)
-psql -f sql/02_barriers/02_dams/barriers_anthropogenic.sql
+psql -f sql/02_barriers/02_anthropogenic/barriers_anthropogenic.sql

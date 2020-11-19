@@ -43,4 +43,16 @@ SELECT
 FROM bcfishpass.bcdams_events d
 WHERE d.barrier_ind = 'Y'
 AND d.hydro_dam_ind = 'Y'
+AND d.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ON CONFLICT DO NOTHING;
+
+
+
+CREATE INDEX ON bcfishpass.barriers_majordams (linear_feature_id);
+CREATE INDEX ON bcfishpass.barriers_majordams (blue_line_key);
+CREATE INDEX ON bcfishpass.barriers_majordams (watershed_group_code);
+CREATE INDEX ON bcfishpass.barriers_majordams USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_majordams USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.barriers_majordams USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_majordams USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.barriers_majordams USING GIST (geom);

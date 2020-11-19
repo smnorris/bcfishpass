@@ -9,7 +9,7 @@
 DROP TABLE IF EXISTS bcfishpass.barriers_anthropogenic;
 CREATE TABLE bcfishpass.barriers_anthropogenic
 (
-    barrier_anthropogenic_id serial primary key,
+    barriers_anthropogenic_id serial primary key,
     stream_crossing_id integer,
     dam_id integer,
     modelled_crossing_id integer,
