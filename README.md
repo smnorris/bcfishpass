@@ -106,12 +106,6 @@ For details, see [dams README](01_prep/03_dams/README.md).
     cd 02_model
     ./model.sh
 
-To customize the model, edit the .sql files in `02_model/sql` as required to:
-
-- define watershed groups to be included
-- define what observations to be included (species)
-- define barriers
-
 For details, see [model README](02_model/README.md).
 
 
