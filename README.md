@@ -84,7 +84,7 @@ As with `fwapg` and `bcfishobs`, scripts depend on several environment variables
     cd 01_prep/01_modelled_stream_crossings
     ./modelled_stream_crossins.sh
 
-For details, see [README](`01_prep/01_modelled_stream_crossings/README.md`).
+For details, see [README](`01_prep//01_modelled_stream_crossings//README.md`).
 
 ### Clean PSCIS crossings and reference to stream network
 
