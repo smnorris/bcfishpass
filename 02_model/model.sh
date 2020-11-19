@@ -1,18 +1,27 @@
 #!/bin/bash
 set -euxo pipefail
 
-# This script
-# 1. creates table bcfishpass.observations holding observations for species of interest
-# 2. initializes a copy of the stream network for segmenting at all features of interest
-# 3. breaks streams at 'definite' barriers, all streams downstream of these barriers are 'potentiallly accessible'
-# 3. breaks streams at anthropogenic barriers, all streams upstream of these barriers are 'inaccessible'
-# 4. breaks streams at fish observations, label all streams downstream of observations
+
+# create table for each type of definite (not generally fixable) barrier
+psql -f sql/barriers_majordams.sql
+psql -f sql/barriers_ditchflow.sql
+psql -f sql/barriers_falls.sql
+psql -f sql/barriers_gradient_15.sql
+psql -f sql/barriers_gradient_20.sql
+psql -f sql/barriers_gradient_30.sql
+psql -f sql/barriers_intermittentflow.sql
+psql -f sql/barriers_subsurfaceflow.sql
+psql -f sql/barriers_other.sql
+
+# create a single tables of anthropogenic barriers / potential barriers for prioritization
+# (smaller dams / pscis crossings / modelled culverts / other)
+psql -f sql/barriers_anthropogenic.sql
 
 # Create output streams table - edit sql file to specify watershed groups of interest
-psql -f sql/03_model/01_load_streams.sql
+psql -f sql/streams.sql
 
 # Create observations table with species of interest - edit sql file for spp of interest
-psql -f sql/03_model/02_load_observations.sql
+psql -f sql/observations.sql
 
 # break streams at observations
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.observations

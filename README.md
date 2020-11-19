@@ -65,7 +65,7 @@ Presuming PostgreSQL/PostGIS and Python/`pip` and `conda` are already installed 
 
 ### Environment variables
 
-As with `fwapg` and `bcfishobs`, scripts depend on several environment variables that point your postgres database:
+As with `fwapg` and `bcfishobs`, scripts depend on several environment variables that point to the postgres database:
 
     export PGHOST=localhost
     export PGPORT=5432
@@ -77,38 +77,43 @@ As with `fwapg` and `bcfishobs`, scripts depend on several environment variables
     export PGOGR='host=localhost user=postgres dbname=mydb password=mypwd port=5432'
 
 
-## Run the model
+## Prep data
 
 ### Create modelled road-stream crossings
 
-See [`modelled_stream_crossings.md`](modelled_stream_crossings.md).
+    cd 01_prep/01_modelled_stream_crossings
+    ./modelled_stream_crossins.sh
+
+For details, see [README](`01_prep/01_modelled_stream_crossings/README.md`).
 
 ### Clean PSCIS crossings and reference to stream network
 
-See [`pscis.md`](pscis.md).
+    cd 01_prep/02_pscis
+    ./pscis.sh
+
+For details, see [README](`01_prep/02_pscis/README.md`).
 
 ### Load CWF dams and reference to stream network
 
-    ./03_dams.sh
+    cd 01_prep/03_dams
+    ./dams.sh
 
-### Create individual barrier tables
+For details, see [README](`01_prep/03_dams/README.md`).
 
-Edit the .sql files in `sql/02_barriers` as required to:
 
-- define watershed groups to be included
-- define barriers
+## Run model
 
-Once ready:
+    cd 02_model
+    ./model.sh
 
-    ./04_create_barriers.sh
-
-### Segment streams at barriers/observations and label streams upstream/downstream of these points
-
-Edit the .sql files in `sql/03_model` as required to:
+To customize the model, edit the .sql files in `02_model/sql` as required to:
 
 - define watershed groups to be included
 - define what observations to be included (species)
+- define barriers
 
-Once ready:
+For details, see [README](`02_model/README.md`).
 
-    ./05_model.sh
+
+
+

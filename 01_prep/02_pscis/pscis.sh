@@ -22,11 +22,11 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_fixes"
 psql -c "CREATE TABLE bcfishpass.pscis_fixes (watershed_group_code text, stream_crossing_id integer, crossing_subtype_code text, barrier_result_code text, assessment_comment text, updated_barrier_result_code text)"
 psql -c "\copy bcfishpass.pscis_fixes FROM 'data/pscis_fixes.csv' delimiter ',' csv header"
 
-psql -f sql/01_prep/02_pscis/01_pscis_points_all.sql
-psql -f sql/01_prep/02_pscis/02_pscis_events_prelim1.sql
-psql -f sql/01_prep/02_pscis/03_pscis_events_prelim2.sql
-psql -f sql/01_prep/02_pscis/04_pscis_model_match_pts.sql
-psql -f sql/01_prep/02_pscis/05_pscis_events_prelim3.sql
-psql -f sql/01_prep/02_pscis/06_pscis_events.sql
-psql -f sql/01_prep/02_pscis/07_pscis_points_duplicates.sql
-psql -f sql/01_prep/02_pscis/08_cleanup.sql
+psql -f sql/01_pscis_points_all.sql
+psql -f sql/02_pscis_events_prelim1.sql
+psql -f sql/03_pscis_events_prelim2.sql
+psql -f sql/04_pscis_model_match_pts.sql
+psql -f sql/05_pscis_events_prelim3.sql
+psql -f sql/06_pscis_events.sql
+psql -f sql/07_pscis_points_duplicates.sql
+psql -f sql/08_cleanup.sql

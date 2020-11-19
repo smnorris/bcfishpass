@@ -39,7 +39,7 @@ The PSCIS feature retained is based on (in order of priority):
 
 Download data and run above queries
 
-    ./02_pscis.sh
+    ./pscis.sh
 
 ## Output table definition
 

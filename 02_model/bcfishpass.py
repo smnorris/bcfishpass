@@ -72,9 +72,9 @@ def add_downstream_ids(table_a, id_a, table_b, id_b, downstream_ids_col, include
     groups = sorted([g[0] for g in db.query(f"SELECT DISTINCT watershed_group_CODE from {schema_a}.{table_a}")])
     # todo - is this really the best way to specify which query to use?
     if include_equivalent_measure:
-        q = "sql/03_model/00_add_downstream_and_equivalent_ids.sql"
+        q = "sql/00_add_downstream_and_equivalent_ids.sql"
     else:
-        q = "sql/03_model/00_add_downstream_ids.sql"
+        q = "sql/00_add_downstream_ids.sql"
     query = sql.SQL(read_file(q)).format(
         schema_a=sql.Identifier(schema_a),
         schema_b=sql.Identifier(schema_b),
@@ -118,7 +118,7 @@ def add_upstream_ids(table_a, id_a, table_b, id_b, upstream_ids_col):
     db.execute(f"CREATE TABLE {schema_a}.{temp_table} (LIKE {schema_a}.{table_a})")
     db.execute(f"ALTER TABLE {schema_a}.{temp_table} ADD COLUMN {upstream_ids_col} integer[]")
     groups = sorted([g[0] for g in db.query(f"SELECT DISTINCT watershed_group_code from {schema_a}.{table_a}")])
-    query = sql.SQL(read_file("sql/03_model/00_add_upstream_ids.sql")).format(
+    query = sql.SQL(read_file("sql/00_add_upstream_ids.sql")).format(
         schema_a=sql.Identifier(schema_a),
         schema_b=sql.Identifier(schema_b),
         temp_table=sql.Identifier(temp_table),
@@ -152,7 +152,7 @@ def segment_streams(stream_table, point_table):
     stream_schema, stream_table = db.parse_table_name(stream_table)
     point_schema, point_table = db.parse_table_name(point_table)
     groups = [g[0] for g in db.query(f"SELECT DISTINCT watershed_group_CODE FROM bcfishpass.streams")]
-    query = sql.SQL(read_file("sql/03_model/00_segment_streams.sql")).format(
+    query = sql.SQL(read_file("sql/00_segment_streams.sql")).format(
         stream_schema=sql.Identifier(stream_schema),
         stream_table=sql.Identifier(stream_table),
         point_schema=sql.Identifier(point_schema),

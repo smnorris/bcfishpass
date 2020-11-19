@@ -22,4 +22,4 @@ ogr2ogr -f PostgreSQL \
   bcdams
 
 # match the dams to streams
-psql -f sql/01_prep/03_dams/bcdams_events.sql
+psql -f sql/bcdams_events.sql

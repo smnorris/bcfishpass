@@ -75,33 +75,33 @@ bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --fid HWY_STRUCTUR
 psql -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 
 # create empty crossings table
-psql -f sql/01_prep/01_modelled_stream_crossings/01_create_output_table.sql
+psql -f sql/01_create_output_table.sql
 
 # load preliminary crossings by source and watershed group
 time psql -t -P border=0,footer=no \
 -c "SELECT ''''||watershed_group_code||'''' FROM whse_basemapping.fwa_watershed_groups_poly" \
     | sed -e '$d' \
-    | parallel --colsep ' ' psql -f sql/01_prep/01_modelled_stream_crossings/02_intersect_dra.sql -v wsg={1}
+    | parallel --colsep ' ' psql -f sql/02_intersect_dra.sql -v wsg={1}
 
 time psql -t -P border=0,footer=no \
 -c "SELECT ''''||watershed_group_code||'''' FROM whse_basemapping.fwa_watershed_groups_poly" \
     | sed -e '$d' \
-    | parallel --colsep ' ' psql -f sql/01_prep/01_modelled_stream_crossings/03_intersect_ften.sql -v wsg={1}
+    | parallel --colsep ' ' psql -f sql/03_intersect_ften.sql -v wsg={1}
 
 time psql -t -P border=0,footer=no \
 -c "SELECT ''''||watershed_group_code||'''' FROM whse_basemapping.fwa_watershed_groups_poly" \
     | sed -e '$d' \
-    | parallel --colsep ' ' psql -f sql/01_prep/01_modelled_stream_crossings/04_intersect_ogc.sql -v wsg={1}
+    | parallel --colsep ' ' psql -f sql/04_intersect_ogc.sql -v wsg={1}
 
 time psql -t -P border=0,footer=no \
 -c "SELECT ''''||watershed_group_code||'''' FROM whse_basemapping.fwa_watershed_groups_poly" \
     | sed -e '$d' \
-    | parallel --colsep ' ' psql -f sql/01_prep/01_modelled_stream_crossings/05_intersect_ogcpre06.sql -v wsg={1}
+    | parallel --colsep ' ' psql -f sql/05_intersect_ogcpre06.sql -v wsg={1}
 
 time psql -t -P border=0,footer=no \
 -c "SELECT ''''||watershed_group_code||'''' FROM whse_basemapping.fwa_watershed_groups_poly" \
     | sed -e '$d' \
-    | parallel --colsep ' ' psql -f sql/01_prep/01_modelled_stream_crossings/06_intersect_railway.sql -v wsg={1}
+    | parallel --colsep ' ' psql -f sql/06_intersect_railway.sql -v wsg={1}
 
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (transport_line_id);"
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings (ften_road_section_lines_id);"
@@ -117,7 +117,9 @@ psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings USING GIST (localc
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings USING BTREE (localcode_ltree)"
 
 # remove duplicate crossings introduced by using multiple sources
-psql -f sql/01_prep/01_modelled_stream_crossings/07_remove_duplicates.sql
+psql -f sql/07_remove_duplicates.sql
 
-# identify open bottom / closed bottom structures
-psql -f sql/01_prep/01_modelled_stream_crossings/07_remove_duplicates.sql
+# load manual QA of modelled crossings - (modelled crossings that are either OBS or non-existent)
+psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"
+psql -c "CREATE TABLE bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id integer, watershed_group_code text, reviewer text, structure text, notes text)"
+psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM 'data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
