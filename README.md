@@ -84,21 +84,21 @@ As with `fwapg` and `bcfishobs`, scripts depend on several environment variables
     cd 01_prep/01_modelled_stream_crossings
     ./modelled_stream_crossings.sh
 
-For details, see [modelled stream crossings README](01_prep/01_modelled_stream_crossings/README.md).
+For details, see [modelled stream crossings](01_prep/01_modelled_stream_crossings).
 
 #### Clean PSCIS crossings and reference to stream network
 
     cd 01_prep/02_pscis
     ./pscis.sh
 
-For details, see [PSCIS README](01_prep/02_pscis/README.md).
+For details, see [PSCIS](01_prep/02_pscis).
 
 #### Load CWF dams and reference to stream network
 
     cd 01_prep/03_dams
     ./dams.sh
 
-For details, see [dams README](01_prep/03_dams/README.md).
+For details, see [dams](01_prep/03_dams).
 
 
 ## Run model
@@ -106,7 +106,7 @@ For details, see [dams README](01_prep/03_dams/README.md).
     cd 02_model
     ./model.sh
 
-For details, see [model README](02_model/README.md).
+For details, see [model](02_model).
 
 
 
