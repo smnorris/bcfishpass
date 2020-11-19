@@ -166,53 +166,5 @@ def segment_streams(stream_table, point_table):
     pool.join()
 
 
-@cli.command()
-@click.argument("stream_table")
-@click.argument("barrier_table")
-@click.argument("source_column")
-@click.argument("target_column")
-def clear_barriers_below_observations(stream_table, barrier_table, source_column, target_column):
-    """create a new column in streams table, populating with barrier_id values from source_column, minus
-    any barriers that are downstream of observations (upstream_observation_ids must be present)
-    """
-    db = pgdata.connect()
-    conn = db.engine.raw_connection()
-    cur = conn.cursor()
-    stream_schema, stream_table = db.parse_table_name(stream_table)
-    barrier_schema, barrier_table = db.parse_table_name(barrier_table)
-    # add output column
-    query = sql.SQL("ALTER TABLE {stream_schema}.{stream_table} DROP COLUMN IF EXISTS {target_column}").format(
-        stream_schema=sql.Identifier(stream_schema),
-        stream_table=sql.Identifier(stream_table),
-        target_column=sql.Identifier(target_column)
-    )
-    cur.execute(query)
-    conn.commit()
-    query = sql.SQL("ALTER TABLE {stream_schema}.{stream_table} ADD COLUMN IF NOT EXISTS {target_column} integer[];").format(
-        stream_schema=sql.Identifier(stream_schema),
-        stream_table=sql.Identifier(stream_table),
-        target_column=sql.Identifier(target_column)
-    )
-    cur.execute(query)
-    conn.commit()
-
-    # get the groups and process in parallel
-    groups = [g[0] for g in db.query(f"SELECT watershed_group_CODE from cwf.target_watershed_groups WHERE status = 'In'")]
-    query = sql.SQL(db.queries["clear_barriers_below_observations"]).format(
-        stream_schema=sql.Identifier(stream_schema),
-        stream_table=sql.Identifier(stream_table),
-        barrier_schema=sql.Identifier(barrier_schema),
-        barrier_table=sql.Identifier(barrier_table),
-        target_column=sql.Identifier(target_column),
-        source_column=sql.Identifier(source_column)
-    )
-    func = partial(execute_parallel, query)
-    n_processes = multiprocessing.cpu_count() - 1
-    pool = multiprocessing.Pool(processes=n_processes)
-    pool.map(func, groups)
-    pool.close()
-    pool.join()
-
-
 if __name__ == "__main__":
     cli()

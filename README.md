@@ -79,11 +79,6 @@ See [`pscis.md`](pscis.md).
 
     ./04_create_barriers.sh
 
-### Segment streams at barriers/observations
+### Segment streams at barriers/observations and label streams upstream/downstream of these points
 
-    ./05_segment_streams.sh
-
-### Create model output
-
-    ./06_model.sh
-
+    ./05_model.sh
