@@ -77,8 +77,22 @@ See [`pscis.md`](pscis.md).
 
 ### Create individual barrier tables
 
+Edit the .sql files in `sql/02_barriers` as required to:
+
+- define watershed groups to be included
+- define barriers
+
+Once ready:
+
     ./04_create_barriers.sh
 
 ### Segment streams at barriers/observations and label streams upstream/downstream of these points
+
+Edit the .sql files in `sql/03_model` as required to:
+
+- define watershed groups to be included
+- define what observations to be included (species)
+
+Once ready:
 
     ./05_model.sh
