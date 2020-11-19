@@ -128,3 +128,14 @@ SELECT
        )
     )::geometry(Point, 3005) AS geom
 FROM nearest;
+
+
+
+CREATE INDEX ON bcfishpass.bcdams_events (linear_feature_id);
+CREATE INDEX ON bcfishpass.bcdams_events (blue_line_key);
+CREATE INDEX ON bcfishpass.bcdams_events (watershed_group_code);
+CREATE INDEX ON bcfishpass.bcdams_events USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.bcdams_events USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.bcdams_events USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.bcdams_events USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.bcdams_events USING GIST (geom);
