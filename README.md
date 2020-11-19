@@ -82,23 +82,23 @@ As with `fwapg` and `bcfishobs`, scripts depend on several environment variables
 ### Create modelled road-stream crossings
 
     cd 01_prep/01_modelled_stream_crossings
-    ./modelled_stream_crossins.sh
+    ./modelled_stream_crossings.sh
 
-For details, see [README](`01_prep//01_modelled_stream_crossings//README.md`).
+For details, see [modelled stream crossings README](01_prep/01_modelled_stream_crossings/README.md).
 
 ### Clean PSCIS crossings and reference to stream network
 
     cd 01_prep/02_pscis
     ./pscis.sh
 
-For details, see [README](`01_prep/02_pscis/README.md`).
+For details, see [PSCIS README](01_prep/02_pscis/README.md).
 
 ### Load CWF dams and reference to stream network
 
     cd 01_prep/03_dams
     ./dams.sh
 
-For details, see [README](`01_prep/03_dams/README.md`).
+For details, see [dams README](01_prep/03_dams/README.md).
 
 
 ## Run model
@@ -112,7 +112,7 @@ To customize the model, edit the .sql files in `02_model/sql` as required to:
 - define what observations to be included (species)
 - define barriers
 
-For details, see [README](`02_model/README.md`).
+For details, see [model README](02_model/README.md).
 
 
 
