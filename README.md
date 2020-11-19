@@ -18,7 +18,7 @@ Using the BC Freshwater Atlas as the base for analysis, these 'definite' barrier
 - segments of >100m linear stream that are steeper than the user provided gradient threshold(s) based on swimming ability of species of interest (eg 15, 20, 25, 30)
 - major dams
 - waterfalls >5m
-- points corresponding to other natural stream characteristics that are potential barriers to fish passage (eg subsurface flow, intermittent flow)
+- points corresponding to other natural stream characteristics that are potential barriers to fish passage (eg subsurface flow, intermittent flow, ditch flow)
 
 All aquatic habitat downstream of these points is classified as potentially accessible to fish.  In the absence of any addtional anthropogenic barriers, anadramous species should be able to access all aquatic habitat below these definite barriers. Note that the definite barriers can be customized - for example, not all intermittent flows are barriers to fish passage.
 
@@ -39,17 +39,33 @@ Based on the above features, we can define potentially accessible / potentially 
 
 - Postgresql/PostGIS (tested with 12.4/3.0.2)
 - Python >= 3.7
-- [bcdata](https://github.com/smnorris/bcdata)
+- [bcdata](https://github.com/smnorris/bcdata) (requires `GDAL`/`geopandas`/`rasterio`)
 - a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg) >= v0.1.1
 - [bcfishobs](https://github.com/smnorris/bcfishobs) (BC fish observations and obstacles, loaded and processed)
 - gradient barrier points at 15/20/30 percent (data available from FPTWG on request)
 
 
-## Setup
+## Installation / Setup
+
+Presuming PostgreSQL/PostGIS and Python/`pip` and `conda` are already installed to your system, setup could look something like this:
+
+    conda create -n bcfp
+    conda activate bcfp
+    conda config --env --add channels conda-forge
+    conda config --env --set channel_priority strict
+    conda install gdal
+    conda install geopandas
+    conda install rasterio
+    pip3 install bcdata
+    # download fwapg, load BC FWA
+    # download bcfishobs, load BC fish observations and obstacles
+    # load gradient barriers to database
+    git clone https://github.com/smnorris/bcfishpass.git
+    cd bcfishpass
 
 ### Environment variables
 
-Scripts depend on several environment variables that point your postgres database:
+As with `fwapg` and `bcfishobs`, scripts depend on several environment variables that point your postgres database:
 
     export PGHOST=localhost
     export PGPORT=5432
