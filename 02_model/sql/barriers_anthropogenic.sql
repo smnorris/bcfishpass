@@ -21,16 +21,16 @@ CREATE TABLE bcfishpass.barriers_anthropogenic
     watershed_group_code text,
     barrier_type text,
     -- these prioritization columns all get populated later in separate query
-    barrier_name,
-    map_tile_display_name,
-    downstream_ids,
-    stream_order,
-    upstream_gradient,
-    downstream_species,
-    upstream_species,
-    upstream_accessible_salmon_km float            -- length accessible @15% (salmon)
-    upstream_accessible_salmon_steelhead_km float  -- length accessible @20% (salmon/steelhead)
-    upstream_accessible_wct_km float               -- length accessible @30% and below observations (westslope cutthroat)
+    --barrier_name text,
+    --map_tile_display_name text,
+    --downstream_ids intarray[],
+    --stream_order,
+    --upstream_gradient,
+    --downstream_species,
+    --upstream_species,
+    --upstream_accessible_salmon_km float            -- length accessible @15% (salmon)
+    --upstream_accessible_salmon_steelhead_km float  -- length accessible @20% (salmon/steelhead)
+    --upstream_accessible_wct_km float               -- length accessible @30% and below observations (westslope cutthroat)
     --
     geom geometry(Point, 3005),
     -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
