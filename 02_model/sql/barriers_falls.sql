@@ -46,8 +46,9 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp b
 ON a.linear_feature_id = b.linear_feature_id
 -- Horsefly known falls
 WHERE (a.fish_obstacle_point_ids && ARRAY[27481, 27482, 19653, 19565]
--- plus everything >= 5m
-OR a.height >= 5 )
+-- plus everything >= 5m ?
+-- OR a.height >= 5
+)
 AND a.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ON CONFLICT DO NOTHING;
 

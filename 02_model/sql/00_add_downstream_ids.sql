@@ -22,7 +22,7 @@ downstream AS
         FROM
             src a
         INNER JOIN {schema_b}.{table_b} b ON
-        fwa_downstream(
+        FWA_Downstream(
             a.blue_line_key,
             a.downstream_route_measure,
             a.wscode_ltree,

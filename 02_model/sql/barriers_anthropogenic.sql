@@ -13,13 +13,25 @@ CREATE TABLE bcfishpass.barriers_anthropogenic
     stream_crossing_id integer,
     dam_id integer,
     modelled_crossing_id integer,
-    barrier_type text,
     linear_feature_id integer,
     blue_line_key integer,
     downstream_route_measure double precision,
     wscode_ltree ltree,
     localcode_ltree ltree,
     watershed_group_code text,
+    barrier_type text,
+    -- these prioritization columns all get populated later in separate query
+    barrier_name,
+    map_tile_display_name,
+    downstream_ids,
+    stream_order,
+    upstream_gradient,
+    downstream_species,
+    upstream_species,
+    upstream_accessible_salmon_km float            -- length accessible @15% (salmon)
+    upstream_accessible_salmon_steelhead_km float  -- length accessible @20% (salmon/steelhead)
+    upstream_accessible_wct_km float               -- length accessible @30% and below observations (westslope cutthroat)
+    --
     geom geometry(Point, 3005),
     -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
     UNIQUE (linear_feature_id, downstream_route_measure)

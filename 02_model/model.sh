@@ -11,11 +11,11 @@ psql -f sql/barriers_gradient_20.sql
 psql -f sql/barriers_gradient_30.sql
 psql -f sql/barriers_intermittentflow.sql
 psql -f sql/barriers_subsurfaceflow.sql
-psql -f sql/barriers_other.sql
+psql -f sql/barriers_other_definite.sql
 
 # create a single tables of anthropogenic barriers / potential barriers for prioritization
 # (smaller dams / pscis crossings / modelled culverts / other)
-psql -f sql/barriers_anthropogenic.sql
+psql -f sql/crossings.sql
 
 # Create output streams table - edit sql file to specify watershed groups of interest
 psql -f sql/streams.sql
@@ -32,7 +32,7 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_grad
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_gradient_20
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_gradient_30
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_majordams
-python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_other
+python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_other_definite
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_anthropogenic
 
 # add column tracking upstream observations
@@ -46,6 +46,6 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_intermittentflow barriers_intermittentflow_id dnstr_barriers_intermittentflow --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_majordams barriers_majordams_id dnstr_barriers_majordams --include_equivalent_measure
-python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_other barriers_other_id dnstr_barriers_other --include_equivalent_measure
+python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_other_definite barriers_other_definite_id dnstr_barriers_other_definite --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id dnstr_barriers_anthropogenic --include_equivalent_measure

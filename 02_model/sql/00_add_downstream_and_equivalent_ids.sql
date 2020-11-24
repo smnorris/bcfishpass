@@ -23,7 +23,7 @@ downstream AS
         FROM
             src a
         INNER JOIN {schema_b}.{table_b} b ON
-        fwa_downstream_or_equivalent(
+        FWA_Downstream(
             a.blue_line_key,
             a.downstream_route_measure,
             a.wscode_ltree,
@@ -31,7 +31,9 @@ downstream AS
             b.blue_line_key,
             b.downstream_route_measure,
             b.wscode_ltree,
-            b.localcode_ltree
+            b.localcode_ltree,
+            True,
+            .01
         )
         ORDER BY
           a.{id_a},
