@@ -70,7 +70,7 @@ AND x.railway_track_id IS NOT NULL;
 
 -- default everything else to CBS
 -- (but note that PSCIS will replace many of these with OBS)
-UPDATE fish_passage.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings x
 SET modelled_crossing_type = 'CBS'
 WHERE modelled_crossing_type IS NULL;
 

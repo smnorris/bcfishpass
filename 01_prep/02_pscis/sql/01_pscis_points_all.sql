@@ -12,7 +12,6 @@ CREATE TABLE bcfishpass.pscis_points_all
 
 -- Insert in reverse order of status (remediation, design, conf, asssessment),
 -- to ensure that the most current status of a given crossing is retained
-
 INSERT INTO bcfishpass.pscis_points_all
 SELECT
  d.stream_crossing_id::integer,

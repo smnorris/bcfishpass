@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS bcfishpass.pscis_events_sp;
 CREATE TABLE bcfishpass.pscis_events_sp
 (
  stream_crossing_id       integer  PRIMARY KEY ,
- modelled_crossing_id        integer              ,
+ modelled_crossing_id     integer              ,
  distance_to_stream       double precision     ,
  linear_feature_id        bigint               ,
  wscode_ltree             ltree                ,
@@ -15,12 +15,14 @@ CREATE TABLE bcfishpass.pscis_events_sp
  score                    integer              ,
  pscis_status             text                 ,
  current_barrier_result_code text              ,
- geom                     geometry(Point, 3005)
+ geom                     geometry(Point, 3005),
+-- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
+UNIQUE (linear_feature_id, downstream_route_measure)
 );
 
--- first, insert PSCIS points that have been manually matched to streams (by CWF)
--- note that we include features that we know are not matched to streams,
--- this ensures they are not added in later steps. Delete them later.
+-- First, insert PSCIS points that have been manually matched to streams (by CWF)
+-- Note - to ensure they are not added in later steps, include features that are known
+-- to not be on a mapped stream (with empty geom) - these get deleted in a subsequent step
 WITH referenced AS
 (SELECT
   a.stream_crossing_id,
@@ -50,18 +52,27 @@ LEFT OUTER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON a.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN whse_fish.pscis_habitat_confirmation_svw hc
 ON a.stream_crossing_id = hc.stream_crossing_id
+),
+
+-- sort above by linear_feature_id, measure, distance to stream
+-- this will retain the closest record to the stream in case two points fall
+-- at the same measure
+referenced_sorted AS
+(
+  SELECT * FROM referenced
+  ORDER BY linear_feature_id, downstream_route_measure, distance_to_stream asc
 )
--- ensure that we include points that do not get referenced
--- (so they are not added later by the automated process)
+
+-- include points not on streams (so they aren't added by automated proces)
 INSERT INTO bcfishpass.pscis_events_sp
 SELECT r.*, NULL as geom
-FROM referenced r
+FROM referenced_sorted r
 WHERE linear_feature_id is NULL
 UNION ALL
 SELECT
   r.*,
   (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, r.downstream_route_measure)))).geom as geom
-FROM referenced r
+FROM referenced_sorted r
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON r.linear_feature_id = s.linear_feature_id
 WHERE r.linear_feature_id is NOT NULL;

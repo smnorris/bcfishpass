@@ -1,3 +1,5 @@
+-- match PSCIS points to closest stream within 100m
+
 DROP TABLE IF EXISTS bcfishpass.pscis_events_prelim1;
 
 CREATE TABLE bcfishpass.pscis_events_prelim1 AS
