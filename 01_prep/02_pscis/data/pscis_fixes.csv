@@ -18,7 +18,6 @@ BULK,57968,ROUND,BARRIER,"No fish access possible, no action required",NOT ACCES
 BULK,57990,ROUND,BARRIER,"No fish access possible, no action required",NOT ACCESSIBLE
 BULK,58107,ROUND,BARRIER,"No fish access from d/s, remove if road no longer in use",NOT ACCESSIBLE
 BULK,58153,ROUND,BARRIER,"No fish access, no action required",NOT ACCESSIBLE
-BULK,58154,ROUND,BARRIER,"Fish access unlikely, vegetation should be cleared from inlet and outlet",NOT ACCESSIBLE
 BULK,58185,ROUND,BARRIER,"Too steep for fish access, no action required",NOT ACCESSIBLE
 BULK,58232,ROUND,BARRIER,"Too steep for fish access, no action required",NOT ACCESSIBLE
 BULK,58287,ROUND,BARRIER,"No fish access, no action required",NOT ACCESSIBLE
@@ -77,7 +76,6 @@ BULK,195348,ROUND,BARRIER,"Fish access unlikely, no action required",NOT ACCESSI
 BULK,195349,ROUND,BARRIER,"Fish access unlikely, no action required",NOT ACCESSIBLE
 BULK,195355,ROUND,BARRIER,"Fish access unlikely, no action required",NOT ACCESSIBLE
 BULK,195364,ROUND,POTENTIAL,"Fish presence unlikely, culvert damaged - replace",NOT ACCESSIBLE
-BULK,195365,ROUND,BARRIER,"Fish presence unlikely, culvert damaged - replace",NOT ACCESSIBLE
 BULK,195369,ROUND,BARRIER,"Fish access unlikely, no action required",NOT ACCESSIBLE
 BULK,195374,ROUND,BARRIER,"Fish access unlikely, no action required",NOT ACCESSIBLE
 BULK,195375,ROUND,BARRIER,"Fish access unlikely, no action required",NOT ACCESSIBLE
@@ -163,11 +161,7 @@ ELKR,50273,ROUND,BARRIER,"paved highway crossing, outlet is into Michel Creek, u
 ELKR,50274,ROUND,BARRIER,"paved highway crossing, unknown fish presence",BARRIER
 ELKR,50276,ROUND,POTENTIAL,"railroad crossing, unknown fish presence",POTENTIAL
 ELKR,50277,ROUND,BARRIER,"gas pipeline access road, unknown fish presence",BARRIER
-ELKR,50278,ROUND,BARRIER,"unknown fish presence, unlikely",NOT ACCESSIBLE
-ELKR,50279,ROUND,BARRIER,"unknown fish presence, unlikely",NOT ACCESSIBLE
 ELKR,51146,ROUND,BARRIER,"unknown fish presence, step-pool, Storm Creek Road is crossditched and major stream crossings are removed",BARRIER
-ELKR,62232,ROUND,BARRIER,stream gradient likely too steep for fish use. Low priority,NOT ACCESSIBLE
-ELKR,62239,ROUND,BARRIER,stream gradient likely too steep for fish use. Low priority,NOT ACCESSIBLE
 ELKR,62417,ROUND,BARRIER,"Moderate habitat with steeper gradients, abundant cover with some pools but not very deep. Limited to no spawning gravel. Culvert at railway, ~250m downstream of crossing is a barrier to fish passage. Electrofished a distance of 250m with no fish caught. Not recommended for replacement. Log jam 1.2m high  ~ 250m upstream of culvert.",BARRIER
 ELKR,103043,ROUND,BARRIER,Channel is almost dry.  Stream slope steepens 10m beyond culvert to >35%.  Likely non-fish bearing.,NOT ACCESSIBLE
 ELKR,103044,ROUND,BARRIER,Channel is almost dry. Likely non-fish bearing.  Stream gradient steepens below culvert.  Low habitat value.,NOT ACCESSIBLE
@@ -1098,7 +1092,6 @@ HORS,57160,FORD,UNKNOWN,"Fish passage may be difficult at low flow, but no conce
 HORS,57163,FORD,UNKNOWN,No fish passage concerns,PASSABLE
 HORS,57167,WOODBOX,PASSABLE,"Wetland downstream with no fish access, no action required",NOT ACCESSIBLE
 HORS,57172,FORD,UNKNOWN,"No fish access, no action required",NOT ACCESSIBLE
-HORS,57175,FORD,UNKNOWN,"Fish access unlikely, if present, remove debris",NOT ACCESSIBLE
 HORS,57176,FORD,UNKNOWN,"No fish access, no action required",NOT ACCESSIBLE
 HORS,57177,FORD,UNKNOWN,No concerns for fish access at ford,PASSABLE
 HORS,57178,FORD,UNKNOWN,"Too steep for fish access, no action required",NOT ACCESSIBLE
