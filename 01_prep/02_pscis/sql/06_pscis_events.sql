@@ -75,7 +75,8 @@ SELECT
 FROM referenced_sorted r
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON r.linear_feature_id = s.linear_feature_id
-WHERE r.linear_feature_id is NOT NULL;
+WHERE r.linear_feature_id is NOT NULL
+ON CONFLICT DO NOTHING;
 
 -- Now insert data from the prelim tables, pruning PSCIS duplicates that remain
 
