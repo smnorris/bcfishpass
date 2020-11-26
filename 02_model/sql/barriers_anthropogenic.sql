@@ -79,7 +79,7 @@ WHERE (
   OR f.updated_barrier_result_code IN ('BARRIER', 'POTENTIAL')
 )
 -- remove any evaluated as passable by CWF (mostly fords)
-AND f.updated_barrier_result_code != 'PASSABLE'
+AND (f.updated_barrier_result_code IS NULL OR f.updated_barrier_result_code != 'PASSABLE')
 -- only include PSCIS crossings within the watershed groups of interest for now
 -- (there are some in the HARR group that fall on the fraser)
 AND e.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
