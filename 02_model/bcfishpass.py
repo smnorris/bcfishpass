@@ -97,6 +97,11 @@ def add_downstream_ids(table_a, id_a, table_b, id_b, downstream_ids_col, include
     db.execute(f"ALTER TABLE {schema_a}.{temp_table} RENAME TO {table_a}")
     create_indexes(f"{schema_a}.{table_a}")
     db.execute(f"ALTER TABLE {schema_a}.{table_a} ADD PRIMARY KEY ({id_a})")
+    # make sure the table gets analyzed before running this again
+    conn = db.engine.raw_connection()
+    conn.set_isolation_level(0)
+    cur = conn.cursor()
+    cur.execute(f"VACUUM ANALYZE {schema_a}.{table_a}")
 
 
 @cli.command()
@@ -140,6 +145,10 @@ def add_upstream_ids(table_a, id_a, table_b, id_b, upstream_ids_col):
     db.execute(f"ALTER TABLE {schema_a}.{temp_table} RENAME TO {table_a}")
     create_indexes(f"{schema_a}.{table_a}")
     db.execute(f"ALTER TABLE {schema_a}.{table_a} ADD PRIMARY KEY ({id_a})")
+    conn = db.engine.raw_connection()
+    conn.set_isolation_level(0)
+    cur = conn.cursor()
+    cur.execute(f"VACUUM ANALYZE {schema_a}.{table_a}")
 
 
 @cli.command()
