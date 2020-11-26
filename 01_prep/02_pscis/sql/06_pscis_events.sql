@@ -5,16 +5,17 @@ CREATE TABLE bcfishpass.pscis_events_sp
 (
  stream_crossing_id       integer  PRIMARY KEY ,
  modelled_crossing_id     integer              ,
+ pscis_status             text                 ,
+ current_crossing_subtype_code    character varying(10) ,
+ current_barrier_result_code text              ,
  distance_to_stream       double precision     ,
+ stream_match_score       integer              ,
  linear_feature_id        bigint               ,
  wscode_ltree             ltree                ,
  localcode_ltree          ltree                ,
  blue_line_key            integer              ,
  downstream_route_measure double precision     ,
  watershed_group_code     character varying(4) ,
- score                    integer              ,
- pscis_status             text                 ,
- current_barrier_result_code text              ,
  geom                     geometry(Point, 3005),
 -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
 UNIQUE (linear_feature_id, downstream_route_measure)
@@ -38,12 +39,13 @@ WITH referenced AS
   (ST_LineLocatePoint(s.geom, ST_ClosestPoint(s.geom, p.geom)) * s.length_metre) + s.downstream_route_measure
   )))) as downstream_route_measure,
   s.watershed_group_code,
-  NULL::integer as score,
+  999 as stream_match_score,
   CASE
     WHEN hc.stream_crossing_id IS NOT NULL
     THEN 'HABITAT CONFIRMATION'
     ELSE p.current_pscis_status
   END AS pscis_status,
+  p.current_crossing_subtype_code,
   p.current_barrier_result_code
 FROM bcfishpass.pscis_modelledcrossings_streams_xref a
 INNER JOIN bcfishpass.pscis_points_all p
@@ -65,12 +67,52 @@ referenced_sorted AS
 
 -- include points not on streams (so they aren't added by automated proces)
 INSERT INTO bcfishpass.pscis_events_sp
-SELECT r.*, NULL as geom
+(stream_crossing_id,
+ modelled_crossing_id,
+ pscis_status,
+ current_crossing_subtype_code,
+ current_barrier_result_code,
+ distance_to_stream,
+ stream_match_score,
+ linear_feature_id,
+ wscode_ltree,
+ localcode_ltree,
+ blue_line_key,
+ downstream_route_measure,
+ watershed_group_code,
+ geom)
+SELECT
+r.stream_crossing_id,
+ r.modelled_crossing_id,
+ r.pscis_status,
+ r.current_crossing_subtype_code,
+ r.current_barrier_result_code,
+ r.distance_to_stream,
+ r.stream_match_score,
+ r.linear_feature_id,
+ r.wscode_ltree,
+ r.localcode_ltree,
+ r.blue_line_key,
+ r.downstream_route_measure,
+ r.watershed_group_code,
+ NULL as geom
 FROM referenced_sorted r
 WHERE linear_feature_id is NULL
 UNION ALL
 SELECT
-  r.*,
+  r.stream_crossing_id,
+ r.modelled_crossing_id,
+ r.pscis_status,
+ r.current_crossing_subtype_code,
+ r.current_barrier_result_code,
+ r.distance_to_stream,
+ r.stream_match_score,
+ r.linear_feature_id,
+ r.wscode_ltree,
+ r.localcode_ltree,
+ r.blue_line_key,
+ r.downstream_route_measure,
+ r.watershed_group_code,
   (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, r.downstream_route_measure)))).geom as geom
 FROM referenced_sorted r
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -91,6 +133,22 @@ ON CONFLICT DO NOTHING;
 
 
 INSERT INTO bcfishpass.pscis_events_sp
+(
+ stream_crossing_id,
+ modelled_crossing_id,
+ distance_to_stream,
+ linear_feature_id,
+ wscode_ltree,
+ localcode_ltree,
+ blue_line_key,
+ downstream_route_measure,
+ watershed_group_code,
+ stream_match_score,
+ pscis_status,
+ current_crossing_subtype_code,
+ current_barrier_result_code,
+ geom
+)
 SELECT
   p.stream_crossing_id,
   p.modelled_crossing_id,
@@ -101,12 +159,13 @@ SELECT
   p.blue_line_key,
   p.downstream_route_measure,
   p.watershed_group_code,
-  p.score,
+  p.score as stream_match_score,
   CASE
     WHEN hc.stream_crossing_id IS NOT NULL
     THEN 'HABITAT CONFIRMATION'
     ELSE pa.current_pscis_status
   END AS pscis_status,
+  pa.current_crossing_subtype_code,
   pa.current_barrier_result_code,
   ST_Force2D((ST_Dump(ST_LocateAlong(s.geom, p.downstream_route_measure))).geom) as geom
 FROM (

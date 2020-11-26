@@ -69,7 +69,7 @@ SELECT
   END AS name_score,
   -- if both structures are bridges they are probably a match
   CASE
-    WHEN a.crossing_subtype_code = 'BRIDGE' AND m.modelled_crossing_type = 'bridge' THEN 85
+    WHEN a.crossing_subtype_code = 'BRIDGE' AND m.modelled_crossing_type = 'OBS' THEN 85
     ELSE 0
   END AS bridge_score,
   -- stream width to stream order relationship doesn't increase scores as it
