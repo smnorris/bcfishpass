@@ -34,6 +34,7 @@ CREATE TABLE bcfishpass.streams
     (REPLACE(REPLACE(local_watershed_code, '-000000', ''), '-', '.')::ltree) STORED,
   upstream_route_measure double precision GENERATED ALWAYS AS (downstream_route_measure +
     ST_Length (geom)) STORED,
+  upstream_area_ha double precision,
   geom geometry(LineStringZM,3005)
 );
 
@@ -66,6 +67,7 @@ INSERT INTO bcfishpass.streams
   watershed_key_50k,
   watershed_group_code_50k,
   feature_code,
+  upstream_area_ha,
   geom)
 SELECT
   linear_feature_id,
@@ -90,6 +92,7 @@ SELECT
   watershed_key_50k,
   watershed_group_code_50k,
   feature_code,
+  upstream_area_ha,
   geom
 FROM
   whse_basemapping.fwa_stream_networks_sp s

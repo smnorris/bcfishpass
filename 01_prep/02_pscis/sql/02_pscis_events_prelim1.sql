@@ -19,7 +19,7 @@ WITH candidates AS
     nn.distance_to_stream,
     nn.watershed_group_code,
     ST_LineMerge(nn.geom) AS geom
-  FROM whse_fish.pscis_points_all as pt
+  FROM bcfishpass.pscis_points_all as pt
   CROSS JOIN LATERAL
   (SELECT
      str.linear_feature_id,
@@ -74,7 +74,7 @@ FROM bluelines
 INNER JOIN candidates ON bluelines.stream_crossing_id = candidates.stream_crossing_id
 AND bluelines.blue_line_key = candidates.blue_line_key
 AND bluelines.distance_to_stream = candidates.distance_to_stream
-INNER JOIN whse_fish.pscis_points_all pts ON bluelines.stream_crossing_id = pts.stream_crossing_id;
+INNER JOIN bcfishpass.pscis_points_all pts ON bluelines.stream_crossing_id = pts.stream_crossing_id;
 
 CREATE INDEX ON bcfishpass.pscis_events_prelim1 (stream_crossing_id);
 CREATE INDEX ON bcfishpass.pscis_events_prelim1 (linear_feature_id);
