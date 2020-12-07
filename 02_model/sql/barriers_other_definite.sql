@@ -43,7 +43,7 @@ SELECT
     e.localcode_ltree,
     e.watershed_group_code,
     e.geom
-FROM whse_fish.pscis_events_sp e
+FROM bcfishpass.pscis_events_sp e
 INNER JOIN bcfishpass.pscis_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 WHERE f.updated_barrier_result_code = 'NOT ACCESSIBLE'

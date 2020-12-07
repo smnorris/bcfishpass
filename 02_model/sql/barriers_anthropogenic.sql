@@ -141,7 +141,7 @@ SELECT
 FROM fish_passage.modelled_stream_crossings b
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id
-LEFT OUTER JOIN bcfishpass.pscis_events p
+LEFT OUTER JOIN bcfishpass.pscis_events_sp p
 ON b.modelled_crossing_id = p.modelled_crossing_id
 WHERE b.blue_line_key = s.watershed_key
 -- only CBS

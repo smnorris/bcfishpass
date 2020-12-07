@@ -155,7 +155,12 @@ def add_upstream_ids(table_a, id_a, table_b, id_b, upstream_ids_col):
 @click.argument("stream_table")
 @click.argument("point_table")
 def segment_streams(stream_table, point_table):
-    """break streams at points
+    """
+    Break streams at points.
+
+    Break lines in stream_table at each location specified in point_table
+    Points are defined as blue_line_key / route measure (not geom).
+    Each table must have the standard FWA columns.
     """
     db = pgdata.connect()
     stream_schema, stream_table = db.parse_table_name(stream_table)

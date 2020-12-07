@@ -38,6 +38,9 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_anth
 # we often want to report on PSCIS crossings regardless of barrier status
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.pscis_events_sp
 
+# and at all falls, for QA of falls to include
+python bcfishpass.py segment-streams bcfishpass.streams whse_fish.fiss_falls_events
+
 # add column tracking upstream observations
 python bcfishpass.py add-upstream-ids bcfishpass.streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 

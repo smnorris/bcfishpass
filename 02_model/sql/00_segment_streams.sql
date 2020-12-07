@@ -3,7 +3,7 @@
 ---------------------------------------------------------------
 CREATE TEMPORARY TABLE temp_streams AS
 
--- find streams to break by joining streams to the min pts
+-- find streams to break by joining streams to the input points
 WITH to_break AS (
   SELECT
     s.segmented_stream_id,
@@ -127,7 +127,8 @@ SET
   watershed_code_50k = s.watershed_code_50k,
   watershed_key_50k = s.watershed_key_50k,
   watershed_group_code_50k = s.watershed_group_code_50k,
-  feature_code = s.feature_code
+  feature_code = s.feature_code,
+  upstream_area_ha = s.upstream_area_ha
 FROM whse_basemapping.fwa_stream_networks_sp s
 WHERE a.watershed_group_id IS NULL
   AND a.linear_feature_id = s.linear_feature_id;
