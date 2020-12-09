@@ -5,7 +5,7 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_up
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS stream_order integer;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS stream_magnitude integer;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS gradient double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS watershed_ha double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS watershed_upstr_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_network_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_lakereservoir_ha double precision;
@@ -147,7 +147,7 @@ report AS
   b.stream_order,
   b.stream_magnitude,
   b.gradient,
-  b.upstream_area_ha AS watershed_ha,
+  b.upstream_area_ha AS watershed_upstr_ha,
   spd.species_codes as observedspp_dnstr,
   spu.species_codes as observedspp_upstr,
 
@@ -223,7 +223,7 @@ SET
   stream_order = r.stream_order,
   stream_magnitude = r.stream_magnitude,
   gradient = r.gradient,
-  watershed_ha = r.watershed_ha,
+  watershed_upstr_ha = r.watershed_upstr_ha,
   total_network_km = r.total_network_km,
   total_stream_km = r.total_stream_km,
   --total_lakereservoir_ha = r.total_lakereservoir_ha,
@@ -300,7 +300,7 @@ WHERE p.{point_id} = r.{point_id};
 COMMENT ON COLUMN {point_schema}.{point_table}.stream_order IS 'Order of FWA stream at point';
 COMMENT ON COLUMN {point_schema}.{point_table}.stream_magnitude IS 'Magnitude of FWA stream at point';
 COMMENT ON COLUMN {point_schema}.{point_table}.gradient IS 'Stream slope at point';
-COMMENT ON COLUMN {point_schema}.{point_table}.watershed_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
+COMMENT ON COLUMN {point_schema}.{point_table}.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
 COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_dnstr IS 'Fish species observed downstream of point (on the same stream/blue_line_key)';
 COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_upstr IS 'Fish species observed anywhere upstream of point';
 COMMENT ON COLUMN {point_schema}.{point_table}.total_network_km IS 'Total length of stream network upstream of point';
