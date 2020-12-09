@@ -180,5 +180,22 @@ def segment_streams(stream_table, point_table):
     pool.join()
 
 
+@cli.command()
+@click.argument("point_table")
+@click.argument("point_id")
+def report(point_table, point_id):
+    db = pgdata.connect()
+    point_schema, point_table = db.parse_table_name(point_table)
+    query = sql.SQL(read_file("sql/00_report.sql")).format(
+        point_schema=sql.Identifier(point_schema),
+        point_table=sql.Identifier(point_table),
+        point_id=sql.Identifier(point_id)
+    )
+    conn = db.engine.raw_connection()
+    cur = conn.cursor()
+    cur.execute(query)
+    conn.commit()
+
+
 if __name__ == "__main__":
     cli()

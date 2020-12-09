@@ -38,8 +38,9 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_anth
 # we often want to report on PSCIS crossings regardless of barrier status
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.pscis_events_sp
 
-# and at all falls, for QA of falls to include
-python bcfishpass.py segment-streams bcfishpass.streams whse_fish.fiss_falls_events
+# create a waterfalls table for evaluation, break streams at waterfalls
+psql -f sql/waterfalls.sql
+python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.waterfalls
 
 # add column tracking upstream observations
 python bcfishpass.py add-upstream-ids bcfishpass.streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
@@ -56,6 +57,9 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id dnstr_barriers_anthropogenic --include_equivalent_measure
 
+# classify streams per accessibility model based on the upstream / downstream features processed above
+psql -f sql/model.sql
+
 # add downstream ids to barrier tables too - handy for reporting
 python bcfishpass.py add-downstream-ids bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls_id
 python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15_id
@@ -68,4 +72,15 @@ python bcfishpass.py add-downstream-ids bcfishpass.barriers_intermittentflow bar
 python bcfishpass.py add-downstream-ids bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow barriers_ditchflow_id dnstr_barriers_ditchflow_id
 python bcfishpass.py add-downstream-ids bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow_id
 
-# and report on how much is upstream of each definite barrier
+# for qa, report on how much is upstream of various definite barriers
+python bcfishpass.py report bcfishpass.barriers_ditchflow barriers_ditchflow_id
+python bcfishpass.py report bcfishpass.barriers_falls barriers_falls_id
+python bcfishpass.py report bcfishpass.barriers_gradient_15 barriers_gradient_15_id
+python bcfishpass.py report bcfishpass.barriers_gradient_20 barriers_gradient_20_id
+python bcfishpass.py report bcfishpass.barriers_gradient_30 barriers_gradient_30_id
+python bcfishpass.py report bcfishpass.barriers_intermittentflow barriers_intermittentflow_id
+python bcfishpass.py report bcfishpass.barriers_majordams barriers_majordams_id
+python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id
+
+# and waterfalls
+python bcfishpass.py report bcfishpass.waterfalls falls_id
