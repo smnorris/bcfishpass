@@ -57,6 +57,19 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id dnstr_barriers_anthropogenic --include_equivalent_measure
 
+# because NULLS don't come through in MVT, code NULLs as zero
+psql -c "UPDATE bcfishpass.barriers_gradient_15 SET dnstr_barriers_gradient_15_id = ARRAY[0] WHERE dnstr_barriers_gradient_15_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_gradient_20 SET dnstr_barriers_gradient_20_id = ARRAY[0] WHERE dnstr_barriers_gradient_20_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_gradient_30 SET dnstr_barriers_gradient_30_id = ARRAY[0] WHERE dnstr_barriers_gradient_30_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_ditchflow SET dnstr_barriers_ditchflow_id = ARRAY[0] WHERE dnstr_barriers_ditchflow_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_falls SET dnstr_barriers_falls_id = ARRAY[0] WHERE dnstr_barriers_falls_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_intermittentflow SET dnstr_barriers_intermittentflow_id = ARRAY[0] WHERE dnstr_barriers_intermittentflow_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_majordams SET dnstr_barriers_majordams_id = ARRAY[0] WHERE dnstr_barriers_majordams_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_other_definite SET dnstr_barriers_other_definite_id = ARRAY[0] WHERE dnstr_barriers_other_definite_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_subsurfaceflow SET dnstr_barriers_subsurfaceflow_id = ARRAY[0] WHERE dnstr_barriers_subsurfaceflow_id IS NULL"
+psql -c "UPDATE bcfishpass.dnstr_barriers_anthropogenic SET dnstr_barriers_anthropogenic_id = ARRAY[0] WHERE dnstr_barriers_anthropogenic_id IS NULL"
+
+
 # classify streams per accessibility model based on the upstream / downstream features processed above
 psql -f sql/model.sql
 
