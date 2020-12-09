@@ -1,3 +1,4 @@
-Match additional waterfalls compiled by CWF to streams:
+Load additional waterfalls compiled by CWF and match to streams:
 
-    psql -f cwf_waterfalls_additional.sql
+
+    ./falls.sh
