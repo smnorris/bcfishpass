@@ -100,6 +100,13 @@ For details, see [PSCIS](01_prep/02_pscis).
 
 For details, see [dams](01_prep/03_dams).
 
+#### Load additional waterfalls prepped by CWF
+
+    cd 01_prep/04_other
+    ./falls.sh
+
+For details, see [other](01_prep/04_other).
+
 
 ## Run model
 
