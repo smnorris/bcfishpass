@@ -13,7 +13,7 @@ CREATE TABLE bcfishpass.barriers_gradient_20
     watershed_group_code text,
     geom geometry(Point, 3005),
     -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-    UNIQUE (linear_feature_id, downstream_route_measure)
+    UNIQUE (blue_line_key, downstream_route_measure)
 );
 
 

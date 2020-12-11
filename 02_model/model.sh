@@ -61,14 +61,13 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 psql -c "UPDATE bcfishpass.barriers_gradient_15 SET dnstr_barriers_gradient_15_id = ARRAY[0] WHERE dnstr_barriers_gradient_15_id IS NULL"
 psql -c "UPDATE bcfishpass.barriers_gradient_20 SET dnstr_barriers_gradient_20_id = ARRAY[0] WHERE dnstr_barriers_gradient_20_id IS NULL"
 psql -c "UPDATE bcfishpass.barriers_gradient_30 SET dnstr_barriers_gradient_30_id = ARRAY[0] WHERE dnstr_barriers_gradient_30_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_ditchflow SET dnstr_barriers_ditchflow_id = ARRAY[0] WHERE dnstr_barriers_ditchflow_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_falls SET dnstr_barriers_falls_id = ARRAY[0] WHERE dnstr_barriers_falls_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_intermittentflow SET dnstr_barriers_intermittentflow_id = ARRAY[0] WHERE dnstr_barriers_intermittentflow_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_majordams SET dnstr_barriers_majordams_id = ARRAY[0] WHERE dnstr_barriers_majordams_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_other_definite SET dnstr_barriers_other_definite_id = ARRAY[0] WHERE dnstr_barriers_other_definite_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_subsurfaceflow SET dnstr_barriers_subsurfaceflow_id = ARRAY[0] WHERE dnstr_barriers_subsurfaceflow_id IS NULL"
-psql -c "UPDATE bcfishpass.dnstr_barriers_anthropogenic SET dnstr_barriers_anthropogenic_id = ARRAY[0] WHERE dnstr_barriers_anthropogenic_id IS NULL"
-
+psql -c "UPDATE bcfishpass.barriers_ditchflow SET dnstr_barriers_ditchflow_id = ARRAY[0] WHERE dnstr_barriers_ditchflow_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_falls SET dnstr_barriers_falls_id = ARRAY[0] WHERE dnstr_barriers_falls_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_intermittentflow SET dnstr_barriers_intermittentflow_id = ARRAY[0] WHERE dnstr_barriers_intermittentflow_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_majordams SET dnstr_barriers_majordams_id = ARRAY[0] WHERE dnstr_barriers_majordams_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_other_definite SET dnstr_barriers_other_definite_id = ARRAY[0] WHERE dnstr_barriers_other_definite_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_subsurfaceflow SET dnstr_barriers_subsurfaceflow_id = ARRAY[0] WHERE dnstr_barriers_subsurfaceflow_id IS NULL"
+psql -c "UPDATE bcfishpass.barriers_anthropogenic SET dnstr_barriers_anthropogenic_id = ARRAY[0] WHERE dnstr_barriers_anthropogenic_id IS NULL"
 
 # classify streams per accessibility model based on the upstream / downstream features processed above
 psql -f sql/model.sql
@@ -97,3 +96,41 @@ python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfa
 
 # and waterfalls
 python bcfishpass.py report bcfishpass.waterfalls falls_id
+
+# create tables for cartographic use, merging barriers for specific scenarios into single tables
+psql -f sql/carto.sql
+
+# index these tables
+python bcfishpass.py add-downstream-ids \
+  bcfishpass.carto_barriers_definite_steelhead \
+  carto_barriers_definite_steelhead_id \
+  bcfishpass.carto_barriers_definite_steelhead \
+  carto_barriers_definite_steelhead_id \
+  dnstr_carto_barriers_definite_steelhead_id
+python bcfishpass.py add-downstream-ids \
+  bcfishpass.carto_barriers_definite_wct \
+  carto_barriers_definite_wct_id \
+  bcfishpass.carto_barriers_definite_wct \
+  carto_barriers_definite_wct_id \
+  dnstr_carto_barriers_definite_wct_id
+python bcfishpass.py add-downstream-ids \
+  bcfishpass.carto_barriers_definite_salmon \
+  carto_barriers_definite_salmon_id \
+  bcfishpass.carto_barriers_definite_salmon \
+  carto_barriers_definite_salmon_id \
+  dnstr_carto_barriers_definite_salmon_id
+
+# delete non-minimal points
+psql -c "DELETE FROM  bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto_barriers_definite_salmon_id IS NOT NULL"
+psql -c "DELETE FROM  bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead_id IS NOT NULL"
+psql -c "DELETE FROM  bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct_id IS NOT NULL"
+
+# update for mvt purposes (altho this is no longer needed because of above deletes)
+psql -c "UPDATE bcfishpass.carto_barriers_definite_salmon SET dnstr_carto_barriers_definite_salmon_id = ARRAY[0] WHERE dnstr_carto_barriers_definite_salmon_id IS NULL"
+psql -c "UPDATE bcfishpass.carto_barriers_definite_steelhead SET dnstr_carto_barriers_definite_steelhead_id = ARRAY[0] WHERE dnstr_carto_barriers_definite_steelhead_id IS NULL"
+psql -c "UPDATE bcfishpass.carto_barriers_definite_wct SET dnstr_carto_barriers_definite_wct_id = ARRAY[0] WHERE dnstr_carto_barriers_definite_wct_id IS NULL"
+
+# got to run report on these points too
+python bcfishpass.py report bcfishpass.carto_barriers_definite_steelhead carto_barriers_definite_steelhead_id
+python bcfishpass.py report bcfishpass.carto_barriers_definite_salmon carto_barriers_definite_salmon_id
+python bcfishpass.py report bcfishpass.carto_barriers_definite_wct carto_barriers_definite_wct_id
