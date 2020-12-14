@@ -358,8 +358,7 @@ SELECT
   accessibility_model_wct,
   (ST_Dump(ST_UNION(ST_Force2D(geom)))).geom as geom
 FROM bcfishpass.streams
-WHERE stream_order > 1
-AND
+WHERE stream_order > 2
 GROUP BY blue_line_key,
   gnis_name,
   stream_order,
