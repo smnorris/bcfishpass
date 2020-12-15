@@ -18,9 +18,9 @@ psql -c "\copy bcfishpass.pscis_modelledcrossings_streams_xref FROM 'data/pscis_
 
 # load the CWF generated PSCIS fixes table
 # (noting OBS barriers, non-accessible streams etc)
-psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_fixes"
-psql -c "CREATE TABLE bcfishpass.pscis_fixes (watershed_group_code text, stream_crossing_id integer, crossing_subtype_code text, barrier_result_code text, assessment_comment text, updated_barrier_result_code text)"
-psql -c "\copy bcfishpass.pscis_fixes FROM 'data/pscis_fixes.csv' delimiter ',' csv header"
+psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_barrier_result_fixes"
+psql -c "CREATE TABLE bcfishpass.pscis_barrier_result_fixes (watershed_group_code text, stream_crossing_id integer, crossing_subtype_code text, barrier_result_code text, assessment_comment text, updated_barrier_result_code text)"
+psql -c "\copy bcfishpass.pscis_barrier_result_fixes FROM 'data/pscis_barrier_result_fixes.csv' delimiter ',' csv header"
 
 psql -f sql/01_pscis_points_all.sql
 psql -f sql/02_pscis_events_prelim1.sql

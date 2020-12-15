@@ -121,9 +121,9 @@ python bcfishpass.py add-downstream-ids \
   dnstr_carto_barriers_definite_salmon_id
 
 # delete non-minimal points
-psql -c "DELETE FROM  bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto_barriers_definite_salmon_id IS NOT NULL"
-psql -c "DELETE FROM  bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead_id IS NOT NULL"
-psql -c "DELETE FROM  bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto_barriers_definite_salmon_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct_id IS NOT NULL"
 
 # update for mvt purposes (altho this is no longer needed because of above deletes)
 psql -c "UPDATE bcfishpass.carto_barriers_definite_salmon SET dnstr_carto_barriers_definite_salmon_id = ARRAY[0] WHERE dnstr_carto_barriers_definite_salmon_id IS NULL"

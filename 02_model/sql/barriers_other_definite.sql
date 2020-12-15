@@ -44,7 +44,7 @@ SELECT
     e.watershed_group_code,
     e.geom
 FROM bcfishpass.pscis_events_sp e
-INNER JOIN bcfishpass.pscis_fixes f
+INNER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 WHERE f.updated_barrier_result_code = 'NOT ACCESSIBLE'
 AND e.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
