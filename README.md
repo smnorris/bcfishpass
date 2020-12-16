@@ -1,6 +1,12 @@
 # bcfishpass
 
-Scripts to prioritize assessment/remediation of potential barriers to fish passage, based primarily on stream gradient.
+Scripts to:
+
+- prioritize assessment/remediation of potential barriers to fish passage, based primarily on stream gradient
+- monitor passability status based on BC Provincial Stream Crossing Information System (PSCIS)
+- view model and PSCIS status in a web map
+
+View draft passability/accessiblility output at [https://www.hillcrestgeo.ca/projects/cwf_wcrp/](https://www.hillcrestgeo.ca/projects/cwf_wcrp/)
 
 ## Background
 
