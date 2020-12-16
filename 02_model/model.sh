@@ -126,12 +126,7 @@ psql -c "DELETE FROM bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto
 psql -c "DELETE FROM bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead IS NOT NULL"
 psql -c "DELETE FROM bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct IS NOT NULL"
 
-# update for mvt purposes (altho this is no longer needed because of above deletes)
-psql -c "UPDATE bcfishpass.carto_barriers_definite_salmon SET dnstr_carto_barriers_definite_salmon = ARRAY[0] WHERE dnstr_carto_barriers_definite_salmon IS NULL"
-psql -c "UPDATE bcfishpass.carto_barriers_definite_steelhead SET dnstr_carto_barriers_definite_steelhead = ARRAY[0] WHERE dnstr_carto_barriers_definite_steelhead IS NULL"
-psql -c "UPDATE bcfishpass.carto_barriers_definite_wct SET dnstr_carto_barriers_definite_wct = ARRAY[0] WHERE dnstr_carto_barriers_definite_wct IS NULL"
-
-# got to run report on these points too
+# run report on the carto tables
 python bcfishpass.py report bcfishpass.carto_barriers_definite_steelhead carto_barriers_definite_steelhead_id
 python bcfishpass.py report bcfishpass.carto_barriers_definite_salmon carto_barriers_definite_salmon_id
 python bcfishpass.py report bcfishpass.carto_barriers_definite_wct carto_barriers_definite_wct_id

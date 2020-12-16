@@ -14,7 +14,12 @@ WHERE
     AND watershed_group_code = 'HORS';
 
 UPDATE bcfishpass.streams
-SET accessibility_model_salmon = 'UNCONSTRAINED'
+SET accessibility_model_salmon = 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
+WHERE accessibility_model_salmon = 'POTENTIALLY ACCESSIBLE'
+AND dnstr_barriers_pscis IS NOT NULL;
+
+UPDATE bcfishpass.streams
+SET accessibility_model_salmon = 'ACCESSIBLE'
 WHERE
     dnstr_barriers_gradient_15 IS NULL AND
     dnstr_barriers_gradient_20 IS NULL AND
@@ -36,7 +41,12 @@ WHERE
     AND watershed_group_code IN ('BULK','LNIC');
 
 UPDATE bcfishpass.streams
-SET accessibility_model_steelhead = 'UNCONSTRAINED'
+SET accessibility_model_steelhead = 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
+WHERE accessibility_model_steelhead = 'POTENTIALLY ACCESSIBLE'
+AND dnstr_barriers_pscis IS NOT NULL;
+
+UPDATE bcfishpass.streams
+SET accessibility_model_steelhead = 'ACCESSIBLE'
 WHERE
     dnstr_barriers_gradient_20 IS NULL AND
     dnstr_barriers_gradient_30 IS NULL AND
@@ -58,7 +68,12 @@ WHERE
     AND watershed_group_code = 'ELKR';
 
 UPDATE bcfishpass.streams
-SET accessibility_model_wct = 'UNCONSTRAINED'
+SET accessibility_model_wct = 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
+WHERE accessibility_model_wct = 'POTENTIALLY ACCESSIBLE'
+AND dnstr_barriers_pscis IS NOT NULL;
+
+UPDATE bcfishpass.streams
+SET accessibility_model_wct = 'ACCESSIBLE'
 WHERE
     ((dnstr_barriers_gradient_20 IS NULL AND
     dnstr_barriers_gradient_30 IS NULL AND
