@@ -147,10 +147,10 @@ INSERT INTO bcfishpass.crossings
 SELECT
     b.modelled_crossing_id,
     'MODELLED_CROSSINGS' as crossing_source,
-    modelled_crossing_type as crossing_type,
+    COALESCE(f.structure, modelled_crossing_type) AS crossing_type,
     CASE
-      WHEN modelled_crossing_type = 'CBS' THEN 'POTENTIAL'
-      WHEN modelled_crossing_type = 'OBS' OR f.structure = 'OBS' THEN 'PASSABLE'
+      WHEN modelled_crossing_type = 'CBS' AND COALESCE(f.structure, 'CBS') != 'OBS' THEN 'POTENTIAL'
+      WHEN modelled_crossing_type = 'OBS' OR COALESCE(f.structure, 'CBS') = 'OBS' THEN 'PASSABLE'
     END AS barrier_status,
     b.linear_feature_id,
     b.blue_line_key,
@@ -168,7 +168,7 @@ LEFT OUTER JOIN bcfishpass.modelled_stream_crossings_fixes f
 ON b.modelled_crossing_id = f.modelled_crossing_id
 WHERE b.blue_line_key = s.watershed_key
 -- don't include crossings that have been determined to be non-existent (f.structure = 'NONE')
-AND (f.structure IS NULL OR f.structure = 'OBS')
+AND (f.structure IS NULL OR COALESCE(f.structure, 'CBS') = 'OBS')
 -- don't include PSCIS crossings
 AND p.stream_crossing_id IS NULL
 -- just work with groups of interest for now.
