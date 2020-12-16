@@ -141,6 +141,40 @@ AND a.downstream_route_measure + .001 < s.upstream_route_measure
 ORDER BY a.{point_id}, s.downstream_route_measure
 ),
 
+upstr_wb AS
+(SELECT DISTINCT
+  a.{point_id},
+  s.waterbody_key,
+  s.accessibility_model_salmon,
+  s.accessibility_model_steelhead,
+  s.accessibility_model_wct,
+  ST_Area(lake.geom) as area_lake,
+  ST_Area(manmade.geom) as area_manmade,
+  ST_Area(wetland.geom) as area_wetland
+FROM {point_schema}.{point_table} a
+LEFT OUTER JOIN bcfishpass.streams s
+ON FWA_Upstream(
+    a.blue_line_key,
+    a.downstream_route_measure,
+    a.wscode_ltree,
+    a.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    True,
+    .02
+   )
+LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lake
+ON s.waterbody_key = lake.waterbody_key
+LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly manmade
+ON s.waterbody_key = manmade.waterbody_key
+LEFT OUTER JOIN whse_basemapping.fwa_wetlands_poly wetland
+ON s.waterbody_key = wetland.waterbody_key
+WHERE s.waterbody_key IS NOT NULL
+ORDER BY a.{point_id}
+),
+
 report AS
 (SELECT
   a.{point_id},
@@ -151,9 +185,11 @@ report AS
   spd.species_codes as observedspp_dnstr,
   spu.species_codes as observedspp_upstr,
 
--- total
+-- totals
   COALESCE(ROUND((SUM(ST_Length(s.geom)::numeric) / 1000), 2), 0) AS total_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))) / 1000)::numeric, 2), 0) AS total_stream_km,
+  ROUND(COALESCE((SUM(uwb.area_lake) + SUM(uwb.area_manmade)) / 10000, 0)::numeric, 2) AS total_lakereservoir_ha,
+  ROUND(COALESCE(SUM(uwb.area_wetland) / 10000, 0)::numeric, 2) AS total_wetland_ha,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= 0 AND s.gradient < .03) / 1000))::numeric, 2), 0) as total_slopeclass03_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .03 AND s.gradient < .05) / 1000))::numeric, 2), 0) as total_slopeclass05_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .05 AND s.gradient < .08) / 1000))::numeric, 2), 0) as total_slopeclass08_km,
@@ -164,6 +200,8 @@ report AS
 -- salmon model
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_salmon LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS salmon_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_salmon LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS salmon_stream_km,
+  ROUND(COALESCE((SUM(uwb.area_lake) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%') + SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%')) / 10000, 0)::numeric, 2) AS salmon_lakereservoir_ha,
+  ROUND(COALESCE((SUM(uwb.area_wetland) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%')) / 10000, 0)::numeric, 2) AS salmon_wetland_ha,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_salmon LIKE '%ACCESSIBLE%' AND (s.gradient >= 0 AND s.gradient < .03)) / 1000))::numeric, 2), 0) as salmon_slopeclass03_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_salmon LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as salmon_slopeclass05_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_salmon LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as salmon_slopeclass08_km,
@@ -174,6 +212,8 @@ report AS
 -- steelhead
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_steelhead LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS steelhead_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_steelhead LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS steelhead_stream_km,
+  ROUND(COALESCE((SUM(uwb.area_lake) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%') + SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000, 0)::numeric, 2) AS steelhead_lakereservoir_ha,
+  ROUND(COALESCE((SUM(uwb.area_wetland) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000, 0)::numeric, 2) AS steelhead_wetland_ha,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_steelhead LIKE '%ACCESSIBLE%' AND (s.gradient >= 0 AND s.gradient < .03)) / 1000))::numeric, 2), 0) as steelhead_slopeclass03_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_steelhead LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as steelhead_slopeclass05_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_steelhead LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as steelhead_slopeclass08_km,
@@ -184,6 +224,8 @@ report AS
 -- wct
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS wct_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS wct_stream_km,
+  ROUND(COALESCE((SUM(uwb.area_lake) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%') + SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000, 0)::numeric, 2) AS wct_lakereservoir_ha,
+  ROUND(COALESCE((SUM(uwb.area_wetland) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000, 0)::numeric, 2) AS wct_wetland_ha,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= 0 AND s.gradient < .03)) / 1000))::numeric, 2), 0) as wct_slopeclass03_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as wct_slopeclass05_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as wct_slopeclass08_km,
@@ -212,6 +254,8 @@ LEFT OUTER JOIN spp_downstream spd
 ON a.{point_id} = spd.{point_id}
 LEFT OUTER JOIN grade b
 ON a.{point_id} = b.{point_id}
+LEFT OUTER JOIN upstr_wb uwb
+ON a.{point_id} = uwb.{point_id}
 WHERE a.watershed_group_code IN ('LNIC','BULK','ELKR','HORS')
 GROUP BY a.{point_id}, b.stream_order, b.gradient, b.stream_magnitude, b.upstream_area_ha, spd.species_codes, spu.species_codes
 )
@@ -226,8 +270,8 @@ SET
   watershed_upstr_ha = r.watershed_upstr_ha,
   total_network_km = r.total_network_km,
   total_stream_km = r.total_stream_km,
-  --total_lakereservoir_ha = r.total_lakereservoir_ha,
-  --total_wetland_ha = r.total_wetland_ha,
+  total_lakereservoir_ha = r.total_lakereservoir_ha,
+  total_wetland_ha = r.total_wetland_ha,
   total_slopeclass03_km = r.total_slopeclass03_km,
   total_slopeclass05_km = r.total_slopeclass05_km,
   total_slopeclass08_km = r.total_slopeclass08_km,
@@ -236,8 +280,8 @@ SET
   total_slopeclass30_km = r.total_slopeclass30_km,
   salmon_network_km = r.salmon_network_km,
   salmon_stream_km = r.salmon_stream_km,
-  --salmon_lakereservoir_ha = r.salmon_lakereservoir_ha,
-  --salmon_wetland_ha = r.salmon_wetland_ha,
+  salmon_lakereservoir_ha = r.salmon_lakereservoir_ha,
+  salmon_wetland_ha = r.salmon_wetland_ha,
   salmon_slopeclass03_km = r.salmon_slopeclass03_km,
   salmon_slopeclass05_km = r.salmon_slopeclass05_km,
   salmon_slopeclass08_km = r.salmon_slopeclass08_km,
@@ -256,8 +300,8 @@ SET
   --salmon_belowupstrbarriers_slopeclass_30_km = r.salmon_belowupstrbarriers_slopeclass_30_km,
   steelhead_network_km = r.steelhead_network_km,
   steelhead_stream_km = r.steelhead_stream_km,
-  --steelhead_lakereservoir_ha = r.steelhead_lakereservoir_ha,
-  --steelhead_wetland_ha = r.steelhead_wetland_ha,
+  steelhead_lakereservoir_ha = r.steelhead_lakereservoir_ha,
+  steelhead_wetland_ha = r.steelhead_wetland_ha,
   steelhead_slopeclass03_km = r.steelhead_slopeclass03_km,
   steelhead_slopeclass05_km = r.steelhead_slopeclass05_km,
   steelhead_slopeclass08_km = r.steelhead_slopeclass08_km,
@@ -276,8 +320,8 @@ SET
   --steelhead_belowupstrbarriers_slopeclass_30_km = r.steelhead_belowupstrbarriers_slopeclass_30_km,
   wct_network_km = r.wct_network_km,
   wct_stream_km = r.wct_stream_km,
-  --wct_lakereservoir_ha = r.wct_lakereservoir_ha,
-  --wct_wetland_ha = r.wct_wetland_ha,
+  wct_lakereservoir_ha = r.wct_lakereservoir_ha,
+  wct_wetland_ha = r.wct_wetland_ha,
   wct_slopeclass03_km = r.wct_slopeclass03_km,
   wct_slopeclass05_km = r.wct_slopeclass05_km,
   wct_slopeclass08_km = r.wct_slopeclass08_km,
