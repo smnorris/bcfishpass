@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>CWF WCRP - Fish Passage mapping</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+#menu {
+background: #fff;
+position: absolute;
+z-index: 1;
+top: 10px;
+left: 10px;
+border-radius: 3px;
+width: 120px;
+border: 1px solid rgba(0, 0, 0, 0.4);
+font-family: 'Open Sans', sans-serif;
+}
+
+#menu a {
+font-size: 13px;
+color: #404040;
+display: block;
+margin: 0;
+padding: 0;
+padding: 10px;
+text-decoration: none;
+border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+text-align: center;
+}
+
+#menu a:last-child {
+border: none;
+}
+
+#menu a:hover {
+background-color: #f8f8f8;
+color: #404040;
+}
+
+#menu a.active {
+background-color: #3887be;
+color: #ffffff;
+}
+
+#menu a.active:hover {
+background: #3074a4;
+}
+</style>
+
+<nav id="menu"></nav>
+<div id="map"></div>
+
+<script>
+
+
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'cwf-style.json',
+    center: [-127.084780,54.740961], // starting position
+    zoom: 12 // starting zoom
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+
+
+map.on('load', function () {
+
+    // When a click event occurs on a feature in the streams layer, open a popup at the
+    // location of the click, with description HTML from its properties.
+    map.on('click', 'barriers-definite-salmon', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.total_network_km)
+    .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the states layer.
+    map.on('mouseenter', 'barriers-definite-salmon', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'barriers-definite-salmon', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // 20
+    map.on('click', 'barriers-definite-steelhead', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.total_network_km)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'barriers-definite-steelhead', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'barriers-definite-steelhead', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // 30
+    map.on('click', 'barriers-definite-wct', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.total_network_km)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'barriers-definite-wct', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'barriers-definite-wct', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+
+    // waterfalls
+    map.on('click', 'waterfalls', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.total_network_km)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'waterfalls', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'waterfalls', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // streams
+    map.on('click', 'streams-steelhead', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.gnis_name)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'streams-steelhead', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'streams-steelhead', function () {
+    map.getCanvas().style.cursor = '';
+    });
+    map.on('click', 'streams-steelhead-intermittent', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.gnis_name)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'streams-steelhead-intermittent', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'streams-steelhead-intermittent', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'streams-salmon', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.gnis_name)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'streams-salmon', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'streams-salmon', function () {
+    map.getCanvas().style.cursor = '';
+    });
+    map.on('click', 'streams-salmon-intermittent', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.gnis_name)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'streams-salmon-intermittent', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'streams-salmon-intermittent', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'streams-wct', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.gnis_name)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'streams-wct', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'streams-wct', function () {
+    map.getCanvas().style.cursor = '';
+    });
+    map.on('click', 'streams-wct-intermittent', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.gnis_name)
+    .addTo(map);
+    });
+    map.on('mouseenter', 'streams-wct-intermittent', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'streams-wct-intermittent', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+});
+
+</script>
+
+</body>
+</html>

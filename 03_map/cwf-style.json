@@ -1,0 +1,503 @@
+{
+  "version": 8,
+  "name": "CWF WCRP mapping",
+  "center": [-127.084780,54.740961],
+  "zoom": 12,
+  "sources": {
+    "satellite": {
+      "type": "raster",
+      "tiles": [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 19
+    },
+    "esri-topo": {
+      "type": "raster",
+      "tiles": [
+        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 19
+    },
+    "private": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/whse_cadastre.pmbc_parcel_fabric_poly_svw/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    },
+    "streams": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.streams/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    },
+    "streams_large": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_streams_large/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 6,
+      "maxzoom": 19
+    },
+    "barriers_definite_wct": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_barriers_definite_wct/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 7,
+      "maxzoom": 19
+    },
+    "barriers_definite_steelhead": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_barriers_definite_steelhead/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    },
+    "barriers_definite_salmon": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_barriers_definite_salmon/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    },
+    "waterfalls": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.waterfalls/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 6,
+      "maxzoom": 19
+    },
+    "watershed_groups": {
+      "type": "vector",
+      "tiles": [
+        "https://www.hillcrestgeo.ca/pg_tileserv/whse_basemapping.fwa_watershed_groups_poly/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 6,
+      "maxzoom": 19
+    }
+  },
+
+  "sprite": "https://www.hillcrestgeo.ca/projects/cwf_wcrp/maki_default",
+  "layers": [
+    {
+      "id": "esri-topo",
+      "type": "raster",
+      "source": "esri-topo",
+       "layout": {
+        "visibility": "visible"
+      },
+      "maxzoom": 19
+    },
+    {
+      "id": "satellite",
+      "type": "raster",
+      "source": "satellite",
+      "layout": {
+        "visibility": "none"
+      },
+      "maxzoom": 19
+    },
+
+    {
+      "id": "watershed-groups",
+      "type": "line",
+      "source": "watershed_groups",
+      "layout": {
+        "visibility": "visible"
+      },
+      "source-layer": "whse_basemapping.fwa_watershed_groups_poly",
+      "maxzoom": 19,
+      "minzoom": 6,
+      "filter": [
+          "any",
+          ["==", "watershed_group_code", "BULK"],
+          ["==", "watershed_group_code", "HORS"],
+          ["==", "watershed_group_code", "LNIC"],
+          ["==", "watershed_group_code", "ELKR"]
+      ],
+      "paint": {
+        "line-color": "#000000",
+        "line-width": 4,
+        "line-opacity": 0.5
+      }
+    },
+    {
+      "id": "streams-steelhead-large",
+      "type": "line",
+      "source": "streams_large",
+      "source-layer": "bcfishpass.carto_streams_large",
+      "filter": ["in", "accessibility_model_steelhead", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"]
+      ,
+      "maxzoom": 10,
+      "minzoom": 6,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_steelhead"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": 2.5
+      }
+    },
+    {
+      "id": "streams-steelhead",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "accessibility_model_steelhead", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"],
+        ["!=", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_steelhead"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                3,
+                0.2,
+                0.5
+          ]
+      }
+    },
+    {
+      "id": "streams-steelhead-intermittent",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "accessibility_model_steelhead", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"],
+        ["==", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_steelhead"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                2.5,
+                0.2,
+                0.5
+          ],
+          "line-dasharray": [3, 3]
+      }
+    },
+    {
+      "id": "streams-salmon-large",
+      "type": "line",
+      "source": "streams_large",
+      "source-layer": "bcfishpass.carto_streams_large",
+      "filter": ["in", "accessibility_model_salmon", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"]
+      ,
+      "maxzoom": 10,
+      "minzoom": 6,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_salmon"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": 2.5
+      }
+    },
+    {
+      "id": "streams-salmon",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "accessibility_model_salmon", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"],
+        ["!=", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_salmon"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                3,
+                0.2,
+                0.5
+          ]
+      }
+    },
+    {
+      "id": "streams-salmon-intermittent",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "accessibility_model_salmon", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"],
+        ["==", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_salmon"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                2.5,
+                0.2,
+                0.5
+          ],
+          "line-dasharray": [3, 3]
+      }
+    },
+    {
+      "id": "streams-wct-large",
+      "type": "line",
+      "source": "streams_large",
+      "source-layer": "bcfishpass.carto_streams_large",
+      "filter": ["in", "accessibility_model_wct", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"]
+      ,
+      "maxzoom": 10,
+      "minzoom": 6,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_wct"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": 2.5
+      }
+    },
+    {
+      "id": "streams-wct",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "accessibility_model_wct", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"],
+        ["!=", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_wct"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                3,
+                0.2,
+                0.5
+          ]
+      }
+    },
+    {
+      "id": "streams-wct-intermittent",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "accessibility_model_wct", "UNCONSTRAINED", "POTENTIALLY ACCESSIBLE"],
+        ["==", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "accessibility_model_wct"],
+            "UNCONSTRAINED",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                2.5,
+                0.2,
+                0.5
+          ],
+          "line-dasharray": [3, 3]
+      }
+    },
+    {
+    "id": "barriers-definite-salmon",
+    "type": "circle",
+    "source": "barriers_definite_salmon",
+    "source-layer": "bcfishpass.carto_barriers_definite_salmon",
+    "paint": {
+      "circle-color": "#e6e6e6",
+      "circle-opacity": 0.75,
+      "circle-stroke-width": 1,
+      "circle-stroke-opacity": 0.75,
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["get", "total_network_km"],
+          0,
+          2.5,
+          10,
+          4,
+          20,
+          6,
+          50,
+          7.5,
+          100,
+          10
+      ]
+      },
+    "maxzoom": 19,
+    "minzoom": 10
+    },
+    {
+    "id": "barriers-definite-steelhead",
+    "type": "circle",
+    "source": "barriers_definite_steelhead",
+    "source-layer": "bcfishpass.carto_barriers_definite_steelhead",
+    "paint": {
+      "circle-color": "#e6e6e6",
+      "circle-opacity": 0.75,
+      "circle-stroke-width": 1,
+      "circle-stroke-opacity": 0.75,
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["get", "total_network_km"],
+          0,
+          2.5,
+          10,
+          4,
+          20,
+          6,
+          50,
+          7.5,
+          100,
+          10
+      ]
+      },
+    "maxzoom": 19,
+    "minzoom": 10
+    },
+    {
+    "id": "barriers-definite-wct",
+    "type": "circle",
+    "source": "barriers_definite_wct",
+    "source-layer": "bcfishpass.carto_barriers_definite_wct",
+    "paint": {
+      "circle-color": "#e6e6e6",
+      "circle-opacity": 0.75,
+      "circle-stroke-width": 1,
+      "circle-stroke-opacity": 0.75,
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["get", "total_network_km"],
+          0,
+          2.5,
+          10,
+          4,
+          20,
+          6,
+          50,
+          7.5,
+          100,
+          10
+      ]
+      },
+    "maxzoom": 19,
+    "minzoom": 10
+    },
+    {
+    "id": "waterfalls",
+    "type": "symbol",
+    "source": "waterfalls",
+    "source-layer": "bcfishpass.waterfalls",
+    "maxzoom": 19,
+    "minzoom": 10,
+    "layout": {
+                "icon-image": "waterfall-11",
+                "icon-size": 1.5
+            },
+    "paint": {
+                "icon-halo-color": "rgba(0, 0, 0, 1)",
+                "icon-halo-width": 1,
+                "icon-color": "white"
+            }
+    }
+
+  ]
+}
