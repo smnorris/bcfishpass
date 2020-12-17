@@ -17,6 +17,17 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_slopecla
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_slopeclass15_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_slopeclass22_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_slopeclass30_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_network_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_stream_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_lakereservoir_ha double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_wetland_ha double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass03_waterbodies_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass03_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass05_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass08_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass15_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass22_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass30_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_network_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_lakereservoir_ha double precision;
@@ -32,12 +43,13 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowup
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_lakereservoir_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_wetland_ha double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass_03_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass_05_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass_08_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass_15_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass_22_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass_30_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass03_waterbodies_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass03_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass05_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass08_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass15_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass22_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS salmon_belowupstrbarriers_slopeclass30_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_network_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_lakereservoir_ha double precision;
@@ -53,12 +65,13 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belo
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_lakereservoir_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_wetland_ha double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass_03_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass_05_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass_08_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass_15_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass_22_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass_30_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass03_waterbodies_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass03_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass05_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass08_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass15_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass22_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS steelhead_belowupstrbarriers_slopeclass30_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_network_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_lakereservoir_ha double precision;
@@ -74,12 +87,108 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstr
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_stream_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_lakereservoir_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_wetland_ha double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass_03_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass_05_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass_08_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass_15_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass_22_km double precision;
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass_30_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass03_waterbodies_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass03_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass05_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass08_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass15_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass22_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass30_km double precision;
+
+COMMENT ON COLUMN {point_schema}.{point_table}.stream_order IS 'Order of FWA stream at point';
+COMMENT ON COLUMN {point_schema}.{point_table}.stream_magnitude IS 'Magnitude of FWA stream at point';
+COMMENT ON COLUMN {point_schema}.{point_table}.gradient IS 'Stream slope at point';
+COMMENT ON COLUMN {point_schema}.{point_table}.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
+COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_dnstr IS 'Fish species observed downstream of point (on the same stream/blue_line_key)';
+COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_upstr IS 'Fish species observed anywhere upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_network_km IS 'Total length of stream network upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_stream_km IS 'Total length of streams and rivers upstream of point (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_lakereservoir_ha IS 'Total area lakes and reservoirs upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_wetland_ha IS 'Total area wetlands upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass03_waterbodies_km IS 'Total length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass03_km IS 'Total length of stream potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass05_km IS 'Total length of stream potentially accessible upstream of point with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass08_km IS 'Total length of stream potentially accessible upstream of point with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass15_km IS 'Total length of stream potentially accessible upstream of point with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass22_km IS 'Total length of stream potentially accessible upstream of point with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass30_km IS 'Total length of stream potentially accessible upstream of point with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_network_km IS 'Total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_stream_km IS 'Total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_lakereservoir_ha IS 'Total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_wetland_ha IS 'Total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass03_waterbodies_km IS 'Total length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass03_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass05_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass08_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass15_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass22_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.total_belowupstrbarriers_slopeclass30_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_network_km IS 'Salmon model, total length of stream network potentially accessible upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_stream_km IS 'Salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_lakereservoir_ha IS 'Salmon model, total area lakes and reservoirs potentially accessible upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_wetland_ha IS 'Salmon model, total area wetlands potentially accessible upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass03_waterbodies_km IS 'Salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass03_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass05_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass08_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass15_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass22_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass30_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_network_km IS 'Salmon model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_stream_km IS 'Salmon model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_lakereservoir_ha IS 'Salmon model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_wetland_ha IS 'Salmon model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass03_waterbodies_km IS 'Salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass03_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass05_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass08_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass15_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass22_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass30_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_network_km IS 'Steelhead model, total length of stream network potentially accessible upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_stream_km IS 'Steelhead model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_lakereservoir_ha IS 'Steelhead model, total area lakes and reservoirs potentially accessible upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_wetland_ha IS 'Steelhead model, total area wetlands potentially accessible upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass03_waterbodies_km IS 'Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass03_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass05_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass08_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass15_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass22_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass30_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_network_km IS 'Steelhead model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_stream_km IS 'Steelhead model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_lakereservoir_ha IS 'Steelhead model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_wetland_ha IS 'Steelhead model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass03_waterbodies_km IS 'Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass03_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass05_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass08_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass15_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass22_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass30_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_network_km IS 'Westslope Cuthroat Trout model, total length of stream network potentially accessible upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_stream_km IS 'Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_lakereservoir_ha IS 'Westslope Cuthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_wetland_ha IS 'Westslope Cuthroat Trout model, total area wetlands potentially accessible upstream of point ';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass03_waterbodies_km IS 'Westslope Cutthroat Trout model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass03_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass05_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass08_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass15_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass22_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass30_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 22-30%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_network_km IS 'Westslope Cutthroat Trout model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_stream_km IS 'Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_lakereservoir_ha IS 'Westslope Cutthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_wetland_ha IS 'Westslope Cutthroat Trout model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass03_waterbodies_km IS 'Westslope Cutthroat Trout model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass03_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass05_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass08_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass15_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass22_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass30_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
 
 -- run the report, updating new columns in existing table
 WITH
@@ -317,16 +426,6 @@ SET
   salmon_slopeclass15_km = r.salmon_slopeclass15_km,
   salmon_slopeclass22_km = r.salmon_slopeclass22_km,
   salmon_slopeclass30_km = r.salmon_slopeclass30_km,
-  --salmon_belowupstrbarriers_network_km = r.salmon_belowupstrbarriers_network_km,
-  --salmon_belowupstrbarriers_stream_km = r.salmon_belowupstrbarriers_stream_km,
-  --salmon_belowupstrbarriers_lakereservoir_ha = r.salmon_belowupstrbarriers_lakereservoir_ha,
-  --salmon_belowupstrbarriers_wetland_ha = r.salmon_belowupstrbarriers_wetland_ha,
-  --salmon_belowupstrbarriers_slopeclass_03_km = r.salmon_belowupstrbarriers_slopeclass_03_km,
-  --salmon_belowupstrbarriers_slopeclass_05_km = r.salmon_belowupstrbarriers_slopeclass_05_km,
-  --salmon_belowupstrbarriers_slopeclass_08_km = r.salmon_belowupstrbarriers_slopeclass_08_km,
-  --salmon_belowupstrbarriers_slopeclass_15_km = r.salmon_belowupstrbarriers_slopeclass_15_km,
-  --salmon_belowupstrbarriers_slopeclass_22_km = r.salmon_belowupstrbarriers_slopeclass_22_km,
-  --salmon_belowupstrbarriers_slopeclass_30_km = r.salmon_belowupstrbarriers_slopeclass_30_km,
   steelhead_network_km = r.steelhead_network_km,
   steelhead_stream_km = r.steelhead_stream_km,
   steelhead_lakereservoir_ha = r.steelhead_lakereservoir_ha,
@@ -338,16 +437,6 @@ SET
   steelhead_slopeclass15_km = r.steelhead_slopeclass15_km,
   steelhead_slopeclass22_km = r.steelhead_slopeclass22_km,
   steelhead_slopeclass30_km = r.steelhead_slopeclass30_km,
-  --steelhead_belowupstrbarriers_network_km = r.steelhead_belowupstrbarriers_network_km,
-  --steelhead_belowupstrbarriers_stream_km = r.steelhead_belowupstrbarriers_stream_km,
-  --steelhead_belowupstrbarriers_lakereservoir_ha = r.steelhead_belowupstrbarriers_lakereservoir_ha,
-  --steelhead_belowupstrbarriers_wetland_ha = r.steelhead_belowupstrbarriers_wetland_ha,
-  --steelhead_belowupstrbarriers_slopeclass_03_km = r.steelhead_belowupstrbarriers_slopeclass_03_km,
-  --steelhead_belowupstrbarriers_slopeclass_05_km = r.steelhead_belowupstrbarriers_slopeclass_05_km,
-  --steelhead_belowupstrbarriers_slopeclass_08_km = r.steelhead_belowupstrbarriers_slopeclass_08_km,
-  --steelhead_belowupstrbarriers_slopeclass_15_km = r.steelhead_belowupstrbarriers_slopeclass_15_km,
-  --steelhead_belowupstrbarriers_slopeclass_22_km = r.steelhead_belowupstrbarriers_slopeclass_22_km,
-  --steelhead_belowupstrbarriers_slopeclass_30_km = r.steelhead_belowupstrbarriers_slopeclass_30_km,
   wct_network_km = r.wct_network_km,
   wct_stream_km = r.wct_stream_km,
   wct_lakereservoir_ha = r.wct_lakereservoir_ha,
@@ -359,96 +448,5 @@ SET
   wct_slopeclass15_km = r.wct_slopeclass15_km,
   wct_slopeclass22_km = r.wct_slopeclass22_km,
   wct_slopeclass30_km = r.wct_slopeclass30_km
-  --wct_belowupstrbarriers_network_km = r.wct_belowupstrbarriers_network_km,
-  --wct_belowupstrbarriers_stream_km = r.wct_belowupstrbarriers_stream_km,
-  --wct_belowupstrbarriers_lakereservoir_ha = r.wct_belowupstrbarriers_lakereservoir_ha,
-  --wct_belowupstrbarriers_wetland_ha = r.wct_belowupstrbarriers_wetland_ha,
-  --wct_belowupstrbarriers_slopeclass_03_km = r.wct_belowupstrbarriers_slopeclass_03_km,
-  --wct_belowupstrbarriers_slopeclass_05_km = r.wct_belowupstrbarriers_slopeclass_05_km,
-  --wct_belowupstrbarriers_slopeclass_08_km = r.wct_belowupstrbarriers_slopeclass_08_km,
-  --wct_belowupstrbarriers_slopeclass_15_km = r.wct_belowupstrbarriers_slopeclass_15_km,
-  --wct_belowupstrbarriers_slopeclass_22_km = r.wct_belowupstrbarriers_slopeclass_22_km,
-  --wct_belowupstrbarriers_slopeclass_30_km = r.wct_belowupstrbarriers_slopeclass_30_km
 FROM report r
 WHERE p.{point_id} = r.{point_id};
-
-COMMENT ON COLUMN {point_schema}.{point_table}.stream_order IS 'Order of FWA stream at point';
-COMMENT ON COLUMN {point_schema}.{point_table}.stream_magnitude IS 'Magnitude of FWA stream at point';
-COMMENT ON COLUMN {point_schema}.{point_table}.gradient IS 'Stream slope at point';
-COMMENT ON COLUMN {point_schema}.{point_table}.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
-COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_dnstr IS 'Fish species observed downstream of point (on the same stream/blue_line_key)';
-COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_upstr IS 'Fish species observed anywhere upstream of point';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_network_km IS 'Total length of stream network upstream of point';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_stream_km IS 'Total length of streams and rivers upstream of point (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_lakereservoir_ha IS 'Total area lakes and reservoirs upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_wetland_ha IS 'Total area wetlands upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass03_waterbodies_km IS 'Total length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass03_km IS 'Total length of stream potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass05_km IS 'Total length of stream potentially accessible upstream of point with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass08_km IS 'Total length of stream potentially accessible upstream of point with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass15_km IS 'Total length of stream potentially accessible upstream of point with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass22_km IS 'Total length of stream potentially accessible upstream of point with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.total_slopeclass30_km IS 'Total length of stream potentially accessible upstream of point with slope 22-30%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_network_km IS 'Salmon model, total length of stream network potentially accessible upstream of point';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_stream_km IS 'Salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_lakereservoir_ha IS 'Salmon model, total area lakes and reservoirs potentially accessible upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_wetland_ha IS 'Salmon model, total area wetlands potentially accessible upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass03_waterbodies_km IS 'Salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass03_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass05_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass08_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass15_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass22_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_slopeclass30_km IS 'Salmon model, length of stream potentially accessible upstream of point with slope 22-30%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_network_km IS 'Salmon model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_stream_km IS 'Salmon model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_lakereservoir_ha IS 'Salmon model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_wetland_ha IS 'Salmon model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass_03_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass_05_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass_08_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass_15_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass_22_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.salmon_belowupstrbarriers_slopeclass_30_km IS 'Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_network_km IS 'Steelhead model, total length of stream network potentially accessible upstream of point';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_stream_km IS 'Steelhead model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_lakereservoir_ha IS 'Steelhead model, total area lakes and reservoirs potentially accessible upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_wetland_ha IS 'Steelhead model, total area wetlands potentially accessible upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass03_waterbodies_km IS 'Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass03_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass05_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass08_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass15_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass22_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_slopeclass30_km IS 'Steelhead model, length of stream potentially accessible upstream of point with slope 22-30%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_network_km IS 'Steelhead model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_stream_km IS 'Steelhead model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_lakereservoir_ha IS 'Steelhead model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_wetland_ha IS 'Steelhead model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass_03_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass_05_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass_08_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass_15_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass_22_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.steelhead_belowupstrbarriers_slopeclass_30_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_network_km IS 'Westslope Cuthroat Trout model, total length of stream network potentially accessible upstream of point';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_stream_km IS 'Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_lakereservoir_ha IS 'Westslope Cuthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_wetland_ha IS 'Westslope Cuthroat Trout model, total area wetlands potentially accessible upstream of point ';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass03_waterbodies_km IS 'Westslope Cutthroat Trout model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass03_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass05_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass08_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass15_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass22_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_slopeclass30_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 22-30%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_network_km IS 'Westslope Cutthroat Trout model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_stream_km IS 'Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_lakereservoir_ha IS 'Westslope Cutthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_wetland_ha IS 'Westslope Cutthroat Trout model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass_03_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass_05_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass_08_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass_15_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass_22_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
-COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_slopeclass_30_km IS 'Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
