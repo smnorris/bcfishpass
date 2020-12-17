@@ -70,17 +70,17 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
 psql -f sql/model.sql
 
 # add downstream ids to barrier tables too - handy for reporting
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 barriers_gradient_20_id dnstr_barriers_gradient_20
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 barriers_gradient_30_id dnstr_barriers_gradient_30
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams barriers_majordams_id dnstr_barriers_majordams
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_other_definite barriers_other_definite_id bcfishpass.barriers_other_definite barriers_other_definite_id dnstr_barriers_other_definite
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_intermittentflow barriers_intermittentflow_id bcfishpass.barriers_intermittentflow barriers_intermittentflow_id dnstr_barriers_intermittentflow
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow barriers_ditchflow_id dnstr_barriers_ditchflow
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow
-python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_aggregated_crossing
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id dnstr_barriers_anthropogenic
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 barriers_gradient_20_id dnstr_barriers_gradient_20_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 barriers_gradient_30_id dnstr_barriers_gradient_30_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams barriers_majordams_id dnstr_barriers_majordams_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_other_definite barriers_other_definite_id bcfishpass.barriers_other_definite barriers_other_definite_id dnstr_barriers_other_definite_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_intermittentflow barriers_intermittentflow_id bcfishpass.barriers_intermittentflow barriers_intermittentflow_id dnstr_barriers_intermittentflow_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow barriers_ditchflow_id dnstr_barriers_ditchflow_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow_id
+python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_aggregated_crossing_id
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id dnstr_barriers_anthropogenic_id
 
 # for qa, report on how much is upstream of various definite barriers
 python bcfishpass.py report bcfishpass.barriers_ditchflow barriers_ditchflow_id
@@ -93,9 +93,11 @@ python bcfishpass.py report bcfishpass.barriers_majordams barriers_majordams_id
 python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id
 
 # and waterfalls
+python bcfishpass.py add-downstream-ids bcfishpass.waterfalls falls_id bcfishpass.waterfalls falls_id dnstr_falls_id
 python bcfishpass.py report bcfishpass.waterfalls falls_id
 
 # and the crossings table
+python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_aggregated_crossings_id
 python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id
 
 # create tables for cartographic use, merging barriers for specific scenarios into single tables
@@ -107,24 +109,24 @@ python bcfishpass.py add-downstream-ids \
   carto_barriers_definite_steelhead_id \
   bcfishpass.carto_barriers_definite_steelhead \
   carto_barriers_definite_steelhead_id \
-  dnstr_carto_barriers_definite_steelhead
+  dnstr_carto_barriers_definite_steelhead_id
 python bcfishpass.py add-downstream-ids \
   bcfishpass.carto_barriers_definite_wct \
   carto_barriers_definite_wct_id \
   bcfishpass.carto_barriers_definite_wct \
   carto_barriers_definite_wct_id \
-  dnstr_carto_barriers_definite_wct
+  dnstr_carto_barriers_definite_wct_id
 python bcfishpass.py add-downstream-ids \
   bcfishpass.carto_barriers_definite_salmon \
   carto_barriers_definite_salmon_id \
   bcfishpass.carto_barriers_definite_salmon \
   carto_barriers_definite_salmon_id \
-  dnstr_carto_barriers_definite_salmon
+  dnstr_carto_barriers_definite_salmon_id
 
 # delete non-minimal points
-psql -c "DELETE FROM bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto_barriers_definite_salmon IS NOT NULL"
-psql -c "DELETE FROM bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead IS NOT NULL"
-psql -c "DELETE FROM bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto_barriers_definite_salmon_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct_id IS NOT NULL"
 
 # run report on the carto tables
 python bcfishpass.py report bcfishpass.carto_barriers_definite_steelhead carto_barriers_definite_steelhead_id

@@ -102,6 +102,8 @@ def add_downstream_ids(table_a, id_a, table_b, id_b, downstream_ids_col, include
     conn.set_isolation_level(0)
     cur = conn.cursor()
     cur.execute(f"VACUUM ANALYZE {schema_a}.{table_a}")
+    # downstream ids are stored as intarray, we could index them
+    #db.execute(f"CREATE INDEX ON {schema_a}.{table_a} USING GIST ({downstream_ids_col} gist__int_ops);")
 
 
 @cli.command()
@@ -189,7 +191,8 @@ def report(point_table, point_id):
     query = sql.SQL(read_file("sql/00_report.sql")).format(
         point_schema=sql.Identifier(point_schema),
         point_table=sql.Identifier(point_table),
-        point_id=sql.Identifier(point_id)
+        point_id=sql.Identifier(point_id),
+        dnstr_point_id=sql.Identifier("dnstr_" + point_id)
     )
     conn = db.engine.raw_connection()
     cur = conn.cursor()
