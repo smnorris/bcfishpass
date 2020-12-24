@@ -934,7 +934,6 @@ ELKR,50174,FORD,UNKNOWN,"deactivated, high habitat value, known BT according to 
 ELKR,50175,FORD,UNKNOWN,"looks like a washout that had a CMP, high value habitat, unknown fish presence",BARRIER
 ELKR,50176,BRIDGE,PASSABLE,"wooden deck, C564-011, no fish observed but WCT present according to Habitat Wizard, behind gate",PASSABLE
 ELKR,50178,BRIDGE,PASSABLE,"behind gate, unknown fish presence, dry, moderate habitat value, C564-012",PASSABLE
-ELKR,50179,FORD,UNKNOWN,"deactivation high value habitat, no fish observed but known BT, DV, MW, WCT, CT, KO and RB according to Habitat Wizard",BARRIER
 ELKR,50180,BRIDGE,PASSABLE,None.,PASSABLE
 ELKR,50182,FORD,UNKNOWN,"unknown fish presence, deact was not pulled back",BARRIER
 ELKR,50183,FORD,UNKNOWN,"unknown fish presence, constructed ford on gasline",BARRIER
