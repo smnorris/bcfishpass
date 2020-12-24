@@ -99,10 +99,7 @@ INSERT INTO bcfishpass.crossings
 SELECT
     d.dam_id,
     'BCDAMS' as crossing_source,
-    CASE
-      WHEN UPPER(d.hydro_dam_ind) = 'Y' THEN 'DAM - HYDRO'
-      WHEN UPPER(d.hydro_dam_ind) = 'N' THEN 'DAM - OTHER'
-    END AS crossing_type,
+    'DAM' AS crossing_type,
     CASE
       WHEN UPPER(d.barrier_ind) = 'Y' THEN 'BARRIER'
       WHEN UPPER(d.barrier_ind) = 'N' THEN 'PASSABLE'
@@ -120,6 +117,8 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
 -- ignore dams on side channels for this exercise
 WHERE d.blue_line_key = s.watershed_key
+-- do not include major/bc hydro dams, they are definite barriers, already in the barriers_majordams table
+AND d.hydro_dam_ind = 'N'
 -- include only watershed groups of interest for now
 AND d.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY dam_id

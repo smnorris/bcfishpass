@@ -47,7 +47,7 @@
     "barriers_definite_wct": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_barriers_definite_wct/{z}/{x}/{y}.pbf"
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_wct/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 7,
       "maxzoom": 19
@@ -55,7 +55,7 @@
     "barriers_definite_steelhead": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_barriers_definite_steelhead/{z}/{x}/{y}.pbf"
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_steelhead/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -63,7 +63,7 @@
     "barriers_definite_salmon": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_barriers_definite_salmon/{z}/{x}/{y}.pbf"
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_salmon/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -416,7 +416,7 @@
     "id": "barriers-definite-salmon",
     "type": "circle",
     "source": "barriers_definite_salmon",
-    "source-layer": "bcfishpass.carto_barriers_definite_salmon",
+    "source-layer": "bcfishpass.definitebarriers_salmon",
     "paint": {
       "circle-color": "#e6e6e6",
       "circle-opacity": 0.75,
@@ -445,7 +445,7 @@
     "id": "barriers-definite-steelhead",
     "type": "circle",
     "source": "barriers_definite_steelhead",
-    "source-layer": "bcfishpass.carto_barriers_definite_steelhead",
+    "source-layer": "bcfishpass.definitebarriers_steelhead",
     "paint": {
       "circle-color": "#e6e6e6",
       "circle-opacity": 0.75,
@@ -474,7 +474,7 @@
     "id": "barriers-definite-wct",
     "type": "circle",
     "source": "barriers_definite_wct",
-    "source-layer": "bcfishpass.carto_barriers_definite_wct",
+    "source-layer": "bcfishpass.definitebarriers_wct",
     "paint": {
       "circle-color": "#e6e6e6",
       "circle-opacity": 0.75,

@@ -37,7 +37,11 @@ The PSCIS feature retained is based on (in order of priority):
 
 ## Run scripts
 
-Download data and run above queries
+Download PSCIS data from DataBC
+
+    ./load.sh
+
+Run above queries
 
     ./pscis.sh
 

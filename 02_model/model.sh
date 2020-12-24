@@ -13,6 +13,42 @@ psql -f sql/barriers_intermittentflow.sql
 psql -f sql/barriers_subsurfaceflow.sql
 psql -f sql/barriers_other_definite.sql
 
+# merge these into single tables per species scenario
+# create tables for cartographic use, merging barriers for specific scenarios into single tables
+psql -f sql/definitebarriers.sql
+
+# note which have observations upstream
+python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
+python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
+python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
+# remove definite barriers in ELK that are below observations
+psql -c "DELETE FROM bcfishpass.combinedbarriers_wct WHERE upstr_observation_id IS NOT NULL"
+
+# note minimal definite barriers
+python bcfishpass.py add-downstream-ids \
+  bcfishpass.definitebarriers_steelhead \
+  definitebarriers_steelhead_id \
+  bcfishpass.definitebarriers_steelhead \
+  definitebarriers_steelhead_id \
+  dnstr_definitebarriers_steelhead_id
+python bcfishpass.py add-downstream-ids \
+  bcfishpass.definitebarriers_salmon \
+  definitebarriers_salmon_id \
+  bcfishpass.definitebarriers_salmon \
+  definitebarriers_salmon_id \
+  dnstr_definitebarriers_salmon_id
+python bcfishpass.py add-downstream-ids \
+  bcfishpass.definitebarriers_wct \
+  definitebarriers_wct_id \
+  bcfishpass.definitebarriers_wct \
+  definitebarriers_wct_id \
+  dnstr_definitebarriers_wct_id
+
+# delete non-minimal definite barriers
+psql -c "DELETE FROM bcfishpass.definitebarriers_salmon WHERE dnstr_definitebarriers_salmon_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.definitebarriers_steelhead WHERE dnstr_definitebarriers_steelhead_id IS NOT NULL"
+psql -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE dnstr_definitebarriers_wct_id IS NOT NULL"
+
 # consolidate all stream crossings into a single table
 # (pscis crossings, modelled crossings, dams)
 psql -f sql/crossings.sql
@@ -63,6 +99,9 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id dnstr_barriers_anthropogenic --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_pscis stream_crossing_id dnstr_barriers_pscis --include_equivalent_measure
 
+# for ELKR, use the combined definite barriers table for modelling
+python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.definitebarriers_wct definitebarriers_wct_id dnstr_barriers_wct --include_equivalent_measure
+
 # drop the temp pscis barrier table to avoid confusion
 psql -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
 
@@ -106,35 +145,7 @@ python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishp
 # populating the belowupstrbarriers for OBS in the crossings table requires a separate query
 psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
 
-# create tables for cartographic use, merging barriers for specific scenarios into single tables
-psql -f sql/carto.sql
-
-# index these tables
-python bcfishpass.py add-downstream-ids \
-  bcfishpass.carto_barriers_definite_steelhead \
-  carto_barriers_definite_steelhead_id \
-  bcfishpass.carto_barriers_definite_steelhead \
-  carto_barriers_definite_steelhead_id \
-  dnstr_carto_barriers_definite_steelhead_id
-python bcfishpass.py add-downstream-ids \
-  bcfishpass.carto_barriers_definite_wct \
-  carto_barriers_definite_wct_id \
-  bcfishpass.carto_barriers_definite_wct \
-  carto_barriers_definite_wct_id \
-  dnstr_carto_barriers_definite_wct_id
-python bcfishpass.py add-downstream-ids \
-  bcfishpass.carto_barriers_definite_salmon \
-  carto_barriers_definite_salmon_id \
-  bcfishpass.carto_barriers_definite_salmon \
-  carto_barriers_definite_salmon_id \
-  dnstr_carto_barriers_definite_salmon_id
-
-# delete non-minimal points
-psql -c "DELETE FROM bcfishpass.carto_barriers_definite_salmon WHERE dnstr_carto_barriers_definite_salmon_id IS NOT NULL"
-psql -c "DELETE FROM bcfishpass.carto_barriers_definite_steelhead WHERE dnstr_carto_barriers_definite_steelhead_id IS NOT NULL"
-psql -c "DELETE FROM bcfishpass.carto_barriers_definite_wct WHERE dnstr_carto_barriers_definite_wct_id IS NOT NULL"
-
-# run report on the carto tables
-python bcfishpass.py report bcfishpass.carto_barriers_definite_salmon carto_barriers_definite_salmon_id bcfishpass.carto_barriers_definite_salmon dnstr_carto_barriers_definite_salmon_id
-python bcfishpass.py report bcfishpass.carto_barriers_definite_steelhead carto_barriers_definite_steelhead_id bcfishpass.carto_barriers_definite_steelhead dnstr_carto_barriers_definite_steelhead_id
-python bcfishpass.py report bcfishpass.carto_barriers_definite_wct carto_barriers_definite_wct_id bcfishpass.carto_barriers_definite_wct dnstr_carto_barriers_definite_wct_id
+# run report on the combined definite barrier tables
+python bcfishpass.py report bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.definitebarriers_salmon dnstr_definitebarriers_salmon_id
+python bcfishpass.py report bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.definitebarriers_steelhead dnstr_definitebarriers_steelhead_id
+python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id

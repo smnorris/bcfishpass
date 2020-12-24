@@ -1,14 +1,6 @@
 #!/bin/bash
 set -euxo pipefail
 
-# -----------
-# PSCIS
-# -----------
-bcdata bc2pg WHSE_FISH.PSCIS_ASSESSMENT_SVW
-bcdata bc2pg WHSE_FISH.PSCIS_DESIGN_PROPOSAL_SVW
-bcdata bc2pg WHSE_FISH.PSCIS_HABITAT_CONFIRMATION_SVW
-bcdata bc2pg WHSE_FISH.PSCIS_REMEDIATION_SVW
-
 # load the CWF generated PSCIS - stream - modelled crossing lookup table
 # this matches all PSCIS crossings (as of July 2020) to streams/modelled crossings where possible
 # null values indicate that the PSCIS crossing does not match to a FWA stream
