@@ -158,7 +158,7 @@ SELECT
     b.localcode_ltree,
     b.watershed_group_code,
     ST_Force2D((ST_Dump(b.geom)).geom) as geom
-FROM fish_passage.modelled_stream_crossings b
+FROM bcfishpass.modelled_stream_crossings b
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN bcfishpass.pscis_events_sp p
