@@ -108,6 +108,9 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
 # classify streams per accessibility model based on the upstream / downstream features processed above
 psql -f sql/model.sql
 
+# create generalized copy of streams for visualization
+psql -f sql/carto.sql
+
 # add downstream ids to barrier tables too - handy for reporting
 python bcfishpass.py add-downstream-ids bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls
 python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15
