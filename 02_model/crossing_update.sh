@@ -34,6 +34,7 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 
 # re-run model classification
 psql -f sql/model.sql
+psql -f sql/carto.sql
 
 
 # ----------
@@ -57,3 +58,4 @@ psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
 python bcfishpass.py report bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.definitebarriers_salmon dnstr_definitebarriers_salmon_id
 python bcfishpass.py report bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.definitebarriers_steelhead dnstr_definitebarriers_steelhead_id
 python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
+
