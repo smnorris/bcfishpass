@@ -30,6 +30,6 @@ SELECT
   watershed_group_code,
   total_score AS score
 FROM bcfishpass.pscis_events_prelim2) AS foo
-ORDER BY stream_crossing_id, score, modelled_crossing_id DESC NULLS LAST;
+ORDER BY stream_crossing_id, score DESC, modelled_crossing_id DESC NULLS LAST;
 
 ALTER TABLE bcfishpass.pscis_events_prelim3 ADD PRIMARY KEY (stream_crossing_id);
