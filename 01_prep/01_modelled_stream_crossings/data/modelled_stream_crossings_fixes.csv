@@ -1819,9 +1819,9 @@ modelled_crossing_id,watershed_group_code,reviewer,structure,notes
 24734192,ELKR,SN,OBS,Bridge visible
 24734719,ELKR,SN,NONE,no crossing structure mentioned here in habitat conf for PSCIS 50181
 24734160,ELKR,SN,NONE,no crossing
-1805182,ELKR,SN,OBS,Assessment pre load (Irvine 2020)
-1800472,ELKR,SN,OBS,Assessment pre load (Irvine 2020)
-1804153,ELKR,SN,OBS,Assessment pre load (Irvine 2020)
-1800066,ELKR,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
-1801069,ELKR,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
-1800076,ELKR,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1805182,BULK,SN,OBS,Assessment pre load (Irvine 2020)
+1800472,BULK,SN,OBS,Assessment pre load (Irvine 2020)
+1804153,BULK,SN,OBS,Assessment pre load (Irvine 2020)
+1800066,BULK,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1801069,BULK,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1800076,BULK,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
