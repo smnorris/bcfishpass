@@ -8,7 +8,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 3046,1803574,17093500,SN,matched to nearest modelled crossing within 15m (instream)
 3047,1804647,17053682,,
 3048,1803799,17054507,,
-3049,,17057939,,
 3050,1803993,17059159,SN,matched to nearest modelled crossing within 15m (instream)
 3051,17059351,17059351,,
 3052,1803711,17060884,,
@@ -27,8 +26,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 3065,1803539,17055178,,
 3066,1803566,17057005,,
 3067,1803577,17062292,,
-3068,,17063474,,
-3069,,17064919,,
 3070,1803578,17068447,SN,matched to nearest modelled crossing within 15m (instream)
 3071,1803542,17082206,,
 3072,1805264,17063474,,
@@ -67,23 +64,19 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 3141,1803579,17074556,SN,matched to nearest modelled crossing within 15m (instream)
 3142,,17071026,,
 3143,1800069,17076323,,
-3144,,17071990,,
 3145,1806045,17071990,,
 6272,1801771,17014061,,
 6273,1804823,17014063,,
 6531,6801574,701412466,,
 6532,6801535,701409730,,
-6533,,701407964,,
 7677,11304573,701756640,,
 7883,11305427,701755166,,
 7885,11304571,701756638,,
 8237,11305824,701752605,,
 8239,11304632,701765524,SN,matched to nearest modelled crossing within 15m (instream)
-8240,,701765480,,
 8245,11304697,701755336,,
 8246,11304694,701754974,,
 8733,1803546,17086160,SN,matched to nearest modelled crossing within 15m (instream)
-8744,,17086160,,
 8745,24704538,17022140,,
 8758,1804827,17021127,,
 50060,4606391,706855859,,
@@ -93,15 +86,12 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50064,4606364,706858423,,
 50065,4606207,706857585,,
 50066,4606183,706858994,,
-50067,,706860952,,
 50068,,,,
 50069,4607564,706862976,,
 50070,4606171,706863929,,
 50071,,706866244,,
 50072,4606965,706866956,,
-50073,,706868755,,
 50074,24706654,706871580,,
-50075,,706870446,,
 50076,24706673,706869407,,
 50077,4605986,706862867,,
 50078,4605985,706863052,,
@@ -123,7 +113,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50094,4602021,706880130,SN,matched to nearest modelled crossing within 15m (instream)
 50095,,706880116,,
 50096,24706676,706873710,,
-50097,,706873665,,
 50098,4605512,706873903,,
 50099,,,,
 50100,4605505,706873689,,
@@ -138,16 +127,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50109,4601898,706871317,SN,matched to nearest modelled crossing within 15m (instream)
 50110,,706872809,,
 50111,4606898,706873272,,
-50112,,706873272,,
 50113,4603530,706873541,,
 50114,4602747,706873630,,
 50115,4600519,706875064,,
 50116,4602831,706875925,SN,matched to nearest modelled crossing within 15m (instream)
 50117,4602830,706875581,,
+50254,,706839455,,
 50118,4601990,706875925,SN,matched to nearest modelled crossing within 15m (instream)
 50119,24706543,706874027,,
 50120,4606602,706862786,,
-50121,,706862124,,
 50122,24706652,706875188,,
 50123,,,,
 50124,4605468,706877341,,
@@ -163,7 +151,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50134,4605854,706859965,,
 50135,4600402,706859689,SN,matched to nearest modelled crossing within 15m (instream)
 50136,24706535,706859927,,
-50137,,706859785,,
 50138,4603696,706859920,,
 50139,4603677,706860052,,
 50140,4602664,706860764,,
@@ -177,7 +164,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50148,24706534,706862134,SN,matched to nearest modelled crossing within 15m (instream)
 50149,4603220,706862289,SN,matched to nearest modelled crossing within 15m (instream)
 50150,4603221,706862936,SN,matched to nearest modelled crossing within 15m (instream)
-50151,,706857903,,
 50152,4600144,706845075,,
 50153,4602147,706844794,,
 50154,,,,
@@ -222,7 +208,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50193,4605566,706849240,,
 50194,4605569,706848612,SN,matched to nearest modelled crossing within 15m (instream)
 50195,,706848218,,
-50196,,706848215,,
 50197,24706511,706848215,,
 50198,4606969,706847621,,
 50199,4600211,706847491,,
@@ -230,9 +215,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50201,4600498,706846878,,
 50202,4600716,706847242,SN,matched to nearest modelled crossing within 15m (instream)
 50203,4600210,706847242,SN,matched to nearest modelled crossing within 15m (instream)
-50204,,706847621,,
 50205,4605567,706848218,SN,matched to nearest modelled crossing within 15m (instream)
-50206,,706848664,,
 50207,4602032,706848967,SN,matched to nearest modelled crossing within 15m (instream)
 50208,4601702,706850410,,
 50209,,,,
@@ -241,21 +224,18 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50213,,,,
 50214,4604217,706840725,SN,matched to nearest modelled crossing within 15m (instream)
 50215,,,,
-50216,,706837345,,
 50217,4603187,706837046,,
 50218,4601380,706837070,SN,matched to nearest modelled crossing within 15m (instream)
 50219,4601408,706837070,SN,matched to nearest modelled crossing within 15m (instream)
 50220,24706493,706837121,SN,matched to nearest modelled crossing within 15m (instream)
 50221,4604258,706837703,,
 50222,4604259,706837948,SN,matched to nearest modelled crossing within 15m (instream)
-50223,,706840723,,
 50224,4600382,706842103,,
 50225,,706839894,,
 50226,,,,
 50227,4601018,706839248,SN,matched to nearest modelled crossing within 15m (instream)
 50228,4602410,706837154,,
 50229,4605911,706836914,,
-50230,,706836878,,
 50231,4605447,706836875,SN,matched to nearest modelled crossing within 15m (instream)
 50232,4600996,706837509,,
 50233,4602426,706837255,,
@@ -269,7 +249,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50241,4602406,706836418,,
 50243,4601470,706836199,SN,matched to nearest modelled crossing within 15m (instream)
 50244,4601485,706836532,,
-50245,,706836197,,
 50246,4601999,706835327,,
 50247,4602216,706835847,,
 50248,4607190,706835331,SN,matched to nearest modelled crossing within 15m (instream)
@@ -278,11 +257,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50251,4601056,706835250,,
 50252,4600355,706839141,SN,matched to nearest modelled crossing within 15m (instream)
 50253,24706515,706839198,,
-50254,,706839455,,
 50255,4606744,706839455,SN,matched to nearest modelled crossing within 15m (instream)
 50256,24706516,706839650,,
 50257,4600122,706839904,,
-50258,,706840350,,
 50259,4607146,706842805,,
 50260,4606166,706843357,,
 50261,4607458,706843732,,
@@ -296,7 +273,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50269,,,,
 50270,4606737,706837345,,
 50271,24706514,706838079,,
-50272,,706838172,,
 50273,4600365,706834784,,
 50274,4600363,706834630,,
 50275,,706836561,,
@@ -307,10 +283,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 51129,4603110,706879594,,
 51146,4601867,706871659,,
 51223,4601733,706852809,SN,matched to nearest modelled crossing within 15m (instream)
-51224,,706852809,,
 51243,4601543,706847491,SN,matched to nearest modelled crossing within 15m (instream)
 51255,,,,
-57095,,701415699,,
 57096,6800598,701415699,SN,matched to nearest modelled crossing within 15m (instream)
 57097,,701415699,,
 57098,6800605,701415699,,
@@ -331,15 +305,12 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57114,6801942,701406090,,
 57115,6801681,701406090,,
 57116,6801383,701406368,,
-57117,,701405660,,
 57118,6802295,701405660,,
 57119,6801589,701406198,,
 57120,6801587,701406056,,
 57121,6801588,701405586,,
-57122,,701405004,,
 57123,6801513,701406056,SN,matched to nearest modelled crossing within 15m (instream)
 57124,6802307,701406906,SN,matched to nearest modelled crossing within 15m (instream)
-57125,,701406908,,
 57126,6802310,701408077,,
 57127,6802302,701408488,SN,matched to nearest modelled crossing within 15m (instream)
 57128,6802303,701408588,,
@@ -374,7 +345,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57157,6802292,701428711,,
 57158,6800596,701427062,,
 57159,,701430260,,
-57160,,701430260,,
 57161,6801777,701426717,SN,matched to nearest modelled crossing within 15m (instream)
 57162,6801219,701426717,,
 57163,6801344,701426717,SN,matched to nearest modelled crossing within 15m (instream)
@@ -397,17 +367,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57181,24708561,701432652,,
 57182,6801408,701432896,SN,matched to nearest modelled crossing within 15m (instream)
 57183,6802272,701433158,SN,matched to nearest modelled crossing within 15m (instream)
-57184,,701409977,,
 57185,6800497,701436428,,
 57186,6801379,701436428,,
 57187,6801403,701437106,,
 57189,6801553,701410596,SN,matched to nearest modelled crossing within 15m (instream)
 57190,6801556,701411742,SN,matched to nearest modelled crossing within 15m (instream)
-57191,,701411566,,
 57192,6802070,701408693,,
 57193,6802067,701409094,,
-57194,,701409976,,
-57195,,701409976,,
 57196,6800761,701409976,,
 57197,6802074,701411710,SN,matched to nearest modelled crossing within 15m (instream)
 57198,24708572,701409931,,
@@ -434,28 +400,22 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57229,6801402,701422235,,
 57230,6801140,701422235,,
 57231,6801139,701422235,,
-57232,,701421241,,
 57234,6801812,701420794,,
 57235,,,,
 57236,6801650,701423147,,
 57237,6801645,701423900,,
-57238,,701423206,,
 57239,6801935,701426094,,
-57240,,701423484,,
 57241,6801930,701424030,SN,matched to nearest modelled crossing within 15m (instream)
 57242,6801932,701423892,,
 57243,6801936,701425080,,
 57244,6801931,701425053,,
-57245,,701424145,,
 57246,6801651,701422839,,
 57247,6801648,701421874,SN,matched to nearest modelled crossing within 15m (instream)
 57248,6801644,701420876,,
 57249,6801647,701420794,SN,matched to nearest modelled crossing within 15m (instream)
-57250,,701420427,,
 57251,,701420220,,
 57252,6800634,701424114,,
 57253,6801804,701420605,,
-57254,,701420605,,
 57255,,,,
 57256,6801814,701417221,,
 57257,6802176,701419797,,
@@ -465,12 +425,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57261,,701419562,,
 57262,6802039,701420429,SN,matched to nearest modelled crossing within 15m (instream)
 57263,6800617,701417997,,
-57264,,701418603,,
 57265,6802280,701423496,,
 57266,6802278,701423441,,
 57267,6802283,701422888,,
 57268,6802282,701422252,,
-57269,,701423875,,
 57270,,,,
 57271,6800635,701423875,SN,matched to nearest modelled crossing within 15m (instream)
 57272,6800637,701423875,,
@@ -523,7 +481,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57321,6801805,701415495,,
 57322,6801799,701414514,,
 57323,6801813,701413342,SN,matched to nearest modelled crossing within 15m (instream)
-57324,,701412122,,
 57325,6801795,701411777,,
 57326,6801797,701410855,SN,matched to nearest modelled crossing within 15m (instream)
 57327,,,,
@@ -532,8 +489,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57330,6801962,701412629,SN,matched to nearest modelled crossing within 15m (instream)
 57331,6801961,701412892,,
 57332,,,,
-57333,,701413479,,
-57334,,701413530,,
 57335,,,,
 57336,6801960,701414752,,
 57337,6800817,701415514,,
@@ -544,10 +499,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57344,6800837,701415295,,
 57346,6800837,701415295,SN,matched to nearest modelled crossing within 15m (instream)
 57347,24708538,701414215,,
-57348,,701416660,,
 57349,,,,
 57350,6801727,701410200,,
-57351,,701410200,,
 57352,6801149,701410739,SN,matched to nearest modelled crossing within 15m (instream)
 57353,6801148,701410631,SN,matched to nearest modelled crossing within 15m (instream)
 57354,,,,
@@ -572,12 +525,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57373,24708537,701411590,SN,matched to nearest modelled crossing within 15m (instream)
 57374,6800826,701412882,,
 57375,6801056,701404120,,
-57376,,701404105,,
 57377,6801058,701404149,SN,matched to nearest modelled crossing within 15m (instream)
 57378,,,,
 57379,,,,
 57380,6801060,701404334,,
-57381,,701404302,,
 57382,6801071,701404784,,
 57383,,,,
 57384,6801057,701405080,SN,matched to nearest modelled crossing within 15m (instream)
@@ -585,16 +536,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57386,6801758,701402410,SN,matched to nearest modelled crossing within 15m (instream)
 57387,6802357,701423855,,
 57388,6801759,701402986,SN,matched to nearest modelled crossing within 15m (instream)
-57389,,701402986,,
 57390,,,,
 57391,24708564,701402051,,
 57392,6801122,701401203,SN,matched to nearest modelled crossing within 15m (instream)
 57393,6800081,701418579,,
 57394,6801413,701424535,SN,matched to nearest modelled crossing within 15m (instream)
 57395,6800100,701400840,,
-57396,,701400672,,
 57397,6801307,701400845,,
-57398,,701400731,,
 57399,,,,
 57400,6800901,701406492,SN,matched to nearest modelled crossing within 15m (instream)
 57401,,,,
@@ -610,7 +558,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57411,,,,
 57412,,701433765,,
 57413,6801472,701433765,,
-57414,,701433691,,
 57415,24701095,701433278,,
 57416,,,,
 57417,,,,
@@ -618,21 +565,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57419,,,,
 57420,6800498,701435884,,
 57421,6801372,701434476,,
-57422,,701435516,,
 57423,6800502,701435516,SN,matched to nearest modelled crossing within 15m (instream)
 57424,,,,
 57425,6801370,701434312,,
-57426,,701432876,,
 57427,,,,
-57428,,701432876,,
-57429,,701436428,,
 57430,6801719,701430483,,
-57431,,701430874,,
 57432,,,,
 57433,6802276,701433593,SN,matched to nearest modelled crossing within 15m (instream)
 57434,6802274,701431479,,
 57435,6802275,701430874,SN,matched to nearest modelled crossing within 15m (instream)
-57436,,701436387,,
 57437,6801912,701435324,,
 57438,,,,
 57439,,,,
@@ -675,15 +616,12 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57476,6801654,701424716,,
 57477,6801836,701426617,,
 57478,6801835,701425233,,
-57479,,701426617,,
 57480,,701429264,,
 57481,,,,
 57482,6802097,701426273,,
 57483,6802215,701427677,,
 57484,6802214,701426708,,
 57485,6800161,701429307,SN,matched to nearest modelled crossing within 15m (instream)
-57486,,701429307,,
-57487,,701429505,,
 57488,,,,
 57489,6801860,701429424,,
 57490,6801863,701427095,,
@@ -692,7 +630,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57493,,701430337,,
 57494,6800570,701426899,SN,matched to nearest modelled crossing within 15m (instream)
 57495,6802333,701425736,,
-57496,,701424268,,
 57497,,,,
 57498,6801826,701424308,,
 57499,,,,
@@ -705,7 +642,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57506,6801419,701425354,,
 57507,6800089,701417046,,
 57508,,,,
-57509,,701425422,,
 57510,6800085,701418417,,
 57512,6800002,701420863,,
 57513,6800660,701411681,,
@@ -713,18 +649,14 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57515,6802146,701435625,,
 57516,24708531,701435649,,
 57517,24708532,701436625,,
-57518,,701409005,,
 57519,,,,
 57520,6800061,701409449,,
-57521,,701410365,,
 57522,6800024,701411164,,
 57523,6800105,701412665,,
 57524,6800664,701412804,,
-57525,,701412470,,
 57526,,,,
 57527,6800738,701408870,,
 57528,6800747,701410120,SN,matched to nearest modelled crossing within 15m (instream)
-57529,,701409332,,
 57530,,,,
 57531,6800272,701408862,SN,matched to nearest modelled crossing within 15m (instream)
 57532,,,,
@@ -733,16 +665,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57535,,,,
 57536,6801904,701410587,,
 57537,6801905,701410164,,
-57540,,701411681,,
 57541,6800326,701413140,,
 57542,6800325,701413140,,
-57543,,701417932,,
 57544,6801377,701416277,,
 57545,,,,
 57546,6801889,701415308,,
 57547,6801477,701416100,,
 57548,,701412349,,
-57549,,701413359,,
 57550,6801414,701423056,SN,matched to nearest modelled crossing within 15m (instream)
 57551,,701414138,,
 57552,6800078,701418304,,
@@ -759,7 +688,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57563,,701424393,,
 57564,6801409,701424824,,
 57565,6801415,701425618,,
-57566,,701426893,,
 57567,6801416,701422934,SN,matched to nearest modelled crossing within 15m (instream)
 57568,6801410,701424177,,
 57569,6801411,701424189,,
@@ -772,7 +700,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57576,6800505,701426519,,
 57577,6800504,701428637,,
 57578,6801670,701429255,,
-57579,,701429908,,
 57580,6801488,701425800,SN,matched to nearest modelled crossing within 15m (instream)
 57581,6802481,701427508,,
 57582,6800035,701415439,,
@@ -784,9 +711,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57588,6800509,701430009,,
 57589,6800181,701427013,,
 57590,6801857,701423420,,
-57591,,701418136,,
 57592,6801479,701416191,,
-57593,,701413560,,
 57594,6802058,701412363,,
 57595,,,,
 57596,6800587,701422805,,
@@ -797,11 +722,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57601,6800011,701411274,,
 57603,6800056,701410800,,
 57604,6800338,701408519,,
-57605,,701408862,,
 57760,1800496,17092439,SN,matched to nearest modelled crossing within 15m (instream)
 57761,1802243,17092909,,
 57762,1800508,17092719,,
-57763,,17093553,,
 57764,,17088830,,
 57765,1805024,17088107,,
 57766,1803955,17088284,,
@@ -809,7 +732,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57768,1803953,17088151,,
 57769,1805022,17091296,,
 57770,1805025,17090426,,
-57772,,17090333,,
 57773,1805058,17089283,,
 57774,1805164,17088704,SN,matched to nearest modelled crossing within 15m (instream)
 57775,,17088704,,
@@ -824,7 +746,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57784,1800172,17090284,,
 57785,1800133,17080045,,
 57786,1800150,17082868,SN,matched to nearest modelled crossing within 15m (instream)
-57787,,17082868,,
 57788,,,,
 57789,1800445,17079184,SN,matched to nearest modelled crossing within 15m (instream)
 57790,1802499,17079184,SN,matched to nearest modelled crossing within 15m (instream)
@@ -843,7 +764,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57803,1800115,17042519,SN,matched to nearest modelled crossing within 15m (instream)
 57804,1800329,17042964,SN,matched to nearest modelled crossing within 15m (instream)
 57805,1800330,17042964,,
-57806,,17042964,,
 57807,1802953,17042964,,
 57808,1802977,17042964,,
 57809,1801355,17042964,SN,matched to nearest modelled crossing within 15m (instream)
@@ -851,24 +771,18 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57811,1801354,17043090,,
 57812,24704497,17042694,,
 57813,1800314,17042323,,
-57814,,17041670,,
 57815,24704498,17042019,,
 57816,1802916,17041718,SN,matched to nearest modelled crossing within 15m (instream)
-57817,,17041537,,
 57818,1802907,17041537,,
 57819,,17041537,,
 57820,,,,
 57821,1801518,17041823,SN,matched to nearest modelled crossing within 15m (instream)
 57822,1800321,17041963,,
 57823,1800676,17041530,,
-57824,,17041611,,
 57825,,17041963,,
 57826,1802914,17041754,,
-57827,,17041754,,
 57828,,,,
-57829,,17042072,,
 57830,1801614,17033525,,
-57831,,17041547,,
 57832,,17041459,,
 57833,,17041459,,
 57834,24703655,17041452,SN,matched to nearest modelled crossing within 15m (instream)
@@ -879,6 +793,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57839,1801541,17041499,SN,matched to nearest modelled crossing within 15m (instream)
 57840,1803279,17041471,SN,matched to nearest modelled crossing within 15m (instream)
 57841,24704542,17041452,SN,matched to nearest modelled crossing within 15m (instream)
+58271,1802927,17041640,,
+58272,1802937,17042557,,
 57842,24704496,17041893,SN,matched to nearest modelled crossing within 15m (instream)
 57843,1803269,17041986,SN,matched to nearest modelled crossing within 15m (instream)
 57844,1800297,17042195,SN,matched to nearest modelled crossing within 15m (instream)
@@ -890,17 +806,14 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57850,1801424,17042687,,
 57851,1800304,17042861,,
 57852,1800302,17042864,SN,matched to nearest modelled crossing within 15m (instream)
-57853,,17043108,,
 57854,1801420,17043108,,
 57855,1800307,17043108,SN,matched to nearest modelled crossing within 15m (instream)
 57856,1800310,17043816,,
 57857,1801442,17042864,,
 57858,1801441,17042861,,
-57859,,17041858,,
 57860,1803286,17043712,SN,matched to nearest modelled crossing within 15m (instream)
 57861,1805082,17043932,SN,matched to nearest modelled crossing within 15m (instream)
 57862,1802337,17044159,,
-57863,,17044230,,
 57864,1805081,17044159,SN,matched to nearest modelled crossing within 15m (instream)
 57865,1803731,17044363,SN,matched to nearest modelled crossing within 15m (instream)
 57866,1803732,17044305,SN,matched to nearest modelled crossing within 15m (instream)
@@ -918,7 +831,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57878,1800294,17043239,,
 57879,1803287,17043145,SN,matched to nearest modelled crossing within 15m (instream)
 57880,1803288,17043143,SN,matched to nearest modelled crossing within 15m (instream)
-57881,,17043126,,
 57882,,,,
 57883,1800296,17043349,,
 57884,1803765,17043975,,
@@ -927,14 +839,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57887,1803842,17043427,,
 57888,1803843,17043425,SN,matched to nearest modelled crossing within 15m (instream)
 57889,1801413,17043425,SN,matched to nearest modelled crossing within 15m (instream)
-57890,,17043425,,
 57891,1800308,17043000,SN,matched to nearest modelled crossing within 15m (instream)
-57892,,17043336,,
 57893,1801414,17043427,SN,matched to nearest modelled crossing within 15m (instream)
 57894,1804481,17043816,,
 57895,1803956,17043336,,
 57896,1804435,17043334,,
-57897,,17043126,,
 57898,1803355,17043816,,
 57899,1803229,17039698,,
 57900,1800141,17040881,SN,matched to nearest modelled crossing within 15m (instream)
@@ -948,10 +857,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57908,1801485,17040070,SN,matched to nearest modelled crossing within 15m (instream)
 57909,,17039863,,
 57910,,,,
-57911,,17039980,,
 57912,1803225,17039444,SN,matched to nearest modelled crossing within 15m (instream)
 57914,1803242,17039444,,
-57915,,17038833,,
 57916,1803219,17038316,,
 57917,1803220,17037885,,
 57918,1800003,17037711,,
@@ -960,7 +867,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57921,1801498,17037835,,
 57922,,17037835,,
 57923,,17037632,,
-57924,,17037632,,
 57925,1800005,17037153,SN,matched to nearest modelled crossing within 15m (instream)
 57926,1800136,17036300,,
 57927,1800136,17036300,SN,matched to nearest modelled crossing within 15m (instream)
@@ -969,16 +875,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57930,,,,
 57931,1800002,17037401,,
 57932,1801621,17037151,,
-57933,,17036555,,
 57934,1801622,17035861,,
 57935,1801625,17035861,,
 57936,1800169,17035861,SN,matched to nearest modelled crossing within 15m (instream)
-57937,,17035861,,
 57938,1803247,17035626,,
 57939,24704488,17034323,,
 57940,1800168,17033534,,
 57941,1800165,17033270,,
-57942,,17033268,,
 57943,1800817,17038833,SN,matched to nearest modelled crossing within 15m (instream)
 57944,1800167,17035138,,
 57945,1800162,17033014,SN,matched to nearest modelled crossing within 15m (instream)
@@ -995,20 +898,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57956,1801600,17034177,SN,matched to nearest modelled crossing within 15m (instream)
 57957,1801570,17034177,,
 57958,1800351,17034275,,
-57959,,17032717,,
 57960,1801605,17032717,,
 57961,1801616,17032717,,
 57962,1801648,17032653,,
-57963,,17034275,,
 57964,1803892,17033567,,
 57965,1803893,17033450,SN,matched to nearest modelled crossing within 15m (instream)
 57966,1804688,17033567,,
-57967,,17033634,,
 57968,1800551,17033632,,
-57969,,17033644,,
 57970,1805290,17033690,,
 57971,1805287,17033361,,
-57972,,17033361,,
 57973,1804865,17033634,SN,matched to nearest modelled crossing within 15m (instream)
 57974,1803211,17034370,,
 57975,1801603,17034370,,
@@ -1018,6 +916,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 57979,,17034678,,
 57980,1801572,17034747,,
 57981,,,,
+58273,1804391,17032247,,
 57982,1800354,17034745,SN,matched to nearest modelled crossing within 15m (instream)
 57983,,,,
 57984,1804111,17033238,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1042,7 +941,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58003,1801564,17034732,,
 58004,1801597,17034745,,
 58005,1801567,17034294,SN,matched to nearest modelled crossing within 15m (instream)
-58006,,17035555,,
 58007,1801585,17035555,,
 58008,1803673,17035437,,
 58009,1803675,17035507,,
@@ -1076,9 +974,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58037,1801619,17035381,SN,matched to nearest modelled crossing within 15m (instream)
 58038,1801617,17035191,,
 58039,1801618,17035116,,
-58040,,17035719,,
 58041,1801640,17035719,,
-58042,,17035719,,
 58043,1801626,17035784,,
 58044,1803201,17035163,SN,matched to nearest modelled crossing within 15m (instream)
 58045,,,,
@@ -1087,8 +983,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58048,,,,
 58049,1803268,17041986,SN,matched to nearest modelled crossing within 15m (instream)
 58050,1805050,17043241,SN,matched to nearest modelled crossing within 15m (instream)
-58051,,17042617,,
-58052,,17042559,,
 58053,1801582,17041582,,
 58054,1801560,17036236,,
 58055,,,,
@@ -1100,7 +994,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58061,1805280,17037201,SN,matched to nearest modelled crossing within 15m (instream)
 58062,1805271,17036623,,
 58063,1802405,17031801,,
-58064,,17031801,,
 58065,1804830,17032382,,
 58066,1800348,17032994,,
 58067,1803245,17032572,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1109,7 +1002,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58070,1800412,17029060,,
 58071,1803309,17029060,,
 58072,1800037,17029060,,
-58073,,17030477,,
 58074,1803203,17034275,,
 58075,1801566,17035852,SN,matched to nearest modelled crossing within 15m (instream)
 58076,1803989,17037210,,
@@ -1117,7 +1009,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58078,1805273,17036689,SN,matched to nearest modelled crossing within 15m (instream)
 58079,,,,
 58080,1805274,17037210,,
-58081,,17028915,,
 58082,1801914,17029663,,
 58083,1805143,17030682,,
 58084,1801865,17028915,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1125,7 +1016,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58086,1805924,17028931,,
 58087,,17029663,,
 58088,1806055,17029663,,
-58089,,17030439,,
 58090,1806054,17030439,SN,matched to nearest modelled crossing within 15m (instream)
 58091,1802365,17031099,SN,matched to nearest modelled crossing within 15m (instream)
 58092,1806232,17031099,,
@@ -1135,7 +1025,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58096,1805282,17087093,,
 58097,1802501,17079889,SN,matched to nearest modelled crossing within 15m (instream)
 58098,1802502,17080234,SN,matched to nearest modelled crossing within 15m (instream)
-58099,,17091569,,
 58100,,17091569,,
 58101,,17087507,,
 58102,1806122,17088386,,
@@ -1148,7 +1037,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58109,1800724,17076686,SN,matched to nearest modelled crossing within 15m (instream)
 58110,1801935,17076686,SN,matched to nearest modelled crossing within 15m (instream)
 58111,,17078390,,
-58112,,17078166,,
 58113,1800714,17077654,,
 58114,1800713,17077654,,
 58115,1800716,17078117,,
@@ -1157,10 +1045,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58118,1801946,17077827,,
 58119,1800686,17079299,,
 58120,1801437,17043108,,
-58121,,17043108,,
-58122,,17043002,,
-58123,,17043002,,
-58124,,17043002,,
 58125,,,,
 58126,,17042020,,
 58127,1804707,17041986,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1172,8 +1056,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58133,1804855,17042252,SN,matched to nearest modelled crossing within 15m (instream)
 58134,,,,
 58135,1804853,17042207,SN,matched to nearest modelled crossing within 15m (instream)
-58136,,17042051,,
-58137,,17042020,,
 58138,1801547,17042020,,
 58139,1801431,17041997,SN,matched to nearest modelled crossing within 15m (instream)
 58140,1804750,17044305,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1186,7 +1068,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58147,1801473,17037223,,
 58148,1801596,17036635,SN,matched to nearest modelled crossing within 15m (instream)
 58149,1804639,17036845,,
-58150,,17029663,,
 58151,1802775,17048346,,
 58152,1800283,17049074,,
 58153,1801406,17049072,,
@@ -1203,8 +1084,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58164,1804206,17052341,SN,matched to nearest modelled crossing within 15m (instream)
 58180,1803363,17032461,SN,matched to nearest modelled crossing within 15m (instream)
 58181,1803364,17032382,,
-58182,,17031801,,
-58183,,17030425,,
 58184,1802354,17031309,,
 58185,1803909,17031801,,
 58186,1802214,17031309,,
@@ -1213,7 +1092,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58189,1803333,17031309,,
 58190,1805265,17030500,SN,matched to nearest modelled crossing within 15m (instream)
 58191,1804041,17029663,,
-58192,,17028915,,
 58193,1803782,17029674,,
 58194,1803783,17029672,SN,matched to nearest modelled crossing within 15m (instream)
 58195,1802296,17029474,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1221,11 +1099,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58197,1802198,17029474,,
 58198,1802356,17031180,SN,matched to nearest modelled crossing within 15m (instream)
 58199,1802355,17031180,,
-58200,,17031180,,
 58201,1803244,17036238,,
 58202,1801634,17036308,,
 58203,1803238,17036210,SN,matched to nearest modelled crossing within 15m (instream)
-58204,,17036210,,
 58205,1803180,17033525,,
 58206,1801630,17034322,,
 58207,1801632,17034320,,
@@ -1248,7 +1124,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58224,1805227,17031319,,
 58225,1803208,17034365,,
 58226,1803210,17034376,SN,matched to nearest modelled crossing within 15m (instream)
-58227,,17034705,,
 58228,1801569,17034251,,
 58229,1803183,17032148,,
 58230,1802261,17031869,,
@@ -1256,11 +1131,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58232,1804392,17032603,,
 58233,1804387,17032438,,
 58234,1800007,17040630,,
-58235,,17042067,,
 58236,1802938,17042067,,
 58237,1800832,17042139,,
 58238,1802971,17041933,SN,matched to nearest modelled crossing within 15m (instream)
-58239,,17041933,,
 58240,,,,
 58241,1800644,17042212,,
 58242,1802965,17042235,,
@@ -1276,10 +1149,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58252,1800740,17040719,,
 58253,1801494,17040721,,
 58254,1800734,17040699,,
-58255,,17040699,,
 58256,1800139,17040399,,
-58257,,17040841,,
-58258,,17042170,,
 58259,1802702,17079662,,
 58260,1800012,17041305,SN,matched to nearest modelled crossing within 15m (instream)
 58261,1800010,17041427,,
@@ -1292,12 +1162,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58268,1801517,17041638,,
 58269,1802930,17041679,,
 58270,1801504,17041640,,
-58271,1802927,17041640,,
-58272,1802937,17042557,,
-58273,1804391,17032247,,
-58274,,17031746,,
 58275,1804389,17031140,SN,matched to nearest modelled crossing within 15m (instream)
-58276,,17031450,,
 58277,1806021,17031448,,
 58278,,17031448,,
 58279,1806019,17031957,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1317,7 +1182,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58293,1800015,17042371,,
 58294,1802976,17042233,,
 58295,1803715,17035258,,
-58296,,17035070,,
 58297,1804149,17035070,SN,matched to nearest modelled crossing within 15m (instream)
 58298,1805197,17034646,,
 58299,1805234,17034648,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1333,7 +1197,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58309,1805230,17032271,,
 58310,1805214,17031414,SN,matched to nearest modelled crossing within 15m (instream)
 58311,1805204,17031380,,
-58312,,17031317,,
 58313,1805238,17031671,,
 58314,,17032152,,
 58315,24704543,17031954,,
@@ -1346,9 +1209,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58322,1801538,17041900,SN,matched to nearest modelled crossing within 15m (instream)
 58323,1801538,17041900,SN,matched to nearest modelled crossing within 15m (instream)
 58324,24703644,17036417,,
-58325,,17030498,,
 58326,1804860,17030873,,
-58327,,17030932,,
 58328,1805236,17032359,SN,matched to nearest modelled crossing within 15m (instream)
 58329,1805235,17032388,SN,matched to nearest modelled crossing within 15m (instream)
 58330,1805231,17033304,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1365,10 +1226,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58341,,,,
 58342,1803222,17038630,,
 58343,,17038874,,
-58344,,17038600,,
 58345,,17038874,,
 58346,,,,
-58347,,17029663,,
 58348,,,,
 58349,,17084892,,
 58350,1800495,17084892,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1379,7 +1238,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58355,,,,
 58356,1801029,17030660,,
 58357,1801030,17030660,,
-58358,,17033152,,
 58359,24703642,17041186,SN,matched to nearest modelled crossing within 15m (instream)
 58360,1802901,17040312,,
 58361,1802873,17040298,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1389,7 +1247,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 58365,1800337,17040010,SN,matched to nearest modelled crossing within 15m (instream)
 58366,1800118,17040838,,
 58367,,17040724,,
-58368,,17040657,,
 58369,1802904,17040253,,
 58370,1802897,17040289,,
 60427,24706658,706813796,,
@@ -1401,8 +1258,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 61239,4607599,706832508,,
 61240,4606524,706832615,,
 61486,,,,
-61487,,706845647,,
-61488,,706846099,,
 61489,4600201,706846031,,
 61491,4600242,706843055,,
 61492,4600204,706844601,,
@@ -1412,13 +1267,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 61496,24706538,706845693,,
 61497,24706508,706843656,,
 61498,4600229,706844603,,
-61499,,706844157,,
 61500,24706496,706844018,,
-61501,,706843771,,
-61502,,706843896,,
 61503,24706513,706843773,,
 61504,24706507,706844196,,
-61505,,706843896,,
 61513,4600215,706821389,,
 61514,,706821389,,
 61515,4605253,706822234,,
@@ -1436,7 +1287,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 61527,4605740,706823394,SN,matched to nearest modelled crossing within 15m (instream)
 61528,,706822185,,
 61529,,706822185,,
-61530,,706822537,,
 61531,4605820,706822486,,
 61602,4605384,706818444,,
 61603,4605390,706818444,,
@@ -1491,13 +1341,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62134,24706669,706849813,,
 62135,24706670,706851885,,
 62136,4602570,706850604,,
-62137,,706850191,,
 62138,4601677,706849279,,
-62139,,706849343,,
 62140,4602558,706849388,,
 62141,,,,
 62142,,706849632,,
-62143,,706849388,,
 62144,4602579,706849632,SN,matched to nearest modelled crossing within 15m (instream)
 62145,4605746,706849388,,
 62146,4606489,706849738,,
@@ -1524,12 +1371,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62168,4600222,706820417,,
 62169,4600219,706820054,,
 62170,4602267,706828052,,
-62172,,706826079,,
 62173,24706506,706828743,,
 62174,,,,
 62175,,,,
-62176,,706821626,,
-62177,,706821626,,
 62178,,,,
 62179,,,,
 62180,4600217,706821019,,
@@ -1608,7 +1452,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62287,4605699,706804051,,
 62288,4605726,706804067,,
 62289,4600065,706805015,,
-62290,,706806138,,
 62291,4605718,706807884,,
 62292,4605319,706807352,,
 62293,4605322,706807848,,
@@ -1626,7 +1469,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62305,,,,
 62306,,,,
 62307,4605317,706808097,,
-62408,,706822195,,
 62409,,,,
 62410,4603096,706822500,SN,matched to nearest modelled crossing within 15m (instream)
 62411,4603085,706822500,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1636,7 +1478,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62415,4603002,706823009,,
 62416,4600504,706823561,,
 62417,4602963,706823105,,
-62418,,706823947,,
 62419,24707142,706829918,,
 62420,,706829680,,
 62421,4602266,706830097,,
@@ -1649,7 +1490,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62428,4606417,706829220,SN,matched to nearest modelled crossing within 15m (instream)
 62429,,706829220,,
 62430,4601164,706828975,,
-62431,,706829443,,
 62432,,706830380,,
 62433,4602294,706830626,,
 62434,4601140,706830815,,
@@ -1665,12 +1505,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62490,,,,
 62491,4607006,706839561,SN,matched to nearest modelled crossing within 15m (instream)
 62492,,,,
-62493,,706827144,,
 62494,4602536,706828805,SN,matched to nearest modelled crossing within 15m (instream)
 62495,,706828916,,
 62496,4602535,706828916,,
-62497,,706828468,,
-62498,,706827375,,
 62499,4601150,706828203,,
 62500,,,,
 62501,4605593,706827787,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1694,8 +1531,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62522,,,,
 62523,4600635,706844504,,
 102964,4600959,706838077,,
-102966,,706837762,,
-102967,4600357,706839455,,
 102968,4604259,706837948,,
 102970,4600617,706838257,,
 102971,4604230,706838255,,
@@ -1703,9 +1538,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 102974,24706514,706838079,SN,matched to nearest modelled crossing within 15m (instream)
 102977,,,,
 102978,4601481,706834995,,
-102980,,706836069,,
 102984,,,,
-102986,,706837110,,
 102987,,,,
 102988,,,,
 102989,,706835685,,
@@ -1716,7 +1549,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 102994,4601385,706836418,SN,matched to nearest modelled crossing within 15m (instream)
 102996,,706834784,,
 102997,4600817,706843262,,
-102998,,706834584,,
 102999,,,,
 103000,,,,
 103001,4600122,706839904,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1747,7 +1579,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 103042,4600716,706847242,,
 103043,4600717,706847491,,
 103044,4606236,706847185,,
-103045,,,,
 103047,4602328,706848664,,
 103050,4605366,706851117,,
 103051,4600773,706851528,,
@@ -1786,8 +1617,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 112343,4605611,706833321,,
 112344,4605614,706833323,,
 112345,4605611,706833321,SN,matched to nearest modelled crossing within 15m (instream)
-112346,,706833323,,
-112347,,706833321,,
 112348,,706833321,,
 112349,,,,
 112350,,,,
@@ -1797,16 +1626,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123224,,,,
 123340,1804471,17084167,,
 123341,1804472,17082605,,
-123342,,17087838,,
-123343,,17091359,,
 123344,1804433,17091447,SN,matched to nearest modelled crossing within 15m (instream)
 123345,1803822,17091024,,
 123346,1803824,17082230,,
 123347,1805826,17079662,,
-123348,,17075610,,
 123349,1802477,17075378,SN,matched to nearest modelled crossing within 15m (instream)
-123350,,17075378,,
-123351,,17075299,,
 123352,1806002,17075299,SN,matched to nearest modelled crossing within 15m (instream)
 123353,1802446,17072634,SN,matched to nearest modelled crossing within 15m (instream)
 123354,1801917,17072634,,
@@ -1821,8 +1645,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123363,1802260,17067648,,
 123364,,17067648,,
 123365,1800262,17065028,,
-123366,,17065028,,
-123367,,17063992,,
 123368,,17064215,,
 123369,,17060784,,
 123370,,17060798,,
@@ -1859,7 +1681,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123402,,17052391,,
 123403,,17052391,,
 123404,,,,
-123405,,17051115,,
 123406,1801388,17051087,SN,matched to nearest modelled crossing within 15m (instream)
 123407,1805117,17052104,SN,matched to nearest modelled crossing within 15m (instream)
 123408,1805119,17052036,,
@@ -1882,8 +1703,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123425,1801266,17053835,,
 123426,1800106,17053701,,
 123427,1800276,17049955,,
-123428,,17049667,,
-123429,,17050383,,
 123430,1802834,17049630,,
 123431,1800107,17052166,SN,matched to nearest modelled crossing within 15m (instream)
 123433,1801392,17051669,,
@@ -1913,7 +1732,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123458,1802515,17044966,,
 123459,1802769,17044966,,
 123460,,17045120,,
-123461,,17045120,,
 123462,1802826,17045120,SN,matched to nearest modelled crossing within 15m (instream)
 123463,1800286,17045980,,
 123464,1802959,17044378,,
@@ -1951,7 +1769,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123511,1801362,17052096,,
 123512,1800669,17052511,,
 123513,1800669,17052511,SN,matched to nearest modelled crossing within 15m (instream)
-123514,,17052498,,
 123515,1801306,17052498,,
 123516,1802431,17053338,SN,matched to nearest modelled crossing within 15m (instream)
 123517,1801317,17053338,,
@@ -1966,7 +1783,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123526,24703765,17057853,SN,matched to nearest modelled crossing within 15m (instream)
 123527,1804228,17056341,,
 123528,1804018,17056341,SN,matched to nearest modelled crossing within 15m (instream)
-123529,,17048390,,
 123530,1805364,17048390,SN,matched to nearest modelled crossing within 15m (instream)
 123531,,17048095,,
 123532,1805367,17048091,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2007,19 +1823,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123569,1803950,17044236,SN,matched to nearest modelled crossing within 15m (instream)
 123570,1803951,17044316,SN,matched to nearest modelled crossing within 15m (instream)
 123571,1800974,17045018,SN,matched to nearest modelled crossing within 15m (instream)
-123572,,17045018,,
 123573,,,,
 123574,1805414,17044236,,
 123575,1804039,17044316,SN,matched to nearest modelled crossing within 15m (instream)
 123576,,,,
-123577,,17044316,,
 123578,24704258,17044663,SN,matched to nearest modelled crossing within 15m (instream)
 123579,,,,
-123580,,17044829,,
 123581,,17051575,,
 123582,1805633,17052318,SN,matched to nearest modelled crossing within 15m (instream)
 123583,1801332,17053701,,
-123584,,17069252,,
 123585,1804233,17054574,SN,matched to nearest modelled crossing within 15m (instream)
 123586,1804320,17052817,SN,matched to nearest modelled crossing within 15m (instream)
 123587,1804322,17052996,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2031,7 +1843,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123593,1806238,17055100,SN,matched to nearest modelled crossing within 15m (instream)
 123594,1800900,17054777,SN,matched to nearest modelled crossing within 15m (instream)
 123595,1804961,17055100,SN,matched to nearest modelled crossing within 15m (instream)
-123596,,17053669,,
 123597,1801984,17053671,SN,matched to nearest modelled crossing within 15m (instream)
 123598,1804682,17053669,SN,matched to nearest modelled crossing within 15m (instream)
 123599,,17055100,,
@@ -2039,13 +1850,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123621,,17070585,,
 123622,1802478,17067668,,
 123623,,,,
-123624,,17067172,,
 123625,1802447,17065353,,
 123626,,,,
 123627,1803742,17058474,SN,matched to nearest modelled crossing within 15m (instream)
 123628,1803748,17058853,,
 123629,1803743,17057227,SN,matched to nearest modelled crossing within 15m (instream)
 123630,1803745,17058853,,
+124216,,17043070,,
 123631,1805783,17058474,,
 123632,1804906,17059071,,
 123633,1802455,17053807,,
@@ -2069,15 +1880,12 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123653,,,,
 123654,1802307,17074183,SN,matched to nearest modelled crossing within 15m (instream)
 123655,1802421,17074497,,
-123656,,17074495,,
 123657,,17074579,,
-123660,,17041816,,
 123661,1801421,17042286,SN,matched to nearest modelled crossing within 15m (instream)
 123662,1800395,17042293,SN,matched to nearest modelled crossing within 15m (instream)
 123663,1800394,17042563,,
 123664,1800393,17042692,SN,matched to nearest modelled crossing within 15m (instream)
 123665,,,,
-123666,,17043034,,
 123667,1800672,17043139,,
 123668,1800391,17043139,SN,matched to nearest modelled crossing within 15m (instream)
 123669,,17043327,,
@@ -2121,7 +1929,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123707,1800335,17040728,,
 123708,1801512,17040250,SN,matched to nearest modelled crossing within 15m (instream)
 123709,1802898,17039855,,
-123710,,17039855,,
 123711,,17040129,,
 123712,,17067046,,
 123713,1801516,17040714,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2154,18 +1961,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123740,1800344,17034123,SN,matched to nearest modelled crossing within 15m (instream)
 123741,,,,
 123742,1804426,17033049,,
-123743,,17034147,,
 123744,1803187,17034945,,
 123745,,,,
 123746,1805371,17046116,,
-123747,,17046308,,
 123760,1802768,17045102,,
 123761,1802840,17044654,SN,matched to nearest modelled crossing within 15m (instream)
 123762,1805216,17036256,SN,matched to nearest modelled crossing within 15m (instream)
 123763,1805220,17035742,,
 123764,1805232,17035756,,
 123765,1805219,17035439,SN,matched to nearest modelled crossing within 15m (instream)
-123766,,17035450,,
 123767,,,,
 123768,1805229,17035268,,
 123769,1805229,17035216,,
@@ -2183,8 +1987,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123781,24700233,17027660,,
 123782,1805745,17022714,,
 123783,24703954,17022610,,
-123784,,17022610,,
 123785,1802297,17023192,,
+124062,6801507,701437586,,
+125976,,,,
 123786,1804665,17024247,SN,matched to nearest modelled crossing within 15m (instream)
 123787,1804666,17024486,,
 123788,1802406,17023924,,
@@ -2194,49 +1999,41 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123792,,17024957,,
 123793,1802194,17024957,,
 123794,1802384,17023990,,
-123795,,17023775,,
 123796,1801872,17023775,SN,matched to nearest modelled crossing within 15m (instream)
 123797,1804786,17023369,,
 123798,1804497,17024120,,
 123799,1806056,17024214,,
 123800,1804975,17025111,SN,matched to nearest modelled crossing within 15m (instream)
-123801,,17022668,,
 123802,24703646,17022343,,
 123803,1800385,17021663,,
 123804,1800815,17021109,SN,matched to nearest modelled crossing within 15m (instream)
 123805,1800376,17024297,,
 123806,1800723,17075299,,
 123820,6801641,701411346,,
-123821,,701411348,,
 123822,6802384,701414624,SN,matched to nearest modelled crossing within 15m (instream)
 123823,6800237,701414624,,
 123824,6801520,701414682,SN,matched to nearest modelled crossing within 15m (instream)
 123825,,701414725,,
 123826,,701429016,,
-123827,,701432074,,
 123828,,,,
 123829,,701432074,,
 123830,6800473,701432835,,
 123831,6800470,701433593,SN,matched to nearest modelled crossing within 15m (instream)
-123832,,701432812,,
 123833,6800472,701434725,SN,matched to nearest modelled crossing within 15m (instream)
 123834,6801380,701437387,,
 123835,6801506,701428777,,
 123836,6800476,701429489,,
-123837,,701430260,,
 123838,6800468,701431352,,
 123839,6800478,701435324,SN,matched to nearest modelled crossing within 15m (instream)
 123840,6800469,701435324,,
 123841,,,,
 123842,6801436,701429380,SN,matched to nearest modelled crossing within 15m (instream)
 123843,6801433,701429661,SN,matched to nearest modelled crossing within 15m (instream)
-123844,,701429661,,
 123845,6801661,701430254,,
 123846,6800479,701430254,,
 123847,6801437,701430934,,
 123848,6800486,701431005,,
 123849,6801772,701430934,,
-123850,,701428268,,
 123851,6800585,701427071,,
 123852,6800593,701424331,SN,matched to nearest modelled crossing within 15m (instream)
 123853,6801511,701402006,,
@@ -2256,7 +2053,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123880,,,,
 123881,6802195,701404841,,
 123882,6801183,701404757,SN,matched to nearest modelled crossing within 15m (instream)
-123883,,701404582,,
 123884,6801425,701403770,SN,matched to nearest modelled crossing within 15m (instream)
 123885,6801457,701403770,SN,matched to nearest modelled crossing within 15m (instream)
 123886,6801424,701404059,,
@@ -2268,13 +2064,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123892,6801155,701402410,,
 123893,,,,
 123894,,701403195,,
-123895,,701403146,,
 123896,6801099,701404168,,
-123897,,701403312,,
 123898,6801098,701404371,SN,matched to nearest modelled crossing within 15m (instream)
 123899,6800351,701403735,,
 123900,6800350,701403831,,
-123901,,701404168,,
 123902,6802230,701409223,,
 123903,,701409223,,
 123904,6801360,701409223,,
@@ -2307,21 +2100,16 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123931,6801176,701436184,,
 123932,,,,
 123933,,,,
-123934,,701433492,,
 123935,,701439674,,
 123936,6800458,701439674,SN,matched to nearest modelled crossing within 15m (instream)
 123937,6800485,701439186,,
 123938,,701438651,,
 123939,,,,
-123940,,701435745,,
 123941,6802158,701436552,,
 123942,,,,
-123943,,701435745,,
 123944,6801886,701414494,,
 123945,6801882,701414202,SN,matched to nearest modelled crossing within 15m (instream)
-123946,,701414198,,
 123947,,701414198,,
-123948,,701413605,,
 123949,6801879,701413375,SN,matched to nearest modelled crossing within 15m (instream)
 123950,6801881,701412696,,
 123951,,701411942,,
@@ -2331,15 +2119,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 123955,6801939,701410285,,
 123958,6800886,701410366,SN,matched to nearest modelled crossing within 15m (instream)
 124060,6802102,701433398,SN,matched to nearest modelled crossing within 15m (instream)
-124061,,701437586,,
-124062,6801507,701437586,,
 124063,6801852,701436118,SN,matched to nearest modelled crossing within 15m (instream)
 124064,6801901,701433681,SN,matched to nearest modelled crossing within 15m (instream)
 124065,6801854,701432732,,
 124066,6801578,701433276,,
 124067,6801846,701433200,SN,matched to nearest modelled crossing within 15m (instream)
-124068,,701433388,,
-124069,,701432605,,
 124070,6801853,701433865,,
 124071,6801853,701433865,SN,matched to nearest modelled crossing within 15m (instream)
 124072,6801851,701434714,,
@@ -2357,8 +2141,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124084,6801592,701435924,,
 124085,,,,
 124086,,,,
-124087,,701436975,,
-124088,,701436975,,
 124089,,701437908,,
 124090,,701438289,,
 124091,6802155,701438223,,
@@ -2377,19 +2159,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124105,,,,
 124106,6802139,701439132,,
 124107,,701439132,,
-124108,,701439084,,
 124109,6800160,701438565,,
 124110,,,,
-124111,,701440761,,
 124112,,,,
 124113,6801385,701440512,,
 124114,6800365,701440465,,
 124115,,,,
-124116,,701438815,,
 124120,6801752,701428464,,
 124121,6801747,701429179,SN,matched to nearest modelled crossing within 15m (instream)
 124122,6801746,701429648,SN,matched to nearest modelled crossing within 15m (instream)
-124123,,701430157,,
 124124,6801749,701430491,,
 124125,6801751,701430898,,
 124126,6801900,701432580,,
@@ -2399,7 +2177,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124130,6802169,701430508,SN,matched to nearest modelled crossing within 15m (instream)
 124131,,701430130,,
 124132,6802174,701427126,,
-124133,,701433893,,
 124134,6800385,701433893,SN,matched to nearest modelled crossing within 15m (instream)
 124135,6800375,701438409,,
 124136,24708524,701433970,,
@@ -2410,7 +2187,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124141,6800004,701431764,SN,matched to nearest modelled crossing within 15m (instream)
 124142,,,,
 124143,6800198,701427346,,
-124144,,701424826,,
 124145,6800186,701423483,,
 124146,6802034,701430828,,
 124147,6801739,701429527,,
@@ -2445,7 +2221,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124181,,,,
 124182,,,,
 124183,1801668,17028250,,
-124184,,17028248,,
 124185,1801667,17028248,,
 124186,,,,
 124187,,,,
@@ -2468,16 +2243,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124204,,17022267,,
 124205,1804527,17021485,SN,matched to nearest modelled crossing within 15m (instream)
 124206,,,,
-124207,,17021682,,
 124208,1804525,17021682,,
 124209,1806007,17021769,,
 124210,,,,
 124211,1801866,17021914,,
 124212,,,,
 124213,1803759,17033109,SN,matched to nearest modelled crossing within 15m (instream)
-124214,,17032582,,
 124215,1802302,17043247,,
-124216,,17043070,,
 124217,1802301,17043073,,
 124218,1802303,17043206,,
 124219,1803281,17042563,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2504,21 +2276,16 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124250,6800313,701410318,,
 124251,6800059,701410775,,
 124252,6800213,701410775,,
-124253,,701411598,,
 124254,6800204,701411598,SN,matched to nearest modelled crossing within 15m (instream)
 124255,24708519,701411008,,
 124256,6800022,701414459,,
 124257,6800065,701401908,SN,matched to nearest modelled crossing within 15m (instream)
-124258,,701402608,,
-124259,,701403167,,
 124260,6801190,701403540,,
 124261,6800166,701403540,,
 124262,6800167,701402608,,
 124263,6800052,701405025,,
 124264,6800051,701407455,,
-124265,,701408566,,
 124266,,,,
-124267,,701408837,,
 124268,6800048,701411073,,
 124269,6800203,701412287,,
 124270,6800543,701420245,,
@@ -2532,7 +2299,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124278,6800047,701412899,,
 124280,1806243,17051298,SN,matched to nearest modelled crossing within 15m (instream)
 124281,1806241,17051425,SN,matched to nearest modelled crossing within 15m (instream)
-124282,,17051427,,
 124283,1806280,17051764,SN,matched to nearest modelled crossing within 15m (instream)
 124284,1800957,17050843,SN,matched to nearest modelled crossing within 15m (instream)
 124285,1800903,17051764,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2552,13 +2318,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124306,6800655,701416180,SN,matched to nearest modelled crossing within 15m (instream)
 124307,6802209,701423016,,
 124309,6802249,701422860,SN,matched to nearest modelled crossing within 15m (instream)
-124310,,701423126,,
 124311,6802246,701424526,SN,matched to nearest modelled crossing within 15m (instream)
 124312,6802248,701424051,,
-124320,,701429264,,
 124321,,,,
 124322,,701427595,,
-124323,,701428431,,
 124324,,701425967,,
 124325,,,,
 124326,6800987,701409758,,
@@ -2574,11 +2337,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124336,,701411053,,
 124337,,701411053,,
 124338,6801429,701412509,,
-124339,,701412763,,
 124340,6802315,701412551,,
 124341,6801817,701412763,,
 124342,,,,
-124343,,701406492,,
 124345,6800993,701406964,,
 124346,6800917,701408219,,
 124347,,701408467,,
@@ -2595,7 +2356,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124359,,,,
 124360,6801093,701403809,,
 124361,6801480,701402410,,
-124362,,701439844,,
 124363,,,,
 124364,,701434042,,
 124365,6800380,701434457,,
@@ -2604,13 +2364,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124368,6800280,701440148,,
 124369,,,,
 124370,6800279,701439236,,
-124371,,701440177,,
 124372,,,,
 124373,6800343,701440186,,
 124374,6800361,701440432,,
 124375,6800355,701440458,,
 124376,6800354,701440458,,
-124377,,701440432,,
 124378,,701440432,,
 124379,,,,
 124380,6801073,701405405,,
@@ -2626,12 +2384,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124390,,701405405,,
 124400,6800668,701416159,SN,matched to nearest modelled crossing within 15m (instream)
 124401,,701413560,,
-124420,,17011494,,
 124421,1800036,17011654,SN,matched to nearest modelled crossing within 15m (instream)
 124422,1800132,17011654,SN,matched to nearest modelled crossing within 15m (instream)
-124423,,17011654,,
 124424,1805487,17011654,SN,matched to nearest modelled crossing within 15m (instream)
-124425,,17010657,,
 124426,,,,
 124427,1800128,17010595,,
 124428,1800039,17010595,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2657,7 +2412,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124449,1800415,17014835,,
 124450,1802668,17014376,,
 124451,1800381,17017507,,
-124452,,17011539,,
 124453,1800127,17011539,,
 124454,1800571,17011159,,
 124455,1803325,17011159,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2710,7 +2464,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 124503,1803402,17059149,SN,matched to nearest modelled crossing within 15m (instream)
 124504,1803401,17059489,SN,matched to nearest modelled crossing within 15m (instream)
 124505,1802518,17056927,,
-124506,,17058070,,
 124507,1806006,17059093,SN,matched to nearest modelled crossing within 15m (instream)
 124508,1800101,17062204,,
 124509,1800277,17049720,,
@@ -2731,9 +2484,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 125910,6800733,701409750,,
 125911,6800734,701409598,SN,matched to nearest modelled crossing within 15m (instream)
 125912,,701408716,,
-125913,,701409598,,
 125914,,,,
-125915,,701409598,,
 125916,,,,
 125917,,,,
 125918,6800732,701412036,,
@@ -2741,8 +2492,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 125920,6800739,701412407,SN,matched to nearest modelled crossing within 15m (instream)
 125921,6801105,701399028,SN,matched to nearest modelled crossing within 15m (instream)
 125922,6801108,701402129,SN,matched to nearest modelled crossing within 15m (instream)
-125923,,701402349,,
-125924,,701405877,,
 125925,,,,
 125926,,701440514,,
 125927,,,,
@@ -2761,7 +2510,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 125940,6802291,701434046,SN,matched to nearest modelled crossing within 15m (instream)
 125941,,,,
 125942,6801959,701436165,,
-125943,,701436127,,
 125944,,,,
 125945,6802321,701434217,,
 125946,6801958,701435465,,
@@ -2769,22 +2517,17 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 125948,6801957,701435675,,
 125949,6801678,701436235,,
 125960,6800157,701402912,SN,matched to nearest modelled crossing within 15m (instream)
-125961,,701407175,,
 125962,6801244,701431095,,
-125963,,701431095,,
 125964,6801694,701431095,SN,matched to nearest modelled crossing within 15m (instream)
-125965,,701431095,,
 125966,,,,
 125967,6802162,701438014,,
 125968,,,,
 125969,,,,
-125970,,701438228,,
 125971,,,,
 125972,6800420,701438576,SN,matched to nearest modelled crossing within 15m (instream)
 125973,6802147,701438576,SN,matched to nearest modelled crossing within 15m (instream)
 125974,,701438122,,
 125975,6802152,701438705,,
-125976,,,,
 125977,6802105,701438705,,
 125978,,,,
 125979,6801631,701437488,,
@@ -2795,7 +2538,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 125984,6802318,701431270,,
 125985,6801920,701431169,SN,matched to nearest modelled crossing within 15m (instream)
 125986,6801697,701431169,,
-125987,,701431169,,
 125988,6801469,701434837,SN,matched to nearest modelled crossing within 15m (instream)
 125989,,701434837,,
 125990,6802201,701432415,,
@@ -2810,9 +2552,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 125999,6800426,701430085,,
 126000,6801361,701430085,SN,matched to nearest modelled crossing within 15m (instream)
 126001,6801363,701429762,,
-126002,,701429762,,
-126003,,701430328,,
-126004,,701430328,,
 126005,6802316,701430328,,
 126006,6802317,701430328,,
 126007,6802320,701430210,,
@@ -2820,7 +2559,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126009,,,,
 126010,6801351,701427952,,
 126011,,701427952,,
-126012,,701426619,,
 126013,6802085,701426621,SN,matched to nearest modelled crossing within 15m (instream)
 126014,6802083,701425004,,
 126015,6802342,701429531,,
@@ -2844,7 +2582,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126405,6802319,701430207,,
 126406,6802020,701432173,SN,matched to nearest modelled crossing within 15m (instream)
 126407,6802206,701426621,,
-126408,,701426619,,
 126409,,701424099,,
 126410,6802082,701424097,,
 126411,,701424340,,
@@ -2861,7 +2598,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126422,6801438,701427559,,
 126423,6801391,701428148,SN,matched to nearest modelled crossing within 15m (instream)
 126424,,,,
-126425,,701426385,,
 126426,6801297,701430004,,
 126427,6800395,701430693,,
 126428,6800398,701432918,,
@@ -2875,7 +2611,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126436,,701423462,,
 126437,,701424743,,
 126438,6800525,701419325,SN,matched to nearest modelled crossing within 15m (instream)
-126439,,701420339,,
 126440,6800521,701419936,,
 126441,6800528,701420425,,
 126442,6800522,701419516,,
@@ -2889,7 +2624,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126450,6802218,701420371,,
 126451,6802219,701420339,,
 126452,6802221,701420425,,
-126453,,701421327,,
 126454,6802217,701421745,,
 126455,,701424743,,
 126456,,701423462,,
@@ -2905,7 +2639,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126466,6801254,701426215,SN,matched to nearest modelled crossing within 15m (instream)
 126467,,701425874,,
 126468,,,,
-126469,,701427771,,
 126471,,701423420,,
 126472,,701423366,,
 126473,,,,
@@ -2925,7 +2658,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126502,6801917,701429228,,
 126503,6801915,701428866,,
 126504,6801916,701428866,,
-126505,,701428866,,
 126506,,,,
 126507,6802112,701428464,SN,matched to nearest modelled crossing within 15m (instream)
 126508,6800008,701414005,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2946,15 +2678,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126523,6802037,701402866,SN,matched to nearest modelled crossing within 15m (instream)
 126524,6801754,701403623,SN,matched to nearest modelled crossing within 15m (instream)
 126525,6801769,701404734,,
-126526,,701406901,,
-126527,,701405244,,
 126528,6802081,701404843,,
 126529,6802080,701403700,,
 126530,6801768,701403357,,
-126531,,701400276,,
 126532,6802229,701399912,SN,matched to nearest modelled crossing within 15m (instream)
-126533,,701400333,,
-126534,,701399714,,
 126535,6801508,701399460,,
 126536,6800069,701406612,,
 126537,6800332,701406612,,
@@ -2966,7 +2693,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 126560,6802181,701403676,,
 126561,6801742,701403676,SN,matched to nearest modelled crossing within 15m (instream)
 126562,6801778,701402422,SN,matched to nearest modelled crossing within 15m (instream)
-126563,,701401639,,
 126564,6802135,701402189,SN,matched to nearest modelled crossing within 15m (instream)
 126565,6801991,701402346,SN,matched to nearest modelled crossing within 15m (instream)
 126566,6802122,701409416,,
@@ -3036,24 +2762,19 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195244,1800960,17055657,SN,matched to nearest modelled crossing within 15m (instream)
 195245,,,,
 195246,,,,
-195247,,17044173,,
 195248,,,,
 195249,24703745,17044162,,
 195250,1805766,17043945,,
 195251,,17075418,,
 195252,1802318,17076707,,
 195253,1803518,17074295,SN,matched to nearest modelled crossing within 15m (instream)
-195255,,17072672,,
-195256,,17072516,,
 195259,1804160,17073415,,
 195261,1806031,17059595,SN,matched to nearest modelled crossing within 15m (instream)
 195262,1805719,17058080,SN,matched to nearest modelled crossing within 15m (instream)
-195263,,17053046,,
 195264,1805338,17056872,,
 195265,1805352,17052948,,
 195266,1805161,17056915,,
 195267,,17056872,,
-195268,,17055378,,
 195269,1806029,17055471,SN,matched to nearest modelled crossing within 15m (instream)
 195270,1805331,17053342,,
 195271,,,,
@@ -3080,10 +2801,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195293,1802818,17058599,,
 195294,1802831,17055608,,
 195295,24704499,17057325,,
-195296,,17046008,,
 195297,1802347,17046226,SN,matched to nearest modelled crossing within 15m (instream)
-195298,,17046016,,
-195299,,17046016,,
 195300,,17045462,,
 195301,1804089,17046016,,
 195302,1805354,17053180,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3094,9 +2812,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195324,1801957,17051806,SN,matched to nearest modelled crossing within 15m (instream)
 195325,1803877,17049488,SN,matched to nearest modelled crossing within 15m (instream)
 195326,1804667,17049162,,
-195327,,17049162,,
 195328,1803874,17049164,SN,matched to nearest modelled crossing within 15m (instream)
-195329,,17048937,,
 195330,1804963,17046095,,
 195331,1803882,17048874,SN,matched to nearest modelled crossing within 15m (instream)
 195332,1800647,17016719,,
@@ -3110,7 +2826,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195341,1801929,17062171,SN,matched to nearest modelled crossing within 15m (instream)
 195342,,17063981,,
 195343,1801932,17062727,SN,matched to nearest modelled crossing within 15m (instream)
-195344,,17062171,,
 195345,1806069,17061047,SN,matched to nearest modelled crossing within 15m (instream)
 195346,1800908,17058902,SN,matched to nearest modelled crossing within 15m (instream)
 195347,1800907,17059075,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3119,7 +2834,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195350,1805375,17061236,SN,matched to nearest modelled crossing within 15m (instream)
 195351,1804641,17061236,SN,matched to nearest modelled crossing within 15m (instream)
 195352,1805796,17062446,SN,matched to nearest modelled crossing within 15m (instream)
-195353,,17062599,,
 195354,1805777,17062485,SN,matched to nearest modelled crossing within 15m (instream)
 195355,1805427,17056230,SN,matched to nearest modelled crossing within 15m (instream)
 195356,1805428,17056752,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3127,10 +2841,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195359,1800953,17058214,,
 195360,1800951,17057913,SN,matched to nearest modelled crossing within 15m (instream)
 195361,1801985,17057913,SN,matched to nearest modelled crossing within 15m (instream)
-195362,,17057755,,
 195363,1804375,17057913,SN,matched to nearest modelled crossing within 15m (instream)
 195364,1804379,17055614,SN,matched to nearest modelled crossing within 15m (instream)
-195365,,17059358,,
 195366,1800940,17058534,SN,matched to nearest modelled crossing within 15m (instream)
 195367,1805771,17058180,SN,matched to nearest modelled crossing within 15m (instream)
 195368,1804676,17058975,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3154,7 +2866,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195386,1804454,17049293,SN,matched to nearest modelled crossing within 15m (instream)
 195387,1806248,17047024,SN,matched to nearest modelled crossing within 15m (instream)
 195388,1803597,17045578,SN,matched to nearest modelled crossing within 15m (instream)
-195389,,17045773,,
 195390,1803832,17045578,SN,matched to nearest modelled crossing within 15m (instream)
 195391,1803831,17045773,,
 195392,1803671,17046371,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3170,8 +2881,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195402,1804314,17046606,SN,matched to nearest modelled crossing within 15m (instream)
 195403,,17046930,,
 195404,1804946,17049011,SN,matched to nearest modelled crossing within 15m (instream)
-195405,,17048817,,
 195406,,17049011,,
+196941,11305593,701792385,,
 195407,1804758,17048817,SN,matched to nearest modelled crossing within 15m (instream)
 195408,1806247,17048486,SN,matched to nearest modelled crossing within 15m (instream)
 195409,1806249,17048145,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3181,7 +2892,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195413,1805252,17046379,SN,matched to nearest modelled crossing within 15m (instream)
 195420,1803792,17065316,,
 195421,1806078,17062281,,
-195422,,17061611,,
 195423,1803613,17061388,SN,matched to nearest modelled crossing within 15m (instream)
 195424,1804410,17059988,SN,matched to nearest modelled crossing within 15m (instream)
 195425,1804397,17057387,,
@@ -3220,7 +2930,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195458,1805757,17050997,,
 195459,1802426,17057284,,
 195460,1802428,17057307,,
-195461,,17056125,,
 195462,1801260,17056188,,
 195463,1801310,17055491,SN,matched to nearest modelled crossing within 15m (instream)
 195465,1802450,17054930,,
@@ -3235,8 +2944,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195474,1801973,17060395,SN,matched to nearest modelled crossing within 15m (instream)
 195475,1801915,17059564,,
 195476,1800968,17059489,SN,matched to nearest modelled crossing within 15m (instream)
-195477,,17059149,,
-195478,,17053879,,
 195479,,,,
 195480,1800176,17053007,SN,matched to nearest modelled crossing within 15m (instream)
 195481,1801271,17056306,,
@@ -3246,7 +2953,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195485,1801830,17043945,SN,matched to nearest modelled crossing within 15m (instream)
 195486,1803372,17046088,SN,matched to nearest modelled crossing within 15m (instream)
 195487,1805087,17046058,SN,matched to nearest modelled crossing within 15m (instream)
-195488,,17046058,,
 195489,1803806,17046086,SN,matched to nearest modelled crossing within 15m (instream)
 195490,1804425,17045293,,
 195491,1804423,17045524,,
@@ -3279,14 +2985,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195518,1806258,17054236,SN,matched to nearest modelled crossing within 15m (instream)
 195519,1800680,17054935,SN,matched to nearest modelled crossing within 15m (instream)
 195520,1800763,17054916,SN,matched to nearest modelled crossing within 15m (instream)
-195521,,17054916,,
-195522,,17054916,,
 195523,1806256,17059279,SN,matched to nearest modelled crossing within 15m (instream)
 195524,1806257,17059674,SN,matched to nearest modelled crossing within 15m (instream)
 195525,1805941,17059674,SN,matched to nearest modelled crossing within 15m (instream)
 195526,1800955,17059442,SN,matched to nearest modelled crossing within 15m (instream)
 195527,1803968,17059442,SN,matched to nearest modelled crossing within 15m (instream)
-195528,,17059279,,
 195529,,17059442,,
 195530,1803042,17055188,,
 195531,1802000,17059358,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3300,13 +3003,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195539,1805772,17059122,SN,matched to nearest modelled crossing within 15m (instream)
 195540,24703755,17062067,SN,matched to nearest modelled crossing within 15m (instream)
 195541,1801891,17059323,SN,matched to nearest modelled crossing within 15m (instream)
-195542,,17061398,,
-195543,,17059603,,
 195544,1803772,17056341,SN,matched to nearest modelled crossing within 15m (instream)
 195545,1804220,17056709,,
 195546,1805765,17066311,SN,matched to nearest modelled crossing within 15m (instream)
 195547,1804374,17061999,SN,matched to nearest modelled crossing within 15m (instream)
-195548,,17062026,,
 195549,1804378,17062026,,
 195550,1804373,17061297,SN,matched to nearest modelled crossing within 15m (instream)
 195551,1801898,17060598,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3382,7 +3082,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195963,1800026,17088667,SN,matched to nearest modelled crossing within 15m (instream)
 195964,1804200,17085316,SN,matched to nearest modelled crossing within 15m (instream)
 195965,,17088667,,
-195966,,17062086,,
 195967,1800546,17062086,,
 195968,1801339,17058141,,
 195969,1800766,17073228,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3400,7 +3099,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 195981,,17045932,,
 196697,11305096,701791989,,
 196940,11305595,701792317,,
-196941,11305593,701792385,,
 196942,11300383,701793154,,
 196944,11305451,701794402,,
 196945,11305452,701794388,,
@@ -3408,7 +3106,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 196947,11303620,701794010,,
 196957,11300867,701790237,,
 196958,11305583,701790399,,
-196959,,701790219,,
 196964,11304728,701791625,,
 196965,11305105,701786763,,
 196966,11300830,701792006,,
@@ -3421,10 +3118,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 196973,11305686,701790369,,
 196974,11305887,701790778,,
 196975,11305122,701790122,SN,matched to nearest modelled crossing within 15m (instream)
-196976,,701789900,,
 196977,11301022,701790150,,
 196978,11303979,701789902,,
-196979,,701789060,,
 196980,11305644,701786635,SN,matched to nearest modelled crossing within 15m (instream)
 196981,11303881,701787393,,
 196982,11305112,701787393,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3454,7 +3149,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 197006,11305126,701787904,SN,matched to nearest modelled crossing within 15m (instream)
 197007,11303737,701787482,,
 197008,11305753,701787150,SN,matched to nearest modelled crossing within 15m (instream)
-197009,,701785845,,
 197010,11305331,701780438,SN,matched to nearest modelled crossing within 15m (instream)
 197011,11304724,701781944,,
 197012,11301912,701782976,,
@@ -3470,13 +3164,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 197022,11300805,701773911,,
 197023,11300331,701773911,,
 197024,11304065,701781293,,
-197025,,701781815,,
 197026,,701782399,,
 197027,11300028,701782399,,
 197028,11301939,701782399,,
 197029,,701784542,,
 197030,11304404,701786012,,
-197031,,701786939,,
 197032,24713771,701786030,SN,matched to nearest modelled crossing within 15m (instream)
 197033,24713772,701785975,SN,matched to nearest modelled crossing within 15m (instream)
 197034,11304400,701785963,,
@@ -3489,7 +3181,286 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 197041,11300445,701776497,,
 197042,11300021,701776497,,
 197043,11300440,701776497,SN,matched to nearest modelled crossing within 15m (instream)
-197044,,701776497,,
 197045,11300474,701775357,SN,matched to nearest modelled crossing within 15m (instream)
 197180,,701418136,,
 197181,6801622,701403301,,
+197544,,,SN,not on mapped stream
+197582,4600157,706840586,SN,
+197583,4600158,706841240,SN,
+197580,4600026,706840357,SN,
+3069,1803541,17064919,NJO,Matched to closest stream model (Manual Review)
+3144,1802697,17071990,NJO,Matched to closest stream model (Manual Review)
+8240,11304633,701765480,NJO,Matched to closest stream model (Manual Review)
+8744,1803546,17086160,NJO,Matched to closest stream model (Manual Review)
+50067,4607397,706860952,NJO,Matched to closest stream model (Manual Review)
+50073,4606218,706868755,NJO,Matched to closest stream model (Manual Review)
+50075,4606601,706870446,NJO,Matched to closest stream model (Manual Review)
+50097,4605524,706873665,NJO,Matched to closest stream model (Manual Review)
+50121,4602688,706862124,NJO,Matched to closest stream model (Manual Review)
+50137,4603736,706859785,NJO,Matched to closest stream model (Manual Review)
+50151,4602638,706857903,NJO,Matched to closest stream model (Manual Review)
+103045,4605567,706848218,NJO,Matched to closest stream model (Manual Review)
+50196,4602163,706848215,NJO,Matched to closest stream model (Manual Review)
+50206,4602328,706848664,NJO,Matched to closest stream model (Manual Review)
+50216,4604251,706837345,NJO,Matched to closest stream model (Manual Review)
+50223,4600946,706840723,NJO,Matched to closest stream model (Manual Review)
+50230,4605909,706836878,NJO,Matched to closest stream model (Manual Review)
+50245,4601469,706836197,NJO,Matched to closest stream model (Manual Review)
+50258,4600123,706840350,NJO,Matched to closest stream model (Manual Review)
+51224,4601720,706852809,NJO,Matched to closest stream model (Manual Review)
+57095,6800598,701415699,NJO,Matched to closest stream model (Manual Review)
+57117,6802295,701405660,NJO,Matched to closest stream model (Manual Review)
+57122,6801090,701405004,NJO,Matched to closest stream model (Manual Review)
+57125,6802309,701406908,NJO,Matched to closest stream model (Manual Review)
+57160,6802368,701430260,NJO,Matched to closest stream model (Manual Review)
+57184,6801543,701409977,NJO,Matched to closest stream model (Manual Review)
+57191,6801547,701411566,NJO,Matched to closest stream model (Manual Review)
+57194,6802068,701409976,NJO,Matched to closest stream model (Manual Review)
+57195,6800761,701409976,NJO,Matched to closest stream model (Manual Review)
+57232,6801802,701421241,NJO,Matched to closest stream model (Manual Review)
+57238,6801649,701423206,NJO,Matched to closest stream model (Manual Review)
+57240,6801934,701423484,NJO,Matched to closest stream model (Manual Review)
+57245,6801933,701424145,NJO,Matched to closest stream model (Manual Review)
+57250,6801646,701420427,NJO,Matched to closest stream model (Manual Review)
+57254,6800618,701420605,NJO,Matched to closest stream model (Manual Review)
+57264,6800615,701418603,NJO,Matched to closest stream model (Manual Review)
+57269,6801399,701423875,NJO,Matched to closest stream model (Manual Review)
+57324,6801800,701412122,NJO,Matched to closest stream model (Manual Review)
+57333,6801964,701413479,NJO,Matched to closest stream model (Manual Review)
+57334,6801963,701413530,NJO,Matched to closest stream model (Manual Review)
+57348,6801132,701416660,NJO,Matched to closest stream model (Manual Review)
+57376,6802073,701404105,NJO,Matched to closest stream model (Manual Review)
+57381,6801072,701404302,NJO,Matched to closest stream model (Manual Review)
+57398,6801317,701400731,NJO,Matched to closest stream model (Manual Review)
+57414,6801473,701433691,NJO,Matched to closest stream model (Manual Review)
+57422,6801371,701435516,NJO,Matched to closest stream model (Manual Review)
+57426,6801368,701432876,NJO,Matched to closest stream model (Manual Review)
+57428,6801734,701432876,NJO,Matched to closest stream model (Manual Review)
+57429,6801405,701436428,NJO,Matched to closest stream model (Manual Review)
+57431,6801718,701430874,NJO,Matched to closest stream model (Manual Review)
+57436,6801913,701436387,NJO,Matched to closest stream model (Manual Review)
+57479,6800117,701426617,NJO,Matched to closest stream model (Manual Review)
+57486,6800569,701429307,NJO,Matched to closest stream model (Manual Review)
+57487,6801862,701429505,NJO,Matched to closest stream model (Manual Review)
+57496,6802247,701424268,NJO,Matched to closest stream model (Manual Review)
+57509,6801706,701425422,NJO,Matched to closest stream model (Manual Review)
+57518,6800654,701409005,NJO,Matched to closest stream model (Manual Review)
+57521,6800025,701410365,NJO,Matched to closest stream model (Manual Review)
+57525,6800656,701412470,NJO,Matched to closest stream model (Manual Review)
+57529,6800746,701409332,NJO,Matched to closest stream model (Manual Review)
+57540,6800650,701411681,NJO,Matched to closest stream model (Manual Review)
+57543,6801376,701417932,NJO,Matched to closest stream model (Manual Review)
+57549,6802363,701413359,NJO,Matched to closest stream model (Manual Review)
+57566,6801418,701426893,NJO,Matched to closest stream model (Manual Review)
+57579,6801740,701429908,NJO,Matched to closest stream model (Manual Review)
+57591,6801699,701418136,NJO,Matched to closest stream model (Manual Review)
+57593,6802394,701413560,NJO,Matched to closest stream model (Manual Review)
+57605,6800745,701408862,NJO,Matched to closest stream model (Manual Review)
+57763,1800509,17093553,NJO,Matched to closest stream model (Manual Review)
+57772,1805059,17090333,NJO,Matched to closest stream model (Manual Review)
+57787,1800256,17082868,NJO,Matched to closest stream model (Manual Review)
+57806,1802952,17042964,NJO,Matched to closest stream model (Manual Review)
+57814,1802917,17041670,NJO,Matched to closest stream model (Manual Review)
+57817,1802909,17041537,NJO,Matched to closest stream model (Manual Review)
+57824,1802968,17041611,NJO,Matched to closest stream model (Manual Review)
+57829,1802925,17042072,NJO,Matched to closest stream model (Manual Review)
+57831,1803377,17041547,NJO,Matched to closest stream model (Manual Review)
+57859,1803277,17041858,NJO,Matched to closest stream model (Manual Review)
+57863,1801827,17044230,NJO,Matched to closest stream model (Manual Review)
+57881,1805390,17043126,NJO,Matched to closest stream model (Manual Review)
+57890,1801415,17043425,NJO,Matched to closest stream model (Manual Review)
+57892,1804482,17043336,NJO,Matched to closest stream model (Manual Review)
+57897,1804642,17043126,NJO,Matched to closest stream model (Manual Review)
+57911,1803251,17039980,NJO,Matched to closest stream model (Manual Review)
+57915,1800135,17038833,NJO,Matched to closest stream model (Manual Review)
+57924,1806091,17037632,NJO,Matched to closest stream model (Manual Review)
+57933,1803195,17036555,NJO,Matched to closest stream model (Manual Review)
+57942,1800166,17033268,NJO,Matched to closest stream model (Manual Review)
+57959,1801615,17032717,NJO,Matched to closest stream model (Manual Review)
+57963,24738067,17034275,NJO,Matched to closest stream model (Manual Review)
+57967,1805286,17033634,NJO,Matched to closest stream model (Manual Review)
+57969,1805288,17033644,NJO,Matched to closest stream model (Manual Review)
+58006,1803676,17035555,NJO,Matched to closest stream model (Manual Review)
+58040,1801623,17035719,NJO,Matched to closest stream model (Manual Review)
+58042,1801639,17035719,NJO,Matched to closest stream model (Manual Review)
+58051,1804446,17042617,NJO,Matched to closest stream model (Manual Review)
+58052,1804751,17042559,NJO,Matched to closest stream model (Manual Review)
+58064,1802405,17031801,NJO,Matched to closest stream model (Manual Review)
+58073,1800345,17030477,NJO,Matched to closest stream model (Manual Review)
+58081,1805999,17028915,NJO,Matched to closest stream model (Manual Review)
+58089,1806054,17030439,NJO,Matched to closest stream model (Manual Review)
+58099,1805023,17091569,NJO,Matched to closest stream model (Manual Review)
+58112,1800715,17078166,NJO,Matched to closest stream model (Manual Review)
+58121,1801465,17043108,NJO,Matched to closest stream model (Manual Review)
+58122,1801466,17043002,NJO,Matched to closest stream model (Manual Review)
+58124,1801438,17043002,NJO,Matched to closest stream model (Manual Review)
+58136,1805008,17042051,NJO,Matched to closest stream model (Manual Review)
+58137,1805009,17042020,NJO,Matched to closest stream model (Manual Review)
+58150,1801869,17029663,NJO,Matched to closest stream model (Manual Review)
+58182,1803361,17031801,NJO,Matched to closest stream model (Manual Review)
+58183,1801012,17030425,NJO,Matched to closest stream model (Manual Review)
+58192,1803873,17028915,NJO,Matched to closest stream model (Manual Review)
+58227,1803209,17034705,NJO,Matched to closest stream model (Manual Review)
+58235,1800833,17042067,NJO,Matched to closest stream model (Manual Review)
+58239,1800144,17041933,NJO,Matched to closest stream model (Manual Review)
+58257,1806028,17040841,NJO,Matched to closest stream model (Manual Review)
+58258,1800143,17042170,NJO,Matched to closest stream model (Manual Review)
+58274,1804386,17031746,NJO,Matched to closest stream model (Manual Review)
+58276,1804388,17031450,NJO,Matched to closest stream model (Manual Review)
+58296,1804147,17035070,NJO,Matched to closest stream model (Manual Review)
+58312,1805225,17031317,NJO,Matched to closest stream model (Manual Review)
+58325,1804859,17030498,NJO,Matched to closest stream model (Manual Review)
+58327,1804858,17030932,NJO,Matched to closest stream model (Manual Review)
+58344,1803217,17038600,NJO,Matched to closest stream model (Manual Review)
+58347,1801870,17029663,NJO,Matched to closest stream model (Manual Review)
+58358,1803179,17033152,NJO,Matched to closest stream model (Manual Review)
+58368,1802902,17040657,NJO,Matched to closest stream model (Manual Review)
+61487,4600729,706845647,NJO,Matched to closest stream model (Manual Review)
+61488,4600756,706846099,NJO,Matched to closest stream model (Manual Review)
+61499,4600234,706844157,NJO,Matched to closest stream model (Manual Review)
+61501,4600161,706843771,NJO,Matched to closest stream model (Manual Review)
+62137,4607561,706850191,NJO,Matched to closest stream model (Manual Review)
+62139,4602118,706849343,NJO,Matched to closest stream model (Manual Review)
+62143,4602604,706849388,NJO,Matched to closest stream model (Manual Review)
+62172,24706636,706826079,NJO,Matched to closest stream model (Manual Review)
+62176,24706685,706821626,NJO,Matched to closest stream model (Manual Review)
+62290,24706657,706806138,NJO,Matched to closest stream model (Manual Review)
+62408,4606761,706822195,NJO,Matched to closest stream model (Manual Review)
+62418,4602980,706823947,NJO,Matched to closest stream model (Manual Review)
+62431,4607410,706829443,NJO,Matched to closest stream model (Manual Review)
+62493,4605734,706827144,NJO,Matched to closest stream model (Manual Review)
+62497,4601163,706828468,NJO,Matched to closest stream model (Manual Review)
+62498,4605609,706827375,NJO,Matched to closest stream model (Manual Review)
+112346,4607415,706833323,NJO,Matched to closest stream model (Manual Review)
+112347,4606885,706833321,NJO,Matched to closest stream model (Manual Review)
+123342,1803816,17087838,NJO,Matched to closest stream model (Manual Review)
+123343,1804434,17091359,NJO,Matched to closest stream model (Manual Review)
+123348,1802476,17075610,NJO,Matched to closest stream model (Manual Review)
+123350,1805629,17075378,NJO,Matched to closest stream model (Manual Review)
+123351,1800097,17075299,NJO,Matched to closest stream model (Manual Review)
+123366,1802487,17065028,NJO,Matched to closest stream model (Manual Review)
+123367,1800261,17063992,NJO,Matched to closest stream model (Manual Review)
+123405,1801387,17051115,NJO,Matched to closest stream model (Manual Review)
+123428,1802835,17049667,NJO,Matched to closest stream model (Manual Review)
+123429,1800278,17050383,NJO,Matched to closest stream model (Manual Review)
+123461,1802766,17045120,NJO,Matched to closest stream model (Manual Review)
+123514,1801299,17052498,NJO,Matched to closest stream model (Manual Review)
+123572,1800975,17045018,NJO,Matched to closest stream model (Manual Review)
+123577,1803103,17044316,NJO,Matched to closest stream model (Manual Review)
+123580,1805311,17044829,NJO,Matched to closest stream model (Manual Review)
+123584,1800405,17069252,NJO,Matched to closest stream model (Manual Review)
+123596,1805931,17053669,NJO,Matched to closest stream model (Manual Review)
+123656,1802420,17074495,NJO,Matched to closest stream model (Manual Review)
+123660,1800396,17041816,NJO,Matched to closest stream model (Manual Review)
+123666,1801428,17043034,NJO,Matched to closest stream model (Manual Review)
+123710,1801584,17039855,NJO,Matched to closest stream model (Manual Review)
+123747,1805370,17046308,NJO,Matched to closest stream model (Manual Review)
+123766,1804382,17035450,NJO,Matched to closest stream model (Manual Review)
+123795,1802385,17023775,NJO,Matched to closest stream model (Manual Review)
+123801,1801781,17022668,NJO,Matched to closest stream model (Manual Review)
+123821,6801640,701411348,NJO,Matched to closest stream model (Manual Review)
+123827,6801348,701432074,NJO,Matched to closest stream model (Manual Review)
+123832,6800464,701432812,NJO,Matched to closest stream model (Manual Review)
+123837,6800475,701430260,NJO,Matched to closest stream model (Manual Review)
+123844,6801907,701429661,NJO,Matched to closest stream model (Manual Review)
+123850,6800597,701428268,NJO,Matched to closest stream model (Manual Review)
+123883,6802191,701404582,NJO,Matched to closest stream model (Manual Review)
+123895,6801100,701403146,NJO,Matched to closest stream model (Manual Review)
+123897,6801101,701403312,NJO,Matched to closest stream model (Manual Review)
+123901,6800352,701404168,NJO,Matched to closest stream model (Manual Review)
+123934,6800446,701433492,NJO,Matched to closest stream model (Manual Review)
+123940,6801675,701435745,NJO,Matched to closest stream model (Manual Review)
+123943,6802124,701435745,NJO,Matched to closest stream model (Manual Review)
+123946,6801884,701414198,NJO,Matched to closest stream model (Manual Review)
+123948,6801887,701413605,NJO,Matched to closest stream model (Manual Review)
+124061,6802161,701437586,NJO,Matched to closest stream model (Manual Review)
+124068,6801850,701433388,NJO,Matched to closest stream model (Manual Review)
+124069,6801353,701432605,NJO,Matched to closest stream model (Manual Review)
+124088,6802160,701436975,NJO,Matched to closest stream model (Manual Review)
+124108,6801893,701439084,NJO,Matched to closest stream model (Manual Review)
+124111,6800278,701440761,NJO,Matched to closest stream model (Manual Review)
+124116,6801525,701438815,NJO,Matched to closest stream model (Manual Review)
+124123,6801745,701430157,NJO,Matched to closest stream model (Manual Review)
+124133,6802089,701433893,NJO,Matched to closest stream model (Manual Review)
+124144,6800041,701424826,NJO,Matched to closest stream model (Manual Review)
+124184,1802263,17028248,NJO,Matched to closest stream model (Manual Review)
+124207,1801755,17021682,NJO,Matched to closest stream model (Manual Review)
+124214,1806047,17032582,NJO,Matched to closest stream model (Manual Review)
+124258,6800064,701402608,NJO,Matched to closest stream model (Manual Review)
+124259,6800063,701403167,NJO,Matched to closest stream model (Manual Review)
+124265,6800050,701408566,NJO,Matched to closest stream model (Manual Review)
+124267,6800049,701408837,NJO,Matched to closest stream model (Manual Review)
+124282,1806246,17051427,NJO,Matched to closest stream model (Manual Review)
+124310,6801458,701423126,NJO,Matched to closest stream model (Manual Review)
+124320,6802110,701429264,NJO,Matched to closest stream model (Manual Review)
+124323,6802211,701428431,NJO,Matched to closest stream model (Manual Review)
+124339,6801633,701412763,NJO,Matched to closest stream model (Manual Review)
+124343,6800994,701406492,NJO,Matched to closest stream model (Manual Review)
+124362,6801774,701439844,NJO,Matched to closest stream model (Manual Review)
+124371,6800346,701440177,NJO,Matched to closest stream model (Manual Review)
+124377,6800359,701440432,NJO,Matched to closest stream model (Manual Review)
+124420,1803403,17011494,NJO,Matched to closest stream model (Manual Review)
+124423,1800122,17011654,NJO,Matched to closest stream model (Manual Review)
+124425,1800038,17010657,NJO,Matched to closest stream model (Manual Review)
+124452,1800042,17011539,NJO,Matched to closest stream model (Manual Review)
+124506,1806005,17058070,NJO,Matched to closest stream model (Manual Review)
+125913,6800127,701409598,NJO,Matched to closest stream model (Manual Review)
+125915,6800131,701409598,NJO,Matched to closest stream model (Manual Review)
+125923,6801182,701402349,NJO,Matched to closest stream model (Manual Review)
+125924,6801223,701405877,NJO,Matched to closest stream model (Manual Review)
+125943,6802290,701436127,NJO,Matched to closest stream model (Manual Review)
+125961,6800163,701407175,NJO,Matched to closest stream model (Manual Review)
+125963,6801694,701431095,NJO,Matched to closest stream model (Manual Review)
+125965,6801692,701431095,NJO,Matched to closest stream model (Manual Review)
+125970,6802156,701438228,NJO,Matched to closest stream model (Manual Review)
+125987,6801919,701431169,NJO,Matched to closest stream model (Manual Review)
+126002,6802168,701429762,NJO,Matched to closest stream model (Manual Review)
+126003,6802322,701430328,NJO,Matched to closest stream model (Manual Review)
+126004,6800444,701430328,NJO,Matched to closest stream model (Manual Review)
+126012,6802371,701426619,NJO,Matched to closest stream model (Manual Review)
+126408,6802205,701426619,NJO,Matched to closest stream model (Manual Review)
+126425,6802480,701426385,NJO,Matched to closest stream model (Manual Review)
+126439,6800527,701420339,NJO,Matched to closest stream model (Manual Review)
+126469,6801509,701427771,NJO,Matched to closest stream model (Manual Review)
+126505,6801918,701428866,NJO,Matched to closest stream model (Manual Review)
+126526,6802238,701406901,NJO,Matched to closest stream model (Manual Review)
+126527,24738327,701405244,NJO,Matched to closest stream model (Manual Review)
+126531,6801674,701400276,NJO,Matched to closest stream model (Manual Review)
+126533,6802228,701400333,NJO,Matched to closest stream model (Manual Review)
+126534,6802227,701399714,NJO,Matched to closest stream model (Manual Review)
+126563,6800182,701401639,NJO,Matched to closest stream model (Manual Review)
+195247,1802344,17044173,NJO,Matched to closest stream model (Manual Review)
+195255,1802314,17072672,NJO,Matched to closest stream model (Manual Review)
+195256,1802317,17072516,NJO,Matched to closest stream model (Manual Review)
+195263,1805350,17053046,NJO,Matched to closest stream model (Manual Review)
+195268,1805721,17055378,NJO,Matched to closest stream model (Manual Review)
+195296,1802762,17046008,NJO,Matched to closest stream model (Manual Review)
+195298,1804710,17046016,NJO,Matched to closest stream model (Manual Review)
+195299,1804964,17046016,NJO,Matched to closest stream model (Manual Review)
+195327,1803875,17049162,NJO,Matched to closest stream model (Manual Review)
+195329,1803876,17048937,NJO,Matched to closest stream model (Manual Review)
+195344,1806070,17062171,NJO,Matched to closest stream model (Manual Review)
+195353,1805776,17062599,NJO,Matched to closest stream model (Manual Review)
+195362,1800931,17057755,NJO,Matched to closest stream model (Manual Review)
+195365,1800939,17059358,NJO,Matched to closest stream model (Manual Review)
+195389,1803599,17045773,NJO,Matched to closest stream model (Manual Review)
+195405,1804086,17048817,NJO,Matched to closest stream model (Manual Review)
+195422,1806075,17061611,NJO,Matched to closest stream model (Manual Review)
+195461,1802427,17056125,NJO,Matched to closest stream model (Manual Review)
+195477,1800961,17059149,NJO,Matched to closest stream model (Manual Review)
+195478,1801360,17053879,NJO,Matched to closest stream model (Manual Review)
+195488,1806242,17046058,NJO,Matched to closest stream model (Manual Review)
+195521,1800897,17054916,NJO,Matched to closest stream model (Manual Review)
+195522,1800898,17054916,NJO,Matched to closest stream model (Manual Review)
+195528,1805770,17059279,NJO,Matched to closest stream model (Manual Review)
+195542,1805781,17061398,NJO,Matched to closest stream model (Manual Review)
+195543,1805075,17059603,NJO,Matched to closest stream model (Manual Review)
+195548,1804199,17062026,NJO,Matched to closest stream model (Manual Review)
+195966,1800545,17062086,NJO,Matched to closest stream model (Manual Review)
+196959,11300295,701790219,NJO,Matched to closest stream model (Manual Review)
+196976,11305111,701789900,NJO,Matched to closest stream model (Manual Review)
+196979,11305103,701789060,NJO,Matched to closest stream model (Manual Review)
+197009,11302530,701785845,NJO,Matched to closest stream model (Manual Review)
+197025,11300429,701781815,NJO,Matched to closest stream model (Manual Review)
+197031,11301028,701786939,NJO,Matched to closest stream model (Manual Review)
+197044,11300554,701776497,NJO,Matched to closest stream model (Manual Review)

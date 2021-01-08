@@ -5,7 +5,7 @@ set -euxo pipefail
 # this matches all PSCIS crossings (as of July 2020) to streams/modelled crossings where possible
 # null values indicate that the PSCIS crossing does not match to a FWA stream
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref"
-psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref (stream_crossing_id integer primary key, modelled_crossing_id integer, linear_feature_id integer)"
+psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref (stream_crossing_id integer primary key, modelled_crossing_id integer, linear_feature_id integer, reviewer text, notes text)"
 psql -c "\copy bcfishpass.pscis_modelledcrossings_streams_xref FROM 'data/pscis_modelledcrossings_streams_xref.csv' delimiter ',' csv header"
 
 # load the CWF generated PSCIS fixes table
