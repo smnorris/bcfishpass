@@ -1510,3 +1510,4 @@ LNIC,197033,BRIDGE,PASSABLE,Not mapped or id number provided,PASSABLE
 LNIC,197034,BRIDGE,PASSABLE,Not mapped or id number provided,PASSABLE
 LNIC,197037,BRIDGE,PASSABLE,Major bridge.  KVR downstream passable,PASSABLE
 LNIC,197040,FORD,UNKNOWN,ford crossing within Coldwater IR,BARRIER
+BULK,195289,OVAL,BARRIER,reassessment (Irvine 2020),PASSABLE
