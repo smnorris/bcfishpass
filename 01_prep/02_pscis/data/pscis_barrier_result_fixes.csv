@@ -1511,5 +1511,5 @@ LNIC,197034,BRIDGE,PASSABLE,Not mapped or id number provided,PASSABLE
 LNIC,197037,BRIDGE,PASSABLE,Major bridge.  KVR downstream passable,PASSABLE
 LNIC,197040,FORD,UNKNOWN,ford crossing within Coldwater IR,BARRIER
 BULK,195289,OVAL,BARRIER,reassessment (Irvine 2020),PASSABLE
-ELKR,62421,BRIDGE,PASSABLE,crossing has been remediated but PSCIS has not been updated (Irvine Elk report 2020)
-ELKR,62423,BRIDGE,PASSABLE,crossing has been remediated but PSCIS has not been updated (Irvine Elk report 2020)
+ELKR,62421,BRIDGE,BARRIER,crossing has been remediated but PSCIS has not been updated (Irvine Elk report 2020),PASSABLE
+ELKR,62423,BRIDGE,BARRIER,crossing has been remediated but PSCIS has not been updated (Irvine Elk report 2020),PASSABLE
