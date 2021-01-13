@@ -1,6 +1,19 @@
 #!/bin/bash
 set -euxo pipefail
 
+# First, ensure that the latest lookup data is used
+# - modelled crossings fixes
+psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"
+psql -c "CREATE TABLE bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id integer, watershed_group_code text, reviewer text, structure text, notes text)"
+psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM '../01_prep/01_modelled_stream_crossings/data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
+psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id)"
+# - load pscis fixes and re-run scripts matching PSCIS points to streams
+cd ../01_prep/02_pscis
+./pscis.sh
+cd ../../02_model
+
+
+# Now run model
 
 # create table for each type of definite (not generally fixable) barrier
 psql -f sql/barriers_majordams.sql
