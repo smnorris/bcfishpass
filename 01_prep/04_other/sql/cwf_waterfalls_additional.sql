@@ -7,7 +7,7 @@ CREATE TABLE cwf.waterfalls_additional_events
  (
  ogc_fid                 integer primary key,
  name  text        ,
- layer text           ,
+ source text           ,
  linear_feature_id        bigint           ,
  wscode_ltree             ltree            ,
  localcode_ltree          ltree            ,
@@ -27,7 +27,7 @@ WITH candidates AS
  ( SELECT
     pt.ogc_fid,
     pt.name,
-    pt.layer,
+    pt.source,
     nn.linear_feature_id,
     nn.wscode_ltree,
     nn.localcode_ltree,
@@ -80,7 +80,7 @@ measures AS
 (SELECT DISTINCT ON (bluelines.ogc_fid)
   bluelines.ogc_fid,
   candidates.name,
-  candidates.layer,
+  candidates.source,
   candidates.linear_feature_id,
   candidates.wscode_ltree,
   candidates.localcode_ltree,
@@ -105,7 +105,7 @@ ORDER BY bluelines.ogc_fid, candidates.distance_to_stream asc
 INSERT INTO cwf.waterfalls_additional_events
  (ogc_fid,
  name,
- layer,
+ source,
  linear_feature_id,
  wscode_ltree,
  localcode_ltree,
@@ -118,7 +118,7 @@ INSERT INTO cwf.waterfalls_additional_events
 SELECT
   p.ogc_fid,
   p.name,
-  p.layer,
+  p.source,
   p.linear_feature_id,
   p.wscode_ltree,
   p.localcode_ltree,

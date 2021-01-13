@@ -68,7 +68,7 @@ INSERT INTO bcfishpass.waterfalls
 
 SELECT
     name,
-    layer as source,
+    source,
     distance_to_stream,
     linear_feature_id,
     blue_line_key,
