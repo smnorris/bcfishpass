@@ -1,23 +1,25 @@
--- create a table of measured channel width
+-- create channel width table, with both measured and modelled values
 
--- measurements:
+-- First, load measurements from:
 -- - stream sample sites
 -- - PSCIS assessments
 
 -- values are distinct for watershed code / local code combinations (stream segments between tribs),
 -- where more than one measurement exists on a segment, the average is calculated
 
-DROP TABLE IF EXISTS bcfishpass.measured_channel_width;
+DROP TABLE IF EXISTS bcfishpass.channel_width;
 
-CREATE TABLE bcfishpass.measured_channel_width
+CREATE TABLE bcfishpass.channel_width
 (
-  measured_channel_width_id serial primary key,
+  channel_width_id serial primary key,
   stream_sample_site_ids integer[],
   stream_crossing_ids integer[],
   wscode_ltree ltree,
   localcode_ltree ltree,
   watershed_group_code text,
-  channel_width double precision
+  channel_width_measured double precision,
+  channel_width_modelled double precision,
+  UNIQUE (wscode_ltree, localcode_ltree)
 );
 
 
@@ -29,14 +31,14 @@ INSERT INTO bcfishpass.measured_channel_width
   wscode_ltree,
   localcode_ltree,
   watershed_group_code,
-  channel_width
+  channel_width_measured
 )
 SELECT
   array_agg(e.stream_sample_site_id) as stream_sample_sites_ids,
   e.wscode_ltree,
   e.localcode_ltree,
   s.watershed_group_code,
-  avg(p.channel_width) as channel_width
+  avg(p.channel_width) as channel_width_measured
 FROM whse_fish.fiss_stream_sample_sites_events e
 INNER JOIN whse_fish.fiss_stream_sample_sites_sp p
 ON e.stream_sample_site_id = p.stream_sample_site_id
@@ -62,14 +64,14 @@ INSERT INTO bcfishpass.measured_channel_width
   wscode_ltree,
   localcode_ltree,
   watershed_group_code,
-  channel_width
+  channel_width_measured
 )
 SELECT
   array_agg(e.stream_crossing_id) as stream_crossing_ids,
   e.wscode_ltree,
   e.localcode_ltree,
   s.watershed_group_code,
-  avg(a.downstream_channel_width) as channel_width
+  avg(a.downstream_channel_width) as channel_width_measured
 FROM bcfishpass.pscis_events_sp e
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
