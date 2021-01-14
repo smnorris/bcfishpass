@@ -6,13 +6,13 @@
 -- where more than one measurement exists on a segment, the average is calculated
 
 
-WITH measurements AS
+WITH fiss_measurements AS
 (SELECT
-  array_agg(e.stream_sample_site_id) as stream_sample_site_ids,
+  e.stream_sample_site_id,
   e.wscode_ltree,
   e.localcode_ltree,
-  s.watershed_group_code,
-  avg(p.channel_width) as channel_width_measured
+  w.watershed_group_code,
+  p.channel_width as channel_width_fiss
 FROM whse_fish.fiss_stream_sample_sites_events e
 INNER JOIN whse_fish.fiss_stream_sample_sites_sp p
 ON e.stream_sample_site_id = p.stream_sample_site_id
@@ -23,31 +23,19 @@ ON e.blue_line_key = s.blue_line_key
 AND e.downstream_route_measure > s.downstream_route_measure
 AND e.downstream_route_measure <= s.upstream_route_measure
 WHERE p.channel_width IS NOT NULL
--- exclude outliers/bad data
+AND w.watershed_group_code in ('LNIC','BULK','HORS','ELKR')
+-- exclude these records due to errors in measurement and/or linking to streams
 AND p.stream_sample_site_id NOT IN (8486,8644,8609,8518,117,142,8627,98,10997,10356)
-GROUP BY
-  e.wscode_ltree,
-  e.localcode_ltree,
-  s.watershed_group_code
-)
+),
 
-UPDATE bcfishpass.channel_width c
-SET
-  stream_sample_site_ids = m.stream_sample_site_ids,
-  channel_width_measured = m.channel_width_measured
-FROM measurements m
-WHERE c.wscode_ltree = m.wscode_ltree
-AND c.localcode_ltree = m.localcode_ltree;
-
--- pscis measurements
-WITH measurements AS
+pscis_measurements AS
 (
 SELECT
-  array_agg(e.stream_crossing_id) as stream_crossing_ids,
+  e.stream_crossing_id,
   e.wscode_ltree,
   e.localcode_ltree,
   s.watershed_group_code,
-  avg(a.downstream_channel_width) as channel_width_measured
+  a.downstream_channel_width as channel_width_pscis
 FROM bcfishpass.pscis_events_sp e
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
@@ -59,20 +47,39 @@ AND e.downstream_route_measure > s.downstream_route_measure
 AND e.downstream_route_measure <= s.upstream_route_measure
 WHERE a.downstream_channel_width is not null
 AND e.watershed_group_code in ('LNIC','BULK','HORS','ELKR')
+),
+
+combined AS
+(SELECT
+  f.stream_sample_site_id,
+  p.stream_crossing_id,
+  coalesce(f.wscode_ltree, p.wscode_ltree) as wscode_ltree,
+  coalesce(f.localcode_ltree, p.localcode_ltree) as localcode_ltree,
+  coalesce(f.watershed_group_code, p.watershed_group_code) as watershed_group_code,
+  coalesce(f.channel_width_fiss, p.channel_width_pscis) as channel_width
+FROM fiss_measurements f
+FULL OUTER JOIN pscis_measurements p
+ON f.wscode_ltree = p.wscode_ltree
+AND f.localcode_ltree = p.localcode_ltree),
+
+measurements AS
+(SELECT
+ wscode_ltree,
+ localcode_ltree,
+ array_agg(stream_sample_site_id) filter (where stream_sample_site_id is not null) as stream_sample_site_ids,
+ array_agg(stream_crossing_id) filter (where stream_crossing_id is not null) AS stream_crossing_ids,
+ round(avg(channel_width)::numeric, 2) as channel_width
+FROM combined
 GROUP BY
-  w.watershed_feature_id,
-  e.blue_line_key,
-  e.wscode_ltree,
-  e.localcode_ltree,
-  s.watershed_group_code,
-  s.stream_magnitude,
-  s.upstream_area_ha
+ wscode_ltree,
+ localcode_ltree
 )
 
 UPDATE bcfishpass.channel_width c
 SET
+  stream_sample_site_ids = m.stream_sample_site_ids,
   stream_crossing_ids = m.stream_crossing_ids,
-  channel_width_measured = m.channel_width_measured
+  channel_width_measured = m.channel_width
 FROM measurements m
 WHERE c.wscode_ltree = m.wscode_ltree
 AND c.localcode_ltree = m.localcode_ltree;
