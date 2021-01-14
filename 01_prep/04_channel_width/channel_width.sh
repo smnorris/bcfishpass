@@ -15,8 +15,10 @@ bcdata bc2pg WHSE_FISH.FISS_STREAM_SAMPLE_SITES_SP
 psql -c "CREATE INDEX ON whse_fish.fiss_stream_sample_sites_sp (new_watershed_code)"
 psql -f sql/fiss_stream_sample_sites_events.sql
 
-# create a channel_width table, load the measured channel widths
+# model all channel widths
+psql -f sql/modelled_channel_width.sql
+
+# load the measured channel widths where we have them
 psql -f sql/measured_channel_width.sql
 
-# where we don't have a measured channel width, model it
-psql -f sql/modelled_channel_width.sql
+

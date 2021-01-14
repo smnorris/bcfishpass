@@ -1,40 +1,14 @@
--- create channel width table, with both measured and modelled values
-
--- First, load measurements from:
+-- load measured channel widths from:
 -- - stream sample sites
 -- - PSCIS assessments
 
 -- values are distinct for watershed code / local code combinations (stream segments between tribs),
 -- where more than one measurement exists on a segment, the average is calculated
 
-DROP TABLE IF EXISTS bcfishpass.channel_width;
 
-CREATE TABLE bcfishpass.channel_width
-(
-  channel_width_id serial primary key,
-  stream_sample_site_ids integer[],
-  stream_crossing_ids integer[],
-  wscode_ltree ltree,
-  localcode_ltree ltree,
-  watershed_group_code text,
-  channel_width_measured double precision,
-  channel_width_modelled double precision,
-  UNIQUE (wscode_ltree, localcode_ltree)
-);
-
-
--- load stream sample sites, averaging the width measures along the stream
--- where multiple measures occur
-INSERT INTO bcfishpass.measured_channel_width
-(
-  stream_sample_site_ids,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  channel_width_measured
-)
-SELECT
-  array_agg(e.stream_sample_site_id) as stream_sample_sites_ids,
+WITH measurements AS
+(SELECT
+  array_agg(e.stream_sample_site_id) as stream_sample_site_ids,
   e.wscode_ltree,
   e.localcode_ltree,
   s.watershed_group_code,
@@ -54,18 +28,20 @@ AND p.stream_sample_site_id NOT IN (8486,8644,8609,8518,117,142,8627,98,10997,10
 GROUP BY
   e.wscode_ltree,
   e.localcode_ltree,
-  s.watershed_group_code;
-
-
--- insert pscis points
-INSERT INTO bcfishpass.measured_channel_width
-(
-  stream_crossing_ids,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  channel_width_measured
+  s.watershed_group_code
 )
+
+UPDATE bcfishpass.channel_width c
+SET
+  stream_sample_site_ids = m.stream_sample_site_ids,
+  channel_width_measured = m.channel_width_measured
+FROM measurements m
+WHERE c.wscode_ltree = m.wscode_ltree
+AND c.localcode_ltree = m.localcode_ltree;
+
+-- pscis measurements
+WITH measurements AS
+(
 SELECT
   array_agg(e.stream_crossing_id) as stream_crossing_ids,
   e.wscode_ltree,
@@ -90,9 +66,13 @@ GROUP BY
   e.localcode_ltree,
   s.watershed_group_code,
   s.stream_magnitude,
-  s.upstream_area_ha;
+  s.upstream_area_ha
+)
 
-CREATE INDEX ON bcfishpass.measured_channel_width USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.measured_channel_width USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.measured_channel_width USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.measured_channel_width USING BTREE (localcode_ltree);
+UPDATE bcfishpass.channel_width c
+SET
+  stream_crossing_ids = m.stream_crossing_ids,
+  channel_width_measured = m.channel_width_measured
+FROM measurements m
+WHERE c.wscode_ltree = m.wscode_ltree
+AND c.localcode_ltree = m.localcode_ltree;
