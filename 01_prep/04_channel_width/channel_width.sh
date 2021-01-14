@@ -20,5 +20,3 @@ psql -f sql/modelled_channel_width.sql
 
 # load the measured channel widths where we have them
 psql -f sql/measured_channel_width.sql
-
-
