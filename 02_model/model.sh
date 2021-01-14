@@ -12,7 +12,6 @@ cd ../01_prep/02_pscis
 ./pscis.sh
 cd ../../02_model
 
-
 # Now run model
 
 # create table for each type of definite (not generally fixable) barrier
@@ -119,7 +118,24 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 psql -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
 
 # classify streams per accessibility model based on the upstream / downstream features processed above
-psql -f sql/model.sql
+psql -f sql/model_access.sql
+
+# classify streams per salmon habitat model
+# load the habitat model lookup
+psql -c "DROP TABLE IF EXISTS bcfishpass.model_spawning_rearing_habitat"
+psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
+  species_code text,
+  spawn_gradient_max numeric,
+  spawn_channel_width_min numeric,
+  spawn_channel_width_max numeric,
+  rear_gradient_max numeric,
+  rear_channel_width_max numeric,
+  rear_lake_ha_min integer,
+  rear_wetland_multiplier numeric,
+  rear_lake_multiplier numeric
+)"
+psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
+#psql -f sql/model_habitat.sql
 
 # create generalized copy of streams for visualization
 psql -f sql/carto.sql
