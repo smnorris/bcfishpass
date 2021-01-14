@@ -106,12 +106,19 @@ For details, see [PSCIS](01_prep/02_pscis).
 
 For details, see [dams](01_prep/03_dams).
 
+#### Load channel width data
+
+    cd 01_prep/04_channel_width
+    ./channel_width.sh
+
+For details, see [channel_width](01_prep/04_channel_width).
+
 #### Load additional waterfalls prepped by CWF
 
-    cd 01_prep/04_other
+    cd 01_prep/05_other
     ./falls.sh
 
-For details, see [other](01_prep/04_other).
+For details, see [other](01_prep/05_other).
 
 
 ## Run model
