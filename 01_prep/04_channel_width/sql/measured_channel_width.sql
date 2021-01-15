@@ -25,7 +25,7 @@ AND e.downstream_route_measure <= s.upstream_route_measure
 WHERE p.channel_width IS NOT NULL
 AND w.watershed_group_code in ('LNIC','BULK','HORS','ELKR')
 -- exclude these records due to errors in measurement and/or linking to streams
-AND p.stream_sample_site_id NOT IN (8486,8644,8609,8518,117,142,8627,98,10997,10356)
+AND p.stream_sample_site_id NOT IN (44813,44815,10997,8518,37509,37510,53526,15603,98,8644,117,8627,142,8486,8609,15609,10356)
 ),
 
 pscis_measurements AS
@@ -47,6 +47,7 @@ AND e.downstream_route_measure > s.downstream_route_measure
 AND e.downstream_route_measure <= s.upstream_route_measure
 WHERE a.downstream_channel_width is not null
 AND e.watershed_group_code in ('LNIC','BULK','HORS','ELKR')
+AND e.stream_crossing_id NOT IN (57592,123894,57408,124137)
 ),
 
 combined AS
