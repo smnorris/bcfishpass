@@ -1,3 +1,7 @@
+-- precip is provided by watershed, but we want precip for each stream segment
+
+-- create new table with MAP for given stream, and map_upstream that is area-weighted mean
+-- precip for all upstream contributing area
 DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_streams;
 CREATE TABLE bcfishpass.mean_annual_precip_streams
 (
@@ -18,7 +22,7 @@ INSERT INTO bcfishpass.mean_annual_precip_streams
     area,
     map
 )
-
+-- insert the precip on the stream, and the area of the fundamental watershed(s) associated with the stream
 SELECT
     b.wscode_ltree,
     b.localcode_ltree,

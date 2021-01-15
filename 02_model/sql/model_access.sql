@@ -38,7 +38,7 @@ WHERE
     dnstr_barriers_other_definite IS NULL AND
     dnstr_barriers_majordams IS NULL AND
     dnstr_barriers_anthropogenic IS NULL
-    AND watershed_group_code = ('HORS','BULK','LNIC');
+    AND watershed_group_code IN ('HORS','BULK','LNIC');
 
 -- STEELHEAD
 UPDATE bcfishpass.streams
