@@ -33,7 +33,7 @@ FROM bcfishpass.mean_annual_precip_watersheds a
 INNER JOIN whse_basemapping.fwa_watersheds_poly b
 ON a.watershed_feature_id = b.watershed_feature_id
 WHERE map IS NOT NULL
-AND b.watershed_group_code = 'BULK'
+AND b.watershed_group_code IN ('BULK','LNIC')
 GROUP BY b.wscode_ltree, b.localcode_ltree, b.watershed_group_code;
 
 CREATE INDEX ON bcfishpass.mean_annual_precip_streams USING GIST (wscode_ltree);
@@ -43,7 +43,7 @@ CREATE INDEX ON bcfishpass.mean_annual_precip_streams USING BTREE (localcode_ltr
 
 
 -- calculate the area weighted mean of precip contributing to a stream
--- Bulkley only for now, and this should probably be parallelized if running on a large set of watersheds
+-- Bulkley/LNIC only for now, and this should probably be parallelized if running on a large set of watersheds
 WITH areas AS
 (SELECT
   a.id,
@@ -52,7 +52,7 @@ WITH areas AS
 FROM bcfishpass.mean_annual_precip_streams a
 INNER JOIN bcfishpass.mean_annual_precip_streams b
 ON FWA_Upstream(a.wscode_ltree, a.localcode_ltree, b.wscode_ltree, b.localcode_ltree)
-WHERE a.watershed_group_code = 'BULK'
+WHERE a.watershed_group_code IN ('BULK','LNIC')
 ),
 
 totals AS

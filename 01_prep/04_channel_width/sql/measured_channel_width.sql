@@ -47,6 +47,7 @@ AND e.downstream_route_measure > s.downstream_route_measure
 AND e.downstream_route_measure <= s.upstream_route_measure
 WHERE a.downstream_channel_width is not null
 AND e.watershed_group_code in ('LNIC','BULK','HORS','ELKR')
+-- exclude these records due to errors in measurement and/or linking to streams
 AND e.stream_crossing_id NOT IN (57592,123894,57408,124137)
 ),
 

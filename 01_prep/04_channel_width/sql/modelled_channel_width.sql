@@ -85,11 +85,12 @@ WITH streams AS
 -- So, to get distinct codes, simply take the maximum of each, this won't make much/any
 -- difference in the output
 SELECT
-  wscode_ltree,
-  localcode_ltree,
-  max(stream_magnitude) as stream_magnitude,
-  max(upstream_area_ha) as upstream_area_ha
-FROM whse_basemapping.fwa_stream_networks_sp s
+  s.wscode_ltree,
+  s.localcode_ltree,
+  coalesce(max(s.upstream_wetland_ha),0) as upstream_wetland_ha,
+  max(s.stream_magnitude) as stream_magnitude,
+  max(s.upstream_area_ha) as upstream_area_ha
+FROM bcfishpass.streams s
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
 WHERE s.watershed_group_code = 'LNIC'
@@ -114,15 +115,15 @@ SELECT
   round(
     abs(
         81.6758 -
-        (18.9492* ln(s.upstream_area_ha) -
-        (13.6090* ln(s.map) +
-        (4.1731* ln(s.total_wetland_ha) +
-        (0.6629* ln(s.total_wetland_ha * ln(s.upstream_area_ha) -
-        (0.6818* ln(s.total_wetland_ha* ln(s.map) +
-        (3.1850* ln(s.upstream_area_ha* ln(s.map) -
-        (0.1093* ln(s.total_wetland_ha* ln(s.upstream_area_ha* ln(s.map)
-      )::numeric, 2
-  ) as channel_width_modelled
+        (18.9492 * ln(s.upstream_area_ha)) -
+        (13.6090 * ln(m.map_upstream)) +
+        (4.1731 * ln(s.upstream_wetland_ha + 1)) +
+        (0.6629 * ln(s.upstream_wetland_ha + 1) * ln(s.upstream_area_ha)) -
+        (0.6818 * ln(s.upstream_wetland_ha + 1) * ln(m.map_upstream)) +
+        (3.1850 * ln(s.upstream_area_ha) * ln(m.map_upstream)) -
+        (0.1093 * ln(s.upstream_wetland_ha + 1) * ln(s.upstream_area_ha) * ln(m.map_upstream))
+      )::numeric, 2)
+   as channel_width_modelled
 FROM bcfishpass.mean_annual_precip_streams m
 INNER JOIN streams s
 ON m.wscode_ltree = s.wscode_ltree
