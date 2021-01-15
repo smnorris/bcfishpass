@@ -99,7 +99,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk
 ON s.waterbody_key = lk.waterbody_key
 LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
 ON s.waterbody_key = res.waterbody_key
-WHERE s.watershed_group_code = 'BULK'
+WHERE s.watershed_group_code IN ('BULK','LNIC')
 AND s.accessibility_model_salmon IS NOT NULL
 )
 
@@ -148,7 +148,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk
 ON s.waterbody_key = lk.waterbody_key
 LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
 ON s.waterbody_key = res.waterbody_key
-WHERE s.watershed_group_code = 'BULK'
+WHERE s.watershed_group_code IN ('BULK','LNIC')
 AND s.accessibility_model_steelhead IS NOT NULL
 )
 
