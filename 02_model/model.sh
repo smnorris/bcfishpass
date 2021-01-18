@@ -137,7 +137,8 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
 psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
 
 # run the spawning/rearing habitat model
-psql -f sql/model_habitat.sql
+psql -f sql/model_habitat_spawning.sql
+psql -f sql/model_habitat_rearing.sql
 
 # create generalized copy of streams for visualization
 psql -f sql/carto.sql
