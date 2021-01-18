@@ -69,8 +69,9 @@ WITH model AS
   END AS spawn_co,
   CASE
     WHEN
-      s.gradient <= co.rear_gradient_max AND
-      s.channel_width <= co.rear_channel_width_max
+      (s.gradient <= co.rear_gradient_max AND
+      s.channel_width <= co.rear_channel_width_max)
+      OR s.edge_type IN (1050, 1150) -- add wetlands to coho rearing
     THEN true
     ELSE false
   END AS rear_co,
