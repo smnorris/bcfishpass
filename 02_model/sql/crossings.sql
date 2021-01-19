@@ -10,7 +10,9 @@
 DROP TABLE IF EXISTS bcfishpass.crossings;
 CREATE TABLE bcfishpass.crossings
 (
-    aggregated_crossings_id SERIAL PRIMARY KEY,
+    --aggregated_crossings_id integer,
+    aggregated_crossing_id integer PRIMARY KEY GENERATED ALWAYS AS
+       (COALESCE(COALESCE(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1000000000)) STORED,
     stream_crossing_id integer UNIQUE,
     dam_id integer UNIQUE,
     modelled_crossing_id integer UNIQUE,
