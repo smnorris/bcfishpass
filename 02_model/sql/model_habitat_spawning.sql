@@ -5,11 +5,6 @@ ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_coho bool
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_steelhead boolean;
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_sockeye boolean;
 
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_chinook boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_coho boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_steelhead boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_sockeye boolean;
-
 -- populate channel width from the measured/modelled data
 WITH cw AS
 (SELECT DISTINCT

@@ -1,6 +1,12 @@
 -- Because rearing habitat must be connected to spawning habitat (requiring more complex queries),
 -- the rearing model is applied per species
 
+
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_chinook boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_coho boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_steelhead boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_sockeye boolean;
+
 -- ---------------------------------------------
 -- CHINOOK
 WITH rearing AS
