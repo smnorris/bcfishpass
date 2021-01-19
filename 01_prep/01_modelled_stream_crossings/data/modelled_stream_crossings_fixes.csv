@@ -1826,3 +1826,7 @@ modelled_crossing_id,watershed_group_code,reviewer,structure,notes
 1801069,BULK,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
 1800076,BULK,SN,OBS,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
 4601138,ELKR,SN,NONE,only a single crossing at this location (stream is incorrectly mapped) - PSCIS 62423 / model 4601130
+24713774,LNIC,NMW,OBS,bridge
+24713775,LNIC,NMW,OBS,bridge
+11300875,LNIC,NMW,NONE,no stream
+11304439,LNIC,NMW,OBS,bridge
