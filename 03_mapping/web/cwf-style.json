@@ -95,6 +95,7 @@
   },
 
   "sprite": "https://www.hillcrestgeo.ca/projects/cwf_wcrp/maki_default",
+  "glyphs": "http://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
   "layers": [
     {
       "id": "esri-topo",
@@ -524,7 +525,7 @@
                 "icon-color": "white"
             }
     },
-        {
+    {
     "id": "barriers-anthopogenic-top",
     "type": "circle",
     "source": "barriers_anthropogenic",
@@ -541,6 +542,52 @@
       "circle-stroke-opacity": 0.75,
       "circle-radius": 7
       }
+    },
+
+    {
+    "id": "barriers-anthropogenic-top-label",
+    "type": "symbol",
+    "source": "barriers_anthropogenic",
+    "source-layer": "bcfishpass.barriers_anthropogenic",
+    "maxzoom": 16,
+    "filter": ["any",
+        ["in", "stream_crossing_id", 123770,124420,58067,124500,57944,57408,57596,57168,57555,57476,196969],
+        ["in", "modelled_crossing_id", 1800060,1800062,1805665,1800045,1801920,1804694,1800865,1802239,1803403,1803245,1800175,1800167,1800235,6800319,6800587,24708567,6800298,6800077,6800520,6801654,6800240,11301479,11304548,11303928,11304583,11303754,11305086],
+        ["in", "dam_id", 243]
+      ],
+    "layout": {
+        "text-line-height": 1.2,
+        "text-size": {"base": 1, "stops": [[10, 11], [18, 16]]},
+        "text-max-angle": 38,
+        "symbol-spacing": 250,
+        "text-padding": 2,
+        "text-offset": [0, 0],
+        "text-font": ["Open Sans Bold"],
+        "text-rotation-alignment": "viewport",
+        "text-letter-spacing": 0.01,
+        "text-max-width": 7,
+        "text-variable-anchor": ["bottom-right","bottom-left","top","bottom"],
+        "text-radial-offset": 0.5,
+        "text-field": [
+            "match",
+            ["get", "crossing_source"],
+            "ASSESSED",
+            ["get", "stream_crossing_id"],
+            "HABITAT CONFIRMATION",
+            ["get", "stream_crossing_id"],
+            "MODELLED_CROSSINGS",
+            ["get", "modelled_crossing_id"],
+            "BCDAMS",
+            ["get", "dam_id"],
+            ["get", "modelled_crossing_id"]
+            ]
+    },
+    "paint": {
+        "text-color": "hsl(230, 29%, 35%)",
+        "text-halo-color": "hsl(0, 0%, 100%)",
+        "text-halo-width": 1
+    },
+    "interactive": true
   }
 
   ]
