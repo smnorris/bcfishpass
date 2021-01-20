@@ -534,23 +534,6 @@
         ["in", "modelled_crossing_id", 1800060,1800062,1805665,1800045,1801920,1804694,1800865,1802239,1803403,1803245,1800175,1800167,1800235,6800319,6800587,24708567,6800298,6800077,6800520,6801654,6800240,11301479,11304548,11303928,11304583,11303754,11305086],
         ["in", "dam_id", 243]
       ],
-    "layout": {
-      "text-line-height": 1.1,
-      "text-size": {"base": 1, "stops": [[16, 11], [20, 13]]},
-      "text-max-angle": 38,
-      "symbol-spacing": 250,
-      "text-font": [
-          "DIN Offc Pro Medium",
-          "Arial Unicode MS Regular"
-      ],
-      "text-padding": 1,
-      "text-offset": [0, 0.65],
-      "text-rotation-alignment": "viewport",
-      "text-anchor": "top",
-      "text-field": "{barriers_anthropogenic_id}"
-
-
-    },
     "paint": {
       "circle-color": "#ff5f37",
       "circle-opacity": 1,
