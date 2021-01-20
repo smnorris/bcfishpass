@@ -117,15 +117,24 @@ The model will generally over-estimate the extent of closed bottom stream crossi
     - we have very limited data on where bridges are present
     - modelling bridges as occuring at stream order >= 6 is relatively conservative by design - culverts can exist on these higher order streams, we do not want to miss these important locations
 
-2. No road exists at the mapped road/stream crossing. This is primarily due to:
+2. No structure exists at the mapped road/stream crossing. This can be due to a number of different data issues:
+
+    Roads:
 
     - DRA mapping can be over-generous in its definition of 'road'
     - a road has been deactivated or never had a crossing structure
     - FTEN road data is tenure data, not actual 'as built' data - an FTEN road may not have been built
 
+    Streams:
+
+    - there is insufficent flow in the stream channel for a structure to have been necessary in road construction
+    - the stream is incorrectly mapped
+    - the stream channel has moved from where it was mapped (stream mapping is from BC TRIM I data, circa 1998)
+
+
 ## Fixes
 
-Because the above errors will typically result in erroneous modelled culverts with a great deal of stream and potential habitat upstream, it is important to conduct a manual review of the modelled crossings before prioritizing sites for field assessment.  A manual review is generally a simple visual review of available satellite imagery - the user can quickly identify sites where it is clear that a bridge is present or no road/stream crossing is present.
+Because the above errors will often result in erroneous modelled culverts with a great deal of stream and potential habitat upstream, it is important to conduct a manual review of the modelled crossings before prioritizing sites for field assessment.  A manual review is generally a simple visual review of available satellite imagery - the user can quickly identify sites where it is clear that a bridge is present or no road/stream crossing is present.
 
 To apply these fixes, add the crossing id and fix information for the crossing of interest to [`data/modelled_stream_crossings_fixes.csv`](data/modelled_stream_crossings_fixes.csv)
 
@@ -136,7 +145,5 @@ To apply these fixes, add the crossing id and fix information for the crossing o
 |`modelled_crossing_id`| ID of modelled crossing |
 |`watershed_group_code`| watershed group code of watershed in which crossing lies (for quick reference only) |
 |`reviewer`            | initials of user conducting review |
-|`structure`           | fix to apply - either `OBS` if a bridge is present, or `NONE` if there is no stream crossing present
-|`notes`               | relevant notes based on review of imagery
-
-
+|`structure`           | `OBS` - a bridge is present; `NONE` - no stream crossing (or structure) is present
+|`notes`               | relevant notes based on review of imagery and/or other sources
