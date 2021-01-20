@@ -95,7 +95,7 @@
   },
 
   "sprite": "https://www.hillcrestgeo.ca/projects/cwf_wcrp/maki_default",
-  "glyphs": "http://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
+  "glyphs": "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
   "layers": [
     {
       "id": "esri-topo",
