@@ -113,7 +113,9 @@ For details, see [dams](01_prep/03_dams).
 
 For details, see [channel_width](01_prep/04_channel_width).
 
-#### Load additional waterfalls prepped by CWF
+#### Load additional barriers/potential barriers
+
+Load additional misc barriers as identified via local knowledge and waterfalls that are potential barriers (prepped by CWF).
 
     cd 01_prep/05_other
     ./falls.sh
