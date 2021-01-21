@@ -47,7 +47,6 @@ WITH model AS
       s.channel_width <= ch.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_ch,
   CASE
     WHEN
@@ -56,7 +55,6 @@ WITH model AS
       s.channel_width <= co.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_co,
   CASE
     WHEN
@@ -65,7 +63,6 @@ WITH model AS
       s.channel_width <= sk.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_sk,
   CASE
     WHEN
@@ -74,7 +71,6 @@ WITH model AS
       s.channel_width <= st.spawn_channel_width_max AND
       s.accessibility_model_steelhead IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_st
 FROM bcfishpass.streams s
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat ch
