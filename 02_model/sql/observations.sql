@@ -1,4 +1,4 @@
--- create a table holding all distinct observation points for the species of interest
+-- create a table holding all distinct observation points for species of interest
 
 DROP TABLE IF EXISTS bcfishpass.observations;
 CREATE TABLE bcfishpass.observations
@@ -35,66 +35,77 @@ INSERT INTO bcfishpass.observations
 WITH unnested_obs AS
 (
   SELECT
-    fish_obsrvtn_pnt_distinct_id,
-    linear_feature_id,
-    blue_line_key,
-    wscode_ltree,
-    localcode_ltree,
-    downstream_route_measure,
-    watershed_group_code,
-    unnest(species_codes) as species_code,
-    unnest(obs_ids) as observation_id
+    e.fish_obsrvtn_pnt_distinct_id,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.downstream_route_measure,
+    e.watershed_group_code,
+    unnest(e.species_codes) as species_code,
+    unnest(e.obs_ids) as observation_id
   FROM whse_fish.fiss_fish_obsrvtn_events e
+  INNER JOIN bcfishpass.watershed_groups g
+  ON e.watershed_group_code = g.watershed_group_code
+  AND g.include IS TRUE
   WHERE species_codes && ARRAY['CO','CH','SK','ST','WCT']
-  AND watershed_group_code IN ('BULK','HORS','LNIC','ELKR')
+
 ),
 
 -- then re-aggregate, retaining only observation records for the species of interest within group of interest
 by_wsg AS
 (
-  -- salmon / steelhead in BULK, HORS, LNIC
+  -- salmon / steelhead watersheds
   SELECT
-    fish_obsrvtn_pnt_distinct_id,
-    linear_feature_id,
-    blue_line_key,
-    wscode_ltree,
-    localcode_ltree,
-    downstream_route_measure,
-    watershed_group_code,
-    array_agg(species_code) as species_codes,
-    array_agg(observation_id) as observation_ids
-  FROM unnested_obs
+    e.fish_obsrvtn_pnt_distinct_id,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.downstream_route_measure,
+    e.watershed_group_code,
+    array_agg(e.species_code) as species_codes,
+    array_agg(e.observation_id) as observation_ids
+  FROM unnested_obs e
+  INNER JOIN bcfishpass.watershed_groups g
+  ON e.watershed_group_code = g.watershed_group_code AND
+  g.include IS TRUE AND
+  (g.co IS TRUE OR g.ch IS TRUE OR g.sk IS TRUE OR g.st IS TRUE)
   WHERE species_code IN ('CO','CH','SK','ST')
-  AND watershed_group_code IN ('BULK','HORS','LNIC')
-  GROUP BY fish_obsrvtn_pnt_distinct_id,
-    linear_feature_id,
-    blue_line_key,
-    wscode_ltree,
-    localcode_ltree,
-    downstream_route_measure,
-    watershed_group_code
+  GROUP BY
+    e.fish_obsrvtn_pnt_distinct_id,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.downstream_route_measure,
+    e.watershed_group_code
   UNION ALL
-  -- only WCT in ELKR
+  -- WCT
   SELECT
-    fish_obsrvtn_pnt_distinct_id,
-    linear_feature_id,
-    blue_line_key,
-    wscode_ltree,
-    localcode_ltree,
-    downstream_route_measure,
-    watershed_group_code,
-    array_agg(species_code) as species_codes,
-    array_agg(observation_id) as observation_ids
-  FROM unnested_obs
+    e.fish_obsrvtn_pnt_distinct_id,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.downstream_route_measure,
+    e.watershed_group_code,
+    array_agg(e.species_code) as species_codes,
+    array_agg(e.observation_id) as observation_ids
+  FROM unnested_obs e
+  INNER JOIN bcfishpass.watershed_groups g
+  ON e.watershed_group_code = g.watershed_group_code
+  AND g.include IS TRUE
+  AND g.wct IS TRUE
   WHERE species_code = 'WCT'
-  AND watershed_group_code = 'ELKR'
-  GROUP BY fish_obsrvtn_pnt_distinct_id,
-    linear_feature_id,
-    blue_line_key,
-    wscode_ltree,
-    localcode_ltree,
-    downstream_route_measure,
-    watershed_group_code
+  GROUP BY
+    e.fish_obsrvtn_pnt_distinct_id,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.downstream_route_measure,
+    e.watershed_group_code
 )
 
 -- generate geoms

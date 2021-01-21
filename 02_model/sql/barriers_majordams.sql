@@ -41,9 +41,11 @@ SELECT
     d.watershed_group_code,
     ST_Force2D((st_Dump(d.geom)).geom)
 FROM bcfishpass.bcdams_events d
+INNER JOIN bcfishpass.watershed_groups g
+ON d.watershed_group_code = g.watershed_group_code
+AND g.include IS TRUE
 WHERE d.barrier_ind = 'Y'
 AND d.hydro_dam_ind = 'Y'
-AND d.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ON CONFLICT DO NOTHING;
 
 

@@ -40,10 +40,11 @@ SELECT DISTINCT ON (blue_line_key, round(downstream_route_measure::numeric, 2))
     b.watershed_group_code,
     ST_Force2D((st_Dump(b.geom)).geom)
 FROM cwf.gradient_barriers b
+INNER JOIN bcfishpass.watershed_groups g
+ON b.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE b.threshold = .20
 -- spot manual QA of gradient barriers
 AND b.linear_feature_id != 701934669 -- odd point on Salmon River that looks like a data error
-AND b.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY blue_line_key, round(downstream_route_measure::numeric, 2)
 ON CONFLICT DO NOTHING;
 

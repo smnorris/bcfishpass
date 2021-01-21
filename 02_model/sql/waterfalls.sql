@@ -50,7 +50,8 @@ SELECT
 FROM whse_fish.fiss_falls_events a
 INNER JOIN whse_basemapping.fwa_stream_networks_sp b
 ON a.linear_feature_id = b.linear_feature_id
-WHERE a.watershed_group_code IN ('HORS','LNIC','BULK','ELKR');
+INNER JOIN bcfishpass.watershed_groups g
+ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE;
 
 -- insert others
 INSERT INTO bcfishpass.waterfalls
@@ -67,15 +68,17 @@ INSERT INTO bcfishpass.waterfalls
     )
 
 SELECT
-    name,
-    source,
-    distance_to_stream,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM cwf.waterfalls_additional_events
+    e.name,
+    e.source,
+    e.distance_to_stream,
+    e.linear_feature_id,
+    e.blue_line_key,
+    e.downstream_route_measure,
+    e.wscode_ltree,
+    e.localcode_ltree,
+    e.watershed_group_code,
+    e.geom
+FROM cwf.waterfalls_additional_events e
+INNER JOIN bcfishpass.watershed_groups g
+ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 ON CONFLICT DO NOTHING;

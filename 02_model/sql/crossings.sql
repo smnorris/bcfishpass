@@ -76,7 +76,8 @@ LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 -- only include PSCIS crossings within the watershed groups of interest for now
 -- (there are some in the HARR group that fall on the fraser)
-WHERE e.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
+INNER JOIN bcfishpass.watershed_groups g
+ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 ORDER BY e.stream_crossing_id
 ON CONFLICT DO NOTHING;
 
@@ -115,14 +116,15 @@ SELECT
     d.watershed_group_code,
     ST_Force2D((st_Dump(d.geom)).geom)
 FROM bcfishpass.bcdams_events d
+-- include only watershed groups of interest
+INNER JOIN bcfishpass.watershed_groups g
+ON d.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
 -- ignore dams on side channels for this exercise
 WHERE d.blue_line_key = s.watershed_key
 -- do not include major/bc hydro dams, they are definite barriers, already in the barriers_majordams table
 AND d.hydro_dam_ind = 'N'
--- include only watershed groups of interest for now
-AND d.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY dam_id
 ON CONFLICT DO NOTHING;
 
@@ -161,6 +163,9 @@ SELECT
     b.watershed_group_code,
     ST_Force2D((ST_Dump(b.geom)).geom) as geom
 FROM bcfishpass.modelled_stream_crossings b
+-- include only watershed groups of interest
+INNER JOIN bcfishpass.watershed_groups g
+ON b.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN bcfishpass.pscis_events_sp p
@@ -172,8 +177,6 @@ WHERE b.blue_line_key = s.watershed_key
 AND (f.structure IS NULL OR COALESCE(f.structure, 'CBS') = 'OBS')
 -- don't include PSCIS crossings
 AND p.stream_crossing_id IS NULL
--- just work with groups of interest for now.
-AND b.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY modelled_crossing_id
 ON CONFLICT DO NOTHING;
 

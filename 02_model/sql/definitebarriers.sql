@@ -21,18 +21,9 @@ CREATE TABLE bcfishpass.definitebarriers_steelhead
 );
 
 
-INSERT INTO bcfishpass.definitebarriers_steelhead
-(   barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
-SELECT
+WITH barriers AS
+
+(SELECT
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -91,10 +82,24 @@ SELECT
     watershed_group_code,
     geom
 FROM bcfishpass.barriers_other_definite
-ON CONFLICT DO NOTHING;
+)
 
--- steelhead is only BULK,NICL
-DELETE FROM bcfishpass.definitebarriers_steelhead WHERE watershed_group_code NOT IN ('BULK','LNIC');
+INSERT INTO bcfishpass.definitebarriers_steelhead
+(   barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+)
+SELECT b.*
+FROM barriers b
+INNER JOIN bcfishpass.watershed_groups g
+ON b.watershed_group_code = g.watershed_group_code AND g.st IS TRUE
+ON CONFLICT DO NOTHING;
 
 CREATE INDEX ON bcfishpass.definitebarriers_steelhead (linear_feature_id);
 CREATE INDEX ON bcfishpass.definitebarriers_steelhead (blue_line_key);
@@ -126,18 +131,9 @@ CREATE TABLE bcfishpass.definitebarriers_salmon
 );
 
 
-INSERT INTO bcfishpass.definitebarriers_salmon
-(   barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
-SELECT
+WITH barriers AS
+(
+    SELECT
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -208,11 +204,25 @@ SELECT
     watershed_group_code,
     geom
 FROM bcfishpass.barriers_other_definite
+)
+
+INSERT INTO bcfishpass.definitebarriers_salmon
+(   barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+)
+SELECT b.*
+FROM barriers b
+INNER JOIN bcfishpass.watershed_groups g
+ON b.watershed_group_code = g.watershed_group_code AND
+(g.co IS TRUE OR g.ch IS TRUE OR g.sk IS TRUE)
 ON CONFLICT DO NOTHING;
-
--- salmon is only hors
-DELETE FROM bcfishpass.definitebarriers_salmon WHERE watershed_group_code NOT IN ('HORS');
-
 
 CREATE INDEX ON bcfishpass.definitebarriers_salmon (linear_feature_id);
 CREATE INDEX ON bcfishpass.definitebarriers_salmon (blue_line_key);
@@ -225,7 +235,6 @@ CREATE INDEX ON bcfishpass.definitebarriers_salmon USING GIST (geom);
 
 
 -- wct barriers (20%, not below observation)
--- TODO get rid of / note barriers below observations
 DROP TABLE IF EXISTS bcfishpass.definitebarriers_wct;
 
 CREATE TABLE bcfishpass.definitebarriers_wct
@@ -245,17 +254,8 @@ CREATE TABLE bcfishpass.definitebarriers_wct
 );
 
 
-INSERT INTO bcfishpass.definitebarriers_wct
-(   barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
+
+WITH barriers AS (
 SELECT
     barrier_type,
     barrier_name,
@@ -315,10 +315,25 @@ SELECT
     watershed_group_code,
     geom
 FROM bcfishpass.barriers_other_definite
+)
+
+INSERT INTO bcfishpass.definitebarriers_wct
+(   barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+)
+SELECT b.*
+FROM barriers b
+INNER JOIN bcfishpass.watershed_groups g
+ON b.watershed_group_code = g.watershed_group_code AND g.wct IS TRUE
 ON CONFLICT DO NOTHING;
 
--- wct is elkr
-DELETE FROM bcfishpass.definitebarriers_wct WHERE watershed_group_code NOT IN ('ELKR');
 
 CREATE INDEX ON bcfishpass.definitebarriers_wct (linear_feature_id);
 CREATE INDEX ON bcfishpass.definitebarriers_wct (blue_line_key);

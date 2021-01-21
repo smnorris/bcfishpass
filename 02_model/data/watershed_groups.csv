@@ -1,0 +1,247 @@
+watershed_group_code,watershed_group_name,include,co,ch,sk,st,wct,notes
+ADMS,Adams River,t,t,t,t,,,
+ATLL,Atlin Lake,,f,,f,,,
+ATNA,Atnarko River,,t,t,t,t,,
+BABL,Babine Lake,,t,t,t,,,
+BBAR,Big Bar Creek,,t,t,t,,,
+BEAV,Beaver River,,,,,,,Mackenzie basin
+BELA,Bella Coola River,,t,t,t,t,,
+BLAR,Blackwater River,,,t,,f,,
+BLUR,Blue River,,,,,,,Mackenzie basin
+BOWR,Bowron,,,t,t,f,,
+BRID,Bridge Creek,,,,,,,Falls 20807
+BRKS,Brooks Peninsula,,t,t,t,t,,
+BULK,Bulkley River,t,t,t,t,t,,
+BULL,Bull River,,,,,,t,
+CAMB,Campbell River,,t,t,t,t,,
+CANO,Canoe Reach,,,,,,,Columbia basin
+CARP,Carp Lake,,,,,,,Mackenzie basin
+CARR,Cariboo River,,,t,,f,,
+CHES,Cheslatta River,,,t,t,f,,
+CHIR,Chilko River,,,,t,,,
+CHUK,Chukachida River,,,,,,,No target species observations
+CHWK,Chilliwack River,,t,t,t,t,,
+COTR,Cottonwood River,,t,t,f,f,,
+CRKD,Crooked River,,,,,,,Mackenzie basin
+CRYL,Cry Lake,,,,,,,Mackenzie basin
+DEAD,Deadman River,,t,t,t,t,,
+DEAL,Dease Lake,,,,,,,Mackenzie basin
+DOGC,Dog Creek,,t,t,t,f,,
+DRIR,Driftwood River,,f,f,t,f,,
+DUNE,Dunedin River,,,,,,,Mackenzie basin
+EUCH,Euchiniko River,,f,t,,f,,
+EUCL,Euchiniko Lake,,f,t,f,f,,
+FINA,Finlay Arm,,,,,,,Mackenzie basin
+FIRE,Firesteel River,,,,,,,Mackenzie basin
+FONT,Fontas River,,,,,,,Mackenzie basin
+FOXR,Fox River,,,,,,,Mackenzie basin
+FRAN,Francois Lake,,f,t,t,f,,
+FROG,Frog River,,,,,,,Mackenzie basin
+GATA,Gataga River,,,,,,,Mackenzie basin
+GLAR,Gladys River,,f,t,f,f,,
+GOLD,Gold River,,t,t,t,t,,
+GRAI,Graham Island,,t,t,t,t,,
+GRNL,Green Lake,,,,,,,No target species observations
+GUIC,Guichon Creek,,t,t,f,t,,
+HARR,Harrison River,,t,t,t,t,,
+HAYR,Hay River,,,,,,,Mackenzie basin
+HERR,Herrick Creek,,f,t,,,,
+HOLB,Holberg,,t,,,t,,
+HOMA,Homathko River,,t,t,,,,
+HORS,Horsefly River,t,t,t,t,f,,
+INGR,Ingenika River,,,,,,,Mackenzie basin
+INKR,Inklin River,,t,t,t,t,,
+ISKR,Iskut River,,,,,,,No target species observations
+JENR,Jennings River,,f,t,f,f,,
+JERV,Jervis Inlet,,t,t,,t,,
+KAHN,Kahntah River,,,,,,,Mackenzie basin
+KAKC,Kakiddi Creek,,,,,,,Not accessible to target species
+KCHL,Kotcho Lake,,,,,,,Mackenzie basin
+KEEC,Keecha Creek,,t,f,,f,,
+KETL,Kettle River,,,,,,t,
+KHOR,Kicking Horse River,,,,,,t,
+KHTZ,Khutze River,,t,t,t,t,,
+KINR,Kinskuch River,,t,,t,,,
+KISK,Kiskatinaw River,,,,,,,Mackenzie basin
+KISP,Kispiox River,,t,t,t,t,,
+KITL,Kitlope River,,t,t,t,,,
+KITR,Kitimat River,,t,t,t,t,,
+KLAR,Klappan River,,,,,,,No target species observations
+KLIN,Klinaklini River,,t,t,t,t,,
+KLUM,Kalum River,,t,t,t,t,,
+KNIG,Knight Inlet,,t,t,t,t,,
+KOTL,Kootenay Lake,,,,,,t,
+KOTR,Kootenay River,,,,,,t,
+KSHR,Kshwan River,,t,t,,t,,
+KTSU,Kitasu Bay,,t,f,t,f,,
+KUMR,Kumowdah River,,t,,t,,,
+KUSR,Kusawa River,,,,,,,No target species observations
+LARL,Lower Arrow Lake,,,,,,t,
+LBIR,Lower Bell -Irving River,,t,t,,t,,
+LBTN,Lower Beatton River,,,,,,,Mackenzie basin
+LCHL,Lower Chilako River,,t,t,f,f,,
+LCHR,Lower Chilcotin River,,,t,,t,,
+LDEN,Lower Dean River,,,,,t,,
+LEUT,Lower Eutsuk Lake,,,,,,,Kenny Dam
+LFRA,Lower Fraser,,t,t,t,t,,
+LFRT,Lower Fort Nelson River,,,,,,,Mackenzie basin
+LHAF,Lower Halfway River,,,,,,,Mackenzie basin
+LIAR,Liard River,,,,,,,Mackenzie basin
+LILL,Lillooet,,t,t,t,t,,
+LISR,Lower Iskut River,,t,t,t,t,,
+LKEC,Lower Kechika River,,,,,,,Mackenzie basin
+LKEL,Lakelse,,t,t,,t,,
+LMUS,Lower Muskwa River,,,,,,,Mackenzie basin
+LNAR,Lower Nass River,,t,t,,t,,
+LNIC,Lower Nicola River,t,t,t,,t,,
+ALBN,Alberni Inlet,,t,t,t,t,,
+BIGC,Big Creek,,,,,,,
+BONP,Bonaparte River,,t,t,f,t,,
+CLWR,Clearwater River,,t,t,,f,,
+DEAR,Dease River,,,,,,,Mackenzie basin
+LNRS,Lower Nechako Reservoir,,,,,,,
+LNTH,Lower North Thompson River,t,t,t,t,,,
+LOMI,Lower Omineca River,,,,,,,Mackenzie basin
+LPCE,Lower Peace River,,,,,,,Mackenzie basin
+LPET,Lower Petitot River,,,,,,,Mackenzie basin
+LPRO,Lower Prophet River,,,,,,,Mackenzie basin
+LRAN,Little Rancheria River,,,,,,,Mackenzie basin
+LRDO,Laredo Inlet,,t,,t,t,,
+LSAL,Lower Salmon River,,f,t,f,f,,
+LSIK,Lower Sikanni Chief River,,,,,,,Mackenzie basin
+LSKE,Lower Skeena River,,t,t,t,t,,
+LSTR,Lower Stikine River,,t,t,t,f,,
+LTRE,Lower Trembleur Lake,,f,t,t,f,,
+MAHD,Mahood Lake,,,t,f,f,,
+MBNK,Middle Banks Island,,t,f,,f,,
+MCGR,McGregor River,,f,t,,f,,
+MDEA,Middle Dease River,,,,,,,Mackenzie basin
+MESC,Mess Creek,,f,t,f,,,
+MESI,Mesilinka River,,,,,,,Mackenzie basin
+MFRA,Middle Fraser,,f,t,f,f,,
+MFRT,Middle Fort Nelson River,,,,,,,Mackenzie basin
+MIDR,Middle River,,f,,t,f,,
+MILL,Milligan Creek,,,,,,,Mackenzie basin
+MMUS,Middle Muskwa River,,,,,,,Mackenzie basin
+MORI,Morsby Island,,t,,t,t,,
+MORK,Morkill River,,f,t,,,,
+MORR,Morice River,t,t,t,t,t,,
+MPRO,Middle Prophet River,,,,,,,Mackenzie basin
+MSKE,Middle Skeena River,,t,t,t,t,,
+MSTR,Middle Stikine River,,f,f,f,t,,
+MURR,Murray River,,,,,,,Mackenzie basin
+MURT,Murtle Lake,,,,,,,
+MUSK,Muskeg River,,,,,,,
+NAHR,Nahlin River,,,t,,,,
+BABR,Babine River,,t,t,t,t,,
+BARR,Barrington River,,,,t,f,,
+CHIL,Chilako River,,f,t,f,f,,
+CLAY,Clayoquot,,t,t,t,t,,
+CLRH,Columbia Reach,,,,,,t,
+COAL,Coal River,,,,,,,Mackenzie basin
+COLR,Columbia River,,,,,,t,
+COMX,Comox,,t,t,t,t,,
+COWN,Cowichan,,t,t,f,t,,
+DUNC,Duncan Lake,,,,,,t,
+ELKR,Elk River,t,,,,,t,
+FINL,Finlay River,,,,,,,Mackenzie basin
+FRCN,Fraser Canyon,,t,t,t,t,,
+NAKR,Nakina River,,t,t,t,f,,
+NARC,Narcosli Creek,,,t,f,f,,
+NASC,Nascall River,,t,,t,t,,
+NASR,Nass River,,t,t,t,t,,
+NATR,Nation River,,,,,,,Mackenzie basin
+NAZR,Nazko River,,f,t,f,f,,
+NBNK,North Banks Island,,t,f,t,f,,
+NECL,Necleetsconnay River,,t,,t,,,
+NECR,Nechako River,,t,t,t,f,,
+NEVI,Northeast Vancouver Island,,t,,t,t,,
+NICL,Nicola River,,t,t,f,f,,
+NIEL,Niel Creek,,t,t,t,t,,
+NIMP,Nimpkish River,,t,t,t,t,,
+OKAN,Okanagan River,,f,,t,,,
+OSPK,Ospika River,,,,,,,Mackenzie basin
+OWIK,Owikeno Lake,,t,t,t,t,,
+PARA,Parsnip Arm,,,,,,,Mackenzie basin
+PARK,Parksville,,t,t,,t,,
+PARS,Parsnip River,,,,,,,Mackenzie basin
+PCEA,Peace Arm,,,,,,,Mackenzie basin
+PINE,Pine River,,,,,,,Mackenzie basin
+PITR,Pitman River,,,,,,,No target species observations
+PORI,Porcher Island,,t,,f,t,,
+QUES,Quesnel River,,t,t,t,,,
+REVL,Revelstoke Lake,,,,,,t,
+SAHD,Sahdoanah Creek,,,,,,,Mackenzie basin
+SAHT,Sahtaneh River,,,,,,,Mackenzie basin
+SAJR,San Jose River,,t,f,t,f,,
+SALM,Salmon River,,t,t,,t,,
+SALR,Salmon River,,f,t,f,f,,
+SANJ,San Juan River,,t,t,t,t,,
+SETN,Seton Lake,,t,t,t,t,,
+SEYM,Seymour Inlet,,t,t,,t,,
+SHEK,Shekilie River,,,,,,,Mackenzie basin
+SHER,Sheslay River,,t,t,,t,,
+SHUL,Shuswap Lake,,t,t,t,,t,
+SIML,Similkameen River,,,,,,,No target species observations
+SKGT,Skagit River,,,,,,,
+SLOC,Slocan River,,,,,,t,
+SMAR,St. Mary River,,,,,,t,
+SMOK,Smoky River,,,,,,,Mackenzie basin
+SPAT,Spatsizi River,,,,,,,No target species observations
+SQAM,Squamish,,t,t,t,t,,
+STHM,South Thompson River,,t,t,t,,,
+STIR,Stikine River,,t,t,t,,,
+STUL,Stuart Lake,,f,t,t,f,,
+STUR,Stuart River,,f,t,t,f,,
+SUST,Sustut River,,t,t,t,t,,
+SWIR,Swift River,,f,t,f,f,,
+TABR,Tabor River,,f,t,f,f,,
+TAHR,Tahltan River,,,,t,t,,
+TAHS,Tahsis,,t,t,t,t,,
+TAKL,Takla Lake,,f,,t,f,,
+TASR,Taseko River,,,,t,,,
+TATR,Tatshenshini River,,,t,t,,,
+TAYR,Taylor River,,f,f,f,t,,
+TESR,Teslin River,,f,t,f,f,,
+THOM,Thompson River,,t,t,t,t,,
+TOAD,Toad River,,,,,,,Mackenzie basin
+TOBA,Toba Inlet,,t,t,t,t,,
+TOOD,Toodoggone River,,,,,,,Mackenzie basin
+TSAY,Tsaytis River,,t,t,,t,,
+TSEA,Tsea River,,,,,,,Mackenzie basin
+TSIT,Tsitika River,,t,t,,t,,
+TURN,Turnagain River,,,,,,,Mackenzie basin
+TUTR,Tutshi River,,f,f,f,,,
+TUYR,Tuya River,,,,,,,Blockage near mouth of Tuya River
+TWAC,Twan Creek,,,t,,,,
+UARL,Upper Arrow Lake,,,,,,t,
+UBIR,Upper Bell -Irving River,,t,t,,,,
+UBTN,Upper Beatton River,,,,,,,Mackenzie basin
+UCHR,Upper Chilcotin River,,f,t,f,t,,
+UDEN,Upper Dean River,,,,,,,No target species observations
+UEUT,Upper Eutsuk Lake,,,,,,,
+UFRA,Upper Fraser River,,f,t,,f,,
+UFRT,Upper Fort Nelson River,,,,,,,Mackenzie basin
+UHAF,Upper Halfway River,,,,,,,Mackenzie basin
+UISR,Upper Iskut River,,,,,,,Forrest Kerr Generating Station
+UJER,Upper Jennings River,,f,t,f,f,,
+UKEC,Upper Kechika River,,,,,,,Mackenzie basin
+ULRD,Upper Liard River,,,,,,,Mackenzie basin
+UMUS,Upper Muskwa River,,,,,,,Mackenzie basin
+UNAR,Upper Nass River,,,t,,t,,
+UNRS,Upper Nechako Reservoir,,,,,,,
+UNTH,Upper North Thompson River,,t,t,,f,,
+UNUR,Unuk River,,t,,,,,
+UOMI,Upper Omineca River,,,,,,,Mackenzie basin
+UPCE,Upper Peace River,,,,,,,Mackenzie basin
+UPET,Upper Petitot River,,,,,,,Mackenzie basin
+UPRO,Upper Prophet River,,,,,,,Mackenzie basin
+USHU,Upper Shuswap,,t,t,t,,t,
+USIK,Upper Sikanni Chief River,,,,,,,Mackenzie basin
+USKE,Upper Skeena River,,,t,t,t,,
+USTK,Upper Stikine River,,,,,t,,
+UTRE,Upper Trembleur Lake,,f,,t,f,,
+VICT,Victoria,,t,,f,t,,
+WILL,Willow River,,t,t,f,f,,
+WORC,Work Channel,,t,t,,t,,
+ZYMO,Zymoetz River,,t,t,,t,,

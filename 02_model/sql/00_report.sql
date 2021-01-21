@@ -326,6 +326,8 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as wct_slopeclass22_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.accessibility_model_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as wct_slopeclass30_km
 FROM {point_schema}.{point_table} a
+INNER JOIN bcfishpass.watershed_groups g
+ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 LEFT OUTER JOIN bcfishpass.streams s
 ON FWA_Upstream(
     a.blue_line_key,
@@ -347,7 +349,7 @@ LEFT OUTER JOIN spp_downstream spd
 ON a.{point_id} = spd.{point_id}
 LEFT OUTER JOIN grade b
 ON a.{point_id} = b.{point_id}
-WHERE a.watershed_group_code IN ('LNIC','BULK','ELKR','HORS')
+--WHERE a.watershed_group_code IN ('LNIC','BULK','ELKR','HORS')
 GROUP BY a.{point_id}, b.stream_order, b.gradient, b.stream_magnitude, b.upstream_area_ha, spd.species_codes, spu.species_codes
 )
 

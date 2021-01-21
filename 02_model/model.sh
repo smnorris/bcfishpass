@@ -1,18 +1,29 @@
 #!/bin/bash
 set -euxo pipefail
 
-# First, ensure that the latest lookup data is used
+# -----------
+# Load data (QA/fixes/latest PSCIS)
+# -----------
 # - modelled crossings fixes
 psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"
 psql -c "CREATE TABLE bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id integer, watershed_group_code text, reviewer text, structure text, notes text)"
 psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM '../01_prep/01_modelled_stream_crossings/data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id)"
-# - load pscis fixes and re-run scripts matching PSCIS points to streams
+# - load pscis / pscis fixes and re-run scripts matching PSCIS points to streams
 cd ../01_prep/02_pscis
+./load.sh
 ./pscis.sh
 cd ../../02_model
 
-# Now run model
+
+# -----------
+# Run model
+# -----------
+
+# Which watershed groups to process is encoded in watershed_groups.csv where include='t', load to db
+psql -c "DROP TABLE IF EXISTS bcfishpass.watershed_groups"
+psql -c "CREATE TABLE bcfishpass.watershed_groups (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, notes text)"
+psql -c "\copy bcfishpass.watershed_groups FROM 'data/watershed_groups.csv' delimiter ',' csv header"
 
 # create table for each type of definite (not generally fixable) barrier
 psql -f sql/barriers_majordams.sql
@@ -29,11 +40,18 @@ psql -f sql/barriers_other_definite.sql
 # create tables for cartographic use, merging barriers for specific scenarios into single tables
 psql -f sql/definitebarriers.sql
 
+# Create observations table with species of interest
+psql -f sql/observations.sql
+
 # note which have observations upstream
 python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
-# remove definite barriers in ELK that are below observations
+
+# remove definite barriers below observations for WCT
+# *TODO*
+# this assumes there are ONLY WCT observations in WCT groups - currently true
+# but may not be in the future
 psql -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE upstr_observation_id IS NOT NULL"
 
 # note minimal definite barriers
@@ -73,9 +91,6 @@ psql -f sql/barriers_anthropogenic.sql
 
 # Create output streams table
 psql -f sql/streams.sql
-
-# Create observations table with species of interest
-psql -f sql/observations.sql
 
 # break streams at observations
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.observations

@@ -44,12 +44,13 @@ SELECT
 FROM whse_fish.fiss_falls_events a
 INNER JOIN whse_basemapping.fwa_stream_networks_sp b
 ON a.linear_feature_id = b.linear_feature_id
+INNER JOIN bcfishpass.watershed_groups g
+ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 -- Horsefly known falls
 WHERE (a.fish_obstacle_point_ids && ARRAY[27481, 27482, 19653, 19565]
 -- plus everything >= 5m ?
 -- OR a.height >= 5
 )
-AND a.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ON CONFLICT DO NOTHING;
 
 

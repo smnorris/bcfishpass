@@ -20,7 +20,13 @@ WHERE
     dnstr_barriers_subsurfaceflow IS NULL AND
     dnstr_barriers_other_definite IS NULL AND
     dnstr_barriers_majordams IS NULL
-    AND watershed_group_code in ('HORS','BULK','LNIC');
+    AND watershed_group_code in
+    (
+        SELECT watershed_group_code
+        FROM bcfishpass.watershed_groups
+        WHERE include IS TRUE AND
+        (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
+    );
 
 UPDATE bcfishpass.streams
 SET accessibility_model_salmon = 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
@@ -38,7 +44,13 @@ WHERE
     dnstr_barriers_other_definite IS NULL AND
     dnstr_barriers_majordams IS NULL AND
     dnstr_barriers_anthropogenic IS NULL
-    AND watershed_group_code IN ('HORS','BULK','LNIC');
+    AND watershed_group_code IN
+    (
+        SELECT watershed_group_code
+        FROM bcfishpass.watershed_groups
+        WHERE include IS TRUE AND
+        (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
+    );
 
 -- STEELHEAD
 UPDATE bcfishpass.streams
@@ -50,7 +62,12 @@ WHERE
     dnstr_barriers_subsurfaceflow IS NULL AND
     dnstr_barriers_other_definite IS NULL AND
     dnstr_barriers_majordams IS NULL
-    AND watershed_group_code IN ('BULK','LNIC');
+    AND watershed_group_code IN
+    (
+        SELECT watershed_group_code
+        FROM bcfishpass.watershed_groups
+        WHERE include IS TRUE AND st IS TRUE
+    );
 
 UPDATE bcfishpass.streams
 SET accessibility_model_steelhead = 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
@@ -67,14 +84,23 @@ WHERE
     dnstr_barriers_other_definite IS NULL AND
     dnstr_barriers_majordams IS NULL AND
     dnstr_barriers_anthropogenic IS NULL
-    AND watershed_group_code IN ('BULK','LNIC');
-
+    AND watershed_group_code IN
+    (
+        SELECT watershed_group_code
+        FROM bcfishpass.watershed_groups
+        WHERE include IS TRUE AND st IS TRUE
+    );
 
 -- WESTSLOPE CUTTHROAT
 UPDATE bcfishpass.streams
 SET accessibility_model_wct = 'POTENTIALLY ACCESSIBLE'
 WHERE dnstr_barriers_wct IS NULL
-AND watershed_group_code = 'ELKR';
+AND watershed_group_code IN
+    (
+        SELECT watershed_group_code
+        FROM bcfishpass.watershed_groups
+        WHERE include IS TRUE AND wct IS TRUE
+    );
 
 UPDATE bcfishpass.streams
 SET accessibility_model_wct = 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
@@ -85,4 +111,9 @@ UPDATE bcfishpass.streams
 SET accessibility_model_wct = 'ACCESSIBLE'
 WHERE dnstr_barriers_wct IS NULL
 AND dnstr_barriers_anthropogenic IS NULL
-AND watershed_group_code = 'ELKR';
+AND watershed_group_code IN
+    (
+        SELECT watershed_group_code
+        FROM bcfishpass.watershed_groups
+        WHERE include IS TRUE AND wct IS TRUE
+    );

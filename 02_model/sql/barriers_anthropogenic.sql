@@ -47,24 +47,25 @@ INSERT INTO bcfishpass.barriers_anthropogenic
 )
 
 SELECT
-    aggregated_crossings_id as barriers_anthropogenic_id,
-    stream_crossing_id,
-    dam_id,
-    modelled_crossing_id,
-    crossing_source,
-    crossing_type,
-    crossing_name,
-    barrier_status,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM bcfishpass.crossings
+    c.aggregated_crossings_id as barriers_anthropogenic_id,
+    c.stream_crossing_id,
+    c.dam_id,
+    c.modelled_crossing_id,
+    c.crossing_source,
+    c.crossing_type,
+    c.crossing_name,
+    c.barrier_status,
+    c.linear_feature_id,
+    c.blue_line_key,
+    c.downstream_route_measure,
+    c.wscode_ltree,
+    c.localcode_ltree,
+    c.watershed_group_code,
+    c.geom
+FROM bcfishpass.crossings c
+INNER JOIN bcfishpass.watershed_groups g
+ON c.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE barrier_status IN ('BARRIER', 'POTENTIAL')
-AND watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ON CONFLICT DO NOTHING;
 
 
