@@ -185,6 +185,5 @@ python bcfishpass.py report bcfishpass.definitebarriers_salmon definitebarriers_
 python bcfishpass.py report bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.definitebarriers_steelhead dnstr_definitebarriers_steelhead_id
 python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
 
-# summary report
-mkdir -p reporting
-psql2csv < sql/reporting_summary.sql > reporting/summary.csv
+# call summary report - just to be sure that it syncs with any commits without having to remember to call it separately
+psql2csv < ../04_reporting/sql/watershed_summary.sql > ../04_reporting/reports/watershed_summary.csv
