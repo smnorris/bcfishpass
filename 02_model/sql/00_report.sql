@@ -349,7 +349,6 @@ LEFT OUTER JOIN spp_downstream spd
 ON a.{point_id} = spd.{point_id}
 LEFT OUTER JOIN grade b
 ON a.{point_id} = b.{point_id}
---WHERE a.watershed_group_code IN ('LNIC','BULK','ELKR','HORS')
 GROUP BY a.{point_id}, b.stream_order, b.gradient, b.stream_magnitude, b.upstream_area_ha, spd.species_codes, spu.species_codes
 )
 
