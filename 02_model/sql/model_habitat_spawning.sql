@@ -8,19 +8,27 @@ ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_sockeye b
 -- populate channel width from the measured/modelled data
 WITH cw AS
 (SELECT DISTINCT
+  s.wscode_ltree,
+  s.localcode_ltree,
   s.linear_feature_id,
-  CASE
-    WHEN w.channel_width_measured IS NOT NULL THEN w.channel_width_measured
-    ELSE w.channel_width_modelled
-  END AS channel_width
-FROM bcfishpass.channel_width w
-INNER JOIN bcfishpass.streams s
-ON s.wscode_ltree = w.wscode_ltree
-AND s.localcode_ltree = w.localcode_ltree
+  COALESCE(cw1.channel_width_measured, cw2.channel_width_modelled) as channel_width,
+  s.edge_type
+FROM bcfishpass.streams s
+LEFT OUTER JOIN bcfishpass.channel_width_measured cw1
+ON s.wscode_ltree = cw1.wscode_ltree
+AND s.localcode_ltree = cw1.localcode_ltree
+LEFT OUTER JOIN bcfishpass.channel_width_modelled cw2
+ON s.wscode_ltree = cw2.wscode_ltree
+AND s.localcode_ltree = cw2.localcode_ltree
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
+WHERE
+-- only watersheds where we have a model
+s.watershed_group_code in ('BULK','LNIC')
+-- don't model channel width on first order streams
+AND s.stream_order > 1
 -- only apply channel width to rivers and streams
-WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
 )
 
 UPDATE bcfishpass.streams s
@@ -47,7 +55,6 @@ WITH model AS
       s.channel_width <= ch.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_ch,
   CASE
     WHEN
@@ -56,7 +63,6 @@ WITH model AS
       s.channel_width <= co.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_co,
   CASE
     WHEN
@@ -65,7 +71,6 @@ WITH model AS
       s.channel_width <= sk.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_sk,
   CASE
     WHEN
@@ -74,7 +79,6 @@ WITH model AS
       s.channel_width <= st.spawn_channel_width_max AND
       s.accessibility_model_steelhead IS NOT NULL
     THEN true
-    ELSE false
   END AS spawn_st
 FROM bcfishpass.streams s
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat ch

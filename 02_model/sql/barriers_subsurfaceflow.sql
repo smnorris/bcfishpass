@@ -47,11 +47,12 @@ SELECT
         0
     ) as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
+INNER JOIN bcfishpass.watershed_groups g
+ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE s.edge_type IN (1410, 1425)
 AND s.local_watershed_code IS NOT NULL
 AND s.blue_line_key = s.watershed_key
 AND s.fwa_watershed_code NOT LIKE '999%%'
-AND s.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 -- Do not include subsurface flows on the Chilcotin at the Clusco.
 -- The subsurface flow is a side channel, the Chilcotin merges
 -- with the Clusco farther upstream

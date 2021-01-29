@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS bcfishpass.barriers_other_definite;
 CREATE TABLE bcfishpass.barriers_other_definite
 (
     barriers_other_definite_id serial primary key,
-    stream_crossing_id integer,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -22,7 +21,6 @@ CREATE TABLE bcfishpass.barriers_other_definite
 
 INSERT INTO bcfishpass.barriers_other_definite
 (
-    stream_crossing_id,
     barrier_type,
     linear_feature_id,
     blue_line_key,
@@ -34,7 +32,6 @@ INSERT INTO bcfishpass.barriers_other_definite
 )
 
 SELECT
-    e.stream_crossing_id,
     'PSCIS_NOT_ACCESSIBLE',
     e.linear_feature_id,
     e.blue_line_key,
@@ -46,9 +43,40 @@ SELECT
 FROM bcfishpass.pscis_events_sp e
 INNER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
+INNER JOIN bcfishpass.watershed_groups g
+ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE f.updated_barrier_result_code = 'NOT ACCESSIBLE'
-AND e.watershed_group_code IN ('HORS','LNIC','BULK','ELKR')
 ORDER BY e.stream_crossing_id
+ON CONFLICT DO NOTHING;
+
+INSERT INTO bcfishpass.barriers_other_definite
+(
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+)
+
+SELECT
+    a.barrier_type,
+    a.barrier_name,
+    s.linear_feature_id,
+    a.blue_line_key,
+    a.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.watershed_group_code,
+    ST_Force2D(FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
+FROM bcfishpass.misc_barriers a
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON a.blue_line_key = s.blue_line_key AND
+   a.downstream_route_measure > s.downstream_route_measure - .001 AND
+   a.downstream_route_measure + .001 < s.upstream_route_measure
 ON CONFLICT DO NOTHING;
 
 

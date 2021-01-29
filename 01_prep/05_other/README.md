@@ -1,4 +1,4 @@
-Load additional waterfalls compiled by CWF and match to streams:
+Load misc barriers and additional waterfalls compiled by CWF:
 
+    ./other.sh
 
-    ./falls.sh

@@ -1,5 +1,5 @@
-# Join fiss sample sites to nearest streams within 100m,
-# then finalize match by preferring the stream with matching watershed codes
+-- Join fiss sample sites to nearest streams within 100m,
+-- then finalize match by preferring the stream with matching watershed codes
 
 DROP TABLE IF EXISTS whse_fish.fiss_stream_sample_sites_events;
 

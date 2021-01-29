@@ -1,6 +1,7 @@
-# Summary reports
+# Report on model output
 
-Summarize accessible streams / habitat / etc per watershed group:
+Currently just one preliminary summary, reporting on spawning/rearing habitat.
 
+Run query and dump to csv:
 
-    ./accessible_habitat_wsg.sh
+    psql2csv < sql/watershed_summary.sql > reports/watershed_summary.csv

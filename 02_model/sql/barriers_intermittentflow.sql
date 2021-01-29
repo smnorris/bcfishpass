@@ -45,6 +45,8 @@ SELECT
         0
     ) as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
+INNER JOIN bcfishpass.watershed_groups g
+ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE s.feature_code = 'GA24850150'
 AND s.blue_line_key = s.watershed_key
 AND s.localcode_ltree IS NOT NULL

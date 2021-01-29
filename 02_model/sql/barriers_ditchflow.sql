@@ -45,11 +45,14 @@ SELECT
         0
     ) as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
+INNER JOIN bcfishpass.watershed_groups g
+ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE s.feature_code = 'GA08800110'
 AND s.blue_line_key = s.watershed_key
 AND s.localcode_ltree IS NOT NULL
-AND s.fwa_watershed_code NOT LIKE '999%%'
-AND s.watershed_group_code IN ('HORS','LNIC','BULK','ELKR');
+AND s.fwa_watershed_code NOT LIKE '999%%';
+
+
 
 CREATE INDEX ON bcfishpass.barriers_ditchflow (linear_feature_id);
 CREATE INDEX ON bcfishpass.barriers_ditchflow (blue_line_key);

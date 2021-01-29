@@ -17,3 +17,6 @@ ogr2ogr -f PostgreSQL \
 
 # match the dams to streams
 psql -f sql/cwf_waterfalls_additional.sql
+
+# load misc barriers
+psql -f sql/misc_barriers.sql
