@@ -128,7 +128,10 @@ SET
   watershed_key_50k = s.watershed_key_50k,
   watershed_group_code_50k = s.watershed_group_code_50k,
   feature_code = s.feature_code,
-  upstream_area_ha = s.upstream_area_ha
+  upstream_area_ha = s.upstream_area_ha,
+  upstream_lake_ha = s.upstream_lake_ha,
+  upstream_reservoir_ha = s.upstream_reservoir_ha,
+  upstream_wetland_ha = s.upstream_wetland_ha
 FROM whse_basemapping.fwa_stream_networks_sp s
 WHERE a.watershed_group_id IS NULL
   AND a.linear_feature_id = s.linear_feature_id;

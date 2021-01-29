@@ -35,6 +35,9 @@ CREATE TABLE bcfishpass.streams
   upstream_route_measure double precision GENERATED ALWAYS AS (downstream_route_measure +
     ST_Length (geom)) STORED,
   upstream_area_ha double precision,
+  upstream_lake_ha double precision,
+  upstream_reservoir_ha double precision,
+  upstream_wetland_ha double precision,
   geom geometry(LineStringZM,3005)
 );
 
@@ -68,6 +71,9 @@ INSERT INTO bcfishpass.streams
   watershed_group_code_50k,
   feature_code,
   upstream_area_ha,
+  upstream_lake_ha,
+  upstream_reservoir_ha,
+  upstream_wetland_ha,
   geom)
 SELECT
   s.linear_feature_id,
@@ -93,6 +99,9 @@ SELECT
   s.watershed_group_code_50k,
   s.feature_code,
   s.upstream_area_ha,
+  s.upstream_lake_ha,
+  s.upstream_reservoir_ha,
+  s.upstream_wetland_ha,
   s.geom
 FROM whse_basemapping.fwa_stream_networks_sp s
 INNER JOIN bcfishpass.watershed_groups g
@@ -113,4 +122,3 @@ CREATE INDEX ON bcfishpass.streams USING BTREE (wscode_ltree);
 CREATE INDEX ON bcfishpass.streams USING GIST (localcode_ltree);
 CREATE INDEX ON bcfishpass.streams USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.streams USING GIST (geom);
-

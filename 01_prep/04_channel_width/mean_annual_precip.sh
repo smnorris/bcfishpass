@@ -81,8 +81,8 @@ psql -c "DROP TABLE bcfishpass.mean_annual_precip_wsd_load"
 # Because there are streams (distinct watershed code / local code combinations) with no watershed polygon
 # (mostly in rivers) and we need MAP values for these too, generate them directly with the MAP raster
 # rather than joining to the watersheds
-psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_streams_load"
-psql -c "CREATE TABLE bcfishpass.mean_annual_precip_streams_load (wscode_ltree ltree, localcode_ltree ltree, watershed_group_code text, map numeric)"
+psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"
+psql -c "CREATE TABLE bcfishpass.mean_annual_precip_load (wscode_ltree ltree, localcode_ltree ltree, watershed_group_code text, map numeric)"
 psql -t -c "SELECT ST_AsGeoJSON(t.*)
     FROM (
     SELECT
@@ -105,7 +105,11 @@ psql -t -c "SELECT ST_AsGeoJSON(t.*)
   jq '.features[].properties | {wscode_ltree: .wscode_ltree, localcode_ltree: .localcode_ltree, watershed_group_code: .watershed_group_code, map: .value}' | \
   jq --slurp . | \
   in2csv -f json |
-  psql -c "\copy bcfishpass.mean_annual_precip_streams_load FROM STDIN delimiter ',' csv header"
+  psql -c "\copy bcfishpass.mean_annual_precip_load FROM STDIN delimiter ',' csv header"
 
 # finally, call sql that combines everything and calculates area-weighted avg MAP upstream of every stream segment
 psql -f sql/mean_annual_precip.sql
+
+# optionally drop the temp tables
+#psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
+#psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"

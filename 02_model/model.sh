@@ -50,7 +50,7 @@ python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_wct definiteba
 
 # remove definite barriers below observations for WCT
 # *TODO*
-# this assumes there are ONLY WCT observations in WCT groups - currently true
+# this assumes there are ONLY WCT observations in WCT groups - currently true...
 # but may not be in the future
 psql -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE upstr_observation_id IS NOT NULL"
 
