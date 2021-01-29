@@ -2,7 +2,53 @@
 
 The [BC Provincial Stream Crossing Information System](https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/land-based-investment/investment-categories/fish-passage) (PSCIS) monitors fish passage on road-stream crossings throughout British Columbia. These scripts index the crossings on the BC Freshwater Atlas stream network - creating an event table that permits upstream/downstream queries. This enables reporting on aquatic habitat potentially blocked by failed culverts.
 
-## Method / scripts
+## Matching PSCIS crossings to modelled crossings or streams
+
+PSCIS crossings (location based on GPS coordinates at site) need to be matched to the correct stream for priorization to work. Also, to avoid duplication when mapping and reporting on barriers, we need to match PSCIS crossings to modelled crossings.
+
+The scripts included match PSCIS points to streams an modelled crossings based primarily on minimum distance (with some minor checks). Because mapping is often not true to real world coordinates and GPS errors do occur, this is not good enough in many instances, a PSCIS barrier on a small trib can easily (and often) be snapped to a major river that happens to be closer to the PSCIS point. To reduce this issue, a manually built lookup table included to enforce the correct matching of PSCIS points to modelled crossings/streams.
+
+Edit this lookup [`data/pscis_modelledcrossings_streams_xref`](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is added or when errors in snapping are found.
+
+
+To enforce the correct match to a modelled crossing, add a row like this:
+
+
+| stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes |
+|--------------------|----------------------|-------------------|----------|---------------------------------- |
+|              197656|             1800071  |                   |       SN | Match based on assessor comments |
+
+
+To enforce the correct match to a stream (where no modelled crossing is present), add a row like this:
+
+
+| stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes         |
+|--------------------|----------------------|-------------------|----------|-----------------------------------------|
+|              3085  |                      | 17081483          |       SN | No modelled crossing, matched to stream |
+
+
+In cases where the PSCIS crossing is not on a mapped stream and should not be snapped to any stream, add a row like this:
+
+| stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes       |
+|--------------------|----------------------|-------------------|----------|---------------------------------------|
+|              2901  |                      |                   |       SN | No stream mapped at crossing location |
+
+
+Note that PSCIS crossings not on mapped streams will cannot be included in prioritization and habitat reporting.
+
+
+## Run scripts
+
+If latest PSCIS is not already loaded, get it from DataBC:
+
+    ./load.sh
+
+Match PSCIS points to streams:
+
+    ./pscis.sh
+
+
+## Method
 
 Each step noted matches the sql script / output table name:
 
@@ -35,15 +81,7 @@ The PSCIS feature retained is based on (in order of priority):
 7. **`pscis_points_duplicates`** For general QA of PSCIS features, create a report of all source crossing locations that are within 10m of another crossing location.
 
 
-## Run scripts
 
-Download PSCIS data from DataBC
-
-    ./load.sh
-
-Run above queries
-
-    ./pscis.sh
 
 ## Output table definition
 
