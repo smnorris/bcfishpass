@@ -8,33 +8,33 @@ PSCIS crossings (location based on GPS coordinates at site) need to be matched t
 
 The scripts included match PSCIS points to streams an modelled crossings based primarily on minimum distance (with some minor checks). Because mapping is often not true to real world coordinates and GPS errors do occur, this is not good enough in many instances, a PSCIS barrier on a small trib can easily (and often) be snapped to a major river that happens to be closer to the PSCIS point. To reduce this issue, a manually built lookup table included to enforce the correct matching of PSCIS points to modelled crossings/streams.
 
-Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is added or when errors in snapping are found.
+Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is added or when errors in snapping are found. Rows should be added in one of three patterns:
 
 
-To enforce the correct match to a modelled crossing, add a row like this:
+1. Force match of a PSCIS crossing to specific modelled crossing:
 
 
-| stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes |
-|--------------------|----------------------|-------------------|----------|---------------------------------- |
-|              197656|             1800071  |                   |       SN | Match based on assessor comments |
+    | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes |
+    |--------------------|----------------------|-------------------|----------|---------------------------------- |
+    |              197656|             1800071  |                   |       SN | Match based on assessor comments |
 
 
-To enforce the correct match to a stream (where no modelled crossing is present), add a row like this:
+2. Force match of a PSCIS crossing to a stream (where no modelled crossing is present):
 
 
-| stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes         |
-|--------------------|----------------------|-------------------|----------|-----------------------------------------|
-|              3085  |                      | 17081483          |       SN | No modelled crossing, matched to stream |
+    | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes         |
+    |--------------------|----------------------|-------------------|----------|-----------------------------------------|
+    |              3085  |                      | 17081483          |       SN | No modelled crossing, matched to stream |
 
 
-In cases where the PSCIS crossing is not on a mapped stream and should not be snapped to any stream, add a row like this:
+3. Force **no** match of PSCIS crossing to any FWA stream (there is no mapped stream that corresponds to the assessment):
 
-| stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes       |
-|--------------------|----------------------|-------------------|----------|---------------------------------------|
-|              2901  |                      |                   |       SN | No stream mapped at crossing location |
+    | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes       |
+    |--------------------|----------------------|-------------------|----------|---------------------------------------|
+    |              2901  |                      |                   |       SN | No stream mapped at crossing location |
 
 
-Note that PSCIS crossings not on mapped streams will cannot be included in prioritization and habitat reporting.
+Note that PSCIS crossings not on mapped streams are included in prioritization and habitat reporting.
 
 
 ## Run scripts
