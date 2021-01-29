@@ -6,7 +6,7 @@ The [BC Provincial Stream Crossing Information System](https://www2.gov.bc.ca/go
 
 PSCIS crossings (location based on GPS coordinates at site) need to be matched to the correct stream for priorization to work. Also, to avoid duplication when mapping and reporting on barriers, we need to match PSCIS crossings to modelled crossings.
 
-The scripts included match PSCIS points to streams an modelled crossings based primarily on minimum distance (with some minor checks). Because mapping is often not true to real world coordinates and GPS errors do occur, this is not good enough in many instances, a PSCIS barrier on a small trib can easily (and often) be snapped to a major river that happens to be closer to the PSCIS point. To reduce this issue, a manually built lookup table included to enforce the correct matching of PSCIS points to modelled crossings/streams.
+The scripts included match PSCIS points to streams and modelled crossings based primarily on minimum distance (with some basic checks). Because mapping is often not true to real world coordinates and GPS errors do occur, this is not good enough in many instances - a PSCIS barrier on a small tributary can easily (and often) be snapped to a major river that happens to be closer to the PSCIS point. To eliminate this issue, a manually built lookup table is included to enforce the correct matching of PSCIS points to modelled crossings or streams.
 
 Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is added or when errors in snapping are found. Rows should be added in one of three patterns:
 
