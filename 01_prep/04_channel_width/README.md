@@ -76,7 +76,23 @@ Indexes:
     "channel_width_measured_wscode_ltree_idx1" btree (wscode_ltree)
 ```
 
-
+```
+Table "bcfishpass.channel_width_modelled"
+         Column         |       Type       | Collation | Nullable |                                   Default
+------------------------+------------------+-----------+----------+-----------------------------------------------------------------------------
+ channel_width_id       | integer          |           | not null | nextval('bcfishpass.channel_width_modelled_channel_width_id_seq'::regclass)
+ wscode_ltree           | ltree            |           |          |
+ localcode_ltree        | ltree            |           |          |
+ watershed_group_code   | text             |           |          |
+ channel_width_modelled | double precision |           |          |
+Indexes:
+    "channel_width_modelled_pkey" PRIMARY KEY, btree (channel_width_id)
+    "channel_width_modelled_wscode_ltree_localcode_ltree_key" UNIQUE CONSTRAINT, btree (wscode_ltree, localcode_ltree)
+    "channel_width_modelled_localcode_ltree_idx" gist (localcode_ltree)
+    "channel_width_modelled_localcode_ltree_idx1" btree (localcode_ltree)
+    "channel_width_modelled_wscode_ltree_idx" gist (wscode_ltree)
+    "channel_width_modelled_wscode_ltree_idx1" btree (wscode_ltree)
+    ```
 
 
 
