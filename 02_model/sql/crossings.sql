@@ -74,10 +74,6 @@ LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
--- only include PSCIS crossings within the watershed groups of interest for now
--- (there are some in the HARR group that fall on the fraser)
-INNER JOIN bcfishpass.watershed_groups g
-ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 ORDER BY e.stream_crossing_id
 ON CONFLICT DO NOTHING;
 
@@ -116,9 +112,6 @@ SELECT
     d.watershed_group_code,
     ST_Force2D((st_Dump(d.geom)).geom)
 FROM bcfishpass.bcdams_events d
--- include only watershed groups of interest
-INNER JOIN bcfishpass.watershed_groups g
-ON d.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
 -- ignore dams on side channels for this exercise
@@ -163,9 +156,6 @@ SELECT
     b.watershed_group_code,
     ST_Force2D((ST_Dump(b.geom)).geom) as geom
 FROM bcfishpass.modelled_stream_crossings b
--- include only watershed groups of interest
-INNER JOIN bcfishpass.watershed_groups g
-ON b.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN bcfishpass.pscis_events_sp p
