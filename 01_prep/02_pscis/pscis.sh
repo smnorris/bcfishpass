@@ -17,8 +17,5 @@ psql -c "\copy bcfishpass.pscis_barrier_result_fixes FROM 'data/pscis_barrier_re
 psql -f sql/01_pscis_points_all.sql
 psql -f sql/02_pscis_events_prelim1.sql
 psql -f sql/03_pscis_events_prelim2.sql
-psql -f sql/04_pscis_model_match_pts.sql
-psql -f sql/05_pscis_events_prelim3.sql
-psql -f sql/06_pscis_events.sql
-psql -f sql/07_pscis_points_duplicates.sql
-psql -f sql/08_cleanup.sql
+psql -f sql/04_pscis_events.sql
+psql -f sql/05_pscis_points_duplicates.sql

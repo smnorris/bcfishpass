@@ -1,4 +1,4 @@
--- match PSCIS points to closest stream within 100m
+-- Match PSCIS points to all distinct streams (blue lines) within 200m
 
 DROP TABLE IF EXISTS bcfishpass.pscis_events_prelim1;
 
@@ -38,43 +38,29 @@ WITH candidates AS
     WHERE str.localcode_ltree IS NOT NULL
     AND NOT str.wscode_ltree <@ '999'
     ORDER BY str.geom <-> pt.geom
-    LIMIT 100) as nn
-  WHERE nn.distance_to_stream < 100
-),
-
-bluelines AS
-(SELECT DISTINCT ON (stream_crossing_id, blue_line_key)
-  stream_crossing_id,
-  blue_line_key,
-  distance_to_stream
-FROM candidates
-ORDER BY stream_crossing_id, blue_line_key, distance_to_stream
+    LIMIT 20) as nn
+  WHERE nn.distance_to_stream < 200
 )
 
-SELECT
-  bluelines.stream_crossing_id,
-  candidates.linear_feature_id,
-  candidates.wscode_ltree,
-  candidates.localcode_ltree,
-  candidates.fwa_watershed_code,
-  candidates.local_watershed_code,
-  bluelines.blue_line_key,
-  --(ST_LineLocatePoint(candidates.geom,
-  --                     ST_ClosestPoint(candidates.geom, pts.geom))
-  --   * candidates.length_metre) + candidates.downstream_route_measure
-  --  AS downstream_route_measure,
-  -- reference the point to the stream, making output measure an integer
-  -- (ensuring point measure is between stream's downtream measure and upstream measure)
-  CEIL(GREATEST(candidates.downstream_route_measure, FLOOR(LEAST(candidates.upstream_route_measure,
-  (ST_LineLocatePoint(candidates.geom, ST_ClosestPoint(candidates.geom, pts.geom)) * candidates.length_metre) + candidates.downstream_route_measure
+SELECT DISTINCT ON (stream_crossing_id, blue_line_key)
+  c.stream_crossing_id,
+  c.linear_feature_id,
+  c.wscode_ltree,
+  c.localcode_ltree,
+  c.fwa_watershed_code,
+  c.local_watershed_code,
+  c.blue_line_key,
+  CEIL(
+    GREATEST(c.downstream_route_measure,
+      FLOOR(
+        LEAST(c.upstream_route_measure,
+          (ST_LineLocatePoint(c.geom, ST_ClosestPoint(c.geom, pts.geom)) * c.length_metre) + c.downstream_route_measure
   )))) as downstream_route_measure,
-  candidates.distance_to_stream,
-  candidates.watershed_group_code
-FROM bluelines
-INNER JOIN candidates ON bluelines.stream_crossing_id = candidates.stream_crossing_id
-AND bluelines.blue_line_key = candidates.blue_line_key
-AND bluelines.distance_to_stream = candidates.distance_to_stream
-INNER JOIN bcfishpass.pscis_points_all pts ON bluelines.stream_crossing_id = pts.stream_crossing_id;
+  c.distance_to_stream,
+  c.watershed_group_code
+FROM candidates c
+INNER JOIN bcfishpass.pscis_points_all pts ON c.stream_crossing_id = pts.stream_crossing_id
+ORDER BY c.stream_crossing_id, c.blue_line_key, c.distance_to_stream;
 
 CREATE INDEX ON bcfishpass.pscis_events_prelim1 (stream_crossing_id);
 CREATE INDEX ON bcfishpass.pscis_events_prelim1 (linear_feature_id);
