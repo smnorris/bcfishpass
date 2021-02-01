@@ -17,6 +17,7 @@ CREATE TABLE bcfishpass.channel_width_measured
   watershed_group_code text,
   stream_order integer,
   stream_magnitude integer,
+  gradient double precision,
   upstream_area_ha double precision,
   upstream_lake_ha double precision,
   upstream_reservoir_ha double precision,
@@ -127,6 +128,7 @@ WITH update_vals AS
     a.localcode_ltree,
     max(b.stream_order) AS stream_order,
     max(b.stream_magnitude) AS stream_magnitude,
+    avg(b.gradient) AS gradient,
     max(b.upstream_area_ha) AS upstream_area_ha,
     max(b.upstream_lake_ha) AS upstream_lake_ha,
     max(b.upstream_reservoir_ha) AS upstream_reservoir_ha,
@@ -143,6 +145,7 @@ UPDATE bcfishpass.channel_width_measured cw
 SET
   stream_order = u.stream_order,
   stream_magnitude = u.stream_magnitude,
+  gradient = u.gradient,
   upstream_area_ha = COALESCE(u.upstream_area_ha, 0),
   upstream_lake_ha = COALESCE(u.upstream_lake_ha, 0),
   upstream_reservoir_ha = COALESCE(u.upstream_reservoir_ha, 0),

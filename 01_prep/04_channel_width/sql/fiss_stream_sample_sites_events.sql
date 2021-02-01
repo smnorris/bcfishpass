@@ -11,7 +11,7 @@ WITH pts AS
 FROM whse_fish.fiss_stream_sample_sites_sp as pt
 INNER JOIN whse_basemapping.fwa_watershed_groups_poly wsd
 ON ST_Intersects(pt.geom, wsd.geom)
-WHERE wsd.watershed_group_code IN ('LNIC','HORS','BULK','ELKR')
+WHERE wsd.watershed_group_code IN ('LNIC','HORS','BULK','ELKR','MORR')
 ),
 
 -- match pts to closest 10 streams within 100m
