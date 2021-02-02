@@ -19,6 +19,7 @@ CREATE TABLE bcfishpass.crossings
     -- interpret these as best as possible in this script
     crossing_source text,  -- pscis/dam/model
     crossing_type text,    -- road (and type/tenure)/rail/trail/dam
+    wcrp_type text,        -- simplified crossing_type
 
     -- names...
     pscis_road_name text,
@@ -438,6 +439,19 @@ AND (f.structure IS NULL OR COALESCE(f.structure, 'CBS') = 'OBS')  -- don't incl
 AND p.stream_crossing_id IS NULL  -- don't include PSCIS crossings
 ORDER BY modelled_crossing_id
 ON CONFLICT DO NOTHING;
+
+
+-- populate the wcrp_type column from crossing_type
+UPDATE bcfishpass.barriers_anthropogenic
+SET wcrp_type = 'RAIL' WHERE crossing_type = 'RAILWAY';
+UPDATE bcfishpass.barriers_anthropogenic
+SET wcrp_type = 'DAM' WHERE crossing_type = 'DAM';
+UPDATE bcfishpass.barriers_anthropogenic
+SET wcrp_type = 'TRAIL' WHERE crossing_type = 'DRA, TRAIL';
+UPDATE bcfishpass.barriers_anthropogenic
+SET wcrp_type = 'ROAD, DEMOGRAPHIC' WHERE crossing_type IN ('DRA, RUNWAY', 'DRA, DEMOGRAPHIC');
+UPDATE bcfishpass.barriers_anthropogenic
+SET wcrp_type = 'ROAD, OTHER' WHERE crossing_type IN ('OIL AND GAS ROAD','DRA, RECREATION','DRA, RESOURCE/OTHER') OR crossing_type LIKE 'FTEN%';
 
 
 -- --------------------------------
