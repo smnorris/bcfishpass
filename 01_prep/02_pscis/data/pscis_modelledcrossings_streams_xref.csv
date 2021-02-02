@@ -3504,6 +3504,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 197668,1805608,,NJO,Matched to closest Crossing
 197669,,,NJO,No modelled crossing - Not a reference matching
 197656,1800071,,SN,Match based on assessor notes and map review
-50095,4605747,,AI,Very little potential habitat upstream for cutthrout (>25% in 25m).
-50090,4602849,,AI,"If this is the mainstem, habitat upstream at bridge appears mod to high value."
-50110,4605506,,AI,No habitat modelled upstream
+50095,4605747,,AI,Matched to closest stream model (Manual Review)
+50090,4602849,,AI,Matched to closest stream model (Manual Review)
+50110,4605506,,AI,Matched to closest stream model (Manual Review)
