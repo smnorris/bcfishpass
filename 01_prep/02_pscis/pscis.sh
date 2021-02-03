@@ -5,13 +5,24 @@ set -euxo pipefail
 # this matches all PSCIS crossings (as of July 2020) to streams/modelled crossings where possible
 # null values indicate that the PSCIS crossing does not match to a FWA stream
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref"
-psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref (stream_crossing_id integer primary key, modelled_crossing_id integer, linear_feature_id integer, reviewer text, notes text)"
+psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
+        (stream_crossing_id integer primary key,
+         modelled_crossing_id integer,
+         linear_feature_id integer,
+         watershed_group_code text,
+         reviewer text,
+         notes text)"
 psql -c "\copy bcfishpass.pscis_modelledcrossings_streams_xref FROM 'data/pscis_modelledcrossings_streams_xref.csv' delimiter ',' csv header"
 
 # load the CWF generated PSCIS fixes table
 # (noting OBS barriers, non-accessible streams etc)
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_barrier_result_fixes"
-psql -c "CREATE TABLE bcfishpass.pscis_barrier_result_fixes (stream_crossing_id integer, watershed_group_code text, updated_barrier_result_code text, reviewer text, notes text)"
+psql -c "CREATE TABLE bcfishpass.pscis_barrier_result_fixes (
+         stream_crossing_id integer,
+         updated_barrier_result_code text,
+         watershed_group_code text,
+         reviewer text,
+         notes text)"
 psql -c "\copy bcfishpass.pscis_barrier_result_fixes FROM 'data/pscis_barrier_result_fixes.csv' delimiter ',' csv header"
 
 psql -f sql/01_pscis_points_all.sql
