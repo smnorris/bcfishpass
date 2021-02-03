@@ -110,6 +110,7 @@ psql -t -c "SELECT ST_AsGeoJSON(t.*)
 # finally, call sql that combines everything and calculates area-weighted avg MAP upstream of every stream segment
 psql -f sql/mean_annual_precip.sql
 
-# optionally drop the temp tables
+# optionally, drop the temp tables and raster
 #psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
 #psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"
+#rm mean_annual_precip.tif*
