@@ -563,6 +563,9 @@ WHERE p.{point_id} = r.{point_id};
 
 -- finally, calculate and populate upstream length stats for below addtional upstream barriers
 -- (this is the total at the given point as already calculated, minus the total on all points immediately upstream of the point)
+-- NOTE - this has to be re-run separately for bcfishpass.crossings because it includes a mixture of passable/barriers,
+-- and not all tables we run this report on will have the barrier_status column
+-- see 00_report_crossings_obs_belowupstrbarriers.sql
 WITH report AS
 (SELECT
   a.{point_id},
@@ -608,6 +611,7 @@ WITH report AS
   ROUND(COALESCE((a.wct_slopeclass15_km - SUM(b.wct_slopeclass15_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass15_km,
   ROUND(COALESCE((a.wct_slopeclass22_km - SUM(b.wct_slopeclass22_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass22_km,
   ROUND(COALESCE((a.wct_slopeclass30_km - SUM(b.wct_slopeclass30_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass30_km,
+
   ROUND(COALESCE((a.ch_spawning_km - SUM(b.ch_spawning_km)), 0)::numeric, 2) ch_spawning_belowupstrbarriers_km  ,
   ROUND(COALESCE((a.ch_rearing_km - SUM(b.ch_rearing_km)), 0)::numeric, 2) ch_rearing_belowupstrbarriers_km  ,
   ROUND(COALESCE((a.co_spawning_km - SUM(b.co_spawning_km)), 0)::numeric, 2) co_spawning_belowupstrbarriers_km  ,

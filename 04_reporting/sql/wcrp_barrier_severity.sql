@@ -7,8 +7,8 @@ WITH wcrp_types AS
     ELSE 'NOT ASSESSED'
   END AS assessment_status,
   CASE
-    WHEN crossing_source = 'MODEL' AND barrier_status = 'PASSABLE' THEN 'MODELLED AS PASSABLE'
-    WHEN crossing_source = 'MODEL' AND barrier_status = 'POTENTIAL' THEN 'MODELLED AS POTENTIAL'
+    WHEN crossing_source = 'MODELLED CROSSINGS' AND barrier_status = 'PASSABLE' THEN 'MODELLED AS PASSABLE' -- barrier status comes from model and QA, us it rather than crossing
+    WHEN crossing_source = 'MODELLED CROSSINGS' AND barrier_status = 'POTENTIAL' THEN 'MODELLED AS POTENTIAL'
     ELSE barrier_status
   END AS barrier_status,
   wcrp_barrier_type

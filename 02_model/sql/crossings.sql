@@ -15,16 +15,20 @@ CREATE TABLE bcfishpass.crossings
     stream_crossing_id integer UNIQUE,
     dam_id integer UNIQUE,
     modelled_crossing_id integer UNIQUE,
+    crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
 
-    -- various types
-    crossing_type_code text,              -- crossing type as per PSCIS - CBS/OBS/OTHER/DAM - taken from PSCIS/model/dams
+    -- basic crossing status/info - use PSCIS where available, insert model info where no PSCIS
+    pscis_status text,            -- ASSESSED/HABITAT CONFIRMATION etc
+    crossing_type_code text,              -- PSCIS info plus model info CBS/OBS/OTHER
     crossing_subtype_code text,           -- PSCIS crossing subtype info (BRIDGE, FORD, ROUND etc)
     modelled_crossing_type_source text[], -- what data source(s) indicate that a modelled crossing is OBS
-    crossing_source text,                 -- pscis/dam/model
+    barrier_status text,
+
+    -- CWF WCRP specific types (rail/road/trail/dam)
     wcrp_barrier_type_detailed text,      -- road tenure type details plus rail/trail/dam
     wcrp_barrier_type text,               -- simplified wcrp crossing type (road demographic, road forest/other, trail, dam)
 
-    -- names...
+    -- names where available
     pscis_road_name text,
     dra_road_name text,
     rail_owner_name text,
@@ -35,9 +39,8 @@ CREATE TABLE bcfishpass.crossings
     ften_client_number text,
     ften_client_name text,
     ften_life_cycle_status_code text,
+    -- NOTE we could insert ogc tenure data here too but ogc roads are not a priority at the moment
 
-    -- we could insert ogc tenure data here too but ogc roads are not a priority at the moment
-    barrier_status text,
     linear_feature_id integer,
     blue_line_key integer,
     downstream_route_measure double precision,
@@ -58,10 +61,14 @@ INSERT INTO bcfishpass.crossings
 (
     stream_crossing_id,
     modelled_crossing_id,
+
+    crossing_source,
+    pscis_status,
     crossing_type_code,
     crossing_subtype_code,
     modelled_crossing_type_source,
-    crossing_source,
+    barrier_status,
+
     wcrp_barrier_type_detailed,
     pscis_road_name,
     dra_road_name,
@@ -70,7 +77,6 @@ INSERT INTO bcfishpass.crossings
     ften_client_number,
     ften_client_name,
     ften_life_cycle_status_code,
-    barrier_status,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -83,13 +89,16 @@ INSERT INTO bcfishpass.crossings
 SELECT
     e.stream_crossing_id,
     e.modelled_crossing_id,
+    'PSCIS' AS crossing_source,
+    e.pscis_status,
     e.current_crossing_type_code as crossing_type_code,
     e.current_crossing_subtype_code as crossing_subtype_code,
     CASE
       WHEN mf.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
       ELSE m.modelled_crossing_type_source
     END AS modelled_crossing_type_source,
-    'PSCIS' AS crossing_source,
+    COALESCE(f.updated_barrier_result_code, e.current_barrier_result_code) as barrier_status, -- use manually updated barrier result code if available
+
     -- type = rail/trail/forest road/ogc road/public road/dam - this all comes from modelled crossings
     CASE
       WHEN m.railway_track_id IS NOT NULL THEN 'RAILWAY'
@@ -131,7 +140,6 @@ SELECT
     ften.client_number as ften_client_number,
     ften.client_name as ften_client_name,
     ften.life_cycle_status_code as ften_life_cycle_status_code,
-    COALESCE(f.updated_barrier_result_code, e.current_barrier_result_code) as barrier_status, -- use manually updated barrier result code if available
     e.linear_feature_id,
     e.blue_line_key,
     e.downstream_route_measure,
@@ -265,8 +273,10 @@ INSERT INTO bcfishpass.crossings
 (
     stream_crossing_id,
     crossing_source,
+    pscis_status,
     crossing_type_code,
     crossing_subtype_code,
+    barrier_status,
     wcrp_barrier_type_detailed,
     pscis_road_name,
     dra_road_name,
@@ -275,7 +285,6 @@ INSERT INTO bcfishpass.crossings
     ften_client_number,
     ften_client_name,
     ften_life_cycle_status_code,
-    barrier_status,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -288,8 +297,10 @@ INSERT INTO bcfishpass.crossings
 SELECT DISTINCT ON (stream_crossing_id)
     r.stream_crossing_id,
     'PSCIS' AS crossing_source,
+    e.pscis_status,
     e.current_crossing_type_code as crossing_type_code,
     e.current_crossing_subtype_code as crossing_subtype_code,
+    COALESCE(f.updated_barrier_result_code, e.current_barrier_result_code) as barrier_status, -- use manually updated barrier result code if available
     r.wcrp_barrier_type_detailed,
     a.road_name as pscis_road_name,
     r.dra_road_name,
@@ -298,7 +309,6 @@ SELECT DISTINCT ON (stream_crossing_id)
     r.ften_client_name,
     r.ften_life_cycle_status_code,
     r.rail_owner_name,
-    COALESCE(f.updated_barrier_result_code, e.current_barrier_result_code) as barrier_status, -- use manually updated barrier result code if available
     e.linear_feature_id,
     e.blue_line_key,
     e.downstream_route_measure,
@@ -325,9 +335,9 @@ INSERT INTO bcfishpass.crossings
     crossing_source,
     crossing_type_code,
     crossing_subtype_code,
+    barrier_status,
     wcrp_barrier_type_detailed,
     dam_name,
-    barrier_status,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -341,12 +351,12 @@ SELECT
     'BCDAMS' as crossing_source,
     'DAM' AS crossing_type_code,
     'DAM' AS crossing_subtype_code,
-    'DAM' AS wcrp_barrier_type_detailed,
-    d.dam_name as dam_name,
     CASE
       WHEN UPPER(d.barrier_ind) = 'Y' THEN 'BARRIER'
       WHEN UPPER(d.barrier_ind) = 'N' THEN 'PASSABLE'
     END AS barrier_status,
+    'DAM' AS wcrp_barrier_type_detailed,
+    d.dam_name as dam_name,
     d.linear_feature_id,
     d.blue_line_key,
     d.downstream_route_measure,
@@ -371,9 +381,10 @@ ON CONFLICT DO NOTHING;
 INSERT INTO bcfishpass.crossings
 (
     modelled_crossing_id,
-    modelled_crossing_type_source,
     crossing_source,
+    modelled_crossing_type_source,
     crossing_type_code,
+    barrier_status,
     wcrp_barrier_type_detailed,
     dra_road_name,
     ften_forest_file_id,
@@ -381,7 +392,6 @@ INSERT INTO bcfishpass.crossings
     ften_client_name,
     ften_life_cycle_status_code,
     rail_owner_name,
-    barrier_status,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -393,12 +403,18 @@ INSERT INTO bcfishpass.crossings
 
 SELECT
     b.modelled_crossing_id,
+    'MODELLED CROSSINGS' as crossing_source,
     CASE
       WHEN f.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
       ELSE b.modelled_crossing_type_source
     END AS modelled_crossing_type_source,
-    'MODELLED CROSSINGS' as crossing_source,
-    b.modelled_crossing_type as crossing_type_code,
+    COALESCE(f.structure, b.modelled_crossing_type) as crossing_type_code,
+    -- POTENTIAL is default for modelled CBS crossings
+    -- assign PASSABLE if modelled as OBS or if the fix indicates it is OBS
+    CASE
+      WHEN modelled_crossing_type = 'CBS' AND COALESCE(f.structure, 'CBS') != 'OBS' THEN 'POTENTIAL'
+      WHEN modelled_crossing_type = 'OBS' OR COALESCE(f.structure, 'CBS') = 'OBS' THEN 'PASSABLE'
+    END AS barrier_status,
     -- type = rail/trail/forest road/ogc road/public road/dam - this all comes from modelled crossings
     CASE
       WHEN b.railway_track_id IS NOT NULL THEN 'RAILWAY'
@@ -432,17 +448,13 @@ SELECT
            b.og_road_segment_permit_id IS NULL AND
            b.og_petrlm_dev_rd_pre06_pub_id IS NULL AND
            dra.transport_line_type_code IN ('RR','RR1') THEN 'DRA, RUNWAY'
-    END AS crossing_type,
+    END AS wcrp_barrier_type_detailed,
     dra.structured_name_1 as dra_road_name,
     ften.forest_file_id as ften_forest_file_id,
     ften.client_number as ften_client_number,
     ften.client_name as ften_client_name,
     ften.life_cycle_status_code as ften_life_cycle_status_code,
     rail.owner_name AS rail_owner_name,
-    CASE
-      WHEN modelled_crossing_type = 'CBS' AND COALESCE(f.structure, 'CBS') != 'OBS' THEN 'POTENTIAL'
-      WHEN modelled_crossing_type = 'OBS' OR COALESCE(f.structure, 'CBS') = 'OBS' THEN 'PASSABLE'
-    END AS barrier_status,
     b.linear_feature_id,
     b.blue_line_key,
     b.downstream_route_measure,

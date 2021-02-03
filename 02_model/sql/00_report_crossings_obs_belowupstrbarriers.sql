@@ -44,7 +44,20 @@ WITH report AS
   ROUND(COALESCE((a.wct_slopeclass08_km - SUM(b.wct_slopeclass08_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass08_km,
   ROUND(COALESCE((a.wct_slopeclass15_km - SUM(b.wct_slopeclass15_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass15_km,
   ROUND(COALESCE((a.wct_slopeclass22_km - SUM(b.wct_slopeclass22_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass22_km,
-  ROUND(COALESCE((a.wct_slopeclass30_km - SUM(b.wct_slopeclass30_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass30_km
+  ROUND(COALESCE((a.wct_slopeclass30_km - SUM(b.wct_slopeclass30_km)), 0)::numeric, 2) wct_belowupstrbarriers_slopeclass30_km,
+
+  ROUND(COALESCE((a.ch_spawning_km - SUM(b.ch_spawning_km)), 0)::numeric, 2) ch_spawning_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.ch_rearing_km - SUM(b.ch_rearing_km)), 0)::numeric, 2) ch_rearing_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.co_spawning_km - SUM(b.co_spawning_km)), 0)::numeric, 2) co_spawning_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.co_rearing_km - SUM(b.co_rearing_km)), 0)::numeric, 2) co_rearing_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.sk_spawning_km - SUM(b.sk_spawning_km)), 0)::numeric, 2) sk_spawning_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.sk_rearing_km - SUM(b.sk_rearing_km)), 0)::numeric, 2) sk_rearing_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.st_spawning_km - SUM(b.st_spawning_km)), 0)::numeric, 2) st_spawning_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.st_rearing_km - SUM(b.st_rearing_km)), 0)::numeric, 2) st_rearing_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.all_spawning_km - SUM(b.all_spawning_km)), 0)::numeric, 2) all_spawning_belowupstrbarriers_km,
+  ROUND(COALESCE((a.all_rearing_km - SUM(b.all_rearing_km)), 0)::numeric, 2) all_rearing_belowupstrbarriers_km  ,
+  ROUND(COALESCE((a.all_spawningrearing_km - SUM(b.all_spawningrearing_km)), 0)::numeric, 2) all_spawningrearing_belowupstrbarriers_km
+
 FROM bcfishpass.crossings a
 INNER JOIN bcfishpass.crossings b
 ON a.aggregated_crossings_id = b.dnstr_crossings[1]
@@ -95,6 +108,18 @@ SET
   wct_belowupstrbarriers_slopeclass08_km = r.wct_belowupstrbarriers_slopeclass08_km,
   wct_belowupstrbarriers_slopeclass15_km = r.wct_belowupstrbarriers_slopeclass15_km,
   wct_belowupstrbarriers_slopeclass22_km = r.wct_belowupstrbarriers_slopeclass22_km,
-  wct_belowupstrbarriers_slopeclass30_km = r.wct_belowupstrbarriers_slopeclass30_km
+  wct_belowupstrbarriers_slopeclass30_km = r.wct_belowupstrbarriers_slopeclass30_km,
+
+  ch_spawning_belowupstrbarriers_km = r.ch_spawning_belowupstrbarriers_km,
+  ch_rearing_belowupstrbarriers_km = r.ch_rearing_belowupstrbarriers_km,
+  co_spawning_belowupstrbarriers_km = r.co_spawning_belowupstrbarriers_km,
+  co_rearing_belowupstrbarriers_km = r.co_rearing_belowupstrbarriers_km,
+  sk_spawning_belowupstrbarriers_km = r.sk_spawning_belowupstrbarriers_km,
+  sk_rearing_belowupstrbarriers_km = r.sk_rearing_belowupstrbarriers_km,
+  st_spawning_belowupstrbarriers_km = r.st_spawning_belowupstrbarriers_km,
+  st_rearing_belowupstrbarriers_km = r.st_rearing_belowupstrbarriers_km,
+  all_spawning_belowupstrbarriers_km = r.all_spawning_belowupstrbarriers_km,
+  all_rearing_belowupstrbarriers_km = r.all_rearing_belowupstrbarriers_km,
+  all_spawningrearing_belowupstrbarriers_km = r.all_spawningrearing_belowupstrbarriers_km
 FROM report r
 WHERE p.aggregated_crossings_id = r.aggregated_crossings_id;
