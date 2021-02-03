@@ -6,6 +6,7 @@ CREATE TABLE bcfishpass.pscis_events_sp
  stream_crossing_id       integer  PRIMARY KEY ,
  modelled_crossing_id     integer              ,
  pscis_status             text                 ,
+ current_crossing_type_code    character varying(10) ,
  current_crossing_subtype_code    character varying(10) ,
  current_barrier_result_code text              ,
  distance_to_stream       double precision     ,
@@ -46,6 +47,7 @@ SELECT
     THEN 'HABITAT CONFIRMATION'
     ELSE p.current_pscis_status
   END AS pscis_status,
+  p.current_crossing_type_code,
   p.current_crossing_subtype_code,
   p.current_barrier_result_code
 FROM bcfishpass.pscis_modelledcrossings_streams_xref lut
@@ -83,6 +85,7 @@ referenced_streams AS
       THEN 'HABITAT CONFIRMATION'
       ELSE p.current_pscis_status
     END AS pscis_status,
+    p.current_crossing_type_code,
     p.current_crossing_subtype_code,
     p.current_barrier_result_code
   FROM bcfishpass.pscis_modelledcrossings_streams_xref lut
@@ -115,6 +118,7 @@ INSERT INTO bcfishpass.pscis_events_sp
 (stream_crossing_id,
  modelled_crossing_id,
  pscis_status,
+ current_crossing_type_code,
  current_crossing_subtype_code,
  current_barrier_result_code,
  distance_to_stream,
@@ -130,6 +134,7 @@ SELECT
  stream_crossing_id,
  modelled_crossing_id,
  pscis_status,
+ current_crossing_type_code,
  current_crossing_subtype_code,
  current_barrier_result_code,
  distance_to_stream,
@@ -216,6 +221,7 @@ INSERT INTO bcfishpass.pscis_events_sp
  watershed_group_code,
  stream_match_score,
  pscis_status,
+ current_crossing_type_code,
  current_crossing_subtype_code,
  current_barrier_result_code,
  geom
@@ -236,6 +242,7 @@ SELECT
     THEN 'HABITAT CONFIRMATION'
     ELSE pa.current_pscis_status
   END AS pscis_status,
+  pa.current_crossing_type_code,
   pa.current_crossing_subtype_code,
   pa.current_barrier_result_code,
   ST_Force2D(FWA_LocateAlong(p.blue_line_key, p.downstream_route_measure)) as geom

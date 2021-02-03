@@ -74,3 +74,23 @@ UPDATE bcfishpass.modelled_stream_crossings x
 SET modelled_crossing_type = 'CBS'
 WHERE modelled_crossing_type IS NULL;
 
+-- remove any duplicates from the crossing_type_source array
+WITH de_duped AS
+(
+  SELECT
+    modelled_crossing_id,
+    array_agg(modelled_crossing_type_source) AS modelled_crossing_type_source
+  FROM
+  (
+    SELECT DISTINCT
+      modelled_crossing_id, unnest(modelled_crossing_type_source) as modelled_crossing_type_source
+    FROM bcfishpass.modelled_stream_crossings
+    ORDER BY modelled_crossing_id, modelled_crossing_type_source
+  ) as f
+  GROUP BY modelled_crossing_id
+)
+
+UPDATE bcfishpass.modelled_stream_crossings x
+SET modelled_crossing_type_source = d.modelled_crossing_type_source
+FROM de_duped d
+WHERE x.modelled_crossing_id = d.modelled_crossing_id;

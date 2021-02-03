@@ -16,10 +16,13 @@ CREATE TABLE bcfishpass.crossings
     dam_id integer UNIQUE,
     modelled_crossing_id integer UNIQUE,
 
-    -- interpret these as best as possible in this script
-    crossing_source text,  -- pscis/dam/model
-    crossing_type text,    -- road (and type/tenure)/rail/trail/dam
-    wcrp_type text,        -- simplified crossing_type
+    -- various types
+    crossing_type_code text,              -- crossing type as per PSCIS - CBS/OBS/OTHER/DAM - taken from PSCIS/model/dams
+    crossing_subtype_code text,           -- PSCIS crossing subtype info (BRIDGE, FORD, ROUND etc)
+    modelled_crossing_type_source text[], -- what data source(s) indicate that a modelled crossing is OBS
+    crossing_source text,                 -- pscis/dam/model
+    wcrp_barrier_type_detailed text,      -- road tenure type details plus rail/trail/dam
+    wcrp_barrier_type text,               -- simplified wcrp crossing type (road demographic, road forest/other, trail, dam)
 
     -- names...
     pscis_road_name text,
@@ -55,8 +58,11 @@ INSERT INTO bcfishpass.crossings
 (
     stream_crossing_id,
     modelled_crossing_id,
+    crossing_type_code,
+    crossing_subtype_code,
+    modelled_crossing_type_source,
     crossing_source,
-    crossing_type,
+    wcrp_barrier_type_detailed,
     pscis_road_name,
     dra_road_name,
     rail_owner_name,
@@ -77,6 +83,12 @@ INSERT INTO bcfishpass.crossings
 SELECT
     e.stream_crossing_id,
     e.modelled_crossing_id,
+    e.current_crossing_type_code as crossing_type_code,
+    e.current_crossing_subtype_code as crossing_subtype_code,
+    CASE
+      WHEN mf.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
+      ELSE m.modelled_crossing_type_source
+    END AS modelled_crossing_type_source,
     'PSCIS' AS crossing_source,
     -- type = rail/trail/forest road/ogc road/public road/dam - this all comes from modelled crossings
     CASE
@@ -111,7 +123,7 @@ SELECT
            m.og_road_segment_permit_id IS NULL AND
            m.og_petrlm_dev_rd_pre06_pub_id IS NULL AND
            dra.transport_line_type_code IN ('RR','RR1') THEN 'DRA, RUNWAY'
-    END AS crossing_type,
+    END AS wcrp_barrier_type_detailed,
     a.road_name as pscis_road_name,
     dra.structured_name_1 as dra_road_name,
     rail.owner_name AS rail_owner_name,
@@ -134,6 +146,8 @@ LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN bcfishpass.modelled_stream_crossings m
 ON e.modelled_crossing_id = m.modelled_crossing_id
+LEFT OUTER JOIN bcfishpass.modelled_stream_crossings_fixes mf
+ON m.modelled_crossing_id = mf.modelled_crossing_id
 LEFT OUTER JOIN whse_basemapping.gba_railway_tracks_sp rail
 ON m.railway_track_id = rail.railway_track_id
 LEFT OUTER JOIN whse_basemapping.transport_line dra
@@ -157,7 +171,7 @@ WITH rail AS
   FROM bcfishpass.pscis_events_sp as pt
   CROSS JOIN LATERAL
   (SELECT
-     'RAILWAY' as crossing_type,
+     'RAILWAY' as wcrp_barrier_type_detailed,
      owner_name as rail_owner_name,
      NULL as dra_road_name,
      NULL as ften_forest_file_id,
@@ -188,7 +202,7 @@ dra as
         WHEN transport_line_type_code IN ('RDN','RRS','RRD','RU','RRN') THEN 'DRA, RESOURCE/OTHER'
         WHEN transport_line_type_code IN ('T','TD','TR','TS') THEN 'DRA, TRAIL'
         WHEN transport_line_type_code IN ('RR','RR1') THEN 'DRA, RUNWAY'
-      END AS crossing_type,
+      END AS wcrp_barrier_type_detailed,
      structured_name_1,
      ST_Distance(rd.geom, pt.geom) as distance_to_road
    FROM whse_basemapping.transport_line AS rd
@@ -207,7 +221,7 @@ ften as (
   FROM bcfishpass.pscis_events_sp as pt
   CROSS JOIN LATERAL
   (SELECT
-    'FTEN, '||UPPER(file_type_description) as crossing_type,
+    'FTEN, '||UPPER(file_type_description) as wcrp_barrier_type_detailed,
      forest_file_id,
      client_number,
      client_name,
@@ -228,7 +242,7 @@ roads AS
 (
   SELECT
    COALESCE(a.stream_crossing_id, b.stream_crossing_id) as stream_crossing_id,
-   COALESCE(b.crossing_type, a.crossing_type) as crossing_type, -- ften type is preferred
+   COALESCE(b.wcrp_barrier_type_detailed, a.wcrp_barrier_type_detailed) as wcrp_barrier_type_detailed, -- ften type is preferred
    NULL as rail_owner_name,
    a.structured_name_1 as dra_road_name,
    b.forest_file_id as ften_forest_file_id,
@@ -251,7 +265,9 @@ INSERT INTO bcfishpass.crossings
 (
     stream_crossing_id,
     crossing_source,
-    crossing_type,
+    crossing_type_code,
+    crossing_subtype_code,
+    wcrp_barrier_type_detailed,
     pscis_road_name,
     dra_road_name,
     rail_owner_name,
@@ -272,7 +288,9 @@ INSERT INTO bcfishpass.crossings
 SELECT DISTINCT ON (stream_crossing_id)
     r.stream_crossing_id,
     'PSCIS' AS crossing_source,
-    r.crossing_type,
+    e.current_crossing_type_code as crossing_type_code,
+    e.current_crossing_subtype_code as crossing_subtype_code,
+    r.wcrp_barrier_type_detailed,
     a.road_name as pscis_road_name,
     r.dra_road_name,
     r.ften_forest_file_id,
@@ -305,7 +323,9 @@ INSERT INTO bcfishpass.crossings
 (
     dam_id,
     crossing_source,
-    crossing_type,
+    crossing_type_code,
+    crossing_subtype_code,
+    wcrp_barrier_type_detailed,
     dam_name,
     barrier_status,
     linear_feature_id,
@@ -319,7 +339,9 @@ INSERT INTO bcfishpass.crossings
 SELECT
     d.dam_id,
     'BCDAMS' as crossing_source,
-    'DAM' AS crossing_type,
+    'DAM' AS crossing_type_code,
+    'DAM' AS crossing_subtype_code,
+    'DAM' AS wcrp_barrier_type_detailed,
     d.dam_name as dam_name,
     CASE
       WHEN UPPER(d.barrier_ind) = 'Y' THEN 'BARRIER'
@@ -349,8 +371,10 @@ ON CONFLICT DO NOTHING;
 INSERT INTO bcfishpass.crossings
 (
     modelled_crossing_id,
+    modelled_crossing_type_source,
     crossing_source,
-    crossing_type,
+    crossing_type_code,
+    wcrp_barrier_type_detailed,
     dra_road_name,
     ften_forest_file_id,
     ften_client_number,
@@ -369,7 +393,12 @@ INSERT INTO bcfishpass.crossings
 
 SELECT
     b.modelled_crossing_id,
+    CASE
+      WHEN f.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
+      ELSE b.modelled_crossing_type_source
+    END AS modelled_crossing_type_source,
     'MODELLED CROSSINGS' as crossing_source,
+    b.modelled_crossing_type as crossing_type_code,
     -- type = rail/trail/forest road/ogc road/public road/dam - this all comes from modelled crossings
     CASE
       WHEN b.railway_track_id IS NOT NULL THEN 'RAILWAY'
@@ -441,17 +470,17 @@ ORDER BY modelled_crossing_id
 ON CONFLICT DO NOTHING;
 
 
--- populate the wcrp_type column from crossing_type
+-- populate the more general wcrp_barrier_type column
 UPDATE bcfishpass.crossings
-SET wcrp_type = 'RAIL' WHERE crossing_type = 'RAILWAY';
+SET wcrp_barrier_type = 'RAIL' WHERE wcrp_barrier_type_detailed = 'RAILWAY';
 UPDATE bcfishpass.crossings
-SET wcrp_type = 'DAM' WHERE crossing_type = 'DAM';
+SET wcrp_barrier_type = 'DAM' WHERE wcrp_barrier_type_detailed = 'DAM';
 UPDATE bcfishpass.crossings
-SET wcrp_type = 'TRAIL' WHERE crossing_type = 'DRA, TRAIL';
+SET wcrp_barrier_type = 'TRAIL' WHERE wcrp_barrier_type_detailed = 'DRA, TRAIL';
 UPDATE bcfishpass.crossings
-SET wcrp_type = 'ROAD, DEMOGRAPHIC' WHERE crossing_type IN ('DRA, RUNWAY', 'DRA, DEMOGRAPHIC');
+SET wcrp_barrier_type = 'ROAD, DEMOGRAPHIC' WHERE wcrp_barrier_type_detailed IN ('DRA, RUNWAY', 'DRA, DEMOGRAPHIC');
 UPDATE bcfishpass.crossings
-SET wcrp_type = 'ROAD, OTHER' WHERE crossing_type IN ('OIL AND GAS ROAD','DRA, RECREATION','DRA, RESOURCE/OTHER') OR crossing_type LIKE 'FTEN%';
+SET wcrp_barrier_type = 'ROAD, OTHER' WHERE wcrp_barrier_type_detailed IN ('OIL AND GAS ROAD','DRA, RECREATION','DRA, RESOURCE/OTHER') OR wcrp_barrier_type_detailed LIKE 'FTEN%';
 
 
 -- --------------------------------
