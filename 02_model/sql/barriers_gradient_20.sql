@@ -30,7 +30,7 @@ INSERT INTO bcfishpass.barriers_gradient_20
 )
 -- ensure that points are unique so that when splitting streams,
 -- we don't generate zero length lines
-SELECT DISTINCT ON (blue_line_key, round(downstream_route_measure::numeric, 2))
+SELECT DISTINCT ON (blue_line_key, round(b.downstream_route_measure::numeric, 2))
     'GRADIENT_20' as barrier_type,
     b.linear_feature_id,
     b.blue_line_key,
@@ -42,10 +42,13 @@ SELECT DISTINCT ON (blue_line_key, round(downstream_route_measure::numeric, 2))
 FROM cwf.gradient_barriers b
 INNER JOIN bcfishpass.watershed_groups g
 ON b.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
+LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
+ON b.blue_line_key = p.blue_line_key
+AND b.downstream_route_measure <= p.downstream_route_measure
+AND b.upstream_route_measure > p.downstream_route_measure
 WHERE b.threshold = .20
--- spot manual QA of gradient barriers
-AND b.linear_feature_id != 701934669 -- odd point on Salmon River that looks like a data error
-ORDER BY blue_line_key, round(downstream_route_measure::numeric, 2)
+AND p.blue_line_key IS NULL -- don't include any that get matched to passable table
+ORDER BY blue_line_key, round(b.downstream_route_measure::numeric, 2)
 ON CONFLICT DO NOTHING;
 
 CREATE INDEX ON bcfishpass.barriers_gradient_20 (linear_feature_id);
