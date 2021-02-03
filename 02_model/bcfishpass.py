@@ -81,7 +81,7 @@ def add_downstream_ids(
         [
             g[0]
             for g in db.query(
-                f"SELECT DISTINCT watershed_group_CODE from {schema_a}.{table_a}"
+                f"SELECT DISTINCT watershed_group_code from {schema_a}.{table_a}"
             )
         ]
     )
