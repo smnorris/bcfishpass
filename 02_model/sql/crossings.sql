@@ -442,15 +442,15 @@ ON CONFLICT DO NOTHING;
 
 
 -- populate the wcrp_type column from crossing_type
-UPDATE bcfishpass.barriers_anthropogenic
+UPDATE bcfishpass.crossings
 SET wcrp_type = 'RAIL' WHERE crossing_type = 'RAILWAY';
-UPDATE bcfishpass.barriers_anthropogenic
+UPDATE bcfishpass.crossings
 SET wcrp_type = 'DAM' WHERE crossing_type = 'DAM';
-UPDATE bcfishpass.barriers_anthropogenic
+UPDATE bcfishpass.crossings
 SET wcrp_type = 'TRAIL' WHERE crossing_type = 'DRA, TRAIL';
-UPDATE bcfishpass.barriers_anthropogenic
+UPDATE bcfishpass.crossings
 SET wcrp_type = 'ROAD, DEMOGRAPHIC' WHERE crossing_type IN ('DRA, RUNWAY', 'DRA, DEMOGRAPHIC');
-UPDATE bcfishpass.barriers_anthropogenic
+UPDATE bcfishpass.crossings
 SET wcrp_type = 'ROAD, OTHER' WHERE crossing_type IN ('OIL AND GAS ROAD','DRA, RECREATION','DRA, RESOURCE/OTHER') OR crossing_type LIKE 'FTEN%';
 
 
