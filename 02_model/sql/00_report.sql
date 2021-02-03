@@ -118,6 +118,9 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS all_rearing_be
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS all_spawningrearing_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS all_spawningrearing_belowupstrbarriers_km double precision;
 
+-- map tile used for generating pdf planning maps
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS dbm_mof_50k_grid text;
+
 COMMENT ON COLUMN {point_schema}.{point_table}.stream_order IS 'Order of FWA stream at point';
 COMMENT ON COLUMN {point_schema}.{point_table}.stream_magnitude IS 'Magnitude of FWA stream at point';
 COMMENT ON COLUMN {point_schema}.{point_table}.gradient IS 'Stream slope at point';
@@ -235,6 +238,7 @@ COMMENT ON COLUMN {point_schema}.{point_table}.all_rearing_km IS 'Length of stre
 COMMENT ON COLUMN {point_schema}.{point_table}.all_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential rearing habitat (all CH,CO,SK,ST)';
 COMMENT ON COLUMN {point_schema}.{point_table}.all_spawningrearing_km IS 'Length of all spawning and rearing habitat upstream of point';
 COMMENT ON COLUMN {point_schema}.{point_table}.all_spawningrearing_belowupstrbarriers_km IS 'Length of all spawning and rearing habitat upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.dbm_mof_50k_grid IS 'WHSE_BASEMAPPING.DBM_MOF_50K_GRID map_tile_display_name, used for generating planning map pdfs';
 
 
 
@@ -677,6 +681,23 @@ SET
   all_spawning_belowupstrbarriers_km = r.all_spawning_belowupstrbarriers_km,
   all_rearing_belowupstrbarriers_km = r.all_rearing_belowupstrbarriers_km,
   all_spawningrearing_belowupstrbarriers_km = r.all_spawningrearing_belowupstrbarriers_km
-
 FROM report r
 WHERE p.{point_id} = r.{point_id};
+
+
+
+-- also, populate map tile column
+WITH tile AS
+(
+    SELECT
+      a.{point_id},
+      b.map_tile_display_name
+    FROM {point_schema}.{point_table} a
+    INNER JOIN whse_basemapping.dbm_mof_50k_grid b
+    ON ST_Intersects(a.geom, b.geom)
+)
+
+UPDATE {point_schema}.{point_table} p
+SET dbm_mof_50k_grid = t.map_tile_display_name
+FROM tile t
+WHERE p.{point_id} = t.{point_id};
