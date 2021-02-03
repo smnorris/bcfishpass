@@ -106,12 +106,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50087,4606205,,,
 50088,24700390,,,
 50089,,,,
-50090,,706879645,,
 50091,,706879468,,
 50092,4602846,,,
 50093,4605870,,,
 50094,4602021,,SN,matched to nearest modelled crossing within 15m (instream)
-50095,,706880116,,
 50096,24706676,,,
 50098,4605512,,,
 50099,,,,
@@ -125,7 +123,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50107,4601087,,SN,matched to nearest modelled crossing within 15m (instream)
 50108,4602022,,,
 50109,4601898,,SN,matched to nearest modelled crossing within 15m (instream)
-50110,,706872809,,
 50111,4606898,,,
 50113,4603530,,,
 50114,4602747,,,
@@ -3504,6 +3501,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 197668,1805608,,NJO,Matched to closest Crossing
 197669,,,NJO,No modelled crossing - Not a reference matching
 197656,1800071,,SN,Match based on assessor notes and map review
-50095,4605747,,AI,Matched to closest stream model (Manual Review)
-50090,4602849,,AI,Matched to closest stream model (Manual Review)
-50110,4605506,,AI,Matched to closest stream model (Manual Review)
+50095,4605747,,AI,Matched to closest modelled crossing (Manual Review)
+50090,4602849,,AI,Matched to closest modelled crossing (Manual Review)
+50110,4605506,,AI,Matched to closest modelled crossing (Manual Review)
