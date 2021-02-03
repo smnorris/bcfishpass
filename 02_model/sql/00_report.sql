@@ -1,10 +1,17 @@
 -- add the reporting columns
 
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_dnstr text[];
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_upstr text[];
+
+-- stream characteristics, accessibility model status
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS stream_order integer;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS stream_magnitude integer;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS gradient double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS accessibility_model_salmon    text;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS accessibility_model_steelhead text;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS accessibility_model_wct       text;
+
+-- upstream/downstream reporting
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_dnstr text[];
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_upstr text[];
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS watershed_upstr_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_network_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_stream_km double precision;
@@ -124,6 +131,9 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS dbm_mof_50k_gr
 COMMENT ON COLUMN {point_schema}.{point_table}.stream_order IS 'Order of FWA stream at point';
 COMMENT ON COLUMN {point_schema}.{point_table}.stream_magnitude IS 'Magnitude of FWA stream at point';
 COMMENT ON COLUMN {point_schema}.{point_table}.gradient IS 'Stream slope at point';
+COMMENT ON COLUMN {point_schema}.{point_table}.accessibility_model_salmon IS 'Modelled accessibility to Salmon (15% max)';
+COMMENT ON COLUMN {point_schema}.{point_table}.accessibility_model_steelhead IS 'Modelled accessibility to Steelhead (20% max)';
+COMMENT ON COLUMN {point_schema}.{point_table}.accessibility_model_wct IS 'Modelled accessibility to West Slope Cutthroat Trout (20% max or downstream of known WCT observation)';     ;
 COMMENT ON COLUMN {point_schema}.{point_table}.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
 COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_dnstr IS 'Fish species observed downstream of point (on the same stream/blue_line_key)';
 COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_upstr IS 'Fish species observed anywhere upstream of point';
@@ -246,6 +256,8 @@ COMMENT ON COLUMN {point_schema}.{point_table}.dbm_mof_50k_grid IS 'WHSE_BASEMAP
 
 -- run the report, updating new columns in existing table
 
+
+
 -- first, calculate linear stats
 WITH
 spp_downstream AS
@@ -301,6 +313,9 @@ SELECT
   s.gradient,
   s.stream_order,
   s.stream_magnitude,
+  s.accessibility_model_salmon,
+  s.accessibility_model_steelhead,
+  s.accessibility_model_wct,
   s.upstream_area_ha
 FROM {point_schema}.{point_table} a
 INNER JOIN bcfishpass.streams s
@@ -316,6 +331,9 @@ report AS
   b.stream_order,
   b.stream_magnitude,
   b.gradient,
+  b.accessibility_model_salmon,
+  b.accessibility_model_steelhead,
+  b.accessibility_model_wct,
   b.upstream_area_ha AS watershed_upstr_ha,
   spd.species_codes as observedspp_dnstr,
   spu.species_codes as observedspp_upstr,
@@ -433,7 +451,17 @@ LEFT OUTER JOIN spp_downstream spd
 ON a.{point_id} = spd.{point_id}
 LEFT OUTER JOIN grade b
 ON a.{point_id} = b.{point_id}
-GROUP BY a.{point_id}, b.stream_order, b.gradient, b.stream_magnitude, b.upstream_area_ha, spd.species_codes, spu.species_codes
+GROUP BY
+  a.{point_id},
+  b.stream_order,
+  b.gradient,
+  b.stream_magnitude,
+  b.accessibility_model_salmon,
+  b.accessibility_model_steelhead,
+  b.accessibility_model_wct,
+  b.upstream_area_ha,
+  spd.species_codes,
+  spu.species_codes
 )
 
 UPDATE {point_schema}.{point_table} p
@@ -443,6 +471,9 @@ SET
   stream_order = r.stream_order,
   stream_magnitude = r.stream_magnitude,
   gradient = r.gradient,
+  accessibility_model_salmon = r.accessibility_model_salmon,
+  accessibility_model_steelhead = r.accessibility_model_steelhead,
+  accessibility_model_wct = r.accessibility_model_wct,
   watershed_upstr_ha = r.watershed_upstr_ha,
   total_network_km = r.total_network_km,
   total_stream_km = r.total_stream_km,
