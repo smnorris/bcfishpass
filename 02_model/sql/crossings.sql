@@ -97,7 +97,11 @@ SELECT
       WHEN mf.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
       ELSE m.modelled_crossing_type_source
     END AS modelled_crossing_type_source,
-    COALESCE(f.updated_barrier_result_code, e.current_barrier_result_code) as barrier_status, -- use manually updated barrier result code if available
+    CASE
+      WHEN f.updated_barrier_result_code IN ('PASSABLE','POTENTIAL','BARRIER') -- use manually updated barrier result code if available (but filter out NOT ACCESSIBLE)
+      THEN f.updated_barrier_result_code
+      ELSE  e.current_barrier_result_code as barrier_status
+    END as barrier_status,
 
     -- type = rail/trail/forest road/ogc road/public road/dam - this all comes from modelled crossings
     CASE
