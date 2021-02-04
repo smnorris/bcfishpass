@@ -107,7 +107,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50088,24700390,706877674,,
 50089,,,,
 50090,,706879645,,
-50091,,706879468,,
+50091,4602549,706879468,NJO, Matched to nearest crossing
 50092,4602846,706879645,,
 50093,4605870,706878590,,
 50094,4602021,706880130,SN,matched to nearest modelled crossing within 15m (instream)
@@ -118,9 +118,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50100,4605505,706873689,,
 50101,4605484,706873501,,
 50102,4605498,706873467,,
-50103,,706873880,,
+50103,,,NJO, No modelled crossing present
 50104,4605496,706873577,SN,matched to nearest modelled crossing within 15m (instream)
-50105,,706873604,,
+50105,,,NJO, No modelled crossing present 
 50106,,,,
 50107,4601087,706871838,SN,matched to nearest modelled crossing within 15m (instream)
 50108,4602022,706871506,,
@@ -132,11 +132,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50115,4600519,706875064,,
 50116,4602831,706875925,SN,matched to nearest modelled crossing within 15m (instream)
 50117,4602830,706875581,,
-50254,,706839455,,
+50254,4600357,706839455,NJO,matched to closest stream
 50118,4601990,706875925,SN,matched to nearest modelled crossing within 15m (instream)
 50119,24706543,706874027,,
 50120,4606602,706862786,,
-50122,,706875188,NJO,Not on a mapped stream - Review?
+50122,24706652,706875188,NJO, Matched to closest stream 
 50123,,,,
 50124,4605468,706877341,,
 50125,4605470,706879015,,
@@ -154,8 +154,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50138,4603696,706859920,,
 50139,4603677,706860052,,
 50140,4602664,706860764,,
-50141,,706861182,,
-50142,,706859911,,
+50141,,,NJO, No modelled crossing present 
+50142,,,NJO, No modelled crossing present
 50143,4603461,706859657,,
 50144,4603709,706862494,,
 50145,4603705,706863781,,
@@ -201,13 +201,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50186,24727446,706852369,SN,matched to nearest modelled crossing within 15m (instream)
 50187,,,,
 50188,4605564,706850820,,
-50189,,706850820,,
+50189,,,NJO, Not on a mapped stream
 50190,,,,
 50191,4605568,706851127,,
 50192,4605563,706850354,,
 50193,4605566,706849240,,
 50194,4605569,706848612,SN,matched to nearest modelled crossing within 15m (instream)
-50195,,706848218,,
+50195,,706848218,NJO,3 PISCES point for 1 crossing
 50197,24706511,706848215,,
 50198,4606969,706847621,,
 50199,4600211,706847491,,
@@ -263,9 +263,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50259,4607146,706842805,,
 50260,4606166,706843357,,
 50261,4607458,706843732,,
-50262,,706842975,,
+50262,,,NJO, Not on modelled stream 
 50263,4601915,706842975,,
-50264,,706841862,,
+50264,,,NJO, Not on modelled stream
 50265,,,,
 50266,4601381,706836345,SN,matched to nearest modelled crossing within 15m (instream)
 50267,4600351,706836881,SN,matched to nearest modelled crossing within 15m (instream)
@@ -275,7 +275,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 50271,24706514,706838079,,
 50273,4600365,706834784,,
 50274,4600363,706834630,,
-50275,,706836561,,
+50275,,,NJO, Not on a modelled stream
 50276,4602457,706836320,SN,matched to nearest modelled crossing within 15m (instream)
 50277,4602457,706836320,SN,matched to nearest modelled crossing within 15m (instream)
 50278,4601382,706836345,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1273,20 +1273,20 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 61513,4600215,706821389,,
 61514,,,NJO, Not on a modelled stream
 61515,4605253,706822234,,
-61516,,706822352,,
+61516,,,NJO, Not on a modelled stream
 61517,4605249,706823819,SN,matched to nearest modelled crossing within 15m (instream)
 61518,4605251,706823268,,
 61519,4603124,706822484,,
 61520,4600601,706822036,,
-61521,,706822040,,
+61521,,,NJO, No modelled crossing
 61522,4600602,706821435,,
 61523,4600600,706821387,,
-61524,,706821771,,
+61524,,,NJO, Not on a modelled stream
 61525,4600599,706821771,,
 61526,4603147,706823536,,
 61527,4605740,706823394,SN,matched to nearest modelled crossing within 15m (instream)
-61528,,706822185,,
-61529,,706822185,,
+61528,,,NJO, Not on a modelled stream
+61529,,,NJO, Not on a modelled stream
 61531,4605820,706822486,,
 61602,4605384,706818444,,
 61603,4605390,706818444,,
@@ -1296,7 +1296,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 61607,4605314,706818726,,
 61608,4605389,706818579,,
 61609,4605289,706819142,,
-61610,,706819142,,
+61610,,,NJO, Not on a modelled stream
 61611,4605287,706819232,,
 61612,4605287,706819232,SN,matched to nearest modelled crossing within 15m (instream)
 61613,4605286,706819386,,
@@ -1304,7 +1304,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 61615,4605776,706819593,,
 61616,24706679,706819770,,
 61617,4606315,706820128,,
-61618,,706819916,,
+61618,,,NJO, Not on a modelled stream
 61619,4605425,706820116,,
 61620,4606324,706820610,,
 61621,4605423,706820441,,
@@ -1328,7 +1328,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62121,4607459,706854722,,
 62122,4607466,706856885,,
 62123,4606968,706855043,,
-62124,,706849740,,
+62124,,706849740,NJO, No modelled crossings within vicinity 
 62125,,,,
 62126,,,,
 62127,,,,
@@ -1344,14 +1344,14 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62138,4601677,706849279,,
 62140,4602558,706849388,,
 62141,,,,
-62142,,706849632,,
+62142,,,NJO, Not on modelled stream
 62144,4602579,706849632,SN,matched to nearest modelled crossing within 15m (instream)
 62145,4605746,706849388,,
 62146,4606489,706849738,,
 62147,24700389,706850008,,
 62148,4606499,706849740,,
 62149,4602568,706849740,,
-62150,,706849390,,
+62150,,,NJO, Not on modelled stream
 62151,4601684,706849632,SN,matched to nearest modelled crossing within 15m (instream)
 62152,4605278,706818367,,
 62153,,,,
@@ -1361,7 +1361,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62157,,,,
 62158,4605282,706817984,,
 62159,24706510,706817701,,
-62161,,706817162,,
+62161,,,NJO,Not on modelled stream 
 62162,4600221,706820491,,
 62163,4600220,706820761,,
 62164,,,,
@@ -1389,7 +1389,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62223,4605662,706801738,,
 62224,4605650,706801748,,
 62225,4605682,706802080,,
-62226,,706802531,,
+62226,,,NJO, Potential duplicate?
 62227,4606960,706802517,,
 62228,4605680,706801995,,
 62229,4606961,706801974,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1406,7 +1406,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62240,4605682,706802080,SN,matched to nearest modelled crossing within 15m (instream)
 62241,,,,
 62242,,,,
-62243,,706802481,,
+62243,,,NJO, Not on modelled stream
 62244,4605728,706801756,SN,matched to nearest modelled crossing within 15m (instream)
 62245,,,,
 62246,,,,
@@ -1414,7 +1414,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62248,,,,
 62249,4605684,706803496,,
 62250,4605659,706803498,,
-62251,,706802481,,
+62251,,,NJO, Not on modelled stream
 62252,4605719,706802430,,
 62253,4605672,706803769,,
 62254,4605642,706803865,,
@@ -1445,7 +1445,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62279,,,,
 62281,4605703,706804473,,
 62282,4605690,706804555,,
-62283,,706804807,,
+62283,,,NJO, not on mapped stream - potential duplicate?
 62284,4605694,706804807,,
 62285,,,,
 62286,,,,
@@ -1464,7 +1464,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62300,4605323,706806629,,
 62301,4605316,706806732,,
 62302,,,NJO,Not on a mapped stream
-62303,,706806743,,
+62303,,,NJO,Not on a mapped stream 
 62304,,,,
 62305,,,,
 62306,,,,
@@ -1479,18 +1479,18 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62416,4600504,706823561,,
 62417,4602963,706823105,,
 62419,24707142,706829918,,
-62420,,706829680,,
+62420,,,NJO,Not on mapped dstream 
 62421,4602266,706830097,,
 62422,4602883,706829735,,
 62423,4601130,706829538,,
 62424,4605607,706829482,SN,matched to nearest modelled crossing within 15m (instream)
-62425,,706829482,,
+62425,,,NJO, No modelled crossing in vicinity
 62426,,706829410,, Unsure Review
 62427,4606419,706829355,,
 62428,4606417,706829220,SN,matched to nearest modelled crossing within 15m (instream)
 62429,,706829220,, Unsure Review 
 62430,4601164,706828975,,
-62432,,706830380,,
+62432,,,NJO,Not on modelled stream 
 62433,4602294,706830626,,
 62434,4601140,706830815,,
 62435,,,,
@@ -1506,7 +1506,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 62491,4607006,706839561,SN,matched to nearest modelled crossing within 15m (instream)
 62492,,,,
 62494,4602536,706828805,SN,matched to nearest modelled crossing within 15m (instream)
-62495,,706828916,,
+62495,,,NJO,Not on modelled stream
 62496,4602535,706828916,,
 62499,4601150,706828203,,
 62500,,,,
@@ -1541,7 +1541,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 102984,,,,
 102987,,,,
 102988,,,,
-102989,,706835685,,
+102989,,,NJO, Not on a mapped stream 
 102990,4601443,706834916,,
 102991,,,,
 102992,4602433,706835921,,
@@ -1556,18 +1556,18 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 103004,4600359,706839796,,
 103006,4607456,706841270,,
 103007,4607167,706841951,,
-103008,,706840673,,
+103008,,,NJO, Not on a mapped stream 
 103009,4607460,706842593,,
 103010,4607562,706842374,,
 103011,,,,
 103012,,,,
-103013,,706843359,,
-103014,,706843359,,
+103013,,,NJO,Not on a mapped stream
+103014,,,NJO,Not on a mapped stream 
 103015,,,NJO, Not on a mapped stream
 103017,4600117,706837345,,
 103019,24706516,706839650,SN,matched to nearest modelled crossing within 15m (instream)
 103022,4606191,706843078,,
-103024,,706840348,,
+103024,4605962,706840348,NJO,matched to closest stream 
 103025,24706694,706836068,SN,matched to nearest modelled crossing within 15m (instream)
 103032,4606361,706851834,,
 103033,4602340,706852809,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1607,7 +1607,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,reviewer,notes
 112333,4606301,706832400,,
 112334,4606298,706832542,,
 112335,,,,
-112336,,706832864,,
+112336,4606292,706832864,NJO,Matched to closest Crossing 
 112337,4606616,706832657,,
 112338,,,,
 112339,4606303,706833347,,
