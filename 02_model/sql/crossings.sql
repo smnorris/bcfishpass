@@ -18,29 +18,34 @@ CREATE TABLE bcfishpass.crossings
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
 
     -- basic crossing status/info - use PSCIS where available, insert model info where no PSCIS
-    pscis_status text,            -- ASSESSED/HABITAT CONFIRMATION etc
-    crossing_type_code text,              -- PSCIS info plus model info CBS/OBS/OTHER
-    crossing_subtype_code text,           -- PSCIS crossing subtype info (BRIDGE, FORD, ROUND etc)
-    modelled_crossing_type_source text[], -- what data source(s) indicate that a modelled crossing is OBS
-    barrier_status text,
+    pscis_status text,                    -- ASSESSED/HABITAT CONFIRMATION etc
+    crossing_type_code text,              -- PSCIS crossing_type_code where available, model CBS/OBS otherwise
+    crossing_subtype_code text,           -- PSCIS crossing_subtype_code info (BRIDGE, FORD, ROUND etc) (NULL for modelled crossings)
+    modelled_crossing_type_source text[], -- for modelled crossings, what data source(s) indicate that a modelled crossing is OBS
+    barrier_status text,                  -- PSCIS barrier status if available, otherwise 'POTENTIAL' for modelled CBS, 'PASSABLE' for modelled OBS
 
-    -- CWF WCRP specific types (rail/road/trail/dam)
-    wcrp_barrier_type_detailed text,      -- road tenure type details plus rail/trail/dam
-    wcrp_barrier_type text,               -- simplified wcrp crossing type (road demographic, road forest/other, trail, dam)
-
-    -- names where available
+    -- road name info
     pscis_road_name text,
     dra_road_name text,
     rail_owner_name text,
     dam_name text,
+
+    -- DRA type info
+    transport_line_type_code text,
+    transport_line_surface_code text,
 
     -- forest road tenure info
     ften_forest_file_id text,
     ften_client_number text,
     ften_client_name text,
     ften_life_cycle_status_code text,
-    -- NOTE we could insert ogc tenure data here too but ogc roads are not a priority at the moment
+    -- TODO insert ogc tenure data here (ogc roads are not a priority at the moment)
 
+    -- CWF WCRP specific types (rail/road/trail/dam)
+    wcrp_barrier_type_detailed text,      -- road tenure type details plus rail/trail/dam
+    wcrp_barrier_type text,               -- simplified wcrp crossing type (road demographic, road forest/other, trail, dam)
+
+    -- FWA info
     linear_feature_id integer,
     blue_line_key integer,
     downstream_route_measure double precision,
