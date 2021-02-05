@@ -266,3 +266,22 @@ CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (localcode_ltree);
 CREATE INDEX ON bcfishpass.pscis_events_sp USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (geom);
 
+
+-- for mapping, also create a view that shows PSCIS crossings that
+-- are not in pscis_events_sp - are not matched to a stream
+CREATE VIEW bcfishpass.pscis_not_matched_to_streams_vw AS
+SELECT
+    a.stream_crossing_id,
+    a.current_pscis_status,
+    a.current_barrier_result_code,
+    a.current_crossing_type_code,
+    a.current_crossing_subtype_code,
+    w.watershed_group_code,
+    a.geom
+FROM bcfishpass.pscis_points_all a
+LEFT OUTER JOIN bcfishpass.pscis_events_sp b
+ON a.stream_crossing_id = b.stream_crossing_id
+INNER JOIN whse_basemapping.fwa_watershed_groups_poly w
+ON ST_Intersects(a.geom, w.geom)
+WHERE b.stream_crossing_id IS NULL;
+
