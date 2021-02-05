@@ -1,6 +1,12 @@
 #!/bin/bash
 set -euxo pipefail
 
+
+# -----------
+# Load required functions
+# -----------
+psql -f sql/utmzone.sql
+
 # -----------
 # Load data (QA/fixes/latest PSCIS)
 # -----------
