@@ -18,13 +18,20 @@ WITH wcrp_types AS
   accessibility_model_wct
 FROM bcfishpass.crossings c
 WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+ORDER BY watershed_group_code, watershed_group_code,
+  accessibility_model_salmon,
+  accessibility_model_steelhead,
+  accessibility_model_wct,
+  wcrp_barrier_type,
+  assessment_status,
+  barrier_status
 )
 
 SELECT
   watershed_group_code,
   accessibility_model_salmon,
   accessibility_model_steelhead,
-  accessibility_model_wct
+  accessibility_model_wct,
   wcrp_barrier_type,
   assessment_status,
   barrier_status,

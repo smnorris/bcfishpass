@@ -1,4 +1,6 @@
 -- Create a table for holding all distinct PSCIS crossings
+DROP VIEW IF EXISTS bcfishpass.pscis_not_matched_to_streams_vw;
+
 DROP TABLE IF EXISTS bcfishpass.pscis_points_all;
 CREATE TABLE bcfishpass.pscis_points_all
  (
