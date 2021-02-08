@@ -95,6 +95,9 @@ psql -f sql/crossings.sql
 # so we can visulize streams that are upstream of *confirmed* barriers
 psql -f sql/barriers_anthropogenic.sql
 
+# create a temp table holding all remediated PSCIS crossings so we can report on remediated streams
+psql -f sql/remediated.sql
+
 # Create output streams table
 psql -f sql/streams.sql
 
@@ -131,6 +134,9 @@ python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id b
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_pscis stream_crossing_id dnstr_barriers_pscis --include_equivalent_measure
+
+# and a column for tracking downstream remediations
+python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.remediated aggregated_crossings_id dnstr_remediated --include_equivalent_measure
 
 # for ELKR, use the combined definite barriers table for modelling
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.definitebarriers_wct definitebarriers_wct_id dnstr_barriers_wct --include_equivalent_measure
