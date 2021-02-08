@@ -566,14 +566,19 @@ ORDER BY a.{point_id}
 report AS
 (SELECT
   {point_id},
-  COALESCE(ROUND(((SUM(uwb.area_lake) + SUM(uwb.area_manmade)) / 10000)::numeric, 2), 0) AS total_lakereservoir_ha,
-  COALESCE(ROUND((SUM(uwb.area_wetland) / 10000)::numeric, 2), 0) AS total_wetland_ha,
-  COALESCE(ROUND(((SUM(uwb.area_lake) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%') + SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS salmon_lakereservoir_ha,
-  COALESCE(ROUND(((SUM(uwb.area_wetland) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS salmon_wetland_ha,
-  COALESCE(ROUND(((SUM(uwb.area_lake) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%') + SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS steelhead_lakereservoir_ha,
-  COALESCE(ROUND(((SUM(uwb.area_wetland) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS steelhead_wetland_ha,
-  COALESCE(ROUND(((SUM(uwb.area_lake) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%') + SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS wct_lakereservoir_ha,
-  COALESCE(ROUND(((SUM(uwb.area_wetland) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS wct_wetland_ha
+  ROUND(((
+    SUM(COALESCE(uwb.area_lake, 0)) + SUM(COALESCE(uwb.area_manmade,0))) / 10000)::numeric, 2
+  ) AS total_lakereservoir_ha,
+  ROUND((SUM(COALESCE(uwb.area_wetland, 0)) / 10000)::numeric, 2) AS total_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%') +
+          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS salmon_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.accessibility_model_salmon LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2), 0) AS salmon_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%') +
+          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS steelhead_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS steelhead_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%') +
+          SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_wetland_ha
 FROM upstr_wb uwb
 GROUP BY {point_id}
 )
