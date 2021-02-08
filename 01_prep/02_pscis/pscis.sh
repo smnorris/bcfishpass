@@ -6,7 +6,7 @@ set -euxo pipefail
 # null values indicate that the PSCIS crossing does not match to a FWA stream
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref"
 psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
-        (stream_crossing_id integer primary key,
+        (stream_crossing_id integer PRIMARY KEY,
          modelled_crossing_id integer,
          linear_feature_id integer,
          watershed_group_code text,
@@ -18,7 +18,7 @@ psql -c "\copy bcfishpass.pscis_modelledcrossings_streams_xref FROM 'data/pscis_
 # (noting OBS barriers, non-accessible streams etc)
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_barrier_result_fixes"
 psql -c "CREATE TABLE bcfishpass.pscis_barrier_result_fixes (
-         stream_crossing_id integer,
+         stream_crossing_id integer PRIMARY KEY,
          updated_barrier_result_code text,
          watershed_group_code text,
          reviewer text,
