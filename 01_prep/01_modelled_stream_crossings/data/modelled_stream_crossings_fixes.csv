@@ -108,6 +108,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 1202270,NONE,BLAR,AL,no road
 1202271,NONE,BLAR,AL,no road
 1202744,NONE,BLAR,AL,no road
+1400107,OBS,BONP,SN,
 1400183,OBS,BONP,NMW,
 1400300,NONE,BONP,NMW,no road/structure
 1401942,OBS,BONP,NMW,
@@ -145,6 +146,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 1801041,NONE,BULK,NMW,no road/structure
 1801067,OBS,BULK,NMW,
 1801069,OBS,BULK,SN,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1801088,NONE,BULK,SN,no structure
 1801117,OBS,BULK,PK,
 1801156,NONE,BULK,NMW,no road/structure
 1801167,NONE,BULK,NMW,no road/structure
@@ -239,6 +241,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 1805331,OBS,BULK,PK,
 1805348,OBS,BULK,PK,
 1805409,NONE,BULK,PK,no road/structure
+1805530,OBS,BULK,SN,
 1805593,OBS,BULK,NMW,
 1805595,OBS,BULK,NMW,
 1805733,NONE,BULK,PK,no road/structure
@@ -335,6 +338,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 2301274,NONE,CARR,PK,no crossing
 2301417,NONE,CARR,PK,no crossing
 2301418,OBS,CARR,PK,
+2400259,NONE,CHES,SN,no road
+2400265,NONE,CHES,SN,no road
 2400804,OBS,CHES,AL,
 2400805,OBS,CHES,AL,
 2400877,OBS,CHES,AL,
@@ -342,6 +347,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 2400880,OBS,CHES,AL,
 2401131,NONE,CHES,AL,no road/structure
 2401162,NONE,CHES,AL,no road/structure
+2500038,OBS,CHIL,SN,
+2500039,NONE,CHIL,SN,no road
 2500727,OBS,CHIL,AL,
 2500753,OBS,CHIL,AL,
 2800090,OBS,CHWK,NMW,
@@ -584,8 +591,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 4604057,OBS,ELKR,AL,
 4604133,NONE,ELKR,AL,no road/structure
 4604151,NONE,ELKR,AL,no road/structure
-4604219,OBS,ELKR,PK,
 4604219,OBS,ELKR,AL,
+4604219,OBS,ELKR,PK,
 4604258,OBS,ELKR,AL,
 4604258,OBS,ELKR,PK,
 4604259,OBS,ELKR,PK,
@@ -617,11 +624,11 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 4605396,OBS,ELKR,AL,
 4605419,OBS,ELKR,AL,
 4605447,OBS,ELKR,AL,
-4605452,OBS,ELKR,AL,
 4605452,OBS,ELKR,PK,
+4605452,OBS,ELKR,AL,
 4605467,OBS,ELKR,PK,
-4605470,OBS,ELKR,PK,
 4605470,OBS,ELKR,AL,
+4605470,OBS,ELKR,PK,
 4605472,NONE,ELKR,AL,no road/structure
 4605512,OBS,ELKR,PK,
 4605512,OBS,ELKR,AL,
@@ -631,8 +638,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 4605607,OBS,ELKR,PK,
 4605608,OBS,ELKR,AL,
 4605613,OBS,ELKR,AL,
-4605718,OBS,ELKR,PK,
 4605718,OBS,ELKR,AL,
+4605718,OBS,ELKR,PK,
 4605748,OBS,ELKR,AL,
 4605748,OBS,ELKR,PK,
 4605791,OBS,ELKR,AL,
@@ -647,8 +654,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 4605925,OBS,ELKR,PK,
 4605927,OBS,ELKR,AL,
 4605962,NONE,ELKR,AL,no road/structure
-4606046,OBS,ELKR,PK,
 4606046,OBS,ELKR,AL,
+4606046,OBS,ELKR,PK,
 4606091,OBS,ELKR,PK,
 4606091,OBS,ELKR,AL,
 4606122,OBS,ELKR,AL,
@@ -692,8 +699,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 4606906,NONE,ELKR,AL,no road/structure
 4606912,NONE,ELKR,PK,no road/structure
 4606962,NONE,ELKR,AL,no road/structure
-4606968,OBS,ELKR,AL,
 4606968,OBS,ELKR,PK,
+4606968,OBS,ELKR,AL,
 4607138,NONE,ELKR,PK,no road/structure
 4607189,NONE,ELKR,PK,no road/structure
 4607266,OBS,ELKR,AL,
@@ -710,6 +717,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 24734192,OBS,ELKR,SN,Bridge visible
 24734470,NONE,ELKR,SN,no road
 24734719,NONE,ELKR,SN,no crossing structure mentioned here in habitat conf for PSCIS 50181
+4700107,NONE,EUCH,SN,no road
+4700160,OBS,EUCH,SN,
 4800017,NONE,EUCL,AL,no crossing
 4800030,NONE,EUCL,AL,no crossing
 4800038,NONE,EUCL,AL,no crossing
@@ -726,6 +735,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 5400050,OBS,FRAN,NMW,
 5400155,NONE,FRAN,NMW,no road/structure
 5400156,NONE,FRAN,NMW,no road/structure
+5400211,OBS,FRAN,SN,
 5400307,OBS,FRAN,NMW,
 5400504,OBS,FRAN,NMW,
 5400530,NONE,FRAN,NMW,no road/structure
@@ -812,8 +822,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 6303589,NONE,HARR,OB,no road
 6303601,OBS,HARR,OB,
 6303626,OBS,HARR,OB,
-6304007,OBS,HARR,OB,
 6304007,NONE,HARR,OB,no road/structure
+6304007,OBS,HARR,OB,
 6500060,NONE,HERR,PK,no road
 6500260,NONE,HERR,PK,no road
 6500638,OBS,HERR,PK,
@@ -825,11 +835,19 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 6800058,NONE,HORS,NMW,no road/structure
 6800118,NONE,HORS,NMW,no road/structure
 6800143,NONE,HORS,NMW,no road/structure
+6800181,OBS,HORS,SN,
+6800186,OBS,HORS,SN,
+6800207,NONE,HORS,SN,no road
 6800279,NONE,HORS,NMW,no road/structure
 6800300,NONE,HORS,NMW,no road/structure
+6800313,OBS,HORS,SN,
 6800370,NONE,HORS,NMW,no road/structure
 6800445,NONE,HORS,NMW,no road/structure
+6800509,OBS,HORS,SN,
+6800513,OBS,HORS,SN,
+6800523,OBS,HORS,SN,
 6800543,OBS,HORS,NMW,
+6800547,NONE,HORS,SN,no structure
 6800587,NONE,HORS,NMW,no road/structure
 6800686,NONE,HORS,PK,no road/structure
 6800687,NONE,HORS,PK,no road/structure
@@ -849,6 +867,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 6801900,OBS,HORS,PK,
 6801945,NONE,HORS,NMW,no road/structure
 6801959,OBS,HORS,NMW,
+6802146,OBS,HORS,SN,
 6802158,OBS,HORS,PK,
 6802228,OBS,HORS,PK,
 6802238,NONE,HORS,PK,no road/structure
@@ -1165,6 +1184,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 11300867,OBS,LNIC,NMW,
 11300875,NONE,LNIC,NMW,no stream
 11301008,NONE,LNIC,NMW,no road/structure
+11301020,NONE,LNIC,SN,no structure
 11301076,NONE,LNIC,PK,no road/structure
 11301113,NONE,LNIC,NJO,No structure
 11301390,NONE,LNIC,PK,no road/structure
@@ -1208,10 +1228,13 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 11303706,NONE,LNIC,NJO,No structure no stream
 11303784,NONE,LNIC,PK,no road/structure
 11303842,NONE,LNIC,PK,no road/structure
+11303905,NONE,LNIC,SN,no crossing
+11303979,OBS,LNIC,SN,
 11303992,NONE,LNIC,NMW,no road/structure
 11304171,OBS,LNIC,NJO,bridge
 11304177,NONE,LNIC,NJO,No stream
 11304178,NONE,LNIC,NJO,No stream
+11304238,OBS,LNIC,SN,
 11304284,OBS,LNIC,SN,workshop indicates this stream is passible
 11304295,OBS,LNIC,NJO,bridge
 11304315,OBS,LNIC,SN,Braumandl 2017 assessment on upstr Coldwater Rd (crossing 197037) indicates this KVR crossing is passable
@@ -1221,8 +1244,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 11304439,OBS,LNIC,NJO,bridge
 11304460,NONE,LNIC,NJO,no stream
 11304469,NONE,LNIC,NJO,No stream
-11304470,OBS,LNIC,SN,
 11304470,OBS,LNIC,NJO,bridge
+11304470,OBS,LNIC,SN,
 11304521,NONE,LNIC,NJO,No structure road deactivated
 11304571,NONE,LNIC,NJO,No structure road deactivated
 11304578,NONE,LNIC,NJO,no stream
@@ -1239,6 +1262,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 11305043,NONE,LNIC,NJO,No structure road deactivated
 11305070,NONE,LNIC,NJO,No structure no stream
 11305071,NONE,LNIC,NJO,No stream
+11305254,OBS,LNIC,SN,duplicate road
 11305451,OBS,LNIC,NMW,
 11305593,OBS,LNIC,PK,
 11305622,NONE,LNIC,NJO,No stream
@@ -1281,10 +1305,15 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 11508419,OBS,LNTH,AL,
 11509136,OBS,LNTH,AL,
 12200423,NONE,LSAL,NMW,no road/structure
+12200461,NONE,LSAL,SN,no road
+12200481,NONE,LSAL,SN,no road
+12200482,NONE,LSAL,SN,no road
 12200486,OBS,LSAL,NMW,
 12200665,NONE,LSAL,NMW,no road/structure
 12200755,NONE,LSAL,NMW,no road/structure
+12200773,NONE,LSAL,SN,no structure
 12201039,NONE,LSAL,NMW,no road/structure
+12201496,NONE,LSAL,SN,no structure
 12201545,OBS,LSAL,NMW,
 12201598,NONE,LSAL,NMW,no road/structure
 12201726,OBS,LSAL,NMW,
@@ -1463,6 +1492,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 14901717,NONE,NARC,AL,no crossing
 15300257,OBS,NAZR,AL,
 15300382,NONE,NAZR,AL,no road/structure
+15300442,NONE,NAZR,SN,no crossing
+15300470,NONE,NAZR,SN,no structure/road
+15300471,NONE,NAZR,SN,no structure/road
 15300597,OBS,NAZR,AL,
 15300685,NONE,NAZR,AL,no road/structure
 15301104,OBS,NAZR,AL,
@@ -1540,6 +1572,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 17104295,NONE,QUES,NMW,no road/structure
 17104408,NONE,QUES,NMW,no road/structure
 17104409,NONE,QUES,NMW,no road/structure
+17500143,OBS,SAJR,SN,
 17700736,OBS,SALR,OB,
 17701052,NONE,SALR,OB,no road/structure
 17701084,OBS,SALR,OB,
@@ -1598,6 +1631,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 19300009,OBS,STUL,OB,
 19300178,NONE,STUL,OB,no road/structure
 19300290,NONE,STUL,OB,no road/structure
+19300295,NONE,STUL,SN,no structure
 19300357,OBS,STUL,OB,
 19300396,NONE,STUL,OB,no road/structure
 19300410,NONE,STUL,OB,no road/structure
@@ -1613,6 +1647,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 19300643,NONE,STUL,OB,no road/structure
 19300755,NONE,STUL,OB,no road/structure
 19300768,NONE,STUL,OB,no road/structure
+19300993,OBS,STUL,SN,
 19301036,OBS,STUL,OB,
 19301062,NONE,STUL,OB,no road/structure
 19301069,NONE,STUL,OB,no road/structure
@@ -1655,21 +1690,26 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 19302672,NONE,STUL,OB,no road/structure
 19302677,NONE,STUL,OB,no road/structure
 19302678,NONE,STUL,OB,no road/structure
+19401338,NONE,STUR,SN,no structure
 19401414,OBS,STUR,AL,
 19600061,OBS,SWIR,PK,
 19700281,OBS,TABR,AL,
 19700363,NONE,TABR,AL,no road/structure
 19700600,NONE,TABR,AL,no road/structure
 19700712,NONE,TABR,AL,no road/structure
+19701104,OBS,TABR,SN,
 19701111,NONE,TABR,AL,no road/structure
 19701112,NONE,TABR,AL,no road/structure
 19701651,NONE,TABR,AL,no road/structure
 19701784,NONE,TABR,AL,no road/structure
 19702046,OBS,TABR,AL,
 19702787,OBS,TABR,AL,
+19703054,OBS,TABR,SN,
 19703115,OBS,TABR,AL,
 19703203,OBS,TABR,AL,
+19703431,NONE,TABR,SN,no road
 19703574,NONE,TABR,AL,no road/structure
+19703578,NONE,TABR,SN,no crossing
 19703632,NONE,TABR,AL,no road/structure
 20000000,OBS,TAKL,AL,
 20000195,NONE,TAKL,AL,no road
@@ -1739,9 +1779,15 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 21900577,NONE,UCHR,NMW,no road/structure
 21900611,NONE,UCHR,NMW,no road/structure
 21900617,NONE,UCHR,NMW,no road/structure
+21900684,OBS,UCHR,SN,
+21900760,NONE,UCHR,SN,historic channel
+21900764,NONE,UCHR,SN,historic channel
 21901063,NONE,UCHR,NMW,no road/structure
+21901159,OBS,UCHR,SN,equivalent to 21901160
+21901160,OBS,UCHR,SN,
 21901260,NONE,UCHR,NMW,no road/structure
 21901293,NONE,UCHR,NMW,no road/structure
+21901328,NONE,UCHR,SN,historic channel
 21901341,NONE,UCHR,NMW,no road/structure
 21901834,OBS,UCHR,NMW,
 21901960,OBS,UCHR,NMW,
@@ -1825,6 +1871,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 24401788,OBS,WILL,AL,
 24401848,OBS,WILL,AL,
 24401986,NONE,WILL,AL,no road/structure
+24402294,OBS,WILL,SN,
+24402297,OBS,WILL,SN,
 24402669,NONE,WILL,AL,no road/structure
 24402682,OBS,WILL,AL,
 24402683,OBS,WILL,AL,
@@ -1851,52 +1899,3 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 24404047,OBS,WILL,AL,
 24404231,OBS,WILL,AL,
 24404451,NONE,WILL,AL,no road/structure
-1400107,OBS,,SN,
-1801088,NONE,,SN,no structure
-1805530,OBS,,SN,
-2400259,NONE,,SN,no road
-2400265,NONE,,SN,no road
-2500038,OBS,,SN,
-2500039,NONE,,SN,no road
-4700107,NONE,,SN,no road
-4700160,OBS,,SN,
-5400211,OBS,,SN,
-6800181,OBS,,SN,
-6800186,OBS,,SN,
-6800207,NONE,,SN,no road
-6800313,OBS,,SN,
-6800509,OBS,,SN,
-6800513,OBS,,SN,
-6800523,OBS,,SN,
-6800547,NONE,,SN,no structure
-6802146,OBS,,SN,
-11301020,NONE,,SN,no structure
-11303905,NONE,,SN,no crossing
-11303979,OBS,,SN,
-11304238,OBS,,SN,
-11305254,OBS,,SN,duplicate road
-12200461,NONE,,SN,no road
-12200481,NONE,,SN,no road
-12200482,NONE,,SN,no road
-12200773,NONE,,SN,no structure
-12201496,NONE,,SN,no structure
-15300442,NONE,,SN,no crossing
-15300470,NONE,,SN,no structure/road
-15300471,NONE,,SN,no structure/road
-17500143,OBS,,SN,
-19300295,NONE,,SN,no structure
-19300546,OBS,,SN,
-19300993,OBS,,SN,
-19401338,NONE,,SN,no structure
-19701104,OBS,,SN,
-19703054,OBS,,SN,
-19703431,NONE,,SN,no road
-19703578,NONE,,SN,no crossing
-21900684,OBS,,SN,
-21900760,NONE,,SN,historic channel
-21900764,NONE,,SN,historic channel
-21901159,OBS,,SN,equivalent to 21901160
-21901160,OBS,,SN,
-21901328,NONE,,SN,historic channel
-24402294,OBS,,SN,
-24402297,OBS,,SN,
