@@ -1,6 +1,7 @@
 -- Calculate "Barrier Severity" as
 -- "the % of each barrier type that are barriers/potential barriers (out of those that have been assessed)"
 -- (with further restriction that the barriers be on potentially accessible streams)
+
 WITH totals AS
 (
   SELECT
@@ -9,7 +10,7 @@ WITH totals AS
   count(*) as n_total
 FROM bcfishpass.crossings
 WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-AND stream_crossing_id IS NOT NULL
+AND stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL
 AND (accessibility_model_salmon IS NOT NULL
     OR
     accessibility_model_steelhead IS NOT NULL
@@ -28,7 +29,7 @@ SELECT
   count(*) as n_barrier
 FROM bcfishpass.crossings
 WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-AND stream_crossing_id IS NOT NULL
+AND stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL
 AND barrier_status in ('BARRIER', 'POTENTIAL')
 AND (accessibility_model_salmon IS NOT NULL
     OR
