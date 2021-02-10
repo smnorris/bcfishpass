@@ -14,7 +14,7 @@ SELECT
   ROUND(SUM(all_rearing_belowupstrbarriers_km)::numeric, 2) as all_rearing_belowupstrbarriers_km,
   ROUND(SUM(all_spawningrearing_belowupstrbarriers_km)::numeric, 2) as all_spawningrearing_belowupstrbarriers_km
 FROM bcfishpass.crossings
-WHERE watershed_group_code in ('BULK','HORS','LNIC','ELKR')
+WHERE watershed_group_code in ('BULK','LNIC')
 GROUP BY
   watershed_group_code,
   wcrp_barrier_type
