@@ -360,7 +360,11 @@ SELECT DISTINCT ON (stream_crossing_id)
     e.pscis_status,
     e.current_crossing_type_code as crossing_type_code,
     e.current_crossing_subtype_code as crossing_subtype_code,
-    COALESCE(f.updated_barrier_result_code, e.current_barrier_result_code) as barrier_status, -- use manually updated barrier result code if available
+    CASE
+      WHEN f.updated_barrier_result_code IN ('PASSABLE','POTENTIAL','BARRIER') -- use manually updated barrier result code if available (but filter out NOT ACCESSIBLE)
+      THEN f.updated_barrier_result_code
+      ELSE  e.current_barrier_result_code
+    END as barrier_status,
     a.road_name as pscis_road_name,
 
     r.transport_line_structured_name_1,
@@ -689,3 +693,9 @@ UPPER(transport_line_type_description) LIKE 'TRAIL%';
 -- everything else from DRA
 UPDATE bcfishpass.crossings
 SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER' WHERE wcrp_barrier_type IS NULL AND transport_line_type_description IS NOT NULL;
+
+-- in the absence of any of the above info, assume a PSCIS crossing is on a resource/other road
+UPDATE bcfishpass.crossings
+SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER'
+WHERE stream_crossing_id IS NOT NULL
+AND wcrp_barrier_type IS NULL;
