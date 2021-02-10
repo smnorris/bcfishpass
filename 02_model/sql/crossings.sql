@@ -651,7 +651,7 @@ WHERE rail_owner_name IS NOT NULL;
 
 -- tenured roads
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'ROAD, RESOURCE TENURE'
+SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER'
 WHERE ften_forest_file_id IS NOT NULL
 OR ogc_proponent IS NOT NULL;
 
@@ -688,4 +688,4 @@ UPPER(transport_line_type_description) LIKE 'TRAIL%';
 
 -- everything else from DRA
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'ROAD, OTHER' WHERE wcrp_barrier_type IS NULL AND transport_line_type_description IS NOT NULL;
+SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER' WHERE wcrp_barrier_type IS NULL AND transport_line_type_description IS NOT NULL;
