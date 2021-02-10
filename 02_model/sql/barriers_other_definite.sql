@@ -72,7 +72,7 @@ SELECT
     s.localcode_ltree,
     s.watershed_group_code,
     ST_Force2D(FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
-FROM bcfishpass.misc_barriers a
+FROM bcfishpass.misc_barriers_definite a
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON a.blue_line_key = s.blue_line_key AND
    a.downstream_route_measure > s.downstream_route_measure - .001 AND

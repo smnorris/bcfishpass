@@ -10,10 +10,18 @@
 DROP TABLE IF EXISTS bcfishpass.crossings;
 CREATE TABLE bcfishpass.crossings
 (
+  -- Note how the aggregated crossing id combines the various ids to create a unique integer, after assigning PSCIS crossings their source crossing id
+  -- - to avoid conflict with PSCIS ids, moelled crossings have modelled_crossing_id plus 1000000000 (max modelled crossing id is currently 24742842)
+  -- - dams go into the 1100000000 bin
+  -- - misc go into the 1200000000 bin
+  -- postgres max integer is 2147483647 so this leaves room for 9 additional sources with this simple system
+  -- (but of course it could be broken down further if neeeded)
+
     aggregated_crossings_id integer PRIMARY KEY GENERATED ALWAYS AS
-       (COALESCE(COALESCE(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1000000000)) STORED,
+       (COALESCE(COALESCE(COALESCE(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1100000000), misc_barrier_anthropogenic_id + 1200000000)) STORED,
     stream_crossing_id integer UNIQUE,
     dam_id integer UNIQUE,
+    misc_barrier_anthropogenic_id integer UNIQUE,
     modelled_crossing_id integer UNIQUE,
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
 
@@ -49,7 +57,7 @@ CREATE TABLE bcfishpass.crossings
     dam_name text,
     dam_owner text,
 
-    -- CWF WCRP specific type (rail/road/trail/dam)
+    -- CWF WCRP specific type (rail/road/trail/dam/weir)
     wcrp_barrier_type text,
 
     -- coordinates (of the point snapped to the stream)
@@ -446,6 +454,69 @@ ON CONFLICT DO NOTHING;
 
 
 -- --------------------------------
+-- other misc anthropogenic barriers
+-- --------------------------------
+
+-- misc barriers are blue_line_key/measure only - generate geom & get wscodes etc
+WITH misc_barriers AS
+(
+  SELECT
+    b.misc_barrier_anthropogenic_id,
+    b.blue_line_key,
+    b.downstream_route_measure,
+    b.barrier_type,
+    s.linear_feature_id,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.watershed_group_code,
+    ST_Force2D((ST_Dump(ST_LocateAlong(s.geom, b.downstream_route_measure))).geom) as geom
+  FROM bcfishpass.misc_barriers_anthropogenic b
+  INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+  ON b.blue_line_key = s.blue_line_key
+  AND b.downstream_route_measure > s.downstream_route_measure - .001
+  AND b.downstream_route_measure + .001 < s.upstream_route_measure
+)
+
+INSERT INTO bcfishpass.crossings
+(
+    misc_barrier_anthropogenic_id,
+    crossing_source,
+    crossing_type_code,
+    crossing_subtype_code,
+    barrier_status,
+    utm_zone,
+    utm_easting,
+    utm_northing,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+)
+SELECT
+    b.misc_barrier_anthropogenic_id,
+    'MISC BARRIERS' as crossing_source,
+    b.barrier_type AS crossing_type_code,
+    b.barrier_type AS crossing_subtype_code,
+    'BARRIER' AS barrier_status,
+    SUBSTRING(to_char(utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
+    ST_X(ST_Transform(b.geom, utmzone(b.geom)))::int as utm_easting,
+    ST_Y(ST_Transform(b.geom, utmzone(b.geom)))::int as utm_northing,
+    b.linear_feature_id,
+    b.blue_line_key,
+    b.downstream_route_measure,
+    b.wscode_ltree,
+    b.localcode_ltree,
+    b.watershed_group_code,
+    ST_Force2D((st_Dump(b.geom)).geom)
+FROM misc_barriers b
+ORDER BY misc_barrier_anthropogenic_id
+ON CONFLICT DO NOTHING;
+
+
+-- --------------------------------
 -- insert modelled crossings
 -- --------------------------------
 INSERT INTO bcfishpass.crossings
@@ -568,6 +639,9 @@ CREATE INDEX ON bcfishpass.crossings USING GIST (geom);
 -- populate wcrp_barrier_type column
 -- --------------------------------
 UPDATE bcfishpass.crossings
+SET wcrp_barrier_type = 'WEIR' WHERE crossing_type_code = 'WEIR';
+
+UPDATE bcfishpass.crossings
 SET wcrp_barrier_type = 'DAM' WHERE crossing_source = 'BCDAMS';
 
 -- railway
@@ -612,6 +686,6 @@ SET wcrp_barrier_type = 'TRAIL'
 WHERE wcrp_barrier_type IS NULL AND
 UPPER(transport_line_type_description) LIKE 'TRAIL%';
 
--- everything else (from DRA)
+-- everything else from DRA
 UPDATE bcfishpass.crossings
 SET wcrp_barrier_type = 'ROAD, OTHER' WHERE wcrp_barrier_type IS NULL AND transport_line_type_description IS NOT NULL;
