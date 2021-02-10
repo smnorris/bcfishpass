@@ -1,55 +1,53 @@
-WITH wcrp_types AS
-(SELECT
-  c.aggregated_crossings_id,
-  c.watershed_group_code,
-  CASE
-    WHEN crossing_source = 'PSCIS' THEN 'ASSESSED'
-    ELSE 'NOT ASSESSED'
-  END AS assessment_status,
-  CASE
-    WHEN crossing_source = 'MODELLED CROSSINGS' AND barrier_status = 'PASSABLE' THEN 'MODELLED AS PASSABLE' -- barrier status comes from model and QA, us it rather than crossing
-    WHEN crossing_source = 'MODELLED CROSSINGS' AND barrier_status = 'POTENTIAL' THEN 'MODELLED AS POTENTIAL'
-    ELSE barrier_status
-  END AS barrier_status,
+-- Calculate "Barrier Severity" as
+-- "the % of each barrier type that are barriers/potential barriers (out of those that have been assessed)"
+-- (with further restriction that the barriers be on potentially accessible streams)
+WITH totals AS
+(
+  SELECT
+  watershed_group_code,
   wcrp_barrier_type,
-  -- note whether crossings is on accessible stream according to model used in given watershed
-  accessibility_model_salmon,
-  accessibility_model_steelhead,
-  accessibility_model_wct
-FROM bcfishpass.crossings c
-WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-ORDER BY watershed_group_code, watershed_group_code,
-  accessibility_model_salmon,
-  accessibility_model_steelhead,
-  accessibility_model_wct,
+  count(*) as n_total
+FROM bcfishpass.crossings
+WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+AND stream_crossing_id IS NOT NULL
+AND (accessibility_model_salmon IS NOT NULL
+    OR
+    accessibility_model_steelhead IS NOT NULL
+    OR
+    accessibility_model_wct IS NOT NULL
+    )
+GROUP BY watershed_group_code, wcrp_barrier_type
+ORDER BY watershed_group_code, wcrp_barrier_type
+),
+
+barrier_potential AS
+(
+SELECT
+  watershed_group_code,
   wcrp_barrier_type,
-  assessment_status,
-  barrier_status
+  count(*) as n_barrier
+FROM bcfishpass.crossings
+WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+AND stream_crossing_id IS NOT NULL
+AND barrier_status in ('BARRIER', 'POTENTIAL')
+AND (accessibility_model_salmon IS NOT NULL
+    OR
+    accessibility_model_steelhead IS NOT NULL
+    OR
+    accessibility_model_wct IS NOT NULL
+    )
+GROUP BY watershed_group_code, wcrp_barrier_type
 )
 
 SELECT
-  watershed_group_code,
-  accessibility_model_salmon,
-  accessibility_model_steelhead,
-  accessibility_model_wct,
-  wcrp_barrier_type,
-  assessment_status,
-  barrier_status,
-  count(*)
-FROM wcrp_types
-GROUP BY
-  watershed_group_code,
-  accessibility_model_salmon,
-  accessibility_model_steelhead,
-  accessibility_model_wct,
-  wcrp_barrier_type,
-  assessment_status,
-  barrier_status
-ORDER BY
-  watershed_group_code,
-  accessibility_model_salmon,
-  accessibility_model_steelhead,
-  accessibility_model_wct,
-  wcrp_barrier_type,
-  assessment_status,
-  barrier_status
+  t.watershed_group_code,
+  t.wcrp_barrier_type,
+  COALESCE(b.n_barrier, 0) as n_assessed_barrier,
+  t.n_total as n_assessed_total,
+  ROUND((COALESCE(b.n_barrier, 0) * 100)::numeric / t.n_total, 1) AS pct_assessed_barriers
+FROM totals t
+LEFT OUTER JOIN barrier_potential b
+ON t.watershed_group_code = b.watershed_group_code
+AND t.wcrp_barrier_type = b.wcrp_barrier_type
+
+
