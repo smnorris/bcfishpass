@@ -347,7 +347,7 @@ INSERT INTO bcfishpass.crossings
 )
 
 SELECT DISTINCT ON (stream_crossing_id)
-    r.stream_crossing_id,
+    e.stream_crossing_id,
     'PSCIS' AS crossing_source,
     e.pscis_status,
     e.current_crossing_type_code as crossing_type_code,
@@ -377,13 +377,14 @@ SELECT DISTINCT ON (stream_crossing_id)
     e.localcode_ltree,
     e.watershed_group_code,
     e.geom
-FROM road_and_rail r
-INNER JOIN bcfishpass.pscis_events_sp e
+FROM bcfishpass.pscis_events_sp e
+LEFT OUTER JOIN road_and_rail r
 ON r.stream_crossing_id = e.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
+WHERE e.modelled_crossing_id IS NULL
 ORDER BY stream_crossing_id, distance_to_road asc
 ON CONFLICT DO NOTHING;
 

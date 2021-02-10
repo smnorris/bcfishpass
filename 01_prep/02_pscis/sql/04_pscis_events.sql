@@ -179,6 +179,8 @@ WITH pts AS
   (
     SELECT stream_crossing_id FROM bcfishpass.pscis_modelledcrossings_streams_xref
   )
+  -- DO NOT LOAD CROSSINGS WITH MATCH SCORE < -25 (THIS MAY STILL BE TOO GENEROUS)
+ AND match_score >= -25
 ),
 
 -- cluster the derived geoms so we can remove duplicates within the clustering distance (5m)
@@ -276,12 +278,15 @@ SELECT
     a.current_barrier_result_code,
     a.current_crossing_type_code,
     a.current_crossing_subtype_code,
-    w.watershed_group_code,
+    CASE
+      WHEN a.stream_crossing_id = 8261 THEN 'SALM' -- hopefully we don't get any more in the ocean and outside of all watershed groups
+      ELSE w.watershed_group_code
+    END as watershed_group_code,
     a.geom
 FROM bcfishpass.pscis_points_all a
 LEFT OUTER JOIN bcfishpass.pscis_events_sp b
 ON a.stream_crossing_id = b.stream_crossing_id
-INNER JOIN whse_basemapping.fwa_watershed_groups_poly w
+LEFT OUTER JOIN whse_basemapping.fwa_watershed_groups_poly w
 ON ST_Intersects(a.geom, w.geom)
 WHERE b.stream_crossing_id IS NULL;
 
