@@ -7,7 +7,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 3045,1803570,,BULK,,
 3046,1803574,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 3047,1804647,,BULK,,
-3048,1803799,,BULK,,
+3048,1803799,,BULK,NJO,Correct match
 3050,1803993,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 3051,17059351,,BULK,,
 3052,1803711,,BULK,,
@@ -22,7 +22,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 3061,1805306,,BULK,,
 3062,1803531,,BULK,,
 3063,1803565,,BULK,,
-3064,1803799,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+3064,,,BULK,NJO,No modelled crossing - Removed duplicate matching
 3065,1803539,,BULK,,
 3066,1803566,,BULK,,
 3067,1803577,,BULK,,
@@ -82,7 +82,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 8245,11304697,,LNIC,,
 8246,11304694,,LNIC,,
 8733,1803546,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-8744,1803546,,BULK,NJO,Matched to closest stream model (Manual Review)
+8744,,,BULK,NJO,Potential Duplicate - Removed from double matching 
 8745,24704538,,BULK,,
 8758,1804827,,BULK,,
 50060,4606391,,ELKR,,
@@ -209,7 +209,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50181,4606365,,ELKR,,
 50182,4602338,,ELKR,,
 50183,24734169,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-50184,4601733,,ELKR,,
+50184,4601733,,ELKR,NJO, Best guess match
 50185,4605191,,ELKR,,
 50186,24727446,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50187,,,ELKR,,
@@ -227,9 +227,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50199,4600211,,ELKR,,
 50200,4600210,,ELKR,,
 50201,4600498,,ELKR,,
-50202,4600716,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-50203,4600210,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-50205,4605567,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50202,,,ELKR,NJO,Not on modelled crossing - Removed duplicate matching
+50203,,,ELKR,NJO,No modelled crossing - Removed double matching
+50205,,,ELKR,NJO,No modelled crossing - Removed double matching
 50206,,,ELKR,NJO,Not on a mapped stream
 50207,4602032,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50208,4601702,,ELKR,,
@@ -245,7 +245,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50219,4601408,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50220,24706493,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50221,4604258,,ELKR,,
-50222,4604259,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50222,,,ELKR,NJO, Not on a modelled crossing - Removed double
 50223,4600946,,ELKR,NJO,Matched to closest stream model (Manual Review)
 50224,4600382,,ELKR,,
 50225,,706839894,ELKR,,
@@ -260,10 +260,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50234,4605448,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50235,4605623,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50236,4604228,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-50237,4604230,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50237,,,ELKR,NJO,No modelled crossing - Removed double match 
 50238,4604229,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50239,4601494,,ELKR,,
-50240,4601385,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50240,,,ELKR,NJO,Removed double matching 
 50241,4602406,,ELKR,,
 50243,4601470,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50244,4601485,,ELKR,,
@@ -271,7 +271,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50246,4601999,,ELKR,,
 50247,4602216,,ELKR,,
 50248,4607190,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-50249,4601481,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50249,,,ELKR,NJO,No modelled crossing - Removed double match 
 50250,4601480,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50251,4601056,,ELKR,,
 50252,4600355,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
@@ -293,22 +293,22 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50268,4606793,,ELKR,,
 50269,,,ELKR,,
 50270,4606737,,ELKR,,
-50271,24706514,,ELKR,,
+50271,24706514,,ELKR,NJO, Correct mapping
 50272,,,ELKR,NJO,Not on a mapped stream
 50273,4600365,,ELKR,,
 50274,4600363,,ELKR,,
 50275,,706836561,ELKR,,
-50276,4602457,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50276,,,ELKR,NJO,No modelled crossing - Removed double match
 50277,4602457,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50278,4601382,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50279,4601383,,ELKR,,
 51129,4603110,,ELKR,,
 51146,4601867,,ELKR,,
-51223,4601733,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+51223,,,ELKR,NJO, Not on modelled crossing - Potential duplicate?
 51224,4601720,,ELKR,NJO,Matched to closest stream model (Manual Review)
 51243,4601543,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 51255,,,ELKR,,
-57095,6800598,,HORS,NJO,Matched to closest stream model (Manual Review)
+57095,,,HORS,NJO,No modelled crossing - Removed double matching 
 57096,6800598,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 57097,,701415699,HORS,,
 57098,6800605,,HORS,,
@@ -329,7 +329,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57114,6801942,,HORS,,
 57115,6801681,,HORS,,
 57116,6801383,,HORS,,
-57117,6802295,,HORS,NJO,Matched to closest stream model (Manual Review)
+57117,,,HORS,NJO,Matched to closest stream model (Manual Review)
 57118,6802295,,HORS,,
 57119,6801589,,HORS,,
 57120,6801587,,HORS,,
@@ -405,8 +405,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57192,6802070,,HORS,,
 57193,6802067,,HORS,,
 57194,6802068,,HORS,NJO,Matched to closest stream model (Manual Review)
-57195,6800761,,HORS,NJO,Matched to closest stream model (Manual Review)
-57196,6800761,,HORS,,
+57195,,,HORS,NJO,No modelled crossing - removed double match
+57196,6800761,,HORS,NJO,correct
 57197,6802074,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 57198,24708572,,HORS,,
 57199,24708565,,HORS,,
@@ -488,7 +488,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57286,,,HORS,,
 57287,,,HORS,,
 57288,6802180,,HORS,,
-57290,6801770,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+57290,,,HORS,NJO,No modelled crossing - removed double match
 57291,6801770,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 57292,6802284,,HORS,,
 57293,6801475,,HORS,,
@@ -540,7 +540,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57341,6801878,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 57342,6800120,,HORS,,
 57344,6800837,,HORS,,
-57346,6800837,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+57346,,,HORS,NJO,No modelled crossing - Removed duplicate matching 
 57347,24708538,,HORS,,
 57348,6801132,,HORS,NJO,Matched to closest stream model (Manual Review)
 57349,,,HORS,,
@@ -789,7 +789,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57597,6801624,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 57598,,,HORS,,
 57599,,701416100,HORS,,
-57600,6800008,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+57600,6800008,,HORS,NJO, Going to need further review
 57601,6800011,,HORS,,
 57603,6800056,,HORS,,
 57604,6800338,,HORS,,
@@ -958,7 +958,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57924,1806091,,BULK,NJO,Matched to closest stream model (Manual Review)
 57925,1800005,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 57926,1800136,,BULK,,
-57927,1800136,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+57927,,,BULK,NJO,No modelled crossing - Removed duplicate matching
 57928,1800137,,BULK,,
 57929,,,BULK,,
 57930,,,BULK,,
@@ -1093,7 +1093,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 58061,1805280,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 58062,1805271,,BULK,,
 58063,1802405,,BULK,,
-58064,1802405,,BULK,NJO,Matched to closest stream model (Manual Review)
+58064,,,BULK,NJO,No modelled crossing - removed double match 
 58065,1804830,,BULK,,
 58066,1800348,,BULK,,
 58067,1803245,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1103,7 +1103,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 58071,1803309,,BULK,,
 58072,1800037,,BULK,,
 58073,1800345,,BULK,NJO,Matched to closest stream model (Manual Review)
-58074,1803203,,BULK,,
+58074,,,BULK,NJO,Double match removed - No modelled crossing in vicinity
 58075,1801566,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 58076,1803989,,BULK,,
 58077,,17036291,BULK,,
@@ -1299,8 +1299,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 58285,1801606,,BULK,,
 58286,,17032117,BULK,,
 58287,1800013,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-58288,1800819,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-58289,1800819,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+58288,,,BULK,NJO, No modelled crossing - Removed double matching
+58289,1800819,,BULK,NJO,matched to nearest modelled crossing within 15m (instream)
 58290,1802943,,BULK,,
 58291,1802942,,BULK,,
 58292,1800014,,BULK,,
@@ -1334,7 +1334,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 58320,,,BULK,NJO,not on a matched stream
 58321,1804144,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 58322,1801538,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-58323,1801538,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+58323,,,BULK,NJO,Removed double matching - potential duplicate?
 58324,24703644,,BULK,,
 58325,1804859,,BULK,NJO,Matched to closest stream model (Manual Review)
 58326,1804860,,BULK,,
@@ -1386,7 +1386,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 60428,4606437,,ELKR,,
 60429,4606439,,ELKR,,
 60430,4606438,,ELKR,,
-61220,4600123,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+61220,,,ELKR,NJO, No modelled crossing - Removed double match
 61238,4606543,,ELKR,,
 61239,4607599,,ELKR,,
 61240,4606524,,ELKR,,
@@ -1435,8 +1435,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 61608,4605389,,ELKR,,
 61609,4605289,,ELKR,,
 61610,,706819142,ELKR,,
-61611,4605287,,ELKR,,
-61612,4605287,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+61611,4605287,,ELKR,,Correct 
+61612,,,ELKR,NJO,Removed duplicate matching 
 61613,4605286,,ELKR,,
 61614,4605288,,ELKR,,
 61615,4605776,,ELKR,,
@@ -1458,7 +1458,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 61631,4605311,,ELKR,,
 61632,4605307,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 61633,4605312,,ELKR,,
-61634,4605312,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+61634,,,ELKR,NJO, No modelled crossing - Removed double matching
 61635,4605969,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 61636,4600224,,ELKR,,
 61637,4603318,,ELKR,,
@@ -1534,8 +1534,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62225,4605682,,ELKR,,
 62226,,706802531,ELKR,,
 62227,4606960,,ELKR,,
-62228,4605680,,ELKR,,
-62229,4606961,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+62228,4605680,,ELKR,NJO,Correct
+62229,,,ELKR,NJO,No modelled crossing - potentially should be one?
 62230,4605706,,ELKR,,
 62231,4605716,,ELKR,,
 62232,4605711,,ELKR,,
@@ -1546,14 +1546,14 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62237,4605717,,ELKR,,
 62238,,,ELKR,,
 62239,4605674,,ELKR,,
-62240,4605682,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+62240,,,ELKR,NJO, No modelled crossing - removed double matching
 62241,,,ELKR,,
 62242,,,ELKR,,
 62243,,706802481,ELKR,,
 62244,4605728,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 62245,,,ELKR,,
 62246,,,ELKR,,
-62247,4605680,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+62247,,,ELKR,NJO,Removed double matching
 62248,,,ELKR,,
 62249,4605684,,ELKR,,
 62250,4605659,,ELKR,,
@@ -1563,8 +1563,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62254,4605642,,ELKR,,
 62255,,,ELKR,,
 62256,,,ELKR,,
-62257,4605638,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-62258,4605638,,ELKR,,
+62257,,,ELKR,NJO,Removed double match
+62258,4605638,,ELKR,NJO, Matched to closest stream 
 62259,4605666,,ELKR,,
 62260,4605665,,ELKR,,
 62261,,,ELKR,,
@@ -1685,7 +1685,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 102970,4600617,,ELKR,,
 102971,4604230,,ELKR,,
 102972,4600119,,ELKR,,
-102974,24706514,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+102974,,,ELKR,NJO, Potential duplicate - removed duplicate matching
 102977,,,ELKR,,
 102978,4601481,,ELKR,,
 102980,,,ELKR,NJO,Not on a mapped stream
@@ -1702,7 +1702,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 102997,4600817,,ELKR,,
 102999,,,ELKR,,
 103000,,,ELKR,,
-103001,4600122,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+103001,,,ELKR,NJO,Removed duplicate matching - Potential duplicate 
 103003,24706689,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 103004,4600359,,ELKR,,
 103006,4607456,,ELKR,,
@@ -1716,7 +1716,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 103014,,706843359,ELKR,,
 103015,,,ELKR,NJO,Not on a mapped stream
 103017,4600117,,ELKR,,
-103019,24706516,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+103019,24706683,,ELKR,NJO,matched to nearest modelled crossing within 15m (instream)
 103022,4606191,,ELKR,,
 103024,,706840348,ELKR,,
 103025,24706694,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1768,7 +1768,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 112342,4602529,,ELKR,,
 112343,4605611,,ELKR,,
 112344,4605614,,ELKR,,
-112345,4605611,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+112345,,ELKR,NJO,No modelled crossing - Removed double match
 112346,4607415,,ELKR,NJO,Matched to closest stream model (Manual Review)
 112347,4606885,,ELKR,NJO,Matched to closest stream model (Manual Review)
 112348,,,ELKR,NJO,Not on a mapped stream
@@ -1811,8 +1811,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123370,,17060798,BULK,,
 123371,,,BULK,,
 123372,1801331,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-123373,1800273,,BULK,,
-123374,1800273,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+123373,1800273,,BULK,NJO,Correct
+123374,,,BULK,NJO,No modelled crossing - Removed double matching
 123375,1800131,,BULK,,
 123376,1800413,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123377,1800404,,BULK,,
@@ -1836,8 +1836,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123395,1802810,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123396,1801321,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123398,1800268,,BULK,,
-123399,1800103,,BULK,,
-123400,1800103,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+123399,1800103,,BULK,NJO,Matched to cloest stream 
+123400,,,BULK,NJO,Not on a modelled crossing - removed double matching
 123401,1800102,,BULK,,
 123402,,17052391,BULK,,
 123403,,17052391,BULK,,
@@ -1853,8 +1853,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123413,1800270,,BULK,,
 123414,1802800,,BULK,,
 123415,,,BULK,,
-123416,1802805,,BULK,,
-123417,1802805,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+123416,1802805,,BULK,NJO, Correct match 
+123417,,,BULK,NJO,No modelled crossing - Removed duplicate matching
 123418,1801269,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123419,1802806,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123420,1802807,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
@@ -1927,13 +1927,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123504,,17045152,BULK,,
 123505,,17044837,BULK,,
 123506,1803094,,BULK,,
-123507,1804117,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+123507,,,BULK,NJO,No modelled crossing - Removed double matching
 123508,1804117,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123509,1804381,,BULK,,
 123510,1801445,,BULK,,
 123511,1801362,,BULK,,
 123512,1800669,,BULK,,
-123513,1800669,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+123513,,,BULK,NJO,No modelled crossing in vicinity
 123514,1801299,,BULK,NJO,Matched to closest stream model (Manual Review)
 123515,1801306,,BULK,,
 123516,1802431,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2147,11 +2147,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123765,1805219,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123766,1804382,,BULK,NJO,Matched to closest stream model (Manual Review)
 123767,,,BULK,,
-123768,1805229,,BULK,,
-123769,1805229,,BULK,,
+123768,,,BULK,NJO,This crossing should have a modelled crossing 
+123769,1805229,,BULK,NJO, Correct match 
 123770,1800045,,BULK,,
 123771,1801674,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-123772,1801674,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+123772,,,BULK,NJO, Not on a modelled crossing - Removed double matching 
 123773,1801673,,BULK,,
 123774,1800629,,BULK,,
 123775,1800161,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
@@ -2220,7 +2220,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123851,6800585,,HORS,,
 123852,6800593,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 123853,6801511,,HORS,,
-123854,6801781,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+123854,,,HORS,NJO,Not on modelled crossing
 123855,6801787,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 123856,6801784,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 123857,,701400916,HORS,,
@@ -2231,7 +2231,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123862,6802300,,HORS,,
 123863,6801782,,HORS,,
 123864,6801783,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
-123865,6801781,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+123865,6801781,,HORS,SN,matched to nearest modelled crossing within 15m (instream) - correct
 123866,,,HORS,,
 123880,,,HORS,,
 123881,6802195,,HORS,,
@@ -2320,8 +2320,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 124067,6801846,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 124068,6801850,,HORS,NJO,Matched to closest stream model (Manual Review)
 124069,6801353,,HORS,NJO,Matched to closest stream model (Manual Review)
-124070,6801853,,HORS,,
-124071,6801853,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+124070,6801853,,HORS,NJO, Correct Match 
+124071,,,HORS,NJO,No modelled crossing - removed duplicate matching
 124072,6801851,,HORS,,
 124073,6802127,,HORS,,
 124074,6801847,,HORS,,
@@ -2749,7 +2749,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 125960,6800157,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 125961,6800163,,HORS,NJO,Matched to closest stream model (Manual Review)
 125962,6801244,,HORS,,
-125963,6801694,,HORS,NJO,Matched to closest stream model (Manual Review)
+125963,,,HORS,NJO,No modelled crossing - Removed duplicate matching 
 125964,6801694,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 125965,6801692,,HORS,NJO,Matched to closest stream model (Manual Review)
 125966,,,HORS,,
@@ -2768,8 +2768,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 125979,6801631,,HORS,,
 125980,6801632,,HORS,,
 125981,,,HORS,,
-125982,6801679,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
-125983,6801679,,HORS,,
+125982,,,HORS,NJO,No modelled crossing - Removed duplicate matching
+125983,6801679,,HORS,NJO, Correct
 125984,6802318,,HORS,,
 125985,6801920,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 125986,6801697,,HORS,,
@@ -2816,9 +2816,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 126027,6800250,,HORS,,
 126400,,,HORS,,
 126401,6802364,,HORS,,
-126402,6802366,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+126402,,,HORS,NJO,Removed double matching - Potential Duplicate?
 126403,6800443,,HORS,,
-126404,6802366,,HORS,,
+126404,6802366,,HORS,NJO,Correct 
 126405,6802319,,HORS,,
 126406,6802020,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 126407,6802206,,HORS,,
@@ -2905,7 +2905,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 126505,6801918,,HORS,NJO,Matched to closest stream model (Manual Review)
 126506,,,HORS,,
 126507,6802112,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
-126508,6800008,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+126508,6800008,,HORS,NJO, Going to need further review 
 126509,,701411021,HORS,,
 126510,6800259,,HORS,,
 126511,6800263,,HORS,,
@@ -2962,8 +2962,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 126579,6800111,,HORS,,
 126580,,,HORS,,
 126581,6800658,,HORS,,
-126582,6800110,,HORS,,
-126583,6800110,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
+126582,6800110,,HORS,NJO, Correct matching
+126583,,,HORS,NJO, Potential duplicate - remove duplicate matching 
 126584,6800109,,HORS,,
 126585,6801027,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
 126586,6802331,,HORS,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3019,7 +3019,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 195250,1805766,,BULK,,
 195251,,17075418,BULK,,
 195252,1802318,,BULK,,
-195253,1803518,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+195253,,,BULK,NJO,No modelled crossing - Removed duplicate matching
 195255,1802314,,BULK,NJO,Matched to closest stream model (Manual Review)
 195256,1802317,,BULK,NJO,Matched to closest stream model (Manual Review)
 195259,1804160,,BULK,,
@@ -3152,8 +3152,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 195407,1804758,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195408,1806247,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195409,1806249,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-195410,1806244,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-195411,1806244,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+195410,1806244,,BULK,NJO,matched to nearest modelled crossing within 15m (instream) - Correct match 
+195411,,,BULK,SN, No modelled crossing - removed duplicate matching
 195412,1803585,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195413,1805252,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195420,1803792,,BULK,,
@@ -3270,7 +3270,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 195532,1803885,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195533,1805426,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195534,1805425,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-195535,1805425,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+195535,,,BULK,NJO,Not on modelled crossing
 195536,1800976,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195537,1800936,,BULK,,
 195538,1800950,,BULK,,
@@ -3375,7 +3375,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 195979,1800899,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195980,,,BULK,,
 195981,,17045932,BULK,,
-196697,11305096,,LNIC,,
+196697,11305096,,LNIC,NJO, Matched to closest crossing
 196940,11305595,,LNIC,,
 196941,11305593,,LNIC,,
 196942,11300383,,LNIC,,
@@ -3389,7 +3389,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 196964,11304728,,LNIC,,
 196965,11305105,,LNIC,,
 196966,11300830,,LNIC,,
-196967,11305096,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
+196967,,,LNIC,NJO,No modelled crossing in vicinity - removed double match
 196968,11305091,,LNIC,,
 196969,11304548,,LNIC,,
 196970,11303965,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
