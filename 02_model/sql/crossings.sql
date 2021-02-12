@@ -78,6 +78,47 @@ CREATE TABLE bcfishpass.crossings
     UNIQUE (blue_line_key, downstream_route_measure)
 );
 
+
+-- document the columns included
+COMMENT ON COLUMN bcfishpass.crossings.aggregated_crossings_id IS 'Unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, dam_id + 1100000000, misc_barrier_anthropogenic_id + 1200000000';
+COMMENT ON COLUMN bcfishpass.crossings.stream_crossing_id IS 'PSCIS stream crossing unique identifier';
+COMMENT ON COLUMN bcfishpass.crossings.dam_id IS 'BC Dams unique identifier';
+COMMENT ON COLUMN bcfishpass.crossings.misc_barrier_anthropogenic_id IS 'Misc anthropogenic barriers unique identifier';
+COMMENT ON COLUMN bcfishpass.crossings.modelled_crossing_id IS 'Modelled crossing unique identifier';
+COMMENT ON COLUMN bcfishpass.crossings.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,BCDAMS,MISC BARRIERS}';
+COMMENT ON COLUMN bcfishpass.crossings.pscis_status IS 'From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED,HABITAT CONFIRMATION,DESIGN,REMEDIATED}';
+COMMENT ON COLUMN bcfishpass.crossings.crossing_type_code IS 'Defines the type of crossing present at the location of the stream crossing. Acceptable types are: OBS = Open Bottom Structure CBS = Closed Bottom Structure OTHER = Crossing structure does not fit into the above categories. Eg: ford, wier';
+COMMENT ON COLUMN bcfishpass.crossings.crossing_subtype_code IS 'Further definition of the type of crossing, one of {BRIDGE,CRTBOX,DAM,FORD,OVAL,PIPEARCH,ROUND,WEIR,WOODBOX,NULL}';
+COMMENT ON COLUMN bcfishpass.crossings.modelled_crossing_type_source IS 'List of sources that indicate if a modelled crossing is open bottom, Acceptable values are: FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order >=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, "MANUAL FIX"=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}';
+COMMENT ON COLUMN bcfishpass.crossings.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential Barrier, BARRIER - Barrier, UNKOWN - Other';
+COMMENT ON COLUMN bcfishpass.crossings.pscis_road_name  IS 'PSCIS road name, taken from the PSCIS assessment data submission';
+COMMENT ON COLUMN bcfishpass.crossings.transport_line_structured_name_1 IS 'DRA road name, taken from the nearest DRA road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.transport_line_type_description IS 'DRA road type, taken from the nearest DRA road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.transport_line_surface_description IS 'DRA road surface, taken from the nearest DRA road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.ften_forest_file_id IS 'FTEN road forest_file_id value, taken from the nearest FTEN road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.ften_file_type_description IS 'FTEN road tenure type (Forest Service Road, Road Permit, etc), taken from the nearest FTEN road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.ften_client_number IS 'FTEN road client number, taken from the nearest FTEN road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.ften_client_name IS 'FTEN road client name, taken from the nearest FTEN road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.ften_life_cycle_status_code IS 'FTEN road life_cycle_status_code (active or retired, pending roads are not included), taken from the nearest FTEN road (within 30m)';
+COMMENT ON COLUMN bcfishpass.crossings.rail_track_name IS 'Railway name, taken from nearest railway (within 25m)';
+COMMENT ON COLUMN bcfishpass.crossings.rail_owner_name IS 'Railway owner name, taken from nearest railway (within 25m)';
+COMMENT ON COLUMN bcfishpass.crossings.rail_operator_english_name IS 'Railway operator name, taken from nearest railway (within 25m)';;
+COMMENT ON COLUMN bcfishpass.crossings.ogc_proponent IS 'OGC road tenure proponent (currently modelled crossings only, taken from OGC road that crosses the stream)';
+COMMENT ON COLUMN bcfishpass.crossings.dam_name IS 'Dam name, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers';
+COMMENT ON COLUMN bcfishpass.crossings.dam_owner IS 'Dam owner, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers';
+COMMENT ON COLUMN bcfishpass.crossings.wcrp_barrier_type IS 'Custom barrier type classification for CWF Watershed Connectivity Restoration Planning, based on crossing_type_code, crossing_subtype_code and road info, valid types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
+COMMENT ON COLUMN bcfishpass.crossings.utm_zone IS 'UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees.';
+COMMENT ON COLUMN bcfishpass.crossings.utm_easting IS 'UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698';
+COMMENT ON COLUMN bcfishpass.crossings.utm_northing IS 'UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826';
+COMMENT ON COLUMN bcfishpass.crossings.linear_feature_id IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)';
+COMMENT ON COLUMN bcfishpass.crossings.blue_line_key IS 'From BC FWA, Uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
+COMMENT ON COLUMN bcfishpass.crossings.downstream_route_measure IS 'The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature.';
+COMMENT ON COLUMN bcfishpass.crossings.wscode_ltree IS 'A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';
+COMMENT ON COLUMN bcfishpass.crossings.localcode_ltree IS 'A truncated version of the BC FWA local_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';;
+COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed group code associated with the feature.';
+COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
+
+
 -- --------------------------------
 -- insert PSCIS crossings first, they take precedence
 -- PSCIS on modelled crossings first, to get the road tenure info from model
@@ -426,7 +467,7 @@ INSERT INTO bcfishpass.crossings
 SELECT
     d.dam_id,
     'BCDAMS' as crossing_source,
-    'DAM' AS crossing_type_code,
+    'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
     'DAM' AS crossing_subtype_code,
     CASE
       WHEN UPPER(d.barrier_ind) = 'Y' THEN 'BARRIER'
@@ -502,7 +543,7 @@ INSERT INTO bcfishpass.crossings
 SELECT
     b.misc_barrier_anthropogenic_id,
     'MISC BARRIERS' as crossing_source,
-    b.barrier_type AS crossing_type_code,
+    'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
     b.barrier_type AS crossing_subtype_code,
     'BARRIER' AS barrier_status,
     SUBSTRING(to_char(utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
@@ -643,10 +684,10 @@ CREATE INDEX ON bcfishpass.crossings USING GIST (geom);
 -- populate wcrp_barrier_type column
 -- --------------------------------
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'WEIR' WHERE crossing_type_code = 'WEIR';
+SET wcrp_barrier_type = 'WEIR' WHERE crossing_subtype_code = 'WEIR';
 
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'DAM' WHERE crossing_source = 'BCDAMS';
+SET wcrp_barrier_type = 'DAM' WHERE crossing_subtype_code = 'DAM';
 
 -- railway
 UPDATE bcfishpass.crossings
