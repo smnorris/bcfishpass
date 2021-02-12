@@ -1,3 +1,16 @@
 misc_barriers_id,blue_line_key,downstream_route_measure,barrier_type,barrier_name,watershed_group_code,reviewer,notes
-1,356348366,1012.8,LOCAL KNOWLEDGE,Stump Lake Creek Dam,LNIC,SN,
+1,356348366,1013,LOCAL KNOWLEDGE,Stump Lake Creek Dam,LNIC,SN,
 2,356341914,140,LOCAL KNOWLEDGE,Hamilton Creek,LNIC,SN,
+3,356332517,0,STREAM DISSIPATION,MISC,LNIC,NJO,Impassable to fish
+5,356162422,23120,CASCADE,MISC,LNIC,NJO,Impassable 8m long cascade barrier located ~25m downstream No perennial fish habitat u/s of the barrier.
+6,356363343,41922,STEEP GRADIENT,MISC,LNIC,NJO,Too steep for fish use - no headwater lakes to support any isolated fish population
+7,356264650,0,FALLS,MISC,LNIC,NJO, Seasonal stream descends over vertical bedrock wall no headwater lakes to support any isolated fish population
+8,356221118,2058,MISC,STEEP GRADIENT,LNIC,NJO,Seasonal stream diverted to ditch – descends at 25% to the main stem Impassable to fish no perennial
+upstream
+9,356213071,390,GRADIENT BARRIER,Trib to west of Barker Creek,HORS,SH,Local knowledge
+10,356208960,787,INTERMITTENT,Trib to west of Patenaude Creek,HORS,SH,non-fish bearing stream
+11,356304613,145,INTERMITTENT,Trib to east of Patenaude Creek,HORS,SH,Non-fish bearing stream
+12,356265216,327,NATURAL BARRIER,Trib to Mussel Creek,HORS,SH,Possible salmon habitat to this point
+13,356351116,1864,NATURAL BARRIER,Mussel Creek,HORS,SH,Small stream no indication of salmon habitat beyond this point
+14,356350431,70.76346727,INTERMITTENT,Trib to Horsefly River,HORS,SH,Dry gulch low to no habitat value
+15,356024294,0,INTERMITTENT,Trib to Horsefly River,HORS,SH,Dry gulch low to no habitat value
