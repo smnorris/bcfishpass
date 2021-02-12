@@ -1,0 +1,159 @@
+column_name,description
+aggregated_crossings_id,"Unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, dam_id + 1100000000, misc_barrier_anthropogenic_id + 1200000000"
+stream_crossing_id,PSCIS stream crossing unique identifier
+dam_id,BC Dams unique identifier
+misc_barrier_anthropogenic_id,Misc anthropogenic barriers unique identifier
+modelled_crossing_id,Modelled crossing unique identifier
+crossing_source,"Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,BCDAMS,MISC BARRIERS}"
+pscis_status,"From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED,HABITAT CONFIRMATION,DESIGN,REMEDIATED}"
+crossing_type_code,"Defines the type of crossing present at the location of the stream crossing. Acceptable types are: OBS = Open Bottom Structure CBS = Closed Bottom Structure OTHER = Crossing structure does not fit into the above categories. Eg: ford, wier"
+crossing_subtype_code,"Further definition of the type of crossing, one of {BRIDGE,CRTBOX,DAM,FORD,OVAL,PIPEARCH,ROUND,WEIR,WOODBOX,NULL}"
+modelled_crossing_type_source,"List of sources that indicate if a modelled crossing is open bottom, Acceptable values are: FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order >=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, ""MANUAL FIX""=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}"
+barrier_status,"The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential Barrier, BARRIER - Barrier, UNKOWN - Other"
+pscis_road_name,"PSCIS road name, taken from the PSCIS assessment data submission"
+transport_line_structured_name_1,"DRA road name, taken from the nearest DRA road (within 30m)"
+transport_line_type_description,"DRA road type, taken from the nearest DRA road (within 30m)"
+transport_line_surface_description,"DRA road surface, taken from the nearest DRA road (within 30m)"
+ften_forest_file_id,"FTEN road forest_file_id value, taken from the nearest FTEN road (within 30m)"
+ften_file_type_description,"FTEN road tenure type (Forest Service Road, Road Permit, etc), taken from the nearest FTEN road (within 30m)"
+ften_client_number,"FTEN road client number, taken from the nearest FTEN road (within 30m)"
+ften_client_name,"FTEN road client name, taken from the nearest FTEN road (within 30m)"
+ften_life_cycle_status_code,"FTEN road life_cycle_status_code (active or retired, pending roads are not included), taken from the nearest FTEN road (within 30m)"
+rail_track_name,"Railway name, taken from nearest railway (within 25m)"
+rail_owner_name,"Railway owner name, taken from nearest railway (within 25m)"
+rail_operator_english_name,"Railway operator name, taken from nearest railway (within 25m)"
+ogc_proponent,"OGC road tenure proponent (currently modelled crossings only, taken from OGC road that crosses the stream)"
+dam_name,"Dam name, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers"
+dam_owner,"Dam owner, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers"
+wcrp_barrier_type,"Custom barrier type classification for CWF Watershed Connectivity Restoration Planning, based on crossing_type_code, crossing_subtype_code and road info, valid types are {DAM,RAIL,""ROAD, DEMOGRAPHIC"",""ROAD, RESOURCE/OTHER"",TRAIL,WEIR}"
+utm_zone,"UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees."
+utm_easting,"UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698"
+utm_northing,"UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826"
+linear_feature_id,"From BC FWA, the unique identifier for a stream segment (flow network arc)"
+blue_line_key,"From BC FWA, Uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)."
+downstream_route_measure,"The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature."
+wscode_ltree,"A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ""-"" replaced with ""."", stored as postgres type ltree for fast tree based queries"
+localcode_ltree,"A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ""-"" replaced with ""."", stored as postgres type ltree for fast tree based queries"
+watershed_group_code,The watershed group code associated with the feature.
+dnstr_crossings,
+dnstr_barriers_anthropogenic,
+stream_order,Order of FWA stream at point
+stream_magnitude,Magnitude of FWA stream at point
+gradient,Stream slope at point
+accessibility_model_salmon,Modelled accessibility to Salmon (15% max)
+accessibility_model_steelhead,Modelled accessibility to Steelhead (20% max)
+accessibility_model_wct,Modelled accessibility to West Slope Cutthroat Trout (20% max or downstream of known WCT observation)
+observedspp_dnstr,Fish species observed downstream of point (on the same stream/blue_line_key)
+observedspp_upstr,Fish species observed anywhere upstream of point
+watershed_upstr_ha,"Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)"
+total_network_km,Total length of stream network upstream of point
+total_stream_km,Total length of streams and rivers upstream of point (does not include network connectors in lakes etc)
+total_lakereservoir_ha,Total area lakes and reservoirs upstream of point 
+total_wetland_ha,Total area wetlands upstream of point 
+total_slopeclass03_waterbodies_km,Total length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%
+total_slopeclass03_km,Total length of stream potentially accessible upstream of point with slope 0-3%
+total_slopeclass05_km,Total length of stream potentially accessible upstream of point with slope 3-5%
+total_slopeclass08_km,Total length of stream potentially accessible upstream of point with slope 5-8%
+total_slopeclass15_km,Total length of stream potentially accessible upstream of point with slope 8-15%
+total_slopeclass22_km,Total length of stream potentially accessible upstream of point with slope 15-22%
+total_slopeclass30_km,Total length of stream potentially accessible upstream of point with slope 22-30%
+total_belowupstrbarriers_network_km,Total length of stream network potentially accessible upstream of point and below any additional upstream barriers
+total_belowupstrbarriers_stream_km,Total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)
+total_belowupstrbarriers_lakereservoir_ha,Total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers
+total_belowupstrbarriers_wetland_ha,Total area wetlands potentially accessible upstream of point and below any additional upstream barriers
+total_belowupstrbarriers_slopeclass03_waterbodies_km,"Total length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+total_belowupstrbarriers_slopeclass03_km,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+total_belowupstrbarriers_slopeclass05_km,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+total_belowupstrbarriers_slopeclass08_km,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+total_belowupstrbarriers_slopeclass15_km,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+total_belowupstrbarriers_slopeclass22_km,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+total_belowupstrbarriers_slopeclass30_km,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+salmon_network_km,"Salmon model, total length of stream network potentially accessible upstream of point"
+salmon_stream_km,"Salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)"
+salmon_lakereservoir_ha,"Salmon model, total area lakes and reservoirs potentially accessible upstream of point "
+salmon_wetland_ha,"Salmon model, total area wetlands potentially accessible upstream of point "
+salmon_slopeclass03_waterbodies_km,"Salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%"
+salmon_slopeclass03_km,"Salmon model, length of stream potentially accessible upstream of point with slope 0-3%"
+salmon_slopeclass05_km,"Salmon model, length of stream potentially accessible upstream of point with slope 3-5%"
+salmon_slopeclass08_km,"Salmon model, length of stream potentially accessible upstream of point with slope 5-8%"
+salmon_slopeclass15_km,"Salmon model, length of stream potentially accessible upstream of point with slope 8-15%"
+salmon_slopeclass22_km,"Salmon model, length of stream potentially accessible upstream of point with slope 15-22%"
+salmon_slopeclass30_km,"Salmon model, length of stream potentially accessible upstream of point with slope 22-30%"
+salmon_belowupstrbarriers_network_km,"Salmon model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers"
+salmon_belowupstrbarriers_stream_km,"Salmon model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
+salmon_belowupstrbarriers_lakereservoir_ha,"Salmon model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers"
+salmon_belowupstrbarriers_wetland_ha,"Salmon model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers"
+salmon_belowupstrbarriers_slopeclass03_waterbodies_km,"Salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+salmon_belowupstrbarriers_slopeclass03_km,"Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+salmon_belowupstrbarriers_slopeclass05_km,"Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+salmon_belowupstrbarriers_slopeclass08_km,"Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+salmon_belowupstrbarriers_slopeclass15_km,"Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+salmon_belowupstrbarriers_slopeclass22_km,"Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+salmon_belowupstrbarriers_slopeclass30_km,"Salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+steelhead_network_km,"Steelhead model, total length of stream network potentially accessible upstream of point"
+steelhead_stream_km,"Steelhead model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)"
+steelhead_lakereservoir_ha,"Steelhead model, total area lakes and reservoirs potentially accessible upstream of point "
+steelhead_wetland_ha,"Steelhead model, total area wetlands potentially accessible upstream of point "
+steelhead_slopeclass03_waterbodies_km,"Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%"
+steelhead_slopeclass03_km,"Steelhead model, length of stream potentially accessible upstream of point with slope 0-3%"
+steelhead_slopeclass05_km,"Steelhead model, length of stream potentially accessible upstream of point with slope 3-5%"
+steelhead_slopeclass08_km,"Steelhead model, length of stream potentially accessible upstream of point with slope 5-8%"
+steelhead_slopeclass15_km,"Steelhead model, length of stream potentially accessible upstream of point with slope 8-15%"
+steelhead_slopeclass22_km,"Steelhead model, length of stream potentially accessible upstream of point with slope 15-22%"
+steelhead_slopeclass30_km,"Steelhead model, length of stream potentially accessible upstream of point with slope 22-30%"
+steelhead_belowupstrbarriers_network_km,"Steelhead model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers"
+steelhead_belowupstrbarriers_stream_km,"Steelhead model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
+steelhead_belowupstrbarriers_lakereservoir_ha,"Steelhead model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers"
+steelhead_belowupstrbarriers_wetland_ha,"Steelhead model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers"
+steelhead_belowupstrbarriers_slopeclass03_waterbodies_km,"Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+steelhead_belowupstrbarriers_slopeclass03_km,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+steelhead_belowupstrbarriers_slopeclass05_km,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+steelhead_belowupstrbarriers_slopeclass08_km,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+steelhead_belowupstrbarriers_slopeclass15_km,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+steelhead_belowupstrbarriers_slopeclass22_km,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+steelhead_belowupstrbarriers_slopeclass30_km,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+wct_network_km,"Westslope Cuthroat Trout model, total length of stream network potentially accessible upstream of point"
+wct_stream_km,"Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)"
+wct_lakereservoir_ha,"Westslope Cuthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point "
+wct_wetland_ha,"Westslope Cuthroat Trout model, total area wetlands potentially accessible upstream of point "
+wct_slopeclass03_waterbodies_km,"Westslope Cutthroat Trout model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%"
+wct_slopeclass03_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 0-3%"
+wct_slopeclass05_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 3-5%"
+wct_slopeclass08_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 5-8%"
+wct_slopeclass15_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 8-15%"
+wct_slopeclass22_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 15-22%"
+wct_slopeclass30_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point with slope 22-30%"
+wct_belowupstrbarriers_network_km,"Westslope Cutthroat Trout model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers"
+wct_belowupstrbarriers_stream_km,"Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
+wct_belowupstrbarriers_lakereservoir_ha,"Westslope Cutthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers"
+wct_belowupstrbarriers_wetland_ha,"Westslope Cutthroat Trout model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers"
+wct_belowupstrbarriers_slopeclass03_waterbodies_km,"Westslope Cutthroat Trout model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+wct_belowupstrbarriers_slopeclass03_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+wct_belowupstrbarriers_slopeclass05_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+wct_belowupstrbarriers_slopeclass08_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+wct_belowupstrbarriers_slopeclass15_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+wct_belowupstrbarriers_slopeclass22_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+wct_belowupstrbarriers_slopeclass30_km,"Westslope Cutthroat Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+ch_spawning_km,Length of stream upstream of point modelled as potential Chinook spawning habitat
+ch_rearing_km,Length of stream upstream of point modelled as potential Chinook rearing habitat
+ch_spawning_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Chinook spawning habitat"
+ch_rearing_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Chinook rearing habitat"
+co_spawning_km,Length of stream upstream of point modelled as potential Coho spawning habitat
+co_rearing_km,Length of stream upstream of point modelled as potential Coho rearing habitat
+co_spawning_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Coho spawning habitat"
+co_rearing_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Coho rearing habitat"
+sk_spawning_km,Length of stream upstream of point modelled as potential Sockeye spawning habitat
+sk_rearing_km,Length of stream upstream of point modelled as potential Sockeye rearing habitat
+sk_spawning_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Sockeye spawning habitat"
+sk_rearing_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Sockeye rearing habitat"
+st_spawning_km,Length of stream upstream of point modelled as potential Steelhead spawning habitat
+st_rearing_km,Length of stream upstream of point modelled as potential Steelhead rearing habitat
+st_spawning_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Steelhead spawning habitat"
+st_rearing_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential Steelhead rearing habitat"
+all_spawning_km,"Length of stream upstream of point modelled as potential spawning habitat (all CH,CO,SK,ST)"
+all_spawning_belowupstrbarriers_km,"Length of stream upstream of point modelled as potential rearing habitat (all CH,CO,SK,ST)"
+all_rearing_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential spawning habitat (all CH,CO,SK,ST)"
+all_rearing_belowupstrbarriers_km,"Length of stream upstream of point and below any additional upstream barriers, modelled as potential rearing habitat (all CH,CO,SK,ST)"
+all_spawningrearing_km,Length of all spawning and rearing habitat upstream of point
+all_spawningrearing_belowupstrbarriers_km,Length of all spawning and rearing habitat upstream of point
+dbm_mof_50k_grid,"WHSE_BASEMAPPING.DBM_MOF_50K_GRID map_tile_display_name, used for generating planning map pdfs"
