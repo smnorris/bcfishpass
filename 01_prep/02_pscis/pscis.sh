@@ -7,7 +7,7 @@ set -euxo pipefail
 psql -c "DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref"
 psql -c "CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
         (stream_crossing_id integer PRIMARY KEY,
-         modelled_crossing_id integer,
+         modelled_crossing_id integer UNIQUE,
          linear_feature_id integer,
          watershed_group_code text,
          reviewer text,

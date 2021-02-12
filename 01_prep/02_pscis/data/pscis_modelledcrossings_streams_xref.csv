@@ -1104,7 +1104,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 58087,,,BULK,NJO,Not on a modelled crossing
 58088,1806055,,BULK,,
 58089,1806054,,BULK,NJO,Matched to closest stream model (Manual Review)
-58090,1806054,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
+58090,,,BULK,SN,not on mapped stream
 58091,1802365,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 58092,1806232,,BULK,,
 58093,1805144,,BULK,,
@@ -1747,7 +1747,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 112342,4602529,,ELKR,,
 112343,4605611,,ELKR,,
 112344,4605614,,ELKR,,
-112345,,ELKR,NJO;SN,Not on mapped stream
+112345,,,ELKR,NJO;SN,Not on mapped stream
 112346,4607415,,ELKR,NJO,Matched to closest stream model (Manual Review)
 112347,4606885,,ELKR,NJO,Matched to closest stream model (Manual Review)
 112348,,,ELKR,NJO,Not on a mapped stream
