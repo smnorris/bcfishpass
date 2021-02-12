@@ -204,6 +204,10 @@ python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossing
 python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
 python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
+# document these two new columns in the crossings table
+psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_crossings IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
+psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
+
 # populating the belowupstrbarriers for OBS in the crossings table requires a separate query
 psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
 
