@@ -15,6 +15,7 @@ roads AS
     railway_track_id,
     geom
   FROM whse_basemapping.gba_railway_tracks_sp r
+  WHERE r.track_classification != 'Ferry Route'
 ),
 
 -- overlay with streams, creating intersection points
