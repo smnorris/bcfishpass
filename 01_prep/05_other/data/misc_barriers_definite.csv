@@ -3,7 +3,7 @@ misc_barriers_id,blue_line_key,downstream_route_measure,barrier_type,barrier_nam
 2,356341914,140,LOCAL KNOWLEDGE,Hamilton Creek,LNIC,SN,
 3,356332517,0,STREAM DISSIPATION,MISC,LNIC,NJO,Impassable to fish
 5,356162422,23120,CASCADE,MISC,LNIC,NJO,Impassable 8m long cascade barrier located ~25m downstream No perennial fish habitat u/s of the barrier.
-6,356363343,41922,STEEP GRADIENT,MISC,LNIC,NJO,Too steep for fish use - no headwater lakes to support any isolated fish population
+6,356308732,200,STEEP GRADIENT,MISC,LNIC,NJO,Too steep for fish use - no headwater lakes to support any isolated fish population
 7,356264650,0,FALLS,MISC,LNIC,NJO,Seasonal stream descends over vertical bedrock wall no headwater lakes to support any isolated fish population
 8,356221118,2058,MISC,STEEP GRADIENT,LNIC,NJO,Seasonal stream diverted to ditch – descends at 25% to the main stem Impassable to fish no perennial upstream
 9,356213071,390,GRADIENT BARRIER,Trib to west of Barker Creek,HORS,SH,Local knowledge
@@ -13,3 +13,10 @@ misc_barriers_id,blue_line_key,downstream_route_measure,barrier_type,barrier_nam
 13,356351116,1864,NATURAL BARRIER,Mussel Creek,HORS,SH,Small stream no indication of salmon habitat beyond this point
 14,356350431,70.76346727,INTERMITTENT,Trib to Horsefly River,HORS,SH,Dry gulch low to no habitat value
 15,356024294,0,INTERMITTENT,Trib to Horsefly River,HORS,SH,Dry gulch low to no habitat value
+16,356257013,173,INTERMITTENT,Trib 1 South of Horsefly River,HORS,SH,Dr/intermittent
+17,356358002,260,INTERMITTENT,Trib 2 South of Horsefly River,HORS,SH,Dry/intermittent
+18,356083394,56,INTERMITTENT,Trib 3 South of Horsefly River,HORS,SH,Dry/intermittent
+19,356193013,357,INTERMITTENT,Trib west of Black Creek,HORS,SH,Unlikely to be fish bearing
+20,356029579,169,INTERMITTENT,Near Starlike Lake Road,HORS,SH,Dry/intermittent
+21,356327400,288,INTERMITTENT,Trib to Moffat Creek,HORS,SH,"Unlikley to be fish bearing, intermittent, poor habitat value"
+22,356243886,58,INTERMITTENT,Trib to Horsefly River,HORS,SH,"Unlikely fish bearing, industrial zone"
