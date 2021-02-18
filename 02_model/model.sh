@@ -193,8 +193,8 @@ python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfa
 python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
 # and waterfalls that aren't considered in the model yet, just for evaluation
-python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.waterfalls falls_event_id dnstr_falls
-python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.waterfalls dnstr_falls
+python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp falls_event_id dnstr_falls
+python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp dnstr_falls
 
 # and also the crossings table
 # but for crossings,  index it based on the barriers table - we want the downstream ids to be barriers only
