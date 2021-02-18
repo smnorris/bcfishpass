@@ -41,17 +41,18 @@ psql -c "\copy bcfishpass.falls_fiss_barrier_ind FROM 'data/falls_fiss_barrier_i
 
 
 # load other falls, from various sources (add any new falls to this table)
-# (World Waterfall Database, CanVec, FISS (these are presumably duplicates), Irvine 2020)
-ogr2ogr -f PostgreSQL \
-  "PG:host=$PGHOST user=$PGUSER dbname=$PGDATABASE port=$PGPORT" \
-  -overwrite \
-  -s_srs EPSG:4326 \
-  -t_srs EPSG:3005 \
-  -nln bcfishpass.falls_other \
-  -lco GEOMETRY_NAME=geom \
-  data/falls_other.geojson
-psql -c "ALTER TABLE bcfishpass.falls_other DROP COLUMN ogc_fid"
-psql -c "ALTER TABLE bcfishpass.falls_other ADD PRIMARY KEY (falls_other_id)"
+psql -c "DROP TABLE IF EXISTS bcfishpass.falls_other"
+psql -c "CREATE TABLE bcfishpass.falls_other
+  (falls_other_id integer primary key,
+   height numeric,
+   barrier_ind boolean,
+   blue_line_key integer,
+   downstream_route_measure integer,
+   watershed_group_code text,
+   source text,
+   reviewer text,
+   notes text)"
+psql -c "\copy bcfishpass.falls_other FROM 'data/falls_other.csv' delimiter ',' csv header"
 
 # match falls to streams, combine sources
 psql -f sql/falls.sql
