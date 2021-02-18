@@ -78,6 +78,7 @@
 { "type": "Feature", "properties": { "falls_other_id": 74, "name": "Falls", "source": "Irvine 2020", "barrier_ind": null }, "geometry": { "type": "Point", "coordinates": [ -126.60257, 54.362078] } },
 { "type": "Feature", "properties": { "falls_other_id": 75, "name": "Waterfall", "source": "Irvine 2020", "barrier_ind": null }, "geometry": { "type": "Point", "coordinates": [ -126.562341, 54.360289] } },
 { "type": "Feature", "properties": { "falls_other_id": 76, "name": "Dungate Falls", "source": "Irvine 2020", "barrier_ind": null }, "geometry": { "type": "Point", "coordinates": [ -126.506289, 54.302032] } },
-{ "type": "Feature", "properties": { "falls_other_id": 77, "name": "Findlay Falls", "source": "Irvine 2020", "barrier_ind": null }, "geometry": { "type": "Point", "coordinates": [ -126.301307, 54.564885] } }
+{ "type": "Feature", "properties": { "falls_other_id": 77, "name": "Findlay Falls", "source": "Irvine 2020", "barrier_ind": null }, "geometry": { "type": "Point", "coordinates": [ -126.301307, 54.564885] } },
+{ "type": "Feature", "properties": { "falls_other_id": 78, "name": null, "source": "CWF WCRP", "barrier_ind": true }, "geometry": { "type": "Point", "coordinates": [ -121.088289506722944, 50.222261724705845 ] } }
 ]
 }
