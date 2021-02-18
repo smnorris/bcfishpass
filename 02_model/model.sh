@@ -115,9 +115,8 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_othe
 # break at all pscis crossings, modelled crossings, dams (including OBS and non barriers)
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.crossings
 
-# create a waterfalls table for evaluation, break streams at waterfalls
-psql -f sql/waterfalls.sql
-python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.waterfalls
+# break streams at all falls, not just those already identified as barriers
+python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls_events_sp
 
 # add column tracking upstream observations
 python bcfishpass.py add-upstream-ids bcfishpass.streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
@@ -194,8 +193,8 @@ python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfa
 python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
 # and waterfalls that aren't considered in the model yet, just for evaluation
-python bcfishpass.py add-downstream-ids bcfishpass.waterfalls falls_id bcfishpass.waterfalls falls_id dnstr_falls
-python bcfishpass.py report bcfishpass.waterfalls falls_id bcfishpass.waterfalls dnstr_falls
+python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.waterfalls falls_event_id dnstr_falls
+python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.waterfalls dnstr_falls
 
 # and also the crossings table
 # but for crossings,  index it based on the barriers table - we want the downstream ids to be barriers only

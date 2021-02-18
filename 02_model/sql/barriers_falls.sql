@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS bcfishpass.barriers_falls;
 
 CREATE TABLE bcfishpass.barriers_falls
 (
-    barriers_falls_id serial primary key,
+    barriers_falls_id integer primary key,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -31,7 +31,7 @@ INSERT INTO bcfishpass.barriers_falls
     geom
 )
 SELECT
-    falls_id as barriers_falls_id,
+    falls_event_id,
    'FALLS' as barrier_type,
     NULL as barrier_name,
     a.linear_feature_id,
@@ -40,19 +40,12 @@ SELECT
     a.wscode_ltree,
     a.localcode_ltree,
     a.watershed_group_code,
-    (ST_Dump(ST_Force2D(ST_locateAlong(b.geom, a.downstream_route_measure)))).geom as geom
-FROM whse_fish.fiss_falls_events a
-INNER JOIN whse_basemapping.fwa_stream_networks_sp b
-ON a.linear_feature_id = b.linear_feature_id
+    a.geom
+FROM bcfishpass.falls_events_sp a
 INNER JOIN bcfishpass.watershed_groups g
 ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
--- Horsefly known falls
-WHERE (a.fish_obstacle_point_ids && ARRAY[27481, 27482, 19653, 19565]
--- plus everything >= 5m ?
--- OR a.height >= 5
-)
+WHERE a.barrier_ind IS TRUE
 ON CONFLICT DO NOTHING;
-
 
 
 CREATE INDEX ON bcfishpass.barriers_falls (linear_feature_id);
