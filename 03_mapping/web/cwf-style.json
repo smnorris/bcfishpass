@@ -79,7 +79,7 @@
     "waterfalls": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.waterfalls/{z}/{x}/{y}.pbf"
+        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.falls_events_sp/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 6,
       "maxzoom": 19
@@ -512,7 +512,7 @@
     "id": "waterfalls",
     "type": "symbol",
     "source": "waterfalls",
-    "source-layer": "bcfishpass.waterfalls",
+    "source-layer": "bcfishpass.falls_events_sp",
     "maxzoom": 19,
     "minzoom": 10,
     "layout": {
