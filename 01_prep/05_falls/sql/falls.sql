@@ -432,7 +432,7 @@ ON e.blue_line_key = b.blue_line_key AND
 ON CONFLICT DO NOTHING;
 
 
---ALTER TABLE bcfishpass.falls_events_sp DROP COLUMN falls_fiss_id;  -- dump the meaningless column
+ALTER TABLE bcfishpass.falls_events_sp DROP COLUMN falls_fiss_id;  -- dump the meaningless column
 
 CREATE INDEX ON bcfishpass.falls_events_sp (linear_feature_id);
 CREATE INDEX ON bcfishpass.falls_events_sp (blue_line_key);
