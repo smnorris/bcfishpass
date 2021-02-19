@@ -1,5 +1,5 @@
-species_code,spawn_gradient_max,spawn_channel_width_min,spawn_channel_width_max,rear_gradient_max,rear_channel_width_max,rear_lake_ha_min,rear_wetland_multiplier,rear_lake_multiplier
-CH,.03,3.7,50,.05,15,,,
-CO,.05,2,50,.05,15,,1.5,
-ST,.04,3.8,50,.074,15,,,
-SK,.02,2,50,,,200,,1.5
+species_code,spawn_gradient_max,spawn_channel_width_min,spawn_channel_width_max,spawn_mad_min,spawn_mad_max,rear_gradient_max,rear_channel_width_max,rear_mad_min,rear_mad_max,rear_lake_ha_min,rear_wetland_multiplier,rear_lake_multiplier
+CH,0.03,3.7,50,0.58,300,0.05,15,1.5,100,,,
+CO,0.05,2,50,0.22,300,0.05,15,0.05,40,,1.5,
+ST,0.04,3.8,50,0.59,300,0.074,15,0.04,60,,,
+SK,0.02,2,50,0.18,300,,,,,200,,1.5
