@@ -1,9 +1,9 @@
 -- Join fiss sample sites to nearest streams within 100m,
 -- then finalize match by preferring the stream with matching watershed codes
 
-DROP TABLE IF EXISTS whse_fish.fiss_stream_sample_sites_events_sp;
+DROP TABLE IF EXISTS bcfishpass.fiss_stream_sample_sites_events_sp;
 
-CREATE TABLE whse_fish.fiss_stream_sample_sites_events_sp AS
+CREATE TABLE bcfishpass.fiss_stream_sample_sites_events_sp AS
 
 -- only wsd of interest
 WITH pts AS
@@ -112,7 +112,7 @@ WITH pts AS
   FROM whse_fish.fiss_stream_sample_sites_sp as pt
   INNER JOIN whse_basemapping.fwa_watershed_groups_poly wsd
   ON ST_Intersects(pt.geom, wsd.geom)
-  LEFT OUTER JOIN whse_fish.fiss_stream_sample_sites_events_sp e
+  LEFT OUTER JOIN bcfishpass.fiss_stream_sample_sites_events_sp e
   ON pt.stream_sample_site_id = e.stream_sample_site_id
   WHERE wsd.watershed_group_code IN ('LNIC','HORS','BULK','ELKR','MORR')
   AND e.stream_sample_site_id IS NULL
@@ -180,7 +180,7 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON c.linear_feature_id = s.linear_feature_id
 )
 
-INSERT INTO whse_fish.fiss_stream_sample_sites_events_sp
+INSERT INTO bcfishpass.fiss_stream_sample_sites_events_sp
 (
   stream_sample_site_id,
   linear_feature_id,

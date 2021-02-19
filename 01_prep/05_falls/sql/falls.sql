@@ -8,6 +8,7 @@ CREATE TABLE bcfishpass.falls_fiss
 (
  falls_fiss_id              serial primary key  ,
  height                     double precision    ,
+ new_watershed_code         text                ,
  watershed_group_code       text                ,
  geom                       geometry(Point, 3005)
 );
@@ -59,6 +60,7 @@ height_cleaned AS
       WHEN height = -1000 THEN NULL
       ELSE height
     END as height,
+    new_watershed_code,
     geom
   FROM whse_fish.fiss_obstacles_pnt_sp o
   WHERE o.obstacle_name = 'Falls'
@@ -71,6 +73,7 @@ height_cleaned AS
       WHEN height = -1000 THEN NULL
       ELSE height
     END as height,
+    NULL as new_watershed_code,
     geom
   FROM singlepart_unpublished o
   WHERE o.obstacle_name = 'Falls'
@@ -79,22 +82,24 @@ height_cleaned AS
 agg AS
 (
   SELECT
-    unnest(array_agg(o.height)) as height,
+    unnest(array_agg(height)) as height,
+    new_watershed_code,
     geom
-  FROM height_cleaned o
-  GROUP BY o.geom
+  FROM height_cleaned
+  GROUP BY new_watershed_code, geom
 )
 
 INSERT INTO bcfishpass.falls_fiss
-(height, watershed_group_code, geom)
+(height, new_watershed_code, watershed_group_code, geom)
 SELECT
   max(agg.height) as height,
+  agg.new_watershed_code,
   g.watershed_group_code,
   agg.geom
 FROM agg
 INNER JOin whse_basemapping.fwa_watershed_groups_subdivided g
 ON ST_Intersects(agg.geom, g.geom)
-GROUP BY g.watershed_group_code, agg.geom;
+GROUP BY g.watershed_group_code, agg.new_watershed_code, agg.geom;
 
 
 -- ---------------------------------------------
@@ -105,6 +110,7 @@ DROP TABLE IF EXISTS bcfishpass.falls_events_sp;
 CREATE TABLE bcfishpass.falls_events_sp
  (
  falls_event_id           serial primary key,
+ falls_fiss_id            integer          , -- temporary column, for tracking what gets inserted
  source                   text             ,
  height                   double precision ,
  barrier_ind              boolean          ,
@@ -163,7 +169,11 @@ p.downstream_route_measure + .001 < s.upstream_route_measure
 ON CONFLICT DO NOTHING;
 
 
--- Next, reference FISS falls to the FWA stream network, simply matching falls to closest stream.
+-- Next, reference FISS falls to the FWA stream network, matching to closest stream
+-- that has matching watershed code (via 50k/20k lookup)
+-- FISS falls >= 5m are barrier_ind = True, or as indicated in falls_fiss_barrier_ind.csv
+
+-- Next, reference FISS falls to the FWA stream network
 -- FISS falls >= 5m are barrier_ind = True, or as indicated in falls_fiss_barrier_ind.csv
 
 WITH candidates AS -- first, find up to 10 streams within 200m of the falls
@@ -216,11 +226,152 @@ bluelines AS
 ),
 
 -- from the selected blue lines, generate downstream_route_measure
--- and only return the closest match
+-- and join to the 20k 50k lookup table
 events AS
-
 (
-  SELECT DISTINCT ON (bluelines.falls_fiss_id )
+  SELECT
+    bluelines.falls_fiss_id,
+    candidates.linear_feature_id,
+    (REPLACE(REPLACE(lut.fwa_watershed_code_20k, '-000000', ''), '-', '.')::ltree) as wscode_ltree_lookup,
+    candidates.wscode_ltree,
+    candidates.localcode_ltree,
+    candidates.waterbody_key,
+    bluelines.blue_line_key,
+    -- reference the point to the stream, making output measure an integer
+    -- (ensuring point measure is between stream's downtream measure and upstream measure)
+    CEIL(GREATEST(candidates.downstream_route_measure, FLOOR(LEAST(candidates.upstream_route_measure,
+    (ST_LineLocatePoint(candidates.geom, ST_ClosestPoint(candidates.geom, pts.geom)) * candidates.length_metre) + candidates.downstream_route_measure
+    )))) as downstream_route_measure,
+    candidates.distance_to_stream,
+    candidates.height,
+    candidates.watershed_group_code
+  FROM bluelines
+  INNER JOIN candidates ON bluelines.falls_fiss_id  = candidates.falls_fiss_id
+  AND bluelines.blue_line_key = candidates.blue_line_key
+  AND bluelines.distance_to_stream = candidates.distance_to_stream
+  INNER JOIN bcfishpass.falls_fiss pts
+  ON bluelines.falls_fiss_id  = pts.falls_fiss_id
+  LEFT OUTER JOIN whse_basemapping.fwa_streams_20k_50k lut
+  ON REPLACE(pts.new_watershed_code,'-','') = lut.watershed_code_50k
+  ORDER BY bluelines.falls_fiss_id, candidates.distance_to_stream asc
+),
+
+-- grab closest with a matched code
+matched AS
+(
+SELECT DISTINCT ON (falls_fiss_id) *
+FROM events
+WHERE wscode_ltree_lookup = wscode_ltree
+ORDER BY falls_fiss_id, distance_to_stream asc
+)
+
+INSERT INTO bcfishpass.falls_events_sp
+ (
+ falls_fiss_id,
+ source,
+ height,
+ barrier_ind,
+ distance_to_stream,
+ linear_feature_id,
+ blue_line_key,
+ downstream_route_measure,
+ wscode_ltree,
+ localcode_ltree,
+ watershed_group_code,
+ geom)
+SELECT
+  falls_fiss_id,
+ 'FISS' as source,
+ e.height,
+ CASE
+   WHEN b.barrier_ind IS NOT NULL THEN b.barrier_ind
+   WHEN b.barrier_ind IS NULL AND e.height >= 5 THEN True
+   ELSE False
+ END as barrier_ind,
+ e.distance_to_stream,
+ e.linear_feature_id,
+ e.blue_line_key,
+ e.downstream_route_measure,
+ e.wscode_ltree,
+ e.localcode_ltree,
+ e.watershed_group_code,
+ (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, e.downstream_route_measure)))).geom as geom
+FROM matched e
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON e.linear_feature_id = s.linear_feature_id
+LEFT OUTER JOIN bcfishpass.falls_fiss_barrier_ind b
+ON e.blue_line_key = b.blue_line_key AND
+   e.downstream_route_measure = b.downstream_route_measure
+ON CONFLICT DO NOTHING;
+
+
+-- Above only inserts records with matching watershed codes.
+-- Insert records that don't get inserted above but are still very close to a stream (50m)
+WITH pts AS
+(
+  SELECT *
+  FROM bcfishpass.falls_fiss
+  WHERE falls_fiss_id NOT IN (
+     SELECT falls_fiss_id from bcfishpass.falls_events_sp
+     WHERE falls_fiss_id IS NOT NULL
+  )
+),
+
+candidates AS -- now find up to 10 streams within 50m of the falls
+ ( SELECT
+    pt.falls_fiss_id,
+    nn.linear_feature_id,
+    nn.wscode_ltree,
+    nn.localcode_ltree,
+    nn.blue_line_key,
+    nn.waterbody_key,
+    nn.length_metre,
+    nn.downstream_route_measure,
+    nn.upstream_route_measure,
+    nn.distance_to_stream,
+    pt.height,
+    pt.watershed_group_code,
+    ST_LineMerge(nn.geom) AS geom
+  FROM pts pt
+  CROSS JOIN LATERAL
+  (SELECT
+     str.linear_feature_id,
+     str.wscode_ltree,
+     str.localcode_ltree,
+     str.blue_line_key,
+     str.waterbody_key,
+     str.length_metre,
+     str.downstream_route_measure,
+     str.upstream_route_measure,
+     str.geom,
+     ST_Distance(str.geom, pt.geom) as distance_to_stream
+    FROM whse_basemapping.fwa_stream_networks_sp AS str
+    WHERE str.localcode_ltree IS NOT NULL
+    AND NOT str.wscode_ltree <@ '999'
+    ORDER BY str.geom <-> pt.geom
+    LIMIT 10) as nn
+  WHERE nn.distance_to_stream < 50
+),
+
+-- find just the closest point for distinct blue_line_keys -
+-- we don't want to match to all individual stream segments
+bluelines AS
+(SELECT * FROM
+    (SELECT
+      falls_fiss_id,
+      blue_line_key,
+      min(distance_to_stream) AS distance_to_stream
+    FROM candidates
+    GROUP BY falls_fiss_id, blue_line_key) as f
+  ORDER BY distance_to_stream asc
+),
+
+-- from the selected blue lines, generate downstream_route_measure
+-- and join to the 20k 50k lookup table
+events AS
+(
+  SELECT DISTINCT ON (bluelines.falls_fiss_id)
+    bluelines.falls_fiss_id,
     candidates.linear_feature_id,
     candidates.wscode_ltree,
     candidates.localcode_ltree,
@@ -281,6 +432,7 @@ ON e.blue_line_key = b.blue_line_key AND
 ON CONFLICT DO NOTHING;
 
 
+--ALTER TABLE bcfishpass.falls_events_sp DROP COLUMN falls_fiss_id;  -- dump the meaningless column
 
 CREATE INDEX ON bcfishpass.falls_events_sp (linear_feature_id);
 CREATE INDEX ON bcfishpass.falls_events_sp (blue_line_key);
