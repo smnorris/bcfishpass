@@ -93,7 +93,7 @@ SELECT
   ) AS rearing_accessible_km
 
 FROM bcfishpass.streams
-WHERE watershed_group_code IN ('LNIC','BULK')
+WHERE watershed_group_code IN ('LNIC','BULK','HORS')
 GROUP BY watershed_group_code
 )
 

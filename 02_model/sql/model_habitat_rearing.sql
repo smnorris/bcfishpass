@@ -18,7 +18,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC') AND
+    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
     s.gradient <= h.rear_gradient_max AND
     s.channel_width <= h.rear_channel_width_max
@@ -77,7 +77,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CO'
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC') AND
+    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
     -- coho rearing is based on gradient/width, plus any connected wetland
     (
@@ -145,7 +145,7 @@ WITH rearing AS
   LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
   ON s.waterbody_key = res.waterbody_key
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC') AND
+    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
     -- sockeye rear in lakes bigger than given size
      (
@@ -211,7 +211,7 @@ WITH rearing AS
   LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
   ON s.waterbody_key = res.waterbody_key
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC') AND
+    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
      (
         s.gradient <= h.rear_gradient_max AND

@@ -24,7 +24,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
 WHERE
 -- only watersheds where we have a model
-s.watershed_group_code in ('BULK','LNIC')
+s.watershed_group_code in ('BULK','LNIC','HORS')
 -- don't model channel width on first order streams
 AND s.stream_order > 1
 -- only apply channel width to rivers and streams
@@ -89,7 +89,7 @@ LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
 ON sk.species_code = 'SK'
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat st
 ON st.species_code = 'ST'
-WHERE s.watershed_group_code IN ('BULK','LNIC')
+WHERE s.watershed_group_code IN ('BULK','LNIC','HORS')
 )
 
 UPDATE bcfishpass.streams s
