@@ -5,37 +5,6 @@ ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_coho bool
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_steelhead boolean;
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_sockeye boolean;
 
--- populate channel width from the measured/modelled data
-WITH cw AS
-(SELECT DISTINCT
-  s.wscode_ltree,
-  s.localcode_ltree,
-  s.linear_feature_id,
-  COALESCE(cw1.channel_width_measured, cw2.channel_width_modelled) as channel_width,
-  s.edge_type
-FROM bcfishpass.streams s
-LEFT OUTER JOIN bcfishpass.channel_width_measured cw1
-ON s.wscode_ltree = cw1.wscode_ltree
-AND s.localcode_ltree = cw1.localcode_ltree
-LEFT OUTER JOIN bcfishpass.channel_width_modelled cw2
-ON s.wscode_ltree = cw2.wscode_ltree
-AND s.localcode_ltree = cw2.localcode_ltree
-LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
-ON s.waterbody_key = wb.waterbody_key
-WHERE
--- only watersheds where we have a model
-s.watershed_group_code in ('BULK','LNIC','HORS')
--- don't model channel width on first order streams
-AND s.stream_order > 1
--- only apply channel width to rivers and streams
-AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
-)
-
-UPDATE bcfishpass.streams s
-SET
-  channel_width = cw.channel_width
-FROM cw
-WHERE s.linear_feature_id = cw.linear_feature_id;
 
 -- apply spawning model
 WITH model AS
@@ -51,32 +20,32 @@ WITH model AS
   CASE
     WHEN
       s.gradient <= ch.spawn_gradient_max AND
-      s.channel_width > ch.spawn_channel_width_min AND
-      s.channel_width <= ch.spawn_channel_width_max AND
+      mad.mad_m3s > ch.spawn_mad_min AND
+      mad.mad_m3s <= ch.spawn_mad_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
   END AS spawn_ch,
   CASE
     WHEN
       s.gradient <= co.spawn_gradient_max AND
-      s.channel_width > co.spawn_channel_width_min AND
-      s.channel_width <= co.spawn_channel_width_max AND
+      mad.mad_m3s > co.spawn_mad_min AND
+      mad.mad_m3s <= co.spawn_mad_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
   END AS spawn_co,
   CASE
     WHEN
       s.gradient <= sk.spawn_gradient_max AND
-      s.channel_width > sk.spawn_channel_width_min AND
-      s.channel_width <= sk.spawn_channel_width_max AND
+      mad.mad_m3s > sk.spawn_mad_min AND
+      mad.mad_m3s <= sk.spawn_mad_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
   END AS spawn_sk,
   CASE
     WHEN
       s.gradient <= st.spawn_gradient_max AND
-      s.channel_width > st.spawn_channel_width_min AND
-      s.channel_width <= st.spawn_channel_width_max AND
+      mad.mad_m3s > st.spawn_mad_min AND
+      mad.mad_m3s <= st.spawn_mad_max AND
       s.accessibility_model_steelhead IS NOT NULL
     THEN true
   END AS spawn_st
@@ -89,7 +58,9 @@ LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
 ON sk.species_code = 'SK'
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat st
 ON st.species_code = 'ST'
-WHERE s.watershed_group_code IN ('BULK','LNIC','HORS')
+LEFT OUTER JOIN foundry.fwa_streams_mad mad
+ON s.linear_feature_id = mad.linear_feature_id
+WHERE s.watershed_group_code IN ('BULK','HORS')
 )
 
 UPDATE bcfishpass.streams s

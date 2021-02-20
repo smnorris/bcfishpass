@@ -154,17 +154,27 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
   spawn_gradient_max numeric,
   spawn_channel_width_min numeric,
   spawn_channel_width_max numeric,
+  spawn_mad_min numeric,
+  spawn_mad_max numeric,
   rear_gradient_max numeric,
   rear_channel_width_max numeric,
+  rear_mad_min numeric,
+  rear_mad_max numeric,
   rear_lake_ha_min integer,
   rear_wetland_multiplier numeric,
   rear_lake_multiplier numeric
 )"
 psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
 
-# run the spawning/rearing habitat model
+# run the spawning/rearing habitat models
+
+# LNIC uses channel width
 psql -f sql/model_habitat_spawning.sql
 psql -f sql/model_habitat_rearing.sql
+
+# BULK/HORS use mean annual discharge
+psql -f sql/model_habitat_spawning_mad.sql
+psql -f sql/model_habitat_rearing_mad.sql
 
 # create generalized copy of streams for visualization
 psql -f sql/carto.sql

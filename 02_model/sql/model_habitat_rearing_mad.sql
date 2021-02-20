@@ -17,11 +17,14 @@ WITH rearing AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CH'
+  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  ON s.linear_feature_id = mad.linear_feature_id
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
+    s.watershed_group_code IN ('BULK','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
     s.gradient <= h.rear_gradient_max AND
-    s.channel_width <= h.rear_channel_width_max
+    mad.mad_m3s > h.rear_mad_min AND
+    mad.mad_m3s <= h.rear_mad_max
 ),
 
 -- cluster/aggregate
@@ -76,14 +79,16 @@ WITH rearing AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CO'
+  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  ON s.linear_feature_id = mad.linear_feature_id
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
+    s.watershed_group_code IN ('BULK','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
-    -- coho rearing is based on gradient/width, plus any connected wetland
+    -- coho rearing is based on gradient/MAD, plus any connected wetland
     (
       s.gradient <= h.rear_gradient_max AND
-      s.channel_width <= h.rear_channel_width_max OR
-      s.edge_type IN (1050, 1150)
+      (mad.mad_m3s > h.rear_mad_min AND mad.mad_m3s <= h.rear_mad_max)
+      OR s.edge_type IN (1050, 1150)
     )
 ),
 
@@ -145,7 +150,7 @@ WITH rearing AS
   LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
   ON s.waterbody_key = res.waterbody_key
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
+    s.watershed_group_code IN ('BULK','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
     -- sockeye rear in lakes bigger than given size
      (
@@ -206,16 +211,15 @@ WITH rearing AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'ST'
-  LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk
-  ON s.waterbody_key = lk.waterbody_key
-  LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
-  ON s.waterbody_key = res.waterbody_key
+  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  ON s.linear_feature_id = mad.linear_feature_id
   WHERE
-    s.watershed_group_code IN ('BULK','LNIC','HORS') AND
+    s.watershed_group_code IN ('BULK','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
      (
         s.gradient <= h.rear_gradient_max AND
-        s.channel_width <= h.rear_channel_width_max
+        mad.mad_m3s > h.rear_mad_min AND
+        mad.mad_m3s <= h.rear_mad_max
      )
 ),
 
