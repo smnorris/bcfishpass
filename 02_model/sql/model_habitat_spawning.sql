@@ -89,7 +89,7 @@ LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
 ON sk.species_code = 'SK'
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat st
 ON st.species_code = 'ST'
-WHERE s.watershed_group_code IN ('LNIC')  -- MAD model in BULK/HORS for now
+WHERE s.watershed_group_code IN ('LNIC','BULK','HORS')  -- MAD model in BULK/HORS for now
 )
 
 UPDATE bcfishpass.streams s

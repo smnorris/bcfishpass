@@ -18,7 +18,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.watershed_group_code IN ('LNIC') AND
+    s.watershed_group_code IN ('LNIC','BULK','HORS') AND
     s.accessibility_model_salmon IS NOT NULL AND
     s.gradient <= h.rear_gradient_max AND
     s.channel_width <= h.rear_channel_width_max

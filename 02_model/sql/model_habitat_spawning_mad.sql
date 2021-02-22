@@ -1,9 +1,9 @@
 -- add modelled channel width and habitat columns to streams table
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS channel_width double precision;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_chinook boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_coho boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_steelhead boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_sockeye boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_chinook_mad boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_coho_mad boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_steelhead_mad boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_sockeye_mad boolean;
 
 
 -- apply spawning model
@@ -65,9 +65,9 @@ WHERE s.watershed_group_code IN ('BULK','HORS')
 
 UPDATE bcfishpass.streams s
 SET
-  spawning_model_chinook = model.spawn_ch,
-  spawning_model_coho = model.spawn_co,
-  spawning_model_sockeye = model.spawn_sk,
-  spawning_model_steelhead = model.spawn_st
+  spawning_model_chinook_mad = model.spawn_ch,
+  spawning_model_coho_mad = model.spawn_co,
+  spawning_model_sockeye_mad = model.spawn_sk,
+  spawning_model_steelhead_mad = model.spawn_st
 FROM model
 WHERE s.segmented_stream_id = model.segmented_stream_id;

@@ -2,10 +2,10 @@
 -- the rearing model is applied per species
 
 
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_chinook boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_coho boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_steelhead boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_sockeye boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_chinook_mad boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_coho_mad boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_steelhead_mad boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_sockeye_mad boolean;
 
 -- ---------------------------------------------
 -- CHINOOK
@@ -43,14 +43,14 @@ rearing_clusters_spawn AS
 (
 SELECT DISTINCT
   s1.cid,
-  bool_or(s2.spawning_model_chinook) as ch
+  bool_or(s2.spawning_model_chinook_mad) as ch
 FROM rearing_clusters s1
 LEFT OUTER JOIN bcfishpass.streams s2
 -- join to all streams within 1m
 -- (including itself, a stream could be spawning and rearing habitat,
 --  without connectivity to anything else)
 ON ST_DWithin(s1.geom, s2.geom, 1)
-WHERE s2.spawning_model_chinook IS TRUE
+WHERE s2.spawning_model_chinook_mad IS TRUE
 GROUP BY s1.segmented_stream_id, s1.cid
 ),
 
@@ -66,7 +66,7 @@ rearing_ids AS
 
 -- finally, apply update based on above ids
 UPDATE bcfishpass.streams s
-SET rearing_model_chinook = TRUE
+SET rearing_model_chinook_mad = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 -- ----------------------------------------------
@@ -108,14 +108,14 @@ rearing_clusters_spawn AS
 (
 SELECT DISTINCT
   s1.cid,
-  bool_or(s2.spawning_model_coho) as ch
+  bool_or(s2.spawning_model_coho_mad) as ch
 FROM rearing_clusters s1
 LEFT OUTER JOIN bcfishpass.streams s2
 -- join to all streams within 1m
 -- (including itself, a stream could be spawning and rearing habitat,
 --  without connectivity to anything else)
 ON ST_DWithin(s1.geom, s2.geom, 1)
-WHERE s2.spawning_model_coho IS TRUE
+WHERE s2.spawning_model_coho_mad IS TRUE
 GROUP BY s1.segmented_stream_id, s1.cid
 ),
 
@@ -131,7 +131,7 @@ rearing_ids AS
 
 -- finally, apply update based on above ids
 UPDATE bcfishpass.streams s
-SET rearing_model_coho = TRUE
+SET rearing_model_coho_mad = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 
@@ -175,14 +175,14 @@ rearing_clusters_spawn AS
 (
 SELECT DISTINCT
   s1.cid,
-  bool_or(s2.spawning_model_sockeye) as ch
+  bool_or(s2.spawning_model_sockeye_mad) as ch
 FROM rearing_clusters s1
 LEFT OUTER JOIN bcfishpass.streams s2
 -- join to all streams within 1m
 -- (including itself, a stream could be spawning and rearing habitat,
 --  without connectivity to anything else)
 ON ST_DWithin(s1.geom, s2.geom, 1)
-WHERE s2.spawning_model_sockeye IS TRUE
+WHERE s2.spawning_model_sockeye_mad IS TRUE
 GROUP BY s1.segmented_stream_id, s1.cid
 ),
 
@@ -198,7 +198,7 @@ rearing_ids AS
 
 -- finally, apply update based on above ids
 UPDATE bcfishpass.streams s
-SET rearing_model_sockeye = TRUE
+SET rearing_model_sockeye_mad = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 -- ----------------------------------------------
@@ -239,14 +239,14 @@ rearing_clusters_spawn AS
 (
 SELECT DISTINCT
   s1.cid,
-  bool_or(s2.spawning_model_steelhead) as ch
+  bool_or(s2.spawning_model_steelhead_mad) as ch
 FROM rearing_clusters s1
 LEFT OUTER JOIN bcfishpass.streams s2
 -- join to all streams within 1m
 -- (including itself, a stream could be spawning and rearing habitat,
 --  without connectivity to anything else)
 ON ST_DWithin(s1.geom, s2.geom, 1)
-WHERE s2.spawning_model_steelhead IS TRUE
+WHERE s2.spawning_model_steelhead_mad IS TRUE
 GROUP BY s1.segmented_stream_id, s1.cid
 ),
 
@@ -262,6 +262,6 @@ rearing_ids AS
 
 -- finally, apply update based on above ids
 UPDATE bcfishpass.streams s
-SET rearing_model_steelhead = TRUE
+SET rearing_model_steelhead_mad = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
