@@ -1512,3 +1512,4 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 197034,PASSABLE,LNIC,CWF,based on assessment comments (and imagery review where required)
 197038,BARRIER,LNIC,CWF,based on assessment comments (and imagery review where required)
 197040,BARRIER,LNIC,CWF,based on assessment comments (and imagery review where required)
+3138,BARRIER,BULK,AI,"error in crossing_type_description.  Should be ""Closed Bottom Structure"""

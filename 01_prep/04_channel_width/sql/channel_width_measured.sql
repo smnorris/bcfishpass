@@ -38,6 +38,9 @@ WITH fiss_measurements AS
   e.stream_sample_site_id,
   e.wscode_ltree,
   e.localcode_ltree,
+  s.stream_order,
+  s.stream_magnitude,
+  s.gradient,
   w.watershed_group_code,
   p.channel_width as channel_width_fiss
 FROM whse_fish.fiss_stream_sample_sites_events_sp e
@@ -61,6 +64,9 @@ SELECT
   e.stream_crossing_id,
   e.wscode_ltree,
   e.localcode_ltree,
+  s.stream_order,
+  s.stream_magnitude,
+  s.gradient,
   s.watershed_group_code,
   a.downstream_channel_width as channel_width_pscis
 FROM bcfishpass.pscis_events_sp e
@@ -82,6 +88,9 @@ combined AS
 (SELECT
   f.stream_sample_site_id,
   p.stream_crossing_id,
+  GREATEST(f.stream_order, p.stream_order) as stream_order,
+  GREATEST(f.stream_magnitude, p.stream_magnitude) as stream_magnitude,
+  GREATEST(f.gradient, p.gradient) as gradient,
   coalesce(f.wscode_ltree, p.wscode_ltree) as wscode_ltree,
   coalesce(f.localcode_ltree, p.localcode_ltree) as localcode_ltree,
   coalesce(f.watershed_group_code, p.watershed_group_code) as watershed_group_code,
@@ -98,6 +107,9 @@ INSERT INTO bcfishpass.channel_width_measured
   wscode_ltree,
   localcode_ltree,
   watershed_group_code,
+  stream_order,
+  stream_magnitude,
+  gradient,
   channel_width_measured
 )
 SELECT
@@ -106,6 +118,9 @@ SELECT
  wscode_ltree,
  localcode_ltree,
  watershed_group_code,
+ max(stream_order) as stream_order,
+ max(stream_magnitude) as stream_magnitude,
+ avg(gradient) as gradient,
  round(avg(channel_width)::numeric, 2) as channel_width_measured
 FROM combined
 GROUP BY
@@ -126,9 +141,6 @@ WITH update_vals AS
   SELECT
     a.wscode_ltree,
     a.localcode_ltree,
-    max(b.stream_order) AS stream_order,
-    max(b.stream_magnitude) AS stream_magnitude,
-    avg(b.gradient) AS gradient,
     max(b.upstream_area_ha) AS upstream_area_ha,
     max(b.upstream_lake_ha) AS upstream_lake_ha,
     max(b.upstream_reservoir_ha) AS upstream_reservoir_ha,
@@ -143,9 +155,9 @@ WITH update_vals AS
 
 UPDATE bcfishpass.channel_width_measured cw
 SET
-  stream_order = u.stream_order,
-  stream_magnitude = u.stream_magnitude,
-  gradient = u.gradient,
+  --stream_order = u.stream_order,
+  --stream_magnitude = u.stream_magnitude,
+  --gradient = u.gradient,
   upstream_area_ha = COALESCE(u.upstream_area_ha, 0),
   upstream_lake_ha = COALESCE(u.upstream_lake_ha, 0),
   upstream_reservoir_ha = COALESCE(u.upstream_reservoir_ha, 0),

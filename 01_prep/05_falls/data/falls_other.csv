@@ -52,11 +52,11 @@ falls_other_id,height,barrier_ind,blue_line_key,downstream_route_measure,watersh
 52,,,360615745,1780,BULK,Irvine 2020,CWF,
 53,,,360817924,4781,BULK,Irvine 2020,CWF,
 54,,,360817924,2958,BULK,Irvine 2020,CWF,
-55,,,360817924,2880,BULK,Irvine 2020,CWF,
-56,,,360856488,6732,BULK,Irvine 2020,CWF,ThreeFalls
+55,,t,360817924,2880,BULK,Irvine 2020,AI,Rasberry Falls
+56,,t,360856488,6732,BULK,Irvine 2020,AI,ThreeFalls
 57,,,360856488,9963,BULK,Irvine 2020,CWF,
 58,,,360856488,10086,BULK,Irvine 2020,CWF,
-59,,,360788426,3461,BULK,Irvine 2020,CWF,RichfieldFalls
+59,,t,360788426,3461,BULK,Irvine 2020,AI,RichfieldFalls
 60,,,360788426,7274,BULK,Irvine 2020,CWF,Lower Findlay Falls
 61,,,360883143,1441,BULK,Irvine 2020,CWF,Redtop Falls
 62,,,360788426,13765,BULK,Irvine 2020,CWF,Tacheck Falls
@@ -75,3 +75,6 @@ falls_other_id,height,barrier_ind,blue_line_key,downstream_route_measure,watersh
 75,,,360760898,13761,BULK,Irvine 2020,CWF,Dungate Falls
 76,,,360788426,9899,BULK,Irvine 2020,CWF,Findlay Falls
 77,,t,356264650,4,LNIC,CWF WCRP,NJO,Seasonal stream descends over vertical bedrock wall no headwater lakes to support any isolated fish population
+78,,t,356317730,2087,HORS,Hocquard 2021,SH,Black Creek Falls
+79,,t,360869846,6617,BULK,Irvine 2020,AI,Wilson Falls
+80,,t,360875378,3800,BULK,http://a100.gov.bc.ca/appsdata/acat/documents/r8931/Mid-BulkleyDetailedFishHabitatRiparian.ChannelAss_1169052197910_e76ab8bf05ee4953b589da961b220f69.pdf,AI,McQuarrie Creek 4-5 confirmed impassable falls
