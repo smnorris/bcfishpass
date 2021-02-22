@@ -25,7 +25,7 @@ cd ../../02_model
 # - and falls, misc
 cd ../01_prep/05_falls
 ./falls.sh
-cd ../misc
+cd ../06_misc
 ./misc.sh
 cd ../../02_model
 
