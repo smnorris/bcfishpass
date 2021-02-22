@@ -133,8 +133,7 @@ GROUP BY
 -- Insert values that come direct from streams table
 -- But note that because we are working 'stream segments' as distinct watershed codes,
 -- we have to aggregate slightly - upstream_area_ha will not be unique for each
--- (as it is calculated per linear_feature_id) and neigher are order/magnitude (weird side channels)
--- just take the max and hope this gives a reasonable result, the peculiarities will be minimal
+-- (as it is calculated per linear_feature_id)
 -- -------------------------------------------
 WITH update_vals AS
 (
@@ -155,9 +154,6 @@ WITH update_vals AS
 
 UPDATE bcfishpass.channel_width_measured cw
 SET
-  --stream_order = u.stream_order,
-  --stream_magnitude = u.stream_magnitude,
-  --gradient = u.gradient,
   upstream_area_ha = COALESCE(u.upstream_area_ha, 0),
   upstream_lake_ha = COALESCE(u.upstream_lake_ha, 0),
   upstream_reservoir_ha = COALESCE(u.upstream_reservoir_ha, 0),
