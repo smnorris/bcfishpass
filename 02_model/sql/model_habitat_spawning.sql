@@ -38,7 +38,13 @@ FROM cw
 WHERE s.linear_feature_id = cw.linear_feature_id;
 
 -- apply spawning model
-WITH model AS
+WITH rivers AS  -- get unique river waterbody keys, there is a handful of duplicates
+(
+  SELECT DISTINCT waterbody_key
+  FROM whse_basemapping.fwa_rivers_poly
+),
+
+model AS
 (SELECT
   s.segmented_stream_id,
   s.blue_line_key,
@@ -51,7 +57,7 @@ WITH model AS
   CASE
     WHEN
       s.gradient <= ch.spawn_gradient_max AND
-      s.channel_width > ch.spawn_channel_width_min AND
+      (s.channel_width > ch.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= ch.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
@@ -59,7 +65,7 @@ WITH model AS
   CASE
     WHEN
       s.gradient <= co.spawn_gradient_max AND
-      s.channel_width > co.spawn_channel_width_min AND
+      (s.channel_width > co.spawn_channel_width_min  OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= co.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
@@ -67,7 +73,7 @@ WITH model AS
   CASE
     WHEN
       s.gradient <= sk.spawn_gradient_max AND
-      s.channel_width > sk.spawn_channel_width_min AND
+      (s.channel_width > sk.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= sk.spawn_channel_width_max AND
       s.accessibility_model_salmon IS NOT NULL
     THEN true
@@ -75,7 +81,7 @@ WITH model AS
   CASE
     WHEN
       s.gradient <= st.spawn_gradient_max AND
-      s.channel_width > st.spawn_channel_width_min AND
+      (s.channel_width > st.spawn_channel_width_min  OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= st.spawn_channel_width_max AND
       s.accessibility_model_steelhead IS NOT NULL
     THEN true
@@ -89,6 +95,8 @@ LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
 ON sk.species_code = 'SK'
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat st
 ON st.species_code = 'ST'
+LEFT OUTER JOIN rivers r
+ON s.waterbody_key = r.waterbody_key
 WHERE s.watershed_group_code IN ('LNIC')  -- MAD model in BULK/HORS for now
 )
 
