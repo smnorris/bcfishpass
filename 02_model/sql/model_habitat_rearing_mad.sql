@@ -15,6 +15,8 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+  ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CH'
   LEFT OUTER JOIN foundry.fwa_streams_mad mad
@@ -24,7 +26,8 @@ WITH rearing AS
     s.accessibility_model_salmon IS NOT NULL AND
     s.gradient <= h.rear_gradient_max AND
     mad.mad_m3s > h.rear_mad_min AND
-    mad.mad_m3s <= h.rear_mad_max
+    mad.mad_m3s <= h.rear_mad_max AND
+    (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
 ),
 
 -- cluster/aggregate
@@ -77,6 +80,8 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+  ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'CO'
   LEFT OUTER JOIN foundry.fwa_streams_mad mad
@@ -87,7 +92,11 @@ WITH rearing AS
     -- coho rearing is based on gradient/MAD, plus any connected wetland
     (
       s.gradient <= h.rear_gradient_max AND
-      (mad.mad_m3s > h.rear_mad_min AND mad.mad_m3s <= h.rear_mad_max)
+       -- streams
+       (mad.mad_m3s > h.rear_mad_min AND
+        mad.mad_m3s <= h.rear_mad_max AND
+        (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))
+       -- wetlands
       OR s.edge_type IN (1050, 1150)
     )
 ),
@@ -209,6 +218,8 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+  ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
   ON h.species_code = 'ST'
   LEFT OUTER JOIN foundry.fwa_streams_mad mad
@@ -219,7 +230,10 @@ WITH rearing AS
      (
         s.gradient <= h.rear_gradient_max AND
         mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        mad.mad_m3s <= h.rear_mad_max AND
+        (wb.waterbody_type = 'R' OR           -- streams/rivers only
+          (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+        )
      )
 ),
 

@@ -50,6 +50,8 @@ WITH model AS
     THEN true
   END AS spawn_st
 FROM bcfishpass.streams s
+LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+ON s.waterbody_key = wb.waterbody_key
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat ch
 ON ch.species_code = 'CH'
 LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat co
@@ -61,6 +63,7 @@ ON st.species_code = 'ST'
 LEFT OUTER JOIN foundry.fwa_streams_mad mad
 ON s.linear_feature_id = mad.linear_feature_id
 WHERE s.watershed_group_code IN ('BULK','HORS')
+AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- streams/rivers only
 )
 
 UPDATE bcfishpass.streams s
