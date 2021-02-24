@@ -176,9 +176,12 @@ psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawni
 
 # run the spawning/rearing habitat models
 
+# Note that the different models feed into the same columns in the stream table (ie <spawn/rear>_model_<species>)
+# Queries must be edited directly to control what model is used to populate these columns in a given watershed group.
+
 # LNIC uses channel width
-psql -f sql/model_habitat_spawning.sql
-psql -f sql/model_habitat_rearing.sql
+psql -f sql/model_habitat_spawning_cw.sql
+psql -f sql/model_habitat_rearing_cw.sql
 
 # BULK/HORS use mean annual discharge
 psql -f sql/model_habitat_spawning_mad.sql
