@@ -15,10 +15,18 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"
 psql -c "CREATE TABLE bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id integer PRIMARY KEY, structure text, watershed_group_code text, reviewer text, notes text)"
 psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM '../01_prep/01_modelled_stream_crossings/data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id)"
+
 # - load pscis / pscis fixes and re-run scripts matching PSCIS points to streams
 cd ../01_prep/02_pscis
 ./load.sh
 ./pscis.sh
+cd ../../02_model
+
+# - and falls, misc
+cd ../01_prep/05_falls
+./falls.sh
+cd ../06_misc
+./misc.sh
 cd ../../02_model
 
 
@@ -26,9 +34,9 @@ cd ../../02_model
 # Run model
 # -----------
 
-# Which watershed groups to process is encoded in watershed_groups.csv where include='t', load to db
+# Which watershed groups to process and what type of habitat model to run is encoded in watershed_groups.csv
 psql -c "DROP TABLE IF EXISTS bcfishpass.watershed_groups"
-psql -c "CREATE TABLE bcfishpass.watershed_groups (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, notes text)"
+psql -c "CREATE TABLE bcfishpass.watershed_groups (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, model text, notes text)"
 psql -c "\copy bcfishpass.watershed_groups FROM 'data/watershed_groups.csv' delimiter ',' csv header"
 
 # create table for each type of definite (not generally fixable) barrier
@@ -154,17 +162,33 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
   spawn_gradient_max numeric,
   spawn_channel_width_min numeric,
   spawn_channel_width_max numeric,
+  spawn_mad_min numeric,
+  spawn_mad_max numeric,
   rear_gradient_max numeric,
   rear_channel_width_max numeric,
+  rear_mad_min numeric,
+  rear_mad_max numeric,
   rear_lake_ha_min integer,
   rear_wetland_multiplier numeric,
   rear_lake_multiplier numeric
 )"
 psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
 
-# run the spawning/rearing habitat model
+# load channel width to streams
+psql -f sql/model_channel_width.sql
+
+# run spawning/rearing models
+# Note that the different models feed into the same columns in the stream table (ie <spawn/rear>_model_<species>)
+# Edit data/watershed_groups.csv to control which model gets run in a given watershed group
+
+# run ch/co/st spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
-psql -f sql/model_habitat_rearing.sql
+psql -f sql/model_habitat_rearing_1.sql  # ch/co/st rearing AND spawning streams (rearing with no connectivity analysis)
+psql -f sql/model_habitat_rearing_2.sql  # ch/co/st rearing downstream of spawning
+psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
+
+# sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
+psql -f sql/model_habitat_sockeye.sql
 
 # create generalized copy of streams for visualization
 psql -f sql/carto.sql

@@ -1,5 +1,7 @@
-blue_line_key,downstream_route_measure,barrier_ind
-356361560,9948,T
-356357296,92501,T
-356357296,67635,T
-356361560,7085,T
+blue_line_key,downstream_route_measure,barrier_ind,watershed_group_code,reviewer,notes
+356361560,9948,T,,,
+356357296,92501,T,,,
+356357296,67635,T,,,
+356361560,7085,T,,,
+360873822,242072,F,BULK,NMW;SN,FISS falls appears to be an error - no 8m falls visible on Bulkley River at this location
+360887063,24530,T,MORR,SN,FISS falls is in lake - move below lake so Kidprice lake does not get classed as SK rearing habitat

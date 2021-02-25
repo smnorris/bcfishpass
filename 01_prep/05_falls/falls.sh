@@ -36,7 +36,10 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.falls_fiss_barrier_ind;"
 psql -c "CREATE TABLE bcfishpass.falls_fiss_barrier_ind
  (blue_line_key              integer,
  downstream_route_measure    integer,
- barrier_ind                 boolean)"
+ barrier_ind                 boolean,
+ watershed_group_code        text,
+ reviewer                    text,
+ notes                       text)"
 psql -c "\copy bcfishpass.falls_fiss_barrier_ind FROM 'data/falls_fiss_barrier_ind.csv' delimiter ',' csv header"
 
 

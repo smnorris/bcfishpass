@@ -52,11 +52,11 @@ falls_other_id,height,barrier_ind,blue_line_key,downstream_route_measure,watersh
 52,,,360615745,1780,BULK,Irvine 2020,CWF,
 53,,,360817924,4781,BULK,Irvine 2020,CWF,
 54,,,360817924,2958,BULK,Irvine 2020,CWF,
-55,,,360817924,2880,BULK,Irvine 2020,CWF,
-56,,,360856488,6732,BULK,Irvine 2020,CWF,ThreeFalls
+55,,t,360817924,2880,BULK,Irvine 2020,AI,Rasberry Falls
+56,,t,360856488,6732,BULK,Irvine 2020,AI,ThreeFalls
 57,,,360856488,9963,BULK,Irvine 2020,CWF,
 58,,,360856488,10086,BULK,Irvine 2020,CWF,
-59,,,360788426,3461,BULK,Irvine 2020,CWF,RichfieldFalls
+59,,t,360788426,3461,BULK,Irvine 2020,AI,RichfieldFalls
 60,,,360788426,7274,BULK,Irvine 2020,CWF,Lower Findlay Falls
 61,,,360883143,1441,BULK,Irvine 2020,CWF,Redtop Falls
 62,,,360788426,13765,BULK,Irvine 2020,CWF,Tacheck Falls
