@@ -174,14 +174,18 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
 )"
 psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
 
-# run the spawning/rearing habitat models
+# load channel width to streams
+psql -f sql/model_channel_width.sql
 
+# run spawning/rearing models
 # Note that the different models feed into the same columns in the stream table (ie <spawn/rear>_model_<species>)
 # Edit data/watershed_groups.csv to control which model gets run in a given watershed group
 
 # run ch/co/st spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
-psql -f sql/model_habitat_rearing.sql
+psql -f sql/model_habitat_rearing_1.sql  # ch/co/st rearing AND spawning streams (rearing with no connectivity analysis)
+psql -f sql/model_habitat_rearing_2.sql  # ch/co/st rearing downstream of spawning
+psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
 
 # sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
 psql -f sql/model_habitat_sockeye.sql

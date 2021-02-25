@@ -1,9 +1,6 @@
+-- Find rearing downstream of spawning
 -- Rearing streams/wetlands must be connected (to some degree) to spawning streams of the same spp,
 -- so rearing model is applied per species to make connectivity/clustering straightforward
-
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_chinook boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_coho boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_steelhead boolean;
 
 -- CHINOOK
 WITH rearing AS
