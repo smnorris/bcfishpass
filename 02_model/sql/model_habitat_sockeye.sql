@@ -91,13 +91,162 @@ dnstr_spawning AS
   SELECT
     a.*,
     b.waterbody_key,
-    b.row_number
+    b.row_number,
+    CASE
+      WHEN
+        wsg.model = 'cw' AND
+        s.gradient <= sk.spawn_gradient_max AND
+        s.channel_width > sk.spawn_channel_width_min AND
+        (s.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
+        s.channel_width <= sk.spawn_channel_width_max
+      THEN true
+      WHEN
+        wsg.model = 'mad' AND
+        s.gradient <= sk.spawn_gradient_max AND
+        mad.mad_m3s > sk.spawn_mad_min AND
+        mad.mad_m3s <= sk.spawn_mad_max
+      THEN true
+  END AS spawn_sk
   FROM downstream_within_3k a
   LEFT OUTER JOIN too_steep b
   ON a.waterbody_key = b.waterbody_key
+  INNER JOIN bcfishpass.streams s
+  ON a.segmented_stream_id = s.segmented_stream_id
+  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  ON s.linear_feature_id = mad.linear_feature_id
+  INNER JOIN bcfishpass.watershed_groups wsg
+  ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
+  ON sk.species_code = 'SK'
   WHERE b.waterbody_key IS NULL OR a.row_number < b.row_number
 )
 
 UPDATE bcfishpass.streams
 SET spawning_model_sockeye = TRUE
-WHERE segmented_stream_id IN (SELECT DISTINCT segmented_stream_id FROM dnstr_spawning);
+WHERE segmented_stream_id IN (SELECT DISTINCT segmented_stream_id FROM dnstr_spawning WHERE spawn_sk IS TRUE);
+
+
+-- ---------------------
+-- spawning, upstream
+-- ---------------------
+
+WITH spawn AS
+(
+  SELECT
+    segmented_stream_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    geom
+  FROM bcfishpass.streams s
+  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  ON s.linear_feature_id = mad.linear_feature_id
+  INNER JOIN bcfishpass.watershed_groups wsg
+  ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
+  ON sk.species_code = 'SK'
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+  ON s.waterbody_key = wb.waterbody_key
+  WHERE
+  ((
+    wsg.model = 'cw' AND
+    s.gradient <= sk.spawn_gradient_max AND
+    s.channel_width > sk.spawn_channel_width_min AND
+    (s.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
+    s.channel_width <= sk.spawn_channel_width_max
+  ) OR
+  (
+    wsg.model = 'mad' AND
+    s.gradient <= sk.spawn_gradient_max AND
+    mad.mad_m3s > sk.spawn_mad_min AND
+    mad.mad_m3s <= sk.spawn_mad_max
+  ))
+  AND
+  (wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
+    (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+  )
+),
+
+-- find spawn upstream of rearing
+spawn_upstream AS
+(
+  SELECT DISTINCT
+    sp.*
+  FROM spawn sp
+  INNER JOIN bcfishpass.streams r
+  ON FWA_Upstream(
+    r.blue_line_key,
+    r.downstream_route_measure,
+    r.wscode_ltree,
+    r.localcode_ltree,
+    sp.blue_line_key,
+    sp.downstream_route_measure,
+    sp.wscode_ltree,
+    sp.localcode_ltree
+  )
+  WHERE r.rearing_model_sockeye IS TRUE
+),
+
+-- cluster the spawning
+clusters as
+(
+  SELECT
+    segmented_stream_id,
+    ST_ClusterDBSCAN(geom, 1, 1) over() as cid,
+    geom
+  FROM spawn_upstream
+  ORDER BY segmented_stream_id
+),
+
+-- get waterbody keys of rearing lakes/reservoirs
+wb AS
+(
+  SELECT DISTINCT waterbody_key
+  FROM bcfishpass.streams
+  WHERE rearing_model_sockeye IS TRUE
+),
+
+-- and geoms of the lakes/reservoirs
+wb_geom AS
+(
+  SELECT
+    waterbody_key,
+    geom
+  FROM whse_basemapping.fwa_lakes_poly l
+  WHERE waterbody_key IN (SELECT waterbody_key from wb)
+  UNION ALL
+  SELECT
+    waterbody_key,
+    geom
+  FROM whse_basemapping.fwa_manmade_waterbodies_poly l
+  WHERE waterbody_key IN (SELECT waterbody_key from wb)
+),
+
+-- find all spawning clusters adjacent to lake (give or take a metre or so)
+clusters_near_rearing AS
+(
+  SELECT DISTINCT
+    s1.cid,
+    bool_or(l.waterbody_key IS NOT NULL) as wb
+  FROM clusters s1
+  LEFT OUTER JOIN wb_geom l
+  ON ST_DWithin(s1.geom, l.geom, 2)
+  GROUP BY s1.cid
+),
+
+-- and get the ids of the streams that compose the clusters connected to lakes
+ids AS
+(
+  SELECT
+    b.segmented_stream_id
+  FROM clusters_near_rearing a
+  INNER JOIN clusters b
+  ON a.cid = b.cid
+  WHERE a.wb IS TRUE
+)
+
+-- finally, apply update based on above ids
+UPDATE bcfishpass.streams s
+SET spawning_model_sockeye = TRUE
+WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM ids);
