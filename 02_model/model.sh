@@ -34,9 +34,9 @@ cd ../../02_model
 # Run model
 # -----------
 
-# Which watershed groups to process is encoded in watershed_groups.csv where include='t', load to db
+# Which watershed groups to process and what type of habitat model to run is encoded in watershed_groups.csv
 psql -c "DROP TABLE IF EXISTS bcfishpass.watershed_groups"
-psql -c "CREATE TABLE bcfishpass.watershed_groups (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, notes text)"
+psql -c "CREATE TABLE bcfishpass.watershed_groups (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, model text, notes text)"
 psql -c "\copy bcfishpass.watershed_groups FROM 'data/watershed_groups.csv' delimiter ',' csv header"
 
 # create table for each type of definite (not generally fixable) barrier
@@ -174,15 +174,21 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
 )"
 psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
 
-# run the spawning/rearing habitat models
+# load channel width to streams
+psql -f sql/model_channel_width.sql
 
-# LNIC uses channel width
+# run spawning/rearing models
+# Note that the different models feed into the same columns in the stream table (ie <spawn/rear>_model_<species>)
+# Edit data/watershed_groups.csv to control which model gets run in a given watershed group
+
+# run ch/co/st spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
-psql -f sql/model_habitat_rearing.sql
+psql -f sql/model_habitat_rearing_1.sql  # ch/co/st rearing AND spawning streams (rearing with no connectivity analysis)
+psql -f sql/model_habitat_rearing_2.sql  # ch/co/st rearing downstream of spawning
+psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
 
-# BULK/HORS use mean annual discharge
-psql -f sql/model_habitat_spawning_mad.sql
-psql -f sql/model_habitat_rearing_mad.sql
+# sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
+psql -f sql/model_habitat_sockeye.sql
 
 # create generalized copy of streams for visualization
 psql -f sql/carto.sql
