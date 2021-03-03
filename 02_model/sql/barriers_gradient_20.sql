@@ -39,7 +39,7 @@ SELECT DISTINCT ON (blue_line_key, round(b.downstream_route_measure::numeric, 2)
     b.localcode_ltree,
     b.watershed_group_code,
     ST_Force2D((st_Dump(b.geom)).geom)
-FROM cwf.gradient_barriers b
+FROM bcfishpass.gradient_barriers b
 INNER JOIN bcfishpass.watershed_groups g
 ON b.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
