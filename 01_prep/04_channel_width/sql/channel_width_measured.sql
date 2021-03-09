@@ -43,7 +43,7 @@ WITH fiss_measurements AS
   s.gradient,
   w.watershed_group_code,
   p.channel_width as channel_width_fiss
-FROM whse_fish.fiss_stream_sample_sites_events_sp e
+FROM bcfishpass.fiss_stream_sample_sites_events_sp e
 INNER JOIN whse_fish.fiss_stream_sample_sites_sp p
 ON e.stream_sample_site_id = p.stream_sample_site_id
 LEFT OUTER JOIN whse_basemapping.fwa_watersheds_poly w
@@ -168,7 +168,7 @@ cw.localcode_ltree = u.localcode_ltree;
 UPDATE bcfishpass.channel_width_measured cw
 SET
   map = map.map
-FROM bcfishpass.mean_annual_precip map
+FROM bcfishpass.mean_annual_precip_load map
 WHERE cw.wscode_ltree = map.wscode_ltree AND
 cw.localcode_ltree = map.localcode_ltree;
 
