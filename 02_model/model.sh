@@ -237,6 +237,7 @@ psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_cou
 psql -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
 
 # populating the belowupstrbarriers for OBS in the crossings table requires a separate query
+# (because the dnstr_barriers_anthropogenic is used in above report, and that misses the OBS of interest)
 psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
 
 # run report on the combined definite barrier tables
