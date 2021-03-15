@@ -250,3 +250,48 @@ ids AS
 UPDATE bcfishpass.streams s
 SET spawning_model_sockeye = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM ids);
+
+
+
+
+--
+-- For Horsefly, all of the above has no effect because Quesnel Lake (where rearing occurs)
+-- is outide of the group. Simply apply the spawing model everywhere in HORS.
+--
+WITH spawn AS
+(
+  SELECT
+    segmented_stream_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    geom
+  FROM bcfishpass.streams s
+  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  ON s.linear_feature_id = mad.linear_feature_id
+  INNER JOIN bcfishpass.watershed_groups wsg
+  ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat sk
+  ON sk.species_code = 'SK'
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+  ON s.waterbody_key = wb.waterbody_key
+  WHERE
+  (
+    wsg.model = 'mad' AND
+    s.gradient <= sk.spawn_gradient_max AND
+    mad.mad_m3s > sk.spawn_mad_min AND
+    mad.mad_m3s <= sk.spawn_mad_max
+  )
+  AND
+  (wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
+    (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+  )
+  AND s.watershed_group_code = 'HORS'
+  AND s.accessibility_model_salmon IS NOT NULL
+)
+
+
+UPDATE bcfishpass.streams s
+SET spawning_model_sockeye = TRUE
+WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM spawn);
