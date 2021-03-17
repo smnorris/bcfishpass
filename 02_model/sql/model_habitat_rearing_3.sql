@@ -228,7 +228,7 @@ downstream AS
 ),
 
 -- we don't have a specific threshold but lets cap the distance between rear/spawn at 10k for now
--- Create a sequential (downstream, from outlet of lake) row_number column
+-- Create a sequential (downstream of cluster) row_number column
 -- in the query result so that we can easily find streams above any 5% grade
 downstream_within_10k AS
 (SELECT row_number() over (PARTITION BY cid), *
