@@ -220,8 +220,8 @@ python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossin
 #python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp falls_event_id dnstr_falls
 #python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp dnstr_falls
 
-# and also the crossings table
-# but for crossings,  index it based on the barriers table - we want the downstream ids to be barriers only
+# now process the crossings table
+# For crossings,  index it based on the barriers table - we want the downstream ids to be barriers only
 # (for reporting on belowupstrbarriers columns)
 python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_crossings
 python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
