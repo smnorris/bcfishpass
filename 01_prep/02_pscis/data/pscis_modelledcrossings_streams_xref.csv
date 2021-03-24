@@ -3478,4 +3478,5 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197666,24742366,,BULK,NJO,Matched to closest Crossing
 197667,1805606,,BULK,NJO,Matched to closest Crossing
 197668,1805608,,BULK,NJO,Matched to closest Crossing
-197669,14000079,,MORR,AI,Matched to closest stream model (not sure why it didn't happen automatically
+197669,14000079,,MORR,AI,Matched to closest stream model (not sure why it didn't happen automatically)
+195940,1804009,,BULK,SN,PSCIS coordinates are incoorect - assessment is on road R09533904 and trib to Bulkley - modelled xing 1804009 is closest choice
