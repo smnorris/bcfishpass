@@ -1152,8 +1152,8 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 57516,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57517,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57522,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
-57523,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
-57524,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
+57523,PASSABLE,HORS,NMW,based on assessment comments (and imagery review where required)
+57524,PASSABLE,HORS,NMW,based on assessment comments (and imagery review where required)
 57526,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57527,NOT ACCESSIBLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57532,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
@@ -1430,7 +1430,7 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 126466,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 126467,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 126469,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
-126472,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
+126472,PASSABLE,HORS,NMW,based on assessment comments (and imagery review where required)
 126478,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
 126479,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 126480,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
@@ -1516,3 +1516,4 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 197536,PASSABLE,ELKR,NJO,Manual review
 197727,PASSABLE,ELKR,NJO,Manual review
 112328,PASSABLE,ELKR,NJO,Manual review
+197045,NOT ACCESSIBLE,LNIC,NMW,Manual review
