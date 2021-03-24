@@ -62,6 +62,10 @@ Presuming PostgreSQL/PostGIS and Python/`pip` and `conda` are already installed 
     conda install gdal
     conda install geopandas
     conda install rasterio
+    conda install rasterstats
+    conda install csvkit
+    conda install jq
+    conda install parallel
     pip3 install bcdata
     # download fwapg, load BC FWA
     # download bcfishobs, load BC fish observations and obstacles

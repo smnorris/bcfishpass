@@ -50,8 +50,10 @@ WITH report AS
   ROUND((COALESCE(a.ch_rearing_km, 0) - SUM(COALESCE(b.ch_rearing_km, 0)))::numeric, 2) ch_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.co_spawning_km, 0) - SUM(COALESCE(b.co_spawning_km, 0)))::numeric, 2) co_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.co_rearing_km, 0) - SUM(COALESCE(b.co_rearing_km, 0)))::numeric, 2) co_rearing_belowupstrbarriers_km  ,
+  ROUND((COALESCE(a.co_rearing_ha, 0) - SUM(COALESCE(b.co_rearing_ha, 0)))::numeric, 2) co_rearing_belowupstrbarriers_ha  ,
   ROUND((COALESCE(a.sk_spawning_km, 0) - SUM(COALESCE(b.sk_spawning_km, 0)))::numeric, 2) sk_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.sk_rearing_km, 0) - SUM(COALESCE(b.sk_rearing_km, 0)))::numeric, 2) sk_rearing_belowupstrbarriers_km  ,
+  ROUND((COALESCE(a.sk_rearing_ha, 0) - SUM(COALESCE(b.sk_rearing_km, 0)))::numeric, 2) sk_rearing_belowupstrbarriers_ha  ,
   ROUND((COALESCE(a.st_spawning_km, 0) - SUM(COALESCE(b.st_spawning_km, 0)))::numeric, 2) st_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.st_rearing_km, 0) - SUM(COALESCE(b.st_rearing_km, 0)))::numeric, 2) st_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.all_spawning_km, 0) - SUM(COALESCE(b.all_spawning_km, 0)))::numeric, 2) all_spawning_belowupstrbarriers_km,
@@ -62,6 +64,7 @@ FROM bcfishpass.crossings a
 INNER JOIN bcfishpass.crossings b
 ON a.aggregated_crossings_id = b.dnstr_crossings[1]
 WHERE b.barrier_status IN ('BARRIER', 'POTENTIAL')
+AND a.barrier_status = 'PASSABLE'
 GROUP BY a.aggregated_crossings_id
 )
 
@@ -114,8 +117,10 @@ SET
   ch_rearing_belowupstrbarriers_km = r.ch_rearing_belowupstrbarriers_km,
   co_spawning_belowupstrbarriers_km = r.co_spawning_belowupstrbarriers_km,
   co_rearing_belowupstrbarriers_km = r.co_rearing_belowupstrbarriers_km,
+  co_rearing_belowupstrbarriers_ha = r.co_rearing_belowupstrbarriers_ha,
   sk_spawning_belowupstrbarriers_km = r.sk_spawning_belowupstrbarriers_km,
   sk_rearing_belowupstrbarriers_km = r.sk_rearing_belowupstrbarriers_km,
+  sk_rearing_belowupstrbarriers_ha = r.sk_rearing_belowupstrbarriers_ha,
   st_spawning_belowupstrbarriers_km = r.st_spawning_belowupstrbarriers_km,
   st_rearing_belowupstrbarriers_km = r.st_rearing_belowupstrbarriers_km,
   all_spawning_belowupstrbarriers_km = r.all_spawning_belowupstrbarriers_km,

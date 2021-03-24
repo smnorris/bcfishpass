@@ -101,19 +101,23 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstr
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass15_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass22_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_belowupstrbarriers_slopeclass30_km double precision;
--- modelled spawn/rear summaries
+-- modelled spawn/rear summaries, including wetland/lake areas for co/sk
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS ch_spawning_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS ch_rearing_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS ch_spawning_belowupstrbarriers_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS ch_rearing_belowupstrbarriers_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS co_spawning_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS co_rearing_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS co_rearing_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS co_spawning_belowupstrbarriers_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS co_rearing_belowupstrbarriers_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS co_rearing_belowupstrbarriers_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS sk_spawning_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS sk_rearing_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS sk_rearing_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS sk_spawning_belowupstrbarriers_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS sk_rearing_belowupstrbarriers_km double precision;
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS sk_rearing_belowupstrbarriers_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS st_spawning_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS st_rearing_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS st_spawning_belowupstrbarriers_km double precision;
@@ -232,12 +236,16 @@ COMMENT ON COLUMN {point_schema}.{point_table}.ch_spawning_belowupstrbarriers_km
 COMMENT ON COLUMN {point_schema}.{point_table}.ch_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Chinook rearing habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.co_spawning_km IS 'Length of stream upstream of point modelled as potential Coho spawning habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.co_rearing_km IS 'Length of stream upstream of point modelled as potential Coho rearing habitat';
+COMMENT ON COLUMN {point_schema}.{point_table}.co_rearing_ha IS 'Area of wetlands upstream of point modelled as potential Coho rearing habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.co_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Coho spawning habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.co_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Coho rearing habitat';
+COMMENT ON COLUMN {point_schema}.{point_table}.co_rearing_belowupstrbarriers_ha IS 'Area of wetlands upstream of point and below any additional upstream barriers, modelled as potential Coho rearing habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.sk_spawning_km IS 'Length of stream upstream of point modelled as potential Sockeye spawning habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.sk_rearing_km IS 'Length of stream upstream of point modelled as potential Sockeye rearing habitat';
+COMMENT ON COLUMN {point_schema}.{point_table}.sk_rearing_ha IS 'Area of lakes upstream of point modelled as potential Sockeye rearing habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.sk_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Sockeye spawning habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.sk_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Sockeye rearing habitat';
+COMMENT ON COLUMN {point_schema}.{point_table}.sk_rearing_belowupstrbarriers_ha IS 'Area of lakes upstream of point and below any additional upstream barriers, modelled as potential Sockeye rearing habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.st_spawning_km IS 'Length of stream upstream of point modelled as potential Steelhead spawning habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.st_rearing_km IS 'Length of stream upstream of point modelled as potential Steelhead rearing habitat';
 COMMENT ON COLUMN {point_schema}.{point_table}.st_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Steelhead spawning habitat';
@@ -522,10 +530,47 @@ SET
   all_spawning_km = r.all_spawning_km,
   all_rearing_km = r.all_rearing_km,
   all_spawningrearing_km = r.all_spawningrearing_km
-
 FROM report r
 WHERE p.{point_id} = r.{point_id};
 
+
+-- increase linear total for co and sk rearing by 50% within wetlands/lakes
+-- this is just an attempt to give these more importance (as they aren't really linear anyway)
+WITH lake_wetland_rearing AS
+(
+  SELECT
+    a.{point_id},
+    COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_coho IS TRUE AND wb.waterbody_type = 'W') / 1000))::numeric, 2), 0) AS co_rearing_km_wetland,
+    COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_sockeye IS TRUE AND wb.waterbody_type IN ('X','L')) / 1000))::numeric, 2), 0) AS sk_rearing_km_lake
+  FROM {point_schema}.{point_table} a
+  INNER JOIN bcfishpass.watershed_groups g
+  ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
+  LEFT OUTER JOIN bcfishpass.streams s
+  ON FWA_Upstream(
+      a.blue_line_key,
+      a.downstream_route_measure,
+      a.wscode_ltree,
+      a.localcode_ltree,
+      s.blue_line_key,
+      s.downstream_route_measure,
+      s.wscode_ltree,
+      s.localcode_ltree,
+      True,
+      .02
+     )
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
+  ON s.waterbody_key = wb.waterbody_key
+  GROUP BY a.{point_id}
+)
+
+UPDATE {point_schema}.{point_table} p
+SET
+  co_rearing_km = co_rearing_km + (r.co_rearing_km_wetland * .5),
+  sk_rearing_km = sk_rearing_km + (r.sk_rearing_km_lake * .5),
+  all_rearing_km = all_rearing_km + (r.co_rearing_km_wetland * .5) + (r.sk_rearing_km_lake * .5),
+  all_spawningrearing_km = all_spawningrearing_km + (r.co_rearing_km_wetland * .5) + (r.sk_rearing_km_lake * .5)
+FROM lake_wetland_rearing r
+WHERE p.{point_id} = r.{point_id};
 
 
 -- populate upstream area stats
@@ -536,6 +581,8 @@ WITH upstr_wb AS
   s.accessibility_model_salmon,
   s.accessibility_model_steelhead,
   s.accessibility_model_wct,
+  s.rearing_model_coho,
+  s.rearing_model_sockeye,
   ST_Area(lake.geom) as area_lake,
   ST_Area(manmade.geom) as area_manmade,
   ST_Area(wetland.geom) as area_wetland
@@ -578,7 +625,10 @@ report AS
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.accessibility_model_steelhead LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS steelhead_wetland_ha,
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%') +
           SUM(uwb.area_manmade) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
-  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_wetland_ha
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.accessibility_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.rearing_model_coho = True)) / 10000)::numeric, 2) AS co_rearing_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.rearing_model_sockeye = True) +
+          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.rearing_model_sockeye = True)) / 10000)::numeric, 2) AS sk_rearing_ha
 FROM upstr_wb uwb
 GROUP BY {point_id}
 )
@@ -592,16 +642,77 @@ SET
   steelhead_lakereservoir_ha = r.steelhead_lakereservoir_ha,
   steelhead_wetland_ha = r.steelhead_wetland_ha,
   wct_lakereservoir_ha = r.wct_lakereservoir_ha,
-  wct_wetland_ha = r.wct_wetland_ha
+  wct_wetland_ha = r.wct_wetland_ha,
+  co_rearing_ha = r.co_rearing_ha,
+  sk_rearing_ha = r.sk_rearing_ha
 FROM report r
 WHERE p.{point_id} = r.{point_id};
 
 
--- finally, calculate and populate upstream length stats for below addtional upstream barriers
+-- Calculate and populate upstream length/area stats for below addtional upstream barriers
 -- (this is the total at the given point as already calculated, minus the total on all points immediately upstream of the point)
 -- NOTE - this has to be re-run separately for bcfishpass.crossings because it includes a mixture of passable/barriers,
 -- and not all tables we run this report on will have the barrier_status column
 -- see 00_report_crossings_obs_belowupstrbarriers.sql
+
+-- default to total upstream
+UPDATE {point_schema}.{point_table} p
+SET
+  total_belowupstrbarriers_network_km = total_network_km,
+  total_belowupstrbarriers_stream_km = total_stream_km,
+  total_belowupstrbarriers_lakereservoir_ha = total_lakereservoir_ha,
+  total_belowupstrbarriers_wetland_ha = total_wetland_ha,
+  total_belowupstrbarriers_slopeclass03_waterbodies_km = total_slopeclass03_waterbodies_km,
+  total_belowupstrbarriers_slopeclass03_km = total_slopeclass03_km,
+  total_belowupstrbarriers_slopeclass05_km = total_slopeclass05_km,
+  total_belowupstrbarriers_slopeclass08_km = total_slopeclass08_km,
+  total_belowupstrbarriers_slopeclass15_km = total_slopeclass15_km,
+  total_belowupstrbarriers_slopeclass22_km = total_slopeclass22_km,
+  total_belowupstrbarriers_slopeclass30_km = total_slopeclass30_km,
+  salmon_belowupstrbarriers_network_km = salmon_network_km,
+  salmon_belowupstrbarriers_stream_km = salmon_stream_km,
+  salmon_belowupstrbarriers_lakereservoir_ha = salmon_lakereservoir_ha,
+  salmon_belowupstrbarriers_wetland_ha = salmon_wetland_ha,
+  salmon_belowupstrbarriers_slopeclass03_waterbodies_km = salmon_slopeclass03_waterbodies_km,
+  salmon_belowupstrbarriers_slopeclass03_km = salmon_slopeclass03_km,
+  salmon_belowupstrbarriers_slopeclass05_km = salmon_slopeclass05_km,
+  salmon_belowupstrbarriers_slopeclass08_km = salmon_slopeclass08_km,
+  salmon_belowupstrbarriers_slopeclass15_km = salmon_slopeclass15_km,
+  salmon_belowupstrbarriers_slopeclass22_km = salmon_slopeclass22_km,
+  salmon_belowupstrbarriers_slopeclass30_km = salmon_slopeclass30_km,
+  steelhead_belowupstrbarriers_network_km = steelhead_network_km,
+  steelhead_belowupstrbarriers_stream_km = steelhead_stream_km,
+  steelhead_belowupstrbarriers_lakereservoir_ha = steelhead_lakereservoir_ha,
+  steelhead_belowupstrbarriers_wetland_ha = steelhead_wetland_ha,
+  steelhead_belowupstrbarriers_slopeclass03_km = steelhead_slopeclass03_km,
+  steelhead_belowupstrbarriers_slopeclass05_km = steelhead_slopeclass05_km,
+  steelhead_belowupstrbarriers_slopeclass08_km = steelhead_slopeclass08_km,
+  steelhead_belowupstrbarriers_slopeclass15_km = steelhead_slopeclass15_km,
+  steelhead_belowupstrbarriers_slopeclass22_km = steelhead_slopeclass22_km,
+  steelhead_belowupstrbarriers_slopeclass30_km = steelhead_slopeclass30_km,
+  wct_belowupstrbarriers_network_km = wct_network_km,
+  wct_belowupstrbarriers_stream_km = wct_stream_km,
+  wct_belowupstrbarriers_lakereservoir_ha = wct_lakereservoir_ha,
+  wct_belowupstrbarriers_wetland_ha = wct_wetland_ha,
+  wct_belowupstrbarriers_slopeclass03_km = wct_slopeclass03_km,
+  wct_belowupstrbarriers_slopeclass05_km = wct_slopeclass05_km,
+  wct_belowupstrbarriers_slopeclass08_km = wct_slopeclass08_km,
+  wct_belowupstrbarriers_slopeclass15_km = wct_slopeclass15_km,
+  wct_belowupstrbarriers_slopeclass22_km = wct_slopeclass22_km,
+  wct_belowupstrbarriers_slopeclass30_km = wct_slopeclass30_km,
+  ch_spawning_belowupstrbarriers_km = ch_spawning_km,
+  ch_rearing_belowupstrbarriers_km = ch_rearing_km,
+  co_spawning_belowupstrbarriers_km = co_spawning_km,
+  co_rearing_belowupstrbarriers_km = co_rearing_km,
+  sk_spawning_belowupstrbarriers_km = sk_spawning_km,
+  sk_rearing_belowupstrbarriers_km = sk_rearing_km,
+  st_spawning_belowupstrbarriers_km = st_spawning_km,
+  st_rearing_belowupstrbarriers_km = st_rearing_km,
+  all_spawning_belowupstrbarriers_km = all_spawning_km,
+  all_rearing_belowupstrbarriers_km = all_rearing_km,
+  all_spawningrearing_belowupstrbarriers_km = all_spawningrearing_km;
+
+-- then calculate the rest where there is/are anthropogenic crossings upstream
 WITH report AS
 (SELECT
   a.{point_id},
@@ -651,14 +762,15 @@ WITH report AS
   ROUND((COALESCE(a.ch_rearing_km, 0) - SUM(COALESCE(b.ch_rearing_km, 0)))::numeric, 2) ch_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.co_spawning_km, 0) - SUM(COALESCE(b.co_spawning_km, 0)))::numeric, 2) co_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.co_rearing_km, 0) - SUM(COALESCE(b.co_rearing_km, 0)))::numeric, 2) co_rearing_belowupstrbarriers_km  ,
+  ROUND((COALESCE(a.co_rearing_ha, 0) - SUM(COALESCE(b.co_rearing_ha, 0)))::numeric, 2) co_rearing_belowupstrbarriers_ha,
   ROUND((COALESCE(a.sk_spawning_km, 0) - SUM(COALESCE(b.sk_spawning_km, 0)))::numeric, 2) sk_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.sk_rearing_km, 0) - SUM(COALESCE(b.sk_rearing_km, 0)))::numeric, 2) sk_rearing_belowupstrbarriers_km  ,
+  ROUND((COALESCE(a.sk_rearing_ha, 0) - SUM(COALESCE(b.sk_rearing_ha, 0)))::numeric, 2) sk_rearing_belowupstrbarriers_ha  ,
   ROUND((COALESCE(a.st_spawning_km, 0) - SUM(COALESCE(b.st_spawning_km, 0)))::numeric, 2) st_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.st_rearing_km, 0) - SUM(COALESCE(b.st_rearing_km, 0)))::numeric, 2) st_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.all_spawning_km, 0) - SUM(COALESCE(b.all_spawning_km, 0)))::numeric, 2) all_spawning_belowupstrbarriers_km,
   ROUND((COALESCE(a.all_rearing_km, 0) - SUM(COALESCE(b.all_rearing_km, 0)))::numeric, 2) all_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.all_spawningrearing_km, 0) - SUM(COALESCE(b.all_spawningrearing_km, 0)))::numeric, 2) all_spawningrearing_belowupstrbarriers_km
-
 FROM {point_schema}.{point_table} a
 INNER JOIN {barriers_schema}.{barriers_table} b
 ON a.{point_id} = b.{dnstr_barriers_id}[1]
@@ -722,7 +834,6 @@ SET
   all_spawningrearing_belowupstrbarriers_km = r.all_spawningrearing_belowupstrbarriers_km
 FROM report r
 WHERE p.{point_id} = r.{point_id};
-
 
 
 -- also, populate map tile column

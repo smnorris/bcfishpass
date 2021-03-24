@@ -141,7 +141,7 @@ rearing_clusters_dnstr AS
   INNER JOIN bcfishpass.streams spawn
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
   AND s.watershed_group_code = spawn.watershed_group_code
-  WHERE spawn.spawning_model_chinook IS TRUE
+  WHERE spawn.spawning_model_coho IS TRUE
 ),
 
 -- find ids of streams that compose the above clusters
@@ -221,7 +221,7 @@ rearing_clusters_dnstr AS
   INNER JOIN bcfishpass.streams spawn
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
   AND s.watershed_group_code = spawn.watershed_group_code
-  WHERE spawn.spawning_model_chinook IS TRUE
+  WHERE spawn.spawning_model_steelhead IS TRUE
 ),
 
 -- find ids of streams that compose the above clusters

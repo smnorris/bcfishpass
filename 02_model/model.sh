@@ -217,11 +217,11 @@ python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfa
 python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
 # and waterfalls that aren't considered in the model yet, just for evaluation
-python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp falls_event_id dnstr_falls
-python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp dnstr_falls
+#python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp falls_event_id dnstr_falls
+#python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp dnstr_falls
 
-# and also the crossings table
-# but for crossings,  index it based on the barriers table - we want the downstream ids to be barriers only
+# now process the crossings table
+# For crossings,  index it based on the barriers table - we want the downstream ids to be barriers only
 # (for reporting on belowupstrbarriers columns)
 python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_crossings
 python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
@@ -231,7 +231,13 @@ python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishp
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_crossings IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
 
+# also note the number of barriers downstream, just a count of values in dnstr_barriers_anthropogenic
+psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN dnstr_barriers_anthropogenic_count integer"
+psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_count IS 'A count of the barrier crossings downstream of the given crossing';"
+psql -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
+
 # populating the belowupstrbarriers for OBS in the crossings table requires a separate query
+# (because the dnstr_barriers_anthropogenic is used in above report, and that misses the OBS of interest)
 psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
 
 # run report on the combined definite barrier tables
