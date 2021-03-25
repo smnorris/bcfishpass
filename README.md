@@ -82,6 +82,7 @@ As with `fwapg` and `bcfishobs`, scripts depend on several environment variables
     # and a OGR compatible string
     export PGOGR='host=localhost user=postgres dbname=mydb password=mypwd port=5432'
 
+Note that if you are using `conda`, `conda` can manage these - modify the variables in `environment.yml` as required.
 
 ## Prep data
 

@@ -1,0 +1,30 @@
+name: bcfpenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip=21.0.*
+  - gdal=3.1.*
+  - requests=2.25.*
+  - owslib=0.23.*
+  - rasterio=1.2.*
+  - geopandas=0.9.*
+  - sqlalchemy=1.4.*
+  - geoalchemy2=0.6.*
+  - sqlalchemy-utils=0.36.*
+  - alembic=1.5.*
+  - jq
+  - parallel
+  - rasterstats
+  - csvkit
+  - pip:
+      - pgdata==0.0.12
+      - bcdata==0.4.3
+variables:
+  PGHOST: localhost
+  PGUSER: postgres
+  PGPORT: 5432
+  PGDATABASE: postgis
+  DATABASE_URL: postgresql://postgres@localhost:5432/postgis
+  PGOGR: 'host=localhost user=postgres dbname=posgis password=postgres port=5432'
