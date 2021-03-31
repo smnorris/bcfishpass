@@ -18,12 +18,11 @@ psql -t -c "SELECT
   ST_AsGeoJSON(t.*)
 FROM
   (
-    SELECT DISTINCT
+    SELECT
       watershed_feature_id,
       watershed_group_code,
       geom
     FROM whse_basemapping.fwa_watersheds_poly
-    WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR','MORR')
   ) as t" | \
   parallel \
     --pipe \
@@ -97,7 +96,6 @@ psql -t -c "SELECT ST_AsGeoJSON(t.*)
       s.watershed_group_code = w.watershed_group_code
     WHERE
       w.wscode_ltree IS NULL AND
-      s.watershed_group_code IN ('BULK','LNIC','HORS','ELKR','MORR') AND
       s.fwa_watershed_code NOT LIKE '999%'
     GROUP BY s.wscode_ltree, s.localcode_ltree, s.watershed_group_code
     ) as t" |

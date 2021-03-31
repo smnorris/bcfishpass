@@ -27,4 +27,4 @@ variables:
   PGPORT: 5432
   PGDATABASE: postgis
   DATABASE_URL: postgresql://postgres@localhost:5432/postgis
-  PGOGR: 'host=localhost user=postgres dbname=posgis password=postgres port=5432'
+  PGOGR: 'host=localhost user=postgres dbname=postgis password=postgres port=5432'
