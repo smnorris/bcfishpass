@@ -13,26 +13,38 @@ gdalwarp $TMP/climatebc/map mean_annual_precip.tif -t_srs EPSG:3005 -of COG -co 
 psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load"
 psql -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd_load (watershed_feature_id integer, watershed_group_code text, map numeric)"
 
-# derive map and load to postgres, in the load table
-psql -t -c "SELECT
-  ST_AsGeoJSON(t.*)
-FROM
-  (
-    SELECT
-      watershed_feature_id,
-      watershed_group_code,
-      geom
-    FROM whse_basemapping.fwa_watersheds_poly
-  ) as t" | \
-  parallel \
-    --pipe \
-    "rio -q zonalstats \
-      -r mean_annual_precip.tif \
-      --prefix 'map_'" | \
-  jq '.features[].properties | {watershed_feature_id: .watershed_feature_id, watershed_group_code: .watershed_group_code, map: .map_mean}' | \
-  jq --slurp . | \
-  in2csv -f json |
-  psql -c "\copy bcfishpass.mean_annual_precip_wsd_load FROM STDIN delimiter ',' csv header"
+# Derive MAP per fundamental watershed from raster and load to temp load table in postgres
+# Loop through watershed groups
+# (rather than loading geojson of fundamental all watershed polys for BC into memory,
+# this takes longer but is much more memory safe)
+for WSG in $(psql -t -P border=0,footer=no \
+  -c "SELECT watershed_group_code
+      FROM whse_basemapping.fwa_watershed_groups_poly
+      ORDER BY watershed_group_code")
+do
+  echo 'Processing '$WSG
+  psql -X -t -v wsg="$WSG" <<< "SELECT
+    ST_AsGeoJSON(t.*)
+  FROM
+    (
+      SELECT
+        watershed_feature_id,
+        watershed_group_code,
+        geom
+      FROM whse_basemapping.fwa_watersheds_poly
+      WHERE watershed_group_code = :'wsg'
+    ) as t" | \
+    parallel \
+      --pipe \
+      "rio -q zonalstats \
+        -r mean_annual_precip.tif \
+        --prefix 'map_' \
+        2>/dev/null" | \
+    jq '.features[].properties | [.watershed_feature_id, .watershed_group_code, .map_mean]' | \
+    jq -r --slurp '.[] | @csv' | \
+    psql -c "\copy bcfishpass.mean_annual_precip_wsd_load FROM STDIN delimiter ',' csv header"
+done
+
 
 # load unique watersheds from load table (rasterstats is generating some duplicates and I'm not sure how to fix,
 # it is probably something to do with sequences vs collections)
@@ -49,7 +61,7 @@ psql -c "DROP TABLE bcfishpass.mean_annual_precip_wsd_load"
 # recreate load table
 psql -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd_load (watershed_feature_id integer, watershed_group_code text, map numeric)"
 
-# run pointquery
+# run pointquery. At 73,409 points, this is fine to run provincially and in a single process.
 psql -t -c "SELECT ST_AsGeoJSON(t.*)
     FROM (
       SELECT
@@ -61,10 +73,9 @@ psql -t -c "SELECT ST_AsGeoJSON(t.*)
       ON a.watershed_feature_id = b.watershed_feature_id
       WHERE a.map IS NULL
     ) AS t" |
-  rio -q pointquery -r mean_annual_precip.tif | \
-  jq '.features[].properties | {watershed_feature_id: .watershed_feature_id, watershed_group_code: .watershed_group_code, map: .value}' | \
-  jq --slurp . | \
-  in2csv -f json |
+  rio -q pointquery -r mean_annual_precip.tif 2>/dev/null | \
+  jq '.features[].properties | [.watershed_feature_id, .watershed_group_code, .value]' | \
+  jq -r --slurp '.[] | @csv' | \
   psql -c "\copy bcfishpass.mean_annual_precip_wsd_load FROM STDIN delimiter ',' csv header"
 
 psql -c "UPDATE bcfishpass.mean_annual_precip_wsd a
@@ -75,11 +86,11 @@ psql -c "UPDATE bcfishpass.mean_annual_precip_wsd a
 # drop load table again
 psql -c "DROP TABLE bcfishpass.mean_annual_precip_wsd_load"
 
-# there are remaining nulls (n=12) - presumably these wsds just are not covered by the grid (on border)
+# Note that there are remaining nulls - presumably these wsds simply are not covered by the MAP grid (on border)
 
 # Because there are streams (distinct watershed code / local code combinations) with no watershed polygon
 # (mostly in rivers) and we need MAP values for these too, generate them directly with the MAP raster
-# rather than joining to the watersheds
+# rather than joining to the watersheds. There are about 59k of these.
 psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"
 psql -c "CREATE TABLE bcfishpass.mean_annual_precip_load (wscode_ltree ltree, localcode_ltree ltree, watershed_group_code text, map numeric)"
 psql -t -c "SELECT ST_AsGeoJSON(t.*)
@@ -99,14 +110,54 @@ psql -t -c "SELECT ST_AsGeoJSON(t.*)
       s.fwa_watershed_code NOT LIKE '999%'
     GROUP BY s.wscode_ltree, s.localcode_ltree, s.watershed_group_code
     ) as t" |
-  rio -q pointquery -r mean_annual_precip.tif | \
-  jq '.features[].properties | {wscode_ltree: .wscode_ltree, localcode_ltree: .localcode_ltree, watershed_group_code: .watershed_group_code, map: .value}' | \
-  jq --slurp . | \
-  in2csv -f json |
+  rio -q pointquery -r mean_annual_precip.tif 2>/dev/null | \
+  jq '.features[].properties | [.wscode_ltree, .localcode_ltree, .watershed_group_code, .value]' | \
+  jq -r --slurp '.[] | @csv' | \
   psql -c "\copy bcfishpass.mean_annual_precip_load FROM STDIN delimiter ',' csv header"
 
-# finally, call sql that combines everything and calculates area-weighted avg MAP upstream of every stream segment
-psql -f sql/mean_annual_precip.sql
+
+# Create the output table.
+# There can be some remenant duplicates in the source data, make sure it does not get included
+# by adding a unique constraint on watershed codes
+psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip"
+psql -c "CREATE TABLE bcfishpass.mean_annual_precip
+(
+  id serial primary key,
+  wscode_ltree ltree,
+  localcode_ltree ltree,
+  watershed_group_code text,
+  area bigint,
+  map integer,
+  map_upstream integer,
+  UNIQUE (wscode_ltree, localcode_ltree)
+);"
+
+# Take data from the MAP load table, average the MAP over the stream segment
+# (watershed code / local code) and insert (along with area of fundamental watershed(s) associated with
+# this stream segment into the MAP table. Run the inserts per watershed group.
+for WSG in $(psql -t -P border=0,footer=no \
+  -c "SELECT watershed_group_code
+      FROM whse_basemapping.fwa_watershed_groups_poly
+      ORDER BY watershed_group_code")
+do
+  psql -f sql/map.sql -v wsg="$WSG"
+done
+
+# index the table for upstream/downstream joins
+psql -c "CREATE INDEX ON bcfishpass.mean_annual_precip USING GIST (wscode_ltree);"
+psql -c "CREATE INDEX ON bcfishpass.mean_annual_precip USING BTREE (wscode_ltree);"
+psql -c "CREATE INDEX ON bcfishpass.mean_annual_precip USING GIST (localcode_ltree);"
+psql -c "CREATE INDEX ON bcfishpass.mean_annual_precip USING BTREE (localcode_ltree);"
+
+# now calculate area-weighted avg MAP upstream of every stream segment
+# loop through watershed groups, don't bother trying to update in parallel
+for WSG in $(psql -t -P border=0,footer=no \
+  -c "SELECT watershed_group_code
+      FROM whse_basemapping.fwa_watershed_groups_poly
+      ORDER BY watershed_group_code")
+do
+  psql -f -v wsg:"$WSG" sql/map_upstream.sql
+done
 
 # optionally, drop the temp tables and raster
 #psql -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"

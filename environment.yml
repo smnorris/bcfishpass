@@ -17,7 +17,6 @@ dependencies:
   - jq
   - parallel
   - rasterstats
-  - csvkit
   - pip:
       - pgdata==0.0.12
       - bcdata==0.4.3
