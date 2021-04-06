@@ -1,8 +1,8 @@
 {
   "version": 8,
   "name": "CWF WCRP mapping",
-  "center": [-127.084780,54.740961],
-  "zoom": 12,
+  "center": [-120.728285,52.195932],
+  "zoom": 6,
   "sources": {
     "satellite": {
       "type": "raster",
