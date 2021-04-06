@@ -1,4 +1,4 @@
-# bcfishpass web map
+# Draft web map for WCRP planning
 
 
 ### Sprites

@@ -41,7 +41,7 @@
       "tiles": [
         "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_streams_large/{z}/{x}/{y}.pbf"
       ],
-      "minzoom": 6,
+      "minzoom": 7,
       "maxzoom": 19
     },
     "barriers_definite_wct": {
@@ -49,7 +49,7 @@
       "tiles": [
         "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_wct/{z}/{x}/{y}.pbf"
       ],
-      "minzoom": 7,
+      "minzoom": 8,
       "maxzoom": 19
     },
     "barriers_definite_steelhead": {
@@ -73,7 +73,7 @@
       "tiles": [
         "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.barriers_anthropogenic/{z}/{x}/{y}.pbf"
       ],
-      "minzoom": 6,
+      "minzoom": 8,
       "maxzoom": 19
     },
     "waterfalls": {
@@ -81,7 +81,7 @@
       "tiles": [
         "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.falls_events_sp/{z}/{x}/{y}.pbf"
       ],
-      "minzoom": 6,
+      "minzoom": 8,
       "maxzoom": 19
     },
     "watershed_groups": {
@@ -89,7 +89,7 @@
       "tiles": [
         "https://www.hillcrestgeo.ca/pg_tileserv/whse_basemapping.fwa_watershed_groups_poly/{z}/{x}/{y}.pbf"
       ],
-      "minzoom": 6,
+      "minzoom": 5,
       "maxzoom": 19
     }
   },
@@ -125,7 +125,7 @@
       },
       "source-layer": "whse_basemapping.fwa_watershed_groups_poly",
       "maxzoom": 19,
-      "minzoom": 6,
+      "minzoom": 5,
       "filter": [
           "any",
           ["==", "watershed_group_code", "BULK"],
@@ -147,7 +147,7 @@
       "filter": ["in", "accessibility_model_steelhead", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM"]
       ,
       "maxzoom": 10,
-      "minzoom": 6,
+      "minzoom": 7,
       "layout": {"line-join": "round", "line-cap": "round"},
       "paint": {
           "line-color": [
@@ -241,7 +241,7 @@
       "filter": ["in", "accessibility_model_salmon", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM"]
       ,
       "maxzoom": 10,
-      "minzoom": 6,
+      "minzoom": 7,
       "layout": {"line-join": "round", "line-cap": "round"},
       "paint": {
           "line-color": [
@@ -335,7 +335,7 @@
       "filter": ["in", "accessibility_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM"]
       ,
       "maxzoom": 10,
-      "minzoom": 6,
+      "minzoom": 7,
       "layout": {"line-join": "round", "line-cap": "round"},
       "paint": {
           "line-color": [
