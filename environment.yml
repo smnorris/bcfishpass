@@ -19,7 +19,7 @@ dependencies:
   - rasterstats
   - pip:
       - pgdata==0.0.12
-      - bcdata==0.4.3
+      - bcdata==0.4.4
 variables:
   PGHOST: localhost
   PGUSER: postgres
