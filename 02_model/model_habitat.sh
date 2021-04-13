@@ -26,7 +26,7 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
 psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
 
 # load modelled (and measured) channel width to streams table
-psql -f sql/model_channel_width.sql
+psql -f sql/load_channel_width.sql
 
 # run ch/co/st spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
