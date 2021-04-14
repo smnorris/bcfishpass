@@ -117,6 +117,7 @@ ORDER BY
 CREATE INDEX ON bcfishpass.streams (linear_feature_id);
 CREATE INDEX ON bcfishpass.streams (blue_line_key);
 CREATE INDEX ON bcfishpass.streams (watershed_group_code);
+CREATE INDEX ON bcfishpass.streams (waterbody_key);
 CREATE INDEX ON bcfishpass.streams USING GIST (wscode_ltree);
 CREATE INDEX ON bcfishpass.streams USING BTREE (wscode_ltree);
 CREATE INDEX ON bcfishpass.streams USING GIST (localcode_ltree);

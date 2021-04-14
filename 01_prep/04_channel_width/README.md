@@ -19,11 +19,6 @@ Load FISS sample sites to the db, reference them to the streams and load channel
 
     ./channel_width_measured.sh
 
-This data can also be used to inform the channel width model below.
-To create an extract of measured channel widths and various predictor variables:
-
-    ./dump_channel_width_predictors.sh
-
 ## Channel width - modelled
 
 To derive channel width for streams where there is no measurement, we model the width based on upstream area and mean annual precip.
