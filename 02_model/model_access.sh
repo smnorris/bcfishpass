@@ -5,6 +5,13 @@ set -euxo pipefail
 #### build barrier tables and stream table, model fish passage access
 #################################
 
+PARAMETERS_DIR="${1:-parameters}"
+
+# Which watershed groups to process and what type of habitat model to run is encoded in parameters/param_watersheds.csv
+psql -c "DROP TABLE IF EXISTS bcfishpass.param_watersheds"
+psql -c "CREATE TABLE bcfishpass.param_watersheds (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, model text, notes text)"
+psql -c "\copy bcfishpass.param_watersheds FROM '$PARAMETERS_DIR/param_watersheds.csv' delimiter ',' csv header"
+
 # -----------
 # Load required functions
 # -----------
@@ -33,11 +40,6 @@ cd ../../02_model
 # -----------
 # Create barrier tables, run access model
 # -----------
-
-# Which watershed groups to process and what type of habitat model to run is encoded in parameters/param_watersheds.csv
-psql -c "DROP TABLE IF EXISTS bcfishpass.param_watersheds"
-psql -c "CREATE TABLE bcfishpass.param_watersheds (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, model text, notes text)"
-psql -c "\copy bcfishpass.param_watersheds FROM 'parameters/param_watersheds.csv' delimiter ',' csv header"
 
 # create table for each type of definite (not generally fixable) barrier
 psql -f sql/barriers_majordams.sql

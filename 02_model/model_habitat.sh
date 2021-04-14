@@ -6,6 +6,8 @@ set -euxo pipefail
 # (plus create some QA tables, cartographic streams layer, run reports)
 #################################
 
+PARAMETERS_DIR="${1:-parameters}"
+
 # load table that defines the parameters for spawning/rearing
 psql -c "DROP TABLE IF EXISTS bcfishpass.param_habitat"
 psql -c "CREATE TABLE bcfishpass.param_habitat (
@@ -23,7 +25,7 @@ psql -c "CREATE TABLE bcfishpass.param_habitat (
   rear_wetland_multiplier numeric,
   rear_lake_multiplier numeric
 )"
-psql -c "\copy bcfishpass.param_habitat FROM 'parameters/param_habitat.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.param_habitat FROM '$PARAMETERS_DIR/param_habitat.csv' delimiter ',' csv header"
 
 # load modelled (and measured) channel width to streams table
 psql -f sql/load_channel_width.sql
