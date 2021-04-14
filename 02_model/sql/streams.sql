@@ -104,7 +104,7 @@ SELECT
   s.upstream_wetland_ha,
   s.geom
 FROM whse_basemapping.fwa_stream_networks_sp s
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE
   s.fwa_watershed_code NOT LIKE '999%%'

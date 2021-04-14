@@ -18,7 +18,7 @@ ON s.wscode_ltree = cw2.wscode_ltree
 AND s.localcode_ltree = cw2.localcode_ltree
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
-INNER JOIN bcfishpass.watershed_groups wsg
+INNER JOIN bcfishpass.param_watersheds wsg
 ON s.watershed_group_code = wsg.watershed_group_code
 WHERE wsg.model = 'cw'
 -- don't model channel width on first order streams

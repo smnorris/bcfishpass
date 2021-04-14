@@ -23,7 +23,7 @@ WHERE
     AND watershed_group_code in
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND
         (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
     );
@@ -48,7 +48,7 @@ WHERE
     watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND
         (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
     );
@@ -68,7 +68,7 @@ WHERE
     watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND
         (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
     );
@@ -86,7 +86,7 @@ WHERE
     AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND st IS TRUE
     );
 
@@ -109,7 +109,7 @@ WHERE
     AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND st IS TRUE
     );
 
@@ -127,7 +127,7 @@ WHERE
     AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND st IS TRUE
     );
 
@@ -139,7 +139,7 @@ WHERE dnstr_barriers_wct IS NULL
 AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND wct IS TRUE
     );
 
@@ -156,7 +156,7 @@ AND dnstr_barriers_anthropogenic IS NULL
 AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND wct IS TRUE
     );
 
@@ -168,6 +168,6 @@ AND dnstr_remediated IS NOT NULL
 AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.watershed_groups
+        FROM bcfishpass.param_watersheds
         WHERE include IS TRUE AND wct IS TRUE
     );

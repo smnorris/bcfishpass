@@ -11,13 +11,13 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.watershed_groups wsg
+  INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN foundry.fwa_streams_mad mad
   ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
+  LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
   WHERE
     s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
@@ -151,13 +151,13 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.watershed_groups wsg
+  INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN foundry.fwa_streams_mad mad
   ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
+  LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CO'
   WHERE
     s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
@@ -291,13 +291,13 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.watershed_groups wsg
+  INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN foundry.fwa_streams_mad mad
   ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat h
+  LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'ST'
   WHERE
     s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check

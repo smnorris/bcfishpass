@@ -97,7 +97,7 @@ INSERT INTO bcfishpass.definitebarriers_steelhead
 )
 SELECT b.*
 FROM barriers b
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON b.watershed_group_code = g.watershed_group_code AND g.st IS TRUE
 ON CONFLICT DO NOTHING;
 
@@ -219,7 +219,7 @@ INSERT INTO bcfishpass.definitebarriers_salmon
 )
 SELECT b.*
 FROM barriers b
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON b.watershed_group_code = g.watershed_group_code AND
 (g.co IS TRUE OR g.ch IS TRUE OR g.sk IS TRUE)
 ON CONFLICT DO NOTHING;
@@ -330,7 +330,7 @@ INSERT INTO bcfishpass.definitebarriers_wct
 )
 SELECT b.*
 FROM barriers b
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON b.watershed_group_code = g.watershed_group_code AND g.wct IS TRUE
 ON CONFLICT DO NOTHING;
 

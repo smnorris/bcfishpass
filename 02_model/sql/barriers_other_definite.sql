@@ -43,7 +43,7 @@ SELECT
 FROM bcfishpass.pscis_events_sp e
 INNER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE f.updated_barrier_result_code = 'NOT ACCESSIBLE'
 ORDER BY e.stream_crossing_id

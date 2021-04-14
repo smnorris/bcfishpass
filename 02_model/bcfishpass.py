@@ -219,6 +219,7 @@ def segment_streams(stream_table, point_table):
 @click.argument("barriers_table")
 @click.argument("dnstr_barriers_id")
 def report(point_table, point_id, barriers_table, dnstr_barriers_id):
+    """run sql/00_report.sql against the specified tables"""
     db = pgdata.connect()
     point_schema, point_table = db.parse_table_name(point_table)
     barriers_schema, barriers_table = db.parse_table_name(barriers_table)

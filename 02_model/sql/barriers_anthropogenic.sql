@@ -71,7 +71,7 @@ SELECT
     c.watershed_group_code as watershed_group_code,
     c.geom as geom
 FROM bcfishpass.crossings c
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON c.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE barrier_status IN ('BARRIER', 'POTENTIAL')
 ON CONFLICT DO NOTHING;

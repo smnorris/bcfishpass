@@ -436,7 +436,7 @@ report AS
                                                   ) / 1000))::numeric, 2), 0) AS all_spawningrearing_km
 
 FROM {point_schema}.{point_table} a
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 LEFT OUTER JOIN bcfishpass.streams s
 ON FWA_Upstream(
@@ -543,7 +543,7 @@ WITH lake_wetland_rearing AS
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_coho IS TRUE AND wb.waterbody_type = 'W') / 1000))::numeric, 2), 0) AS co_rearing_km_wetland,
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_sockeye IS TRUE AND wb.waterbody_type IN ('X','L')) / 1000))::numeric, 2), 0) AS sk_rearing_km_lake
   FROM {point_schema}.{point_table} a
-  INNER JOIN bcfishpass.watershed_groups g
+  INNER JOIN bcfishpass.param_watersheds g
   ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
   LEFT OUTER JOIN bcfishpass.streams s
   ON FWA_Upstream(

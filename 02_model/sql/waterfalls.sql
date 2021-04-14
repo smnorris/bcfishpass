@@ -50,7 +50,7 @@ SELECT
 FROM whse_fish.fiss_falls_events a
 INNER JOIN whse_basemapping.fwa_stream_networks_sp b
 ON a.linear_feature_id = b.linear_feature_id
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE;
 
 -- insert others
@@ -79,6 +79,6 @@ SELECT
     e.watershed_group_code,
     e.geom
 FROM cwf.waterfalls_additional_events e
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 ON CONFLICT DO NOTHING;
