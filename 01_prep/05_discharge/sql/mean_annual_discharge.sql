@@ -8,13 +8,13 @@ DROP TABLE IF EXISTS foundry.fwa_streams_mad;
 CREATE TABLE foundry.fwa_streams_mad
 (
     linear_feature_id bigint primary key,
-    watershed_group_code, character varying(4)
+    watershed_group_code character varying(4),
     mad_m3s double precision
 );
 
 -- load streams with watershed code that matches the watershed polys
 INSERT INTO foundry.fwa_streams_mad
-(linear_feature_id, mad_m3s)
+(linear_feature_id, watershed_group_code, mad_m3s)
 SELECT
   s.linear_feature_id,
   s.watershed_group_code,
@@ -26,7 +26,7 @@ AND s.localcode_ltree = w.localcode_ltree
 AND s.watershed_group_code = w.watershed_group_code
 LEFT OUTER JOIN foundry.fwa_watersheds_mad mad
 ON w.watershed_feature_id = mad.watershed_feature_id
-WHERE s.watershed_group_code IN ('BULK','HORS')
+WHERE s.watershed_group_code IN ('BULK','HORS','LNIC')
 ON CONFLICT DO NOTHING;
 
 
@@ -40,15 +40,16 @@ WITH stream_pts AS
 FROM whse_basemapping.fwa_stream_networks_sp s
 LEFT OUTER JOIN foundry.fwa_streams_mad st
 ON s.linear_feature_id = st.linear_feature_id
-WHERE s.watershed_group_code IN ('BULK','HORS')
+WHERE s.watershed_group_code IN ('BULK','HORS','LNIC')
 AND st.linear_feature_id is null
 AND s.fwa_watershed_code NOT LIKE '999%'
 AND s.local_watershed_code IS NOT NULL)
 
 INSERT INTO foundry.fwa_streams_mad
-(linear_feature_id, mad_m3s)
+(linear_feature_id, watershed_group_code, mad_m3s)
 SELECT
   p.linear_feature_id,
+  p.watershed_group_code,
   mad.mad_m3s
 FROM stream_pts p
 INNER JOIN whse_basemapping.fwa_watersheds_poly w
