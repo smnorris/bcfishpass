@@ -1,9 +1,12 @@
 #!/bin/bash
 set -euxo pipefail
 
-psql2csv < sql/watershed_summary.sql > reports/watershed_summary.csv
-psql2csv < sql/wcrp_barrier_extent.sql > reports/wcrp_barrier_extent.csv
-psql2csv < sql/wcrp_barrier_severity.sql > reports/wcrp_barrier_severity.csv
+mkdir -p reports
 
-# this one is rather basic, just a single value
-psql2csv < sql/wcrp_wct_dci.sql > reports/wcrp_wct_dci.csv
+psql2csv < sql/watershed_summary.sql > reports/watershed_summary.csv
+psql2csv < sql/barrier_extent.sql > reports/barrier_extent.csv
+psql2csv < sql/barrier_severity.sql > reports/barrier_severity.csv
+
+# just one value for each of these
+psql2csv < sql/dci_elkr_above_elko.sql > reports/dci_elkr_above_elko.csv
+psql2csv < sql/dci_elkr_below_elko.sql > reports/dci_elkr_below_elko.csv

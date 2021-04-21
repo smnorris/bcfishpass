@@ -247,7 +247,3 @@ python bcfishpass.py report bcfishpass.definitebarriers_salmon definitebarriers_
 python bcfishpass.py report bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.definitebarriers_steelhead dnstr_definitebarriers_steelhead_id
 python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
 
-# call summary reports - just to be sure that they sync with any commits without having to remember to call it separately
-cd ../04_reporting
-./report.sh
-cd ../02_model
