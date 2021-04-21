@@ -1,8 +1,8 @@
 watershed_group_code,wcrp_barrier_type,ch_spawning_blocked_km,ch_rearing_blocked_km,co_spawning_blocked_km,co_rearing_blocked_km,sk_spawning_blocked_km,sk_rearing_blocked_km,st_spawning_blocked_km,st_rearing_blocked_km,all_spawning_blocked_km,all_rearing_blocked_km,all_spawningrearing_blocked_km
-BULK,DAM,0.00,0.00,0.90,9.87,0.00,0.00,0.00,2.62,0.90,12.09,12.09
-BULK,RAIL,11.83,13.77,22.48,39.30,0.00,0.00,12.02,33.48,22.48,45.41,45.41
-BULK,"ROAD, DEMOGRAPHIC",29.45,45.02,64.13,138.22,0.00,10.56,31.03,95.95,64.13,165.63,165.63
-BULK,"ROAD, RESOURCE/OTHER",46.30,74.52,114.92,306.99,2.23,41.15,46.49,341.53,115.26,494.37,494.37
+BULK,DAM,1.17,8.98,5.32,18.43,0.00,0.00,1.17,14.98,5.32,23.91,23.91
+BULK,RAIL,21.09,51.54,37.33,63.27,0.00,0.00,21.10,59.19,37.34,69.96,69.97
+BULK,"ROAD, DEMOGRAPHIC",64.93,157.05,133.50,228.42,1.30,10.56,66.32,229.44,134.89,297.42,298.80
+BULK,"ROAD, RESOURCE/OTHER",106.97,317.62,320.16,611.58,2.02,41.15,106.98,540.39,320.17,822.59,822.61
 BULK,TRAIL,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00
 HORS,DAM,,,,,,,,,,,
 HORS,"ROAD, DEMOGRAPHIC",,,,,,,,,,,
