@@ -62,7 +62,7 @@ psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_crossings IS 'List of the 
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
 
 # also note the number of barriers downstream, just a count of values in dnstr_barriers_anthropogenic
-psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN dnstr_barriers_anthropogenic_count integer"
+psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS dnstr_barriers_anthropogenic_count integer"
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_count IS 'A count of the barrier crossings downstream of the given crossing';"
 psql -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
 
