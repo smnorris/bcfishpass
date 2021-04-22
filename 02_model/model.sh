@@ -202,6 +202,9 @@ psql -c "\copy bcfishpass.param_habitat FROM '$PARAMETERS_DIR/param_habitat.csv'
 # load modelled (and measured) channel width to streams table
 psql -f sql/load_channel_width.sql
 
+# load modelled discharge data to streams table (where available)
+psql -f sql/load_discharge.sql
+
 # run ch/co/st spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
 psql -f sql/model_habitat_rearing_1.sql  # ch/co/st rearing AND spawning streams (rearing with no connectivity analysis)
