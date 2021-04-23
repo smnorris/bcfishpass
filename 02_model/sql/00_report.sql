@@ -851,3 +851,25 @@ UPDATE {point_schema}.{point_table} p
 SET dbm_mof_50k_grid = t.map_tile_display_name
 FROM tile t
 WHERE p.{point_id} = t.{point_id};
+
+
+-- what would be newly accessible (to resident WCT) if remediating a given barrier
+-- (simply sum everything to all adjacent barriers)
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_betweenbarriers_network_km double precision;
+COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_network_km IS 'Westslope Cutthroat Trout model, total length of potentially accessible stream network between crossing and all in-stream adjacent barriers';
+
+UPDATE {point_schema}.{point_table} p
+SET wct_betweenbarriers_network_km = ROUND((p.wct_belowupstrbarriers_network_km + b.wct_belowupstrbarriers_network_km)::numeric, 2)
+FROM {point_schema}.{point_table} b
+WHERE p.dnstr_barriers_anthropogenic[1] = b.aggregated_crossings_id
+AND p.barrier_status IN ('BARRIER', 'POTENTIAL')
+AND p.watershed_group_code = 'ELKR';
+
+-- separate update for where there are no barriers downstream (Elko Dam)
+UPDATE {point_schema}.{point_table}
+SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km
+WHERE p.dnstr_barriers_anthropogenic IS NULL
+AND p.barrier_status IN ('BARRIER', 'POTENTIAL')
+AND p.watershed_group_code = 'ELKR';
+
+
