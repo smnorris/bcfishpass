@@ -19,6 +19,13 @@ Load FISS sample sites to the db, reference them to the streams and load channel
 
     ./channel_width_measured.sh
 
+## Channel width - mapped
+
+We can directly measure the mapped channel width of FWA rivers.
+Measure width between banks at mid-point of stream segments of FWA rivers, loading to `bcfishpass.channel_width_mapped`:
+
+    psql -f sql/channel_width_mapped.sql
+
 ## Channel width - modelled
 
 To derive channel width for streams where there is no measurement, we model the width based on upstream area and mean annual precip.
