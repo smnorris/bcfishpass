@@ -1,28 +1,27 @@
--- For main flow of double line rivers,
--- measure mapped channel width at midpoint of stream segment
-
+-- Calculate the average channel width of stream segments for main flow of double line rivers.
+-- (where stream segment = distinct linear_feature_id)
+-- To calculate average, this measures distance at 10% intervals along individual geoms.
+-- There will only be multiple geoms where a stream is broken by a fish passage feature
+-- (ie, bridge, dam, observation, etc))
 
 DROP TABLE IF EXISTS bcfishpass.channel_width_mapped;
 
 CREATE TABLE bcfishpass.channel_width_mapped
 (
-  channel_width_mapped_id serial primary key,
-  wscode_ltree ltree,
-  localcode_ltree ltree,
+  linear_feature_id bigint primary key,
   watershed_group_code text,
-  channel_width_mapped double precision,
-  UNIQUE (wscode_ltree, localcode_ltree)
+  channel_width_mapped double precision
 );
 
 
--- get midpoint
+-- get points at .1, .2. .3 etc pct along the line
 WITH midpoint AS
 (
 SELECT
   s.segmented_stream_id,
   s.linear_feature_id,
   s.waterbody_key,
-  ST_LineInterpolatePoint(geom, .5) as geom
+  (ST_Dump(ST_LineInterpolatePoints(geom, .1))).geom as geom
 FROM bcfishpass.streams s
 WHERE s.edge_type = 1250
 ),
@@ -31,7 +30,7 @@ WHERE s.edge_type = 1250
 right_bank AS
  ( SELECT
     pt.segmented_stream_id,
-    nn.linear_feature_id,
+    pt.linear_feature_id,
     nn.distance_to_pt,
     nn.geom
   FROM midpoint pt
@@ -52,7 +51,7 @@ right_bank AS
 left_bank AS
  ( SELECT
     pt.segmented_stream_id,
-    nn.linear_feature_id,
+    pt.linear_feature_id,
     nn.distance_to_pt,
     nn.geom
   FROM midpoint pt
@@ -71,49 +70,17 @@ left_bank AS
 
 INSERT INTO bcfishpass.channel_width_mapped
 (
-  wscode_ltree,
-  localcode_ltree,
+  linear_feature_id,
   watershed_group_code,
   channel_width_mapped
 )
 
+-- calculate avg dist to each bank and add the averages together
 SELECT
-  s.wscode_ltree,
-  s.localcode_ltree,
+  r.linear_feature_id,
   s.watershed_group_code,
-  --round(r.distance_to_pt::numeric, 2) as distance_to_right_bank,
-  --round(l.distance_to_pt::numeric, 2) as distance_to_left_bank,
-  round(avg(r.distance_to_pt + l.distance_to_pt)::numeric, 2) as channel_width_mapped
+  ROUND((avg(r.distance_to_pt) + avg(l.distance_to_pt))::numeric, 2) as channel_width_mapped
 FROM right_bank r
-INNER JOIN left_bank l ON r.segmented_stream_id = l.segmented_stream_id
-INNER JOIN bcfishpass.streams s ON r.segmented_stream_id = s.segmented_stream_id
-GROUP BY s.wscode_ltree, s.localcode_ltree, s.watershed_group_code;
-
-
--- as a rough visual QA - buffer streams by the calculated channel width
-DROP TABLE IF EXISTS bcfishpass.channel_width_mapped_qa ;
-
-CREATE TABLE bcfishpass.channel_width_mapped_qa
-(id SERIAL primary key,
-wscode_ltree ltree,
-localcode_ltree ltree,
-watershed_group_code text,
-geom geometry(polygon, 3005)
-);
-
-INSERT INTO bcfishpass.channel_width_mapped_qa
-(wscode_ltree,
-localcode_ltree,
-watershed_group_code,
-geom)
-
-SELECT
-  s.wscode_ltree,
-  s.localcode_ltree,
-  s.watershed_group_code,
-  ST_Buffer(s.geom, cw.channel_width_mapped) as geom
-FROM bcfishpass.streams s
-INNER JOIN bcfishpass.channel_width_mapped cw ON s.wscode_ltree = cw.wscode_ltree AND s.localcode_ltree = cw.localcode_ltree
-WHERE s.edge_type = 1250;
-
-CREATE INDEX ON bcfishpass.channel_width_mapped_qa USING GIST (geom);
+INNER JOIN left_bank l ON r.linear_feature_id = l.linear_feature_id
+INNER JOIN bcfishpass.streams s ON r.linear_feature_id = s.linear_feature_id
+GROUP BY r.linear_feature_id, s.watershed_group_code;

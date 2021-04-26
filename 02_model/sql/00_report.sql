@@ -865,7 +865,7 @@ WHERE p.dnstr_barriers_anthropogenic[1] = b.aggregated_crossings_id
 AND p.barrier_status IN ('BARRIER', 'POTENTIAL')
 AND p.watershed_group_code = 'ELKR';
 
--- separate update for where there are no barriers downstream (Elko Dam)
+-- separate update for where there are no barriers downstream
 UPDATE {point_schema}.{point_table}
 SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km
 WHERE p.dnstr_barriers_anthropogenic IS NULL

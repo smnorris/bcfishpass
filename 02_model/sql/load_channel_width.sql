@@ -24,24 +24,12 @@ WHERE s.linear_feature_id = cw.linear_feature_id;
 
 
 -- now load mapped channel widths
-WITH cw AS
-(SELECT DISTINCT
-  s.linear_feature_id,
-  c.channel_width_mapped AS channel_width
-FROM bcfishpass.streams s
-LEFT OUTER JOIN bcfishpass.channel_width_mapped c
-ON s.wscode_ltree = c.wscode_ltree
-AND s.localcode_ltree = c.localcode_ltree
-WHERE s.edge_type = 1250    -- only apply channel width to river polygons where it was derived
-AND s.channel_width IS NULL -- don't apply where we have a measured value
-)
-
 UPDATE bcfishpass.streams s
 SET
-  channel_width = cw.channel_width
-FROM cw
-WHERE s.linear_feature_id = cw.linear_feature_id;
-
+  channel_width = cw.channel_width_mapped
+FROM bcfishpass.channel_width_mapped cw
+WHERE s.linear_feature_id = cw.linear_feature_id
+AND channel_width IS NULL; -- don't apply where we have a measured value
 
 -- finally, load all *modelled* channel width values to streams table
 -- (note that this will not include first order streams)
