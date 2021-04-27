@@ -2,9 +2,10 @@
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_chinook boolean;
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_coho boolean;
 ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_steelhead boolean;
+ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_wct boolean;
 
 
--- apply ch/co/st spawning models
+-- apply ch/co/st/wct spawning models
 
 WITH rivers AS  -- get unique river waterbodies, there are some duplicates
 (
@@ -67,7 +68,23 @@ model AS
       mad.mad_m3s <= st.spawn_mad_max AND
       s.accessibility_model_steelhead IS NOT NULL
     THEN true
-  END AS spawn_st
+  END AS spawn_st,
+  CASE
+    WHEN
+      wsg.model = 'cw' AND
+      s.gradient <= wct.spawn_gradient_max AND
+      (s.channel_width > wct.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
+      s.channel_width <= wct.spawn_channel_width_max AND
+      s.accessibility_model_wct IS NOT NULL -- note: this also ensures only wsg where wct occur are included
+    THEN true
+    WHEN
+      wsg.model = 'mad' AND
+      s.gradient <= wct.spawn_gradient_max AND
+      mad.mad_m3s > wct.spawn_mad_min AND
+      mad.mad_m3s <= wct.spawn_mad_max AND
+      s.accessibility_model_wct IS NOT NULL
+    THEN true
+  END AS spawn_wct
 FROM bcfishpass.streams s
 LEFT OUTER JOIN foundry.fwa_streams_mad mad
 ON s.linear_feature_id = mad.linear_feature_id
@@ -81,6 +98,8 @@ LEFT OUTER JOIN bcfishpass.param_habitat co
 ON co.species_code = 'CO'
 LEFT OUTER JOIN bcfishpass.param_habitat st
 ON st.species_code = 'ST'
+LEFT OUTER JOIN bcfishpass.param_habitat wct
+ON wct.species_code = 'WCT'
 LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key
 WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)) -- apply to streams/rivers only
@@ -90,6 +109,7 @@ UPDATE bcfishpass.streams s
 SET
   spawning_model_chinook = model.spawn_ch,
   spawning_model_coho = model.spawn_co,
-  spawning_model_steelhead = model.spawn_st
+  spawning_model_steelhead = model.spawn_st,
+  spawning_model_wct = model.spawn_wct
 FROM model
 WHERE s.segmented_stream_id = model.segmented_stream_id;

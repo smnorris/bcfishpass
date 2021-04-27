@@ -178,7 +178,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'ST'
   WHERE
-    s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
+    s.accessibility_model_steelhead IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
