@@ -861,15 +861,13 @@ COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_network_km
 UPDATE {point_schema}.{point_table} p
 SET wct_betweenbarriers_network_km = ROUND((p.wct_belowupstrbarriers_network_km + b.wct_belowupstrbarriers_network_km)::numeric, 2)
 FROM {point_schema}.{point_table} b
-WHERE p.dnstr_barriers_anthropogenic[1] = b.aggregated_crossings_id
-AND p.barrier_status IN ('BARRIER', 'POTENTIAL')
+WHERE p.{dnstr_barriers_id}[1] = b.{point_id}
 AND p.watershed_group_code = 'ELKR';
 
 -- separate update for where there are no barriers downstream
 UPDATE {point_schema}.{point_table}
 SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km
-WHERE p.dnstr_barriers_anthropogenic IS NULL
-AND p.barrier_status IN ('BARRIER', 'POTENTIAL')
-AND p.watershed_group_code = 'ELKR';
+WHERE {dnstr_barriers_id} IS NULL
+AND watershed_group_code = 'ELKR';
 
 

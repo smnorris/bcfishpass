@@ -26,7 +26,7 @@ totals AS
 -- calculate DCI
 SELECT
   t.watershed_group_code,
-  ROUND(SUM((s.length_segment * s.length_segment) / (t.length_total * t.length_total))::numeric, 4) as dci
+  ROUND(SUM((s.length_segment * s.length_segment) / (t.length_total * t.length_total))::numeric, 4) as dci_p
 FROM segments s
 INNER JOIN totals t
 ON s.watershed_Group_code = t.watershed_group_code
