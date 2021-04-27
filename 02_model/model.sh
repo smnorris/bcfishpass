@@ -1,6 +1,16 @@
 #!/bin/bash
 set -euxo pipefail
 
+#################################
+#### build barrier tables and stream table, model fish passage access
+#################################
+
+PARAMETERS_DIR="${1:-parameters}"
+
+# Which watershed groups to process and what type of habitat model to run is encoded in parameters/param_watersheds.csv
+psql -c "DROP TABLE IF EXISTS bcfishpass.param_watersheds"
+psql -c "CREATE TABLE bcfishpass.param_watersheds (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, model text, notes text)"
+psql -c "\copy bcfishpass.param_watersheds FROM '$PARAMETERS_DIR/param_watersheds.csv' delimiter ',' csv header"
 
 # -----------
 # Load required functions
@@ -15,29 +25,21 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"
 psql -c "CREATE TABLE bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id integer PRIMARY KEY, structure text, watershed_group_code text, reviewer text, notes text)"
 psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM '../01_prep/01_modelled_stream_crossings/data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id)"
-
 # - load pscis / pscis fixes and re-run scripts matching PSCIS points to streams
 cd ../01_prep/02_pscis
 ./load.sh
 ./pscis.sh
 cd ../../02_model
-
 # - and falls, misc
-cd ../01_prep/05_falls
+cd ../01_prep/06_falls
 ./falls.sh
-cd ../06_misc
+cd ../07_misc
 ./misc.sh
 cd ../../02_model
 
-
 # -----------
-# Run model
+# Create barrier tables, run access model
 # -----------
-
-# Which watershed groups to process and what type of habitat model to run is encoded in watershed_groups.csv
-psql -c "DROP TABLE IF EXISTS bcfishpass.watershed_groups"
-psql -c "CREATE TABLE bcfishpass.watershed_groups (watershed_group_code character varying(4), watershed_group_name text, include boolean, co boolean, ch boolean, sk boolean, st boolean, wct boolean, model text, notes text)"
-psql -c "\copy bcfishpass.watershed_groups FROM 'data/watershed_groups.csv' delimiter ',' csv header"
 
 # create table for each type of definite (not generally fixable) barrier
 psql -f sql/barriers_majordams.sql
@@ -49,6 +51,17 @@ psql -f sql/barriers_gradient_30.sql
 psql -f sql/barriers_intermittentflow.sql
 psql -f sql/barriers_subsurfaceflow.sql
 psql -f sql/barriers_other_definite.sql
+
+# Add columns tracking downstream barriers
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 barriers_gradient_20_id dnstr_barriers_gradient_20
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 barriers_gradient_30_id dnstr_barriers_gradient_30
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams barriers_majordams_id dnstr_barriers_majordams
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_other_definite barriers_other_definite_id bcfishpass.barriers_other_definite barriers_other_definite_id dnstr_barriers_other_definite
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_intermittentflow barriers_intermittentflow_id bcfishpass.barriers_intermittentflow barriers_intermittentflow_id dnstr_barriers_intermittentflow
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow barriers_ditchflow_id dnstr_barriers_ditchflow
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow
 
 # merge these into single tables per species scenario
 # create tables for cartographic use, merging barriers for specific scenarios into single tables
@@ -103,6 +116,14 @@ psql -f sql/crossings.sql
 # so we can visulize streams that are upstream of *confirmed* barriers
 psql -f sql/barriers_anthropogenic.sql
 
+# index barriers_anthropogenic
+python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
+
+# index crossings on downstream crossings, but also on downstream and upstream anthropogenic barriers
+python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_crossings
+python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
+python bcfishpass.py add-upstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id upstr_barriers_anthropogenic
+
 # create a temp table holding all remediated PSCIS crossings so we can report on remediated streams
 psql -f sql/remediated.sql
 
@@ -129,7 +150,7 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls_events_
 # add column tracking upstream observations
 python bcfishpass.py add-upstream-ids bcfishpass.streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 
-# add columns tracking downstream barriers
+# add columns tracking downstream barriers to streams table
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15 --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_gradient_20 barriers_gradient_20_id dnstr_barriers_gradient_20 --include_equivalent_measure
 python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.barriers_gradient_30 barriers_gradient_30_id dnstr_barriers_gradient_30 --include_equivalent_measure
@@ -154,10 +175,14 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
 # classify streams per accessibility model based on the upstream / downstream features processed above
 psql -f sql/model_access.sql
 
-# classify streams per salmon habitat model
-# load the habitat model lookup
-psql -c "DROP TABLE IF EXISTS bcfishpass.model_spawning_rearing_habitat"
-psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
+#################################
+# Model spawning/rearing habitat based on gradient and channel width / discharge
+# (plus create some QA tables, cartographic streams layer, run reports)
+#################################
+
+# load table that defines the parameters for spawning/rearing
+psql -c "DROP TABLE IF EXISTS bcfishpass.param_habitat"
+psql -c "CREATE TABLE bcfishpass.param_habitat (
   species_code text,
   spawn_gradient_max numeric,
   spawn_channel_width_min numeric,
@@ -172,14 +197,13 @@ psql -c "CREATE TABLE bcfishpass.model_spawning_rearing_habitat (
   rear_wetland_multiplier numeric,
   rear_lake_multiplier numeric
 )"
-psql -c "\copy bcfishpass.model_spawning_rearing_habitat FROM 'data/model_spawning_rearing_habitat.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.param_habitat FROM '$PARAMETERS_DIR/param_habitat.csv' delimiter ',' csv header"
 
-# load channel width to streams
-psql -f sql/model_channel_width.sql
+# load modelled (and measured) channel width to streams table
+psql -f sql/load_channel_width.sql
 
-# run spawning/rearing models
-# Note that the different models feed into the same columns in the stream table (ie <spawn/rear>_model_<species>)
-# Edit data/watershed_groups.csv to control which model gets run in a given watershed group
+# load modelled discharge data to streams table (where available)
+psql -f sql/load_discharge.sql
 
 # run ch/co/st spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
@@ -190,22 +214,11 @@ psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
 # sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
 psql -f sql/model_habitat_sockeye.sql
 
-# create generalized copy of streams for visualization
+
+# Create generalized copy of streams for visualization
 psql -f sql/carto.sql
 
-# add downstream ids to barrier tables too - handy for reporting
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 barriers_gradient_20_id dnstr_barriers_gradient_20
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 barriers_gradient_30_id dnstr_barriers_gradient_30
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams barriers_majordams_id dnstr_barriers_majordams
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_other_definite barriers_other_definite_id bcfishpass.barriers_other_definite barriers_other_definite_id dnstr_barriers_other_definite
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_intermittentflow barriers_intermittentflow_id bcfishpass.barriers_intermittentflow barriers_intermittentflow_id dnstr_barriers_intermittentflow
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow barriers_ditchflow_id dnstr_barriers_ditchflow
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow
-python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
-
-# for qa, report on how much is upstream of various definite barriers and the anthropogenic barriers
+# For qa, report on how much is upstream of various definite barriers and the anthropogenic barriers
 python bcfishpass.py report bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow dnstr_barriers_ditchflow
 python bcfishpass.py report bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls dnstr_barriers_falls
 python bcfishpass.py report bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 dnstr_barriers_gradient_15
@@ -216,15 +229,7 @@ python bcfishpass.py report bcfishpass.barriers_majordams barriers_majordams_id 
 python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow dnstr_barriers_subsurfaceflow
 python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
-# and waterfalls that aren't considered in the model yet, just for evaluation
-#python bcfishpass.py add-downstream-ids bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp falls_event_id dnstr_falls
-#python bcfishpass.py report bcfishpass.falls_events_sp falls_event_id bcfishpass.falls_events_sp dnstr_falls
-
-# now process the crossings table
-# For crossings,  index it based on the barriers table - we want the downstream ids to be barriers only
-# (for reporting on belowupstrbarriers columns)
-python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_crossings
-python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
+# and run the report
 python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
 # document these two new columns in the crossings table
@@ -232,7 +237,7 @@ psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_crossings IS 'List of the 
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
 
 # also note the number of barriers downstream, just a count of values in dnstr_barriers_anthropogenic
-psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN dnstr_barriers_anthropogenic_count integer"
+psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS dnstr_barriers_anthropogenic_count integer"
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_count IS 'A count of the barrier crossings downstream of the given crossing';"
 psql -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
 
@@ -245,7 +250,3 @@ python bcfishpass.py report bcfishpass.definitebarriers_salmon definitebarriers_
 python bcfishpass.py report bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.definitebarriers_steelhead dnstr_definitebarriers_steelhead_id
 python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
 
-# call summary reports - just to be sure that they sync with any commits without having to remember to call it separately
-cd ../04_reporting
-./report.sh
-cd ../02_model

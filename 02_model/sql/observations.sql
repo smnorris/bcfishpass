@@ -45,7 +45,7 @@ WITH unnested_obs AS
     unnest(e.species_codes) as species_code,
     unnest(e.obs_ids) as observation_id
   FROM whse_fish.fiss_fish_obsrvtn_events e
-  INNER JOIN bcfishpass.watershed_groups g
+  INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
   AND g.include IS TRUE
   WHERE species_codes && ARRAY['CO','CH','SK','ST','WCT']
@@ -67,7 +67,7 @@ by_wsg AS
     array_agg(e.species_code) as species_codes,
     array_agg(e.observation_id) as observation_ids
   FROM unnested_obs e
-  INNER JOIN bcfishpass.watershed_groups g
+  INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code AND
   g.include IS TRUE AND
   (g.co IS TRUE OR g.ch IS TRUE OR g.sk IS TRUE OR g.st IS TRUE)
@@ -93,7 +93,7 @@ by_wsg AS
     array_agg(e.species_code) as species_codes,
     array_agg(e.observation_id) as observation_ids
   FROM unnested_obs e
-  INNER JOIN bcfishpass.watershed_groups g
+  INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
   AND g.include IS TRUE
   AND g.wct IS TRUE

@@ -53,25 +53,21 @@ Based on the above features, we can define potentially accessible / potentially 
 
 ## Installation / Setup
 
-Presuming PostgreSQL/PostGIS and Python/`pip` and `conda` are already installed to your system, setup could look something like this:
+Most scripts require `bash`.
+Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
+To create a `conda` environment and install all dependencies:
 
-    conda create -n bcfp
-    conda activate bcfp
-    conda config --env --add channels conda-forge
-    conda config --env --set channel_priority strict
-    conda install gdal
-    conda install geopandas
-    conda install rasterio
-    conda install rasterstats
-    conda install csvkit
-    conda install jq
-    conda install parallel
-    pip3 install bcdata
-    # download fwapg, load BC FWA
-    # download bcfishobs, load BC fish observations and obstacles
-    # load gradient barriers to database
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
+    conda create -f environment.yml
+    conda activate bcfpenv
+
+With the environment created and dependencies installed, load the data requirements:
+
+    - download fwapg, load BC FWA
+    - download bcfishobs, load BC fish observations and obstacles
+    - load gradient barriers to database
+
 
 ### Environment variables
 
@@ -86,6 +82,7 @@ As with `fwapg` and `bcfishobs`, scripts depend on several environment variables
     # and a OGR compatible string
     export PGOGR='host=localhost user=postgres dbname=mydb password=mypwd port=5432'
 
+Note that if you are using `conda`, `conda` can manage these - modify the variables in `environment.yml` as required.
 
 ## Prep data
 

@@ -1875,7 +1875,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 1800421,NONE,BULK,NMW,no road/structure
 1800420,NONE,BULK,NMW,no road/structure
 1801081,NONE,BULK,NMW,no road/structure
-1801920,NONE,BULK,NMW,no road/structure
 1802104,NONE,BULK,NMW,no road/structure
 1800562,NONE,BULK,NMW,no road/structure
 1800855,NONE,BULK,NMW,no road/structure
@@ -1883,3 +1882,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 11303724,NONE,LNIC,NMW,no road/structure
 11300876,NONE,LNIC,NMW,no stream
 11300022,NONE,LNIC,NMW,no stream
+4600069,NONE,ELKR,NJO,Local knowledge - Passable
+4600183,OBS,ELKR,NJO,Local Knowledge - Barrier - Highway Culvert
+4600070,OBS,ELKR,NJO,Local Knowledge - Barrier - Highway Culvert
+4600667,CBS,ELKR,NJO,Local knowledge - Passable - box culvert
+4603269,CBS,ELKR,NJO,Local knowledge - Passable - box culvert
+4606915,OBS,ELKR,NJO,Local knowledge - Passable - Teck Restoration Work - Bridge

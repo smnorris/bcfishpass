@@ -10,6 +10,8 @@ WITH totals AS
   count(*) as n_total
 FROM bcfishpass.crossings
 WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+-- do not include flathead in ELKR
+AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
 AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
 AND (accessibility_model_salmon IS NOT NULL
     OR
@@ -29,6 +31,7 @@ SELECT
   count(*) as n_barrier
 FROM bcfishpass.crossings
 WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
 AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
 AND barrier_status in ('BARRIER', 'POTENTIAL')
 AND (accessibility_model_salmon IS NOT NULL

@@ -71,15 +71,15 @@ model AS
 FROM bcfishpass.streams s
 LEFT OUTER JOIN foundry.fwa_streams_mad mad
 ON s.linear_feature_id = mad.linear_feature_id
-INNER JOIN bcfishpass.watershed_groups wsg
+INNER JOIN bcfishpass.param_watersheds wsg
 ON s.watershed_group_code = wsg.watershed_group_code
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
-LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat ch
+LEFT OUTER JOIN bcfishpass.param_habitat ch
 ON ch.species_code = 'CH'
-LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat co
+LEFT OUTER JOIN bcfishpass.param_habitat co
 ON co.species_code = 'CO'
-LEFT OUTER JOIN bcfishpass.model_spawning_rearing_habitat st
+LEFT OUTER JOIN bcfishpass.param_habitat st
 ON st.species_code = 'ST'
 LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key

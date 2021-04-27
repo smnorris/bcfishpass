@@ -212,14 +212,14 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50186,24727446,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50187,,,ELKR,,
 50188,4605564,,ELKR,,
-50189,,706850820,ELKR,,
+50189,,,ELKR,SN,Not on a mapped stream
 50190,,,ELKR,,
 50191,4605568,,ELKR,,
 50192,4605563,,ELKR,,
 50193,4605566,,ELKR,,
 50194,4605569,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50195,,706848218,ELKR,,
-50196,4602163,,ELKR,NJO,Matched to closest stream model (Manual Review)
+50196,,,ELKR,SN,Not on a mapped stream
 50197,24706511,,ELKR,,
 50198,4606969,,ELKR,,
 50199,4600211,,ELKR,,
@@ -254,6 +254,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50234,4605448,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50235,4605623,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50236,4604228,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+50237,4604230,,ELKR,SN,matched to modelled crossing
 50238,4604229,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50239,4601494,,ELKR,,
 50241,4602406,,ELKR,,
@@ -1388,25 +1389,27 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 61499,4600234,,ELKR,NJO,Matched to closest stream model (Manual Review)
 61500,24706496,,ELKR,,
 61501,4600161,,ELKR,NJO,Matched to closest stream model (Manual Review)
+61502,,,ELKR,SN,Double culvert - discard this record
 61503,24706513,,ELKR,,
 61504,24706507,,ELKR,,
+61505,706843896,,ELKR,SN,automatching fails because PSCIS stream name is incorrect
 61513,4600215,,ELKR,,
 61514,,,ELKR,NJO,Not on a mapped stream
 61515,4605253,,ELKR,,
-61516,,706822352,ELKR,,
+61516,,,ELKR,SN,Not on mapped stream
 61517,4605249,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 61518,4605251,,ELKR,,
 61519,4603124,,ELKR,,
 61520,4600601,,ELKR,,
-61521,,706822040,ELKR,,
+61521,,,ELKR,SN,not on mapped stream
 61522,4600602,,ELKR,,
 61523,4600600,,ELKR,,
-61524,,706821771,ELKR,,
+61524,,,ELKR,SN,Not on mapped stream
 61525,4600599,,ELKR,,
 61526,4603147,,ELKR,,
 61527,4605740,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-61528,,706822185,ELKR,,
-61529,,706822185,ELKR,,
+61528,,,ELKR,SN,Not on mapped stream
+61529,,,ELKR,SN,Not on mapped stream
 61530,,,ELKR,NJO,Not on a mapped stream
 61531,4605820,,ELKR,,
 61602,4605384,,ELKR,,
@@ -1498,7 +1501,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62173,24706506,,ELKR,,
 62174,,,ELKR,,
 62175,,,ELKR,,
-62176,24706685,,ELKR,NJO,Matched to closest stream model (Manual Review)
+62176,24706505,,ELKR,SN,Matched to highway as per crossing road_tenure value
+62177,24706685,,ELKR,SN,Matched to railway as per crossing road_tenure value
 62178,,,ELKR,,
 62179,,,ELKR,,
 62180,4600217,,ELKR,,
@@ -1530,7 +1534,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62240,,,ELKR,NJO;SN, Not on mapped stream
 62241,,,ELKR,,
 62242,,,ELKR,,
-62243,,706802481,ELKR,,
+62243,,,ELKR,SN,Not on a mapped stream
 62244,4605728,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 62245,,,ELKR,,
 62246,,,ELKR,,
@@ -1538,7 +1542,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62248,,,ELKR,,
 62249,4605684,,ELKR,,
 62250,4605659,,ELKR,,
-62251,,706802481,ELKR,,
+62251,,,ELKR,SN,Not on a mapped stream
 62252,4605719,,ELKR,,
 62253,4605672,,ELKR,,
 62254,4605642,,ELKR,,
@@ -1589,7 +1593,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62300,4605323,,ELKR,,
 62301,4605316,,ELKR,,
 62302,,,ELKR,NJO,Not on a mapped stream
-62303,,706806743,ELKR,,
+62303,,,ELKR,SN,Not on a mapped stream
 62304,,,ELKR,,
 62305,,,ELKR,,
 62306,,,ELKR,,
@@ -1618,7 +1622,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62429,,706829220,ELKR,,Unsure Review
 62430,4601164,,ELKR,,
 62431,4607410,,ELKR,NJO,Matched to closest stream model (Manual Review)
-62432,,706830380,ELKR,,
+62432,,,ELKR,SN,Not on mapped stream (trib to Harmer)
 62433,4602294,,ELKR,,
 62434,4601140,,ELKR,,
 62435,,,ELKR,,
@@ -1663,17 +1667,17 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62523,4600635,,ELKR,,
 102964,4600959,,ELKR,,
 102968,4604259,,ELKR,,
-102970,4600617,,ELKR,,
-102971,4604230,,ELKR,,
+102970,,,ELKR,SN,Duplicate of 50237 - avoid issue by not associating this point with a stream
+102971,,,ELKR,SN,Unclear where this is - probably an unmapped stream based on pipe size
 102972,4600119,,ELKR,,
 102974,24706680,,ELKR,SN,Matched to railway based on assessment info
 102977,,,ELKR,,
 102978,4601481,,ELKR,,
 102980,,,ELKR,NJO,Not on a mapped stream
 102984,,,ELKR,,
-102987,,,ELKR,,
+102987,,,ELKR,SN,This is a duplicate of 50220
 102988,,,ELKR,,
-102989,,706835685,ELKR,,
+102989,,,ELKR,SN,Not on a mapped stream
 102990,4601443,,ELKR,,
 102991,,,ELKR,,
 102992,4602433,,ELKR,,
@@ -1683,19 +1687,20 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 102997,4600817,,ELKR,,
 102999,,,ELKR,,
 103000,,,ELKR,,
-103003,24706689,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
+103003,24706689,,ELKR,SN,Matched to rail crossing as indicated by photos
 103004,4600359,,ELKR,,
 103006,4607456,,ELKR,,
 103007,4607167,,ELKR,,
-103008,,706840673,ELKR,,
+103008,,,ELKR,SN,Cannot determine what stream this is on
 103009,4607460,,ELKR,,
 103010,4607562,,ELKR,,
 103011,,,ELKR,,
 103012,,,ELKR,,
-103013,,706843359,ELKR,,
-103014,,706843359,ELKR,,
-103015,,,ELKR,NJO,Not on a mapped stream
+103013,,,ELKR,SN,Not on a mapped stream
+103014,,,ELKR,SN,Not on a mapped stream
+103015,24706681,,ELKR,SN,Matched to rail crossing as indicated by photos
 103017,4600117,,ELKR,,
+103019,24706683,,ELKR,SN,Matched to rail crossing as indicated by photos
 103022,4606191,,ELKR,,
 103024,,706840348,ELKR,,
 103025,24706694,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3311,7 +3316,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 195937,1802350,,BULK,,
 195938,1803766,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 195939,1803773,,BULK,,
-195940,,17035683,BULK,,
 195941,1804011,,BULK,,
 195942,,17069142,BULK,,
 195943,1800025,,BULK,,
@@ -3478,4 +3482,5 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197666,24742366,,BULK,NJO,Matched to closest Crossing
 197667,1805606,,BULK,NJO,Matched to closest Crossing
 197668,1805608,,BULK,NJO,Matched to closest Crossing
-197669,14000079,,MORR,AI,Matched to closest stream model (not sure why it didn't happen automatically
+197669,14000079,,MORR,AI,Matched to closest stream model (not sure why it didn't happen automatically)
+195940,1804009,,BULK,SN,PSCIS coordinates are incoorect - assessment is on road R09533904 and trib to Bulkley - modelled xing 1804009 is closest choice

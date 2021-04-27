@@ -104,7 +104,7 @@ SELECT
   s.upstream_wetland_ha,
   s.geom
 FROM whse_basemapping.fwa_stream_networks_sp s
-INNER JOIN bcfishpass.watershed_groups g
+INNER JOIN bcfishpass.param_watersheds g
 ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
 WHERE
   s.fwa_watershed_code NOT LIKE '999%%'
@@ -117,6 +117,7 @@ ORDER BY
 CREATE INDEX ON bcfishpass.streams (linear_feature_id);
 CREATE INDEX ON bcfishpass.streams (blue_line_key);
 CREATE INDEX ON bcfishpass.streams (watershed_group_code);
+CREATE INDEX ON bcfishpass.streams (waterbody_key);
 CREATE INDEX ON bcfishpass.streams USING GIST (wscode_ltree);
 CREATE INDEX ON bcfishpass.streams USING BTREE (wscode_ltree);
 CREATE INDEX ON bcfishpass.streams USING GIST (localcode_ltree);

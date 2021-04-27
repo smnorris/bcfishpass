@@ -492,8 +492,6 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
 -- ignore dams on side channels for this exercise
 WHERE d.blue_line_key = s.watershed_key
--- do not include major/bc hydro dams, they are definite barriers, already in the barriers_majordams table
-AND d.hydro_dam_ind = 'N'
 ORDER BY dam_id
 ON CONFLICT DO NOTHING;
 

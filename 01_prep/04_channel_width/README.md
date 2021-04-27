@@ -1,6 +1,6 @@
 # Channel width
 
-Modelled channel width can be used as an input to model spawning/rearin habitat (combined with stream gradient and potentially with valley confinement).
+Modelled channel width can be used as an input to model spawning/rearing habitat (combined with stream gradient - and potentially with valley confinement).
 
 Most channel width predictors are available in the FWA, but we also need Mean Annual Precip
 
@@ -12,18 +12,24 @@ To generate mean annual precipitation:
 
     ./mean_annual_precip.sh
 
-## Channel width model
+## Channel width - measured
 
-To create a best-fit model for predicting channel width, we:
-- extract measured channel width values from PSCIS and FISS
-- find the values of the various channel width predictors at these locations
-- provide this data to R scripts for finding the best fit
-
-To run this and create the output table for input to R `bcfishpass.channel_width_measured`:
+Field measurements of channel width are available from FISS and PSCIS.
+Load FISS sample sites to the db, reference them to the streams and load channel width measurements from both sources to `bcfishpass.channel_width_measured`:
 
     ./channel_width_measured.sh
 
-Once the channel width model parameters have been determined in R, encoded the parameters directly in [`sql/channel_width_modelled.sql`](`sql/channel_width_modelled.sql) - currently a different model is derived for each watershed group. Once models for all groups are added, model channel width on all streams by calling the script:
+## Channel width - mapped
+
+We can directly measure the mapped channel width of FWA rivers.
+Measure width between banks at mid-point of stream segments of FWA rivers, loading to `bcfishpass.channel_width_mapped`:
+
+    psql -f sql/channel_width_mapped.sql
+
+## Channel width - modelled
+
+To derive channel width for streams where there is no measurement, we model the width based on upstream area and mean annual precip.
+To run the model, loading data to `bcfishpass.channel_width_modelled`:
 
     psql -f sql/channel_width_modelled.sql
 
@@ -59,14 +65,8 @@ Table "bcfishpass.channel_width_measured"
  wscode_ltree           | ltree            |           |          |
  localcode_ltree        | ltree            |           |          |
  watershed_group_code   | text             |           |          |
- stream_order           | integer          |           |          |
- stream_magnitude       | integer          |           |          |
- upstream_area_ha       | double precision |           |          |
- upstream_lake_ha       | double precision |           |          |
- upstream_reservoir_ha  | double precision |           |          |
- upstream_wetland_ha    | double precision |           |          |
  channel_width_measured | double precision |           |          |
- map                    | integer          |           |          |
+
 Indexes:
     "channel_width_measured_pkey" PRIMARY KEY, btree (channel_width_id)
     "channel_width_measured_wscode_ltree_localcode_ltree_key" UNIQUE CONSTRAINT, btree (wscode_ltree, localcode_ltree)
@@ -75,6 +75,7 @@ Indexes:
     "channel_width_measured_wscode_ltree_idx" gist (wscode_ltree)
     "channel_width_measured_wscode_ltree_idx1" btree (wscode_ltree)
 ```
+
 
 ```
 Table "bcfishpass.channel_width_modelled"
@@ -92,12 +93,11 @@ Indexes:
     "channel_width_modelled_localcode_ltree_idx1" btree (localcode_ltree)
     "channel_width_modelled_wscode_ltree_idx" gist (wscode_ltree)
     "channel_width_modelled_wscode_ltree_idx1" btree (wscode_ltree)
-    ```
+```
 
 
+## References
 
-Reference:
+- Wang, T., Hamann, A., Spittlehouse, D.L., Murdock, T., 2012. *ClimateWNA - High-Resolution Spatial Climate Data for Western North America*. Journal of Applied Meteorology and Climatology, 51: 16-29.*
 
-*Wang, T., Hamann, A., Spittlehouse, D.L., Murdock, T., 2012. ClimateWNA - High-Resolution Spatial Climate Data for Western North America. Journal of Applied Meteorology and Climatology, 51: 16-29.*
-
-
+- Thorley and Irvine 2021 [*Channel Width 2021*](https://github.com/NewGraphEnvironment/fish_passage_bulkley_2020_reporting/blob/master/docs/channel-width-21.pdf)
