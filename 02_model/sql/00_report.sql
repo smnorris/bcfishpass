@@ -858,16 +858,26 @@ WHERE p.{point_id} = t.{point_id};
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_betweenbarriers_network_km double precision;
 COMMENT ON COLUMN {point_schema}.{point_table}.wct_belowupstrbarriers_network_km IS 'Westslope Cutthroat Trout model, total length of potentially accessible stream network between crossing and all in-stream adjacent barriers';
 
+UPDATE {point_schema}.{point_table}
+SET wct_betweenbarriers_network_km = 0;
+
 UPDATE {point_schema}.{point_table} p
 SET wct_betweenbarriers_network_km = ROUND((p.wct_belowupstrbarriers_network_km + b.wct_belowupstrbarriers_network_km)::numeric, 2)
 FROM {point_schema}.{point_table} b
 WHERE p.{dnstr_barriers_id}[1] = b.{point_id}
+AND p.wct_network_km != 0
 AND p.watershed_group_code = 'ELKR';
 
 -- separate update for where there are no barriers downstream
 UPDATE {point_schema}.{point_table}
 SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km
 WHERE {dnstr_barriers_id} IS NULL
+AND wct_network_km != 0
 AND watershed_group_code = 'ELKR';
 
+-- and remove any nulls
+UPDATE {point_schema}.{point_table}
+SET wct_betweenbarriers_network_km = 0
+WHERE wct_network_km = 0
+AND watershed_group_code = 'ELKR';
 

@@ -129,6 +129,11 @@ psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_crossings IS 'List of the 
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
 psql -c "COMMENT ON COLUMN bcfishpass.crossings.upstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
 
+# also note the number of barriers downstream, just a count of values in dnstr_barriers_anthropogenic
+psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS dnstr_barriers_anthropogenic_count integer"
+psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_count IS 'A count of the barrier crossings downstream of the given crossing';"
+psql -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
+
 # create a temp table holding all remediated PSCIS crossings so we can report on remediated streams
 psql -f sql/remediated.sql
 
@@ -238,11 +243,6 @@ python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossin
 
 # and run the report
 python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
-
-# also note the number of barriers downstream, just a count of values in dnstr_barriers_anthropogenic
-psql -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS dnstr_barriers_anthropogenic_count integer"
-psql -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_count IS 'A count of the barrier crossings downstream of the given crossing';"
-psql -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
 
 # populating the belowupstrbarriers for OBS in the crossings table requires a separate query
 # (because the dnstr_barriers_anthropogenic is used in above report, and that misses the OBS of interest)
