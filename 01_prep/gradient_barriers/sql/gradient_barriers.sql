@@ -14,7 +14,7 @@ WITH grade100m AS
     ((ST_LineLocatePoint(geom, ST_PointN(geom, generate_series(1, ST_NPoints(geom) - 1))) * length_metre) + downstream_route_measure) as downstream_route_measure,
     ST_Z(ST_PointN(geom, generate_series(1, ST_NPoints(geom) - 1))) AS elevation
   FROM whse_basemapping.fwa_stream_networks_sp s
-  WHERE watershed_group_code = :wsg
+  WHERE watershed_group_code = :'wsg'
   AND blue_line_key = watershed_key
   AND edge_type != 6010
   ORDER BY blue_line_key, downstream_route_measure
@@ -33,25 +33,27 @@ gradeclass AS
     blue_line_key,
     downstream_route_measure,
     downstream_route_measure + 100 as upstream_route_measure,
+    -- modify break classes here as required
     CASE
-      WHEN gradient >= .05 AND gradient < .1 THEN 5
-      WHEN gradient >= .1 AND gradient < .15 THEN 10
       WHEN gradient >= .15 AND gradient < .2 THEN 15
       WHEN gradient >= .2 AND gradient < .25 THEN 20
-      WHEN gradient >= .25 AND gradient < .3 THEN 25
       WHEN gradient >= .3 THEN 30
       ELSE 0
     END as grade_class
+    -- --------------------
   FROM grade100m
   ORDER BY blue_line_key, downstream_route_measure
 )
 
--- Group the continuous same slope segments together (thank you Erwin B)
+-- Group the continuous same-slope class segments together (thank you Erwin B)
 -- https://dba.stackexchange.com/questions/166374/grouping-or-window/166397#166397
+INSERT INTO bcfishpass.gradient_barriers_test
+(blue_line_key, downstream_route_measure, gradient_class)
+
 SELECT
   blue_line_key,
   min(downstream_route_measure) AS downstream_route_measure,
-  grade_class
+  grade_class as gradient_class
 FROM
 (
   SELECT
@@ -67,4 +69,4 @@ FROM
 WHERE grade_class != 0
 ) sub2
 GROUP BY blue_line_key, grade_class, grp
-ORDER BY blue_line_key, downstream_route_measure
+ORDER BY blue_line_key, downstream_route_measure;
