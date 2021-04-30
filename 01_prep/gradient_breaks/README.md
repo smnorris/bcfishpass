@@ -7,11 +7,13 @@ derived from the BC Digital Elevation Model and also QA'ed to ensure that all st
 values, it is easy to analyze the gradient of a stream at any point.
 
 To identify potential gradient barriers on a given stream, start at the mouth of a stream (`blue_line_key`) and
-iterate through each vertex of the stream flow line, calculating the gradient between the given vertex and the
-next vertex at least 100m (or as otherwised specified) upstream.  Any section of stream with gradient falling
-within the noted gradient classes is identified and a 'gradient break' point is generated at the vertex where this
-slope begins.
+iterate through each vertex of the stream flow line, calculating the gradient between the given vertex and a
+point 100m upstream. Any 100m section of stream with gradient falling within the noted gradient classes is
+identified and a 'gradient break' point is generated at the vertex where this slope begins.
 
-To generate:
+These are the `edge_type`s included: `(1000,1050,1100,1150,1250,1350,1410,2000,2300)` - network connectors
+within lakes and similar are excluded.
 
-    python gradient_breaks.py <thresholds> <interval> <watershed_groups>
+To generate the gradient break table:
+
+    ./gradient_breaks.sh
