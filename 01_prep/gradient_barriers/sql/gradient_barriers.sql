@@ -33,14 +33,18 @@ gradeclass AS
     blue_line_key,
     downstream_route_measure,
     downstream_route_measure + 100 as upstream_route_measure,
-    -- modify break classes here as required
+    -- create breaks at 5pct intervals from 5-30pct
+    -- (fish access model does not have to use all of these,
+    -- but we might as well create them all to have on hand)
     CASE
+      WHEN gradient >= .05 AND gradient < .1 THEN 5
+      WHEN gradient >= .1 AND gradient < .15 THEN 10
       WHEN gradient >= .15 AND gradient < .2 THEN 15
       WHEN gradient >= .2 AND gradient < .25 THEN 20
+      WHEN gradient >= .25 AND gradient < .3 THEN 25
       WHEN gradient >= .3 THEN 30
       ELSE 0
     END as grade_class
-    -- --------------------
   FROM grade100m
   ORDER BY blue_line_key, downstream_route_measure
 )
