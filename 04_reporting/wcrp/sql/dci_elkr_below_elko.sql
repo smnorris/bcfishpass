@@ -21,6 +21,7 @@ segments AS
     SUM(ST_Length(geom)) as length_segment
   FROM bcfishpass.streams
   WHERE accessibility_model_wct IS NOT NULL
+  AND wscode_ltree <@ '300.625474.584724'::ltree
   AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- below Elko Dam
   GROUP BY watershed_group_code, dnstr_barriers_anthropogenic
 ),
