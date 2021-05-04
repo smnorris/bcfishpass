@@ -24,6 +24,7 @@ WITH grade100m AS
      sv.downstream_route_measure + 100 >= s2.downstream_route_measure AND -- find stream segment 100m up
      sv.downstream_route_measure + 100 < s2.upstream_route_measure
   WHERE sv.edge_type IN (1000,1050,1100,1150,1250,1350,1410,2000,2300)
+  AND s2.edge_type != 6010
 ),
 
 -- note the slope classes
