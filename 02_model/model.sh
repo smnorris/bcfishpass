@@ -157,6 +157,15 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.crossings
 # break streams at all falls, not just those already identified as barriers
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls_events_sp
 
+# in case they are not already broken at provided locations, break streams at ends of the manual habitat classification segments
+# (and rather than re-working segment-streams to accept upstream_route_measure, create a temp table holding the endpoint measures)
+psql -c "DROP TABLE IF EXISTS bcfishpass.manual_habitat_classification_endpoints"
+psql -c "CREATE TABLE bcfishpass.manual_habitat_classification_endpoints (blue_line_key integer, downstream_route_measure double precision, PRIMARY KEY(blue_line_key, downstream_route_measure))"
+psql -c "INSERT INTO bcfishpass.manual_habitat_classification_endpoints SELECT DISTINCT blue_line_key, downstream_route_measure FROM bcfishpass.manual_habitat_classification"
+psql -c "INSERT INTO bcfishpass.manual_habitat_classification_endpoints SELECT DISTINCT blue_line_key, upstream_route_measure as downstream_route_measure FROM bcfishpass.manual_habitat_classification ON CONFLICT DO NOTHING"
+python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.manual_habitat_classification_endpoints
+psql -c "DROP TABLE IF EXISTS bcfishpass.manual_habitat_classification_endpoints"
+
 # add column tracking upstream observations
 python bcfishpass.py add-upstream-ids bcfishpass.streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 
@@ -226,6 +235,8 @@ psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
 # sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
 psql -f sql/model_habitat_sockeye.sql
 
+# override the model where specified by manual_habitat_classification
+psql -f sql/manual_habitat_classification.sql
 
 # Create generalized copy of streams for visualization
 psql -f sql/carto.sql

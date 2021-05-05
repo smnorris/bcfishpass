@@ -1,0 +1,84 @@
+﻿blue_line_key,downstream_route_measure,upstream_route_measure,species,habitat_type,habitat_ind,reviewer,watershed_group_code,source,notes
+356357296,63276.91548,66821.92263,SK,spawning,t,SH,HORS,SH,Horsefly R below falls
+356357296,61020.97868,63084.42272,SK,spawning,t,SH,HORS,SH,Horsefly R below McKinley Cr
+356357296,59620.71697,61020.97905,SK,spawning,t,SH,HORS,SH,Horsefly R below Black Cr
+356357296,59426.66054,59620.71706,SK,spawning,t,SH,HORS,SH,Horsefly R below Wilmot Cr(extends d/s in North fork)
+356357296,36486.26566,39289.9023,SK,spawning,t,SH,HORS,SH,"Horsefly R below Woodjam Cr - Potential, limited"
+356357296,35091.84208,36486.26484,SK,spawning,t,SH,HORS,SH,Horsefly R below Deerhorn Cr
+356357296,27557.65276,35091.84312,SK,spawning,t,SH,HORS,SH,Horsefly R below Sucker Cr
+356357296,26730.08995,27557.6527,SK,spawning,t,SH,HORS,SH,Horsefly R below Moffat Cr
+356357296,21691.91268,26703.16773,SK,spawning,t,SH,HORS,SH,Horsefly R below Harper's Cr
+356357296,14585.31952,21691.9122,SK,spawning,t,SH,HORS,SH,Horsefly R below Little Horsefly R
+356357296,4240.676247,14585.32014,SK,spawning,t,SH,HORS,SH,Horsefly R below Rat Cr
+356361560,21.01542555,7085.115218,SK,spawning,t,SH,HORS,SH,Moffat Cr (flow goes in west fork)
+356343490,18.22060553,1170.652664,SK,spawning,t,SH,HORS,SH,Tisdall Cr - potential
+356357296,58225.59853,59426.66031,SK,spawning,t,SH,HORS,SH,"Horsefly R to Tisdall Cr (poor connectivity, possibly in North fork)"
+356363537,22289.24294,4432.460425,SK,spawning,t,SH,HORS,SH,McKinley Cr
+356356315,35.29829167,4308.074094,SK,spawning,t,SH,HORS,SH,Little Horsefly River
+356356315,5718.337728,6831.724972,SK,spawning,f,SH,HORS,SH,Little Horsefly River
+356317730,43.70879832,2087,CH,spawning,t,SH,HORS,SH,Black Cr potential habitat
+356353773,4507.187459,7476.221502,CH,spawning,t,SH,HORS,SH,Molybdenite Creek -  potential chinook spawning in lower section
+356357296,36891.11953,58225.59911,CH,spawning,f,SH,HORS,SH,Horsefly R below Tisdall Cr - not spawning habitat
+356328230,35.69623673,1061.635866,CH,spawning,f,SH,HORS,SH,Woodjam Cr
+356363840,60.40284812,476.8271856,CH,rearing,t,SH,HORS,SH,Rat Cr
+356363537,15150.96019,26748.84973,CH,rearing,t,SH,HORS,SH,McKinley Cr
+356363270,91.47701028,966.0677067,CH,rearing,t,SH,HORS,SH,Woodjam tributary
+356358551,13.82972652,1549.46438,CH,rearing,t,SH,HORS,SH,Patenaude Cr
+356357017,62.345211,439,CH,rearing,t,SH,HORS,SH,Elbow Lake to McKinley Cr
+356355495,65.87069098,858.2731869,CH,rearing,t,SH,HORS,SH,Side channel temporary refuge
+356349383,24.32381443,1014.312551,CH,rearing,t,SH,HORS,SH,Small tribs between Woodjam Cr & Kroener Cr
+356342331,24.14035464,290,CH,rearing,t,SH,HORS,SH,Sucker Cr - lower
+356342278,491.6673288,2548.158375,CH,rearing,t,SH,HORS,SH,Starlike Lake outlet
+356342278,131.871418,491.6680963,CH,rearing,t,SH,HORS,SH,Deerhorn tributary
+356334078,0,494,CH,rearing,t,SH,HORS,SH,Deerhorn tributary
+356333908,19.34547469,597.2952741,CH,rearing,t,SH,HORS,SH,Kroener Cr
+356328230,1072.23243,15006.49116,CH,rearing,t,SH,HORS,SH,Woodjam Cr
+356317730,43.70879832,2087,CH,rearing,t,SH,HORS,SH,Black Cr potential habitat
+356316824,21.89360449,241,CH,rearing,t,SH,HORS,SH,Harper's Cr
+356310492,23.67178487,6022.748054,CH,rearing,t,SH,HORS,SH,Deerhorn Cr
+356292307,44.68301788,510.1698781,CH,rearing,t,SH,HORS,SH,Green Lake outlet
+356254011,17.4408829,458,CH,rearing,t,SH,HORS,SH,Vedder Cr
+356237874,28.14131157,475,CH,rearing,t,SH,HORS,SH,Small tribs between Woodjam Cr & Kroener Cr
+356220138,19.12133636,1430.908855,CH,rearing,t,SH,HORS,SH,Wilmot Cr
+356216072,18.97780863,269.2501504,CH,rearing,t,SH,HORS,SH,Side channel temporary refuge
+356208960,21.98916421,787,CH,rearing,t,SH,HORS,SH,Sidechannel
+356083394,0,56,CH,rearing,t,SH,HORS,SH,Side channel temporary refuge
+356358551,248.4091306,1549.46438,CO,spawning,t,SH,HORS,SH,Patenaude Cr
+356317730,963.9530542,2087,CO,spawning,t,SH,HORS,SH,Black Cr potential habitat
+356353773,3940.305072,7476.221502,CO,spawning,t,SH,HORS,SH,Molybdenite Creek - coho spawning
+356357296,36891.11953,58225.59911,CO,spawning,f,SH,HORS,SH,Horsefly R below Tisdall Cr - not spawning habitat
+356353773,10467.9004,19359.58449,CO,spawning,f,SH,HORS,SH,"Molybdenite Creek - no record of salmon here, poor habitat"
+356328230,35.69623673,1061.635866,CO,spawning,f,SH,HORS,SH,Woodjam Cr
+356286838,379.5559953,3803.639621,CO,spawning,f,SH,HORS,SH,Tisdall Lake inlet
+356358551,13.82972652,1549.46438,CO,rearing,t,SH,HORS,SH,Patenaude Cr
+356333908,19.34547469,597.2952741,CO,rearing,t,SH,HORS,SH,Kroener Cr
+356317730,963.9530542,2087,CO,rearing,t,SH,HORS,SH,Black Cr potential habitat
+356237874,28.14131157,475,CO,rearing,t,SH,HORS,SH,Small tribs between Woodjam Cr & Kroener Cr
+356349383,24.32381443,832.7103512,CO,rearing,t,SH,HORS,SH,Small tribs between Woodjam Cr & Kroener Cr
+356208960,21.98916421,787,CO,rearing,t,SH,HORS,SH,Sidechannel
+356363840,60.40284812,334.9051598,CO,rearing,t,SH,HORS,SH,Rat Cr
+356254011,17.4408829,458,CO,rearing,t,SH,HORS,SH,Vedder Cr
+356316824,21.89360449,241,CO,rearing,t,SH,HORS,SH,Harper's Cr
+356355495,65.87069098,858.2731869,CO,rearing,t,SH,HORS,SH,Side channel temporary refuge
+356216072,18.97780863,269.2501504,CO,rearing,t,SH,HORS,SH,Side channel temporary refuge
+356083394,0,56,CO,rearing,t,SH,HORS,SH,Side channel temporary refuge
+356353773,10467.9004,19359.58449,CO,rearing,f,SH,HORS,SH,"Molybdenite Creek - no record of salmon here, poor habitat"
+356285424,194.1978363,777.7359966,CO,rearing,f,SH,HORS,SH,"Molybdenite Creek - no record of salmon here, poor habitat"
+356354875,1157.581455,2438.754462,CO,rearing,f,SH,HORS,SH,Woodjam tributary
+356286838,379.5559953,3803.639621,CO,rearing,f,SH,HORS,SH,Tisdall Lake inlet
+356342331,290,10380.08722,CO,rearing,f,SH,HORS,SH,Sucker Cr - little to no flow for significant durations. Could remove all.
+356284960,383.382961,1047.815825,CO,rearing,f,SH,HORS,SH,Very doubtful
+356563941,0,1709,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,68938,70427,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,59716,61351,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,52440.76179,52897,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,51485,51794.59129,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,50014.6768,51342,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,42599,45233.60051,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,38277,40441.16592,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,36955,37961,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,33440,34651,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,31438,31823,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,28249,30209,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356568903,23246,27692,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
+356558982,0,1195,WCT,spawning,t,NJO,ELKR,Upper Fording River Tek Assessement,
