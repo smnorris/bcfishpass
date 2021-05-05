@@ -2,8 +2,8 @@
 set -euxo pipefail
 
 # create the table
-psql -c "DROP TABLE IF EXISTS bcfishpass.gradient_barriers_test"
-psql -c "CREATE TABLE bcfishpass.gradient_barriers_test
+psql -c "DROP TABLE IF EXISTS bcfishpass.gradient_barriers"
+psql -c "CREATE TABLE bcfishpass.gradient_barriers
         (
          blue_line_key             integer               ,
          downstream_route_measure  double precision      ,
@@ -21,5 +21,5 @@ do
   psql -X -v wsg="$WSG" < sql/gradient_barriers.sql
 done
 
-psql -c "CREATE INDEX ON bcfishpass.gradient_barriers_test (blue_line_key)"
-psql -c "CREATE INDEX ON bcfishpass.gradient_barriers_test (blue_line_key, downstream_route_measure)"
+psql -c "CREATE INDEX ON bcfishpass.gradient_barriers (blue_line_key)"
+psql -c "CREATE INDEX ON bcfishpass.gradient_barriers (blue_line_key, downstream_route_measure)"

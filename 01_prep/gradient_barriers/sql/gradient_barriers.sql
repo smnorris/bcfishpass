@@ -48,30 +48,45 @@ gradeclass AS
     END as grade_class
   FROM grade100m
   ORDER BY blue_line_key, downstream_route_measure
-)
+),
 
--- Group the continuous same-slope class segments together (thank you Erwin B)
+-- Group the continuous same-slope class segments (islands) together (thank you Erwin B)
 -- https://dba.stackexchange.com/questions/166374/grouping-or-window/166397#166397
-INSERT INTO bcfishpass.gradient_barriers_test
-(blue_line_key, downstream_route_measure, gradient_class)
-
-SELECT
-  blue_line_key,
-  min(downstream_route_measure) AS downstream_route_measure,
-  grade_class as gradient_class
-FROM
+islands AS
 (
   SELECT
     blue_line_key,
-    downstream_route_measure,
-    grade_class,
-    count(step OR NULL) OVER (ORDER BY blue_line_key, downstream_route_measure) AS grp
-  FROM  (
-    SELECT blue_line_key, downstream_route_measure, grade_class
-         , lag(grade_class, 1, grade_class) OVER (ORDER BY blue_line_key, downstream_route_measure) <> grade_class AS step
-    FROM gradeclass
-  ) sub1
-WHERE grade_class != 0
-) sub2
-GROUP BY blue_line_key, grade_class, grp
-ORDER BY blue_line_key, downstream_route_measure;
+    min(downstream_route_measure) AS downstream_route_measure,
+    grade_class as gradient_class
+  FROM
+  (
+    SELECT
+      blue_line_key,
+      downstream_route_measure,
+      grade_class,
+      count(step OR NULL) OVER (ORDER BY blue_line_key, downstream_route_measure) AS grp
+    FROM  (
+      SELECT blue_line_key, downstream_route_measure, grade_class
+           , lag(grade_class, 1, grade_class) OVER (ORDER BY blue_line_key, downstream_route_measure) <> grade_class AS step
+      FROM gradeclass
+    ) sub1
+  WHERE grade_class != 0
+  ) sub2
+  GROUP BY blue_line_key, grade_class, grp
+  ORDER BY blue_line_key, downstream_route_measure
+)
+
+INSERT INTO bcfishpass.gradient_barriers
+(blue_line_key, downstream_route_measure, gradient_class)
+
+-- Because we are measuring each vertex, some adjacent measurements are at almost the same location.
+-- Generally these will be grouped together - but it is possible to have two adjacent gradients
+-- (at the same measure after rounding) that span the gradient categories
+-- (eg .0104 and .0994 at 129.23m on blue_line_key=360293619).
+-- To rectify this, get the maximum gradient at a given location.
+SELECT
+  blue_line_key,
+  downstream_route_measure,
+  max(gradient_class) as gradient_class
+FROM islands
+GROUP BY blue_line_key, downstream_route_measure;
