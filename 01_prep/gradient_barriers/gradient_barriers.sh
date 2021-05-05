@@ -8,7 +8,7 @@ psql -c "CREATE TABLE bcfishpass.gradient_barriers
          blue_line_key             integer               ,
          downstream_route_measure  double precision      ,
          gradient_class            integer               ,
-         UNIQUE (blue_line_key, downstream_route_measure)
+         PRIMARY KEY (blue_line_key, downstream_route_measure)
         )"
 
 # Load as loop through watershed groups
@@ -22,4 +22,3 @@ do
 done
 
 psql -c "CREATE INDEX ON bcfishpass.gradient_barriers (blue_line_key)"
-psql -c "CREATE INDEX ON bcfishpass.gradient_barriers (blue_line_key, downstream_route_measure)"
