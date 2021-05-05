@@ -18,4 +18,6 @@ To create and load the gradient barrier table:
 
     ./gradient_barriers.sh
 
-To change the slope thresholds of interest or the interval at which slope is measured, edit `sql/gradient_barriers.sql`
+To change the slope thresholds of interest or the interval at which slope is measured, edit `sql/gradient_barriers.sql`.
+Note however that this script only identifies the locations of gradient breaks, to change the slope value that is used
+as a barrier, edit the `barriers_gradient_<grade>` files in `../02_model/sql` and modify `../02_model/model.sh` accordingly.
