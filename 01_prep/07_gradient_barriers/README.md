@@ -33,10 +33,9 @@ the model script `../02_model/model.sh` accordingly.
                          Table "bcfishpass.gradient_barriers"
               Column          |       Type       | Collation | Nullable | Default
     --------------------------+------------------+-----------+----------+---------
-     blue_line_key            | integer          |           |          |
-     downstream_route_measure | double precision |           |          |
+     blue_line_key            | integer          |           | not null |
+     downstream_route_measure | double precision |           | not null |
      gradient_class           | integer          |           |          |
     Indexes:
-        "gradient_barriers_test_blue_line_key_downstream_route_measu_idx" btree (blue_line_key, downstream_route_measure)
-        "gradient_barriers_test_blue_line_key_downstream_route_measu_key" UNIQUE CONSTRAINT, btree (blue_line_key, downstream_route_measure)
+        "gradient_barriers_pkey" PRIMARY KEY, btree (blue_line_key, downstream_route_measure)
         "gradient_barriers_test_blue_line_key_idx" btree (blue_line_key)
