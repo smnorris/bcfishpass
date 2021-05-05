@@ -11,8 +11,9 @@ psql -c "CREATE TABLE bcfishpass.gradient_barriers
          PRIMARY KEY (blue_line_key, downstream_route_measure)
         )"
 
-# Load as loop through watershed groups
-# Only process a select few for now
+# Process and load each watershed group separately.
+# Note that this processes all of BC...
+# but the output table (for all 5/10/15/20/25/30 breaks at 100m) is only about 540MB
 for WSG in $(psql -t -P border=0,footer=no \
   -c "SELECT watershed_group_code
       FROM whse_basemapping.fwa_watershed_groups_poly
