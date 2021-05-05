@@ -33,7 +33,7 @@ cd ../../02_model
 # - and falls, misc
 cd ../01_prep/06_falls
 ./falls.sh
-cd ../07_misc
+cd ../08_misc
 ./misc.sh
 cd ../../02_model
 
