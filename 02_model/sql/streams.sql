@@ -1,5 +1,5 @@
 -- create initial stream table based on provincial table
-DROP TABLE IF EXISTS bcfishpass.streams;
+DROP TABLE IF EXISTS bcfishpass.streams CASCADE;
 
 CREATE TABLE bcfishpass.streams
 (

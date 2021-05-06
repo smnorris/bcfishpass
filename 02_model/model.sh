@@ -159,10 +159,7 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls_events_
 
 # in case they are not already broken at provided locations, break streams at ends of the manual habitat classification segments
 # (and rather than re-working segment-streams to accept upstream_route_measure, create a temp table holding the endpoint measures)
-psql -c "DROP TABLE IF EXISTS bcfishpass.manual_habitat_classification_endpoints"
-psql -c "CREATE TABLE bcfishpass.manual_habitat_classification_endpoints (blue_line_key integer, downstream_route_measure double precision, PRIMARY KEY(blue_line_key, downstream_route_measure))"
-psql -c "INSERT INTO bcfishpass.manual_habitat_classification_endpoints SELECT DISTINCT blue_line_key, downstream_route_measure FROM bcfishpass.manual_habitat_classification"
-psql -c "INSERT INTO bcfishpass.manual_habitat_classification_endpoints SELECT DISTINCT blue_line_key, upstream_route_measure as downstream_route_measure FROM bcfishpass.manual_habitat_classification ON CONFLICT DO NOTHING"
+psql -f sql/manual_habitat_classification_endpoints.sql
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.manual_habitat_classification_endpoints
 psql -c "DROP TABLE IF EXISTS bcfishpass.manual_habitat_classification_endpoints"
 

@@ -1,4 +1,4 @@
--- first, create a view for visualizing where manual updates have been applied
+-- Create a view for visualizing where manual updates have been applied
 -- and to track whether the manual classification agrees with the model output
 -- (to keep the streams table somewhat simple, model outputs get overwritten by
 -- manual classification in below updates)
@@ -88,7 +88,7 @@ ORDER BY s.blue_line_key, s.downstream_route_measure, h.blue_line_key;
 
 
 
--- Now apply the updates to the streams table.
+-- Apply the manual habitat classifications to the streams table.
 -- Because we are conditionally updating many columns, updates are most easily applied
 -- per species/habitat type
 UPDATE bcfishpass.streams s
