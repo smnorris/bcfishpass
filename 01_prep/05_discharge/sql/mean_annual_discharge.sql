@@ -26,7 +26,7 @@ AND s.localcode_ltree = w.localcode_ltree
 AND s.watershed_group_code = w.watershed_group_code
 LEFT OUTER JOIN foundry.fwa_watersheds_mad mad
 ON w.watershed_feature_id = mad.watershed_feature_id
-WHERE s.watershed_group_code IN ('BULK','HORS','LNIC')
+WHERE s.watershed_group_code IN ('BULK','HORS','LNIC','ELKR')
 ON CONFLICT DO NOTHING;
 
 
@@ -40,7 +40,7 @@ WITH stream_pts AS
 FROM whse_basemapping.fwa_stream_networks_sp s
 LEFT OUTER JOIN foundry.fwa_streams_mad st
 ON s.linear_feature_id = st.linear_feature_id
-WHERE s.watershed_group_code IN ('BULK','HORS','LNIC')
+WHERE s.watershed_group_code IN ('BULK','HORS','LNIC','ELKR')
 AND st.linear_feature_id is null
 AND s.fwa_watershed_code NOT LIKE '999%'
 AND s.local_watershed_code IS NOT NULL)

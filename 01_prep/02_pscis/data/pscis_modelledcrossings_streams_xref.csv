@@ -1428,7 +1428,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 61615,4605776,,ELKR,,
 61616,24706679,,ELKR,,
 61617,4606315,,ELKR,,
-61618,,706819916,ELKR,,
 61619,4605425,,ELKR,,
 61620,4606324,,ELKR,,
 61621,4605423,,ELKR,,
@@ -1535,8 +1534,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62241,,,ELKR,,
 62242,,,ELKR,,
 62243,,,ELKR,SN,Not on a mapped stream
-62244,4605728,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
-62245,,,ELKR,,
 62246,,,ELKR,,
 62247,,,ELKR,NJO,Removed double matching
 62248,,,ELKR,,
@@ -1702,7 +1699,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 103017,4600117,,ELKR,,
 103019,24706683,,ELKR,SN,Matched to rail crossing as indicated by photos
 103022,4606191,,ELKR,,
-103024,,706840348,ELKR,,
 103025,24706694,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 103032,4606361,,ELKR,,
 103033,4602340,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3484,3 +3480,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197668,1805608,,BULK,NJO,Matched to closest Crossing
 197669,14000079,,MORR,AI,Matched to closest stream model (not sure why it didn't happen automatically)
 195940,1804009,,BULK,SN,PSCIS coordinates are incoorect - assessment is on road R09533904 and trib to Bulkley - modelled xing 1804009 is closest choice
+103024,,,ELKR,SN,not on mapped stream
+62244,,,ELKR,SN,duplicate of 62245 - do not link to stream
+62245,4605728,,ELKR,SN,matched to nearest modelled crossing - this is the PSCIS id of interest for this location (not 62244)
+61618,,,ELKR,SN,not on mapped stream
