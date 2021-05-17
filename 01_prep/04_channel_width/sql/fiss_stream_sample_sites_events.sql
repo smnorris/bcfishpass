@@ -5,15 +5,12 @@ DROP TABLE IF EXISTS bcfishpass.fiss_stream_sample_sites_events_sp;
 
 CREATE TABLE bcfishpass.fiss_stream_sample_sites_events_sp AS
 
--- only wsd of interest
 WITH pts AS
-(SELECT pt.stream_sample_site_id, pt.geom
-FROM whse_fish.fiss_stream_sample_sites_sp as pt
-INNER JOIN whse_basemapping.fwa_watershed_groups_poly wsd
-ON ST_Intersects(pt.geom, wsd.geom)
-INNER JOIN bcfishpass.param_watersheds wsg
-ON wsd.watershed_group_code = wsg.watershed_group_code
-WHERE wsg.include is true -- include only watershed groups being modelled
+(
+  SELECT pt.stream_sample_site_id, pt.geom
+  FROM whse_fish.fiss_stream_sample_sites_sp as pt
+  INNER JOIN whse_basemapping.fwa_watershed_groups_poly wsd
+  ON ST_Intersects(pt.geom, wsd.geom)
 ),
 
 -- match pts to closest 10 streams within 150m
@@ -105,7 +102,6 @@ ORDER BY indexed.stream_sample_site_id, indexed.distance_to_stream asc;
 
 -- There are a lot of records very close to FWA streams that do not get matched.
 -- Lets add them too if they are within 50m of the stream
--- (in wsd of interest)
 WITH pts AS
 (
   SELECT
@@ -116,10 +112,7 @@ WITH pts AS
   ON ST_Intersects(pt.geom, wsd.geom)
   LEFT OUTER JOIN bcfishpass.fiss_stream_sample_sites_events_sp e
   ON pt.stream_sample_site_id = e.stream_sample_site_id
-  INNER JOIN bcfishpass.param_watersheds wsg
-  ON e.watershed_group_code = wsg.watershed_group_code
-  WHERE wsg.include is true -- include only watershed groups being modelled
-  AND e.stream_sample_site_id IS NULL
+  WHERE e.stream_sample_site_id IS NULL
 ),
 
 -- match pts to closest 10 streams within 150m

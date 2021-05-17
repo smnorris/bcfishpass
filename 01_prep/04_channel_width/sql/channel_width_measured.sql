@@ -34,10 +34,7 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON e.blue_line_key = s.blue_line_key
 AND e.downstream_route_measure > s.downstream_route_measure
 AND e.downstream_route_measure <= s.upstream_route_measure
-INNER JOIN bcfishpass.param_watersheds wsg
-ON w.watershed_group_code = wsg.watershed_group_code
-WHERE wsg.include is true -- include only watershed groups being modelled
-AND p.channel_width IS NOT NULL
+WHERE p.channel_width IS NOT NULL
 -- exclude these records due to errors in measurement and/or linking to streams
 AND p.stream_sample_site_id NOT IN (44813,44815,10997,8518,37509,37510,53526,15603,98,8644,117,8627,142,8486,8609,15609,10356)
 ),
@@ -51,8 +48,6 @@ SELECT
   s.watershed_group_code,
   a.downstream_channel_width as channel_width_pscis
 FROM bcfishpass.pscis_events_sp e
-INNER JOIN bcfishpass.param_watersheds wsg
-ON e.watershed_group_code = wsg.watershed_group_code
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN whse_basemapping.fwa_watersheds_poly w
@@ -62,7 +57,6 @@ ON e.blue_line_key = s.blue_line_key
 AND e.downstream_route_measure > s.downstream_route_measure
 AND e.downstream_route_measure <= s.upstream_route_measure
 WHERE a.downstream_channel_width is not null
-AND wsg.include is true -- include only watershed groups being modelled
 -- exclude these records due to errors in measurement and/or linking to streams
 AND e.stream_crossing_id NOT IN (57592,123894,57408,124137)
 ),

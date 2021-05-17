@@ -28,9 +28,6 @@ SELECT
 FROM whse_basemapping.fwa_stream_networks_sp s
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
-INNER JOIN bcfishpass.param_watersheds wsg
-ON s.watershed_group_code = wsg.watershed_group_code
-WHERE wsg.include is true
 -- we only want widths of streams/rivers
 AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
 AND s.localcode_ltree IS NOT NULL
