@@ -9,3 +9,5 @@ psql -f sql/fiss_stream_sample_sites_events.sql
 # load the measured channel widths where we have them,
 # and add various parameters used to model predicted channel width
 psql -f sql/channel_width_measured.sql
+psql -f sql/channel_width_mapped.sql
+psql -f sql/channel_width_modelled.sql
