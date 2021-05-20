@@ -1,8 +1,8 @@
 # README.txt
 
-## File/layer
+## File
 
-modelled_stream_crossings_archive.gdb/modelled_stream_crossings_archive
+https://www.hillcrestgeo.ca/outgoing/fishpassage/data/bcfishpass/inputs/modelled_stream_crossings_archive.gpkg.zip
 
 ## Background
 
