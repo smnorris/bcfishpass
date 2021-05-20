@@ -23,7 +23,7 @@ Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mappin
 
 1. Collect known natural barriers to fish passage (waterfalls >5m, subsurface flow, hydro dams that are not feasible to remediate) and reference to the stream network
 2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
-3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation
+3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation (where applicable)
 4. Classify all streams downstream of resulting barriers as `POTENTIALLY ACCESSIBLE` (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
 5. Collect known (dams, PSCIS crossings) and modelled (road/railway stream crossings, ie culverts) anthropogenic barriers
 6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier (and downstream of other anthropogenic barriers)
