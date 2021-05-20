@@ -23,16 +23,16 @@ Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mappin
 
 1. Collect known natural barriers to fish passage (waterfalls >5m, subsurface flow, hydro dams that are not feasible to remediate) and reference to the stream network
 2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
-3. Using known fish observations referenced to streams [bcfishobs](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation
-4. Classify all streams not upstream of resulting barriers as `POTENTIALLY ACCESSIBLE` - ignoring any other barriers (eg, insufficent water, temperature, etc), a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers were present
+3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation
+4. Classify all streams downstream of resulting barriers as `POTENTIALLY ACCESSIBLE` (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
 5. Collect known (dams, PSCIS crossings) and modelled (road/railway stream crossings, ie culverts) anthropogenic barriers
-6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier
+6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier (and downstream of other anthropogenic barriers)
 
 To improve prioritization of barriers, `bcfishpass` also includes basic habitat potential modelling. Habitat potential for spawning and rearing is based on:
 
-1. stream gradient
-2. stream discharge / stream channel width (based on data availability)
-3. various species-specific connectivitiy criteria (eg, sockeye spawn must be connected to rearing lakes)
+1. Stream gradient
+2. Stream discharge / stream channel width (modelled discharge where available, modelled channel width where discharge unavailable)
+3. Various species-specific connectivitiy criteria (eg. sockeye spawn must be connected to rearing lakes)
 
 Streams meeting the criteria for a given species are classified as spawning or rearing habitat and the amount of spawning/rearing habitat upstream of barriers can be summarized for barrier prioritization.
 
