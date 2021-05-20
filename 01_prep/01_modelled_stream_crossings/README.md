@@ -57,17 +57,12 @@ Once duplicates have been removed, output crossings are identified/modelled as o
 
 ## Run scripts
 
-If table `bcfishpass.modelled_stream_crossings` already exists from a previous run, archive the table so that the feature IDs can be preserved between runs.
-
-    psql -c "ALTER TABLE bcfishpass.modelled_stream_crossings RENAME TO modelled_stream_crossings_archive"
-
-Download data and run scripts to generate the crossings:
+Download data and run scripts to generate the crossings.
 
     ./modelled_stream_crossings.sh
 
-If matching feature IDs to an older run, first create a table `bcfishpass.modelled_stream_crossings_archive` from the older data, then run the matching:
-
-    psql -f sql/09_match_archived_crossings.sql
+Note that the script re-generates **all** modelled crossings.
+To ensure that ID values for the crossings are consistent with previous model outputs, an archived version of the modelled crossings is downloaded and the `modelled_crossing_id` values are transferred from the archive to the new output crossings (where crossings are within 10m distance).
 
 ## Output
 
@@ -103,10 +98,6 @@ Indexes:
     "modelled_stream_crossings_railway_track_id_idx" btree (railway_track_id)
     "modelled_stream_crossings_transport_line_id_idx" btree (transport_line_id)
 ```
-
-## ID value consistency
-
-Note that on the `modelled_crossing_id` values were matched to `crossing_id` values from v.2.3.1 of the Fish Passage Technical Working Group model.
 
 ## Known errors and limitations
 

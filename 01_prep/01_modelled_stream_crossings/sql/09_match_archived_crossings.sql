@@ -1,5 +1,6 @@
 -- match modelled_stream_crossings modelled_crossing_id to modelled_crossing_id in bcfishpass.modelled_stream_crossings_archive
--- match is done for crossings within 10m
+-- match is done for crossings within 10m distance in any direction
+-- (rather than matching on blue_line_key and measure, just in case the FWA stream has changed)
 
 DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_temp;
 
@@ -52,7 +53,7 @@ WITH matched AS
     (SELECT
        crossing_id as modelled_crossing_id,
        ST_Distance(a.geom, b.geom) as dist
-     FROM bcfishpass.road_stream_crossings_all b
+     FROM bcfishpass.modelled_stream_crossings_archive b
      ORDER BY a.geom <-> b.geom
      LIMIT 1) as nn
     WHERE nn.dist < 10
