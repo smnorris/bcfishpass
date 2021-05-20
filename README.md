@@ -4,7 +4,7 @@
 
 - tracks known barriers to fish passage (eg dams, waterfalls, etc)
 - models potential natural and anthropogenic barriers to fish passage (stream gradient, road/rail stream crossings)
-- models `POTENTIALLY ACCESSIBLE` streams based on above barriers and species swimming ability
+- models accessibility of streams based on barriers and species swimming ability
 - models potential habitat (spawning and rearing) for select species
 - provides tools for prioritizing assessment and remediation of barriers based on summary of upstream modelled access/habitat
 - monitors and summarizes stream crossing passability status based on BC Provincial Stream Crossing Information System (PSCIS)
@@ -24,7 +24,7 @@ Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mappin
 1. Collect known natural barriers to fish passage (waterfalls >5m, subsurface flow, hydro dams that are not feasible to remediate) and reference to the stream network
 2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
 3. Using known fish observations referenced to streams [bcfishobs](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation
-4. Classify all streams not upstream of resulting barriers as *'POTENTIALLY ACCESSIBLE'* - ignoring any other barriers (eg, insufficent water, temperature, etc), a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers were present
+4. Classify all streams not upstream of resulting barriers as `POTENTIALLY ACCESSIBLE` - ignoring any other barriers (eg, insufficent water, temperature, etc), a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers were present
 5. Collect known (dams, PSCIS crossings) and modelled (road/railway stream crossings, ie culverts) anthropogenic barriers
 6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier
 
