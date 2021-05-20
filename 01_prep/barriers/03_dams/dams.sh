@@ -7,7 +7,6 @@ tmp="${TEMP:-/tmp}"
 # ---------
 # download CWF dam data and match to FWA streams
 # ---------
-
 wget --trust-server-names -qNP "$tmp"  https://raw.githubusercontent.com/smnorris/bcdams/main/bcdams.geojson
 psql -c "CREATE SCHEMA IF NOT EXISTS cwf"
 ogr2ogr -f PostgreSQL \
