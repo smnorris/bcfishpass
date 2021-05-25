@@ -1,15 +1,15 @@
 # bcfishpass
 
-`bcfishpass` is a set of scripts to create and maintain an aquatic connectivity / fish passage database for British Columbia that:
+`bcfishpass` is a set of scripts to create and maintain an aquatic connectivity / fish passage database for British Columbia to:
 
-- tracks known barriers to fish passage (eg dams, waterfalls, etc)
-- models potential natural and anthropogenic barriers to fish passage (stream gradient, road/rail stream crossings)
-- models accessibility of streams based on barriers and species swimming ability
-- models potential habitat (spawning and rearing) for select species
-- provides tools for prioritizing assessment and remediation of barriers based on summary of upstream modelled access/habitat
-- monitors and summarizes stream crossing passability status based on BC Provincial Stream Crossing Information System (PSCIS)
+- track known barriers to fish passage (eg dams, waterfalls)
+- work with BC Provincial Stream Crossing Information System (PSCIS) crossings and barriers
+- model potential barriers to fish passage (stream gradient, road/rail stream crossings)
+- model passability/accessibility of streams based on barriers and species swimming ability
+- model potential habitat (spawning and rearing) for select species
+- prioritize assessment and remediation of barriers based on modelled accessibility and habitat
 
-Also provided are tools for mapping the features in the database:
+Also provided are tools for mapping features in the database:
 
 - comprehensive QGIS layer file
 - basic MapboxGL stylesheet and web page
