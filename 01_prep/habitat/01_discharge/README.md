@@ -9,3 +9,7 @@ With discharge shapefile `cwf_mad_funds.shp` extracted and loaded to current wor
 
 
 `./discharge.sh`
+
+Although discharge values are not required to run the channel width model, the output table `foundry.fwa_streams_mad` is required.  Therefore, for users wishing to run the channel width version of the model that do not have access to the mean annual discharge data run:
+
+`./discharge_norun.sh`
