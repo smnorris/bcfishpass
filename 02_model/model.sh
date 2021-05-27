@@ -223,11 +223,17 @@ psql -f sql/load_channel_width.sql
 # load modelled discharge data to streams table (where available)
 psql -f sql/load_discharge.sql
 
-# run ch/co/st spawning and rearing models
+# run ch/co/st/wct spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
-psql -f sql/model_habitat_rearing_1.sql  # ch/co/st rearing AND spawning streams (rearing with no connectivity analysis)
-psql -f sql/model_habitat_rearing_2.sql  # ch/co/st rearing downstream of spawning
-psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
+
+psql -f sql/model_habitat_rearing_1.sql  # ch/co/st/wct rearing AND spawning streams (rearing with no connectivity analysis)
+
+# ch/co/st/wct rearing that is downstream of spawning
+time psql -t -P border=0,footer=no \
+-c "SELECT watershed_group_code FROM bcfishpass.param_watersheds ORDER BY watershed_group_code" \
+    | parallel psql -f sql/model_habitat_rearing_2.sql -v wsg={1}
+
+psql -f sql/model_habitat_rearing_3.sql  # ch/co/st/wct rearing upstream of spawning
 
 # sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
 psql -f sql/model_habitat_sockeye.sql

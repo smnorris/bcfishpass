@@ -7,7 +7,11 @@ WITH rearing AS
 (
   SELECT
     s.segmented_stream_id,
-    s.geom
+    ST_ClusterDBSCAN(geom, 1, 1) over() as cluster_id,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
@@ -38,46 +42,52 @@ WITH rearing AS
         mad.mad_m3s <= h.rear_mad_max
       )
     )
+  AND s.watershed_group_code = :'wsg'
 ),
 
--- cluster/aggregate
-rearing_clusters as
+cluster_minimums AS
 (
-  SELECT
-    segmented_stream_id,
-    ST_ClusterDBSCAN(geom, 1, 1) over() as cid,
-    geom
+  SELECT DISTINCT ON (cluster_id)
+    cluster_id,
+    wscode_ltree,
+    localcode_ltree,
+    blue_line_key,
+    downstream_route_measure
   FROM rearing
-  ORDER BY segmented_stream_id
+  ORDER BY cluster_id, wscode_ltree asc, localcode_ltree asc, downstream_route_measure asc
 ),
 
--- find all rearing downstream of spawning and get distinct cluster ids present
-rearing_clusters_dnstr AS
+-- find all rearing clusters with spawning either:
+--   - upstream
+--   - upstream of stream that the rearing is trib to (and rearing is within 10m of confluence)
+rearing_clusters_dnstr_of_spawn AS
 (
-  SELECT DISTINCT cid
-  FROM rearing_clusters rc
-  INNER JOIN bcfishpass.streams s
-  ON rc.segmented_stream_id = s.segmented_stream_id
+  SELECT DISTINCT s.cluster_id
+  FROM cluster_minimums s
   INNER JOIN bcfishpass.streams spawn
+  -- make sure there is spawning habitat either upstream
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
-  AND s.watershed_group_code = spawn.watershed_group_code
+  -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
+  OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
   WHERE spawn.spawning_model_chinook IS TRUE
+  AND spawn.watershed_group_code = :'wsg'
 ),
 
--- find ids of streams that compose the above clusters
+-- find the stream ids that we want to update
 rearing_ids AS
 (
   SELECT
     a.segmented_stream_id
-  FROM rearing_clusters a
-  INNER JOIN rearing_clusters_dnstr b
-  ON a.cid = b.cid
+  FROM rearing a
+  INNER JOIN rearing_clusters_dnstr_of_spawn b
+  ON a.cluster_id = b.cluster_id
 )
 
--- and finally, apply update based on these ids
+-- set rearing as true for these streams
 UPDATE bcfishpass.streams s
 SET rearing_model_chinook = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
+
 
 
 -- ----------------------------------------------
@@ -86,7 +96,11 @@ WITH rearing AS
 (
   SELECT
     s.segmented_stream_id,
-    s.geom
+    ST_ClusterDBSCAN(geom, 1, 1) over() as cluster_id,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
@@ -118,43 +132,50 @@ WITH rearing AS
       )
     OR s.edge_type IN (1050, 1150)  -- any wetlands are potential rearing
     )
+
+    AND s.watershed_group_code = :'wsg'
 ),
 
--- cluster/aggregate
-rearing_clusters as
+cluster_minimums AS
 (
-  SELECT
-    segmented_stream_id,
-    ST_ClusterDBSCAN(geom, 1, 1) over() as cid,
-    geom
-  FROM rearing
-  ORDER BY segmented_stream_id
+SELECT DISTINCT ON (cluster_id)
+  cluster_id,
+  wscode_ltree,
+  localcode_ltree,
+  blue_line_key,
+  downstream_route_measure
+FROM rearing
+ORDER BY cluster_id, wscode_ltree asc, localcode_ltree asc, downstream_route_measure asc
 ),
 
--- find all rearing downstream of spawning and get distinct cluster ids present
-rearing_clusters_dnstr AS
+
+-- find all rearing clusters with spawning either:
+--   - upstream
+--   - upstream of stream that the rearing is trib to (and rearing is within 10m of confluence)
+rearing_clusters_dnstr_of_spawn AS
 (
-  SELECT DISTINCT cid
-  FROM rearing_clusters rc
-  INNER JOIN bcfishpass.streams s
-  ON rc.segmented_stream_id = s.segmented_stream_id
+  SELECT DISTINCT s.cluster_id
+  FROM cluster_minimums s
   INNER JOIN bcfishpass.streams spawn
+  -- make sure there is spawning habitat either upstream
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
-  AND s.watershed_group_code = spawn.watershed_group_code
+  -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
+  OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
   WHERE spawn.spawning_model_coho IS TRUE
+  AND spawn.watershed_group_code = :'wsg'
 ),
 
--- find ids of streams that compose the above clusters
+-- find the stream ids that we want to update
 rearing_ids AS
 (
   SELECT
     a.segmented_stream_id
-  FROM rearing_clusters a
-  INNER JOIN rearing_clusters_dnstr b
-  ON a.cid = b.cid
+  FROM rearing a
+  INNER JOIN rearing_clusters_dnstr_of_spawn b
+  ON a.cluster_id = b.cluster_id
 )
 
--- and finally, apply update based on these ids
+-- set rearing as true for these streams
 UPDATE bcfishpass.streams s
 SET rearing_model_coho = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
@@ -167,7 +188,11 @@ WITH rearing AS
 (
   SELECT
     s.segmented_stream_id,
-    s.geom
+    ST_ClusterDBSCAN(geom, 1, 1) over() as cluster_id,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
@@ -200,44 +225,49 @@ WITH rearing AS
     )
 ),
 
--- cluster/aggregate
-rearing_clusters as
+cluster_minimums AS
 (
-  SELECT
-    segmented_stream_id,
-    ST_ClusterDBSCAN(geom, 1, 1) over() as cid,
-    geom
-  FROM rearing
-  ORDER BY segmented_stream_id
+SELECT DISTINCT ON (cluster_id)
+  cluster_id,
+  wscode_ltree,
+  localcode_ltree,
+  blue_line_key,
+  downstream_route_measure
+FROM rearing
+ORDER BY cluster_id, wscode_ltree asc, localcode_ltree asc, downstream_route_measure asc
 ),
 
--- find all rearing downstream of spawning and get distinct cluster ids present
-rearing_clusters_dnstr AS
+-- find all rearing clusters with spawning either:
+--   - upstream
+--   - upstream of stream that the rearing is trib to (and rearing is within 10m of confluence)
+rearing_clusters_dnstr_of_spawn AS
 (
-  SELECT DISTINCT cid
-  FROM rearing_clusters rc
-  INNER JOIN bcfishpass.streams s
-  ON rc.segmented_stream_id = s.segmented_stream_id
+  SELECT DISTINCT s.cluster_id
+  FROM cluster_minimums s
   INNER JOIN bcfishpass.streams spawn
+  -- make sure there is spawning habitat either upstream
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
-  AND s.watershed_group_code = spawn.watershed_group_code
+  -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
+  OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
   WHERE spawn.spawning_model_steelhead IS TRUE
+  AND spawn.watershed_group_code = :'wsg'
 ),
 
--- find ids of streams that compose the above clusters
+-- find the stream ids that we want to update
 rearing_ids AS
 (
   SELECT
     a.segmented_stream_id
-  FROM rearing_clusters a
-  INNER JOIN rearing_clusters_dnstr b
-  ON a.cid = b.cid
+  FROM rearing a
+  INNER JOIN rearing_clusters_dnstr_of_spawn b
+  ON a.cluster_id = b.cluster_id
 )
 
--- and finally, apply update based on these ids
+-- set rearing as true for these streams
 UPDATE bcfishpass.streams s
 SET rearing_model_steelhead = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
+
 
 -- ----------------------------------------------
 -- WESTSLOPE CUTTHROAT TROUT
@@ -245,7 +275,11 @@ WITH rearing AS
 (
   SELECT
     s.segmented_stream_id,
-    s.geom
+    ST_ClusterDBSCAN(geom, 1, 1) over() as cluster_id,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
@@ -278,41 +312,45 @@ WITH rearing AS
     )
 ),
 
--- cluster/aggregate
-rearing_clusters as
+cluster_minimums AS
 (
-  SELECT
-    segmented_stream_id,
-    ST_ClusterDBSCAN(geom, 1, 1) over() as cid,
-    geom
-  FROM rearing
-  ORDER BY segmented_stream_id
+SELECT DISTINCT ON (cluster_id)
+  cluster_id,
+  wscode_ltree,
+  localcode_ltree,
+  blue_line_key,
+  downstream_route_measure
+FROM rearing
+ORDER BY cluster_id, wscode_ltree asc, localcode_ltree asc, downstream_route_measure asc
 ),
 
--- find all rearing downstream of spawning and get distinct cluster ids present
-rearing_clusters_dnstr AS
+-- find all rearing clusters with spawning either:
+--   - upstream
+--   - upstream of stream that the rearing is trib to (and rearing is within 10m of confluence)
+rearing_clusters_dnstr_of_spawn AS
 (
-  SELECT DISTINCT cid
-  FROM rearing_clusters rc
-  INNER JOIN bcfishpass.streams s
-  ON rc.segmented_stream_id = s.segmented_stream_id
+  SELECT DISTINCT s.cluster_id
+  FROM cluster_minimums s
   INNER JOIN bcfishpass.streams spawn
+  -- make sure there is spawning habitat either upstream
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
-  AND s.watershed_group_code = spawn.watershed_group_code
+  -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
+  OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
   WHERE spawn.spawning_model_wct IS TRUE
+  AND spawn.watershed_group_code = :'wsg'
 ),
 
--- find ids of streams that compose the above clusters
+-- find the stream ids that we want to update
 rearing_ids AS
 (
   SELECT
     a.segmented_stream_id
-  FROM rearing_clusters a
-  INNER JOIN rearing_clusters_dnstr b
-  ON a.cid = b.cid
+  FROM rearing a
+  INNER JOIN rearing_clusters_dnstr_of_spawn b
+  ON a.cluster_id = b.cluster_id
 )
 
--- and finally, apply update based on these ids
+-- set rearing as true for these streams
 UPDATE bcfishpass.streams s
 SET rearing_model_wct = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
