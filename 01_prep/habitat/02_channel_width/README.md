@@ -2,36 +2,27 @@
 
 Modelled channel width can be used as an input to model spawning/rearing habitat (combined with stream gradient - and potentially with valley confinement).
 
-Most channel width predictors are available in the FWA, but we also need Mean Annual Precip
+Most channel width predictors are available in the FWA, but we also need Mean Annual Precip.
 
 ## Mean annual precipitation
 
 Mean annual precipitation (MAP) is taken from ClimateBC, using the [1981-2010 climate normal grid](http://raster.climatebc.ca/download/Normal_1981_2010MSY/Normal_1981_2010_annual.zip).  MAP is derived for each fundamental watershed, and an area-weighted average upstream MAP is calculated for each stream segment.
 
-To generate mean annual precipitation:
+To download, process and generate mean annual precipitation for each stream segment:
 
     ./mean_annual_precip.sh
 
-## Channel width - measured
+## Channel width
 
-Field measurements of channel width are available from FISS and PSCIS.
-Load FISS sample sites to the db, reference them to the streams and load channel width measurements from both sources to `bcfishpass.channel_width_measured`:
+Channel width is derived via three methods:
 
-    ./channel_width_measured.sh
+- mapped: we can derive the width of FWA river polygons (measuring the width between banks at 10% intervals and averaging the result)
+- measured: field measurements of channel width are available from FISS and PSCIS (averaging measurements where more than one is available for the same stream)
+- modelled: calculate the modelled channel width based on upstream area and mean annual precipitation
 
-## Channel width - mapped
+To run these calculations and load the data:
 
-We can directly measure the mapped channel width of FWA rivers.
-Measure width between banks at mid-point of stream segments of FWA rivers, loading to `bcfishpass.channel_width_mapped`:
-
-    psql -f sql/channel_width_mapped.sql
-
-## Channel width - modelled
-
-To derive channel width for streams where there is no measurement, we model the width based on upstream area and mean annual precip.
-To run the model, loading data to `bcfishpass.channel_width_modelled`:
-
-    psql -f sql/channel_width_modelled.sql
+    ./channel_width.sh
 
 
 ## Output tables
@@ -54,8 +45,17 @@ Indexes:
     "mean_annual_precip_localcode_ltree_idx1" btree (localcode_ltree)
     "mean_annual_precip_wscode_ltree_idx" gist (wscode_ltree)
     "mean_annual_precip_wscode_ltree_idx1" btree (wscode_ltree)
-```
-```
+
+Table "bcfishpass.channel_width_mapped"
+        Column        |       Type       | Collation | Nullable | Default
+----------------------+------------------+-----------+----------+---------
+ linear_feature_id    | bigint           |           | not null |
+ watershed_group_code | text             |           |          |
+ channel_width_mapped | double precision |           |          |
+Indexes:
+    "channel_width_mapped_pkey" PRIMARY KEY, btree (linear_feature_id)
+
+
 Table "bcfishpass.channel_width_measured"
          Column         |       Type       | Collation | Nullable |                                   Default
 ------------------------+------------------+-----------+----------+-----------------------------------------------------------------------------
@@ -74,10 +74,8 @@ Indexes:
     "channel_width_measured_localcode_ltree_idx1" btree (localcode_ltree)
     "channel_width_measured_wscode_ltree_idx" gist (wscode_ltree)
     "channel_width_measured_wscode_ltree_idx1" btree (wscode_ltree)
-```
 
 
-```
 Table "bcfishpass.channel_width_modelled"
          Column         |       Type       | Collation | Nullable |                                   Default
 ------------------------+------------------+-----------+----------+-----------------------------------------------------------------------------

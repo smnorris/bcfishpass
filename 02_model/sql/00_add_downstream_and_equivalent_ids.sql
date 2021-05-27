@@ -1,6 +1,6 @@
--- insert all data from table a into temp_table, plus a column
+-- Insert all data from table a into temp_table, plus a column
 -- noting which ids from table b are downstream of records in table a
--- features with equivalent blkey and measure are included
+-- Features with equivalent blkey and measure (within 1m) are included
 -- (ie, a point at the downstream end of a line)
 INSERT INTO {schema_a}.{temp_table}
 
@@ -33,7 +33,7 @@ downstream AS
             b.wscode_ltree,
             b.localcode_ltree,
             True,
-            .01
+            1
         )
         ORDER BY
           a.{id_a},

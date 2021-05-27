@@ -67,6 +67,18 @@ bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --fid railway_track_id
 bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --fid RAILWAY_STRUCTURE_LINE_ID
 bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --fid HWY_STRUCTURE_CLASS_ID
 
+# download modelled crossings archive (to extract exising IDs, they need to remain consistent)
+wget https://www.hillcrestgeo.ca/outgoing/fishpassage/data/bcfishpass/inputs/modelled_stream_crossings_archive.gpkg.zip
+unzip modelled_stream_crossings_archive.gpkg.zip
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:host=$PGHOST user=$PGUSER dbname=$PGDATABASE port=$PGPORT" \
+  -overwrite \
+  -nln bcfishpass.modelled_stream_crossings_archive \
+  modelled_stream_crossings_archive.gpkg \
+  modelled_stream_crossings_archive
+rm modelled_stream_crossings_archive.gpkg.zip
+rm modelled_stream_crossings_archive.gpkg
 
 # Now create modelled road/railway - stream crossings table by intersecting various transportation
 # features with FWA streams and removing duplicate crossings as best as possible
@@ -120,6 +132,9 @@ psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings USING BTREE (local
 psql -f sql/07_remove_duplicates.sql
 
 psql -f sql/08_identify_open_bottom_structures.sql
+
+# assign modelled_crossing_id from previous version to ensure consistency
+psql -f sql/09_match_archived_crossings.sql
 
 # load manual QA of modelled crossings - (modelled crossings that are either OBS or non-existent)
 psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"

@@ -33,7 +33,7 @@ cd ../../02_model
 # - and falls, misc
 cd ../01_prep/06_falls
 ./falls.sh
-cd ../07_misc
+cd ../08_misc
 ./misc.sh
 cd ../../02_model
 
@@ -157,6 +157,12 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.crossings
 # break streams at all falls, not just those already identified as barriers
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls_events_sp
 
+# in case they are not already broken at provided locations, break streams at ends of the manual habitat classification segments
+# (and rather than re-working segment-streams to accept upstream_route_measure, create a temp table holding the endpoint measures)
+psql -f sql/manual_habitat_classification_endpoints.sql
+python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.manual_habitat_classification_endpoints
+psql -c "DROP TABLE IF EXISTS bcfishpass.manual_habitat_classification_endpoints"
+
 # add column tracking upstream observations
 python bcfishpass.py add-upstream-ids bcfishpass.streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 
@@ -217,15 +223,23 @@ psql -f sql/load_channel_width.sql
 # load modelled discharge data to streams table (where available)
 psql -f sql/load_discharge.sql
 
-# run ch/co/st spawning and rearing models
+# run ch/co/st/wct spawning and rearing models
 psql -f sql/model_habitat_spawning.sql
-psql -f sql/model_habitat_rearing_1.sql  # ch/co/st rearing AND spawning streams (rearing with no connectivity analysis)
-psql -f sql/model_habitat_rearing_2.sql  # ch/co/st rearing downstream of spawning
-psql -f sql/model_habitat_rearing_3.sql  # ch/co/st rearing upstream of spawning
+
+psql -f sql/model_habitat_rearing_1.sql  # ch/co/st/wct rearing AND spawning streams (rearing with no connectivity analysis)
+
+# ch/co/st/wct rearing that is downstream of spawning
+time psql -t -P border=0,footer=no \
+-c "SELECT watershed_group_code FROM bcfishpass.param_watersheds ORDER BY watershed_group_code" \
+    | parallel psql -f sql/model_habitat_rearing_2.sql -v wsg={1}
+
+psql -f sql/model_habitat_rearing_3.sql  # ch/co/st/wct rearing upstream of spawning
 
 # sockeye have a different life cycle, run sockeye model separately (rearing and spawning)
 psql -f sql/model_habitat_sockeye.sql
 
+# override the model where specified by manual_habitat_classification
+psql -f sql/manual_habitat_classification.sql
 
 # Create generalized copy of streams for visualization
 psql -f sql/carto.sql

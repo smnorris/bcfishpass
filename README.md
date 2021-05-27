@@ -1,136 +1,94 @@
 # bcfishpass
 
-Scripts to:
+`bcfishpass` is a set of scripts to create and maintain an aquatic connectivity / fish passage database for British Columbia to:
 
-- prioritize assessment/remediation of potential barriers to fish passage, based primarily on stream gradient
-- monitor passability status based on BC Provincial Stream Crossing Information System (PSCIS)
-- view model and PSCIS status in a web map
+- track known barriers to fish passage (eg dams, waterfalls)
+- work with BC Provincial Stream Crossing Information System (PSCIS) crossings and barriers
+- model potential barriers to fish passage (stream gradient, road/rail stream crossings)
+- model passability/accessibility of streams based on barriers and species swimming ability
+- model potential habitat (spawning and rearing) for select species
+- prioritize assessment and remediation of barriers based on modelled accessibility and habitat
 
-View draft passability/accessiblility output at [https://www.hillcrestgeo.ca/projects/cwf_wcrp/](https://www.hillcrestgeo.ca/projects/cwf_wcrp/)
+Also provided are tools for mapping features in the database:
 
-## Background
-
-Generate a simple model of aquatic habitat connectivity by identifying natural barriers to fish passage (plus hydro dams that are not feasible to remediate) and classifying all streams not upstream of these barriers as *'potentially accessible'*.
-
-On potentially accessible streams, identify known barriers and additional anthropogenic features (primarily road/railway stream crossings, ie culverts) that are potentially barriers. To prioritize these features for assessment or remediation, we can report on how much modelled potentially accessible aquatic habitat the barriers may obstruct.
-
-The model can be refined with known fish observations. Depending on the modelling scenario, all aquatic habitat downstream of a given fish observation can be classified as *'observed accessbile'*, overriding any downstream barriers.
+- comprehensive QGIS layer file
+- basic MapboxGL stylesheet and web page
 
 
-### 1. Generate potentially accessible aquatic habitat
+## General Methodology
 
-Using the BC Freshwater Atlas as the base for analysis, these 'definite' barrier features are located on the stream network:
+`bcfishpass` is an update to the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions.
 
-- segments of >100m linear stream that are steeper than the user provided gradient threshold(s) based on swimming ability of species of interest (eg 15, 20, 25, 30)
-- major dams
-- waterfalls >5m
-- points corresponding to other natural stream characteristics that are potential barriers to fish passage (eg subsurface flow, intermittent flow, ditch flow)
+Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mapping base:
 
-All aquatic habitat downstream of these points is classified as potentially accessible to fish.  In the absence of any addtional anthropogenic barriers, anadramous species should be able to access all aquatic habitat below these definite barriers. Note that the definite barriers can be customized - for example, not all intermittent flows are barriers to fish passage.
+1. Collect data defining known definite/fixed barriers to fish passage (waterfalls >5m, subsurface flow, hydro dams that are not feasible to remediate) and reference to the stream network
+2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
+3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation (where applicable)
+4. Classify all streams downstream of resulting barriers as `POTENTIALLY ACCESSIBLE` (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
+5. Collect known (dams, PSCIS crossings) and modelled (road/railway stream crossings, ie culverts) anthropogenic barriers
+6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier (and downstream of other anthropogenic barriers)
 
-### 2. Generate observed accessible aquatic habitat
+To improve prioritization of barriers, `bcfishpass` also includes basic habitat potential modelling. Habitat potential for spawning and rearing is based on:
 
-Fish observation points from [bcfishobs](https://github.com/smnorris/bcfishobs) are loaded and stream segments below fish observations are identified. A user can then choose a species (or group of species) of interest and either classify all aquatic habitat downstream of observations of this species as observed accessible, or simply note that downstream definite barriers do not in fact restrict passage to this species.
+1. Stream gradient
+2. Stream discharge / stream channel width (modelled discharge where available, modelled channel width where discharge unavailable)
+3. Various species-specific connectivitiy criteria (eg. sockeye spawn must be connected to rearing lakes)
 
-### 3. Locate/generate anthropogenic barriers (culverts, dams, other)
-
-Anthropogenic barriers to fish passage (with potential for remediation) such as non-hydro dams and PSCIS crossings are referenced to the stream network. Locations of culverts are modelled by intersecting the stream network and roads/railways.  We then prioritize these barriers and potential barriers for assessment or remediation by reporting on how much potentially accessible aquatic habitat each barrier may block.
-
-### 4. Generate an output
-
-Based on the above features, we can define potentially accessible / potentially constrained aquatic habitat for different species and/or different regional scenarios.
+Streams meeting the criteria for a given species are classified as spawning or rearing habitat and the amount of spawning/rearing habitat upstream of barriers can be summarized for barrier prioritization.
 
 
 ## Requirements
 
-- Postgresql/PostGIS (tested with 12.4/3.0.2)
+- bash (primarily tested on macOS but should work on Linux or Windows Subsystem for Linux)
+- PostgreSQL/PostGIS (tested with 13.2/3.1.1, requires Postgres >= 12)
 - Python >= 3.7
-- [bcdata](https://github.com/smnorris/bcdata) (requires `GDAL`/`geopandas`/`rasterio`)
+- [bcdata](https://github.com/smnorris/bcdata)
 - a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg) >= v0.1.1
 - [bcfishobs](https://github.com/smnorris/bcfishobs) (BC fish observations and obstacles, loaded and processed)
-- gradient barrier points at 15/20/30 percent (data available from FPTWG on request)
 
 
 ## Installation / Setup
 
-Most scripts require `bash`.
-Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
-To create a `conda` environment and install all dependencies:
+`bcfishpass` is a collection of shell/sql/Python scripts - no installation is required, just download the scripts:
 
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
+
+Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
+A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file
+as required (to match your database connection) and then create/activate the environment:
+
     conda create -f environment.yml
     conda activate bcfpenv
 
-With the environment created and dependencies installed, load the data requirements:
+Once you have an environment created and can connect to the database successfully, load the base data and fish observations using scripts in these repositories:
 
-    - download fwapg, load BC FWA
-    - download bcfishobs, load BC fish observations and obstacles
-    - load gradient barriers to database
-
-
-### Environment variables
-
-As with `fwapg` and `bcfishobs`, scripts depend on several environment variables that point to the postgres database:
-
-    export PGHOST=localhost
-    export PGPORT=5432
-    export PGDATABASE=mydb
-    export PGUSER=postgres
-    # put these together
-    export DATABASE_URL='postgresql://'$PGUSER'@'$PGHOST':'$PGPORT'/'$PGDATABASE
-    # and a OGR compatible string
-    export PGOGR='host=localhost user=postgres dbname=mydb password=mypwd port=5432'
-
-Note that if you are using `conda`, `conda` can manage these - modify the variables in `environment.yml` as required.
-
-## Prep data
-
-#### Create modelled road-stream crossings
-
-    cd 01_prep/01_modelled_stream_crossings
-    ./modelled_stream_crossings.sh
-
-For details, see [modelled stream crossings](01_prep/01_modelled_stream_crossings).
-
-#### Clean PSCIS crossings and reference to stream network
-
-    cd 01_prep/02_pscis
-    ./pscis.sh
-
-For details, see [PSCIS](01_prep/02_pscis).
-
-#### Load CWF dams and reference to stream network
-
-    cd 01_prep/03_dams
-    ./dams.sh
-
-For details, see [dams](01_prep/03_dams).
-
-#### Load channel width data
-
-    cd 01_prep/04_channel_width
-    ./channel_width.sh
-
-For details, see [channel_width](01_prep/04_channel_width).
-
-#### Load additional barriers/potential barriers
-
-Load additional misc barriers as identified via local knowledge and waterfalls that are potential barriers (prepped by CWF).
-
-    cd 01_prep/05_other
-    ./falls.sh
-
-For details, see [other](01_prep/05_other).
+- [Freshwater Atlas](https://github.com/smnorris/fwapg)
+- [Known Fish Observations](https://github.com/smnorris/bcfishobs)
 
 
-## Run model
+## Usage
 
-    cd 02_model
-    ./model.sh
+All data preparation scripts (`01_data`) must be run before running the final stream classification models (`02_model`).
+As usage of `bcfishpass` will generally depend on study area and species of interest, improved documentation is under development.
 
-For details, see [model](02_model).
+### Data preparation
 
+See the instructions in the various folders in [`01_prep`](01_prep) for how to run these scripts.
 
+### Model
 
+See the instructions in [`02_model`](02_model) for how to run the access and habitat models, creating the output `streams` and `crossings` tables for analysis and mapping.
 
+## Credits
+
+These tools are made possible by the work and funding of the following groups:
+
+- [BC Fish Passage Technical Working Group (FPTWG)](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage)
+- [Canadian Wildlife Federation (CWF)](https://cwf-fcf.org/en/explore/fish-passage/breaking-down-barriers.html)
+- [BC Salmon Restoration and Innovation Fund (BCSRIF)](https://www.dfo-mpo.gc.ca/fisheries-peches/initiatives/fish-fund-bc-fonds-peche-cb/index-eng.html)
+- [Canada Nature Fund for Aquatic Species at Risk (CNFASAR)](https://www.dfo-mpo.gc.ca/species-especes/sara-lep/cnfasar-fnceap/index-eng.html)
+- [BC Fish and Wildlife Compensation Program (FWCP)](https://fwcp.ca/)
+- [Society for Ecosystem Restoration in Northern British Columbia (SERNBC)](https://sernbc.ca/)
+- [New Graph Environment](https://www.newgraphenvironment.com/)
+- [Hillcrest Geographics](https://www.hillcrestgeo.ca)
