@@ -5,7 +5,5 @@ CREATE TABLE bcfishpass.gradient_barriers_passable
 downstream_route_measure double precision,
 watershed_group_code text,
 reviewer text,
-notes text);
-
-ALTER TABLE bcfishpass.gradient_barriers_passable
-ADD PRIMARY KEY (blue_line_key, downstream_route_measure);
+notes text,
+PRIMARY KEY (blue_line_key, downstream_route_measure));

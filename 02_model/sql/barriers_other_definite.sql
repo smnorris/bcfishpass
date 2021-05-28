@@ -14,7 +14,6 @@ CREATE TABLE bcfishpass.barriers_other_definite
     localcode_ltree ltree,
     watershed_group_code text,
     geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
     UNIQUE (blue_line_key, downstream_route_measure)
 );
 
@@ -63,7 +62,7 @@ INSERT INTO bcfishpass.barriers_other_definite
 )
 
 SELECT
-    a.barrier_type,
+    'MISC' as barrier_type,
     a.barrier_name,
     s.linear_feature_id,
     a.blue_line_key,

@@ -1,6 +1,6 @@
-# Other features
+# Misc barriers
 
-Load misc barriers, load additional waterfalls, load lookup for identifying selected gradient barriers as passable:
+Load misc barriers (plus lookup for identifying selected gradient barriers as passable)
 
-    ./other.sh
+    ./misc.sh
 
