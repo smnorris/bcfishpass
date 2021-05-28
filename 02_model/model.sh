@@ -23,19 +23,18 @@ psql -f sql/utmzone.sql
 # - modelled crossings fixes
 psql -c "DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes"
 psql -c "CREATE TABLE bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id integer PRIMARY KEY, structure text, watershed_group_code text, reviewer text, notes text)"
-psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM '../01_prep/01_modelled_stream_crossings/data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.modelled_stream_crossings_fixes FROM '../01_prep/barriers/05_modelled_stream_crossings/data/modelled_stream_crossings_fixes.csv' delimiter ',' csv header"
 psql -c "CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id)"
 # - load pscis / pscis fixes and re-run scripts matching PSCIS points to streams
-cd ../01_prep/02_pscis
+cd ../01_prep/barriers/04_pscis
 ./load.sh
 ./pscis.sh
-cd ../../02_model
 # - and falls, misc
-cd ../01_prep/06_falls
+cd ../01_falls
 ./falls.sh
-cd ../08_misc
+cd ../06_misc
 ./misc.sh
-cd ../../02_model
+cd ../../../02_model
 
 # -----------
 # Create barrier tables, run access model
