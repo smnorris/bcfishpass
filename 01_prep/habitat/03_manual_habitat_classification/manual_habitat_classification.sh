@@ -14,7 +14,7 @@ psql -c "CREATE TABLE bcfishpass.manual_habitat_classification (
   watershed_group_code varchar(4),
   source text,
   notes text,
-  PRIMARY KEY (blue_line_key, downstream_route_measure,species_code,habitat_type)
+  PRIMARY KEY (blue_line_key, downstream_route_measure,species_code, habitat_type)
   )"
 
 # load the data
