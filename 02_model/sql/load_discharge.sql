@@ -6,6 +6,6 @@ SET
   mad_m3s = f.mad_m3s
 FROM foundry.fwa_streams_mad f
 WHERE s.linear_feature_id = f.linear_feature_id
-AND s.watershed_group_code NOT IN ('BULK', 'HORS'); -- BULK and HORS are proprietary, do not incude in output streams table
+AND s.watershed_group_code NOT IN ('BULK', 'HORS', 'ELKR'); -- data for these watersheds is proprietary, do not incude in output streams table
 
 
