@@ -32,4 +32,18 @@ CREATE TABLE bcfishpass.misc_barriers_anthropogenic
 
 \copy bcfishpass.misc_barriers_anthropogenic FROM 'data/misc_barriers_anthropogenic.csv' delimiter ',' csv header
 
+DROP TABLE IF EXISTS bcfishpass.exclusions;
+CREATE TABLE bcfishpass.exclusions
+(
+    blue_line_key integer,
+    downstream_route_measure double precision,
+    barrier_name text,
+    watershed_group_code text,
+    reviewer text,
+    notes text,
+    UNIQUE (blue_line_key, downstream_route_measure)
+);
+
+\copy bcfishpass.exclusions FROM 'data/exclusions.csv' delimiter ',' csv header
+
 commit;

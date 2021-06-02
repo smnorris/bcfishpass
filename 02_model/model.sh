@@ -74,11 +74,11 @@ python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_steelhead defi
 python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 python bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 
-# remove definite barriers below WCT observations (that were not manually added (type='MISC'))
+# remove definite barriers below WCT observations
 # ** NOTE **
 # This assumes there are ONLY WCT observations in WCT groups - currently true...but may not be in the future
 # **********
-psql -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE upstr_observation_id IS NOT NULL AND barrier_type NOT IN ('MISC', 'PSCIS_NOT_ACCESSIBLE')"
+psql -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE upstr_observation_id IS NOT NULL AND barrier_type NOT IN ('EXCLUSION')"
 
 # note minimal definite barriers
 python bcfishpass.py add-downstream-ids \

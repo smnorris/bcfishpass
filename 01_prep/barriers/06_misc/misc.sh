@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-# load misc barriers
+# load misc barriers and exclusions
 psql -f sql/misc_barriers.sql
 
 # load table listing gradient barriers for removal

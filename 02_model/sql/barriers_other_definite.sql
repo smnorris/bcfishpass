@@ -17,6 +17,37 @@ CREATE TABLE bcfishpass.barriers_other_definite
     UNIQUE (blue_line_key, downstream_route_measure)
 );
 
+-- insert exclusions first as they take priority in event there are other features at the same location
+INSERT INTO bcfishpass.barriers_other_definite
+(
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+)
+
+SELECT
+    'EXCLUSION' as barrier_type,
+    a.barrier_name,
+    s.linear_feature_id,
+    a.blue_line_key,
+    a.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.watershed_group_code,
+    ST_Force2D(FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
+FROM bcfishpass.exclusions a
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON a.blue_line_key = s.blue_line_key AND
+   a.downstream_route_measure > s.downstream_route_measure - .001 AND
+   a.downstream_route_measure + .001 < s.upstream_route_measure
+ON CONFLICT DO NOTHING;
+
 
 INSERT INTO bcfishpass.barriers_other_definite
 (
@@ -77,6 +108,7 @@ ON a.blue_line_key = s.blue_line_key AND
    a.downstream_route_measure > s.downstream_route_measure - .001 AND
    a.downstream_route_measure + .001 < s.upstream_route_measure
 ON CONFLICT DO NOTHING;
+
 
 
 CREATE INDEX ON bcfishpass.barriers_other_definite (linear_feature_id);
