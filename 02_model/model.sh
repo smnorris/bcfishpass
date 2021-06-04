@@ -154,7 +154,7 @@ python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.barriers_othe
 python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.crossings
 
 # break streams at all falls, not just those already identified as barriers
-python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls_events_sp
+python bcfishpass.py segment-streams bcfishpass.streams bcfishpass.falls
 
 # in case they are not already broken at provided locations, break streams at ends of the manual habitat classification segments
 # (and rather than re-working segment-streams to accept upstream_route_measure, create a temp table holding the endpoint measures)

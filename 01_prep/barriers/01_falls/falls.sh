@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
+tmp="${TEMP:-/tmp}"
+
 # Script to:
 # - load falls from FISS and falls.geojson,
 # - match pts to streams
@@ -16,8 +18,9 @@ psql -c "CREATE TABLE whse_fish.fiss_obstacles_pnt_sp_$DOWNLOAD_DATE AS SELECT *
 bcdata bc2pg WHSE_FISH.FISS_OBSTACLES_PNT_SP
 
 # load additional (unpublished) obstacle data (provided by the Province, 2014)
-wget -N https://hillcrestgeo.ca/outgoing/public/whse_fish/whse_fish.fiss_obstacles_unpublished.csv.zip
-unzip whse_fish.fiss_obstacles_unpublished.csv.zip
+wget --trust-server-names -qNP "$tmp" https://hillcrestgeo.ca/outgoing/public/whse_fish/whse_fish.fiss_obstacles_unpublished.csv.zip
+unzip -qjun -d "$tmp" "$tmp/whse_fish.fiss_obstacles_unpublished.csv.zip"
+
 psql -c "DROP TABLE IF EXISTS bcfishpass.fiss_obstacles_unpublished;"
 psql -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
  (id                 integer           ,
@@ -31,19 +34,19 @@ psql -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
  strsrvy_rchsrvy_id numeric           ,
  sitesrvy_id        numeric           ,
  comments           character varying)"
-psql -c "\copy bcfishpass.fiss_obstacles_unpublished FROM 'fiss_obstacles_unpublished.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.fiss_obstacles_unpublished FROM '$tmp/fiss_obstacles_unpublished.csv' delimiter ',' csv header"
 
 
 # load lookup that controls barrier status for FISS falls
-psql -c "DROP TABLE IF EXISTS bcfishpass.falls_fiss_barrier_ind;"
-psql -c "CREATE TABLE bcfishpass.falls_fiss_barrier_ind
+psql -c "DROP TABLE IF EXISTS bcfishpass.falls_barrier_ind;"
+psql -c "CREATE TABLE bcfishpass.falls_barrier_ind
  (blue_line_key              integer,
  downstream_route_measure    integer,
  barrier_ind                 boolean,
  watershed_group_code        text,
  reviewer                    text,
  notes                       text)"
-psql -c "\copy bcfishpass.falls_fiss_barrier_ind FROM 'data/falls_fiss_barrier_ind.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.falls_barrier_ind FROM 'data/falls_barrier_ind.csv' delimiter ',' csv header"
 
 
 # load other falls, from various sources (add any new falls to this table)
@@ -62,5 +65,3 @@ psql -c "\copy bcfishpass.falls_other FROM 'data/falls_other.csv' delimiter ',' 
 
 # match falls to streams, combine sources
 psql -f sql/falls.sql
-
-
