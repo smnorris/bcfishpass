@@ -463,7 +463,7 @@ ON FWA_Upstream(
     s.wscode_ltree,
     s.localcode_ltree,
     True,
-    .02
+    1
    )
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
@@ -572,7 +572,7 @@ WITH lake_wetland_rearing AS
       s.wscode_ltree,
       s.localcode_ltree,
       True,
-      .02
+      1
      )
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
@@ -614,7 +614,7 @@ ON FWA_Upstream(
     s.wscode_ltree,
     s.localcode_ltree,
     True,
-    .02
+    1
    )
 LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lake
 ON s.waterbody_key = lake.waterbody_key
@@ -857,7 +857,6 @@ SET
 FROM report r
 WHERE p.{point_id} = r.{point_id};
 
-
 -- also, populate map tile column
 WITH tile AS
 (
@@ -874,6 +873,7 @@ SET dbm_mof_50k_grid = t.map_tile_display_name
 FROM tile t
 WHERE p.{point_id} = t.{point_id};
 
+-- ----------------------------------------------------------------------------------
 -- what would be newly accessible (to resident WCT) if remediating a given barrier
 -- (simply sum everything to all adjacent barriers)
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS wct_betweenbarriers_network_km double precision DEFAULT 0;
@@ -908,3 +908,4 @@ SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km,
 WHERE {dnstr_barriers_id} IS NULL
 AND wct_network_km != 0
 AND watershed_group_code = 'ELKR';
+-- ----------------------------------------------------------------------------------
