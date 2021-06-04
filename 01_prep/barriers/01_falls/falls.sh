@@ -52,15 +52,17 @@ psql -c "\copy bcfishpass.falls_barrier_ind FROM 'data/falls_barrier_ind.csv' de
 # load other falls, from various sources (add any new falls to this table)
 psql -c "DROP TABLE IF EXISTS bcfishpass.falls_other"
 psql -c "CREATE TABLE bcfishpass.falls_other
-  (falls_other_id integer primary key,
-   height numeric,
-   barrier_ind boolean,
+  (
    blue_line_key integer,
    downstream_route_measure integer,
+   barrier_ind boolean,
+   height numeric,
    watershed_group_code text,
    source text,
    reviewer text,
-   notes text)"
+   notes text,
+   primary key (blue_line_key, downstream_route_measure)
+   )"
 psql -c "\copy bcfishpass.falls_other FROM 'data/falls_other.csv' delimiter ',' csv header"
 
 # match falls to streams, combine sources
