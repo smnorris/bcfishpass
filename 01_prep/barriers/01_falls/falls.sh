@@ -16,6 +16,8 @@ psql -c "CREATE TABLE whse_fish.fiss_obstacles_pnt_sp_$DOWNLOAD_DATE AS SELECT *
 bcdata bc2pg WHSE_FISH.FISS_OBSTACLES_PNT_SP
 
 # load additional (unpublished) obstacle data (provided by the Province, 2014)
+wget -N https://hillcrestgeo.ca/outgoing/public/whse_fish/whse_fish.fiss_obstacles_unpublished.csv.zip
+unzip whse_fish.fiss_obstacles_unpublished.csv.zip
 psql -c "DROP TABLE IF EXISTS bcfishpass.fiss_obstacles_unpublished;"
 psql -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
  (id                 integer           ,
@@ -29,7 +31,8 @@ psql -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
  strsrvy_rchsrvy_id numeric           ,
  sitesrvy_id        numeric           ,
  comments           character varying)"
-psql -c "\copy bcfishpass.fiss_obstacles_unpublished FROM 'data/fiss_obstacles_unpublished.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.fiss_obstacles_unpublished FROM 'fiss_obstacles_unpublished.csv' delimiter ',' csv header"
+
 
 # load lookup that controls barrier status for FISS falls
 psql -c "DROP TABLE IF EXISTS bcfishpass.falls_fiss_barrier_ind;"
