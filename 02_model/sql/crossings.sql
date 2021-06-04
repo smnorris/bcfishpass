@@ -31,7 +31,8 @@ CREATE TABLE bcfishpass.crossings
     crossing_subtype_code text,           -- PSCIS crossing_subtype_code info (BRIDGE, FORD, ROUND etc) (NULL for modelled crossings)
     modelled_crossing_type_source text[], -- for modelled crossings, what data source(s) indicate that a modelled crossing is OBS
     barrier_status text,                  -- PSCIS barrier status if available, otherwise 'POTENTIAL' for modelled CBS, 'PASSABLE' for modelled OBS
-    pscis_road_name text,
+    pscis_road_name text,                 -- road name from pscis assessment
+    pscis_assessment_comment text,        -- comments from pscis assessment
 
     -- DRA info
     transport_line_structured_name_1 text,
@@ -92,6 +93,7 @@ COMMENT ON COLUMN bcfishpass.crossings.crossing_subtype_code IS 'Further definit
 COMMENT ON COLUMN bcfishpass.crossings.modelled_crossing_type_source IS 'List of sources that indicate if a modelled crossing is open bottom, Acceptable values are: FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order >=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, "MANUAL FIX"=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}';
 COMMENT ON COLUMN bcfishpass.crossings.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential Barrier, BARRIER - Barrier, UNKOWN - Other';
 COMMENT ON COLUMN bcfishpass.crossings.pscis_road_name  IS 'PSCIS road name, taken from the PSCIS assessment data submission';
+COMMENT ON COLUMN bcfishpass.crossings.pscis_assessment_comment  IS 'PSCIS assessment_comment, taken from the PSCIS assessment data submission';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_structured_name_1 IS 'DRA road name, taken from the nearest DRA road (within 30m)';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_type_description IS 'DRA road type, taken from the nearest DRA road (within 30m)';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_surface_description IS 'DRA road surface, taken from the nearest DRA road (within 30m)';
@@ -135,6 +137,7 @@ INSERT INTO bcfishpass.crossings
     modelled_crossing_type_source,
     barrier_status,
     pscis_road_name,
+    pscis_assessment_comment,
 
     transport_line_structured_name_1,
     transport_line_type_description,
@@ -182,6 +185,7 @@ SELECT
     END as barrier_status,
 
     a.road_name as pscis_road_name,
+    a.assessment_comment as pscis_assessment_comment,
 
     dra.structured_name_1 as transport_line_structured_name_1,
     dratype.description as transport_line_type_description,
@@ -368,6 +372,7 @@ INSERT INTO bcfishpass.crossings
     crossing_subtype_code,
     barrier_status,
     pscis_road_name,
+    pscis_assessment_comment,
 
     transport_line_structured_name_1,
     transport_line_type_description,
@@ -407,6 +412,7 @@ SELECT DISTINCT ON (stream_crossing_id)
       ELSE  e.current_barrier_result_code
     END as barrier_status,
     a.road_name as pscis_road_name,
+    a.assessment_comment as pscis_assessment_comment,
 
     r.transport_line_structured_name_1,
     r.transport_line_type_description,

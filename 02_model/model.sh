@@ -257,6 +257,10 @@ python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfa
 python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
+# add habitat per barrier column to crossings table
+# this could potentially be included in the report.sql and added to all barrier tables, but it is only required for the
+psql -f sql/all_spawningrearing_per_barrier.sql
+
 # populating the belowupstrbarriers for OBS in the crossings table requires a separate query
 # (because the dnstr_barriers_anthropogenic is used in above report, and that misses the OBS of interest)
 psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
