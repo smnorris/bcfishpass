@@ -117,8 +117,6 @@ def add_downstream_ids(
     conn.set_isolation_level(0)
     cur = conn.cursor()
     cur.execute(f"VACUUM ANALYZE {schema_a}.{table_a}")
-    # downstream ids are stored as intarray, we could index them
-    # db.execute(f"CREATE INDEX ON {schema_a}.{table_a} USING GIST ({downstream_ids_col} gist__int_ops);")
 
 
 @cli.command()

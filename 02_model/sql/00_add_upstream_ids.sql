@@ -30,7 +30,9 @@ upstream AS
             b.blue_line_key,
             b.downstream_route_measure,
             b.wscode_ltree,
-            b.localcode_ltree
+            b.localcode_ltree,
+            False,
+            1
         )
         ORDER BY
           a.{id_a},
