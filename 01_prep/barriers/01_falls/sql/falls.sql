@@ -130,46 +130,8 @@ CREATE TABLE bcfishpass.falls
 );
 
 
--- ---------------------------------------------
--- First, load manually reviewed falls, they should take precedence over other sources at the same location
--- ---------------------------------------------
-INSERT INTO bcfishpass.falls
- (
- source,
- height,
- barrier_ind,
- reviewer,
- notes,
- linear_feature_id,
- blue_line_key,
- downstream_route_measure,
- wscode_ltree,
- localcode_ltree,
- watershed_group_code,
- geom)
-SELECT
-  p.source,
-  p.height,
-  p.barrier_ind,
-  p.reviewer,
-  p.notes,
-  s.linear_feature_id,
-  p.blue_line_key,
-  p.downstream_route_measure,
-  s.wscode_ltree,
-  s.localcode_ltree,
-  s.watershed_group_code,
-  (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, p.downstream_route_measure)))).geom as geom
-FROM bcfishpass.falls_other p
-INNER JOIN whse_basemapping.fwa_stream_networks_sp s
-ON p.blue_line_key = s.blue_line_key AND
-p.downstream_route_measure > s.downstream_route_measure - .001 AND
-p.downstream_route_measure + .001 < s.upstream_route_measure
-ON CONFLICT DO NOTHING;
-
-
 -- ----------------------------------------------
--- Next, reference FISS falls to the FWA stream network, matching to closest stream
+-- Reference FISS falls to the FWA stream network, matching to closest stream
 -- that has matching watershed code (via 50k/20k lookup)
 -- FISS falls >= 5m are barrier_ind = True, or as indicated in falls_barrier_ind.csv
 -- ----------------------------------------------
@@ -460,6 +422,43 @@ SELECT
 FROM whse_basemapping.fwa_obstructions_sp
 WHERE obstruction_type = 'Falls'
 AND watershed_group_code NOT IN ('BULK','LNIC','HORS','ELKR') -- exclude these for now
+ON CONFLICT DO NOTHING;
+
+-- ---------------------------------------------
+-- Finally, load manually added falls
+-- ---------------------------------------------
+INSERT INTO bcfishpass.falls
+ (
+ source,
+ height,
+ barrier_ind,
+ reviewer,
+ notes,
+ linear_feature_id,
+ blue_line_key,
+ downstream_route_measure,
+ wscode_ltree,
+ localcode_ltree,
+ watershed_group_code,
+ geom)
+SELECT
+  p.source,
+  p.height,
+  p.barrier_ind,
+  p.reviewer,
+  p.notes,
+  s.linear_feature_id,
+  p.blue_line_key,
+  p.downstream_route_measure,
+  s.wscode_ltree,
+  s.localcode_ltree,
+  s.watershed_group_code,
+  (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, p.downstream_route_measure)))).geom as geom
+FROM bcfishpass.falls_other p
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON p.blue_line_key = s.blue_line_key AND
+p.downstream_route_measure > s.downstream_route_measure - .001 AND
+p.downstream_route_measure + .001 < s.upstream_route_measure
 ON CONFLICT DO NOTHING;
 
 
