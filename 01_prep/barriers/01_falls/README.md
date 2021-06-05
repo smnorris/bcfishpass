@@ -33,11 +33,11 @@ Populate the `barrier_ind` column in this file to control the barrier status of 
 ## Output table
 
 `bcfishpass.falls` contains all known falls features - only features of `barrier_ind IS TRUE` are used for connectivity modelling.
+Note that there is no ID used as a primary key. This is because the FISS Obstacles table does not have a stable primary key - we use `blue_line_key` and `downstream_route_measure` as the primary key.
 ```
                                                   Table "bcfishpass.falls"
           Column          |         Type         | Collation | Nullable |                      Default
 --------------------------+----------------------+-----------+----------+----------------------------------------------------
- falls_id                 | integer              |           | not null | nextval('bcfishpass.falls_falls_id_seq'::regclass)
  source                   | text                 |           |          |
  height                   | double precision     |           |          |
  barrier_ind              | boolean              |           |          |

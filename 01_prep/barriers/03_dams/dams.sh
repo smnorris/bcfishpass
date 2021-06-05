@@ -15,7 +15,7 @@ ogr2ogr -f PostgreSQL \
   -t_srs EPSG:3005 \
   -lco GEOMETRY_NAME=geom \
   -lco FID=bcdams_id \
-  -nln bcfishpass.bcdams \
+  -nln bcfishpass.cwf_bcdams \
   $tmp/bcdams.geojson \
   bcdams
 
