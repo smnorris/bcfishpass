@@ -1,14 +1,62 @@
-# Waterfalls
+# Falls
 
-Load waterfalls and classify features of >5m height as barriers to fish passage.
+Download waterfall data from various sources, match to FWA stream network, identify barriers.
 
 ## Sources
 
-- BC FISS obstacles: WHSE_FISH.FISS_OBSTACLES_PNT_SP
-- [unpublished FISS obstacles data](https://www.hillcrestgeo.ca/outgoing/public/whse_fish)
-- Falls from [FWA obstructions table](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions)
-- other falls, manually compiled (Canadian Wildlife Federation, New Graph Environment)
+- FISS obstacles, [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/provincial-obstacles-to-fish-passage)
+- FISS obstacles, [unpublished](https://www.hillcrestgeo.ca/outgoing/public/whse_fish)
+- FWA obstructions, [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions)
+- [Manually compiled](data/falls_other.csv)
 
-## Load
+## Usage
+
+#### Adding features
+
+Edit the manually compiled falls file `data/falls_other.csv` as required to add falls not present in other data sources.
+
+#### Barriers
+
+The script classifies barriers to fish passage as follows:
+
+- FISS falls with height value >= 5
+- all FWA falls (height is not present in this data)
+
+Edit `data/falls_barrier_ind.csv` to modify the barrier status of any FISS/FWA falls as required.
+
+#### Load and process
 
     ./falls.sh
+
+## Output table
+
+`bcfishpass.falls` contains all known falls features - only features of `barrier_ind IS TRUE` are used for connectivity modelling.
+```
+                                                  Table "bcfishpass.falls"
+          Column          |         Type         | Collation | Nullable |                      Default
+--------------------------+----------------------+-----------+----------+----------------------------------------------------
+ falls_id                 | integer              |           | not null | nextval('bcfishpass.falls_falls_id_seq'::regclass)
+ source                   | text                 |           |          |
+ height                   | double precision     |           |          |
+ barrier_ind              | boolean              |           |          |
+ reviewer                 | text                 |           |          |
+ notes                    | text                 |           |          |
+ distance_to_stream       | double precision     |           |          |
+ linear_feature_id        | bigint               |           |          |
+ blue_line_key            | integer              |           |          |
+ downstream_route_measure | double precision     |           |          |
+ wscode_ltree             | ltree                |           |          |
+ localcode_ltree          | ltree                |           |          |
+ watershed_group_code     | text                 |           |          |
+ geom                     | geometry(Point,3005) |           |          |
+Indexes:
+    "falls_pkey" PRIMARY KEY, btree (falls_id)
+    "falls_blue_line_key_downstream_route_measure_key" UNIQUE CONSTRAINT, btree (blue_line_key, downstream_route_measure)
+    "falls_blue_line_key_idx" btree (blue_line_key)
+    "falls_geom_idx" gist (geom)
+    "falls_linear_feature_id_idx" btree (linear_feature_id)
+    "falls_localcode_ltree_idx" gist (localcode_ltree)
+    "falls_localcode_ltree_idx1" btree (localcode_ltree)
+    "falls_wscode_ltree_idx" gist (wscode_ltree)
+    "falls_wscode_ltree_idx1" btree (wscode_ltree)
+```
