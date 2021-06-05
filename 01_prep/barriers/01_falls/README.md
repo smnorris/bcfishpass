@@ -22,7 +22,7 @@ Add records to `data/falls_barrier_ind.csv` to override the modelled the barrier
 
 #### Adding features
 
-To add falls not present in other data sources, add rows to the manually compiled falls file `data/falls_other.csv` as required.
+To add falls not present in FISS/FWA, add rows to the manually compiled falls file `data/falls_other.csv` as required.
 Populate the `barrier_ind` column in this file to control the barrier status of features added.
 
 
