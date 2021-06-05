@@ -1,17 +1,25 @@
 # PSCIS
 
-The [BC Provincial Stream Crossing Information System](https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/land-based-investment/investment-categories/fish-passage) (PSCIS) monitors fish passage on road-stream crossings throughout British Columbia. These scripts index the crossings on the BC Freshwater Atlas stream network - creating an event table that permits upstream/downstream queries. This enables reporting on aquatic habitat potentially blocked by failed culverts.
+The [BC Provincial Stream Crossing Information System](https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/land-based-investment/investment-categories/fish-passage) (PSCIS) monitors fish passage status of road (and rail) stream crossings (ie bridges and culverts).
 
-## Matching PSCIS crossings to modelled crossings or streams
+These scripts reference PSCIS features to the BC Freshwater Atlas stream network and identify potential problems in the PSCIS data.
 
-PSCIS crossings (location based on GPS coordinates at site) need to be matched to the correct stream for priorization to work. Also, to avoid duplication when mapping and reporting on barriers, we need to match PSCIS crossings to modelled crossings.
-
-The scripts included match PSCIS points to streams and modelled crossings based primarily on minimum distance (with some basic checks). Because mapping is often not true to real world coordinates and GPS errors do occur, this is not good enough in many instances - a PSCIS barrier on a small tributary can easily (and often) be snapped to a major river that happens to be closer to the PSCIS point. To eliminate this issue, a manually built lookup table is included to enforce the correct matching of PSCIS points to modelled crossings or streams.
-
-Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is added or when errors in snapping are found. Rows should be added in one of three patterns:
+## Usage
 
 
-1. Force match of a PSCIS crossing to specific modelled crossing:
+### Edit lookup
+The scripts included match PSCIS points to streams and modelled crossings based primarily on minimum distance (with some basic checks).
+Because mapping, GPS and data entry errors are common, this is inadequate. For instance, the GPS coordinates of a PSCIS crossing for an
+assessment of a small tributary may be closer to the mapped location of a major river than the stream on which the assessment was done -
+if this occurs at a PSCIS barrier, everything upstream on the major system will incorrectly be coded as inaccessible.  To eliminate this
+issue, a manually built lookup table is included to enforce the correct matching of PSCIS points to modelled crossings or streams.
+
+Edit the lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is
+added or when errors in snapping are found. Rows should be added using one of three patterns below:
+
+
+1. Force match of a PSCIS crossing to specific modelled crossing (this implicitly matches the PSCIS crossing to the correct stream) by
+adding the PSCIS `stream_crossing_id` and the corresponding ``modelled_crossing_id``:
 
 
     | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes |
@@ -19,7 +27,8 @@ Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_m
     |              197656|             1800071  |                   |       SN | Match based on assessor comments |
 
 
-2. Force match of a PSCIS crossing to a stream (where no modelled crossing is present):
+2. Force match of a PSCIS crossing to a stream at a location where no modelled crossing is present by adding the PSCIS
+`stream_crossing_id` and the `linear_feature_id` of the matched stream.
 
 
     | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes         |
@@ -27,17 +36,18 @@ Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_m
     |              3085  |                      | 17081483          |       SN | No modelled crossing, matched to stream |
 
 
-3. Force **no** match of PSCIS crossing to any FWA stream (there is no mapped stream that corresponds to the assessment):
+3. If there is no mapped stream that corresponds to the the PSCIS feature, we can force **no** match of the PSCIS crossing to any FWA stream
+by adding the `stream_crossing_id` and leaving the `modelled_crossing_id` and `linear_feature_id` empty:
 
     | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes       |
     |--------------------|----------------------|-------------------|----------|---------------------------------------|
     |              2901  |                      |                   |       SN | No stream mapped at crossing location |
 
 
-Note that PSCIS crossings not on mapped streams are NOT included in prioritization and habitat reporting.
+Note that PSCIS crossings not on mapped streams cannot be included in habitat reporting/prioritization.
 
 
-## Run scripts
+### Run scripts
 
     ./pscis.sh
 
@@ -46,7 +56,7 @@ Note that PSCIS crossings not on mapped streams are NOT included in prioritizati
 
 Each step noted matches the sql script / output table name:
 
-1. **`pscis_points_all`**  Combines the four `WHSE_FISH.PSCIS` views (assessments, confirmations, designs, remediations) into a single table with unique crossing locations.
+1. **`pscis_points_all`**  Combines the four `WHSE_FISH.PSCIS` sources (assessments, confirmations, designs, remediations) into a single table with unique crossing locations.
 
 2. **`pscis_events_prelim1`**  References `pscis_points_all` to the closest stream(s) in FWA stream network within 100m. A crossing will often be within 100m of more than one stream, all results are kept in this preliminary step.
 
@@ -65,7 +75,7 @@ Each step noted matches the sql script / output table name:
 5. **`pscis_events_prelim3`**  Combine the results from 1 and 2 above into a single table that is our best guess of which stream the PSCIS crossing should be associdated with. Because we do not want to overly shift the field GPS coordinates in PSCIS, we are very conservative with matching to modelled points and will primarily snap to the closest point on the stream rather than a modelled crossing farther away.
 
 6. **`pscis_events`**  Create primary output table of interest - all pscis records (that are on a stream) as points on the FWA stream network.
-Do this by first adding all PSCIS records that have been manually matched to streams to the event table (currently `BULK`, `ELKR`, `HORS`, `LNIC`).
+Do this by first adding all PSCIS records that have been manually matched to streams to the event table.
 For remaining points, remove locations from `pscis_events_prelim3` which are obvious duplicates (instream position is within 5m).
 The PSCIS feature retained is based on (in order of priority):
     - status (in order of REMEDIATED, DESIGN, CONFIRMATION, ASSESSED)

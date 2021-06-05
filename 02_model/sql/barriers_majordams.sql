@@ -40,7 +40,7 @@ SELECT
     d.localcode_ltree,
     d.watershed_group_code,
     ST_Force2D((st_Dump(d.geom)).geom)
-FROM bcfishpass.bcdams_events d
+FROM bcfishpass.dams d
 INNER JOIN bcfishpass.param_watersheds g
 ON d.watershed_group_code = g.watershed_group_code
 AND g.include IS TRUE

@@ -469,3 +469,10 @@ CREATE INDEX ON bcfishpass.falls USING BTREE (wscode_ltree);
 CREATE INDEX ON bcfishpass.falls USING GIST (localcode_ltree);
 CREATE INDEX ON bcfishpass.falls USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.falls USING GIST (geom);
+
+
+-- drop the load/intermediate tables
+DROP TABLE bcfishpass.falls_other;
+DROP TABLE bcfishpass.falls_barrier_ind;
+DROP TABLE bcfishpass.fiss_obstacles_falls;
+DROP TABLE bcfishpass.fiss_obstacles_unpublished;
