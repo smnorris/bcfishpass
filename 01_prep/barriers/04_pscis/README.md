@@ -34,16 +34,10 @@ Edit this lookup [`data/pscis_modelledcrossings_streams_xref.csv`](`data/pscis_m
     |              2901  |                      |                   |       SN | No stream mapped at crossing location |
 
 
-Note that PSCIS crossings not on mapped streams are included in prioritization and habitat reporting.
+Note that PSCIS crossings not on mapped streams are NOT included in prioritization and habitat reporting.
 
 
 ## Run scripts
-
-If latest PSCIS is not already loaded, get it from DataBC:
-
-    ./load.sh
-
-Match PSCIS points to streams:
 
     ./pscis.sh
 
