@@ -11,10 +11,6 @@ Download waterfall data from various sources, match to FWA stream network, ident
 
 ## Usage
 
-#### Adding features
-
-Edit the manually compiled falls file `data/falls_other.csv` as required to add falls not present in other data sources.
-
 #### Barriers
 
 The script classifies barriers to fish passage as follows:
@@ -22,7 +18,13 @@ The script classifies barriers to fish passage as follows:
 - FISS falls with height value >= 5
 - all FWA falls (height is not present in this data)
 
-Edit `data/falls_barrier_ind.csv` to modify the barrier status of any FISS/FWA falls as required.
+Add records to `data/falls_barrier_ind.csv` to override the modelled the barrier status of FISS/FWA falls as required.
+
+#### Adding features
+
+To add falls not present in other data sources, add rows to the manually compiled falls file `data/falls_other.csv` as required.
+Populate the `barrier_ind` column in this file to control the barrier status of features added.
+
 
 #### Load and process
 
