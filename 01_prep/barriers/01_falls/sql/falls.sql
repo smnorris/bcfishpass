@@ -109,7 +109,6 @@ DROP TABLE IF EXISTS bcfishpass.falls;
 
 CREATE TABLE bcfishpass.falls
  (
- falls_id                 serial primary key,
  fiss_obstacles_falls_id  integer          , -- temporary column, for tracking what gets inserted
  source                   text             ,
  height                   double precision ,
@@ -126,7 +125,7 @@ CREATE TABLE bcfishpass.falls
  geom                     geometry(Point, 3005),
  -- since blkey/measure needs to be unique we might as well use it as the pk
  -- in the absence of anything else (stable)
- UNIQUE (blue_line_key, downstream_route_measure)
+ PRIMARY KEY (blue_line_key, downstream_route_measure)
 );
 
 

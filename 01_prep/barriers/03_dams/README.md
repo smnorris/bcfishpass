@@ -1,10 +1,15 @@
-# BC dams
+# Dams
 
-Download BC dam dataset compiled by CWF, match to FWA streams:
+BC dam locations and barrier status have been compiled by the Canadian Wildlife Federation from several sources.
+See https://github.com/smnorris/bcdams for more information.
+
+## Usage
+
+Download the BC dam dataset compiled by CWF and match the points to the nearest FWA streams:
 
     ./dams.sh
 
-Output table definition:
+## Output table
 
                                                  Table "bcfishpass.bcdams_events"
               Column          |         Type         | Collation | Nullable |                         Default

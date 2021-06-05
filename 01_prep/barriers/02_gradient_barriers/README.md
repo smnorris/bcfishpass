@@ -14,7 +14,7 @@ and iterate through each vertex of the stream flow line, calculating the slope f
 one of the provided gradient classes the slope and the location of the vertex are recorded.
 
 To prevent breaks occuring within waterbodies (where a slope rises directly above the waterbody), only these `edge_type`
-codes are included: `(1000,1050,1100,1150,1250,1350,1410,2000,2300)` - network connectors andsimilar are excluded.
+codes are included: `(1000,1050,1100,1150,1250,1350,1410,2000,2300)` - network connectors and similar are excluded.
 
 To create and load the gradient barrier table:
 
@@ -23,10 +23,8 @@ To create and load the gradient barrier table:
 This creates gradient breaks at 5/10/15/20/25/30 percent thresholds, finding slope over 100m. To change the slope
 thresholds of interest or the interval over which slope is measured, edit `sql/gradient_barriers.sql`.
 
-Note this script only identifies the locations of gradient breaks. To change the slope values that are used
-as barriers in the accesibility model, edit the `barriers_gradient_<grade>` files in `../02_model/sql` and modify
-the model script `../02_model/model.sh` accordingly.
-
+Note this script simply identifies the locations of all gradient breaks based on the given thresholds. Which
+gradient breaks are actually used as barriers is controlled in the connectivity model.
 
 ## Output table
 

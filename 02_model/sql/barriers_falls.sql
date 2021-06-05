@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS bcfishpass.barriers_falls;
 
 CREATE TABLE bcfishpass.barriers_falls
 (
-    barriers_falls_id integer primary key,
+    barriers_falls_id serial primary key,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -12,14 +12,12 @@ CREATE TABLE bcfishpass.barriers_falls
     localcode_ltree ltree,
     watershed_group_code text,
     geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
     UNIQUE (blue_line_key, downstream_route_measure)
 );
 
 
 INSERT INTO bcfishpass.barriers_falls
 (
-    barriers_falls_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -31,7 +29,6 @@ INSERT INTO bcfishpass.barriers_falls
     geom
 )
 SELECT
-    falls_event_id,
    'FALLS' as barrier_type,
     NULL as barrier_name,
     a.linear_feature_id,
