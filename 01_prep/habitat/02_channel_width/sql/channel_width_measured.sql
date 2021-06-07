@@ -47,7 +47,7 @@ SELECT
   e.localcode_ltree,
   s.watershed_group_code,
   a.downstream_channel_width as channel_width_pscis
-FROM bcfishpass.pscis_events_sp e
+FROM bcfishpass.pscis e
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN whse_basemapping.fwa_watersheds_poly w

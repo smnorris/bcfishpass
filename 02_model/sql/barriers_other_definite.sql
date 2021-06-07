@@ -70,7 +70,7 @@ SELECT
     e.localcode_ltree,
     e.watershed_group_code,
     e.geom
-FROM bcfishpass.pscis_events_sp e
+FROM bcfishpass.pscis e
 INNER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 INNER JOIN bcfishpass.param_watersheds g

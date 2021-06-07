@@ -19,7 +19,7 @@ added or when errors in snapping are found. Rows should be added using one of th
 
 
 1. Force match of a PSCIS crossing to specific modelled crossing (this implicitly matches the PSCIS crossing to the correct stream) by
-adding the PSCIS `stream_crossing_id` and the corresponding ``modelled_crossing_id``:
+adding the PSCIS `stream_crossing_id` and the corresponding `modelled_crossing_id`:
 
 
     | stream_crossing_id | modelled_crossing_id | linear_feature_id | reviewer |                           notes |
@@ -52,70 +52,111 @@ Note that PSCIS crossings not on mapped streams cannot be included in habitat re
     ./pscis.sh
 
 
-## Method
-
-Each step noted matches the sql script / output table name:
-
-1. **`pscis_points_all`**  Combines the four `WHSE_FISH.PSCIS` sources (assessments, confirmations, designs, remediations) into a single table with unique crossing locations.
-
-2. **`pscis_events_prelim1`**  References `pscis_points_all` to the closest stream(s) in FWA stream network within 100m. A crossing will often be within 100m of more than one stream, all results are kept in this preliminary step.
-
-3. **`pscis_events_prelim2`** From `events_prelim1`, attempts to find the PSCIS points to the correct stream using a combination of:
-
-    - distance of PSCIS point to stream
-    - similarity of PSCIS `stream_name` to the stream's `gnis_name`
-    - the relationship of PSCIS `downstream_channel_width` to the stream's`stream_order` - if a very wide channel is matched to a low order stream, it is probably not the correct match
-
-4. **`pscis_model_match_pts`** Match PSCIS points to the modelled crossings where possible. Similar to the matching of PSCIS crossings to streams noted above, the script attempts to find the best match based on:
-
-    - distance of PSCIS point to modelled crossing point
-    - matching the crossing types (if PSCIS `crossing_subtype_code` indicates the crossing is a bridge/open bottom and the model predicts a bridge/open bottom, the points are probably a match)
-    - as above, check the relationship of PSCIS `downstream_channel_width` to the stream's `stream_order`
-
-5. **`pscis_events_prelim3`**  Combine the results from 1 and 2 above into a single table that is our best guess of which stream the PSCIS crossing should be associdated with. Because we do not want to overly shift the field GPS coordinates in PSCIS, we are very conservative with matching to modelled points and will primarily snap to the closest point on the stream rather than a modelled crossing farther away.
-
-6. **`pscis_events`**  Create primary output table of interest - all pscis records (that are on a stream) as points on the FWA stream network.
-Do this by first adding all PSCIS records that have been manually matched to streams to the event table.
-For remaining points, remove locations from `pscis_events_prelim3` which are obvious duplicates (instream position is within 5m).
-The PSCIS feature retained is based on (in order of priority):
-    - status (in order of REMEDIATED, DESIGN, CONFIRMATION, ASSESSED)
-    - most recently assessed
-    - closest source point to stream
-
-7. **`pscis_points_duplicates`** For general QA of PSCIS features, create a report of all source crossing locations that are within 10m of another crossing location.
+## Scripts/method
 
 
+1. `sql/01_pscis_points_all.sql`
+
+    Combine the four `WHSE_FISH.PSCIS` sources (assessments, confirmations, designs, remediations) into temp table holding all unique PSCIS crossings `bcfishpass.pscis_points_all`.
+
+2. `sql/02_pscis_events_prelim1.sql`
+
+    Join unique crossings in `bcfishpass.pscis_points_all` to all FWA stream(s) within 200m, saving to temp table `bcfishpass.pscis_events_prelim1.sql`.
+
+3. `sql/03_pscis_events_prelim2.sql`
+
+    Attempt to assign PSCIS crossings in `bcfishpass.pscis_events_prelim1` to the *correct* stream within 150m by scoring matched streams using a combination of:
+
+    - distance of PSCIS crossing to stream
+    - similarity of the PSCIS crossing's `stream_name` to the stream's `gnis_name`
+    - the relationship of the PSCIS crossing's `downstream_channel_width` to the stream's`stream_order` (if a very wide channel (measured) is matched to a low order stream, the match is likely incorrect)
+
+    If the PSCIS crossing is within 175m of a modelled crossing that is on the same stream (stream with the best score), the PSCIS crossing is also matched to that modelled crossing. Output is written to temp table `bcfishpass.pscis_events_prelim2`
+
+4. `sql/04_pscis.sql`
+
+    Create the output table `bcfishpass.pscis`:
+
+    - first, insert PSCIS crossings that have been manually matched to streams/modelled crossings in `pscis_modelledcrossings_streams_xref.csv`
+    - next, insert PSCIS crossings from `pscis_events_prelim2`, filtering out duplicates and matches that score very poorly
+    - create a view holding PSCIS crossings that do not make it into the output `pscis` table: `pscis_not_matched_to_streams_vw`
+
+5. `sql/05_pscis_points_duplicates.sql`
+
+    For QA of PSCIS data, create a table of duplicate records (crossing source coordinates <10m apart or instream distance <5m apart)
 
 
-## Output table definition
+## Output tables / views
 
-```
-                           Table "bcfishpass.pscis_events"
-           Column            |         Type         | Collation | Nullable | Default
------------------------------+----------------------+-----------+----------+---------
- stream_crossing_id          | integer              |           | not null |
- model_crossing_id           | integer              |           |          |
- distance_to_stream          | double precision     |           |          |
- linear_feature_id           | bigint               |           |          |
- wscode_ltree                | ltree                |           |          |
- localcode_ltree             | ltree                |           |          |
- fwa_watershed_code          | text                 |           |          |
- local_watershed_code        | text                 |           |          |
- blue_line_key               | integer              |           |          |
- downstream_route_measure    | double precision     |           |          |
- watershed_group_code        | character varying(4) |           |          |
- score                       | integer              |           |          |
- pscis_status                | text                 |           |          |
- current_barrier_result_code | text                 |           |          |
- geom                        | geometry(Point,3005) |           |          |
-Indexes:
-    "pscis_events_pkey" PRIMARY KEY, btree (stream_crossing_id)
-    "pscis_events_blue_line_key_idx" btree (blue_line_key)
-    "pscis_events_geom_idx" gist (geom)
-    "pscis_events_linear_feature_id_idx" btree (linear_feature_id)
-    "pscis_events_localcode_ltree_idx" gist (localcode_ltree)
-    "pscis_events_localcode_ltree_idx1" btree (localcode_ltree)
-    "pscis_events_model_crossing_id_idx" btree (model_crossing_id)
-    "pscis_events_wscode_ltree_idx" gist (wscode_ltree)
-    "pscis_events_wscode_ltree_idx1" btree (wscode_ltree)
-```
+PSCIS crossings matched to streams:
+
+              Table "bcfishpass.pscis"
+                Column             |         Type          | Collation | Nullable | Default
+    -------------------------------+-----------------------+-----------+----------+---------
+     stream_crossing_id            | integer               |           | not null |
+     modelled_crossing_id          | integer               |           |          |
+     pscis_status                  | text                  |           |          |
+     current_crossing_type_code    | character varying(10) |           |          |
+     current_crossing_subtype_code | character varying(10) |           |          |
+     current_barrier_result_code   | text                  |           |          |
+     distance_to_stream            | double precision      |           |          |
+     stream_match_score            | integer               |           |          |
+     linear_feature_id             | bigint                |           |          |
+     wscode_ltree                  | ltree                 |           |          |
+     localcode_ltree               | ltree                 |           |          |
+     blue_line_key                 | integer               |           |          |
+     downstream_route_measure      | double precision      |           |          |
+     watershed_group_code          | character varying(4)  |           |          |
+     geom                          | geometry(Point,3005)  |           |          |
+    Indexes:
+        "pscis_pkey" PRIMARY KEY, btree (stream_crossing_id)
+        "pscis_blue_line_key_downstream_route_measure_key" UNIQUE CONSTRAINT, btree (blue_line_key, downstream_route_measure)
+        "pscis_blue_line_key_idx" btree (blue_line_key)
+        "pscis_geom_idx" gist (geom)
+        "pscis_linear_feature_id_idx" btree (linear_feature_id)
+        "pscis_localcode_ltree_idx" gist (localcode_ltree)
+        "pscis_localcode_ltree_idx1" btree (localcode_ltree)
+        "pscis_modelled_crossing_id_idx" btree (modelled_crossing_id)
+        "pscis_wscode_ltree_idx" gist (wscode_ltree)
+        "pscis_wscode_ltree_idx1" btree (wscode_ltree)
+
+
+All PSCIS crossings in a single table:
+
+                Table "bcfishpass.pscis_points_all"
+                Column             |         Type         | Collation | Nullable | Default
+    -------------------------------+----------------------+-----------+----------+---------
+     stream_crossing_id            | integer              |           | not null |
+     current_pscis_status          | text                 |           |          |
+     current_barrier_result_code   | text                 |           |          |
+     current_crossing_type_code    | text                 |           |          |
+     current_crossing_subtype_code | text                 |           |          |
+     geom                          | geometry(Point,3005) |           |          |
+    Indexes:
+        "pscis_points_all_pkey" PRIMARY KEY, btree (stream_crossing_id)
+        "pscis_points_all_geom_idx" gist (geom)
+
+
+Duplicate PSCIS crossings (for QA):
+
+                Table "bcfishpass.pscis_points_duplicates"
+            Column         |  Type   | Collation | Nullable | Default
+    -----------------------+---------+-----------+----------+---------
+     stream_crossing_id    | integer |           |          |
+     duplicate_10m         | boolean |           |          |
+     duplicate_5m_instream | boolean |           |          |
+     watershed_group_code  | text    |           |          |
+
+
+PSCIS crossings that are not matched to streams:
+
+                   View "bcfishpass.pscis_not_matched_to_streams_vw"
+                Column             |         Type         | Collation | Nullable | Default
+    -------------------------------+----------------------+-----------+----------+---------
+     stream_crossing_id            | integer              |           |          |
+     current_pscis_status          | text                 |           |          |
+     current_barrier_result_code   | text                 |           |          |
+     current_crossing_type_code    | text                 |           |          |
+     current_crossing_subtype_code | text                 |           |          |
+     watershed_group_code          | character varying    |           |          |
+     geom                          | geometry(Point,3005) |           |          |

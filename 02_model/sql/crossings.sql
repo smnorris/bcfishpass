@@ -213,7 +213,7 @@ SELECT
     e.localcode_ltree,
     e.watershed_group_code,
     e.geom
-FROM bcfishpass.pscis_events_sp e
+FROM bcfishpass.pscis e
 LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
@@ -251,7 +251,7 @@ WITH rail AS
   SELECT
     pt.stream_crossing_id,
     nn.*
-  FROM bcfishpass.pscis_events_sp as pt
+  FROM bcfishpass.pscis as pt
   CROSS JOIN LATERAL
   (SELECT
 
@@ -285,7 +285,7 @@ dra as
   SELECT
     pt.stream_crossing_id,
     nn.*
-  FROM bcfishpass.pscis_events_sp as pt
+  FROM bcfishpass.pscis as pt
   CROSS JOIN LATERAL
   (SELECT
 
@@ -307,7 +307,7 @@ ften as (
   SELECT
     pt.stream_crossing_id,
     nn.*
-  FROM bcfishpass.pscis_events_sp as pt
+  FROM bcfishpass.pscis as pt
   CROSS JOIN LATERAL
   (SELECT
      forest_file_id,
@@ -436,7 +436,7 @@ SELECT DISTINCT ON (stream_crossing_id)
     e.localcode_ltree,
     e.watershed_group_code,
     e.geom
-FROM bcfishpass.pscis_events_sp e
+FROM bcfishpass.pscis e
 LEFT OUTER JOIN road_and_rail r
 ON r.stream_crossing_id = e.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
@@ -644,7 +644,7 @@ SELECT
 FROM bcfishpass.modelled_stream_crossings b
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id
-LEFT OUTER JOIN bcfishpass.pscis_events_sp p
+LEFT OUTER JOIN bcfishpass.pscis p
 ON b.modelled_crossing_id = p.modelled_crossing_id
 LEFT OUTER JOIN bcfishpass.modelled_stream_crossings_fixes f
 ON b.modelled_crossing_id = f.modelled_crossing_id

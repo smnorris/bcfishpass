@@ -98,7 +98,7 @@ SELECT DISTINCT ON (stream_crossing_id)
   ST_Distance(p.geom, a.model_geom) as distance_to_modelled_xing
 FROM scored a INNER JOIN bcfishpass.pscis_points_all p
 ON a.stream_crossing_id = p.stream_crossing_id
--- tighten up our final tolerances, PSCIS crossing must be 150m from stream and 175m from modelled crossing
+-- tighten up our final tolerances, PSCIS crossing must be 150m from stream and 175m from modelled crossing (if present)
 WHERE distance_to_stream < 150 AND COALESCE(ST_Distance(p.geom, a.model_geom), 0) < 175
 ORDER BY stream_crossing_id, match_score desc, distance_to_modelled_xing;
 

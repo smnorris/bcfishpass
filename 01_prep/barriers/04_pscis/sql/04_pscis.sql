@@ -1,7 +1,7 @@
 -- create pscis events table, linking pscis points to streams
-DROP TABLE IF EXISTS bcfishpass.pscis_events_sp;
+DROP TABLE IF EXISTS bcfishpass.pscis;
 
-CREATE TABLE bcfishpass.pscis_events_sp
+CREATE TABLE bcfishpass.pscis
 (
  stream_crossing_id       integer  PRIMARY KEY ,
  modelled_crossing_id     integer              ,
@@ -114,7 +114,7 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON r.linear_feature_id = s.linear_feature_id
 )
 
-INSERT INTO bcfishpass.pscis_events_sp
+INSERT INTO bcfishpass.pscis
 (stream_crossing_id,
  modelled_crossing_id,
  pscis_status,
@@ -210,7 +210,7 @@ de_duped AS
   ORDER BY cid, p.distance_to_stream asc, assessment_date desc
 )
 
-INSERT INTO bcfishpass.pscis_events_sp
+INSERT INTO bcfishpass.pscis
 (
  stream_crossing_id,
  modelled_crossing_id,
@@ -259,18 +259,18 @@ ORDER BY p.stream_crossing_id
 ON CONFLICT DO NOTHING;
 
 
-CREATE INDEX ON bcfishpass.pscis_events_sp (modelled_crossing_id);
-CREATE INDEX ON bcfishpass.pscis_events_sp (linear_feature_id);
-CREATE INDEX ON bcfishpass.pscis_events_sp (blue_line_key);
-CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.pscis_events_sp USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.pscis_events_sp USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.pscis_events_sp USING GIST (geom);
+CREATE INDEX ON bcfishpass.pscis (modelled_crossing_id);
+CREATE INDEX ON bcfishpass.pscis (linear_feature_id);
+CREATE INDEX ON bcfishpass.pscis (blue_line_key);
+CREATE INDEX ON bcfishpass.pscis USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.pscis USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.pscis USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.pscis USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.pscis USING GIST (geom);
 
 
 -- for mapping, also create a view that shows PSCIS crossings that
--- are not in pscis_events_sp - are not matched to a stream
+-- are not in bcfishpass.pscis- are not matched to a stream
 CREATE VIEW bcfishpass.pscis_not_matched_to_streams_vw AS
 SELECT
     a.stream_crossing_id,
@@ -284,7 +284,7 @@ SELECT
     END as watershed_group_code,
     a.geom
 FROM bcfishpass.pscis_points_all a
-LEFT OUTER JOIN bcfishpass.pscis_events_sp b
+LEFT OUTER JOIN bcfishpass.pscis b
 ON a.stream_crossing_id = b.stream_crossing_id
 LEFT OUTER JOIN whse_basemapping.fwa_watershed_groups_poly w
 ON ST_Intersects(a.geom, w.geom)
