@@ -14,7 +14,7 @@ assessment of a small tributary may be closer to the mapped location of a major 
 if this occurs at a PSCIS barrier, everything upstream on the major system will incorrectly be coded as inaccessible.  To eliminate this
 issue, a manually built lookup table is included to enforce the correct matching of PSCIS points to modelled crossings or streams.
 
-Edit the lookup [data/pscis_modelledcrossings_streams_xref.csv](`data/pscis_modelledcrossings_streams_xref`) when new PSCIS data is
+Edit the lookup [`data/pscis_modelledcrossings_streams_xref.csv`](data/pscis_modelledcrossings_streams_xref) when new PSCIS data is
 added or when errors in snapping are found. Rows should be added using one of three patterns below:
 
 
