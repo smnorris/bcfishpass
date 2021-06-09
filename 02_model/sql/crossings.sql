@@ -493,7 +493,7 @@ SELECT
     d.localcode_ltree,
     d.watershed_group_code,
     ST_Force2D((st_Dump(d.geom)).geom)
-FROM bcfishpass.bcdams_events d
+FROM bcfishpass.dams d
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
 -- ignore dams on side channels for this exercise
