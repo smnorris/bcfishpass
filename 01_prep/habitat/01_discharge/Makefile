@@ -3,12 +3,12 @@
 all: data/baseflow.nc data/runoff.nc data/baseflow_yearsum_mean.nc data/runoff_yearsum_mean.nc data/discharge.nc data/discharge.tif db/discharge_load db/discharge
 
 # table existence check from https://mojodna.net/2015/01/07/make-for-data-using-make.html
-# check if table exists, run matching *shell* script if it does not
+# check if table exists, run matching *sql* script if it does not
 define create_table_sql
 	@psql -c "\d $(subst db/,,bcfishpass.$@)" > /dev/null 2>&1 || psql -v ON_ERROR_STOP=1 -qX1f sql/$(subst db/,,$@).sql
 endef
 
-# check if table exists, run matching *sql* script if it does not
+# check if table exists, run matching *shell* script if it does not
 define create_table_shell
 	@psql -c "\d $(subst db/,,bcfishpass.$@)" > /dev/null 2>&1 || ./$(subst db/,,$@).sh
 endef
