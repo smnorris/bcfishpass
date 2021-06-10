@@ -9,6 +9,5 @@ psql -c "create table bcfishpass.discharge_load (wscode_ltree text, localcode_lt
 psql -A -t -P border=0,footer=off -c "SELECT DISTINCT watershed_group_code
       FROM whse_basemapping.fwa_assessment_watersheds_poly
       WHERE (wscode_ltree <@ '100'::ltree OR wscode_ltree <@ '300'::ltree OR wscode_ltree <@ '200'::ltree)
-      ORDER BY watershed_group_code
-      LIMIT 2" |
+      ORDER BY watershed_group_code" |
 parallel ./raster2fwa.sh data/discharge.tif bcfishpass.discharge_load {}
