@@ -17,7 +17,7 @@ psql -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd_load (watershed_feature_
 # Loop through watershed groups
 # (rather than loading geojson of fundamental all watershed polys for BC into memory,
 # this takes longer but is much more memory safe)
-for WSG in $(psql -t -P border=0,footer=no \
+for WSG in $(psql -A -t -P border=0,footer=no \
   -c "SELECT watershed_group_code
       FROM whse_basemapping.fwa_watershed_groups_poly
       ORDER BY watershed_group_code")
@@ -133,7 +133,7 @@ psql -c "CREATE TABLE bcfishpass.mean_annual_precip
 # Take data from the MAP load table, average the MAP over the stream segment
 # (watershed code / local code) and insert (along with area of fundamental watershed(s) associated with
 # this stream segment into the MAP table. Run the inserts per watershed group.
-for WSG in $(psql -t -P border=0,footer=no \
+for WSG in $(psql -A -t -P border=0,footer=no \
   -c "SELECT watershed_group_code
       FROM whse_basemapping.fwa_watershed_groups_poly
       ORDER BY watershed_group_code")
