@@ -30,7 +30,7 @@ data/runoff_yearsum_mean.nc: data/runoff.nc
 	cdo -O -b F64 -timmean -yearsum $^ $@
 
 ## Add baseflow and runoff to create mean annual discharge (MAD)
-data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc # TODO - sum 26 bi-weekly mean baseflow/runoff files
+data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	cdo -b F64 add $^ $@
 
 ## Convert MAD netcdf to BC Albers GeoTiff
