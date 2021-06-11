@@ -45,6 +45,8 @@ db/discharge_load: data/discharge.tif
 db/discharge: db/discharge_load
 	$(call create_table_shell)
 
-## remove all generated files
+## remove all generated files/tables
 clean:
 	rm -Rf data/*
+	psql -c "drop table bcfishpass.discharge_load"
+	psql -c "drop table bcfishpass.discharge"
