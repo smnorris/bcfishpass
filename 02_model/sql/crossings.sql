@@ -32,6 +32,7 @@ CREATE TABLE bcfishpass.crossings
     modelled_crossing_type_source text[], -- for modelled crossings, what data source(s) indicate that a modelled crossing is OBS
     barrier_status text,                  -- PSCIS barrier status if available, otherwise 'POTENTIAL' for modelled CBS, 'PASSABLE' for modelled OBS
     pscis_road_name text,                 -- road name from pscis assessment
+    pscis_stream_name text,               -- stream name from pscis assessment
     pscis_assessment_comment text,        -- comments from pscis assessment
 
     -- DRA info
@@ -73,6 +74,7 @@ CREATE TABLE bcfishpass.crossings
     wscode_ltree ltree,
     localcode_ltree ltree,
     watershed_group_code text,
+    gnis_stream_name text,
     geom geometry(Point, 3005),
     -- add a unique constraint on linear location
     -- (so that we don't have points in the same spot messing up subsequent joins)
@@ -93,6 +95,7 @@ COMMENT ON COLUMN bcfishpass.crossings.crossing_subtype_code IS 'Further definit
 COMMENT ON COLUMN bcfishpass.crossings.modelled_crossing_type_source IS 'List of sources that indicate if a modelled crossing is open bottom, Acceptable values are: FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order >=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, "MANUAL FIX"=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}';
 COMMENT ON COLUMN bcfishpass.crossings.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential Barrier, BARRIER - Barrier, UNKOWN - Other';
 COMMENT ON COLUMN bcfishpass.crossings.pscis_road_name  IS 'PSCIS road name, taken from the PSCIS assessment data submission';
+COMMENT ON COLUMN bcfishpass.crossings.pscis_road_name  IS 'PSCIS stream name, taken from the PSCIS assessment data submission';
 COMMENT ON COLUMN bcfishpass.crossings.pscis_assessment_comment  IS 'PSCIS assessment_comment, taken from the PSCIS assessment data submission';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_structured_name_1 IS 'DRA road name, taken from the nearest DRA road (within 30m)';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_type_description IS 'DRA road type, taken from the nearest DRA road (within 30m)';
@@ -118,6 +121,7 @@ COMMENT ON COLUMN bcfishpass.crossings.downstream_route_measure IS 'The distance
 COMMENT ON COLUMN bcfishpass.crossings.wscode_ltree IS 'A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';
 COMMENT ON COLUMN bcfishpass.crossings.localcode_ltree IS 'A truncated version of the BC FWA local_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';;
 COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed group code associated with the feature.';
+COMMENT ON COLUMN bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
 COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
 
 
@@ -137,6 +141,7 @@ INSERT INTO bcfishpass.crossings
     modelled_crossing_type_source,
     barrier_status,
     pscis_road_name,
+    pscis_stream_name,
     pscis_assessment_comment,
 
     transport_line_structured_name_1,
@@ -164,6 +169,7 @@ INSERT INTO bcfishpass.crossings
     wscode_ltree,
     localcode_ltree,
     watershed_group_code,
+    gnis_stream_name,
     geom
 )
 
@@ -185,6 +191,7 @@ SELECT
     END as barrier_status,
 
     a.road_name as pscis_road_name,
+    a.stream_name as pscis_stream_name,
     a.assessment_comment as pscis_assessment_comment,
 
     dra.structured_name_1 as transport_line_structured_name_1,
@@ -212,6 +219,7 @@ SELECT
     e.wscode_ltree,
     e.localcode_ltree,
     e.watershed_group_code,
+    s.gnis_name as gnis_stream_name,
     e.geom
 FROM bcfishpass.pscis e
 LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
@@ -236,6 +244,8 @@ LEFT OUTER JOIN whse_basemapping.transport_line_type_code dratype
 ON dra.transport_line_type_code = dratype.transport_line_type_code
 LEFT OUTER JOIN whse_basemapping.transport_line_surface_code drasurface
 ON dra.transport_line_surface_code = drasurface.transport_line_surface_code
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON e.linear_feature_id = s.linear_feature_id
 WHERE e.modelled_crossing_id IS NOT NULL   -- only PSCIS crossings that have been linked to a modelled crossing
 ORDER BY e.stream_crossing_id
 ON CONFLICT DO NOTHING;
@@ -372,6 +382,7 @@ INSERT INTO bcfishpass.crossings
     crossing_subtype_code,
     barrier_status,
     pscis_road_name,
+    pscis_stream_name,
     pscis_assessment_comment,
 
     transport_line_structured_name_1,
@@ -397,6 +408,7 @@ INSERT INTO bcfishpass.crossings
     wscode_ltree,
     localcode_ltree,
     watershed_group_code,
+    gnis_stream_name,
     geom
 )
 
@@ -412,6 +424,7 @@ SELECT DISTINCT ON (stream_crossing_id)
       ELSE  e.current_barrier_result_code
     END as barrier_status,
     a.road_name as pscis_road_name,
+    a.stream_name as pscis_stream_name,
     a.assessment_comment as pscis_assessment_comment,
 
     r.transport_line_structured_name_1,
@@ -435,6 +448,7 @@ SELECT DISTINCT ON (stream_crossing_id)
     e.wscode_ltree,
     e.localcode_ltree,
     e.watershed_group_code,
+    s.gnis_name as gnis_stream_name,
     e.geom
 FROM bcfishpass.pscis e
 LEFT OUTER JOIN road_and_rail r
@@ -443,6 +457,8 @@ LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON e.linear_feature_id = s.linear_feature_id
 WHERE e.modelled_crossing_id IS NULL
 ORDER BY stream_crossing_id, distance_to_road asc
 ON CONFLICT DO NOTHING;
@@ -468,6 +484,7 @@ INSERT INTO bcfishpass.crossings
     wscode_ltree,
     localcode_ltree,
     watershed_group_code,
+    gnis_stream_name,
     geom
 )
 SELECT
@@ -492,6 +509,7 @@ SELECT
     d.wscode_ltree,
     d.localcode_ltree,
     d.watershed_group_code,
+    s.gnis_name as gnis_stream_name,
     ST_Force2D((st_Dump(d.geom)).geom)
 FROM bcfishpass.dams d
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -518,6 +536,7 @@ WITH misc_barriers AS
     s.wscode_ltree,
     s.localcode_ltree,
     s.watershed_group_code,
+    s.gnis_name as gnis_stream_name,
     ST_Force2D((ST_Dump(ST_LocateAlong(s.geom, b.downstream_route_measure))).geom) as geom
   FROM bcfishpass.misc_barriers_anthropogenic b
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -542,6 +561,7 @@ INSERT INTO bcfishpass.crossings
     wscode_ltree,
     localcode_ltree,
     watershed_group_code,
+    gnis_stream_name,
     geom
 )
 SELECT
@@ -559,6 +579,7 @@ SELECT
     b.wscode_ltree,
     b.localcode_ltree,
     b.watershed_group_code,
+    b.gnis_stream_name,
     ST_Force2D((st_Dump(b.geom)).geom)
 FROM misc_barriers b
 ORDER BY misc_barrier_anthropogenic_id
@@ -597,6 +618,7 @@ INSERT INTO bcfishpass.crossings
     wscode_ltree,
     localcode_ltree,
     watershed_group_code,
+    gnis_stream_name,
     geom
 )
 
@@ -640,6 +662,7 @@ SELECT
     b.wscode_ltree,
     b.localcode_ltree,
     b.watershed_group_code,
+    s.gnis_name as gnis_stream_name,
     ST_Force2D((ST_Dump(b.geom)).geom) as geom
 FROM bcfishpass.modelled_stream_crossings b
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
