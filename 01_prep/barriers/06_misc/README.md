@@ -1,6 +1,6 @@
 # Misc barriers
 
-Load misc barriers (plus lookup for identifying selected gradient barriers as passable)
+Load misc barriers
 
     ./misc.sh
 

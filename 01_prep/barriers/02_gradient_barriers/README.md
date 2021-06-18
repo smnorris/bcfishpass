@@ -37,3 +37,11 @@ gradient breaks are actually used as barriers is controlled in the connectivity 
     Indexes:
         "gradient_barriers_pkey" PRIMARY KEY, btree (blue_line_key, downstream_route_measure)
         "gradient_barriers_test_blue_line_key_idx" btree (blue_line_key)
+
+## Override data errors / note gradient barriers that do not exist
+
+If any gradient barriers need to be removed because they are not present, add them to `data/gradient_barriers_passable.csv`.
+
+To load the lookup:
+
+    ./gradient_barriers_passable.sh
