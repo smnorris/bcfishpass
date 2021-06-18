@@ -3,7 +3,9 @@
 -- To calculate average, this measures distance at 10% intervals along individual geoms.
 
 
--- get points at .1, .2. .3 etc pct along the line
+-- Get points at .1, .2. .3 etc pct along the line
+-- This means the sampling distance varies (*a lot*) based on the lenght of the line,
+-- but it is easier to derive than set distances along the line
 WITH midpoint AS
 (
 SELECT
@@ -11,7 +13,7 @@ SELECT
   s.waterbody_key,
   (ST_Dump(ST_LineInterpolatePoints(geom, .1))).geom as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
-WHERE s.edge_type = 1250
+WHERE s.edge_type = 1250                      -- main flow only, do not consider side channels
 AND s.watershed_group_code = :'wsg'
 ),
 
