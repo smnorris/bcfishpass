@@ -1,20 +1,28 @@
 -- Calculate the average channel width of stream segments for main flow of double line rivers.
 -- (where stream segment = distinct linear_feature_id)
--- To calculate average, this measures distance at 10% intervals along individual geoms.
+-- To calculate average, this measures distance at 100m intervals along individual geoms.
 
+WITH measures AS
+(
+  SELECT
+    linear_feature_id,
+    waterbody_key,
+    generate_series(ceil(downstream_route_measure)::integer,
+                    floor(upstream_route_measure)::integer, 100) as route_measure,
+    geom
+  FROM whse_basemapping.fwa_stream_networks_sp
+  WHERE edge_type = 1250                      -- main flow only, do not consider side channels
+  AND watershed_group_code = :'wsg'
+  ORDER BY downstream_route_measure
+),
 
--- Get points at .1, .2. .3 etc pct along the line
--- This means the sampling distance varies (*a lot*) based on the lenght of the line,
--- but it is easier to derive than set distances along the line
-WITH midpoint AS
+channel_points AS
 (
 SELECT
   s.linear_feature_id,
   s.waterbody_key,
-  (ST_Dump(ST_LineInterpolatePoints(geom, .1))).geom as geom
-FROM whse_basemapping.fwa_stream_networks_sp s
-WHERE s.edge_type = 1250                      -- main flow only, do not consider side channels
-AND s.watershed_group_code = :'wsg'
+  (ST_Dump(ST_LocateAlong(geom, route_measure))).geom::geometry(pointzm,3005) as geom
+FROM measures s
 ),
 
 -- find closest right bank (or right bank of closest island)
@@ -23,7 +31,7 @@ right_bank AS
     pt.linear_feature_id,
     nn.distance_to_pt,
     nn.geom
-  FROM midpoint pt
+  FROM channel_points pt
   CROSS JOIN LATERAL
   (SELECT
      lb.linear_feature_id,
@@ -43,7 +51,7 @@ left_bank AS
     pt.linear_feature_id,
     nn.distance_to_pt,
     nn.geom
-  FROM midpoint pt
+  FROM channel_points pt
   CROSS JOIN LATERAL
   (SELECT
      lb.linear_feature_id,
