@@ -145,9 +145,9 @@ INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
 ON w.watershed_feature_id = ua.watershed_feature_id
 INNER JOIN whse_basemapping.fwa_waterbodies_upstream_area uwb
 ON w.watershed_feature_id = uwb.watershed_feature_id
-LEFT OUTER JOIN whse_terrestrial_ecology.erc_ecosections_sp es
+LEFT OUTER JOIN whse_terrestrial_ecology.erc_ecosections_subdivided es
 ON ST_Intersects(m.geom, es.geom)
-LEFT OUTER JOIN whse_forest_vegetation.bec_biogeoclimatic_poly bec
+LEFT OUTER JOIN whse_forest_vegetation.bec_biogeoclimatic_poly_subdivided bec
 ON ST_Intersects(m.geom, bec.geom)
 LEFT OUTER JOIN bcfishpass.mean_annual_precip map
 ON s.wscode_ltree = map.wscode_ltree AND s.localcode_ltree = map.localcode_ltree
