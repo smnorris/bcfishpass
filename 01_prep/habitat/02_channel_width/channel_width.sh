@@ -23,9 +23,11 @@ psql -c "DROP TABLE IF EXISTS bcfishpass.channel_width_mapped;"
 psql -c "CREATE TABLE bcfishpass.channel_width_mapped
 (
   linear_feature_id bigint,
+  blue_line_key integer,
   downstream_route_measure integer,
   watershed_group_code text,
   channel_width_mapped double precision,
+  geom geometry(PointZM,3005)
   UNIQUE (linear_feature_id, downstream_route_measure)
 );"
 # load each watershed group seperately, in parallel

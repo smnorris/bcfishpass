@@ -6,7 +6,9 @@ WITH measures AS
 (
   SELECT
     linear_feature_id,
+    blue_line_key,
     waterbody_key,
+    watershed_group_code,
     generate_series(ceil(downstream_route_measure)::integer,
                     floor(upstream_route_measure)::integer, 100) as route_measure,
     geom
@@ -20,8 +22,10 @@ channel_points AS
 (
 SELECT
   s.linear_feature_id,
+  s.blue_line_key,
   s.waterbody_key,
   s.route_measure,
+  s.watershed_group_code,
   (ST_Dump(ST_LocateAlong(geom, route_measure))).geom::geometry(pointzm,3005) as geom
 FROM measures s
 ),
@@ -30,7 +34,10 @@ FROM measures s
 right_bank AS
  ( SELECT
     pt.linear_feature_id,
+    pt.blue_line_key,
     pt.route_measure,
+    pt.watershed_group_code,
+    pt.geom as midpoint_geom,
     nn.distance_to_pt,
     nn.geom
   FROM channel_points pt
@@ -51,6 +58,8 @@ right_bank AS
 left_bank AS
  ( SELECT
     pt.linear_feature_id,
+    pt.blue_line_key,
+    pt.route_measure,
     nn.distance_to_pt,
     nn.geom
   FROM channel_points pt
@@ -70,18 +79,22 @@ left_bank AS
 INSERT INTO bcfishpass.channel_width_mapped
 (
   linear_feature_id,
+  blue_line_key,
   downstream_route_measure,
   watershed_group_code,
-  channel_width_mapped
+  channel_width_mapped,
+  geom
 )
 
--- calculate avg dist to each bank and add the averages together
+-- calculate distance to each bank and add distances together
 SELECT
   r.linear_feature_id,
+  r.blue_line_key,
   r.route_measure AS downstream_route_measure,
-  s.watershed_group_code,
-  ROUND((r.distance_to_pt + l.distance_to_pt)::numeric, 2) as channel_width_mapped
+  r.watershed_group_code,
+  ROUND((r.distance_to_pt + l.distance_to_pt)::numeric, 2) as channel_width_mapped,
+  r.midpoint_geom as geom
 FROM right_bank r
 INNER JOIN left_bank l ON r.linear_feature_id = l.linear_feature_id
-INNER JOIN whse_basemapping.fwa_stream_networks_sp s ON r.linear_feature_id = s.linear_feature_id
+AND r.route_measure = l.route_measure
 ON CONFLICT DO NOTHING;
