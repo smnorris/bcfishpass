@@ -27,7 +27,13 @@ WHERE s.linear_feature_id = cw.linear_feature_id;
 UPDATE bcfishpass.streams s
 SET
   channel_width = cw.channel_width_mapped
-FROM bcfishpass.channel_width_mapped cw
+FROM (
+  SELECT
+  linear_feature_id,
+  ROUND(avg(channel_width_mapped)::numeric, 2) as channel_width_mapped
+FROM bcfishpass.channel_width_mapped
+GROUP BY linear_feature_id
+) cw
 WHERE s.linear_feature_id = cw.linear_feature_id
 AND channel_width IS NULL; -- don't apply where we have a measured value
 
