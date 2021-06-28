@@ -1,33 +1,27 @@
 #!/bin/bash
 set -euxo pipefail
 
+# Transfer data from load table to discharge table
+# This calculates the area weighted annual average flow for each watershed (mad_mm) and coverts this to cubic m per s (m3s)
+
 # create output table
-psql -c "drop table if exists bcfishpass.discharge;
-
-  create table bcfishpass.discharge (
-    wscode_ltree ltree,
-    localcode_ltree ltree,
+psql -c "DROP TABLE IF EXISTS bcfishpass.discharge;
+CREATE TABLE bcfishpass.discharge (
+    watershed_feature_id integer,
     watershed_group_code text,
-    area bigint,
-    discharge numeric,
-    discharge_upstream numeric,
-    primary key (wscode_ltree, localcode_ltree)
-  );"
+    mad_mm double precision,
+    mad_m3s double precision
+);"
 
-# transfer data from load table to discharge table
-# Calculate area-weighted avg discharge upstream of every stream segment
-# loop through watershed groups, don't bother trying to update in parallel
-for WSG in $(psql -A -t -P border=0,footer=no \
-  -c "select distinct b.watershed_group_code
-      from bcfishpass.discharge_load a
-      inner join whse_basemapping.fwa_watersheds_poly b
-      on a.watershed_feature_id = b.watershed_feature_id
-      order by b.watershed_group_code")
+for WSG in $(psql -AtX -P border=0,footer=no \
+  -c "SELECT DISTINCT b.watershed_group_code
+      FROM bcfishpass.discharge_load a
+      INNER JOIN whse_basemapping.fwa_watersheds_poly b
+      ON a.watershed_feature_id = b.watershed_feature_id
+      ORDER BY b.watershed_group_code")
 do
-  psql -X -v wsg="$WSG" < sql/discharge.sql
+  echo 'Loading '$WSG
+  psql -XA -v wsg=$WSG -f sql/discharge.sql
 done
 
-psql -c "create index on bcfishpass.discharge using gist (wscode_ltree);"
-psql -c "create index on bcfishpass.discharge using btree (wscode_ltree);"
-psql -c "create index on bcfishpass.discharge using gist (localcode_ltree);"
-psql -c "create index on bcfishpass.discharge using btree (localcode_ltree);"
+psql -c "ALTER TABLE bcfishpass.discharge ADD PRIMARY KEY (watershed_feature_id)"

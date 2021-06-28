@@ -71,12 +71,14 @@ SELECT
   NULL as stream_sample_site_id,
   NULL as stream_crossing_id,
   'FWA' as source,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  channel_width_mapped as channel_width,
-  geom
-FROM bcfishpass.channel_width_mapped
+  c.linear_feature_id,
+  s.blue_line_key,
+  s.downstream_route_measure,
+  c.channel_width_mapped as channel_width,
+  st_pointonsurface(s.geom) as geom
+FROM bcfishpass.channel_width_mapped c
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON c.linear_feature_id = s.linear_feature_id
 )
 
 INSERT INTO bcfishpass.channel_width_analysis

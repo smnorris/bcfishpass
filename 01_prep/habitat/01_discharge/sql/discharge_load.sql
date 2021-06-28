@@ -1,9 +1,9 @@
--- Either my syntax is bad or using st_transform() to reproject the vector geometry directly in the overlay query does not work
--- Avoid the issue for now by just creating a temp table of watershed centroids in 4326
+-- Either my syntax is bad or using st_transform() to reproject the vector geometry directly in the overlay query does not work.
+-- Avoid the issue by just creating a temp table of watershed centroids in 4326.
 CREATE TEMPORARY TABLE temp_wsd_pts AS
 SELECT
   watershed_feature_id,
-  st_transform(st_pointonsurface(geom), 4326) as geom
+  st_transform(st_centroid(geom), 4326) as geom
 FROM whse_basemapping.fwa_watersheds_poly
 WHERE watershed_group_code = :'wsg';
 
