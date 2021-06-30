@@ -37,12 +37,17 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 db/discharge_load: data/discharge.nc
 	$(call create_table_shell)
 
-## Transfer discharge data from temp table to discharge table
-db/discharge: db/discharge_load
+## Transfer discharge data from temp table to per watershed discharge table
+db/discharge_wsd: db/discharge_load
+	$(call create_table_shell)
+
+## For habitat modelling, it is easier if discharge is per-stream
+db/discharge: db/discharge_wsd
 	$(call create_table_shell)
 
 ## remove all generated files/tables
 clean:
 	rm -Rf data/*
 	psql -c "drop table bcfishpass.discharge_load"
+	psql -c "drop table bcfishpass.discharge_wsd"
 	psql -c "drop table bcfishpass.discharge"
