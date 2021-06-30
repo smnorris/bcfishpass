@@ -17,7 +17,7 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
@@ -106,7 +106,7 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CO'
@@ -198,7 +198,7 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'ST'
@@ -285,7 +285,7 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'WCT'

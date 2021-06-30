@@ -86,7 +86,7 @@ model AS
     THEN true
   END AS spawn_wct
 FROM bcfishpass.streams s
-LEFT OUTER JOIN foundry.fwa_streams_mad mad
+LEFT OUTER JOIN bcfishpass.discharge mad
 ON s.linear_feature_id = mad.linear_feature_id
 INNER JOIN bcfishpass.param_watersheds wsg
 ON s.watershed_group_code = wsg.watershed_group_code
