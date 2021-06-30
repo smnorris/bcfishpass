@@ -2,7 +2,7 @@
 
 To be quality fish habitat, a stream must have sufficent water, typically defined as mean annual discharge.
 
-## PCIS discharge
+## PCIC discharge
 
 While we have no comprehensive stream discharge model for BC, the [Pacific Climate Impacts Consortium](https://www.pacificclimate.org/) has modelled discharge for the Peace, Fraser and Columbia basins.
 Base flow and runoff time series rasters are available in for download NetCDF and other formats [here]https://www.pacificclimate.org/data/gridded-hydrologic-model-output.
