@@ -18,6 +18,7 @@ CREATE TABLE bcfishpass.channel_width_analysis
   localcode_ltree ltree,
   watershed_group_code text,
   channel_width double precision,
+  cw_stddev double precision,
   stream_order integer,
   stream_magnitude integer,
   gradient double precision,
@@ -46,6 +47,7 @@ SELECT
   e.linear_feature_id,
   e.blue_line_key,
   e.downstream_route_measure,
+  0 as cw_stddev,
   p.channel_width,
   p.geom
 FROM bcfishpass.fiss_stream_sample_sites_events_sp e
@@ -60,6 +62,7 @@ SELECT
   e.linear_feature_id,
   e.blue_line_key,
   e.downstream_route_measure,
+  0 as cw_stddev,
   a.downstream_channel_width as channel_width,
   e.geom
 FROM bcfishpass.pscis_events_sp e
@@ -75,6 +78,7 @@ SELECT
   s.blue_line_key,
   s.downstream_route_measure,
   c.channel_width_mapped as channel_width,
+  c.cw_stddev,
   st_pointonsurface(s.geom) as geom
 FROM bcfishpass.channel_width_mapped c
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -92,6 +96,7 @@ INSERT INTO bcfishpass.channel_width_analysis
   localcode_ltree,
   watershed_group_code,
   channel_width,
+  cw_stddev,
   stream_order,
   stream_magnitude,
   gradient,
@@ -121,6 +126,7 @@ SELECT DISTINCT ON (blue_line_key, downstream_route_measure)
   s.localcode_ltree,
   s.watershed_group_code,
   m.channel_width,
+  m.cw_stddev,
   s.stream_order,
   s.stream_magnitude,
   s.gradient,
