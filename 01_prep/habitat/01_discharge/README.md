@@ -5,7 +5,7 @@ To be quality fish habitat, a stream must have sufficent water, typically define
 ## PCIC discharge
 
 While we have no comprehensive stream discharge model for BC, the [Pacific Climate Impacts Consortium](https://www.pacificclimate.org/) has modelled discharge for the Peace, Fraser and Columbia basins.
-Base flow and runoff time series rasters are available in for download NetCDF and other formats [here]https://www.pacificclimate.org/data/gridded-hydrologic-model-output.
+Base flow and runoff time series rasters are available in for download NetCDF and other formats [here](https://www.pacificclimate.org/data/gridded-hydrologic-model-output).
 
 To download PCIC base flow and runoff, combine into discharge, and load to postgres:
 
@@ -22,7 +22,11 @@ To download PCIC base flow and runoff, combine into discharge, and load to postg
      mad_mm               | double precision |           |          |
      mad_m3s              | double precision |           |          |
 
+## Caveat
 
+Discharge in cubic metres per second (`mad_m3s`) is only accurate where we have upstream area values.
+
+*For streams with contributing areas outside of BC, this value will currently be incorrect - upstream areas are within FWA watersheds only.*
 
 ### Data Citation
 
