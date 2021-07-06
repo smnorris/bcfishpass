@@ -96,8 +96,8 @@ INSERT INTO bcfishpass.channel_width_analysis
   localcode_ltree,
   watershed_group_code,
   channel_width,
-  cw_stddev,
   stream_order,
+  cw_stddev,
   stream_magnitude,
   gradient,
   elevation,
@@ -162,4 +162,3 @@ ON s.wscode_ltree = map.wscode_ltree AND s.localcode_ltree = map.localcode_ltree
 ORDER BY blue_line_key, downstream_route_measure, stream_sample_site_id, stream_crossing_id;
 
 CREATE INDEX ON bcfishpass.channel_width_analysis USING GIST (geom);
-
