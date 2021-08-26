@@ -3,7 +3,7 @@ set -euxo pipefail
 
 # load the raster to the db
 psql -c "DROP TABLE IF EXISTS bcfishpass.discharge_raster"
-raster2pgsql data/discharge.tif bcfishpass.discharge_raster | psql
+raster2pgsql data/discharge.nc bcfishpass.discharge_raster -s 4326 | psql
 
 # create the load table
 psql -c "drop table if exists bcfishpass.discharge_load"

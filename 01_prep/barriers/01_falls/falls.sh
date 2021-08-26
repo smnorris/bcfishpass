@@ -10,6 +10,7 @@ tmp="${TEMP:-/tmp}"
 
 # Archive existing FISS obstacles data just in case we want it later, the unique IDs aren't stable
 # (only keep one archive per day, and some work could be done to ensure the archive is only done if data has changed)
+# TODO - this presumes that the obstacles table is already present... will break on first run of script
 DOWNLOAD_DATE=$(psql -tc "SELECT replace(DATE(date_downloaded)::text, '-', '') FROM public.bcdata WHERE table_name = 'whse_fish.fiss_obstacles_pnt_sp'" | sed -e 's/^[[:space:]]*//')
 psql -c "DROP TABLE IF EXISTS whse_fish.fiss_obstacles_pnt_sp_$DOWNLOAD_DATE"
 psql -c "CREATE TABLE whse_fish.fiss_obstacles_pnt_sp_$DOWNLOAD_DATE AS SELECT * FROM whse_fish.fiss_obstacles_pnt_sp"

@@ -112,7 +112,7 @@ dnstr_spawning AS
   ON a.waterbody_key = b.waterbody_key
   INNER JOIN bcfishpass.streams s
   ON a.segmented_stream_id = s.segmented_stream_id
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
@@ -140,7 +140,7 @@ WITH spawn AS
     localcode_ltree,
     geom
   FROM bcfishpass.streams s
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
@@ -268,7 +268,7 @@ WITH spawn AS
     localcode_ltree,
     geom
   FROM bcfishpass.streams s
-  LEFT OUTER JOIN foundry.fwa_streams_mad mad
+  LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code

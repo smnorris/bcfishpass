@@ -33,20 +33,21 @@ data/runoff_yearsum_mean.nc: data/runoff.nc
 data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	cdo -b F64 add $^ $@
 
-## Convert MAD netcdf to BC Albers GeoTiff
-data/discharge.tif: data/discharge.nc
-	gdalwarp -s_srs EPSG:4326 -t_srs EPSG:3005 -co COMPRESS=DEFLATE -co NUM_THREADS=ALL_CPUS $^ $@
-
 ## Load watershed discharge values to postgres and manipulate in the db
-db/discharge_load: data/discharge.tif
+db/discharge_load: data/discharge.nc
 	$(call create_table_shell)
 
-## Transfer discharge data from temp table to discharge table
-db/discharge: db/discharge_load
+## Transfer discharge data from temp table to per watershed discharge table
+db/discharge_wsd: db/discharge_load
+	$(call create_table_shell)
+
+## For habitat modelling, it is easier if discharge is per-stream
+db/discharge: db/discharge_wsd
 	$(call create_table_shell)
 
 ## remove all generated files/tables
 clean:
 	rm -Rf data/*
 	psql -c "drop table bcfishpass.discharge_load"
+	psql -c "drop table bcfishpass.discharge_wsd"
 	psql -c "drop table bcfishpass.discharge"

@@ -1,41 +1,22 @@
 #!/bin/bash
 set -euxo pipefail
 
-# create output table
-psql -c "drop table if exists bcfishpass.discharge;
+# Transfer per-watershed discharge data to per-stream
 
-  create table bcfishpass.discharge (
-    wscode_ltree ltree,
-    localcode_ltree ltree,
+# create output bcfishpass.discharge table
+psql -c "DROP TABLE IF EXISTS bcfishpass.discharge;
+CREATE TABLE bcfishpass.discharge (
+    linear_feature_id integer,
     watershed_group_code text,
-    area bigint,
-    discharge numeric,
-    discharge_upstream numeric,
-    primary key (wscode_ltree, localcode_ltree)
-  );"
+    mad_mm double precision,
+    mad_m3s double precision
+);"
 
-# transfer data from load table to discharge table
-# Calculate area-weighted avg discharge upstream of every stream segment
-# loop through watershed groups, don't bother trying to update in parallel
-for WSG in $(psql -A -t -P border=0,footer=no \
-  -c "select distinct watershed_group_code
-      from bcfishpass.discharge_load
-      order by watershed_group_code")
+for WSG in $(psql -AtX -P border=0,footer=no \
+  -c "SELECT DISTINCT b.watershed_group_code FROM bcfishpass.discharge_wsd")
 do
-  psql -X -v wsg="$WSG" < sql/discharge.sql
+  echo 'Loading '$WSG
+  psql -XA -v wsg=$WSG -f sql/discharge.sql
 done
 
-psql -c "create index on bcfishpass.discharge using gist (wscode_ltree);"
-psql -c "create index on bcfishpass.discharge using btree (wscode_ltree);"
-psql -c "create index on bcfishpass.discharge using gist (localcode_ltree);"
-psql -c "create index on bcfishpass.discharge using btree (localcode_ltree);"
-
-# Calculate area-weighted avg discharge upstream of every stream segment
-# loop through watershed groups, don't bother trying to update in parallel
-for WSG in $(psql -A -t -P border=0,footer=no \
-  -c "select distinct watershed_group_code
-      from bcfishpass.discharge_load
-      order by watershed_group_code")
-do
-  psql -X -v wsg="$WSG" < sql/discharge_upstream.sql
-done
+psql -c "ALTER TABLE bcfishpass.discharge_wsd ADD PRIMARY KEY (watershed_feature_id)"
