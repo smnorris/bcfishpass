@@ -133,12 +133,12 @@ WHERE segmented_stream_id IN (SELECT DISTINCT segmented_stream_id FROM dnstr_spa
 WITH spawn AS
 (
   SELECT
-    segmented_stream_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    geom
+    s.segmented_stream_id,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.geom
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
@@ -261,12 +261,12 @@ WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM ids);
 WITH spawn AS
 (
   SELECT
-    segmented_stream_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    geom
+    s.segmented_stream_id,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.geom
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad
   ON s.linear_feature_id = mad.linear_feature_id
