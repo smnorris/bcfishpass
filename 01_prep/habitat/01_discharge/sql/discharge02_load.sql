@@ -7,11 +7,11 @@ SELECT
 FROM whse_basemapping.fwa_watersheds_poly
 WHERE watershed_group_code = :'wsg';
 
-INSERT INTO bcfishpass.discharge_load
+INSERT INTO bcfishpass.discharge02_load
 (watershed_feature_id, discharge_mm)
 SELECT 
   p.watershed_feature_id,
   ST_Value(rast, p.geom) as discharge_mm
 FROM temp_wsd_pts p
-INNER JOIN bcfishpass.discharge_raster
+INNER JOIN bcfishpass.discharge01_raster
 ON ST_intersects(p.geom, st_convexhull(rast));
