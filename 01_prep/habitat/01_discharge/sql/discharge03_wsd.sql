@@ -16,14 +16,11 @@ WITH src AS
     a.*,
     b.wscode_ltree,
     b.localcode_ltree,
-    wsg.watershed_group_code,
     b.geom
   FROM bcfishpass.discharge02_load a
   INNER JOIN whse_basemapping.fwa_watersheds_poly b
   ON a.watershed_feature_id = b.watershed_feature_id
-  INNER JOIN whse_basemapping.fwa_watershed_groups_poly wsg
-  ON b.watershed_group_id = wsg.watershed_group_id
-  WHERE b.watershed_group_code = :'wsg'
+  WHERE a.watershed_group_code = :'wsg'
 ),
 
 -- calculate weighted average of discharge for all area upstream of given wsd polygon
