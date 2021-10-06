@@ -61,7 +61,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	(watershed_feature_id integer primary key, discharge_mm double precision);"
 
 	# load PCIC study area (Fraser, Columbia, Peace) in parallel to temp postgres table
-	psql -tXA \
+	psql -tXA -v ON_ERROR_STOP=1 \
 	-c "SELECT DISTINCT watershed_group_code \
 	    FROM whse_basemapping.fwa_assessment_watersheds_poly \
 	    WHERE (wscode_ltree <@ '100'::ltree OR wscode_ltree <@ '300'::ltree OR wscode_ltree <@ '200'::ltree) \
@@ -83,7 +83,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	  mad_m3s double precision \
 	);"
 	for wsg in $(GROUPS) ; do \
-		psql -f sql/discharge03_wsd.sql -v wsg=$$wsg ;\
+		psql -v ON_ERROR_STOP=1 -f sql/discharge03_wsd.sql -v wsg=$$wsg ;\
 	done
 	psql -c "ANALYZE whse_basemapping.fwa_watersheds_upstream_area"
 	touch $@
@@ -94,15 +94,13 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	# create output bcfishpass.discharge table
 	psql -c "CREATE TABLE bcfishpass.discharge \
 	( \
-	    linear_feature_id integer, \
+	    linear_feature_id integer PRIMARY KEY, \
 	    watershed_group_code text, \
 	    mad_mm double precision, \
 	    mad_m3s double precision \
 	);"
-
 	for wsg in $(GROUPS) ; do \
-	  psql -f sql/discharge.sql -v wsg=$$wsg ; \
+	  psql -v ON_ERROR_STOP=1 -f sql/discharge.sql -v wsg=$$wsg ; \
 	done
-	psql -c "ALTER TABLE bcfishpass.discharge ADD PRIMARY KEY (linear_feature_id)"
 	touch $@
 	echo 'Discharge processing complete, see bcfishpass.discharge columns mad_mm, mad_m3s'
