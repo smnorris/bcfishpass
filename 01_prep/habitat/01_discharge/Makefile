@@ -1,25 +1,43 @@
 .PHONY: all clean
 
-all: data/baseflow.nc data/runoff.nc data/baseflow_yearsum_mean.nc data/runoff_yearsum_mean.nc data/discharge.nc data/discharge.tif db/discharge_load db/discharge
+TARGETS = data/baseflow.nc \
+	data/runoff.nc \
+	data/baseflow_yearsum_mean.nc \
+	data/runoff_yearsum_mean.nc \
+	data/discharge.nc \
+	.discharge02_load \
+	.discharge03_wsd \
+	.discharge
 
-# table existence check from https://mojodna.net/2015/01/07/make-for-data-using-make.html
-# check if table exists, run matching *sql* script if it does not
-define create_table_sql
-	@psql -c "\d $(subst db/,,bcfishpass.$@)" > /dev/null 2>&1 || psql -v ON_ERROR_STOP=1 -qX1f sql/$(subst db/,,$@).sql
-endef
+TABLES = discharge01_raster \
+	discharge02_load \
+	discharge03_wsd \
+	discharge
 
-# check if table exists, run matching *shell* script if it does not
-define create_table_shell
-	@psql -c "\d $(subst db/,,bcfishpass.$@)" > /dev/null 2>&1 || ./$(subst db/,,$@).sh
-endef
+GROUPS = $(shell psql -AtX -c "SELECT DISTINCT b.watershed_group_code \
+	FROM bcfishpass.discharge02_load a \
+	INNER JOIN whse_basemapping.fwa_watersheds_poly b \
+	ON a.watershed_feature_id = b.watershed_feature_id \
+	ORDER BY b.watershed_group_code")
+
+all: $(TARGETS)
+
+## remove all generated files/tables
+clean:
+	rm -Rf $(TARGETS)
+	# drop tables
+	for table in $(TABLES) ; do \
+		psql -c "DROP TABLE IF EXISTS bcfishpass.$$table"; \
+	done
 
 ## Download baseflow from PCIC
 data/baseflow.nc:
-	curl -o $@ https://data.pacificclimate.org/data/hydro_model_out/allwsbc.TPS_gridded_obs_init.1945to2099.BASEFLOW.nc.nc?BASEFLOW[13149:24105][][]
+	mkdir -p data
+	curl -o $@ 'https://data.pacificclimate.org/data/hydro_model_out/allwsbc.TPS_gridded_obs_init.1945to2099.BASEFLOW.nc.nc?BASEFLOW'$(printf %s '[13149:24105][][]'|jq -sRr @uri)
 
 ## Download runoff from PCIC
 data/runoff.nc:
-	curl -o $@ https://data.pacificclimate.org/data/hydro_model_out/allwsbc.TPS_gridded_obs_init.1945to2099.RUNOFF.nc.nc?RUNOFF[13149:24105][][]
+	curl -o $@ 'https://data.pacificclimate.org/data/hydro_model_out/allwsbc.TPS_gridded_obs_init.1945to2099.RUNOFF.nc.nc?RUNOFF'$(printf %s '[13149:24105][][]'|jq -sRr @uri)
 
 ## Create mean annual baseflow
 data/baseflow_yearsum_mean.nc: data/baseflow.nc
@@ -34,20 +52,55 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	cdo -b F64 add $^ $@
 
 ## Load watershed discharge values to postgres and manipulate in the db
-db/discharge_load: data/discharge.nc
-	$(call create_table_shell)
+.discharge02_load: data/discharge.nc
+	# load the raster to the db
+	raster2pgsql data/discharge.nc bcfishpass.discharge01_raster -s 4326 | psql
+
+	# create the load table
+	psql -c "CREATE TABLE bcfishpass.discharge02_load \
+	(watershed_feature_id integer primary key, discharge_mm double precision);"
+
+	# load PCIC study area (Fraser, Columbia, Peace) in parallel to temp postgres table
+	psql -tXA -v ON_ERROR_STOP=1 \
+	-c "SELECT DISTINCT watershed_group_code \
+	    FROM whse_basemapping.fwa_assessment_watersheds_poly \
+	    WHERE (wscode_ltree <@ '100'::ltree OR wscode_ltree <@ '300'::ltree OR wscode_ltree <@ '200'::ltree) \
+	    ORDER BY watershed_group_code" | parallel psql -f sql/discharge02_load.sql -v wsg={1}
+	touch $@
 
 ## Transfer discharge data from temp table to per watershed discharge table
-db/discharge_wsd: db/discharge_load
-	$(call create_table_shell)
+.discharge03_wsd: .discharge02_load
+	# Transfer data from load table to discharge table
+	# Calculates the area weighted annual average flow for each wsd (mad_mm) and coverts to cubic m per s (m3s)
+	# To avoid locking issues when running in parallel, run in sequence
+	# (something to do with the parallel queries, even if inserting to separate tables it is very slow)
+	psql -c "DROP TABLE IF EXISTS bcfishpass.discharge03_wsd"
+	psql -c "CREATE TABLE bcfishpass.discharge03_wsd \
+	( \
+	  watershed_feature_id integer, \
+	  watershed_group_code text, \
+	  mad_mm double precision, \
+	  mad_m3s double precision \
+	);"
+	for wsg in $(GROUPS) ; do \
+		psql -v ON_ERROR_STOP=1 -f sql/discharge03_wsd.sql -v wsg=$$wsg ;\
+	done
+	psql -c "ANALYZE whse_basemapping.fwa_watersheds_upstream_area"
+	touch $@
 
 ## For habitat modelling, it is easier if discharge is per-stream
-db/discharge: db/discharge_wsd
-	$(call create_table_shell)
-
-## remove all generated files/tables
-clean:
-	rm -Rf data/*
-	psql -c "drop table bcfishpass.discharge_load"
-	psql -c "drop table bcfishpass.discharge_wsd"
-	psql -c "drop table bcfishpass.discharge"
+.discharge: .discharge03_wsd
+	# Transfer per-watershed discharge data to per-stream
+	# create output bcfishpass.discharge table
+	psql -c "CREATE TABLE bcfishpass.discharge \
+	( \
+	    linear_feature_id integer PRIMARY KEY, \
+	    watershed_group_code text, \
+	    mad_mm double precision, \
+	    mad_m3s double precision \
+	);"
+	for wsg in $(GROUPS) ; do \
+	  psql -v ON_ERROR_STOP=1 -f sql/discharge.sql -v wsg=$$wsg ; \
+	done
+	touch $@
+	echo 'Discharge processing complete, see bcfishpass.discharge columns mad_mm, mad_m3s'

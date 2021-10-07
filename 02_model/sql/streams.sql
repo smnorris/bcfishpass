@@ -98,16 +98,27 @@ SELECT
   s.watershed_key_50k,
   s.watershed_group_code_50k,
   s.feature_code,
-  s.upstream_area_ha,
-  s.upstream_lake_ha,
-  s.upstream_reservoir_ha,
-  s.upstream_wetland_ha,
+  ua.upstream_area_ha,
+  wb.upstream_lake_ha,
+  wb.upstream_reservoir_ha,
+  wb.upstream_wetland_ha,
   s.geom
 FROM whse_basemapping.fwa_stream_networks_sp s
-INNER JOIN bcfishpass.param_watersheds g
-ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
+LEFT OUTER JOIN whse_basemapping.fwa_waterbodies_upstream_area wb
+ON s.linear_feature_id = wb.linear_feature_id
+LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
+ON s.linear_feature_id = l.linear_feature_id
+LEFT OUTER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
+ON l.watershed_feature_id = ua.watershed_feature_id
 WHERE
-  s.fwa_watershed_code NOT LIKE '999%%'
+s.watershed_group_code = ANY(      -- this array query is faster than a join or IN query
+  ARRAY(
+    SELECT watershed_group_code
+    FROM bcfishpass.param_watersheds
+    WHERE include IS TRUE
+  )
+)
+  AND s.wscode_ltree <@ '999' IS FALSE
   AND s.edge_type != 6010
   AND s.localcode_ltree IS NOT NULL
 ORDER BY
