@@ -2,11 +2,11 @@
 -- Avoid the issue by just creating a temp table of watershed centroids in 4326.
 CREATE TEMPORARY TABLE temp_wsd_pts AS
 SELECT
-  a.watershed_feature_id,
-  b.watershed_group_code,
-  st_transform(st_centroid(a.geom), 4326) as geom
-FROM whse_basemapping.fwa_watersheds_poly a
-WHERE a.watershed_group_code = :'wsg';
+  watershed_feature_id,
+  watershed_group_code,
+  st_transform(st_centroid(geom), 4326) as geom
+FROM whse_basemapping.fwa_watersheds_poly
+WHERE watershed_group_code = :'wsg';
 
 INSERT INTO bcfishpass.discharge02_load
 (watershed_feature_id, watershed_group_code, discharge_mm)

@@ -69,7 +69,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	-c "SELECT DISTINCT watershed_group_code \
 	    FROM whse_basemapping.fwa_assessment_watersheds_poly \
 	    WHERE (wscode_ltree <@ '100'::ltree OR wscode_ltree <@ '300'::ltree OR wscode_ltree <@ '200'::ltree) \
-	    ORDER BY watershed_group_code" | parallel psql -f sql/discharge02_load.sql -v wsg={1}
+	    ORDER BY watershed_group_code" | parallel psql -v ON_ERROR_STOP=1 -f sql/discharge02_load.sql -v wsg={1}
 	touch $@
 
 # Transfer data from load table to discharge table
@@ -82,9 +82,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	  mad_mm double precision, \
 	  mad_m3s double precision \
 	);"
-	for wsg in $(GROUPS) ; do \
-		psql -v ON_ERROR_STOP=1 -f sql/discharge03_wsd.sql -v wsg=$$wsg ;\
-	done
+	parallel --jobs 5 psql -v ON_ERROR_STOP=1 -f sql/discharge03_wsd.sql -v wsg={1} ::: $(GROUPS)
 	psql -c "ANALYZE whse_basemapping.fwa_watersheds_upstream_area"
 	touch $@
 
