@@ -287,7 +287,7 @@ spp_downstream AS
         a.{point_id},
         unnest(species_codes) as species_code
       FROM {point_schema}.{point_table} a
-      LEFT OUTER JOIN whse_fish.fiss_fish_obsrvtn_events fo
+      LEFT OUTER JOIN bcfishobs.fiss_fish_obsrvtn_events fo
       ON a.blue_line_key = fo.blue_line_key
       AND a.downstream_route_measure > fo.downstream_route_measure
       ORDER BY {point_id}, species_code
@@ -306,7 +306,7 @@ FROM
       a.{point_id},
       unnest(species_codes) as species_code
     FROM {point_schema}.{point_table} a
-    LEFT OUTER JOIN whse_fish.fiss_fish_obsrvtn_events fo
+    LEFT OUTER JOIN bcfishobs.fiss_fish_obsrvtn_events fo
     ON FWA_Upstream(
       a.blue_line_key,
       a.downstream_route_measure,
