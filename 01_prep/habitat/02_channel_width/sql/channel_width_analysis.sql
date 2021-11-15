@@ -132,10 +132,10 @@ SELECT DISTINCT ON (blue_line_key, downstream_route_measure)
   s.gradient,
   ROUND((ST_Z(ST_PointN(s.geom, - 1)))::numeric) as elevation,
   -- get upstream areas
-  coalesce(ua.upstream_area, 0) as upstream_area,
-  coalesce(uwb.upstream_area_lake, 0) as upstream_area_lake,
-  coalesce(uwb.upstream_area_manmade, 0) as upstream_area_manmade,
-  coalesce(uwb.upstream_area_wetland, 0) as upstream_area_wetland,
+  coalesce(ua.upstream_area_ha, 0) as upstream_area_ha,
+  coalesce(uwb.upstream_lake_ha, 0) as upstream_lake_ha,
+  coalesce(uwb.upstream_reservoir_ha, 0) as upstream_reservoir_ha,
+  coalesce(uwb.upstream_wetland_ha, 0) as upstream_wetland_ha,
   es.parent_ecoregion_code as ecoregion_code,
   es.ecosection_code,
   bec.zone,
@@ -152,7 +152,7 @@ ON ST_Intersects(m.geom, w.geom)  -- joining rivers to watersheds is problematic
 INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
 ON w.watershed_feature_id = ua.watershed_feature_id
 INNER JOIN whse_basemapping.fwa_waterbodies_upstream_area uwb
-ON w.watershed_feature_id = uwb.watershed_feature_id
+ON s.linear_feature_id = uwb.linear_feature_id
 LEFT OUTER JOIN whse_terrestrial_ecology.erc_ecosections_subdivided es
 ON ST_Intersects(m.geom, es.geom)
 LEFT OUTER JOIN whse_forest_vegetation.bec_biogeoclimatic_poly_subdivided bec
