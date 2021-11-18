@@ -7,8 +7,8 @@ Download waterfall data from various sources, match to FWA stream network, ident
 - FISS obstacles, [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/provincial-obstacles-to-fish-passage)
 - FISS obstacles, [unpublished](https://www.hillcrestgeo.ca/outgoing/public/whse_fish)
 - FWA obstructions, [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions)
-- Additional user compiled falls, [falls_other.csv](/data/falls_other.csv)
-- User modification of fall barrier status, [falls_barrier_ind.csv](/data/falls_barrier_ind.csv)
+- Additional user compiled falls, [falls_other.csv](/data/falls/falls_other.csv)
+- User modification of fall barrier status, [falls_barrier_ind.csv](/data/falls/falls_barrier_ind.csv)
 
 
 ## Barrier status logic
