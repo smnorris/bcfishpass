@@ -7,8 +7,8 @@ Download waterfall data from various sources, match to FWA stream network, ident
 - FISS obstacles, [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/provincial-obstacles-to-fish-passage)
 - FISS obstacles, [unpublished](https://www.hillcrestgeo.ca/outgoing/public/whse_fish)
 - FWA obstructions, [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions)
-- Additional user compiled falls, [falls_other.csv](data/falls_other.csv)
-- User modification of fall barrier status, [falls_barrier_ind.csv](../../../data/falls_other.csv)
+- Additional user compiled falls, [falls_other.csv](../../../../data/falls_other.csv)
+- User modification of fall barrier status, [falls_barrier_ind.csv](../../../../data/falls_other.csv)
 
 
 ## Barrier status logic
@@ -43,7 +43,8 @@ SELECT
   f.downstream_route_measure,
   f.source,
   f.height,
-  b.barrier_ind
+  f.upstr_obsrvd_anad_count,
+  f.upstr_obsrvd_spp
 FROM bcfishpass.falls f
 LEFT OUTER JOIN bcfishpass.falls_barrier_ind b
 ON f.blue_line_key = b.blue_line_key
@@ -54,9 +55,9 @@ AND (
     source = 'FWA'
 )
 AND b.barrier_ind IS NULL
-AND upstr_observed_anad_count <=2;
+--AND (upstr_obsrvd_anad_count <=3 OR (upstr_obsrvd_anad_count <= 5 and height > 10))
+ORDER BY height desc, upstr_obsrvd_anad_count desc;
 ```
-
 
 ## Output table
 
