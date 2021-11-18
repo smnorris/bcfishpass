@@ -132,7 +132,6 @@ CREATE TABLE bcfishpass.falls
 -- ----------------------------------------------
 -- Reference FISS falls to the FWA stream network, matching to closest stream
 -- that has matching watershed code (via 50k/20k lookup)
--- FISS falls >= 5m are barrier_ind = True, or as indicated in falls_barrier_ind.csv
 -- ----------------------------------------------
 
 WITH candidates AS -- first, find up to 10 streams within 200m of the falls
@@ -229,7 +228,6 @@ INSERT INTO bcfishpass.falls
  fiss_obstacles_falls_id,
  source,
  height,
- barrier_ind,
  distance_to_stream,
  linear_feature_id,
  blue_line_key,
@@ -242,11 +240,6 @@ SELECT
   fiss_obstacles_falls_id,
  'FISS' as source,
  e.height,
- CASE
-   WHEN b.barrier_ind IS NOT NULL THEN b.barrier_ind
-   WHEN b.barrier_ind IS NULL AND e.height >= 5 THEN True
-   ELSE False
- END as barrier_ind,
  e.distance_to_stream,
  e.linear_feature_id,
  e.blue_line_key,
@@ -258,9 +251,6 @@ SELECT
 FROM matched e
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id
-LEFT OUTER JOIN bcfishpass.falls_barrier_ind b
-ON e.blue_line_key = b.blue_line_key AND
-   e.downstream_route_measure = b.downstream_route_measure
 ON CONFLICT DO NOTHING;
 
 
@@ -359,7 +349,6 @@ INSERT INTO bcfishpass.falls
  (
  source,
  height,
- barrier_ind,
  distance_to_stream,
  linear_feature_id,
  blue_line_key,
@@ -371,11 +360,6 @@ INSERT INTO bcfishpass.falls
 SELECT
  'FISS' as source,
  e.height,
- CASE
-   WHEN b.barrier_ind IS NOT NULL THEN b.barrier_ind
-   WHEN b.barrier_ind IS NULL AND e.height >= 5 THEN True
-   ELSE False
- END as barrier_ind,
  e.distance_to_stream,
  e.linear_feature_id,
  e.blue_line_key,
@@ -387,9 +371,6 @@ SELECT
 FROM events e
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id
-LEFT OUTER JOIN bcfishpass.falls_barrier_ind b
-ON e.blue_line_key = b.blue_line_key AND
-   e.downstream_route_measure = b.downstream_route_measure
 ON CONFLICT DO NOTHING;
 
 
@@ -400,7 +381,6 @@ ALTER TABLE bcfishpass.falls DROP COLUMN fiss_obstacles_falls_id;  -- dump the m
 -- ----------------------------------------------
 INSERT INTO bcfishpass.falls
 (source,
- barrier_ind,
  linear_feature_id,
  blue_line_key,
  downstream_route_measure,
@@ -410,7 +390,6 @@ INSERT INTO bcfishpass.falls
  geom)
 SELECT
  'FWA' as source,
-  true as barrier_ind,
   linear_feature_id,
   blue_line_key,
   route_measure,
@@ -420,11 +399,10 @@ SELECT
   (ST_Dump(geom)).geom as geom
 FROM whse_basemapping.fwa_obstructions_sp
 WHERE obstruction_type = 'Falls'
-AND watershed_group_code NOT IN ('BULK','LNIC','HORS','ELKR') -- exclude these for now
 ON CONFLICT DO NOTHING;
 
 -- ---------------------------------------------
--- Finally, load manually added falls
+-- Load manually added falls
 -- ---------------------------------------------
 INSERT INTO bcfishpass.falls
  (
@@ -460,8 +438,7 @@ p.downstream_route_measure > s.downstream_route_measure - .001 AND
 p.downstream_route_measure + .001 < s.upstream_route_measure
 ON CONFLICT DO NOTHING;
 
-
-
+-- index
 CREATE INDEX ON bcfishpass.falls (linear_feature_id);
 CREATE INDEX ON bcfishpass.falls (blue_line_key);
 CREATE INDEX ON bcfishpass.falls USING GIST (wscode_ltree);
@@ -470,9 +447,137 @@ CREATE INDEX ON bcfishpass.falls USING GIST (localcode_ltree);
 CREATE INDEX ON bcfishpass.falls USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.falls USING GIST (geom);
 
-
--- drop the load/intermediate tables
+-- drop load/intermediate tables (but keeping the barrier_ind table for QA)
 DROP TABLE bcfishpass.falls_other;
-DROP TABLE bcfishpass.falls_barrier_ind;
 DROP TABLE bcfishpass.fiss_obstacles_falls;
 DROP TABLE bcfishpass.fiss_obstacles_unpublished;
+
+-- add observation related fields
+ALTER TABLE bcfishpass.falls ADD COLUMN upstr_obsrvd_spp text[];
+ALTER TABLE bcfishpass.falls ADD COLUMN upstr_obsrvd_count integer;
+ALTER TABLE bcfishpass.falls ADD COLUMN upstr_obsrvd_anad_count integer;
+ALTER TABLE bcfishpass.falls ADD COLUMN upstr_obsrvd_anad_ids integer[];
+COMMENT ON COLUMN bcfishpass.falls.upstr_obsrvd_spp IS 'Fish species observed upstream of falls';
+COMMENT ON COLUMN bcfishpass.falls.upstr_obsrvd_count IS 'Count of all upstream fish observation records';
+COMMENT ON COLUMN bcfishpass.falls.upstr_obsrvd_anad_count IS 'Count of all upstream anadromous fish observation records';
+COMMENT ON COLUMN bcfishpass.falls.upstr_obsrvd_anad_ids IS 'Array of fish_observation_point_id values for upstream fish observation records';
+
+-- note all upstream species
+WITH upstr_spp AS
+(
+  SELECT
+    blue_line_key,
+    downstream_route_measure,
+    array_agg(species_code) as species_codes
+  FROM
+    (
+      SELECT DISTINCT
+        a.blue_line_key,
+        a.downstream_route_measure,
+        unnest(species_codes) as species_code
+      FROM bcfishpass.falls a
+      LEFT OUTER JOIN bcfishobs.fiss_fish_obsrvtn_events fo
+      ON FWA_Upstream(
+        a.blue_line_key,
+        a.downstream_route_measure,
+        a.wscode_ltree,
+        a.localcode_ltree,
+        fo.blue_line_key,
+        fo.downstream_route_measure,
+        fo.wscode_ltree,
+        fo.localcode_ltree,
+        false,
+        50    -- Define this fairly generous tolerance so observations that are in
+       )      -- more or less the same spot (on the same stream) are not included
+              -- Tolerance is generous because we don't trust the locational accuracy/precision
+              -- of FISS observations
+      ORDER BY species_code
+    ) AS f
+  GROUP BY blue_line_key, downstream_route_measure
+)
+
+UPDATE bcfishpass.falls f
+SET upstr_obsrvd_spp = u.species_codes
+FROM upstr_spp u
+WHERE f.blue_line_key = u.blue_line_key
+AND f.downstream_route_measure = u.downstream_route_measure;
+
+-- count all upstream observation records and anadromous observation records, and add anadromous observation ids for QA of questionable observations/falls
+WITH upstr_counts AS
+(
+  SELECT
+    blue_line_key,
+    downstream_route_measure,
+    count(*) as obsrvd_count,
+    count(*) FILTER (WHERE species_code IN ('CH','CM','CO','PK','SK','ST','AO','SA'))  as obsrvd_anad_count,-- all salmon and steelhead - anything else??
+    array_agg(fish_observation_point_id) as obsrvd_anad_ids
+  FROM
+    (
+      SELECT DISTINCT
+        a.blue_line_key,
+        a.downstream_route_measure,
+        fo.fish_observation_point_id,
+        fo.species_code
+      FROM bcfishpass.falls a
+      LEFT OUTER JOIN bcfishobs.fiss_fish_obsrvtn_events_sp fo
+      ON FWA_Upstream(
+        a.blue_line_key,
+        a.downstream_route_measure,
+        a.wscode_ltree,
+        a.localcode_ltree,
+        fo.blue_line_key,
+        fo.downstream_route_measure,
+        fo.wscode_ltree,
+        fo.localcode_ltree,
+        false,
+        50    -- Define this fairly generous tolerance so observations that are in
+       )      -- more or less the same spot (on the same stream) are not included
+              -- Tolerance is generous because we don't trust the locational accuracy/precision
+              -- of FISS observations
+      ORDER BY species_code
+    ) AS f
+  GROUP BY blue_line_key, downstream_route_measure
+)
+
+UPDATE bcfishpass.falls f
+SET
+  upstr_obsrvd_count = u.obsrvd_count,
+  upstr_obsrvd_anad_count = u.obsrvd_anad_count,
+  upstr_obsrvd_anad_ids = u.obsrvd_anad_ids
+FROM upstr_counts u
+WHERE f.blue_line_key = u.blue_line_key
+AND f.downstream_route_measure = u.downstream_route_measure;
+
+-- --------------------------
+-- set barrier status for fiss/fwa records and user input corrections
+-- (any additional falls loaded include their barrier status)
+-- --------------------------
+
+-- fiss falls < 5m or NULL default to passable
+UPDATE bcfishpass.falls
+SET barrier_ind = False
+WHERE source = 'FISS' AND (height < 5 or height is null);
+
+-- fiss falls >= 5m are barriers
+UPDATE bcfishpass.falls
+SET barrier_ind = True
+WHERE source = 'FISS' AND height >= 5;
+
+-- all fwa features default to barriers
+UPDATE bcfishpass.falls
+SET barrier_ind = True
+WHERE source = 'FWA';
+
+-- fiss and fwa records with anadromous observations upstream are NOT barriers
+-- (subject to review! FISS species coding data is suspect)
+UPDATE bcfishpass.falls
+SET barrier_ind = False
+WHERE upstr_obsrvd_anad_count >= 1 AND source IN ('FISS', 'FWA');
+
+-- and override all barrier status based on user input
+UPDATE bcfishpass.falls f
+SET barrier_ind = False
+FROM bcfishpass.falls_barrier_ind b
+WHERE
+  f.blue_line_key = b.blue_line_key AND
+  f.downstream_route_measure = b.downstream_route_measure;
