@@ -55,7 +55,7 @@ AND (
     source = 'FWA'
 )
 AND b.barrier_ind IS NULL
---AND (upstr_obsrvd_anad_count <=3 OR (upstr_obsrvd_anad_count <= 5 and height > 10))
+AND (upstr_obsrvd_anad_count <=3 OR (upstr_obsrvd_anad_count <= 5 and height > 10))
 ORDER BY height desc, upstr_obsrvd_anad_count desc;
 ```
 
@@ -64,9 +64,9 @@ ORDER BY height desc, upstr_obsrvd_anad_count desc;
 `bcfishpass.falls` contains all known falls features - only features of `barrier_ind IS TRUE` are used for connectivity modelling.
 Note that there is no ID used as a primary key. This is because the FISS Obstacles table does not have a stable primary key - we use `blue_line_key` and `downstream_route_measure` as the primary key.
 ```
-                                                  Table "bcfishpass.falls"
-          Column          |         Type         | Collation | Nullable |                      Default
---------------------------+----------------------+-----------+----------+----------------------------------------------------
+                           Table "bcfishpass.falls"
+          Column          |         Type         | Collation | Nullable | Default
+--------------------------+----------------------+-----------+----------+---------
  source                   | text                 |           |          |
  height                   | double precision     |           |          |
  barrier_ind              | boolean              |           |          |
@@ -74,15 +74,18 @@ Note that there is no ID used as a primary key. This is because the FISS Obstacl
  notes                    | text                 |           |          |
  distance_to_stream       | double precision     |           |          |
  linear_feature_id        | bigint               |           |          |
- blue_line_key            | integer              |           |          |
- downstream_route_measure | double precision     |           |          |
+ blue_line_key            | integer              |           | not null |
+ downstream_route_measure | double precision     |           | not null |
  wscode_ltree             | ltree                |           |          |
  localcode_ltree          | ltree                |           |          |
  watershed_group_code     | text                 |           |          |
  geom                     | geometry(Point,3005) |           |          |
+ upstr_obsrvd_spp         | text[]               |           |          |
+ upstr_obsrvd_count       | integer              |           |          |
+ upstr_obsrvd_anad_count  | integer              |           |          |
+ upstr_obsrvd_anad_ids    | integer[]            |           |          |
 Indexes:
-    "falls_pkey" PRIMARY KEY, btree (falls_id)
-    "falls_blue_line_key_downstream_route_measure_key" UNIQUE CONSTRAINT, btree (blue_line_key, downstream_route_measure)
+    "falls_pkey" PRIMARY KEY, btree (blue_line_key, downstream_route_measure)
     "falls_blue_line_key_idx" btree (blue_line_key)
     "falls_geom_idx" gist (geom)
     "falls_linear_feature_id_idx" btree (linear_feature_id)
