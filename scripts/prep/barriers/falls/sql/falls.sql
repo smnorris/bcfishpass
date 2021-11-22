@@ -510,7 +510,7 @@ WITH upstr_counts AS
     downstream_route_measure,
     count(*) as obsrvd_count,
     count(*) FILTER (WHERE species_code IN ('CH','CM','CO','PK','SK','ST','AO','SA'))  as obsrvd_anad_count,-- all salmon and steelhead - anything else??
-    array_agg(fish_observation_point_id) as obsrvd_anad_ids
+    array_agg(fish_observation_point_id) FILTER (WHERE species_code IN ('CH','CM','CO','PK','SK','ST','AO','SA')) as obsrvd_anad_ids
   FROM
     (
       SELECT DISTINCT

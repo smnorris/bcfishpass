@@ -39,6 +39,8 @@ Review barrier status of these falls with this query, identify any falls that ar
 
 ```
 SELECT
+  f.wscode_ltree,
+  f.localcode_ltree,
   f.blue_line_key,
   f.downstream_route_measure,
   f.source,
@@ -56,7 +58,8 @@ AND (
 )
 AND b.barrier_ind IS NULL
 AND (upstr_obsrvd_anad_count <=3 OR (upstr_obsrvd_anad_count <= 5 and height > 10))
-ORDER BY height desc, upstr_obsrvd_anad_count desc;
+--ORDER BY height desc, upstr_obsrvd_anad_count desc
+order by wscode_ltree;
 ```
 
 ## Output table
