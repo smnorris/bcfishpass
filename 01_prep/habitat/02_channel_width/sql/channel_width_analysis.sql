@@ -22,6 +22,7 @@ CREATE TABLE bcfishpass.channel_width_analysis
   stream_order integer,
   stream_magnitude integer,
   gradient double precision,
+  length_metre double precision,
   elevation double precision,
   upstream_area double precision,
   upstream_area_lake double precision,
@@ -77,8 +78,8 @@ SELECT
   c.linear_feature_id,
   s.blue_line_key,
   s.downstream_route_measure,
-  c.channel_width_mapped as channel_width,
   c.cw_stddev,
+  c.channel_width_mapped as channel_width,
   st_pointonsurface(s.geom) as geom
 FROM bcfishpass.channel_width_mapped c
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -100,6 +101,7 @@ INSERT INTO bcfishpass.channel_width_analysis
   stream_order,
   stream_magnitude,
   gradient,
+  length_metre,
   elevation,
   upstream_area,
   upstream_area_lake,
@@ -130,6 +132,7 @@ SELECT DISTINCT ON (blue_line_key, downstream_route_measure)
   s.stream_order,
   s.stream_magnitude,
   s.gradient,
+  s.length_metre,
   ROUND((ST_Z(ST_PointN(s.geom, - 1)))::numeric) as elevation,
   -- get upstream areas
   coalesce(ua.upstream_area_ha, 0) as upstream_area_ha,
