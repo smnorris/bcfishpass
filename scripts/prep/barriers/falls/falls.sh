@@ -10,12 +10,8 @@
 
 set -exo pipefail
 
-# check that path to data folder is provided
-if [ -z "$1" ]
-  then
-    echo "Usage: falls.sh </path/to/data/files>"
-    exit 1
-fi
+# alter path to the data files by setting BCFISHPASS_DATA environment variable
+DATAPATH="${BCFISHPASS_DATA:-../../../../data}"
 
 tmp="${TEMP:-/tmp}"
 
@@ -66,7 +62,7 @@ psql -c "CREATE TABLE bcfishpass.falls_barrier_ind
  watershed_group_code        text,
  reviewer                    text,
  notes                       text)"
-psql -c "\copy bcfishpass.falls_barrier_ind FROM '$1/falls/falls_barrier_ind.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.falls_barrier_ind FROM '$DATAPATH/falls/falls_barrier_ind.csv' delimiter ',' csv header"
 
 
 # load other falls, from various sources (add any new falls to this table)
@@ -83,7 +79,7 @@ psql -c "CREATE TABLE bcfishpass.falls_other
    notes text,
    primary key (blue_line_key, downstream_route_measure)
    )"
-psql -c "\copy bcfishpass.falls_other FROM '$1/falls/falls_other.csv' delimiter ',' csv header"
+psql -c "\copy bcfishpass.falls_other FROM '$DATAPATH/falls/falls_other.csv' delimiter ',' csv header"
 
 # match falls to streams, combine sources
 psql -f sql/falls.sql

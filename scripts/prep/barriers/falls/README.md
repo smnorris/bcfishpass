@@ -13,59 +13,26 @@ Download waterfall data from various sources, match to FWA stream network, ident
 
 ## Barrier status logic
 
-A fall is identified as a barrier if one of these conditions is met:
+A fall is automatically identified as a barrier if one of these conditions is met:
 
 - data source is a FISS obstacles / FISS obstacles unpublished *AND* height >= 5m
 - data source is FWA obstructions (this data source does not include a height)
-- `barrier_ind = True`  for the given falls in `falls_other.csv`
-- `barrier_ind = True`  for the given falls in `falls_barrier_ind.csv`
+- data sourc is `falls_other.csv` and `barrier_ind = True`
 
-Overriding the above logic, a fall is automatically identified as passable if there are FISS known fish observations (anadramous species) upstream of the falls.
+See below for manually modifying the barrier status of individual falls with `falls_barrier_ind.csv`
 
 
 ## Processing
 
 1. Add records/edit `falls_other.csv` as required
-2. Add records/edit `falls_barrier_ind.csv` as required
-3. Process the input data, create `bcfishpass.falls`, note observations upstream:
+2. Download input data, match to FWA streams, combine into a single falls table:
 
         ./falls.sh
 
-
-## Review and QA
-
-Falls that would otherwise be considered barriers should be reviewed if there are few observations upstream.
-Review barrier status of these falls with this query, identify any falls that are likely to be invalid, then add them to the `falls_barrier_ind.csv` with `barrier_ind = F`
-
-```
-SELECT
-  f.wscode_ltree,
-  f.localcode_ltree,
-  f.blue_line_key,
-  f.downstream_route_measure,
-  f.source,
-  f.height,
-  f.upstr_obsrvd_anad_count,
-  f.upstr_obsrvd_spp
-FROM bcfishpass.falls f
-LEFT OUTER JOIN bcfishpass.falls_barrier_ind b
-ON f.blue_line_key = b.blue_line_key
-AND f.downstream_route_measure = b.downstream_route_measure
-WHERE f.barrier_ind is False
-AND (
-    (source = 'FISS' AND height >= 5) OR
-    source = 'FWA'
-)
-AND b.barrier_ind IS NULL
-AND (upstr_obsrvd_anad_count <=3 OR (upstr_obsrvd_anad_count <= 5 and height > 10))
---ORDER BY height desc, upstr_obsrvd_anad_count desc
-order by wscode_ltree;
-```
-
 ## Output table
 
-`bcfishpass.falls` contains all known falls features - only features of `barrier_ind IS TRUE` are used for connectivity modelling.
-Note that there is no ID used as a primary key. This is because the FISS Obstacles table does not have a stable primary key - we use `blue_line_key` and `downstream_route_measure` as the primary key.
+`bcfishpass.falls` contains all known falls features (only the subset of falls with `barrier_ind IS TRUE` are used for connectivity modelling).
+Note that there is no ID used as a primary key. The `blue_line_key`/`downstream_route_measure` columns are used as the primary key instead (the source FISS obstacles table does not include a stable primary key so tracking these falls is easiest via their position on the network).
 ```
                            Table "bcfishpass.falls"
           Column          |         Type         | Collation | Nullable | Default
@@ -83,10 +50,6 @@ Note that there is no ID used as a primary key. This is because the FISS Obstacl
  localcode_ltree          | ltree                |           |          |
  watershed_group_code     | text                 |           |          |
  geom                     | geometry(Point,3005) |           |          |
- upstr_obsrvd_spp         | text[]               |           |          |
- upstr_obsrvd_count       | integer              |           |          |
- upstr_obsrvd_anad_count  | integer              |           |          |
- upstr_obsrvd_anad_ids    | integer[]            |           |          |
 Indexes:
     "falls_pkey" PRIMARY KEY, btree (blue_line_key, downstream_route_measure)
     "falls_blue_line_key_idx" btree (blue_line_key)
@@ -97,3 +60,19 @@ Indexes:
     "falls_wscode_ltree_idx" gist (wscode_ltree)
     "falls_wscode_ltree_idx1" btree (wscode_ltree)
 ```
+
+## Edit barrrier status
+
+When the barrier status of a falls neeeds to be updated, add to `falls_barrier_ind.csv` as required.
+A falls is identified in this table by its position on the network (`blue_line_key`/`downstream_route_measure` combination).
+For example, to remove an invalid falls, add a record like this:
+
+| blue_line_key | downstream_route_measure | barrier_ind | watershed_group_code | reviewer | notes
+| --------     | -------- | -------- | -------- | -------- | -------- |
+| 356252974     | 0                        | F           | HORS                 | NJO      | Does not exist |
+
+Or, if a falls that defaults to passable has been found to be a barrier:
+
+| blue_line_key | downstream_route_measure | barrier_ind | watershed_group_code | reviewer | notes
+| --------     | -------- | -------- | -------- | -------- | -------- |
+|123456789|525|T|AGRP|SN|Barrier confirmed by local source A.Fish.|
