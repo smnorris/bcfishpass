@@ -1,0 +1,27 @@
+.PHONY: all env clean
+
+GENERATED_FILES = .fwapg .bcfishobs .falls
+
+# Make all targets
+all: $(GENERATED_FILES)
+
+# Remove all generated targets
+clean:
+	rm -rf fwapg
+	rm -rf bcfishobs
+	rm -Rf $(GENERATED_FILES)
+
+.fwapg:
+	git clone https://github.com/smnorris/fwapg.git
+	cd fwapg; make
+	touch $@
+
+.bcfishobs: .fwapg
+	git clone https://github.com/smnorris/bcfishobs.git
+	cd bcfishobs; make
+	touch $@
+
+.falls: .bcfishobs .fwapg
+	./scripts/prep/barriers/falls/falls.sh data
+	touch $@
+

@@ -67,6 +67,35 @@ Once you have an environment created and can connect to the database successfull
 - [Known Fish Observations](https://github.com/smnorris/bcfishobs)
 
 
+## Docker
+
+Download the repo, create containers, create database, load all data:
+
+    git clone https://github.com/smnorris/bcfishpass.git
+    cd bcfishpass
+
+Edit the ports mappings as required in `.env` (to avoid conflicts with ports already in use), then build and start the services:
+
+    docker-compose build
+    docker-compose up -d
+    docker-compose run --rm client psql -c "CREATE DATABASE bcfishpass" postgres
+    docker-compose run --rm client make
+
+As long as you do not remove the container `fwapg-db`, it will retain all the data you put in it.
+If you have shut down Docker or the container, start it up again with this command:
+
+    docker-compose up -d
+
+Connect to the db and tilesev/featureserv clients from your host OS via the ports specified in `.env`:
+
+    psql -p 8000 -U postgres fwapg
+    http://localhost:7800/
+    http://localhost:9000/
+
+Delete the containers (and associated data):
+
+    docker-compose down
+
 ## Usage
 
 All data preparation scripts (`01_data`) must be run before running the final stream classification models (`02_model`).
