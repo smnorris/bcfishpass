@@ -40,8 +40,8 @@ psql -c "CREATE INDEX ON bcfishpass.channel_width_mapped (linear_feature_id)"
 # --------
 
 # get bec and ecosection data and optimize it for quicker point in poly queries
-bc2pg WHSE_TERRESTRIAL_ECOLOGY.ERC_ECOSECTIONS_SP --promote_to_multi
-bc2pg WHSE_FOREST_VEGETATION.BEC_BIOGEOCLIMATIC_POLY --promote_to_multi
+bc2pg WHSE_TERRESTRIAL_ECOLOGY.ERC_ECOSECTIONS_SP --nlt MULTIPOLYGON
+bc2pg WHSE_FOREST_VEGETATION.BEC_BIOGEOCLIMATIC_POLY --nlt MULTIPOLYGON
 psql -f sql/load_bec_eco.sql
 
 # report on measured/mapped CW data and dump to file

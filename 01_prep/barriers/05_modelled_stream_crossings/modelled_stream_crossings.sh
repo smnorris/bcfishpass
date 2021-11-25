@@ -60,7 +60,7 @@ ogr2ogr \
 
 
 # Get additional road data direct from BCGW, requesting full datasets (subset in crossing scripts)
-bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW --promote_to_multi # this table doesn't have a single primary key
+bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW --nlt MULTILINESTRING # this table doesn't have a single primary key
 bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --fid og_road_segment_permit_id
 bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --fid og_petrlm_dev_rd_pre06_pub_id
 bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --fid railway_track_id
