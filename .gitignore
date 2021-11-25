@@ -8,3 +8,7 @@
 # Sphinx documentation
 docs/_build/
 .buildinfo
+
+# these requirements get copied into local folder by make
+fwapg
+bcfishobs
