@@ -15,6 +15,7 @@ SELECT row_number() over(partition by linear_feature_id) as id, * FROM
   FROM whse_basemapping.fwa_stream_networks_sp
   WHERE edge_type = 1250                      -- main flow only, do not consider side channels
   AND watershed_group_code = :'wsg'
+  --AND length_metre > 25
   ORDER BY downstream_route_measure) as p
 ),
 
