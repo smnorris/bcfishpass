@@ -7,8 +7,8 @@ all: $(GENERATED_FILES)
 
 # Remove all generated targets
 clean:
-	rm -rf fwapg
-	rm -rf bcfishobs
+	rm -Rf fwapg
+	rm -Rf bcfishobs
 	rm -Rf $(GENERATED_FILES)
 
 .fwapg:
@@ -22,6 +22,9 @@ clean:
 	touch $@
 
 .falls: .bcfishobs .fwapg
-	./scripts/prep/barriers/falls/falls.sh data
+	./scripts/prep/barriers/falls/falls.sh
 	touch $@
 
+.gradient_barriers:
+	./scripts/prep/barriers/gradient_barriers/gradient_barriers.sh
+	touch $@
