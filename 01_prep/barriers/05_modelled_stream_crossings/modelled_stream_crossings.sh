@@ -83,9 +83,6 @@ rm modelled_stream_crossings_archive.gpkg
 # Now create modelled road/railway - stream crossings table by intersecting various transportation
 # features with FWA streams and removing duplicate crossings as best as possible
 
-# make sure schema exists
-psql -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
-
 # create empty crossings table
 psql -f sql/01_create_output_table.sql
 
