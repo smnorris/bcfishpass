@@ -17,6 +17,8 @@ RUN apt-get -qq install -y --no-install-recommends python3-dev
 RUN apt-get -qq install -y --no-install-recommends python3-pip
 RUN apt-get -qq install -y --no-install-recommends git
 
+RUN curl https://raw.githubusercontent.com/fphilipe/psql2csv/master/psql2csv > /usr/local/bin/psql2csv && chmod +x /usr/local/bin/psql2csv
+
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
