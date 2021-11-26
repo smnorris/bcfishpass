@@ -66,7 +66,7 @@ WITH wsg AS
   p.stream_crossing_id,
   w.watershed_group_code
 FROM bcfishpass.pscis_points_all p
-INNER JOIN whse_basemapping.fwa_watershed_groups_subdivided w
+INNER JOIN whse_basemapping.fwa_watershed_groups w
 ON ST_Intersects(p.geom, w.geom)
 )
 
