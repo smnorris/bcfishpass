@@ -1,6 +1,6 @@
 .PHONY: all env clean
 
-GENERATED_FILES = .fwapg .bcfishobs .falls
+GENERATED_FILES = .fwapg .bcfishobs
 
 # Ensure psql stops on error so make script stops when there is a problem
 PSQL_CMD = psql -v ON_ERROR_STOP=1
