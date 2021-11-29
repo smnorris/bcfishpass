@@ -97,7 +97,7 @@ SELECT
   g.watershed_group_code,
   agg.geom
 FROM agg
-INNER JOin whse_basemapping.fwa_watershed_groups_subdivided g
+INNER JOin whse_basemapping.fwa_watershed_groups_poly g
 ON ST_Intersects(agg.geom, g.geom)
 GROUP BY g.watershed_group_code, agg.new_watershed_code, agg.geom;
 
@@ -473,13 +473,7 @@ UPDATE bcfishpass.falls
 SET barrier_ind = True
 WHERE source = 'FWA';
 
--- fiss and fwa records with anadromous observations upstream are NOT barriers
--- (subject to review! FISS species coding data is suspect)
-UPDATE bcfishpass.falls
-SET barrier_ind = False
-WHERE upstr_obsrvd_anad_count >= 1 AND source IN ('FISS', 'FWA');
-
--- and override all barrier status based on user input
+-- override all barrier status based on user input
 UPDATE bcfishpass.falls f
 SET barrier_ind = False
 FROM bcfishpass.falls_barrier_ind b
