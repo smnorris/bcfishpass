@@ -39,8 +39,7 @@ Streams meeting the criteria for a given species are classified as spawning or r
 
 ## Requirements
 
-- bash (primarily tested on macOS but should work on Linux or Windows Subsystem for Linux)
-- PostgreSQL/PostGIS (tested with 13.2/3.1.1, requires Postgres >= 12)
+- bash or similar
 - Python >= 3.7
 - [bcdata](https://github.com/smnorris/bcdata)
 - a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg) >= v0.1.1
@@ -55,16 +54,18 @@ Streams meeting the criteria for a given species are classified as spawning or r
     cd bcfishpass
 
 Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
-A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file
-as required (to match your database connection) and then create/activate the environment:
+A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file as required (to match your database connection parameters) and then create/activate the environment:
 
-    conda create -f environment.yml
+    conda env create -f environment.yml
     conda activate bcfpenv
 
-Once you have an environment created and can connect to the database successfully, load the base data and fish observations using scripts in these repositories:
+If the database you are working with does not already exist, create it:
 
-- [Freshwater Atlas](https://github.com/smnorris/fwapg)
-- [Known Fish Observations](https://github.com/smnorris/bcfishobs)
+    psql -c "CREATE DATABASE bcfishpass" postgres
+
+Then run the data load scripts:
+
+    make
 
 
 ## Docker
