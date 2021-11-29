@@ -131,8 +131,6 @@ SELECT
 FROM nearest
 ON CONFLICT DO NOTHING;
 
-
-
 CREATE INDEX ON bcfishpass.dams (linear_feature_id);
 CREATE INDEX ON bcfishpass.dams (blue_line_key);
 CREATE INDEX ON bcfishpass.dams (watershed_group_code);
