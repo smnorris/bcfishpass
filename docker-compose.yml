@@ -21,6 +21,10 @@ services:
     volumes:
       - "./:/home/bcfishpass"
     environment:
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/bcfishpass
     depends_on:
       db:
