@@ -10,8 +10,6 @@ PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # ---------
 # download CWF dam data and match to FWA streams
 # ---------
-mkdir -p data
-wget --trust-server-names -qNP data  https://raw.githubusercontent.com/smnorris/bcdams/main/bcdams.geojson
 ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
   -overwrite \
@@ -20,7 +18,7 @@ ogr2ogr -f PostgreSQL \
   -lco GEOMETRY_NAME=geom \
   -lco FID=bcdams_id \
   -nln bcfishpass.cwf_bcdams \
-  data/bcdams.geojson \
+  /vsicurl/https://raw.githubusercontent.com/smnorris/bcdams/main/bcdams.geojson \
   bcdams
 
 # match the dams to streams
