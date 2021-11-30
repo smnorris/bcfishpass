@@ -4,7 +4,7 @@
 # do not ignore these files
 !.gitignore
 !.github
-!.env
+!.env.docker
 
 # Sphinx documentation
 docs/_build/

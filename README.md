@@ -70,6 +70,8 @@ Then run the data load scripts:
 
 ## Docker
 
+Rename `.env.docker` to `.env` and edit the ports to be exposed as required. The defaults are fine, the option is only provided to avoid conflicts in case of other Docker services running at these ports.
+
 Download the repo, create containers, create database, load all data:
 
     git clone https://github.com/smnorris/bcfishpass.git
