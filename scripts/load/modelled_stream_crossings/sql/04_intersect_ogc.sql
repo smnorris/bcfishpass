@@ -2,7 +2,7 @@ WITH streams AS
 (
   SELECT s.*
   FROM whse_basemapping.fwa_stream_networks_sp s
-  WHERE s.watershed_group_code = :wsg
+  WHERE s.watershed_group_code = :'wsg'
   AND s.fwa_watershed_code NOT LIKE '999%' -- exclude streams that are not part of the network
   AND s.edge_type NOT IN (1410, 1425)        -- exclude subsurface flow
   AND s.localcode_ltree IS NOT NULL          -- exclude streams with no local code
@@ -10,19 +10,20 @@ WITH streams AS
 
 roads AS
 (
-  -- RAILWAY
+  -- OGC PERMITS
   SELECT
-    railway_track_id,
+    og_road_segment_permit_id,
+    NULL::int AS og_petrlm_dev_rd_pre06_pub_id,
     geom
-  FROM whse_basemapping.gba_railway_tracks_sp r
-  WHERE r.track_classification != 'Ferry Route'
+  FROM whse_mineral_tenure.og_road_segment_permit_sp r
+  WHERE status = 'Approved' AND road_type_desc != 'Snow Ice Road' -- exclude winter roads
 ),
 
--- overlay with streams, creating intersection points
+-- overlay with streams, creating intersection points and labelling bridges
 intersections AS
 (
   SELECT
-    r.railway_track_id,
+    r.og_road_segment_permit_id,
     s.linear_feature_id,
     s.blue_line_key,
     s.wscode_ltree,
@@ -30,7 +31,6 @@ intersections AS
     s.length_metre,
     s.downstream_route_measure,
     s.geom as geom_s,
-    s.edge_type,
     -- dump any collections/mulitpart features to singlepart
     (ST_Dump(
       ST_Intersection(
@@ -43,12 +43,12 @@ intersections AS
   ON ST_Intersects(r.geom, s.geom)
 ),
 
--- to eliminate duplication, cluster crossings within 20m
--- do not cluster across streams
+-- to eliminate duplication, cluster the crossings,
 clusters AS
 (
+  -- 12.5m clustering. Don't bother to cluster across streams at this point
   SELECT
-    max(railway_track_id) as railway_track_id,
+    max(og_road_segment_permit_id) AS og_road_segment_permit_id,
     linear_feature_id,
     blue_line_key,
     wscode_ltree,
@@ -56,7 +56,7 @@ clusters AS
     length_metre,
     downstream_route_measure,
     geom_s,
-    ST_Centroid(unnest(ST_ClusterWithin(geom_x, 20))) as geom_x
+    ST_Centroid(unnest(ST_ClusterWithin(geom_x, 12.5))) as geom_x
   FROM intersections
   GROUP BY linear_feature_id, blue_line_key, wscode_ltree, localcode_ltree, geom_s, length_metre, downstream_route_measure
 ),
@@ -74,9 +74,9 @@ intersections_measures AS
   FROM clusters i
 )
 
--- finally, generate output point from the measure
+-- finally, generate the point from the measure.
 INSERT INTO bcfishpass.modelled_stream_crossings
-(railway_track_id,
+  (og_road_segment_permit_id,
   linear_feature_id,
   blue_line_key,
   downstream_route_measure,
@@ -85,12 +85,12 @@ INSERT INTO bcfishpass.modelled_stream_crossings
   watershed_group_code,
   geom)
 SELECT
-  railway_track_id,
+  og_road_segment_permit_id,
   linear_feature_id,
   blue_line_key,
   downstream_route_measure_pt as downstream_route_measure,
   wscode_ltree,
   localcode_ltree,
-  :wsg AS watershed_group_code,
+  :'wsg' AS watershed_group_code,
   (ST_Dump(ST_LocateAlong(geom_s, downstream_route_measure_pt))).geom as geom
 FROM intersections_measures;

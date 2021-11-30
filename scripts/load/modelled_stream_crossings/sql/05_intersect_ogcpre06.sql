@@ -2,7 +2,7 @@ WITH streams AS
 (
   SELECT s.*
   FROM whse_basemapping.fwa_stream_networks_sp s
-  WHERE s.watershed_group_code = :wsg
+  WHERE s.watershed_group_code = :'wsg'
   AND s.fwa_watershed_code NOT LIKE '999%' -- exclude streams that are not part of the network
   AND s.edge_type NOT IN (1410, 1425)        -- exclude subsurface flow
   AND s.localcode_ltree IS NOT NULL          -- exclude streams with no local code
@@ -91,6 +91,6 @@ SELECT
   downstream_route_measure_pt as downstream_route_measure,
   wscode_ltree,
   localcode_ltree,
-  :wsg AS watershed_group_code,
+  :'wsg' AS watershed_group_code,
   (ST_Dump(ST_LocateAlong(geom_s, downstream_route_measure_pt))).geom as geom
 FROM intersections_measures;

@@ -54,34 +54,5 @@ $PSQL_CMD -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
  comments           character varying)"
 $PSQL_CMD -c "\copy bcfishpass.fiss_obstacles_unpublished FROM '$tmp/fiss_obstacles_unpublished.csv' delimiter ',' csv header"
 
-
-# load lookup that controls barrier status for FISS falls
-$PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.falls_barrier_ind;"
-$PSQL_CMD -c "CREATE TABLE bcfishpass.falls_barrier_ind
- (blue_line_key              integer,
- downstream_route_measure    integer,
- barrier_ind                 boolean,
- watershed_group_code        text,
- reviewer                    text,
- notes                       text)"
-$PSQL_CMD -c "\copy bcfishpass.falls_barrier_ind FROM '$DATAPATH/falls/falls_barrier_ind.csv' delimiter ',' csv header"
-
-
-# load other falls, from various sources (add any new falls to this table)
-$PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.falls_other"
-$PSQL_CMD -c "CREATE TABLE bcfishpass.falls_other
-  (
-   blue_line_key integer,
-   downstream_route_measure integer,
-   barrier_ind boolean,
-   height numeric,
-   watershed_group_code text,
-   source text,
-   reviewer text,
-   notes text,
-   primary key (blue_line_key, downstream_route_measure)
-   )"
-$PSQL_CMD -c "\copy bcfishpass.falls_other FROM '$DATAPATH/falls/falls_other.csv' delimiter ',' csv header"
-
 # match falls to streams, combine sources
 $PSQL_CMD -f sql/falls.sql

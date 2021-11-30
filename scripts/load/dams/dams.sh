@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# --------
+# - load BC dam data compiled by CWF
+# - match to FWA streams
+# --------
+
 set -euxo pipefail
 
 tmp="${TEMP:-/tmp}"
-
-# alter path to the data files by setting BCFISHPASS_DATA environment variable
-DATAPATH="${BCFISHPASS_DATA:-../../../../data}"
-
 PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # ---------

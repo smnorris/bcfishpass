@@ -24,7 +24,7 @@ CREATE TABLE bcfishpass.modelled_stream_crossings_temp
   geom geometry(PointZM, 3005)
 );
 
-SELECT setval('bcfishpass.modelled_stream_crossings_temp_modelled_crossing_id_seq', (SELECT max(crossing_id) FROM bcfishpass.modelled_stream_crossings_archive));
+SELECT setval('bcfishpass.modelled_stream_crossings_temp_modelled_crossing_id_seq', (SELECT max(modelled_crossing_id) FROM bcfishpass.modelled_stream_crossings_archive));
 
 CREATE INDEX ON bcfishpass.modelled_stream_crossings_temp (temp_id);
 
@@ -51,7 +51,7 @@ WITH matched AS
     FROM bcfishpass.modelled_stream_crossings a
     CROSS JOIN LATERAL
     (SELECT
-       crossing_id as modelled_crossing_id,
+       modelled_crossing_id,
        ST_Distance(a.geom, b.geom) as dist
      FROM bcfishpass.modelled_stream_crossings_archive b
      ORDER BY a.geom <-> b.geom
