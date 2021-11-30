@@ -13,3 +13,9 @@ docs/_build/
 # these requirements get copied into local folder by make
 fwapg
 bcfishobs
+
+# ignore data download folders and their contents
+scripts/**/data
+
+# docker postgres data folder
+postgres-data
