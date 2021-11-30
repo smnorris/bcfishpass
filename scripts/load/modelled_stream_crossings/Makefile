@@ -71,6 +71,7 @@ all: .roads .load_archive .modelled_stream_crossings
 		-f PostgreSQL \
 		"PG:$(DATABASE_URL)" \
 		-overwrite \
+		-progress \
 		-nln bcfishpass.modelled_stream_crossings_archive \
 		data/modelled_stream_crossings_archive.gpkg \
 		modelled_stream_crossings_archive
@@ -104,7 +105,8 @@ all: .roads .load_archive .modelled_stream_crossings
 	# remove duplicate crossings introduced by using multiple sources
 	$(PSQL_CMD) -f sql/07_remove_duplicates.sql
 	$(PSQL_CMD) -f sql/08_identify_open_bottom_structures.sql
-	 assign modelled_crossing_id from previous version to ensure consistency
+
+	# assign modelled_crossing_id from previous version to ensure consistency
 	$(PSQL_CMD) -f sql/09_match_archived_crossings.sql
 	echo "modelled stream crossings created, run 'make modelled_stream_crossings_archive.gpkg.zip' to create a new archive"
 	touch $@
@@ -114,7 +116,7 @@ modelled_stream_crossings_archive.gpkg.zip: .modelled_stream_crossings
 	ogr2ogr \
 		-f GPKG \
 		modelled_stream_crossings_archive.gpkg \
-		PG:"host=$PGHOST user=$PGUSER dbname=$PGDATABASE port=$PGPORT" \
+		"PG:($DATABASE_URL)" \
 		-nln modelled_stream_crossings_archive \
 		-sql "SELECT modelled_crossing_id, geom FROM bcfishpass.modelled_stream_crossings"
 	zip -r $@ modelled_stream_crossings_archive.gpkg

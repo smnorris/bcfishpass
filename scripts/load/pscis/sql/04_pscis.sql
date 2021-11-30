@@ -172,7 +172,8 @@ WITH pts AS
   SELECT
     stream_crossing_id,
     watershed_group_code,
-    FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure) as geom
+    # TODO - postgisftw schema qualified function should not be required (fwapg issue #73)
+    postgisftw.FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure) as geom
   FROM bcfishpass.pscis_events_prelim2 a
   WHERE stream_crossing_id NOT IN
   -- DO NOT LOAD CROSSINGS IN THE LOOKUP, they are handled above, or not loaded at all
@@ -247,7 +248,8 @@ SELECT
   pa.current_crossing_type_code,
   pa.current_crossing_subtype_code,
   pa.current_barrier_result_code,
-  ST_Force2D(FWA_LocateAlong(p.blue_line_key, p.downstream_route_measure)) as geom
+  # TODO - postgisftw schema qualified function should not be required (fwapg issue #73)
+  ST_Force2D(postgisftw.FWA_LocateAlong(p.blue_line_key, p.downstream_route_measure)) as geom
 FROM de_duped d
 INNER JOIN bcfishpass.pscis_events_prelim2 p
 ON d.stream_crossing_id = p.stream_crossing_id
