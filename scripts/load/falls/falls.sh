@@ -12,8 +12,6 @@ set -exo pipefail
 
 PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-tmp="${TEMP:-/tmp}"
-
 # Archive existing FISS obstacles data just in case we want it later,
 # the unique IDs aren't stable. Note that the archive is a full copy and
 # will be made every time this is run on a different day

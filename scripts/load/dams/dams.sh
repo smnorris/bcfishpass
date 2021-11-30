@@ -1,19 +1,17 @@
 #!/bin/bash
+set -euxo pipefail
 
 # --------
 # - load BC dam data compiled by CWF
 # - match to FWA streams
 # --------
-
-set -euxo pipefail
-
-tmp="${TEMP:-/tmp}"
 PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # ---------
 # download CWF dam data and match to FWA streams
 # ---------
-wget --trust-server-names -qNP "$tmp"  https://raw.githubusercontent.com/smnorris/bcdams/main/bcdams.geojson
+mkdir -p data
+wget --trust-server-names -qNP data  https://raw.githubusercontent.com/smnorris/bcdams/main/bcdams.geojson
 ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
   -overwrite \
@@ -22,7 +20,7 @@ ogr2ogr -f PostgreSQL \
   -lco GEOMETRY_NAME=geom \
   -lco FID=bcdams_id \
   -nln bcfishpass.cwf_bcdams \
-  $tmp/bcdams.geojson \
+  data/bcdams.geojson \
   bcdams
 
 # match the dams to streams
