@@ -5,7 +5,7 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	FROM whse_basemapping.fwa_watershed_groups_poly \
 	ORDER BY watershed_group_code")
 
-all: .roads .archive .modelled_stream_crossings
+all: .roads .load_archive .modelled_stream_crossings
 
 # Directly download the DRA archive, it is too big to reliably request via WFS
 # *** NOTE ***
@@ -77,7 +77,7 @@ all: .roads .archive .modelled_stream_crossings
 	touch $@
 
 # run the overlays/analysis
-.modelled_stream_crossings:
+.modelled_stream_crossings: .roads .load_archive
 	$(PSQL_CMD) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source

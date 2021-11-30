@@ -14,6 +14,7 @@ all: $(GENERATED_FILES)
 clean:
 	rm -Rf fwapg
 	rm -Rf bcfishobs
+	cd scripts/load/modelled_stream_crossings; make clean
 	rm -Rf $(GENERATED_FILES)
 
 
