@@ -27,7 +27,6 @@ services:
       - PGUSER=postgres
       - PGPASSWORD=postgres
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/bcfishpass
-      - BCFISHPASS_DATA=${BCFISHPASS_DATA}
     depends_on:
       db:
         condition: service_healthy

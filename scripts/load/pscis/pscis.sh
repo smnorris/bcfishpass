@@ -7,9 +7,7 @@ set -euxo pipefail
 # - match to FWA streams
 # - attempt to identify QA issues (duplicates)
 # --------
-
 PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-DATAPATH="${BCFISHPASS_DATA:-../../../../data}"
 
 # download the public views from DataBC
 bcdata bc2pg WHSE_FISH.PSCIS_ASSESSMENT_SVW

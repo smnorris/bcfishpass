@@ -12,9 +12,6 @@ set -exo pipefail
 
 PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-# alter path to the data files by setting BCFISHPASS_DATA environment variable
-DATAPATH="${BCFISHPASS_DATA:-../../../../data}"
-
 tmp="${TEMP:-/tmp}"
 
 # Archive existing FISS obstacles data just in case we want it later,
@@ -35,9 +32,10 @@ fi
 bcdata bc2pg WHSE_FISH.FISS_OBSTACLES_PNT_SP
 
 # load additional (unpublished) obstacle data (provided by the Province, 2014)
-wget --trust-server-names -qNP "$tmp" \
+mkdir -p data
+wget --trust-server-names -qNP data \
   https://hillcrestgeo.ca/outgoing/public/whse_fish/whse_fish.fiss_obstacles_unpublished.csv.zip
-unzip -qjun -d "$tmp" "$tmp/whse_fish.fiss_obstacles_unpublished.csv.zip"
+unzip -qjun -d data data/whse_fish.fiss_obstacles_unpublished.csv.zip
 
 $PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.fiss_obstacles_unpublished;"
 $PSQL_CMD -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
@@ -52,7 +50,7 @@ $PSQL_CMD -c "CREATE TABLE bcfishpass.fiss_obstacles_unpublished
  strsrvy_rchsrvy_id numeric           ,
  sitesrvy_id        numeric           ,
  comments           character varying)"
-$PSQL_CMD -c "\copy bcfishpass.fiss_obstacles_unpublished FROM '$tmp/fiss_obstacles_unpublished.csv' delimiter ',' csv header"
+$PSQL_CMD -c "\copy bcfishpass.fiss_obstacles_unpublished FROM 'data/fiss_obstacles_unpublished.csv' delimiter ',' csv header"
 
 # match falls to streams, combine sources
 $PSQL_CMD -f sql/falls.sql
