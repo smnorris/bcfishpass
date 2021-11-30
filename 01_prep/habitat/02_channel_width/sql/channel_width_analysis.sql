@@ -22,6 +22,7 @@ CREATE TABLE bcfishpass.channel_width_analysis
   stream_order integer,
   stream_magnitude integer,
   gradient double precision,
+  length_metre double precision,
   elevation double precision,
   upstream_area double precision,
   upstream_area_lake double precision,
@@ -77,8 +78,8 @@ SELECT
   c.linear_feature_id,
   s.blue_line_key,
   s.downstream_route_measure,
-  c.channel_width_mapped as channel_width,
   c.cw_stddev,
+  c.channel_width_mapped as channel_width,
   st_pointonsurface(s.geom) as geom
 FROM bcfishpass.channel_width_mapped c
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -96,10 +97,11 @@ INSERT INTO bcfishpass.channel_width_analysis
   localcode_ltree,
   watershed_group_code,
   channel_width,
-  stream_order,
   cw_stddev,
+  stream_order,
   stream_magnitude,
   gradient,
+  length_metre,
   elevation,
   upstream_area,
   upstream_area_lake,
@@ -130,12 +132,13 @@ SELECT DISTINCT ON (blue_line_key, downstream_route_measure)
   s.stream_order,
   s.stream_magnitude,
   s.gradient,
+  s.length_metre,
   ROUND((ST_Z(ST_PointN(s.geom, - 1)))::numeric) as elevation,
   -- get upstream areas
-  coalesce(ua.upstream_area, 0) as upstream_area,
-  coalesce(uwb.upstream_area_lake, 0) as upstream_area_lake,
-  coalesce(uwb.upstream_area_manmade, 0) as upstream_area_manmade,
-  coalesce(uwb.upstream_area_wetland, 0) as upstream_area_wetland,
+  coalesce(ua.upstream_area_ha, 0) as upstream_area_ha,
+  coalesce(uwb.upstream_lake_ha, 0) as upstream_lake_ha,
+  coalesce(uwb.upstream_reservoir_ha, 0) as upstream_reservoir_ha,
+  coalesce(uwb.upstream_wetland_ha, 0) as upstream_wetland_ha,
   es.parent_ecoregion_code as ecoregion_code,
   es.ecosection_code,
   bec.zone,
@@ -152,7 +155,7 @@ ON ST_Intersects(m.geom, w.geom)  -- joining rivers to watersheds is problematic
 INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
 ON w.watershed_feature_id = ua.watershed_feature_id
 INNER JOIN whse_basemapping.fwa_waterbodies_upstream_area uwb
-ON w.watershed_feature_id = uwb.watershed_feature_id
+ON s.linear_feature_id = uwb.linear_feature_id
 LEFT OUTER JOIN whse_terrestrial_ecology.erc_ecosections_subdivided es
 ON ST_Intersects(m.geom, es.geom)
 LEFT OUTER JOIN whse_forest_vegetation.bec_biogeoclimatic_poly_subdivided bec

@@ -23,7 +23,7 @@
     "private": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/whse_cadastre.pmbc_parcel_fabric_poly_svw/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/whse_cadastre.pmbc_parcel_fabric_poly_svw/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -31,7 +31,7 @@
     "streams": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.streams/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.streams/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -39,7 +39,7 @@
     "streams_large": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.carto_streams_large/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.carto_streams_large/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 7,
       "maxzoom": 19
@@ -47,7 +47,7 @@
     "barriers_definite_wct": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_wct/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.definitebarriers_wct/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -55,7 +55,7 @@
     "barriers_definite_steelhead": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_steelhead/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.definitebarriers_steelhead/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -63,7 +63,7 @@
     "barriers_definite_salmon": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.definitebarriers_salmon/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.definitebarriers_salmon/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -71,7 +71,7 @@
     "crossings": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.crossings/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.crossings/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -79,7 +79,7 @@
     "waterfalls": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/bcfishpass.falls_events_sp/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.falls_events_sp/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -87,7 +87,7 @@
     "watershed_groups": {
       "type": "vector",
       "tiles": [
-        "https://www.hillcrestgeo.ca/pg_tileserv/whse_basemapping.fwa_watershed_groups_poly/{z}/{x}/{y}.pbf"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/whse_basemapping.fwa_watershed_groups_poly/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 5,
       "maxzoom": 19

@@ -44,7 +44,7 @@ WITH unnested_obs AS
     e.watershed_group_code,
     unnest(e.species_codes) as species_code,
     unnest(e.obs_ids) as observation_id
-  FROM whse_fish.fiss_fish_obsrvtn_events e
+  FROM bcfishobs.fiss_fish_obsrvtn_events e
   INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
   AND g.include IS TRUE

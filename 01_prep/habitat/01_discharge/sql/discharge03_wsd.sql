@@ -10,20 +10,37 @@ INSERT INTO bcfishpass.discharge03_wsd
 )
 
 -- get raw discharge values from discharge02_load (result of wsd overlay with raster)
-WITH src AS
+-- BUT - do not include watershed polygons for rivers of order >=8 - we
+-- do not generally care about the discharge of these large rivers and modelling their
+-- discharge can be very slow (so many records upstream)
+WITH order8rivs AS
+(
+  SELECT DISTINCT ON (wscode_ltree)
+    wscode_ltree,
+    localcode_ltree,
+    gnis_name,
+    stream_order,
+    watershed_group_code
+FROM whse_basemapping.fwa_stream_networks_sp
+WHERE stream_order >= 8
+AND localcode_ltree IS NOT NULL
+ORDER BY wscode_ltree, localcode_ltree desc
+),
+
+src AS
 (
   SELECT
-    a.*,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    wsg.watershed_group_code,
-    b.geom
-  FROM bcfishpass.discharge02_load a
-  INNER JOIN whse_basemapping.fwa_watersheds_poly b
-  ON a.watershed_feature_id = b.watershed_feature_id
-  INNER JOIN whse_basemapping.fwa_watershed_groups_poly wsg
-  ON b.watershed_group_id = wsg.watershed_group_id
-  WHERE b.watershed_group_code = :'wsg'
+  w.watershed_feature_id,
+  w.wscode_ltree,
+  w.localcode_ltree,
+  w.watershed_group_code,
+  w.geom
+FROM whse_basemapping.fwa_watersheds_poly w
+LEFT OUTER JOIN order8rivs b
+ON w.wscode_ltree = b.wscode_ltree
+AND w.localcode_ltree < b.localcode_ltree
+WHERE w.watershed_group_code = :'wsg'
+AND b.wscode_ltree IS NULL
 ),
 
 -- calculate weighted average of discharge for all area upstream of given wsd polygon

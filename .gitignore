@@ -5,9 +5,6 @@
 !.gitignore
 !.github
 
-# data files
-data/
-
 # Sphinx documentation
 docs/_build/
 .buildinfo
