@@ -1,4 +1,3 @@
-﻿
 -- https://trac.osgeo.org/postgis/wiki/UsersWikiplpgsqlfunctionsDistance
 -- Function: utmzone(geometry)
 -- DROP FUNCTION utmzone(geometry);
@@ -26,4 +25,4 @@ CREATE OR REPLACE FUNCTION public.utmzone(geometry)
      RETURN zone+pref;
  END;
  $BODY$ LANGUAGE 'plpgsql' IMMUTABLE
-   COST 100
+   COST 100;

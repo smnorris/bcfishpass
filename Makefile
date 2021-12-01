@@ -14,7 +14,7 @@ all: $(GENERATED_FILES)
 clean:
 	rm -Rf fwapg
 	rm -Rf bcfishobs
-	cd scripts/load/modelled_stream_crossings; make clean
+	cd scripts/modelled_stream_crossings; make clean
 	rm -Rf $(GENERATED_FILES)
 
 
@@ -47,9 +47,9 @@ bcfishobs: .fwapg
 # ------
 # CREATE DATABASE STRUCTURE
 # ------
-.ddl: .fwapg
-	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
-	$(PSQL_CMD) -f scripts/load/data_files/sql/data_files.sql
+.ddl:
+	$(PSQL_CMD) -f scripts/db/sql/user_data.sql
+	$(PSQL_CMD) -f scripts/db/sql/utmzone.sql
 	touch $@
 
 # ------
@@ -61,13 +61,23 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	touch $@
 
 # ------
+# LOAD PARAMETERS
+# ------
+.parameters: parameters/watersheds.csv parameters/habitat.csv .ddl
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.param_watersheds;"
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.param_habitat;"
+	$(PSQL_CMD) -c "\copy bcfishpass.param_watersheds FROM 'parameters/watersheds.csv' delimiter ',' csv header"
+	$(PSQL_CMD) -c "\copy bcfishpass.param_habitat FROM 'parameters/habitat.csv' delimiter ',' csv header"
+	touch $@
+
+# ------
 # FALLS
 # ------
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
 .falls: .fwapg $(wildcard $(DATAPATH)/falls/*.csv)
-	cd scripts/load/$(subst .,,$@); ./$(subst .,,$@).sh
+	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
 # ------
@@ -78,7 +88,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # (todo - consider consolidating CWF dams.geojson into the bcfishpass data folder so updates
 # are easily picked up)
 .dams: .fwapg
-	cd scripts/load/$(subst .,,$@); ./$(subst .,,$@).sh
+	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
 # ------
@@ -87,7 +97,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 # This takes a little while but only needs to be done once
 .gradient_barriers: .fwapg
-	cd scripts/load/$(subst .,,$@); ./$(subst .,,$@).sh
+	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
 # ------
@@ -96,7 +106,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
 .modelled_stream_crossings: .fwapg
-	cd scripts/load/modelled_stream_crossings; make
+	cd scripts/modelled_stream_crossings; make
 	touch $@
 
 # ------
@@ -104,8 +114,18 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
 .pscis: .fwapg .modelled_stream_crossings
-	cd scripts/load/$(subst .,,$@); ./$(subst .,,$@).sh
+	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
+
+# ------
+# OBSERVATIONS
+# ------
+# extract FISS observations for species of interest from bcfishobs
+.observations: .fwapg .bcfishobs .parameters
+	$(PSQL_CMD) -f scripts/db/sql/$(subst .,,$@).sql
+	touch $@
+
+
 
 
 # ***********************************************
@@ -113,3 +133,36 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # **      CREATE/UPDATE ACCESS MODEL           **
 # **                                           **
 # ***********************************************
+
+# ------
+# Create definite barrier tables/views for ALL potential definite barriers
+# (whether a feature is a barrier depends on species and parameters)
+# ------
+#.barriers_majordams: .dams .parameters
+#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_majordams.sql
+#	touch $@
+#.barriers_ditchflow: .parameters
+#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_ditchflow.sql
+#	touch $@
+#.barriers_falls: .falls .falls_barrier_ind .falls_other .parameters
+#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_falls.sql
+#	touch $@
+#.barriers_gradient_15: .gradient_barriers .gradient_barriers_passable .parameters
+#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_15.sql
+#	touch $@
+#.barriers_gradient_20: .gradient_barriers .gradient_barriers_passable .parameters
+#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_20.sql
+#	touch $@
+#.barriers_gradient_30: .gradient_barriers .gradient_barriers_passable .parameters
+#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_30.sql
+#	touch $@
+#.barriers_intermittentflow: .parameters
+#	$(PSQL_CMD) -f sql/barriers_intermittentflow.sql
+#	touch $@
+#.barriers_subsurfaceflow: .parameters
+#	$(PSQL_CMD) -f sql/barriers_subsurfaceflow.sql
+#	touch $@
+#.barriers_other_definite: .exclusions .pscis_barrier_result_fixes .misc_barriers_definite .parameters
+#	$(PSQL_CMD) -f sql/barriers_other_definite.sql
+#	touch $@
+#
