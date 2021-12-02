@@ -43,7 +43,6 @@ SELECT
 FROM bcfishpass.dams d
 INNER JOIN bcfishpass.param_watersheds g
 ON d.watershed_group_code = g.watershed_group_code
-AND g.include IS TRUE
 WHERE d.barrier_ind = 'Y'
 AND d.hydro_dam_ind = 'Y'
 ON CONFLICT DO NOTHING;

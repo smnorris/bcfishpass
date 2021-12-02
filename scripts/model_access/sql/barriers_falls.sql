@@ -40,7 +40,7 @@ SELECT
     a.geom
 FROM bcfishpass.falls a
 INNER JOIN bcfishpass.param_watersheds g
-ON a.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
+ON a.watershed_group_code = g.watershed_group_code
 WHERE a.barrier_ind IS TRUE
 ON CONFLICT DO NOTHING;
 

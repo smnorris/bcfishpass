@@ -45,7 +45,7 @@ ON b.blue_line_key = s.blue_line_key
 AND s.downstream_route_measure <= b.downstream_route_measure
 AND s.upstream_route_measure + .01 > b.downstream_route_measure
 INNER JOIN bcfishpass.param_watersheds g
-ON s.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
+ON s.watershed_group_code = g.watershed_group_code
 LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
 ON b.blue_line_key = p.blue_line_key
 AND b.downstream_route_measure = p.downstream_route_measure

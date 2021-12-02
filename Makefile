@@ -125,14 +125,59 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	$(PSQL_CMD) -f scripts/db/sql/$(subst .,,$@).sql
 	touch $@
 
-
-
-
 # ***********************************************
 # **                                           **
 # **      CREATE/UPDATE ACCESS MODEL           **
 # **                                           **
 # ***********************************************
+
+# above data sources are all compiled provincially
+# below jobs are run for watersheds specified in parameters only
+
+# -----
+# INITIAL STREAM DATA LOAD
+# -----
+# what streams get loaded depends on wsg listed in parameters
+.segmented_streams: .parameters
+	$(PSQL_CMD) -f scripts/db/sql/segmented_streams.sql
+	touch $@
+
+
+# -----
+# DEFINITE BARRIERS
+# create table for each type of definite (not generally fixable) barrier
+# (targets grouped by data source)
+# -----
+.defbarriers_majordams: .dams
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_majordams.sql
+	touch $@
+.defbarriers_fwa: .parameters
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_ditchflow.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_intermittentflow.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_subsurfaceflow.sql
+	touch $@
+.defbarriers_falls: .falls
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_falls.sql
+	touch $@
+.defbarriers_gradient: .gradient_barriers
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_15.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_20.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_30.sql
+	touch $@
+.defbarriers_other: .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_other_definite.sql
+	touch $@
+# just a catch all target for above
+.definite_barriers: .defbarriers_majordams .defbarriers_fwa .defbarriers_falls .defbarriers_gradient .defbarriers_other
+	touch $@
+
+# -----
+# BREAK STREAMS
+# -----
+# merge all point features into a single view and break streams at intersections
+.break_streams: .segmented_streams .observations .pscis .modelled_stream_crossings .gradient_barriers .dams .falls $(DATA_FILE_TARGETS)
+	$(PSQL_CMD) -f scripts/db/sql/breakpoints_vw.sql
+
 
 # ------
 # Create definite barrier tables/views for ALL potential definite barriers

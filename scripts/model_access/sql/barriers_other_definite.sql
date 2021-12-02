@@ -40,12 +40,14 @@ SELECT
     s.wscode_ltree,
     s.localcode_ltree,
     s.watershed_group_code,
-    ST_Force2D(FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
+    ST_Force2D(postgisftw.FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
 FROM bcfishpass.exclusions a
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON a.blue_line_key = s.blue_line_key AND
    a.downstream_route_measure > s.downstream_route_measure - .001 AND
    a.downstream_route_measure + .001 < s.upstream_route_measure
+INNER JOIN bcfishpass.param_watersheds g
+ON a.watershed_group_code = g.watershed_group_code
 ON CONFLICT DO NOTHING;
 
 
@@ -74,7 +76,7 @@ FROM bcfishpass.pscis e
 INNER JOIN bcfishpass.pscis_barrier_result_fixes f
 ON e.stream_crossing_id = f.stream_crossing_id
 INNER JOIN bcfishpass.param_watersheds g
-ON e.watershed_group_code = g.watershed_group_code AND g.include IS TRUE
+ON e.watershed_group_code = g.watershed_group_code
 WHERE f.updated_barrier_result_code = 'NOT ACCESSIBLE'
 ORDER BY e.stream_crossing_id
 ON CONFLICT DO NOTHING;
@@ -101,12 +103,14 @@ SELECT
     s.wscode_ltree,
     s.localcode_ltree,
     s.watershed_group_code,
-    ST_Force2D(FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
+    ST_Force2D(postgisftw.FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure))
 FROM bcfishpass.misc_barriers_definite a
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON a.blue_line_key = s.blue_line_key AND
    a.downstream_route_measure > s.downstream_route_measure - .001 AND
    a.downstream_route_measure + .001 < s.upstream_route_measure
+INNER JOIN bcfishpass.param_watersheds g
+ON a.watershed_group_code = g.watershed_group_code
 ON CONFLICT DO NOTHING;
 
 
