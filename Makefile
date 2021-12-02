@@ -125,6 +125,14 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	$(PSQL_CMD) -f scripts/db/sql/$(subst .,,$@).sql
 	touch $@
 
+# -----
+# CROSSINGS
+# consolidate all dams/pscis/modelled crossings into one table
+# -----
+.crossings: .pscis .modelled_stream_crossings .dams
+	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
+	touch $@
+
 # ***********************************************
 # **                                           **
 # **      CREATE/UPDATE ACCESS MODEL           **
@@ -141,7 +149,6 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 .segmented_streams: .parameters
 	$(PSQL_CMD) -f scripts/db/sql/segmented_streams.sql
 	touch $@
-
 
 # -----
 # DEFINITE BARRIERS
@@ -170,6 +177,9 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # just a catch all target for above
 .definite_barriers: .defbarriers_majordams .defbarriers_fwa .defbarriers_falls .defbarriers_gradient .defbarriers_other
 	touch $@
+
+
+
 
 # -----
 # BREAK STREAMS
