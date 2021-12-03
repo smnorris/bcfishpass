@@ -124,7 +124,6 @@ COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed gr
 COMMENT ON COLUMN bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
 COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
 
-
 -- --------------------------------
 -- insert PSCIS crossings first, they take precedence
 -- PSCIS on modelled crossings first, to get the road tenure info from model
@@ -326,7 +325,7 @@ ften as (
      client_name,
      life_cycle_status_code,
      ST_Distance(rd.geom, pt.geom) as distance_to_road
-   FROM whse_forest_tenure.ften_road_segment_lines_svw AS rd
+   FROM whse_forest_tenure.ften_road_section_lines_svw AS rd
    WHERE life_cycle_status_code NOT IN ('PENDING')
    ORDER BY rd.geom <-> pt.geom
    LIMIT 1) as nn

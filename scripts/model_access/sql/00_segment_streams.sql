@@ -12,17 +12,14 @@ WITH to_break AS (
     s.upstream_route_measure AS meas_stream_us,
     b.downstream_route_measure AS meas_event
   FROM
-    {stream_schema}.{stream_table} s
-    INNER JOIN {point_schema}.{point_table} b ON s.linear_feature_id = b.linear_feature_id
-    -- *Only break stream lines where the barrier pt is >1m from the end*
-    -- Also, this restriction ensures we are matching the correct segment
-    -- when there is more than 1 equivalent linear_feature_id (rather than
-    -- selecting DISTINCT ON and ordering by measure) - because the difference
-    -- between barrier and segment dnstr measure is positive and the difference
-    -- between the segment upstr measure and the barrier is positive.
-    WHERE (b.downstream_route_measure - s.downstream_route_measure) > 1 AND
-          (s.upstream_route_measure - b.downstream_route_measure) > 1 AND
-          s.watershed_group_code = %s
+    bcfishpass.segmented_streams s
+    INNER JOIN bcfishpass.breakpoints_vw b
+    ON s.blue_line_key = b.blue_line_key AND
+    -- match based on measure, but only break stream lines where the
+    -- barrier pt is >1m from the end of the existing stream segment
+    (b.downstream_route_measure - s.downstream_route_measure) > 1 AND
+    (s.upstream_route_measure - b.downstream_route_measure) > 1 AND
+    s.watershed_group_code = :'wsg'
 ),
 
 -- derive measures of new lines from break points
@@ -51,7 +48,7 @@ SELECT
     (s.geom, n.downstream_route_measure, n.upstream_route_measure
     ))).geom AS geom
 FROM new_measures n
-INNER JOIN {stream_schema}.{stream_table} s ON n.segmented_stream_id = s.segmented_stream_id;
+INNER JOIN bcfishpass.segmented_streams s ON n.segmented_stream_id = s.segmented_stream_id;
 
 
 ---------------------------------------------------------------
@@ -76,12 +73,12 @@ shortened AS
     ST_Length(ST_LocateBetween(s.geom, s.downstream_route_measure, m.downstream_route_measure)) as length_metre,
     (ST_Dump(ST_LocateBetween (s.geom, s.downstream_route_measure, m.downstream_route_measure))).geom as geom
   FROM min_segs m
-  INNER JOIN {stream_schema}.{stream_table} s
+  INNER JOIN bcfishpass.segmented_streams s
   ON m.segmented_stream_id = s.segmented_stream_id
 )
 
 UPDATE
-  {stream_schema}.{stream_table} a
+  bcfishpass.segmented_streams a
 SET
   length_metre = b.length_metre,
   geom = b.geom
@@ -94,7 +91,7 @@ WHERE
 ---------------------------------------------------------------
 -- now insert new features (just the changed values and id)
 ---------------------------------------------------------------
-INSERT INTO {stream_schema}.{stream_table}
+INSERT INTO bcfishpass.segmented_streams
 (linear_feature_id, length_metre, downstream_route_measure, geom)
 SELECT
   linear_feature_id,
@@ -107,7 +104,7 @@ FROM temp_streams;
 -- update standard stream values, minus generated columns
 ---------------------------------------------------------------
 UPDATE
-  {stream_schema}.{stream_table} a
+  bcfishpass.segmented_streams a
 SET
   watershed_group_id = s.watershed_group_id,
   edge_type = s.edge_type,

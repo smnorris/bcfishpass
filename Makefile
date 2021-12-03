@@ -7,6 +7,8 @@ DATA_FILE_TARGETS=$(patsubst data/%.csv,.%,$(DATA_FILES)) # parse csv file names
 # specify all make targets
 GENERATED_FILES=.fwapg .bcfishobs .ddl $(DATA_FILE_TARGETS) .falls .dams .gradient_barriers .modelled_stream_crossings .pscis
 
+GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+
 # Make all targets
 all: $(GENERATED_FILES)
 
@@ -127,9 +129,10 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 
 # -----
 # CROSSINGS
-# consolidate all dams/pscis/modelled crossings into one table
+# consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
+# TODO - could this be a view? It only taks ~4min to generate so probably not important.
 # -----
-.crossings: .pscis .modelled_stream_crossings .dams
+.crossings: .pscis .modelled_stream_crossings .dams .misc_barriers_anthropogenic
 	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
 	touch $@
 
@@ -179,15 +182,16 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	touch $@
 
 
-
-
 # -----
 # BREAK STREAMS
 # -----
 # merge all point features into a single view and break streams at intersections
-.break_streams: .segmented_streams .observations .pscis .modelled_stream_crossings .gradient_barriers .dams .falls $(DATA_FILE_TARGETS)
-	$(PSQL_CMD) -f scripts/db/sql/breakpoints_vw.sql
-
+# note that this will only pick up breakpoints that are 1m from existing breaks in the streams,
+# re-runs with minor updates will be very quick
+.break_streams: .segmented_streams .observations .defbarriers_majordams .falls .defbarriers_gradient .defbarriers_other .crossings
+	$(PSQL_CMD) -f scripts/model_access/sql/breakpoints_vw.sql
+	parallel $(PSQL_CMD) -f scripts/model_access/sql/00_segment_streams.sql -v wsg={1} ::: $(GROUPS)
+	touch $@
 
 # ------
 # Create definite barrier tables/views for ALL potential definite barriers
