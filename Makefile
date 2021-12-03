@@ -158,7 +158,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # create table for each type of definite (not generally fixable) barrier
 # (targets grouped by data source)
 # -----
-.defbarriers_majordams: .dams
+.defbarriers_majordams: .dams .parameters
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_majordams.sql
 	touch $@
 .defbarriers_fwa: .parameters
@@ -166,21 +166,20 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_intermittentflow.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_subsurfaceflow.sql
 	touch $@
-.defbarriers_falls: .falls
+.defbarriers_falls: .falls .parameters
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_falls.sql
 	touch $@
-.defbarriers_gradient: .gradient_barriers
+.defbarriers_gradient: .gradient_barriers .parameters
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_15.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_20.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_30.sql
 	touch $@
-.defbarriers_other: .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
+.defbarriers_other: .exclusions .misc_barriers_definite .pscis_barrier_result_fixes .parameters
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_other_definite.sql
 	touch $@
 # just a catch all target for above
 .definite_barriers: .defbarriers_majordams .defbarriers_fwa .defbarriers_falls .defbarriers_gradient .defbarriers_other
 	touch $@
-
 
 # -----
 # BREAK STREAMS
@@ -193,35 +192,3 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	parallel $(PSQL_CMD) -f scripts/model_access/sql/00_segment_streams.sql -v wsg={1} ::: $(GROUPS)
 	touch $@
 
-# ------
-# Create definite barrier tables/views for ALL potential definite barriers
-# (whether a feature is a barrier depends on species and parameters)
-# ------
-#.barriers_majordams: .dams .parameters
-#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_majordams.sql
-#	touch $@
-#.barriers_ditchflow: .parameters
-#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_ditchflow.sql
-#	touch $@
-#.barriers_falls: .falls .falls_barrier_ind .falls_other .parameters
-#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_falls.sql
-#	touch $@
-#.barriers_gradient_15: .gradient_barriers .gradient_barriers_passable .parameters
-#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_15.sql
-#	touch $@
-#.barriers_gradient_20: .gradient_barriers .gradient_barriers_passable .parameters
-#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_20.sql
-#	touch $@
-#.barriers_gradient_30: .gradient_barriers .gradient_barriers_passable .parameters
-#	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_30.sql
-#	touch $@
-#.barriers_intermittentflow: .parameters
-#	$(PSQL_CMD) -f sql/barriers_intermittentflow.sql
-#	touch $@
-#.barriers_subsurfaceflow: .parameters
-#	$(PSQL_CMD) -f sql/barriers_subsurfaceflow.sql
-#	touch $@
-#.barriers_other_definite: .exclusions .pscis_barrier_result_fixes .misc_barriers_definite .parameters
-#	$(PSQL_CMD) -f sql/barriers_other_definite.sql
-#	touch $@
-#

@@ -178,40 +178,6 @@ def add_upstream_ids(table_a, id_a, table_b, id_b, upstream_ids_col):
 
 
 @cli.command()
-@click.argument("stream_table")
-@click.argument("point_table")
-def segment_streams(stream_table, point_table):
-    """
-    Break streams at points.
-
-    Break lines in stream_table at each location specified in point_table
-    Points are defined as blue_line_key / route measure (not geom).
-    Each table must have the standard FWA columns.
-    """
-    db = pgdata.connect()
-    stream_schema, stream_table = db.parse_table_name(stream_table)
-    point_schema, point_table = db.parse_table_name(point_table)
-    groups = [
-        g[0]
-        for g in db.query(
-            "SELECT DISTINCT watershed_group_code FROM bcfishpass.streams"
-        )
-    ]
-    query = sql.SQL(read_file("sql/00_segment_streams.sql")).format(
-        stream_schema=sql.Identifier(stream_schema),
-        stream_table=sql.Identifier(stream_table),
-        point_schema=sql.Identifier(point_schema),
-        point_table=sql.Identifier(point_table),
-    )
-    func = partial(execute_parallel, query)
-    n_processes = multiprocessing.cpu_count() - 1
-    pool = multiprocessing.Pool(processes=n_processes)
-    pool.map(func, groups)
-    pool.close()
-    pool.join()
-
-
-@cli.command()
 @click.argument("point_table")
 @click.argument("point_id")
 @click.argument("barriers_table")
