@@ -33,6 +33,9 @@ cd ../01_falls
 ./falls.sh
 cd ../06_misc
 ./misc.sh
+cd ../../habitat/03_manual_habitat_classification
+./manual_habitat_classification.sh
+
 cd ../../../02_model
 
 # -----------
