@@ -115,7 +115,6 @@ s.watershed_group_code = ANY(      -- this array query is faster than a join or 
   ARRAY(
     SELECT watershed_group_code
     FROM bcfishpass.param_watersheds
-    WHERE include IS TRUE
   )
 )
   AND s.wscode_ltree <@ '999' IS FALSE

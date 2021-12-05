@@ -37,18 +37,18 @@ To improve prioritization of barriers, `bcfishpass` also includes basic habitat 
 Streams meeting the criteria for a given species are classified as spawning or rearing habitat and the amount of spawning/rearing habitat upstream of barriers can be summarized for barrier prioritization.
 
 
-## Requirements
+## General requirements
 
 - bash or similar
+- GDAL (>= 3.4)
+- a PostgreSQL / PostGIS database (tested with v14/v3.1)
 - Python >= 3.7
 - [bcdata](https://github.com/smnorris/bcdata)
-- a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg) >= v0.1.1
-- [bcfishobs](https://github.com/smnorris/bcfishobs) (BC fish observations and obstacles, loaded and processed)
 
 
 ## Installation / Setup
 
-`bcfishpass` is a collection of shell/sql/Python scripts - no installation is required, just download the scripts:
+`bcfishpass` is a collection of shell/sql/Python scripts - no installation is required. To download and use the latest:
 
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
@@ -62,10 +62,6 @@ A `environment.yml` is provided to set up the processing environment. Edit the e
 If the database you are working with does not already exist, create it:
 
     psql -c "CREATE DATABASE bcfishpass" postgres
-
-Then run the data load scripts:
-
-    make
 
 
 ## Docker
@@ -84,7 +80,8 @@ Edit the ports mappings as required in `.env` (to avoid conflicts with ports alr
     docker-compose run --rm client psql -c "CREATE DATABASE bcfishpass" postgres
     docker-compose run --rm client make
 
-As long as you do not remove the container `fwapg-db`, it will retain all the data you put in it.
+A `postgres-data` folder is created by the database container as a volume for all postgres data.
+
 If you have shut down Docker or the container, start it up again with this command:
 
     docker-compose up -d
@@ -99,18 +96,6 @@ Delete the containers (and associated data):
 
     docker-compose down
 
-## Usage
-
-All data preparation scripts (`01_data`) must be run before running the final stream classification models (`02_model`).
-As usage of `bcfishpass` will generally depend on study area and species of interest, improved documentation is under development.
-
-### Data preparation
-
-See the instructions in the various folders in [`01_prep`](01_prep) for how to run these scripts.
-
-### Model
-
-See the instructions in [`02_model`](02_model) for how to run the access and habitat models, creating the output `streams` and `crossings` tables for analysis and mapping.
 
 ## Credits
 

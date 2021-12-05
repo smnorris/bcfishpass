@@ -30,9 +30,29 @@ INSERT INTO bcfishpass.observations
   geom
 )
 
--- first, de-aggregate all distinct observation points with spp of interest within groups of interest
--- (this will include observations of other spp at the same point)
-WITH unnested_obs AS
+-- convert the boolean species columns in wsg_species_presence into array of species presence for each wsg
+-- (We could modify the input file's multiple spp columns into a single column of spp codes but current
+-- design works fine and is easy to validate. Down side is that this query has to be modified if more spp
+-- are added)
+WITH wsg_spp AS
+(
+SELECT
+  watershed_group_code, string_to_array(array_to_string(ARRAY[co, ch, sk, st, wct], ','),',') as species_codes
+FROM (
+  SELECT
+    p.watershed_group_code,
+    CASE WHEN p.co is true THEN 'CO' ELSE NULL END as co,
+    CASE WHEN p.ch is true THEN 'CH' ELSE NULL END as ch,
+    CASE WHEN p.sk is true THEN 'SK' ELSE NULL END as sk,
+    CASE WHEN p.st is true THEN 'ST' ELSE NULL END as st,
+    CASE WHEN p.wct is true THEN 'WCT' ELSE NULL END as wct
+  FROM bcfishpass.wsg_species_presence p
+  ) as f
+),
+
+-- de-aggregate all distinct observation points with spp of interest within groups of interest
+-- (this includes observations of other species at the same location)
+unnested_obs AS
 (
   SELECT
     e.fish_obsrvtn_pnt_distinct_id,
@@ -47,41 +67,20 @@ WITH unnested_obs AS
   FROM bcfishobs.fiss_fish_obsrvtn_events e
   INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
-  AND g.include IS TRUE
-  WHERE species_codes && ARRAY['CO','CH','SK','ST','WCT']
-
+  INNER JOIN wsg_spp
+  ON e.watershed_group_code = wsg_spp.watershed_group_code
+  AND e.species_codes && wsg_spp.species_codes
+  WHERE e.watershed_group_code = ANY(
+  ARRAY(
+    SELECT watershed_group_code
+    FROM bcfishpass.param_watersheds
+  )
+)
 ),
 
 -- then re-aggregate, retaining only observation records for the species of interest within group of interest
 by_wsg AS
 (
-  -- salmon / steelhead watersheds
-  SELECT
-    e.fish_obsrvtn_pnt_distinct_id,
-    e.linear_feature_id,
-    e.blue_line_key,
-    e.wscode_ltree,
-    e.localcode_ltree,
-    e.downstream_route_measure,
-    e.watershed_group_code,
-    array_agg(e.species_code) as species_codes,
-    array_agg(e.observation_id) as observation_ids
-  FROM unnested_obs e
-  INNER JOIN bcfishpass.param_watersheds g
-  ON e.watershed_group_code = g.watershed_group_code AND
-  g.include IS TRUE AND
-  (g.co IS TRUE OR g.ch IS TRUE OR g.sk IS TRUE OR g.st IS TRUE)
-  WHERE species_code IN ('CO','CH','SK','ST')
-  GROUP BY
-    e.fish_obsrvtn_pnt_distinct_id,
-    e.linear_feature_id,
-    e.blue_line_key,
-    e.wscode_ltree,
-    e.localcode_ltree,
-    e.downstream_route_measure,
-    e.watershed_group_code
-  UNION ALL
-  -- WCT
   SELECT
     e.fish_obsrvtn_pnt_distinct_id,
     e.linear_feature_id,
@@ -95,9 +94,11 @@ by_wsg AS
   FROM unnested_obs e
   INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
-  AND g.include IS TRUE
-  AND g.wct IS TRUE
-  WHERE species_code = 'WCT'
+  WHERE species_code = ANY (
+    ARRAY(SELECT species_code
+          FROM bcfishpass.param_habitat
+          )
+    )
   GROUP BY
     e.fish_obsrvtn_pnt_distinct_id,
     e.linear_feature_id,

@@ -67,18 +67,26 @@ SELECT
     c.watershed_group_code as watershed_group_code,
     c.geom as geom
 FROM bcfishpass.crossings c
-WHERE pscis_status = 'REMEDIATED' AND
-barrier_status = 'PASSABLE' -- only include crossings that are still passable, in theory something may have failed after a remediation
+-- only include crossings that are still passable, in theory something may have failed after a remediation
+WHERE
+  pscis_status = 'REMEDIATED' AND
+  barrier_status = 'PASSABLE' AND
+  c.watershed_group_code = ANY(
+    ARRAY(
+      SELECT watershed_group_code
+      FROM bcfishpass.param_watersheds
+    )
+  )
 ON CONFLICT DO NOTHING;
 
-CREATE INDEX ON bcfishpass.barriers_anthropogenic (stream_crossing_id);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic (dam_id);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic (modelled_crossing_id);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_anthropogenic USING GIST (geom);
+CREATE INDEX ON bcfishpass.remediated (stream_crossing_id);
+CREATE INDEX ON bcfishpass.remediated (dam_id);
+CREATE INDEX ON bcfishpass.remediated (modelled_crossing_id);
+CREATE INDEX ON bcfishpass.remediated (linear_feature_id);
+CREATE INDEX ON bcfishpass.remediated (blue_line_key);
+CREATE INDEX ON bcfishpass.remediated (watershed_group_code);
+CREATE INDEX ON bcfishpass.remediated USING GIST (wscode_ltree);
+CREATE INDEX ON bcfishpass.remediated USING BTREE (wscode_ltree);
+CREATE INDEX ON bcfishpass.remediated USING GIST (localcode_ltree);
+CREATE INDEX ON bcfishpass.remediated USING BTREE (localcode_ltree);
+CREATE INDEX ON bcfishpass.remediated USING GIST (geom);

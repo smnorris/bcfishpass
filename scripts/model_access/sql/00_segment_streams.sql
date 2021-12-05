@@ -13,7 +13,7 @@ WITH to_break AS (
     b.downstream_route_measure AS meas_event
   FROM
     bcfishpass.segmented_streams s
-    INNER JOIN bcfishpass.breakpoints_vw b
+    INNER JOIN bcfishpass.breakpoints b
     ON s.blue_line_key = b.blue_line_key AND
     -- match based on measure, but only break stream lines where the
     -- barrier pt is >1m from the end of the existing stream segment

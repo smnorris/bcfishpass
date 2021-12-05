@@ -1,4 +1,6 @@
-CREATE OR REPLACE VIEW bcfishpass.breakpoints_vw AS 
+DROP TABLE IF EXISTS bcfishpass.breakpoints;
+
+CREATE TABLE bcfishpass.breakpoints AS
 
 SELECT 
   b.blue_line_key, 
@@ -73,4 +75,15 @@ FROM bcfishpass.barriers_other_definite b
 INNER JOIN bcfishpass.segmented_streams s
 ON b.blue_line_key = s.blue_line_key 
 AND (b.downstream_route_measure - s.downstream_route_measure) > 1 
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.manual_habitat_classification_endpoints b
+INNER JOIN bcfishpass.segmented_streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
 AND (s.upstream_route_measure - b.downstream_route_measure) > 1;

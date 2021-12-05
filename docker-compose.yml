@@ -8,7 +8,7 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
     ports:
-      - ${BCFISHPASS_DB_PORT}:5432
+      - ${DB_PORT}:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -36,7 +36,7 @@ services:
     image: pramsey/pg_featureserv:latest
     container_name: bcfishpass-fs
     ports:
-      - ${BCFISHPASS_TS_PORT}:9000
+      - ${TS_PORT}:9000
     volumes:
       - "./:/home/bcfishpass"
     environment:
@@ -48,7 +48,7 @@ services:
     image: pramsey/pg_tileserv:latest
     container_name: bcfishpass-ts
     ports:
-      - ${BCFISHPASS_FS_PORT}:7800
+      - ${FS_PORT}:7800
     volumes:
       - "./:/home/bcfishpass"
     environment:

@@ -5,7 +5,12 @@ DATA_FILES=$(wildcard data/*.csv)                         # find all user input 
 DATA_FILE_TARGETS=$(patsubst data/%.csv,.%,$(DATA_FILES)) # parse csv file names into .hidden make targets
 
 # specify all make targets
-GENERATED_FILES=.fwapg .bcfishobs .ddl $(DATA_FILE_TARGETS) .falls .dams .gradient_barriers .modelled_stream_crossings .pscis
+GENERATED_FILES=.fwapg .bcfishobs .ddl \
+	$(DATA_FILE_TARGETS) \
+	.falls .dams .gradient_barriers .modelled_stream_crossings .pscis .crossings \
+	.manual_habitat_classification_endpoints .segmented_streams \
+	.barriers_majordams .barriers_fwa .barriers_falls .barriers_gradient .barriers_other .barriers_anthropogenic \
+	.observations .break_streams .model_access
 
 GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
@@ -49,7 +54,8 @@ bcfishobs: .fwapg
 # ------
 # CREATE DATABASE STRUCTURE
 # ------
-.ddl:
+.ddl: scripts/db/sql/user_data.sql scripts/db/sql/utmzone.sql
+	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	$(PSQL_CMD) -f scripts/db/sql/user_data.sql
 	$(PSQL_CMD) -f scripts/db/sql/utmzone.sql
 	touch $@
@@ -78,7 +84,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
-.falls: .fwapg $(wildcard $(DATAPATH)/falls/*.csv)
+.falls: .fwapg $(wildcard $(DATAPATH)/falls/*.csv) scripts/falls/falls.sh scripts/falls/sql/falls.sql
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -89,7 +95,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # barriers *and* anthropogenic barriers. Delete the .dams target file if an update is required.
 # (todo - consider consolidating CWF dams.geojson into the bcfishpass data folder so updates
 # are easily picked up)
-.dams: .fwapg
+.dams: .fwapg scripts/dams/dams.sh scripts/dams/sql/dams.sql
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -98,7 +104,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 # This takes a little while but only needs to be done once
-.gradient_barriers: .fwapg
+.gradient_barriers: .fwapg scripts/gradient_barriers/gradient_barriers.sh scripts/gradient_barriers/sql/gradient_barriers.sql
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -107,7 +113,7 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
-.modelled_stream_crossings: .fwapg
+.modelled_stream_crossings: .fwapg scripts/modelled_stream_crossings/Makefile $(wildcard scripts/modelled_stream_crossings/sql/*.sql)
 	cd scripts/modelled_stream_crossings; make
 	touch $@
 
@@ -115,16 +121,8 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # PSCIS
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
-.pscis: .fwapg .modelled_stream_crossings
+.pscis: .fwapg .modelled_stream_crossings scripts/pscis/pscis.sh $(wildcard scripts/pscis/sql/*.sql)
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
-	touch $@
-
-# ------
-# OBSERVATIONS
-# ------
-# extract FISS observations for species of interest from bcfishobs
-.observations: .fwapg .bcfishobs .parameters
-	$(PSQL_CMD) -f scripts/db/sql/$(subst .,,$@).sql
 	touch $@
 
 # -----
@@ -132,7 +130,16 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # TODO - could this be a view? It only taks ~4min to generate so probably not important.
 # -----
-.crossings: .pscis .modelled_stream_crossings .dams .misc_barriers_anthropogenic
+.crossings: .pscis .modelled_stream_crossings .dams .misc_barriers_anthropogenic scripts/model_access/sql/crossings.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
+	touch $@
+
+# -----
+# MANUAL HABITAT CLASSIFICATION ENDPOINTS
+# spawning/rearing habitat can be identified via this user table,
+# but we generate endpoints from lines for stream splitting
+# -----
+.manual_habitat_classification_endpoints: .manual_habitat_classification scripts/model_access/sql/manual_habitat_classification_endpoints.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
 	touch $@
 
@@ -143,42 +150,54 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # ***********************************************
 
 # above data sources are all compiled provincially
-# below jobs are run for watersheds specified in parameters only
+# below jobs/extracts are run for watersheds specified in parameters only
 
 # -----
 # INITIAL STREAM DATA LOAD
 # -----
 # what streams get loaded depends on wsg listed in parameters
-.segmented_streams: .parameters
-	$(PSQL_CMD) -f scripts/db/sql/segmented_streams.sql
+.segmented_streams: .parameters scripts/db/sql/segmented_streams.sql
+	$(PSQL_CMD) -f scripts/db/sql/$(subst .,,$@).sql
 	touch $@
 
 # -----
-# DEFINITE BARRIERS
-# create table for each type of definite (not generally fixable) barrier
-# (targets grouped by data source)
+# BARRIER TABLES
+# create table for each type of definite (not generally fixable) barrier,
+# plus potential/assessed barriers from crossings table
 # -----
-.defbarriers_majordams: .dams .parameters
-	$(PSQL_CMD) -f scripts/model_access/sql/barriers_majordams.sql
+.barriers_majordams: .dams .parameters scripts/model_access/sql/barriers_majordams.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
 	touch $@
-.defbarriers_fwa: .parameters
+.barriers_fwa: .parameters scripts/model_access/sql/barriers_ditchflow.sql scripts/model_access/sql/barriers_intermittentflow.sql scripts/model_access/sql/barriers_subsurfaceflow.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_ditchflow.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_intermittentflow.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_subsurfaceflow.sql
 	touch $@
-.defbarriers_falls: .falls .parameters
-	$(PSQL_CMD) -f scripts/model_access/sql/barriers_falls.sql
+.barriers_falls: .falls .parameters scripts/model_access/sql/barriers_falls.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
 	touch $@
-.defbarriers_gradient: .gradient_barriers .parameters
+.barriers_gradient: .gradient_barriers .parameters scripts/model_access/sql/barriers_gradient_15.sql scripts/model_access/sql/barriers_gradient_20.sql scripts/model_access/sql/barriers_gradient_30.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_15.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_20.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_gradient_30.sql
 	touch $@
-.defbarriers_other: .exclusions .misc_barriers_definite .pscis_barrier_result_fixes .parameters
+.barriers_other: .exclusions .misc_barriers_definite .pscis_barrier_result_fixes .parameters scripts/model_access/sql/barriers_other_definite.sql
 	$(PSQL_CMD) -f scripts/model_access/sql/barriers_other_definite.sql
 	touch $@
-# just a catch all target for above
-.definite_barriers: .defbarriers_majordams .defbarriers_fwa .defbarriers_falls .defbarriers_gradient .defbarriers_other
+.barriers_anthropogenic: .crossings scripts/model_access/sql/barriers_anthropogenic.sql scripts/model_access/sql/barriers_pscis.sql scripts/model_access/sql/remediated.sql
+	# barriers/potential barriers subset of crossings table
+	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
+	# pscis subsets for visualization
+	$(PSQL_CMD) -f scripts/model_access/sql/barriers_pscis.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/remediated.sql
+	touch $@
+
+# ------
+# OBSERVATIONS
+# ------
+# extract FISS observations for species of interest from bcfishobs
+.observations: .fwapg .bcfishobs .parameters scripts/model_access/sql/observations.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/$(subst .,,$@).sql
 	touch $@
 
 # -----
@@ -187,8 +206,36 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # merge all point features into a single view and break streams at intersections
 # note that this will only pick up breakpoints that are 1m from existing breaks in the streams,
 # re-runs with minor updates will be very quick
-.break_streams: .segmented_streams .observations .defbarriers_majordams .falls .defbarriers_gradient .defbarriers_other .crossings
-	$(PSQL_CMD) -f scripts/model_access/sql/breakpoints_vw.sql
+.break_streams: .segmented_streams .observations .barriers_majordams .falls .barriers_gradient .barriers_other .crossings .manual_habitat_classification_endpoints scripts/model_access/sql/breakpoints.sql scripts/model_access/sql/00_segment_streams.sql
+	$(PSQL_CMD) -f scripts/model_access/sql/breakpoints.sql
 	parallel $(PSQL_CMD) -f scripts/model_access/sql/00_segment_streams.sql -v wsg={1} ::: $(GROUPS)
 	touch $@
+
+# -----
+# INDEX
+# -----
+# add column to various tables indexing relative position of features
+# TODO - this is relatively slow. There should be a decent way of either
+# - creating views holding required columns directly
+# - running the add-up/downstream-ids script but only updating the index when new features are added
+.model_access: .break_streams scripts/model_access/sql/model_access.sql
+	#cd scripts/model_access ; python bcfishpass.py add-upstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15 --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_gradient_20 barriers_gradient_20_id dnstr_barriers_gradient_20 --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_gradient_30 barriers_gradient_30_id dnstr_barriers_gradient_30 --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_ditchflow barriers_ditchflow_id dnstr_barriers_ditchflow --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_falls barriers_falls_id dnstr_barriers_falls --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_intermittentflow barriers_intermittentflow_id dnstr_barriers_intermittentflow --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_majordams barriers_majordams_id dnstr_barriers_majordams --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_other_definite barriers_other_definite_id dnstr_barriers_other_definite --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id dnstr_barriers_subsurfaceflow --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_pscis stream_crossing_id dnstr_barriers_pscis --include_equivalent_measure
+	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.remediated aggregated_crossings_id dnstr_remediated --include_equivalent_measure
+	#python bcfishpass.py add-downstream-ids bcfishpass.streams segmented_stream_id bcfishpass.definitebarriers_wct definitebarriers_wct_id dnstr_barriers_wct --include_equivalent_measure
+	#$(PSQL_CMD) -c "DROP TABLE bcfishpass.barriers_pscis" # drop temp pscis barriers table to avoid confusion
+	$(PSQL_CMD) -f scripts/model_access/sql/model_access.sql
+	touch $@
+
+
 
