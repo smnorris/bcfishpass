@@ -212,12 +212,13 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	touch $@
 
 # -----
-# INDEX
+# RUN ACCESS MODEL
 # -----
 # add column to various tables indexing relative position of features
-# TODO - this is relatively slow. There should be a decent way of either
-# - creating views holding required columns directly
-# - running the add-up/downstream-ids script but only updating the index when new features are added
+# TODO - this is relatively slow. There should be a decent way to either:
+#     - create views holding required columns directly
+#     - run the add-up/downstream-ids script for first pass (it isn't that slow),
+#       but only applying updates where new features are added
 .model_access: .break_streams scripts/model_access/sql/model_access.sql
 	#cd scripts/model_access ; python bcfishpass.py add-upstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
 	#cd scripts/model_access ; python bcfishpass.py add-downstream-ids bcfishpass.segmented_streams segmented_stream_id bcfishpass.barriers_gradient_15 barriers_gradient_15_id dnstr_barriers_gradient_15 --include_equivalent_measure

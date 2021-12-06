@@ -23,9 +23,8 @@ WHERE
     AND watershed_group_code in
     (
         SELECT watershed_group_code
-        FROM bcfishpass.param_watersheds
-        WHERE include IS TRUE AND
-        (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
+        FROM bcfishpass.wsg_species_presence
+        WHERE (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
     );
 
 UPDATE bcfishpass.segmented_streams
@@ -48,9 +47,8 @@ WHERE
     watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.param_watersheds
-        WHERE include IS TRUE AND
-        (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
+        FROM bcfishpass.wsg_species_presence
+        WHERE (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
     );
 
 UPDATE bcfishpass.segmented_streams
@@ -68,9 +66,8 @@ WHERE
     watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.param_watersheds
-        WHERE include IS TRUE AND
-        (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
+        FROM bcfishpass.wsg_species_presence
+        WHERE (co IS TRUE OR ch IS TRUE OR sk IS TRUE)
     );
 
 -- STEELHEAD
@@ -86,8 +83,8 @@ WHERE
     AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.param_watersheds
-        WHERE include IS TRUE AND st IS TRUE
+        FROM bcfishpass.wsg_species_presence
+        WHERE st IS TRUE
     );
 
 UPDATE bcfishpass.segmented_streams
@@ -109,8 +106,8 @@ WHERE
     AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.param_watersheds
-        WHERE include IS TRUE AND st IS TRUE
+        FROM bcfishpass.wsg_species_presence
+        WHERE st IS TRUE
     );
 
 UPDATE bcfishpass.segmented_streams
@@ -127,7 +124,7 @@ WHERE
     AND watershed_group_code IN
     (
         SELECT watershed_group_code
-        FROM bcfishpass.param_watersheds
-        WHERE include IS TRUE AND st IS TRUE
+        FROM bcfishpass.wsg_species_presence
+        WHERE st IS TRUE
     );
 
