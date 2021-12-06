@@ -86,4 +86,15 @@ FROM bcfishpass.manual_habitat_classification_endpoints b
 INNER JOIN bcfishpass.segmented_streams s
 ON b.blue_line_key = s.blue_line_key
 AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.crossings b
+INNER JOIN bcfishpass.segmented_streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
 AND (s.upstream_route_measure - b.downstream_route_measure) > 1;
