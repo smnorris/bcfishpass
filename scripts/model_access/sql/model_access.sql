@@ -1,11 +1,11 @@
 -- in case this is a rerun, drop the columns first to ensure nothing is retained from previous runs
-ALTER TABLE bcfishpass.segmented_streams DROP COLUMN IF EXISTS observedspp_upstr;
+ALTER TABLE bcfishpass.segmented_streams DROP COLUMN IF EXISTS upstr_observedspp;
 ALTER TABLE bcfishpass.segmented_streams DROP COLUMN IF EXISTS accessibility_model_salmon;
 ALTER TABLE bcfishpass.segmented_streams DROP COLUMN IF EXISTS accessibility_model_steelhead;
 ALTER TABLE bcfishpass.segmented_streams DROP COLUMN IF EXISTS accessibility_model_wct;
 
 -- add the model output columns
-ALTER TABLE bcfishpass.segmented_streams ADD COLUMN IF NOT EXISTS observedspp_upstr text[];
+ALTER TABLE bcfishpass.segmented_streams ADD COLUMN IF NOT EXISTS upstr_observedspp text[];
 ALTER TABLE bcfishpass.segmented_streams ADD COLUMN accessibility_model_salmon text;
 ALTER TABLE bcfishpass.segmented_streams ADD COLUMN accessibility_model_steelhead text;
 ALTER TABLE bcfishpass.segmented_streams ADD COLUMN accessibility_model_wct text;
@@ -38,7 +38,7 @@ WITH spp_upstream AS (
   GROUP BY segmented_stream_id
 )
 UPDATE bcfishpass.segmented_streams s
-SET observedspp_upstr = u.species_codes
+SET upstr_observedspp = u.species_codes
 FROM spp_upstream u
 WHERE s.segmented_stream_id = u.segmented_stream_id;
 
@@ -183,7 +183,7 @@ WHERE
         dnstr_barriers_other_definite IS NULL
     ) OR
     (
-        observedspp_upstr && ARRAY['WCT']  -- upstr wct observations override dnst barriers
+        upstr_observedspp && ARRAY['WCT']  -- upstr wct observations override dnst barriers
     )
 ) AND
 watershed_group_code = ANY(
