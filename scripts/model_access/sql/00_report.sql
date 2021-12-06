@@ -10,8 +10,8 @@ ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS accessibility_
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS accessibility_model_wct       text;
 
 -- upstream/downstream reporting
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_dnstr text[];
-ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS observedspp_upstr text[];
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS dnstr_observedspp text[];
+ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS upstr_observedspp text[];
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS watershed_upstr_ha double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_network_km double precision;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS total_stream_km double precision;
@@ -143,8 +143,8 @@ COMMENT ON COLUMN {point_schema}.{point_table}.accessibility_model_salmon IS 'Mo
 COMMENT ON COLUMN {point_schema}.{point_table}.accessibility_model_steelhead IS 'Modelled accessibility to Steelhead (20% max)';
 COMMENT ON COLUMN {point_schema}.{point_table}.accessibility_model_wct IS 'Modelled accessibility to West Slope Cutthroat Trout (20% max or downstream of known WCT observation)';     ;
 COMMENT ON COLUMN {point_schema}.{point_table}.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
-COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_dnstr IS 'Fish species observed downstream of point (on the same stream/blue_line_key)';
-COMMENT ON COLUMN {point_schema}.{point_table}.observedspp_upstr IS 'Fish species observed anywhere upstream of point';
+COMMENT ON COLUMN {point_schema}.{point_table}.dnstr_observedspp IS 'Fish species observed downstream of point (on the same stream/blue_line_key)';
+COMMENT ON COLUMN {point_schema}.{point_table}.upstr_observedspp IS 'Fish species observed anywhere upstream of point';
 COMMENT ON COLUMN {point_schema}.{point_table}.total_network_km IS 'Total length of stream network upstream of point';
 COMMENT ON COLUMN {point_schema}.{point_table}.total_stream_km IS 'Total length of streams and rivers upstream of point (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN {point_schema}.{point_table}.total_lakereservoir_ha IS 'Total area lakes and reservoirs upstream of point ';
@@ -351,8 +351,8 @@ report AS
   b.accessibility_model_steelhead,
   b.accessibility_model_wct,
   b.upstream_area_ha AS watershed_upstr_ha,
-  spd.species_codes as observedspp_dnstr,
-  spu.species_codes as observedspp_upstr,
+  spd.species_codes as dnstr_observedspp,
+  spu.species_codes as upstr_observedspp,
 
 -- totals
   COALESCE(ROUND((SUM(ST_Length(s.geom)::numeric) / 1000), 2), 0) AS total_network_km,
@@ -488,8 +488,8 @@ GROUP BY
 
 UPDATE {point_schema}.{point_table} p
 SET
-  observedspp_dnstr = r.observedspp_dnstr,
-  observedspp_upstr = r.observedspp_upstr,
+  dnstr_observedspp = r.dnstr_observedspp,
+  upstr_observedspp = r.upstr_observedspp,
   stream_order = r.stream_order,
   stream_magnitude = r.stream_magnitude,
   gradient = r.gradient,
