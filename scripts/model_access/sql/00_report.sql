@@ -1,6 +1,7 @@
+# upstr_observedspp may already exist. if so, drop it
+ALTER TABLE {point_schema}.{point_table} DROP COLUMN IF EXISTS upstr_observedspp;
+
 -- add the reporting columns
-
-
 -- stream characteristics, accessibility model status
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS stream_order integer;
 ALTER TABLE {point_schema}.{point_table} ADD COLUMN IF NOT EXISTS stream_magnitude integer;
