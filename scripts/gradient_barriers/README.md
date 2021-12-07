@@ -18,12 +18,12 @@ codes are included: `(1000,1050,1100,1150,1250,1350,1410,2000,2300)` - network c
 
 To create and load the gradient barrier table:
 
-    ./gradient_barriers.sh
+    make
 
-This creates gradient breaks at 5/10/15/20/25/30 percent thresholds, finding slope over 100m. To change the slope
+The script creates gradient breaks at 5/10/15/20/25/30 percent thresholds, finding slope over 100m. To change the slope
 thresholds of interest or the interval over which slope is measured, edit `sql/gradient_barriers.sql`.
 
-Note this script simply identifies the locations of all gradient breaks based on the given thresholds. Which
+Note this tool simply identifies the locations of all gradient breaks based on the given thresholds. Which
 gradient breaks are actually used as barriers is controlled in the connectivity model.
 
 ## Output table
@@ -40,8 +40,4 @@ gradient breaks are actually used as barriers is controlled in the connectivity 
 
 ## Override data errors / note gradient barriers that do not exist
 
-If any gradient barriers need to be removed because they are not present, add them to `data/gradient_barriers_passable.csv`.
-
-To load the lookup:
-
-    ./gradient_barriers_passable.sh
+If any gradient barriers need to be removed because they are not present/not barriers, add them to `data/gradient_barriers_passable.csv`.
