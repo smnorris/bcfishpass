@@ -46,7 +46,7 @@ SELECT
   s.wscode_ltree,
   s.localcode_ltree,
   s.watershed_group_code,
-  -- The formula for predicting channel width based on Thorley and Irvine 2021
+  -- formula for predicting channel width is from Thorley and Irvine 2021
   round(
       (EXP(-2.2383120 + 0.3121556 * ln(s.upstream_area_ha / 100) + 0.6546995 * ln(p.map_upstream / 10))
     )::numeric, 2
