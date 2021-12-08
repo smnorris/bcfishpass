@@ -1519,3 +1519,4 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 50186,PASSABLE,ELKR,NMW,Manual review; deactivated
 50174,PASSABLE,ELKR,NMW,Manual review; deactivated
 57596,PASSABLE,HORS,NMW,"Field assessment, no structure"
+57470,PASSABLE,HORS,NMW,"Actually a PSCIS location issue, but temporary fix for Horsefly workshop updates"
