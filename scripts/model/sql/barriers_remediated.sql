@@ -1,8 +1,8 @@
--- insert all barriers from aggregated crossings table
--- (pscis, dams, modelled xings)
+-- extract remediated crossings from the crossings table for reporting/visualization
+-- insert all remediated crossings from aggregated crossings table
 -- no additonal logic required
-DELETE FROM bcfishpass.barriers_anthropogenic;
-INSERT INTO bcfishpass.barriers_anthropogenic
+DELETE FROM bcfishpass.barriers_remediated;
+INSERT INTO bcfishpass.barriers_remediated
 (
     aggregated_crossings_id,
     stream_crossing_id,
@@ -43,20 +43,14 @@ SELECT
     c.watershed_group_code as watershed_group_code,
     c.geom as geom
 FROM bcfishpass.crossings c
-WHERE barrier_status IN ('BARRIER', 'POTENTIAL')
-AND c.watershed_group_code = ANY(
-  ARRAY(
-    SELECT watershed_group_code
-    FROM bcfishpass.param_watersheds
+-- only include crossings that are still passable, in theory something may have failed after a remediation
+WHERE
+  pscis_status = 'REMEDIATED' AND
+  barrier_status = 'PASSABLE' AND
+  c.watershed_group_code = ANY(
+    ARRAY(
+      SELECT watershed_group_code
+      FROM bcfishpass.param_watersheds
+    )
   )
-)
 ON CONFLICT DO NOTHING;
-
-CREATE INDEX ON bcfishpass.barriers_pscis (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_pscis (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_pscis (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_pscis USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_pscis USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_pscis USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_pscis USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_pscis USING GIST (geom);

@@ -1,22 +1,4 @@
-DROP TABLE IF EXISTS bcfishpass.barriers_gradient_30;
-
-CREATE TABLE bcfishpass.barriers_gradient_30
-(
-    barriers_gradient_30_id serial primary key,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code text,
-    geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-    UNIQUE (blue_line_key, downstream_route_measure)
-);
-
-
+DELETE FROM bcfishpass.barriers_gradient_30;
 INSERT INTO bcfishpass.barriers_gradient_30
 (
     barrier_type,
@@ -53,13 +35,3 @@ WHERE b.gradient_class = 30
 AND p.blue_line_key IS NULL -- don't include any that get matched to passable table
 ORDER BY b.blue_line_key, b.downstream_route_measure
 ON CONFLICT DO NOTHING;
-
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (blue_line_key, downstream_route_measure);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (geom);

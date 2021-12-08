@@ -1,21 +1,4 @@
-DROP TABLE IF EXISTS bcfishpass.barriers_majordams;
-
-CREATE TABLE bcfishpass.barriers_majordams
-(
-    barriers_majordams_id serial primary key,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code text,
-    geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-    UNIQUE (blue_line_key, downstream_route_measure)
-);
-
+DELETE FROM bcfishpass.barriers_majordams;
 INSERT INTO bcfishpass.barriers_majordams
 (
     barriers_majordams_id,
@@ -46,14 +29,3 @@ ON d.watershed_group_code = g.watershed_group_code
 WHERE d.barrier_ind = 'Y'
 AND d.hydro_dam_ind = 'Y'
 ON CONFLICT DO NOTHING;
-
-
-
-CREATE INDEX ON bcfishpass.barriers_majordams (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_majordams (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_majordams (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_majordams USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_majordams USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_majordams USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_majordams USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_majordams USING GIST (geom);

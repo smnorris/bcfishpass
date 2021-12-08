@@ -1,23 +1,5 @@
--- other data sources that indicate a stream is not potentially accessible
-
-DROP TABLE IF EXISTS bcfishpass.barriers_other_definite;
-
-CREATE TABLE bcfishpass.barriers_other_definite
-(
-    barriers_other_definite_id serial primary key,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code text,
-    geom geometry(Point, 3005),
-    UNIQUE (blue_line_key, downstream_route_measure)
-);
-
 -- insert exclusions first as they take priority in event there are other features at the same location
+DELETE FROM bcfishpass.barriers_other_definite;
 INSERT INTO bcfishpass.barriers_other_definite
 (
     barrier_type,
@@ -112,14 +94,3 @@ ON a.blue_line_key = s.blue_line_key AND
 INNER JOIN bcfishpass.param_watersheds g
 ON a.watershed_group_code = g.watershed_group_code
 ON CONFLICT DO NOTHING;
-
-
-
-CREATE INDEX ON bcfishpass.barriers_other_definite (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_other_definite (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_other_definite (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_other_definite USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_other_definite USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_other_definite USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_other_definite USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_other_definite USING GIST (geom);

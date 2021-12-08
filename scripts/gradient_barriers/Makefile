@@ -20,3 +20,4 @@ all: .gradient_barriers
 
 clean:
 	$(PSQL_CMD) -c "DROP TABLE bcfishpass.gradient_barriers"
+	rm .gradient_barriers

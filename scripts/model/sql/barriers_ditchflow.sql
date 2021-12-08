@@ -1,22 +1,3 @@
-DROP TABLE IF EXISTS bcfishpass.barriers_ditchflow;
-
-CREATE TABLE bcfishpass.barriers_ditchflow
-(
-    barriers_ditchflow_id serial primary key,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code text,
-    geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-    UNIQUE (linear_feature_id, downstream_route_measure)
-);
-
-
 INSERT INTO bcfishpass.barriers_ditchflow
 (
     barriers_ditchflow_id,

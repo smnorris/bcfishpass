@@ -1,21 +1,4 @@
-DROP TABLE IF EXISTS bcfishpass.barriers_subsurfaceflow;
-
-CREATE TABLE bcfishpass.barriers_subsurfaceflow
-(
-    barriers_subsurfaceflow_id serial primary key,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code text,
-    geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-    UNIQUE (blue_line_key, downstream_route_measure)
-);
-
+DELETE FROM bcfishpass.barriers_subsurfaceflow;
 
 INSERT INTO bcfishpass.barriers_subsurfaceflow
 (
@@ -58,13 +41,3 @@ AND s.fwa_watershed_code NOT LIKE '999%%'
 -- with the Clusco farther upstream
 AND NOT (s.blue_line_key = 356363411 AND s.downstream_route_measure < 213010)
 ON CONFLICT DO NOTHING;
-
-
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_subsurfaceflow USING GIST (geom);
