@@ -1,27 +1,29 @@
-.PHONY: all clean
+.PHONY: all clean clean_sources
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-BARRIERS=majordams subsurfaceflow falls \
-	gradient_15 gradient_20 gradient_30 \
-	other_definite anthropogenic pscis \
-	remediated
-# specify all make targets
-GENERATED_FILES=.fwapg .bcfishobs .ddl \
-	.falls .dams .gradient_barriers .modelled_stream_crossings .pscis .crossings \
-	.manual_habitat_classification_endpoints .segmented_streams \
-	.observations .break_streams .model_access
-#.channel_width .discharge .model_habitat .views .reports
-
 GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+GENERATED_FILES=.fwapg .bcfishobs .ddl .parameters \
+	.falls .dams .gradient_barriers .modelled_stream_crossings .pscis .crossings .manual_habitat_classification_endpoints \
+	.segmented_streams .observations .upstr_observations .break_streams .model_access
+
+	#.channel_width .discharge .model_habitat .views .reports
+BARRIERS=anthropogenic falls gradient_15 gradient_20 gradient_30 majordams other_definite pscis remediated subsurfaceflow
 
 # Make all targets - just point to final target to make everything
 all: .model_access
 
-# Remove all generated targets
-clean:
+# Remove make targets not in root folder
+clean_sources:
 	rm -Rf fwapg
 	rm -Rf bcfishobs
 	cd scripts/modelled_stream_crossings; make clean
+
+# Remove model make targets
+clean:
+	rm -Rf $(GENERATED_FILES)
+	rm -Rf $(wildcard .barriers_*)
+	rm -Rf $(wildcard .dnstr_barriers_*_vw)
+	rm -Rf $(patsubst data/%.csv,.%,$(wildcard data/*csv))
 
 
 # *********************************************************
@@ -53,11 +55,10 @@ bcfishobs: .fwapg
 # ------
 # CREATE REQUIRED FUNCTIONS AND EMPTY TABLES
 # ------
-.ddl: scripts/model/sql/create_functions.sql scripts/model/sql/create_user_tables.sql scripts/model/sql/create_segmented_streams.sql
+.ddl: scripts/model/sql/create_functions.sql scripts/model/sql/create_user_tables.sql
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	$(PSQL_CMD) -f scripts/model/sql/create_functions.sql
 	$(PSQL_CMD) -f scripts/model/sql/create_user_tables.sql
-	$(PSQL_CMD) -f scripts/model/sql/create_segmented_streams.sql
 	touch $@
 
 # ------
@@ -156,10 +157,12 @@ bcfishobs: .fwapg
 # INITIAL STREAM DATA LOAD
 # -----
 # what streams get loaded depends on wsg listed in parameters
-.segmented_streams: .parameters .ddl .fwapg scripts/model/sql/load_segmented_streams.sql
+.segmented_streams: .parameters .ddl .fwapg scripts/model/sql/load_segmented_streams.sql scripts/model/sql/create_segmented_streams.sql
+	# create initial (empty) segmented_streams table
+	$(PSQL_CMD) -f scripts/model/sql/create_segmented_streams.sql
 	# load in parallel (doing the entire load as a single insert is extremely slow for large study areas)
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(GROUPS)
-	# index
+	# index after load because faster
 	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id); \
 		CREATE INDEX ON bcfishpass.segmented_streams (blue_line_key); \
 		CREATE INDEX ON bcfishpass.segmented_streams (watershed_group_code); \
@@ -173,54 +176,47 @@ bcfishobs: .fwapg
 
 # -----
 # BARRIER TABLES
-# load barrier tables
+# create barrier tables, load data, create (empty) views listing barriers of given type downstream of each stream
 # -----
-.barriers_majordams: parameters/watersheds.csv .dams .parameters scripts/model/sql/barriers_majordams.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_majordams: scripts/model/sql/barriers_majordams.sql parameters/watersheds.csv .dams
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_subsurfaceflow: parameters/watersheds.csv scripts/model/sql/barriers_subsurfaceflow.sql # note that there is currently no method to manually change passability of these
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_subsurfaceflow: scripts/model/sql/barriers_subsurfaceflow.sql parameters/watersheds.csv  # note that there is currently no method to manually change passability of these
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_falls: parameters/watersheds.csv .falls scripts/model/sql/barriers_falls.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_falls: scripts/model/sql/barriers_falls.sql parameters/watersheds.csv .falls
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_15: parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable scripts/model/sql/barriers_gradient_15.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_gradient_15: scripts/model/sql/barriers_gradient_15.sql parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_20: parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable scripts/model/sql/barriers_gradient_20.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_gradient_20: scripts/model/sql/barriers_gradient_20.sql parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_30: parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable scripts/model/sql/barriers_gradient_30.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_gradient_30: scripts/model/sql/barriers_gradient_30.sql parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_other_definite: parameters/watersheds.csv .exclusions .misc_barriers_definite .pscis_barrier_result_fixes scripts/model/sql/barriers_other_definite.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_other_definite: scripts/model/sql/barriers_other_definite.sql parameters/watersheds.csv .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_anthropogenic: parameters/watersheds.csv .crossings scripts/model/sql/barriers_anthropogenic.sql
+.barriers_anthropogenic: scripts/model/sql/barriers_anthropogenic.sql parameters/watersheds.csv .crossings
 	# barriers/potential barriers subset of crossings table
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_pscis: parameters/watersheds.csv .crossings scripts/model/sql/barriers_pscis.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_pscis: scripts/model/sql/barriers_pscis.sql parameters/watersheds.csv .crossings
+	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_remediated: parameters/watersheds.csv .crossings scripts/model/sql/barriers_remediated.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.barriers_remediated: scripts/model/sql/barriers_remediated.sql parameters/watersheds.csv .crossings
+	$(PSQL_CMD) -f $<
 	touch $@
 
 # ------
 # OBSERVATIONS
 # ------
-# extract FISS observations for species of interest from bcfishobs
-.observations: .parameters .bcfishobs scripts/model/sql/observations.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
-	touch $@
-
-# ------
-# OBSERVATION VIEW
-# ------
+# extract FISS observations for species of interest from bcfishobs,
 # create empty view relating streams to upstream observations
-.upstr_observations: .observations
-	$(PSQL_CMD) -f scripts/model/sql/upstr_observations_vw.sql
+.observations: scripts/model/sql/observations.sql parameters/watersheds.csv .bcfishobs
+	$(PSQL_CMD) -f $<
 	touch $@
 
 # -----
@@ -253,15 +249,15 @@ bcfishobs: .fwapg
 # REFRESH/LOAD UPSTREAM OBSERVATIONS VIEW
 # -----
 # seperate target because it has to refresh when streams have been re-processed
-.upstr_observations_refresh: .upstr_observations .break_streams
-	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.upstr_observations_vw"
+.upstr_observations_vw: .observations .break_streams
+	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.$(subst .,,$@)"
 	touch $@
 
 # -----
 # RUN ACCESS MODEL QUERY
 # -----
 # load/refresh materialized views that hold lists of downstream barriers for each stream
-.model_access: $(BARRIER_VIEW_TARGETS) .upstr_observations_refresh
+.model_access: $(patsubst %,.dnstr_barriers_%_vw,$(BARRIERS)) .upstr_observations_vw
 	$(PSQL_CMD) -f scripts/model/sql/streams_vw.sql
 	touch $@
 
