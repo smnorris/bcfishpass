@@ -1,33 +1,27 @@
-.PHONY: all clean settings
+.PHONY: all clean
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-DATA_FILES=$(wildcard data/*.csv)                         # find all user input data in .csv files
-DATA_FILE_TARGETS=$(patsubst data/%.csv,.%,$(DATA_FILES)) # parse csv file names into .hidden make targets
-BARRIER_TARGETS=.barriers_majordams .barriers_subsurfaceflow .barriers_falls \
-	.barriers_gradient_15 .barriers_gradient_20 .barriers_gradient_30 \
-	.barriers_other_definite .barriers_anthropogenic .barriers_pscis \
-	.barriers_remediated
-BARRIER_VIEW_TARGETS=$(subst .,.dnstr_, $(BARRIER_TARGETS))
+BARRIERS=majordams subsurfaceflow falls \
+	gradient_15 gradient_20 gradient_30 \
+	other_definite anthropogenic pscis \
+	remediated
 # specify all make targets
 GENERATED_FILES=.fwapg .bcfishobs .ddl \
-	$(DATA_FILE_TARGETS) \
 	.falls .dams .gradient_barriers .modelled_stream_crossings .pscis .crossings \
 	.manual_habitat_classification_endpoints .segmented_streams \
-	$(BARRIER_TARGETS) .dnstr_barrier_views $(BARRIER_VIEW_TARGETS) \
 	.observations .break_streams .model_access
 #.channel_width .discharge .model_habitat .views .reports
 
 GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
-# Make all targets
-all: $(GENERATED_FILES)
+# Make all targets - just point to final target to make everything
+all: .model_access
 
 # Remove all generated targets
 clean:
 	rm -Rf fwapg
 	rm -Rf bcfishobs
 	cd scripts/modelled_stream_crossings; make clean
-	rm -Rf $(GENERATED_FILES)
 
 
 # *********************************************************
@@ -59,20 +53,19 @@ bcfishobs: .fwapg
 # ------
 # CREATE REQUIRED FUNCTIONS AND EMPTY TABLES
 # ------
-.ddl: scripts/model/sql/create_functions.sql scripts/model/sql/create_user_tables.sql scripts/model/sql/create_barrier_tables.sql scripts/model/sql/create_segmented_streams.sql
+.ddl: scripts/model/sql/create_functions.sql scripts/model/sql/create_user_tables.sql scripts/model/sql/create_segmented_streams.sql
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	$(PSQL_CMD) -f scripts/model/sql/create_functions.sql
 	$(PSQL_CMD) -f scripts/model/sql/create_user_tables.sql
-	$(PSQL_CMD) -f scripts/model/sql/create_barrier_tables.sql
 	$(PSQL_CMD) -f scripts/model/sql/create_segmented_streams.sql
 	touch $@
 
 # ------
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
-$(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass$@;"
-	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM 'data/$(subst .,,$@).csv' delimiter ',' csv header"
+.%: data/%.csv .ddl
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass$(subst .,,$@);"
+	$(PSQL_CMD) -c "\copy bcfishpass$(subst .,,$@) FROM '$<' delimiter ',' csv header"
 	touch $@
 
 # ------
@@ -213,11 +206,6 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 .barriers_remediated: parameters/watersheds.csv .crossings scripts/model/sql/barriers_remediated.sql
 	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
 	touch $@
-.dnstr_barrier_views: $(BARRIER_TARGETS)
-	# create all materialized downstream barrier views once the input tables are created
-	# (but do not refresh/populate)
-	$(PSQL_CMD) -f scripts/model/sql/dnstr_barrier_views.sql
-	touch $@
 
 # ------
 # OBSERVATIONS
@@ -256,9 +244,9 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # -----
 # REFRESH/LOAD DOWNSTREAM BARRIER VIEWS WHERE REQUIRED
 # -----
-# load/refresh materialized views that hold lists of downstream barriers for each stream
-$(BARRIER_VIEW_TARGETS): $(BARRIER_TARGETS) .dnstr_barrier_views .break_streams
-	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.$(subst .,,$@)_vw"
+# load/refresh each materialized view that hold arrays of downstream barriers of given type for each stream
+.dnstr_barriers_%_vw: .barriers_% .break_streams
+	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.$(subst .,,$@)"
 	touch $@
 
 # -----
