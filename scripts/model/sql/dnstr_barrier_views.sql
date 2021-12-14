@@ -37,6 +37,7 @@ SELECT
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
 
+CREATE INDEX ON bcfishpass.dnstr_barriers_gradient_15_vw (blue_line_key, downstream_route_measure);
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_gradient_20_vw AS
 SELECT
@@ -71,6 +72,8 @@ SELECT
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
 
+CREATE INDEX ON bcfishpass.dnstr_barriers_gradient_20_vw (blue_line_key, downstream_route_measure);
+
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_gradient_30_vw AS
 SELECT
     blue_line_key,
@@ -96,13 +99,15 @@ SELECT
       b.downstream_route_measure,
       b.wscode_ltree,
       b.localcode_ltree,
-      False,
+      True,
       1
     )
     AND a.watershed_group_code = b.watershed_group_code
   ) as f
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
+
+CREATE INDEX ON bcfishpass.dnstr_barriers_gradient_30_vw (blue_line_key, downstream_route_measure);
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_falls_vw AS
 SELECT
@@ -136,6 +141,8 @@ SELECT
   ) as f
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
+
+CREATE INDEX ON bcfishpass.dnstr_barriers_falls_vw (blue_line_key, downstream_route_measure);
 
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_majordams_vw AS
@@ -173,6 +180,8 @@ SELECT
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
 
+CREATE INDEX ON bcfishpass.dnstr_barriers_majordams_vw (blue_line_key, downstream_route_measure);
+
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_other_definite_vw AS
 SELECT
@@ -206,6 +215,9 @@ SELECT
   ) as f
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
+
+
+CREATE INDEX ON bcfishpass.dnstr_barriers_other_definite_vw (blue_line_key, downstream_route_measure);
 
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_subsurfaceflow_vw AS
@@ -242,6 +254,9 @@ SELECT
   WITH NO DATA;
 
 
+CREATE INDEX ON bcfishpass.dnstr_barriers_subsurfaceflow_vw (blue_line_key, downstream_route_measure);
+
+
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_anthropogenic_vw AS
 SELECT
     blue_line_key,
@@ -274,6 +289,8 @@ SELECT
   ) as f
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
+
+CREATE INDEX ON bcfishpass.dnstr_barriers_anthropogenic_vw (blue_line_key, downstream_route_measure);
 
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_pscis_vw AS
@@ -309,6 +326,8 @@ SELECT
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
 
+CREATE INDEX ON bcfishpass.dnstr_barriers_pscis_vw (blue_line_key, downstream_route_measure);
+
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_remediated_vw AS
 SELECT
@@ -342,3 +361,6 @@ SELECT
   ) as f
   GROUP BY blue_line_key, downstream_route_measure
   WITH NO DATA;
+
+CREATE INDEX ON bcfishpass.dnstr_barriers_remediated_vw (blue_line_key, downstream_route_measure);
+

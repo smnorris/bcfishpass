@@ -475,7 +475,7 @@ WHERE source = 'FWA';
 
 -- override all barrier status based on user input
 UPDATE bcfishpass.falls f
-SET barrier_ind = False
+SET barrier_ind = b.barrier_ind
 FROM bcfishpass.falls_barrier_ind b
 WHERE
   f.blue_line_key = b.blue_line_key AND

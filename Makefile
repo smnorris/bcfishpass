@@ -7,7 +7,7 @@ BARRIER_TARGETS=.barriers_majordams .barriers_subsurfaceflow .barriers_falls \
 	.barriers_gradient_15 .barriers_gradient_20 .barriers_gradient_30 \
 	.barriers_other_definite .barriers_anthropogenic .barriers_pscis \
 	.barriers_remediated
-BARRIER_VIEW_TARGETS=$(patsubst %, dnstr_%_vw, $(BARRIER_TARGETS))
+BARRIER_VIEW_TARGETS=$(subst .,.dnstr_, $(BARRIER_TARGETS))
 # specify all make targets
 GENERATED_FILES=.fwapg .bcfishobs .ddl \
 	$(DATA_FILE_TARGETS) \
@@ -227,13 +227,24 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
 	touch $@
 
+# ------
+# OBSERVATION VIEW
+# ------
+# create empty view relating streams to upstream observations
+.upstr_observations: .observations
+	$(PSQL_CMD) -f scripts/model/sql/upstr_observations_vw.sql
+	touch $@
+
 # -----
 # BREAK STREAMS
 # -----
 # merge all point features into a single view and break streams at intersections
 # note that this will only pick up breakpoints that are 1m from existing breaks in the streams,
 # re-runs with minor updates will be very quick
-.break_streams: .segmented_streams .observations .barriers_majordams .barriers_falls .barriers_gradient .barriers_other_definite .crossings .manual_habitat_classification_endpoints scripts/model/sql/breakpoints.sql scripts/model/sql/00_segment_streams.sql
+.break_streams: .segmented_streams .barriers_majordams .barriers_falls \
+	.barriers_gradient_15 .barriers_gradient_20 .barriers_gradient_30 .barriers_other_definite \
+	.crossings .observations .manual_habitat_classification_endpoints \
+	scripts/model/sql/breakpoints.sql scripts/model/sql/00_segment_streams.sql
 	$(PSQL_CMD) -f scripts/model/sql/breakpoints.sql
 	# query as currently written locks when run in parallel, just iterate through groups
 	#parallel $(PSQL_CMD) -f scripts/model/sql/00_segment_streams.sql -v wsg={1} ::: $(GROUPS)
@@ -246,16 +257,25 @@ $(DATA_FILE_TARGETS): $(DATA_FILES) .ddl
 # REFRESH/LOAD DOWNSTREAM BARRIER VIEWS WHERE REQUIRED
 # -----
 # load/refresh materialized views that hold lists of downstream barriers for each stream
-$(BARRIER_VIEW_TARGETS): $(BARRIER_TARGETS) .break_streams
-	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.$(subst .,,$@)"
+$(BARRIER_VIEW_TARGETS): $(BARRIER_TARGETS) .dnstr_barrier_views .break_streams
+	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.$(subst .,,$@)_vw"
+	touch $@
+
+# -----
+# REFRESH/LOAD UPSTREAM OBSERVATIONS VIEW
+# -----
+# seperate target because it has to refresh when streams have been re-processed
+.upstr_observations_refresh: .upstr_observations .break_streams
+	$(PSQL_CMD) -c "REFRESH MATERIALIZED VIEW bcfishpass.upstr_observations_vw"
+	touch $@
 
 # -----
 # RUN ACCESS MODEL QUERY
 # -----
 # load/refresh materialized views that hold lists of downstream barriers for each stream
-#.model_access: $(BARRIER_VIEW_TARGETS)
-#	$(PSQL_CMD) -f scripts/model/sql/model_access.sql
-#	touch $@
+.model_access: $(BARRIER_VIEW_TARGETS) .upstr_observations_refresh
+	$(PSQL_CMD) -f scripts/model/sql/streams_vw.sql
+	touch $@
 
 
 #.crossings_report:
