@@ -1174,7 +1174,6 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 57588,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57589,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57594,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
-57596,BARRIER,HORS,CWF,based on assessment comments (and imagery review where required)
 57597,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57598,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
 57599,PASSABLE,HORS,CWF,based on assessment comments (and imagery review where required)
@@ -1519,3 +1518,5 @@ stream_crossing_id,updated_barrier_result_code,watershed_group_code,reviewer,not
 50179,PASSABLE,ELKR,NMW,Manual review
 50186,PASSABLE,ELKR,NMW,Manual review; deactivated
 50174,PASSABLE,ELKR,NMW,Manual review; deactivated
+57596,PASSABLE,HORS,NMW,"Field assessment, no structure"
+57470,PASSABLE,HORS,NMW,"Actually a PSCIS location issue, but temporary fix for Horsefly workshop updates"
