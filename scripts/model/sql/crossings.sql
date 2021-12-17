@@ -535,6 +535,7 @@ WITH misc_barriers AS
   SELECT
     b.misc_barrier_anthropogenic_id,
     b.blue_line_key,
+    s.watershed_key,
     b.downstream_route_measure,
     b.barrier_type,
     s.linear_feature_id,
@@ -562,6 +563,7 @@ INSERT INTO bcfishpass.crossings
     utm_northing,
     linear_feature_id,
     blue_line_key,
+    watershed_key,
     downstream_route_measure,
     wscode_ltree,
     localcode_ltree,
@@ -580,6 +582,7 @@ SELECT
     ST_Y(ST_Transform(b.geom, utmzone(b.geom)))::int as utm_northing,
     b.linear_feature_id,
     b.blue_line_key,
+    b.watershed_key,
     b.downstream_route_measure,
     b.wscode_ltree,
     b.localcode_ltree,
@@ -619,6 +622,7 @@ INSERT INTO bcfishpass.crossings
     utm_northing,
     linear_feature_id,
     blue_line_key,
+    watershed_key,
     downstream_route_measure,
     wscode_ltree,
     localcode_ltree,
@@ -663,6 +667,7 @@ SELECT
     ST_Y(ST_Transform(b.geom, utmzone(b.geom)))::int as utm_northing,
     b.linear_feature_id,
     b.blue_line_key,
+    s.watershed_key,
     b.downstream_route_measure,
     b.wscode_ltree,
     b.localcode_ltree,
@@ -703,6 +708,7 @@ CREATE INDEX ON bcfishpass.crossings (dam_id);
 CREATE INDEX ON bcfishpass.crossings (stream_crossing_id);
 CREATE INDEX ON bcfishpass.crossings (modelled_crossing_id);
 CREATE INDEX ON bcfishpass.crossings (linear_feature_id);
+CREATE INDEX ON bcfishpass.crossings (blue_line_key);
 CREATE INDEX ON bcfishpass.crossings (blue_line_key);
 CREATE INDEX ON bcfishpass.crossings (watershed_group_code);
 CREATE INDEX ON bcfishpass.crossings USING GIST (wscode_ltree);
