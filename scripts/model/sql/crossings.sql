@@ -70,6 +70,7 @@ CREATE TABLE bcfishpass.crossings
     -- FWA info
     linear_feature_id integer,
     blue_line_key integer,
+    watershed_key integer,
     downstream_route_measure double precision,
     wscode_ltree ltree,
     localcode_ltree ltree,
@@ -117,6 +118,7 @@ COMMENT ON COLUMN bcfishpass.crossings.utm_easting IS 'UTM EASTING is the distan
 COMMENT ON COLUMN bcfishpass.crossings.utm_northing IS 'UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826';
 COMMENT ON COLUMN bcfishpass.crossings.linear_feature_id IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)';
 COMMENT ON COLUMN bcfishpass.crossings.blue_line_key IS 'From BC FWA, Uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
+COMMENT ON COLUMN bcfishpass.crossings.watershed_key IS 'From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.';
 COMMENT ON COLUMN bcfishpass.crossings.downstream_route_measure IS 'The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature.';
 COMMENT ON COLUMN bcfishpass.crossings.wscode_ltree IS 'A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';
 COMMENT ON COLUMN bcfishpass.crossings.localcode_ltree IS 'A truncated version of the BC FWA local_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';;
@@ -164,6 +166,7 @@ INSERT INTO bcfishpass.crossings
     utm_northing,
     linear_feature_id,
     blue_line_key,
+    watershed_key,
     downstream_route_measure,
     wscode_ltree,
     localcode_ltree,
@@ -214,6 +217,7 @@ SELECT
     ST_Y(ST_Transform(e.geom, utmzone(e.geom)))::int as utm_northing,
     e.linear_feature_id,
     e.blue_line_key,
+    s.watershed_key,
     e.downstream_route_measure,
     e.wscode_ltree,
     e.localcode_ltree,
@@ -403,6 +407,7 @@ INSERT INTO bcfishpass.crossings
     utm_northing,
     linear_feature_id,
     blue_line_key,
+    watershed_key,
     downstream_route_measure,
     wscode_ltree,
     localcode_ltree,
@@ -443,6 +448,7 @@ SELECT DISTINCT ON (stream_crossing_id)
     ST_Y(ST_Transform(e.geom, utmzone(e.geom)))::int as utm_northing,
     e.linear_feature_id,
     e.blue_line_key,
+    s.watershed_key,
     e.downstream_route_measure,
     e.wscode_ltree,
     e.localcode_ltree,
@@ -479,6 +485,7 @@ INSERT INTO bcfishpass.crossings
     utm_northing,
     linear_feature_id,
     blue_line_key,
+    watershed_key,
     downstream_route_measure,
     wscode_ltree,
     localcode_ltree,
@@ -504,6 +511,7 @@ SELECT
     ST_Y(ST_Transform(d.geom, utmzone(d.geom)))::int as utm_northing,
     d.linear_feature_id,
     d.blue_line_key,
+    s.watershed_key,
     d.downstream_route_measure,
     d.wscode_ltree,
     d.localcode_ltree,
@@ -513,8 +521,6 @@ SELECT
 FROM bcfishpass.dams d
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
--- ignore dams on side channels for this exercise
-WHERE d.blue_line_key = s.watershed_key
 ORDER BY dam_id
 ON CONFLICT DO NOTHING;
 
@@ -684,8 +690,8 @@ LEFT OUTER JOIN whse_basemapping.transport_line_type_code dratype
 ON dra.transport_line_type_code = dratype.transport_line_type_code
 LEFT OUTER JOIN whse_basemapping.transport_line_surface_code drasurface
 ON dra.transport_line_surface_code = drasurface.transport_line_surface_code
-WHERE b.blue_line_key = s.watershed_key
-AND (f.structure IS NULL OR COALESCE(f.structure, 'CBS') = 'OBS')  -- don't include crossings that have been determined to be non-existent (f.structure = 'NONE')
+-- WHERE b.blue_line_key = s.watershed_key
+WHERE (f.structure IS NULL OR COALESCE(f.structure, 'CBS') = 'OBS')  -- don't include crossings that have been determined to be non-existent (f.structure = 'NONE')
 AND p.stream_crossing_id IS NULL  -- don't include PSCIS crossings
 ORDER BY modelled_crossing_id
 ON CONFLICT DO NOTHING;

@@ -67,6 +67,7 @@ SELECT
     c.geom as geom
 FROM bcfishpass.crossings c
 WHERE barrier_status IN ('BARRIER', 'POTENTIAL')
+AND c.blue_line_key = s.watershed_key  -- do not include side channel features as barriers
 AND c.watershed_group_code = ANY(
   ARRAY(
     SELECT watershed_group_code
