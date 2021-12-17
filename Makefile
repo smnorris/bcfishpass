@@ -65,8 +65,8 @@ bcfishobs: .fwapg
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
 .%: data/%.csv .ddl
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass$(subst .,,$@);"
-	$(PSQL_CMD) -c "\copy bcfishpass$(subst .,,$@) FROM '$<' delimiter ',' csv header"
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass$@;"
+	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
 	touch $@
 
 # ------
@@ -85,7 +85,7 @@ bcfishobs: .fwapg
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
-.falls: .fwapg $(wildcard $(DATAPATH)/falls/*.csv) scripts/falls/falls.sh scripts/falls/sql/falls.sql
+.falls: .fwapg $(wildcard data/falls*.csv) scripts/falls/falls.sh scripts/falls/sql/falls.sql
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -105,9 +105,8 @@ bcfishobs: .fwapg
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 # Todo - consider including only watershed groups listed in parameters
-.gradient_barriers: .fwapg
-	cd scripts/modelled_stream_crossings; make
-	touch $@
+scripts/gradient_barriers/.gradient_barriers: .fwapg
+	cd scripts/gradient_barriers; make
 
 # ------
 # MODELLED STREAM CROSSINGS
@@ -129,10 +128,9 @@ bcfishobs: .fwapg
 # -----
 # CROSSINGS
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
-# TODO - could this be a view? It only taks ~4min to generate so probably not important.
 # -----
-.crossings: .pscis .modelled_stream_crossings .dams .misc_barriers_anthropogenic scripts/model/sql/crossings.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+.crossings: scripts/model/sql/crossings.sql .pscis .modelled_stream_crossings .dams .misc_barriers_anthropogenic .modelled_stream_crossings_fixes
+	$(PSQL_CMD) -f $<
 	touch $@
 
 # -----
@@ -187,13 +185,13 @@ bcfishobs: .fwapg
 .barriers_falls: scripts/model/sql/barriers_falls.sql parameters/watersheds.csv .falls
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_15: scripts/model/sql/barriers_gradient_15.sql parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable
+.barriers_gradient_15: scripts/model/sql/barriers_gradient_15.sql parameters/watersheds.csv scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_20: scripts/model/sql/barriers_gradient_20.sql parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable
+.barriers_gradient_20: scripts/model/sql/barriers_gradient_20.sql parameters/watersheds.csv scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_30: scripts/model/sql/barriers_gradient_30.sql parameters/watersheds.csv .gradient_barriers .gradient_barriers_passable
+.barriers_gradient_30: scripts/model/sql/barriers_gradient_30.sql parameters/watersheds.csv scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
 	$(PSQL_CMD) -f $<
 	touch $@
 .barriers_other_definite: scripts/model/sql/barriers_other_definite.sql parameters/watersheds.csv .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
@@ -230,7 +228,12 @@ bcfishobs: .fwapg
 	.crossings .observations .manual_habitat_classification_endpoints \
 	scripts/model/sql/breakpoints.sql scripts/model/sql/00_segment_streams.sql
 	$(PSQL_CMD) -f scripts/model/sql/breakpoints.sql
-	# query as currently written locks when run in parallel, just iterate through groups
+	# Stream breaking query as currently written locks when run in parallel, just iterate through groups.
+	# This appears to be an issue with the primary key sequence not being able to keep up,
+	# it would be nice to just use blkey and measure as the pk but many queries depend on
+	# 'segmented_stream_id'. Making segmented_stream_id a generated column based on the
+	# blkey and measure might be a good fix... the id is mainly required in the habitat queries
+	# (but an integer pk may be needed for display in qgis?)
 	#parallel $(PSQL_CMD) -f scripts/model/sql/00_segment_streams.sql -v wsg={1} ::: $(GROUPS)
 	for wsg in $(GROUPS) ; do \
 		$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/00_segment_streams.sql ; \
