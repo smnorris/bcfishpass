@@ -38,7 +38,8 @@ gradeclass AS
     -- (fish access model does not have to use all of these,
     -- but we might as well create them all to have on hand)
     CASE
-      WHEN gradient >= .05 AND gradient < .10 THEN 5
+      WHEN gradient >= .05 AND gradient < .07 THEN 5
+      WHEN gradient >= .07 AND gradient < .10 THEN 7
       WHEN gradient >= .10 AND gradient < .15 THEN 10
       WHEN gradient >= .15 AND gradient < .20 THEN 15
       WHEN gradient >= .20 AND gradient < .25 THEN 20

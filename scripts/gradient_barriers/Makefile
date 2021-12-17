@@ -8,7 +8,8 @@ GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_base
 
 all: .gradient_barriers
 
-.gradient_barriers:
+.gradient_barriers: sql/gradient_barriers.sql
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.gradient_barriers"
 	$(PSQL_CMD) -c "CREATE TABLE bcfishpass.gradient_barriers ( \
 	 blue_line_key             integer               , \
 	 downstream_route_measure  double precision      , \
@@ -19,5 +20,4 @@ all: .gradient_barriers
 	touch $@
 
 clean:
-	$(PSQL_CMD) -c "DROP TABLE bcfishpass.gradient_barriers"
 	rm .gradient_barriers
