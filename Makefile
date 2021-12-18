@@ -2,7 +2,7 @@
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-GENERATED_FILES=.fwapg .bcfishobs .ddl .parameters \
+GENERATED_FILES=.fwapg .bcfishobs .schema .parameters \
 	.falls .dams .gradient_barriers .modelled_stream_crossings .pscis .crossings .manual_habitat_classification_endpoints \
 	.segmented_streams .observations .upstr_observations .break_streams .model_access
 
@@ -53,9 +53,9 @@ bcfishobs: .fwapg
 # ***********************************************
 
 # ------
-# CREATE REQUIRED FUNCTIONS AND EMPTY TABLES
+# CREATE REQUIRED FUNCTIONS AND EMPTY USER DATA TABLES
 # ------
-.ddl: scripts/model/sql/create_functions.sql scripts/model/sql/create_user_tables.sql
+.schema: scripts/model/sql/create_functions.sql scripts/model/sql/create_user_tables.sql
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	$(PSQL_CMD) -f scripts/model/sql/create_functions.sql
 	$(PSQL_CMD) -f scripts/model/sql/create_user_tables.sql
@@ -64,17 +64,15 @@ bcfishobs: .fwapg
 # ------
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
-.%: data/%.csv .ddl
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass$@;"
+.%: data/%.csv .schema
 	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
 	touch $@
 
 # ------
 # LOAD PARAMETERS
 # ------
-.parameters: parameters/watersheds.csv parameters/habitat.csv .ddl
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.param_watersheds;"
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.param_habitat;"
+.parameters: scripts/model/sql/create_parameters.sql parameters/watersheds.csv parameters/habitat.csv .schema
+	$(PSQL_CMD) -f $<
 	$(PSQL_CMD) -c "\copy bcfishpass.param_watersheds FROM 'parameters/watersheds.csv' delimiter ',' csv header"
 	$(PSQL_CMD) -c "\copy bcfishpass.param_habitat FROM 'parameters/habitat.csv' delimiter ',' csv header"
 	touch $@
@@ -85,7 +83,7 @@ bcfishobs: .fwapg
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
-.falls: .fwapg $(wildcard data/falls*.csv) scripts/falls/falls.sh scripts/falls/sql/falls.sql
+.falls: .fwapg $(wildcard data/falls*.csv) scripts/falls/falls.sh scripts/falls/sql/falls.sql .schema
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -96,7 +94,7 @@ bcfishobs: .fwapg
 # barriers *and* anthropogenic barriers. Delete the .dams target file if an update is required.
 # (todo - consider consolidating CWF dams.geojson into the bcfishpass data folder so updates
 # are easily picked up)
-.dams: .fwapg scripts/dams/dams.sh scripts/dams/sql/dams.sql
+.dams: .fwapg scripts/dams/dams.sh scripts/dams/sql/dams.sql .schema
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -105,7 +103,7 @@ bcfishobs: .fwapg
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 # Todo - consider including only watershed groups listed in parameters
-scripts/gradient_barriers/.gradient_barriers: .fwapg
+scripts/gradient_barriers/.gradient_barriers: .fwapg .schema
 	cd scripts/gradient_barriers; make
 
 # ------
@@ -113,7 +111,7 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
-.modelled_stream_crossings: .fwapg
+.modelled_stream_crossings: .fwapg .schema
 	cd scripts/modelled_stream_crossings; make
 	touch $@
 
@@ -121,7 +119,7 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 # PSCIS
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
-.pscis: .fwapg .modelled_stream_crossings
+.pscis: .fwapg .modelled_stream_crossings .schema
 	cd scripts/$(subst .,,$@); ./$(subst .,,$@).sh
 	touch $@
 
@@ -155,7 +153,7 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 # INITIAL STREAM DATA LOAD
 # -----
 # what streams get loaded depends on wsg listed in parameters
-.segmented_streams: .parameters .ddl .fwapg scripts/model/sql/load_segmented_streams.sql scripts/model/sql/create_segmented_streams.sql
+.segmented_streams: .parameters .fwapg scripts/model/sql/load_segmented_streams.sql scripts/model/sql/create_segmented_streams.sql
 	# create initial (empty) segmented_streams table
 	$(PSQL_CMD) -f scripts/model/sql/create_segmented_streams.sql
 	# load in parallel (doing the entire load as a single insert is extremely slow for large study areas)
@@ -176,35 +174,30 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 # BARRIER TABLES
 # create barrier tables, load data, create (empty) views listing barriers of given type downstream of each stream
 # -----
-.barriers_majordams: scripts/model/sql/barriers_majordams.sql parameters/watersheds.csv .dams
+.barriers_majordams: scripts/model/sql/barriers_majordams.sql .parameters .dams
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_subsurfaceflow: scripts/model/sql/barriers_subsurfaceflow.sql parameters/watersheds.csv  # note that there is currently no method to manually change passability of these
+.barriers_subsurfaceflow: scripts/model/sql/barriers_subsurfaceflow.sql .parameters  # note that there is currently no method to manually change passability of these
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_falls: scripts/model/sql/barriers_falls.sql parameters/watersheds.csv .falls
+.barriers_falls: scripts/model/sql/barriers_falls.sql .parameters .falls
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_15: scripts/model/sql/barriers_gradient_15.sql parameters/watersheds.csv scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
+.barriers_gradient: scripts/model/sql/create_barriers_gradient.sql .parameters scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
+	$(PSQL_CMD) -f $<  # create function to create/load each gradient table (so there are not 7 different scripts doing the same thing)
+	parallel "echo 'SELECT bcfishpass.create_barriers_gradient(:grade);' | $(PSQL_CMD) -v grade={1}" ::: 5 7 10 15 20 25 30 # then load all gradients in parallel
+	touch $@
+.barriers_other_definite: scripts/model/sql/barriers_other_definite.sql .parameters .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_gradient_20: scripts/model/sql/barriers_gradient_20.sql parameters/watersheds.csv scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
-	$(PSQL_CMD) -f $<
-	touch $@
-.barriers_gradient_30: scripts/model/sql/barriers_gradient_30.sql parameters/watersheds.csv scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
-	$(PSQL_CMD) -f $<
-	touch $@
-.barriers_other_definite: scripts/model/sql/barriers_other_definite.sql parameters/watersheds.csv .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
-	$(PSQL_CMD) -f $<
-	touch $@
-.barriers_anthropogenic: scripts/model/sql/barriers_anthropogenic.sql parameters/watersheds.csv .crossings
+.barriers_anthropogenic: scripts/model/sql/barriers_anthropogenic.sql .parameters .crossings
 	# barriers/potential barriers subset of crossings table
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_pscis: scripts/model/sql/barriers_pscis.sql parameters/watersheds.csv .crossings
+.barriers_pscis: scripts/model/sql/barriers_pscis.sql .parameters .crossings
 	$(PSQL_CMD) -f $<
 	touch $@
-.barriers_remediated: scripts/model/sql/barriers_remediated.sql parameters/watersheds.csv .crossings
+.barriers_remediated: scripts/model/sql/barriers_remediated.sql .parameters .crossings
 	$(PSQL_CMD) -f $<
 	touch $@
 
@@ -213,7 +206,7 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 # ------
 # extract FISS observations for species of interest from bcfishobs,
 # create empty view relating streams to upstream observations
-.observations: scripts/model/sql/observations.sql parameters/watersheds.csv .bcfishobs
+.observations: scripts/model/sql/observations.sql .parameters .bcfishobs
 	$(PSQL_CMD) -f $<
 	touch $@
 
@@ -224,9 +217,9 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 # note that this will only pick up breakpoints that are 1m from existing breaks in the streams,
 # re-runs with minor updates will be very quick
 .break_streams: .segmented_streams .barriers_majordams .barriers_falls \
-	.barriers_gradient_15 .barriers_gradient_20 .barriers_gradient_30 .barriers_other_definite \
+	.barriers_gradient .barriers_other_definite \
 	.crossings .observations .manual_habitat_classification_endpoints \
-	scripts/model/sql/breakpoints.sql scripts/model/sql/00_segment_streams.sql
+	scripts/model/sql/breakpoints.sql scripts/model/sql/break_streams.sql
 	$(PSQL_CMD) -f scripts/model/sql/breakpoints.sql
 	# Stream breaking query as currently written locks when run in parallel, just iterate through groups.
 	# This appears to be an issue with the primary key sequence not being able to keep up,
@@ -236,7 +229,7 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg
 	# (but an integer pk may be needed for display in qgis?)
 	#parallel $(PSQL_CMD) -f scripts/model/sql/00_segment_streams.sql -v wsg={1} ::: $(GROUPS)
 	for wsg in $(GROUPS) ; do \
-		$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/00_segment_streams.sql ; \
+		$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/break_streams.sql ; \
 	done
 	touch $@
 
