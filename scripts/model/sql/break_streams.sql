@@ -1,7 +1,11 @@
 ---------------------------------------------------------------
 -- create temp breakpoints table for given group
 ---------------------------------------------------------------
-CREATE TEMPORARY TABLE breakpoints AS
+CREATE TEMPORARY TABLE breakpoints
+( blue_line_key integer,
+  downstream_route_measure integer,
+  unique (blue_line_key, downstream_route_measure)
+);
 
 WITH streams AS
 (
@@ -9,146 +13,149 @@ WITH streams AS
   WHERE watershed_group_code = :'wsg'
 )
 
+INSERT INTO breakpoints
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.observations b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.falls b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_05 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_07 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_10 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_15 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_20 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_25 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_gradient_30 b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_majordams b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.barriers_other_definite b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.manual_habitat_classification_endpoints b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
 
-UNION
+UNION ALL
 
 SELECT
   b.blue_line_key,
-  b.downstream_route_measure
+  round(b.downstream_route_measure::numeric)::integer as downstream_route_measure
 FROM bcfishpass.crossings b
 INNER JOIN streams s
 ON b.blue_line_key = s.blue_line_key
-AND (b.downstream_route_measure - s.downstream_route_measure) > 1
-AND (s.upstream_route_measure - b.downstream_route_measure) > 1;
+  AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+  AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+ON CONFLICT DO NOTHING;
+
 
 
 ---------------------------------------------------------------
@@ -274,4 +281,8 @@ SELECT
   t.geom
 FROM temp_streams t
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
-ON t.linear_feature_id = s.linear_feature_id;
+ON t.linear_feature_id = s.linear_feature_id
+-- even though we generate break points only >1m away from existing endpoints,
+-- barriers coming from different tables into the breakpoint selection may not be
+-- distinct. Rather than adding a slow distinct clause, just ignore any duplicates
+ON CONFLICT DO NOTHING;

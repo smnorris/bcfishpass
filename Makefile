@@ -246,9 +246,6 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 .break_streams:  $(patsubst %, .barriers_%, $(BARRIERS)) .segmented_streams .observations \
 	.manual_habitat_classification_endpoints scripts/model/sql/break_streams.sql
 	parallel --joblog break_streams.log --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
-	#for wsg in $(GROUPS_PARAM) ; do \
-	#	$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/break_streams.sql ; \
-	#done
 	touch $@
 
 # -----
@@ -269,10 +266,20 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	touch $@
 
 # -----
+# REMEDIATED - remediated crossings are processed above as barriers,
+#              but they are obv. not barriers, rename accordingly
+# -----
+.remediated: .barriersdnstr_remediated
+	$(PSQL_CMD) -c "alter table bcfishpass.barriers_remediated rename to remediated;"
+	$(PSQL_CMD) -c "alter table bcfishpass.barriers_remediated_dnstr rename to remediated_dnstr;"
+	$(PSQL_CMD) -c "alter table bcfishpass.remediated_dnstr rename column barriers_remediated_dnstr to remediated_dnstr;"
+	touch $@
+
+# -----
 # RUN ACCESS MODEL QUERY
 # -----
 # load/refresh materialized views that hold lists of downstream barriers for each stream
-.model_access: $(patsubst %, .barriersdnstr_%, $(BARRIERS)) .observationsupstr
+.model_access: $(patsubst %, .barriersdnstr_%, $(BARRIERS)) .observationsupstr .remediated
 	$(PSQL_CMD) -f scripts/model/sql/model_access.sql
 	touch $@
 
