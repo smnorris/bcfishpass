@@ -171,7 +171,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	# load in parallel (doing the entire load as a single insert is extremely slow for large study areas)
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.segmented_streams"
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
-	# index after load because faster
+	# index after load completes
 	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id); \
 		CREATE INDEX ON bcfishpass.segmented_streams (blue_line_key); \
 		CREATE INDEX ON bcfishpass.segmented_streams (watershed_group_code); \
@@ -208,7 +208,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	touch $@
 .barriersource_gradient_30: scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
 	touch $@
-# for every .barriersource file, create/load barrier table and barrier _dnstr tables,
+# for every .barriersource file, create barrier table
 # and load/refresh the barrier table for for watershed group(s) where data has had a change
 .barriers_%: .barriersource_% .param_watersheds
 	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .barriers_,,$@)
@@ -244,11 +244,11 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # note that this will only pick up breakpoints that are 1m from existing breaks in the streams,
 # re-runs with minor updates will be very quick
 .break_streams:  $(patsubst %, .barriers_%, $(BARRIERS)) .segmented_streams .observations \
-	.manual_habitat_classification_endpoints scripts/model/sql/breakpoints.sql scripts/model/sql/break_streams.sql
-	#parallel --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
-	for wsg in $(GROUPS_PARAM) ; do \
-		$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/break_streams.sql ; \
-	done
+	.manual_habitat_classification_endpoints scripts/model/sql/break_streams.sql
+	parallel --joblog break_streams.log --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
+	#for wsg in $(GROUPS_PARAM) ; do \
+	#	$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/break_streams.sql ; \
+	#done
 	touch $@
 
 # -----
@@ -263,7 +263,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # -----
 # OBSERVATIONS_UPSTR - INDEX OBSERVATIONS UPSTREAM
 # -----
-.observations_upstr: .observations .break_streams
+.observationsupstr: .observations .break_streams
 	# note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
 	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
 	touch $@
@@ -272,7 +272,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # RUN ACCESS MODEL QUERY
 # -----
 # load/refresh materialized views that hold lists of downstream barriers for each stream
-.model_access: $(wildcard .barriersdnstr*) .observations_upstr
+.model_access: $(patsubst %, .barriersdnstr_%, $(BARRIERS)) .observationsupstr
 	$(PSQL_CMD) -f scripts/model/sql/model_access.sql
 	touch $@
 

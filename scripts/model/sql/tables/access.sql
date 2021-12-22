@@ -24,10 +24,13 @@ CREATE TABLE IF NOT EXISTS bcfishpass.barrier_load
 -- SEGMENTED_STREAMS
 --
 -- a copy of fwa_stream_networks_sp for breaking at barriers/observations
+-- unique segmented stream id is created by combining blkey (shifted to start at 1)
+-- and measure (in 10^-3 m ie mm, because some source stream lines are really short)
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.segmented_streams
 (
-  segmented_stream_id bigint GENERATED ALWAYS AS (pair_ids(blue_line_key, trunc(downstream_route_measure * 1000)::bigint)) STORED PRIMARY KEY,
+  segmented_stream_id       text
+     GENERATED ALWAYS AS (blue_line_key::text|| '.' || round((downstream_route_measure) * 1000)::text) STORED PRIMARY KEY,
   linear_feature_id         bigint                           ,
   edge_type                 integer                          ,
   blue_line_key             integer                          ,
@@ -38,24 +41,13 @@ CREATE TABLE IF NOT EXISTS bcfishpass.segmented_streams
   waterbody_key             integer                          ,
   wscode_ltree              ltree                            ,
   localcode_ltree           ltree                            ,
-  gradient double precision GENERATED ALWAYS AS (round((((ST_Z (ST_PointN (geom, - 1)) - ST_Z
-    (ST_PointN (geom, 1))) / ST_Length (geom))::numeric), 4)) STORED,
-  upstream_route_measure double precision GENERATED ALWAYS AS (downstream_route_measure +
-    ST_Length (geom)) STORED,
+  gradient                  double precision
+    GENERATED ALWAYS AS (round((((ST_Z (ST_PointN (geom, - 1)) - ST_Z (ST_PointN (geom, 1))) / ST_Length (geom))::numeric), 4)) STORED,
+  upstream_route_measure    double precision
+    GENERATED ALWAYS AS (downstream_route_measure + ST_Length (geom)) STORED,
   geom geometry(LineStringZM,3005)
 );
 
--- --------------
--- BREAKPOINTS
---
--- holds all barriers/observations/other where streams are to be broken
--- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.breakpoints
-(
-  blue_line_key integer,
-  downstream_route_measure double precision,
-  primary key (blue_line_key, downstream_route_measure)
-);
 
 -- --------------
 -- OBSERVATIONS_LOAD

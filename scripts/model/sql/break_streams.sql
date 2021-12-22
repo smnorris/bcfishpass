@@ -1,16 +1,13 @@
 ---------------------------------------------------------------
--- refresh breakpoints table for given group
+-- create temp breakpoints table for given group
 ---------------------------------------------------------------
-DELETE FROM bcfishpass.breakpoints;
+CREATE TEMPORARY TABLE breakpoints AS
 
 WITH streams AS
 (
   SELECT * FROM bcfishpass.segmented_streams
   WHERE watershed_group_code = :'wsg'
 )
-
-INSERT INTO bcfishpass.breakpoints
-(blue_line_key, downstream_route_measure)
 
 SELECT
   b.blue_line_key,
@@ -153,6 +150,7 @@ ON b.blue_line_key = s.blue_line_key
 AND (b.downstream_route_measure - s.downstream_route_measure) > 1
 AND (s.upstream_route_measure - b.downstream_route_measure) > 1;
 
+
 ---------------------------------------------------------------
 -- create a temp table where we segment streams at point locations
 ---------------------------------------------------------------
@@ -168,7 +166,7 @@ WITH to_break AS (
     b.downstream_route_measure AS meas_event
   FROM
     bcfishpass.segmented_streams s
-    INNER JOIN bcfishpass.breakpoints b
+    INNER JOIN breakpoints b
     ON s.blue_line_key = b.blue_line_key AND
     -- match based on measure, but only break stream lines where the
     -- barrier pt is >1m from the end of the existing stream segment
@@ -205,6 +203,8 @@ SELECT
 FROM new_measures n
 INNER JOIN bcfishpass.segmented_streams s ON n.segmented_stream_id = s.segmented_stream_id;
 
+
+-- Now make the changes in segmented_streams table
 
 ---------------------------------------------------------------
 -- shorten existing features
@@ -265,7 +265,7 @@ SELECT
   s.edge_type,
   s.blue_line_key,
   s.watershed_key,
-  s.watershed_group_code
+  s.watershed_group_code,
   t.downstream_route_measure,
   ST_Length(t.geom) as length_metre,
   s.waterbody_key,

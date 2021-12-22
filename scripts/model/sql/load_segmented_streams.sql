@@ -34,5 +34,4 @@ WHERE
   AND s.wscode_ltree <@ '999' IS FALSE
   AND s.edge_type != 6010
   AND s.localcode_ltree IS NOT NULL
-  AND s.linear_feature_id NOT IN (832498864) -- exclude bad data
-ORDER BY random();
+  AND s.linear_feature_id NOT IN (832498864, 832474945); -- exclude bad data
