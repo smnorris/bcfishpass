@@ -56,18 +56,15 @@ bcfishobs: .fwapg
 # ***********************************************
 
 # ------
-# CREATE REQUIRED FUNCTIONS AND EMPTY USER DATA TABLES
+# CREATE REQUIRED FUNCTIONS AND (EMPTY) TABLES
 # ------
-# todo: possible to find the sql files and create the single target?
-.schema:
+.schema: $(wildcard scripts/model/sql/tables/*sql) $(wildcard scripts/model/sql/functions/*sql)
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
-	# functions
 	$(PSQL_CMD) -f scripts/model/sql/functions/create_barrier_table.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers_dnstr.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/utmzone.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/wsg_to_refresh.sql
-	# empty tables
 	$(PSQL_CMD) -f scripts/model/sql/tables/access.sql
 	$(PSQL_CMD) -f scripts/model/sql/tables/parameters.sql
 	$(PSQL_CMD) -f scripts/model/sql/tables/user.sql
@@ -77,6 +74,7 @@ bcfishobs: .fwapg
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
 .%: data/%.csv .schema
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst data/%.csv, %, $<)"
 	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
 	touch $@
 
