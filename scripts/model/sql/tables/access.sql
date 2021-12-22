@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.barrier_load
 -- SEGMENTED_STREAMS
 --
 -- a copy of fwa_stream_networks_sp for breaking at barriers/observations
--- unique segmented stream id is created by combining blkey (shifted to start at 1)
--- and measure (in 10^-3 m ie mm, because some source stream lines are really short)
+-- unique segmented stream id is created by combining blkey and measure
+-- (with measure rounded to nearest mm, because some source stream lines are really short)
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.segmented_streams
 (
