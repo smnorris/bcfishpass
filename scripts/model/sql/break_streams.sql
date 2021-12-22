@@ -1,4 +1,159 @@
 ---------------------------------------------------------------
+-- refresh breakpoints table for given group
+---------------------------------------------------------------
+DELETE FROM bcfishpass.breakpoints;
+
+WITH streams AS
+(
+  SELECT * FROM bcfishpass.segmented_streams
+  WHERE watershed_group_code = :'wsg'
+)
+
+INSERT INTO bcfishpass.breakpoints
+(blue_line_key, downstream_route_measure)
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.observations b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.falls b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_05 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_07 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_10 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_15 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_20 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_25 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_gradient_30 b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_majordams b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.barriers_other_definite b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.manual_habitat_classification_endpoints b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1
+
+UNION
+
+SELECT
+  b.blue_line_key,
+  b.downstream_route_measure
+FROM bcfishpass.crossings b
+INNER JOIN streams s
+ON b.blue_line_key = s.blue_line_key
+AND (b.downstream_route_measure - s.downstream_route_measure) > 1
+AND (s.upstream_route_measure - b.downstream_route_measure) > 1;
+
+---------------------------------------------------------------
 -- create a temp table where we segment streams at point locations
 ---------------------------------------------------------------
 CREATE TEMPORARY TABLE temp_streams AS
@@ -89,35 +244,34 @@ WHERE
 
 
 ---------------------------------------------------------------
--- now insert new features (just the changed values and id)
+-- now insert new features
 ---------------------------------------------------------------
 INSERT INTO bcfishpass.segmented_streams
-(linear_feature_id, length_metre, downstream_route_measure, geom)
-SELECT
+(
   linear_feature_id,
-  ST_Length(geom) as length_metre,
+  edge_type,
+  blue_line_key,
+  watershed_key,
+  watershed_group_code,
   downstream_route_measure,
+  length_metre,
+  waterbody_key,
+  wscode_ltree,
+  localcode_ltree,
   geom
-FROM temp_streams;
-
----------------------------------------------------------------
--- update standard stream values, minus generated columns
----------------------------------------------------------------
-UPDATE
-  bcfishpass.segmented_streams a
-SET
-  watershed_group_id = s.watershed_group_id,
-  edge_type = s.edge_type,
-  blue_line_key = s.blue_line_key,
-  watershed_key = s.watershed_key,
-  watershed_group_code = s.watershed_group_code,
-  waterbody_key = s.waterbody_key
-FROM whse_basemapping.fwa_stream_networks_sp s
-LEFT OUTER JOIN whse_basemapping.fwa_waterbodies_upstream_area wb
-ON s.linear_feature_id = wb.linear_feature_id
-LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
-ON s.linear_feature_id = l.linear_feature_id
-LEFT OUTER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
-ON l.watershed_feature_id = ua.watershed_feature_id
-WHERE a.watershed_group_id IS NULL
-  AND a.linear_feature_id = s.linear_feature_id;
+)
+SELECT
+  t.linear_feature_id,
+  s.edge_type,
+  s.blue_line_key,
+  s.watershed_key,
+  s.watershed_group_code
+  t.downstream_route_measure,
+  ST_Length(t.geom) as length_metre,
+  s.waterbody_key,
+  s.wscode_ltree,
+  s.localcode_ltree,
+  t.geom
+FROM temp_streams t
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON t.linear_feature_id = s.linear_feature_id;

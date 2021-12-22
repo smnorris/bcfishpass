@@ -5,8 +5,7 @@
 -- - not a side channel of unknown location
 -- - in the watershed groups of interest
 INSERT INTO bcfishpass.segmented_streams
- (segmented_stream_id,
-  linear_feature_id,
+ (linear_feature_id,
   edge_type,
   blue_line_key,
   watershed_key,
@@ -18,7 +17,6 @@ INSERT INTO bcfishpass.segmented_streams
   localcode_ltree,
   geom)
 SELECT
-  s.linear_feature_id,
   s.linear_feature_id,
   s.edge_type,
   s.blue_line_key,
@@ -36,4 +34,5 @@ WHERE
   AND s.wscode_ltree <@ '999' IS FALSE
   AND s.edge_type != 6010
   AND s.localcode_ltree IS NOT NULL
+  AND s.linear_feature_id NOT IN (832498864) -- exclude bad data
 ORDER BY random();

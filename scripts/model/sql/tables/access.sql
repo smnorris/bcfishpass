@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.barrier_load
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.segmented_streams
 (
-  segmented_stream_id serial primary key,
+  segmented_stream_id bigint GENERATED ALWAYS AS (pair_ids(blue_line_key, trunc(downstream_route_measure * 1000)::bigint)) STORED PRIMARY KEY,
   linear_feature_id         bigint                           ,
   edge_type                 integer                          ,
   blue_line_key             integer                          ,
@@ -44,10 +44,6 @@ CREATE TABLE IF NOT EXISTS bcfishpass.segmented_streams
     ST_Length (geom)) STORED,
   geom geometry(LineStringZM,3005)
 );
-
--- segmented stream id defaults to linear_feature_id, increment from max id present in streams table
-ALTER SEQUENCE bcfishpass.segmented_streams_segmented_stream_id_seq AS bigint;
-ALTER SEQUENCE bcfishpass.segmented_streams_segmented_stream_id_seq start 868144440;
 
 -- --------------
 -- BREAKPOINTS

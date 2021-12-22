@@ -61,6 +61,7 @@ bcfishobs: .fwapg
 .schema: $(wildcard scripts/model/sql/tables/*sql) $(wildcard scripts/model/sql/functions/*sql)
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	$(PSQL_CMD) -f scripts/model/sql/functions/create_barrier_table.sql
+	$(PSQL_CMD) -f scripts/model/sql/functions/pair_ids.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers_dnstr.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/utmzone.sql
@@ -168,6 +169,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # what streams get loaded depends on wsg listed in parameters
 .segmented_streams: .param_watersheds .fwapg scripts/model/sql/load_segmented_streams.sql
 	# load in parallel (doing the entire load as a single insert is extremely slow for large study areas)
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.segmented_streams"
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
 	# index after load because faster
 	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id); \
@@ -235,7 +237,6 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	parallel -a $@_wsg --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
 	mv $@_wsg $@
 
-
 # -----
 # BREAK STREAMS
 # -----
@@ -244,10 +245,8 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # re-runs with minor updates will be very quick
 .break_streams:  $(patsubst %, .barriers_%, $(BARRIERS)) .segmented_streams .observations \
 	.manual_habitat_classification_endpoints scripts/model/sql/breakpoints.sql scripts/model/sql/break_streams.sql
-	# Stream breaking query as currently written locks when run in parallel, just iterate through groups.
-	# (this is probably just an issue with the primary key sequence not being able to keep up/getting locked)
-	for wsg in $(GROUPS_REFRESH) ; do \
-		$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/breakpoints.sql; \
+	#parallel --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
+	for wsg in $(GROUPS_PARAM) ; do \
 		$(PSQL_CMD) -v wsg=$$wsg -f scripts/model/sql/break_streams.sql ; \
 	done
 	touch $@
