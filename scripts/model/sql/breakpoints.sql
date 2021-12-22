@@ -1,6 +1,8 @@
-DROP TABLE IF EXISTS bcfishpass.breakpoints;
+-- refresh the breakpoints table
+DELETE FROM bcfishpass.breakpoints;
 
-CREATE TABLE bcfishpass.breakpoints AS
+INSERT INTO bcfishpass.breakpoints
+(blue_line_key, downstream_route_measure)
 
 SELECT 
   b.blue_line_key, 

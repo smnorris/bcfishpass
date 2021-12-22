@@ -6,8 +6,7 @@
 -- do not model stream above these points. Examples:
 -- - streams that do not exist, areas not to be reported on
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.exclusions;
-CREATE TABLE bcfishpass.exclusions
+CREATE TABLE IF NOT EXISTS bcfishpass.exclusions
 (
     blue_line_key integer,
     downstream_route_measure double precision,
@@ -23,8 +22,7 @@ CREATE TABLE bcfishpass.exclusions
 --
 -- lookup that controls barrier status for FISS falls
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.falls_barrier_ind;
-CREATE TABLE bcfishpass.falls_barrier_ind
+CREATE TABLE IF NOT EXISTS bcfishpass.falls_barrier_ind
 (
   blue_line_key              integer,
   downstream_route_measure    integer,
@@ -40,8 +38,7 @@ CREATE TABLE bcfishpass.falls_barrier_ind
 --
 -- additional falls, from various sources
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.falls_other;
-CREATE TABLE bcfishpass.falls_other
+CREATE TABLE IF NOT EXISTS bcfishpass.falls_other
 (
   blue_line_key integer,
   downstream_route_measure integer,
@@ -60,8 +57,7 @@ CREATE TABLE bcfishpass.falls_other
 -- table to control removal of barriers that are result of FWA data errors
 -- or have been shown to pass fish
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.gradient_barriers_passable;
-CREATE TABLE bcfishpass.gradient_barriers_passable
+CREATE TABLE IF NOT EXISTS bcfishpass.gradient_barriers_passable
 (
   blue_line_key integer,
   downstream_route_measure double precision,
@@ -76,8 +72,7 @@ CREATE TABLE bcfishpass.gradient_barriers_passable
 --
 -- designate stream segments as known rearing/spawning
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.manual_habitat_classification CASCADE;
-CREATE TABLE bcfishpass.manual_habitat_classification
+CREATE TABLE IF NOT EXISTS bcfishpass.manual_habitat_classification
 (
   blue_line_key integer,
   downstream_route_measure double precision,
@@ -99,8 +94,7 @@ CREATE TABLE bcfishpass.manual_habitat_classification
 -- Note that we want simple integer unique ids for all anthropogenic barriers that remain constant.
 -- So do not autogenerate, maintain them in the csv manually for now
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.misc_barriers_anthropogenic;
-CREATE TABLE bcfishpass.misc_barriers_anthropogenic
+CREATE TABLE IF NOT EXISTS bcfishpass.misc_barriers_anthropogenic
 (
     misc_barrier_anthropogenic_id integer primary key,
     blue_line_key integer,
@@ -118,8 +112,7 @@ CREATE TABLE bcfishpass.misc_barriers_anthropogenic
 --
 -- user input misc definite barriers (ie, natural, non-falls barriers)
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.misc_barriers_definite;
-CREATE TABLE bcfishpass.misc_barriers_definite
+CREATE TABLE IF NOT EXISTS bcfishpass.misc_barriers_definite
 (
     blue_line_key integer,
     downstream_route_measure double precision,
@@ -136,8 +129,7 @@ CREATE TABLE bcfishpass.misc_barriers_definite
 -- user defined override for modelled crossings that are either OBS or non-existent
 -- note that this table uses modelled_crossing_id as identifier rather than blkey/measure
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.modelled_stream_crossings_fixes;
-CREATE TABLE bcfishpass.modelled_stream_crossings_fixes
+CREATE TABLE IF NOT EXISTS bcfishpass.modelled_stream_crossings_fixes
 (
   modelled_crossing_id integer,
   reviewer text,
@@ -154,8 +146,7 @@ CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id
 -- (via smallest distance or matched name) does not match correctly
 -- ***PSCIS crossings present in the lookup with no stream/modelled crossing do not get matched to a stream***
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref;
-CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
+CREATE TABLE IF NOT EXISTS bcfishpass.pscis_modelledcrossings_streams_xref
 (
   stream_crossing_id integer PRIMARY KEY,
   modelled_crossing_id integer UNIQUE,
@@ -170,8 +161,7 @@ CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
 --
 -- manual override of PSCIS status - notes OBS barriers, non-accessible streams etc
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.pscis_barrier_result_fixes;
-CREATE TABLE bcfishpass.pscis_barrier_result_fixes
+CREATE TABLE IF NOT EXISTS bcfishpass.pscis_barrier_result_fixes
 (
   stream_crossing_id integer PRIMARY KEY,
   updated_barrier_result_code text,
@@ -186,8 +176,7 @@ CREATE TABLE bcfishpass.pscis_barrier_result_fixes
 -- presence/absence of target species within all BC watershed groups
 -- SOURCE - CWF WCRP project area scoping (2020)
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.wsg_species_presence;
-CREATE TABLE bcfishpass.wsg_species_presence
+CREATE TABLE IF NOT EXISTS bcfishpass.wsg_species_presence
 (
   watershed_group_code varchar(4),
   co boolean,

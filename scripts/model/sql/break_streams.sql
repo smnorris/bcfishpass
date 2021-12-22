@@ -110,21 +110,8 @@ SET
   edge_type = s.edge_type,
   blue_line_key = s.blue_line_key,
   watershed_key = s.watershed_key,
-  fwa_watershed_code = s.fwa_watershed_code,
-  local_watershed_code = s.local_watershed_code,
   watershed_group_code = s.watershed_group_code,
-  feature_source = s.feature_source,
-  gnis_id = s.gnis_id,
-  gnis_name = s.gnis_name,
-  left_right_tributary = s.left_right_tributary,
-  stream_order = s.stream_order,
-  stream_magnitude = s.stream_magnitude,
-  waterbody_key = s.waterbody_key,
-  blue_line_key_50k = s.blue_line_key_50k,
-  watershed_code_50k = s.watershed_code_50k,
-  watershed_key_50k = s.watershed_key_50k,
-  watershed_group_code_50k = s.watershed_group_code_50k,
-  feature_code = s.feature_code
+  waterbody_key = s.waterbody_key
 FROM whse_basemapping.fwa_stream_networks_sp s
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies_upstream_area wb
 ON s.linear_feature_id = wb.linear_feature_id

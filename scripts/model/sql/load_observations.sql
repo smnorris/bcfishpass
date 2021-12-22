@@ -1,22 +1,8 @@
--- create a table holding all distinct observation points for species of interest
-
-DROP TABLE IF EXISTS bcfishpass.observations;
-CREATE TABLE bcfishpass.observations
-(
-  fish_obsrvtn_pnt_distinct_id integer,
-  linear_feature_id         bigint                           ,
-  blue_line_key             integer                          ,
-  wscode_ltree ltree                                         ,
-  localcode_ltree ltree                                      ,
-  downstream_route_measure  double precision                 ,
-  watershed_group_code      character varying(4)             ,
-  species_codes text[]                                      ,
-  observation_ids int[] ,
-  geom geometry(PointZM, 3005)
-);
+-- load observations, overwriting existing _load table
+DELETE FROM bcfishpass.observations_load;
 
 -- insert records for watersheds of interest / spp of interest
-INSERT INTO bcfishpass.observations
+INSERT INTO bcfishpass.observations_load
 (
   fish_obsrvtn_pnt_distinct_id,
   linear_feature_id,
@@ -127,50 +113,3 @@ SELECT
 FROM by_wsg e
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id;
-
-CREATE INDEX ON bcfishpass.observations (linear_feature_id);
-CREATE INDEX ON bcfishpass.observations (blue_line_key);
-CREATE INDEX ON bcfishpass.observations (watershed_group_code);
-CREATE INDEX ON bcfishpass.observations USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.observations USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.observations USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.observations USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.observations USING GIST (geom);
-
-
-CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.upstr_observations_vw AS
-SELECT
-    blue_line_key,
-    downstream_route_measure,
-    array_agg(upstr_id) FILTER (WHERE upstr_id IS NOT NULL) AS upstr_obsrvtn_pnt_distinct,
-    array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as upstr_obsrvtn_species_codes
-  FROM (
-    SELECT DISTINCT
-      a.blue_line_key,
-      a.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      b.downstream_route_measure as meas_b,
-      b.fish_obsrvtn_pnt_distinct_id as upstr_id,
-      unnest(species_codes) as species_code
-    FROM
-      bcfishpass.segmented_streams a
-    INNER JOIN bcfishpass.observations b ON
-    FWA_Upstream(
-      a.blue_line_key,
-      a.downstream_route_measure,
-      a.wscode_ltree,
-      a.localcode_ltree,
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      False,
-      1
-    )
-    AND a.watershed_group_code = b.watershed_group_code
-  ) as f
-  GROUP BY blue_line_key, downstream_route_measure
-WITH NO DATA;
-
-CREATE INDEX ON bcfishpass.upstr_observations_vw (blue_line_key, downstream_route_measure);

@@ -13,7 +13,7 @@ INSERT INTO bcfishpass.barrier_load
 )
 SELECT
     (watershed_group_id * 100000) + row_number() over() as barrier_load_id,
-    'GRADIENT_20' as barrier_type,
+    'GRADIENT_05' as barrier_type,
     NULL as barrier_name,
     s.linear_feature_id,
     b.blue_line_key,
@@ -31,7 +31,7 @@ LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
 ON b.blue_line_key = p.blue_line_key
 AND b.downstream_route_measure = p.downstream_route_measure
 WHERE
-  b.gradient_class = 20 AND
+  b.gradient_class = 5 AND
   p.blue_line_key IS NULL AND -- do not include any records matched to passable table
   s.watershed_group_code = :'wsg'
 ORDER BY b.blue_line_key, b.downstream_route_measure

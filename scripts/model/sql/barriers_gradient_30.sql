@@ -1,27 +1,8 @@
--- gradient 30
-
-DROP TABLE IF EXISTS bcfishpass.barriers_gradient_30 CASCADE;
-
-CREATE TABLE bcfishpass.barriers_gradient_30
+INSERT INTO bcfishpass.barrier_load
 (
-    barriers_gradient_30_id serial primary key,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code text,
-    geom geometry(Point, 3005),
-    -- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-    UNIQUE (blue_line_key, downstream_route_measure)
-);
-
-
-INSERT INTO bcfishpass.barriers_gradient_30
-(
+    barrier_load_id,
     barrier_type,
+    barrier_name,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -30,10 +11,10 @@ INSERT INTO bcfishpass.barriers_gradient_30
     watershed_group_code,
     geom
 )
--- ensure that points are unique so that when splitting streams,
--- we don't generate zero length lines
 SELECT
+    (watershed_group_id * 100000) + row_number() over() as barrier_load_id,
     'GRADIENT_30' as barrier_type,
+    NULL as barrier_name,
     s.linear_feature_id,
     b.blue_line_key,
     b.downstream_route_measure,
@@ -46,59 +27,12 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.blue_line_key = s.blue_line_key
 AND s.downstream_route_measure <= b.downstream_route_measure
 AND s.upstream_route_measure + .01 > b.downstream_route_measure
-INNER JOIN bcfishpass.param_watersheds g
-ON s.watershed_group_code = g.watershed_group_code
 LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
 ON b.blue_line_key = p.blue_line_key
 AND b.downstream_route_measure = p.downstream_route_measure
-WHERE b.gradient_class = 30
-AND p.blue_line_key IS NULL -- don't include any that get matched to passable table
+WHERE
+  b.gradient_class = 30 AND
+  p.blue_line_key IS NULL AND -- do not include any records matched to passable table
+  s.watershed_group_code = :'wsg'
 ORDER BY b.blue_line_key, b.downstream_route_measure
 ON CONFLICT DO NOTHING;
-
-
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (linear_feature_id);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (blue_line_key);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (blue_line_key, downstream_route_measure);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 (watershed_group_code);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.barriers_gradient_30 USING GIST (geom);
-
-
-CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.dnstr_barriers_gradient_30_vw AS
-SELECT
-    blue_line_key,
-    downstream_route_measure,
-    array_agg(dnstr_id) FILTER (WHERE dnstr_id IS NOT NULL) AS dnstr_barriers_gradient_30
-  FROM (
-    SELECT
-      a.blue_line_key,
-      a.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      b.downstream_route_measure as meas_b,
-      b.barriers_gradient_30_id as dnstr_id
-    FROM
-      bcfishpass.segmented_streams a
-    INNER JOIN bcfishpass.barriers_gradient_30 b ON
-    FWA_Downstream(
-      a.blue_line_key,
-      a.downstream_route_measure,
-      a.wscode_ltree,
-      a.localcode_ltree,
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      True,
-      1
-    )
-    AND a.watershed_group_code = b.watershed_group_code
-  ) as f
-  GROUP BY blue_line_key, downstream_route_measure
-  WITH NO DATA;
-
-CREATE INDEX ON bcfishpass.dnstr_barriers_gradient_30_vw (blue_line_key, downstream_route_measure);
