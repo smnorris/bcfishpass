@@ -118,7 +118,6 @@ CREATE INDEX IF NOT EXISTS obsrvtnupstr_rte_idx ON bcfishpass.observations_upstr
 -- ACCESS TABLE
 -- classify accessibility based on downstream barriers and upstream observations
 -- --------------
-drop table bcfishpass.model_access;
 CREATE TABLE IF NOT EXISTS bcfishpass.model_access
 (
   segmented_stream_id text primary key,
