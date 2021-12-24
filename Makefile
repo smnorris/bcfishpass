@@ -1,7 +1,8 @@
-.PHONY: all settings refresh_group #clean clean_sources
+.PHONY: all settings test #clean clean_sources
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-GROUPS_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .manual_habitat_classification_endpoints \
 	.segmented_streams .observations .observations_upstr .break_streams .model_access
@@ -160,27 +161,23 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # **                                           **
 # ***********************************************
 
-# above data sources are all compiled provincially
-# below jobs/extracts are run for watersheds specified in parameters only
-
 # -----
-# INITIAL STREAM DATA LOAD
+# INITIAL PROVINCIAL STREAM DATA LOAD
 # -----
-# what streams get loaded depends on wsg listed in parameters
 .segmented_streams: .param_watersheds .fwapg scripts/model/sql/load_segmented_streams.sql
-	# load in parallel (doing the entire load as a single insert is extremely slow for large study areas)
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.segmented_streams"
-	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
-	# index after load completes
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id); \
-		CREATE INDEX ON bcfishpass.segmented_streams (blue_line_key); \
-		CREATE INDEX ON bcfishpass.segmented_streams (watershed_group_code); \
-		CREATE INDEX ON bcfishpass.segmented_streams (waterbody_key); \
-		CREATE INDEX ON bcfishpass.segmented_streams USING GIST (wscode_ltree); \
-		CREATE INDEX ON bcfishpass.segmented_streams USING BTREE (wscode_ltree); \
-		CREATE INDEX ON bcfishpass.segmented_streams USING GIST (localcode_ltree); \
-		CREATE INDEX ON bcfishpass.segmented_streams USING BTREE (localcode_ltree); \
-		CREATE INDEX ON bcfishpass.segmented_streams USING GIST (geom);"
+	$(PSQL_CMD) -c "ALTER TABLE bcfishpass.segmented_streams SET UNLOGGED"
+	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(WSG)
+	$(PSQL_CMD) -c "ALTER TABLE bcfishpass.segmented_streams SET LOGGED"
+	$(PSQL_CMD) -c "ANALYZE bcfishpass.segmented_streams;"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (blue_line_key);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (watershed_group_code);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (waterbody_key);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING GIST (wscode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING BTREE (wscode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING GIST (localcode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING BTREE (localcode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING GIST (geom);"
 	touch $@
 
 # -----
@@ -225,8 +222,8 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .barriers_,,$@)
 	# clear barrier load table
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.barrier_load"
-	# load all features in study area for given barrier type to barrier_load table
-	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(GROUPS_PARAM)
+	# load all features for given barrier type to barrier_load table
+	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG)
 	# find watershed groups requiring updates and write list to file
 	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $(subst .barriers_,.torefresh_,$@)
 	# load above noted watershed groups to barrier table
@@ -270,7 +267,6 @@ ifneq ($<, .broken_manualhabitat)  # do not process manual habitat classificatio
 endif
 	touch $@
 
-
 # -----
 # OBSERVATIONS_UPSTR - INDEX OBSERVATIONS UPSTREAM
 # -----
@@ -291,15 +287,39 @@ endif
 	rm .torefresh_*
 	touch $@
 
-# if a group is somehow incorrectly processed, replace wsg code as required and make this target
-refresh_group:
-	$(PSQL_CMD) -v wsg=HORS -f scripts/model/sql/load_segmented_streams.sql
+# completely reprocess all streams/barriers/access model for groups specified in test_wsg.txt
+test:
+	for wsg in $(shell cat test_wsg.txt) ; do \
+		$(PSQL_CMD) -c "DELETE FROM segmented_streams WHERE watershed_group_code = '$$wsg'"
+	done
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/load_segmented_streams.sql
 	for barriertype in $(BARRIERS) ; do \
-		$(PSQL_CMD) -v wsg=HORS -v point_table=barriers_$$barriertype -f scripts/model/sql/break_streams_wrapper.sql ; \
+		parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=barriers_$$barriertype -f scripts/model/sql/break_streams_wrapper.sql ; \
 	done
 	for barriertype in $(BARRIERS) ; do \
-		$(PSQL_CMD) -v wsg=HORS -v barriertype=$$barriertype -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql ; \
+		parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v barriertype=$$barriertype -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql ; \
 	done
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=observations -f scripts/model/sql/break_streams_wrapper.sql
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations.sql
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations_upstr.sql
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/model_access.sql
+
+	# create a table for reviewing results
+	$(PSQL_CMD) -f scripts/model/sql/model_access_qa.sql
+
+	# and dump length summary to file
+	psql2csv $(DATABASE_URL) "SELECT \
+	  s.watershed_group_code, \
+	  a.accessibility_model_salmon, \
+	  a.accessibility_model_steelhead, \
+	  a.accessibility_model_wct, \
+	  round((sum(st_length(geom)) / 1000)::numeric, 2) as length_km \
+	FROM bcfishpass.segmented_streams s \
+	LEFT OUTER JOIN bcfishpass.model_access a \
+	ON s.segmented_stream_id = a.segmented_stream_id \
+	WHERE s.watershed_group_code IN ('LNIC','HORS','BULK','ELKR') \
+	GROUP BY s.watershed_group_code, a.accessibility_model_salmon, a.accessibility_model_steelhead, a.accessibility_model_wct;" > model_access_qa.csv
+
 
 #.crossings_report:
 # index barriers_anthropogenic and crossings based on upstream/downstream crossings
