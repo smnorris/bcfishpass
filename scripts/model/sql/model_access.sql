@@ -39,6 +39,7 @@ SELECT
     WHEN
         g15.barriers_gradient_15_dnstr IS NULL AND
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -58,6 +59,7 @@ SELECT
     WHEN
         g15.barriers_gradient_15_dnstr IS NULL AND
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -77,6 +79,7 @@ SELECT
     WHEN
         g15.barriers_gradient_15_dnstr IS NULL AND
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -96,6 +99,7 @@ SELECT
     WHEN
         g15.barriers_gradient_15_dnstr IS NULL AND
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -118,6 +122,7 @@ SELECT
   CASE
     WHEN
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -136,6 +141,7 @@ SELECT
     THEN 'POTENTIALLY ACCESSIBLE'
     WHEN
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -154,6 +160,7 @@ SELECT
     THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
     WHEN
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -172,6 +179,7 @@ SELECT
     THEN 'ACCESSIBLE'
     WHEN
         g20.barriers_gradient_20_dnstr IS NULL AND
+        g25.barriers_gradient_25_dnstr IS NULL AND
         g30.barriers_gradient_30_dnstr IS NULL AND
         falls.barriers_falls_dnstr IS NULL AND
         ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -204,6 +212,7 @@ SELECT
         (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
+            g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
             ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -231,6 +240,7 @@ SELECT
         (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
+            g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
             ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -258,6 +268,7 @@ SELECT
         (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
+            g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
             ssf.barriers_subsurfaceflow_dnstr IS NULL AND
@@ -285,6 +296,7 @@ SELECT
         (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
+            g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
             ssf.barriers_subsurfaceflow_dnstr IS NULL AND
