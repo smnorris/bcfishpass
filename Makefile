@@ -260,8 +260,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # BARRIERS_DNSTR TABLES - INDEX BARRIERS DOWNSTREAM
 # -----
 # updated watershed groups to barrier _dnstr table.
+# note that not only .broken_<barriertype> are requirements, all observation stream breaking must also be complete
 # note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
-.barriersdnstr_%: .broken_%
+.barriersdnstr_%: .broken_% .broken_observations
 ifneq ($<, .broken_manualhabitat)  # do not process manual habitat classification endpoints, they are not barriers
 	parallel -a $(subst .broken_,.torefresh_,$<) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql -v wsg={1} -v barriertype=$(subst .broken_,,$<)
 endif
@@ -270,7 +271,8 @@ endif
 # -----
 # OBSERVATIONS_UPSTR - INDEX OBSERVATIONS UPSTREAM
 # -----
-.observationsupstr: .broken_observations
+# note that not only .broken_observations is a requirement, all barrier stream breaking must also be complete
+.observationsupstr: .broken_observations $(patsubst %, .broken_%, $(BARRIERS))
 	# note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
 	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations_upstr.sql -v wsg={1}
 	touch $@
@@ -289,24 +291,30 @@ endif
 
 # completely reprocess all streams/barriers/access model for groups specified in test_wsg.txt
 test:
+	# delete streams
 	for wsg in $(shell cat test_wsg.txt) ; do \
-		$(PSQL_CMD) -c "DELETE FROM segmented_streams WHERE watershed_group_code = '$$wsg'"
+		echo "DELETE FROM bcfishpass.segmented_streams WHERE watershed_group_code = :'wsg'" | $(PSQL_CMD) -v wsg=$$wsg ;\
 	done
+	# load streams
 	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/load_segmented_streams.sql
+	# break streams at barriers (do not reload barriers)
 	for barriertype in $(BARRIERS) ; do \
 		parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=barriers_$$barriertype -f scripts/model/sql/break_streams_wrapper.sql ; \
 	done
+	# reload observations (currently required)
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations.sql
+	# break streams at observations
+	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=observations -f scripts/model/sql/break_streams_wrapper.sql
+	# re-materialize streams:downstream barriers lookup
 	for barriertype in $(BARRIERS) ; do \
 		parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v barriertype=$$barriertype -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql ; \
 	done
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=observations -f scripts/model/sql/break_streams_wrapper.sql
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations.sql
+	# re-materialize streams:upstream observations lookup
 	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations_upstr.sql
+	# run the access query
 	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/model_access.sql
-
 	# create a table for reviewing results
 	$(PSQL_CMD) -f scripts/model/sql/model_access_qa.sql
-
 	# and dump length summary to file
 	psql2csv $(DATABASE_URL) "SELECT \
 	  s.watershed_group_code, \
@@ -357,7 +365,6 @@ test:
 # -----
 scripts/discharge/.discharge: .fwapg
 	cd scripts/discharge; make
-	touch $@
 
 # -----
 # RUN HABITAT MODEL
