@@ -48,7 +48,6 @@ CREATE TABLE IF NOT EXISTS bcfishpass.segmented_streams
   geom geometry(LineStringZM,3005)
 );
 
-
 -- --------------
 -- OBSERVATIONS_LOAD
 --

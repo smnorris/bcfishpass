@@ -1,4 +1,4 @@
-.PHONY: all settings clear_refresh_list #clean clean_sources
+.PHONY: all settings refresh_group #clean clean_sources
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 GROUPS_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
@@ -290,6 +290,16 @@ endif
 	# clear list of barriers to refresh once complete
 	rm .torefresh_*
 	touch $@
+
+# if a group is somehow incorrectly processed, replace wsg code as required and make this target
+refresh_group:
+	$(PSQL_CMD) -v wsg=HORS -f scripts/model/sql/load_segmented_streams.sql
+	for barriertype in $(BARRIERS) ; do \
+		$(PSQL_CMD) -v wsg=HORS -v point_table=barriers_$$barriertype -f scripts/model/sql/break_streams_wrapper.sql ; \
+	done
+	for barriertype in $(BARRIERS) ; do \
+		$(PSQL_CMD) -v wsg=HORS -v barriertype=$$barriertype -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql ; \
+	done
 
 #.crossings_report:
 # index barriers_anthropogenic and crossings based on upstream/downstream crossings

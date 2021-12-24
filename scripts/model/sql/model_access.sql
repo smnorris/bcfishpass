@@ -55,7 +55,6 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
         pscis.barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
-        --rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -224,7 +223,7 @@ SELECT
             od.barriers_other_definite_dnstr IS NULL AND
            -- md.barriers_majordams_dnstr IS NULL AND
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
-            pscis.barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
+            pscis.barriers_pscis_dnstr IS NULL                -- but not a pscis barrier
           ) OR
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- anth barrier present downstream
@@ -251,11 +250,11 @@ SELECT
             od.barriers_other_definite_dnstr IS NULL AND
            -- md.barriers_majordams_dnstr IS NULL AND
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
-            pscis.barriers_pscis_dnstr IS NOT NULL AND        -- and it is a pscis barrier
+            pscis.barriers_pscis_dnstr IS NOT NULL            -- and it is a pscis barrier
           ) OR
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- anth barrier present downstream
-            pscis.barriers_pscis_dnstr IS NOT NULL AND        -- and it is a pscis barrier
+            pscis.barriers_pscis_dnstr IS NOT NULL            -- and it is a pscis barrier
         )
     THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
     WHEN
@@ -311,7 +310,7 @@ SELECT
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NULL AND
             pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.barriers_remediated_dnstr IS NOT NOT NULL
+            rmd.barriers_remediated_dnstr IS NOT NULL
         )
     THEN 'ACCESSIBLE - REMEDIATED'
   END AS accessibility_model_wct
