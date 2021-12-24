@@ -12,7 +12,10 @@ BEGIN
     CREATE TEMPORARY TABLE temp_streams AS
     WITH breakpoints AS
     (
-      SELECT
+    -- because we are rounding the measure, collapse any duplicates with DISTINCT
+    -- note that rounding only works (does not potentially shift the point off of stream of interest)
+    -- because we are joining only if the point is not within 1m of the endpoint
+      SELECT DISTINCT
         blue_line_key,
         round(downstream_route_measure::numeric)::integer as downstream_route_measure
       FROM bcfishpass.%I
@@ -135,9 +138,6 @@ BEGIN
     FROM temp_streams t
     INNER JOIN whse_basemapping.fwa_stream_networks_sp s
     ON t.linear_feature_id = s.linear_feature_id
-    -- even though we generate break points only >1m away from existing endpoints,
-    -- barriers coming from different tables into the breakpoint selection may not be
-    -- distinct. Rather than adding a slow distinct clause, just ignore any duplicates
     ON CONFLICT DO NOTHING;',
     point_table,
     wsg
