@@ -118,6 +118,7 @@ CREATE INDEX IF NOT EXISTS obsrvtnupstr_rte_idx ON bcfishpass.observations_upstr
 -- ACCESS TABLE
 -- classify accessibility based on downstream barriers and upstream observations
 -- --------------
+drop table bcfishpass.model_access;
 CREATE TABLE IF NOT EXISTS bcfishpass.model_access
 (
   segmented_stream_id text primary key,
@@ -125,8 +126,12 @@ CREATE TABLE IF NOT EXISTS bcfishpass.model_access
   barriers_majordams_dnstr integer[],
   barriers_subsurfaceflow_dnstr integer[],
   barriers_falls_dnstr integer[],
+  barriers_gradient_05_dnstr integer[],
+  barriers_gradient_07_dnstr integer[],
+  barriers_gradient_10_dnstr integer[],
   barriers_gradient_15_dnstr integer[],
   barriers_gradient_20_dnstr integer[],
+  barriers_gradient_25_dnstr integer[],
   barriers_gradient_30_dnstr integer[],
   barriers_other_definite_dnstr integer[],
   barriers_anthropogenic_dnstr integer[],
@@ -135,7 +140,11 @@ CREATE TABLE IF NOT EXISTS bcfishpass.model_access
   obsrvtn_pnt_distinct_upstr integer[],
   accessibility_model_salmon text,
   accessibility_model_steelhead text,
-  accessibility_model_wct text
+  accessibility_model_wct text,
+  accessibility_model_co_ch_sk text,
+  accessibility_model_st text,
+  accessibility_model_pk text,
+  accessibility_model_cm text
 );
 -- --------------
 -- CROSSINGS

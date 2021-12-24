@@ -127,7 +127,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # PSCIS
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
-.pscis_load: scripts/modelled_stream_crossings/.modelled_stream_crossings
+.pscis_load: scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
 	cd scripts/pscis; ./pscis.sh
 	touch $@
 
@@ -135,7 +135,13 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # CROSSINGS
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
-.crossings: scripts/model/sql/load_crossings.sql .pscis_load .barriersource_majordams .misc_barriers_anthropogenic .modelled_stream_crossings_fixes
+.crossings: scripts/model/sql/load_crossings.sql \
+	.misc_barriers_anthropogenic \
+	.modelled_stream_crossings_fixes \
+	.pscis_barrier_result_fixes \
+	.pscis_load \
+	.barriersource_majordams
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.crossings"
 	$(PSQL_CMD) -f $<
 	touch $@
 
