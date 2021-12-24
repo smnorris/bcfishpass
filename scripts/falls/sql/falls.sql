@@ -472,11 +472,3 @@ WHERE source = 'FISS' AND height >= 5;
 UPDATE bcfishpass.falls
 SET barrier_ind = True
 WHERE source = 'FWA';
-
--- override all barrier status based on user input
-UPDATE bcfishpass.falls f
-SET barrier_ind = b.barrier_ind
-FROM bcfishpass.falls_barrier_ind b
-WHERE
-  f.blue_line_key = b.blue_line_key AND
-  f.downstream_route_measure = b.downstream_route_measure;

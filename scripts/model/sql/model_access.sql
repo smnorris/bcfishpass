@@ -1,7 +1,28 @@
-CREATE MATERIALIZED VIEW IF NOT EXISTS bcfishpass.model_access AS
+-- refresh access model for given watershed group
+DELETE FROM bcfishpass.model_access WHERE watershed_group_code = :'wsg';
 
+INSERT INTO bcfishpass.model_access
+(
+  segmented_stream_id,
+  watershed_group_code,
+  barriers_majordams_dnstr,
+  barriers_subsurfaceflow_dnstr,
+  barriers_falls_dnstr,
+  barriers_gradient_15_dnstr,
+  barriers_gradient_20_dnstr,
+  barriers_gradient_30_dnstr,
+  barriers_other_definite_dnstr,
+  barriers_anthropogenic_dnstr,
+  barriers_pscis_dnstr,
+  barriers_remediated_dnstr,
+  obsrvtn_pnt_distinct_upstr,
+  accessibility_model_salmon,
+  accessibility_model_steelhead,
+  accessibility_model_wct
+  )
 SELECT
-  s.*,
+  s.segmented_stream_id,
+  s.watershed_group_code,
   md.barriers_majordams_dnstr,
   ssf.barriers_subsurfaceflow_dnstr,
   falls.barriers_falls_dnstr,
@@ -11,7 +32,7 @@ SELECT
   od.barriers_other_definite_dnstr,
   anth.barriers_anthropogenic_dnstr,
   pscis.barriers_pscis_dnstr,
-  rmd.remediated_dnstr,
+  rmd.barriers_remediated_dnstr,
   obs.obsrvtn_pnt_distinct_upstr,
   -- salmon accessibility
   CASE
@@ -25,7 +46,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
         pscis.barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
-        rmd.remediated_dnstr IS NULL AND
+        rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -44,7 +65,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
         pscis.barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
-        rmd.remediated_dnstr IS NULL AND
+        rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -63,7 +84,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NULL AND
         pscis.barriers_pscis_dnstr IS NULL AND
-        rmd.remediated_dnstr IS NULL AND
+        rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -82,7 +103,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NULL AND
         pscis.barriers_pscis_dnstr IS NULL AND
-        rmd.remediated_dnstr IS NOT NULL AND
+        rmd.barriers_remediated_dnstr IS NOT NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -104,7 +125,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
         pscis.barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
-        rmd.remediated_dnstr IS NULL AND
+        rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -122,7 +143,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
         pscis.barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
-        rmd.remediated_dnstr IS NULL AND
+        rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -140,7 +161,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NULL AND
         pscis.barriers_pscis_dnstr IS NULL AND
-        rmd.remediated_dnstr IS NULL AND
+        rmd.barriers_remediated_dnstr IS NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -158,7 +179,7 @@ SELECT
         md.barriers_majordams_dnstr IS NULL AND
         anth.barriers_anthropogenic_dnstr IS NULL AND
         pscis.barriers_pscis_dnstr IS NULL AND
-        rmd.remediated_dnstr IS NOT NULL AND
+        rmd.barriers_remediated_dnstr IS NOT NULL AND
         s.watershed_group_code = ANY(
           ARRAY(
             SELECT watershed_group_code
@@ -190,12 +211,12 @@ SELECT
            -- md.barriers_majordams_dnstr IS NULL AND
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
             pscis.barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
           ) OR
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- anth barrier present downstream
             pscis.barriers_pscis_dnstr IS NULL AND            -- but it is not a pscis barrier
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
         )
     THEN 'POTENTIALLY ACCESSIBLE'
     WHEN
@@ -217,12 +238,12 @@ SELECT
            -- md.barriers_majordams_dnstr IS NULL AND
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
             pscis.barriers_pscis_dnstr IS NOT NULL AND        -- and it is a pscis barrier
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
           ) OR
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- anth barrier present downstream
             pscis.barriers_pscis_dnstr IS NOT NULL AND        -- and it is a pscis barrier
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
         )
     THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
     WHEN
@@ -244,12 +265,12 @@ SELECT
            -- md.barriers_majordams_dnstr IS NULL AND
             anth.barriers_anthropogenic_dnstr IS NULL AND
             pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
           ) OR
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NULL AND
             pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
         )
     THEN 'ACCESSIBLE'
     WHEN
@@ -271,12 +292,12 @@ SELECT
            -- md.barriers_majordams_dnstr IS NULL AND
             anth.barriers_anthropogenic_dnstr IS NULL AND
             pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.remediated_dnstr IS NULL
+            rmd.barriers_remediated_dnstr IS NULL
           ) OR
             obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
             anth.barriers_anthropogenic_dnstr IS NULL AND
             pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.remediated_dnstr IS NOT NULL
+            rmd.barriers_remediated_dnstr IS NOT NULL
         )
     THEN 'ACCESSIBLE - REMEDIATED'
   END AS accessibility_model_wct
@@ -308,21 +329,10 @@ AND s.downstream_route_measure = anth.downstream_route_measure
 LEFT OUTER JOIN bcfishpass.barriers_pscis_dnstr pscis
 ON s.blue_line_key = pscis.blue_line_key
 AND s.downstream_route_measure = pscis.downstream_route_measure
-LEFT OUTER JOIN bcfishpass.remediated_dnstr rmd
+LEFT OUTER JOIN bcfishpass.barriers_remediated_dnstr rmd
 ON s.blue_line_key = rmd.blue_line_key
 AND s.downstream_route_measure = rmd.downstream_route_measure
 LEFT OUTER JOIN bcfishpass.observations_upstr obs
 ON s.blue_line_key = obs.blue_line_key
-AND s.downstream_route_measure = obs.downstream_route_measure;
-
-
-CREATE INDEX ON bcfishpass.model_access (segmented_stream_id);
-
-CREATE INDEX ON bcfishpass.model_access (linear_feature_id);
-CREATE INDEX ON bcfishpass.model_access (blue_line_key);
-CREATE INDEX ON bcfishpass.model_access (watershed_group_code);
-CREATE INDEX ON bcfishpass.model_access USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.model_access USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.model_access USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.model_access USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.model_access USING GIST (geom);
+AND s.downstream_route_measure = obs.downstream_route_measure
+WHERE s.watershed_group_code = :'wsg';

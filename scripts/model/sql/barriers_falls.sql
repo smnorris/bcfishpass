@@ -23,6 +23,13 @@ SELECT
     a.watershed_group_code,
     a.geom
 FROM bcfishpass.falls a
+LEFT OUTER JOIN bcfishpass.falls_barrier_ind b
+ON a.blue_line_key = b.blue_line_key AND
+  abs(a.downstream_route_measure - b.downstream_route_measure) < 1
 WHERE
-  a.barrier_ind IS TRUE AND
-  a.watershed_group_code = :'wsg';
+  a.watershed_group_code = :'wsg'
+AND
+  (
+    b.barrier_ind IS TRUE OR
+      (b.barrier_ind IS NULL AND a.barrier_ind IS TRUE)
+  );

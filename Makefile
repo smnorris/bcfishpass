@@ -1,8 +1,7 @@
-.PHONY: all settings #clean clean_sources
+.PHONY: all settings clear_refresh_list #clean clean_sources
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 GROUPS_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-GROUPS_REFRESH = $(shell cat .barriers_* .observations | sort | uniq)
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .manual_habitat_classification_endpoints \
 	.segmented_streams .observations .observations_upstr .break_streams .model_access
@@ -61,7 +60,6 @@ bcfishobs: .fwapg
 .schema: $(wildcard scripts/model/sql/tables/*sql) $(wildcard scripts/model/sql/functions/*sql)
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	$(PSQL_CMD) -f scripts/model/sql/functions/create_barrier_table.sql
-	$(PSQL_CMD) -f scripts/model/sql/functions/pair_ids.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers_dnstr.sql
 	$(PSQL_CMD) -f scripts/model/sql/functions/utmzone.sql
@@ -93,7 +91,7 @@ bcfishobs: .fwapg
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
-.barriersource_falls: .fwapg .falls_barrier_ind .falls_other scripts/falls/falls.sh scripts/falls/sql/falls.sql .schema
+.falls: .fwapg .falls_other scripts/falls/falls.sh scripts/falls/sql/falls.sql .schema
 	cd scripts/falls; ./falls.sh
 	touch $@
 
@@ -140,19 +138,15 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 .crossings: scripts/model/sql/load_crossings.sql .pscis_load .barriersource_majordams .misc_barriers_anthropogenic .modelled_stream_crossings_fixes
 	$(PSQL_CMD) -f $<
 	touch $@
-	# also touch additional targets for barrier/remediated tables that come directly from crossings table
-	touch .barriersource_anthropogenic
-	touch .barriersource_pscis
-	touch .barriersource_remediated
 
 # -----
 # MANUAL HABITAT CLASSIFICATION ENDPOINTS
 # spawning/rearing habitat can be identified via this user table,
 # but we generate endpoints from lines for stream splitting
 # -----
-.manual_habitat_classification_endpoints: .manual_habitat_classification scripts/model/sql/manual_habitat_classification_endpoints.sql
-	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
-	touch $@
+#.manual_habitat_classification_endpoints: .manual_habitat_classification scripts/model/sql/manual_habitat_classification_endpoints.sql
+#	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
+#	touch $@
 
 # ***********************************************
 # **                                           **
@@ -187,6 +181,14 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # BARRIER TABLES
 # create barrier tables, load data, create (empty) views listing barriers of given type downstream of each stream
 # -----
+.barriersource_anthropogenic: .crossings
+	touch $@
+.barriersource_falls: .falls
+	touch $@
+.barriersource_pscis: .crossings
+	touch $@
+.barriersource_remediated: .crossings
+	touch $@
 # other_definite barriers depends on these user tables being loaded, create the linkage here
 .barriersource_other_definite: .exclusions .misc_barriers_definite .pscis_barrier_result_fixes
 	touch $@
@@ -208,6 +210,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	touch $@
 .barriersource_gradient_30: scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
 	touch $@
+.barriersource_manualhabitat: .manual_habitat_classification
+	touch $@
+
 # for every .barriersource file, create barrier table
 # and load/refresh the barrier table for for watershed group(s) where data has had a change
 .barriers_%: .barriersource_% .param_watersheds
@@ -217,11 +222,11 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	# load all features in study area for given barrier type to barrier_load table
 	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(GROUPS_PARAM)
 	# find watershed groups requiring updates and write list to file
-	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $@_wsg
+	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $(subst .barriers_,.torefresh_,$@)
 	# load above noted watershed groups to barrier table
 	# note that the wrapper query sql file is not needed, the file is just simpler than figuring out make/parallel quoting
-	parallel -a $@_wsg --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql -v wsg={1} -v barriertype=$(subst .barriers_,,$@)
-	mv $@_wsg $@
+	parallel -a $(subst .barriers_,.torefresh_,$@) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql -v wsg={1} -v barriertype=$(subst .barriers_,,$@)
+	touch $@
 
 # ------
 # OBSERVATIONS
@@ -233,54 +238,51 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	# first, load *all* observation data to _load table
 	$(PSQL_CMD) -f $<
 	# find watershed groups with changed observation data
-	echo "select * from bcfishpass.wsg_to_refresh('observations_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $@_wsg
-	parallel -a $@_wsg --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
-	mv $@_wsg $@
+	echo "select * from bcfishpass.wsg_to_refresh('observations_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $(subst .,.torefresh_,$@)
+	parallel -a $(subst .,.torefresh_,$@) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
+	touch $@
 
 # -----
 # BREAK STREAMS
 # -----
-# merge all point features into a single table and break streams at intersections
-# note that this will only pick up breakpoints that are 1m from existing breaks in the streams,
-# re-runs with minor updates will be very quick
-.break_streams:  $(patsubst %, .barriers_%, $(BARRIERS)) .segmented_streams .observations \
-	.manual_habitat_classification_endpoints scripts/model/sql/break_streams.sql
-	parallel --joblog break_streams.log --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams.sql -v wsg={1} ::: $(GROUPS_PARAM)
+# break at various barrier types and observations
+.broken_%: .barriers_% .segmented_streams
+	parallel -a $(subst .barriers_,.torefresh_,$<) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
+	touch $@
+.broken_observations: .observations .segmented_streams
+	parallel -a $(subst .,.torefresh_,$<) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
 	touch $@
 
 # -----
 # BARRIERS_DNSTR TABLES - INDEX BARRIERS DOWNSTREAM
 # -----
-.barriersdnstr_%: .barriers_% .break_streams
-	# updated watershed groups to barrier _dnstr table.
-	# note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
-	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql -v wsg={1} -v barriertype=$(subst .barriers_,,$<)
+# updated watershed groups to barrier _dnstr table.
+# note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
+.barriersdnstr_%: .broken_%
+ifneq ($<, .broken_manualhabitat)  # do not process manual habitat classification endpoints, they are not barriers
+	parallel -a $(subst .broken_,.torefresh_,$<) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql -v wsg={1} -v barriertype=$(subst .broken_,,$<)
+endif
 	touch $@
+
 
 # -----
 # OBSERVATIONS_UPSTR - INDEX OBSERVATIONS UPSTREAM
 # -----
-.observationsupstr: .observations .break_streams
+.observationsupstr: .broken_observations
 	# note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
-	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
-	touch $@
-
-# -----
-# REMEDIATED - remediated crossings are processed above as barriers,
-#              but they are obv. not barriers, rename accordingly
-# -----
-.remediated: .barriersdnstr_remediated
-	$(PSQL_CMD) -c "alter table bcfishpass.barriers_remediated rename to remediated;"
-	$(PSQL_CMD) -c "alter table bcfishpass.barriers_remediated_dnstr rename to remediated_dnstr;"
-	$(PSQL_CMD) -c "alter table bcfishpass.remediated_dnstr rename column barriers_remediated_dnstr to remediated_dnstr;"
+	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations_upstr.sql -v wsg={1}
 	touch $@
 
 # -----
 # RUN ACCESS MODEL QUERY
 # -----
-# load/refresh materialized views that hold lists of downstream barriers for each stream
-.model_access: $(patsubst %, .barriersdnstr_%, $(BARRIERS)) .observationsupstr .remediated
-	$(PSQL_CMD) -f scripts/model/sql/model_access.sql
+# load (or refresh) access model table for each group that has changed
+.model_access: $(patsubst %, .barriersdnstr_%, $(BARRIERS)) .observationsupstr
+	# combine all .torefresh files into a single list
+	$(shell cat .torefresh_* | sort | uniq > .wsg)
+	parallel -a .wsg --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_access.sql -v wsg={1}
+	# clear list of barriers to refresh once complete
+	rm .torefresh_*
 	touch $@
 
 #.crossings_report:
@@ -317,7 +319,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # -----
 # MODEL DISCHARGE
 # -----
-.discharge: .fwapg
+scripts/discharge/.discharge: .fwapg
 	cd scripts/discharge; make
 	touch $@
 

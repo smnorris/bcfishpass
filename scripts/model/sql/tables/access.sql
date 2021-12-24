@@ -114,7 +114,29 @@ CREATE TABLE IF NOT EXISTS bcfishpass.observations_upstr
 CREATE INDEX IF NOT EXISTS obsrvtnupstr_rte_idx ON bcfishpass.observations_upstr (blue_line_key, downstream_route_measure);
 
 
-
+-- --------------
+-- ACCESS TABLE
+-- classify accessibility based on downstream barriers and upstream observations
+-- --------------
+CREATE TABLE IF NOT EXISTS bcfishpass.model_access
+(
+  segmented_stream_id text primary key,
+  watershed_group_code character varying (4),
+  barriers_majordams_dnstr integer[],
+  barriers_subsurfaceflow_dnstr integer[],
+  barriers_falls_dnstr integer[],
+  barriers_gradient_15_dnstr integer[],
+  barriers_gradient_20_dnstr integer[],
+  barriers_gradient_30_dnstr integer[],
+  barriers_other_definite_dnstr integer[],
+  barriers_anthropogenic_dnstr integer[],
+  barriers_pscis_dnstr integer[],
+  barriers_remediated_dnstr integer[],
+  obsrvtn_pnt_distinct_upstr integer[],
+  accessibility_model_salmon text,
+  accessibility_model_steelhead text,
+  accessibility_model_wct text
+);
 -- --------------
 -- CROSSINGS
 --
@@ -124,8 +146,6 @@ CREATE INDEX IF NOT EXISTS obsrvtnupstr_rte_idx ON bcfishpass.observations_upstr
 -- 3. Modelled crossings (culverts and bridges)
 -- 4. Other ?
 -- --------------
-
-DROP TABLE IF EXISTS bcfishpass.crossings;
 CREATE TABLE bcfishpass.crossings
 (
   -- Note how the aggregated crossing id combines the various ids to create a unique integer, after assigning PSCIS crossings their source crossing id
