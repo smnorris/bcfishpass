@@ -12,7 +12,7 @@ SELECT
     blue_line_key,
     downstream_route_measure,
     watershed_group_code,
-    array_agg(upstr_id) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_pnt_distinct_upstr,
+    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_pnt_distinct_upstr,
     array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as obsrvtn_species_codes_upstr
   FROM (
     SELECT DISTINCT
