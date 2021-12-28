@@ -309,44 +309,7 @@ endif
 	rm .wsg_to_refresh
 	touch $@
 
-# completely reprocess all streams/barriers/access model for groups specified in test_wsg.txt
-test:
-	# delete streams
-	for wsg in $(shell cat test_wsg.txt) ; do \
-		echo "DELETE FROM bcfishpass.segmented_streams WHERE watershed_group_code = :'wsg'" | $(PSQL_CMD) -v wsg=$$wsg ;\
-	done
-	# load streams
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/load_segmented_streams.sql
-	# break streams at barriers (do not reload barriers)
-	for barriertype in $(BARRIERS) ; do \
-		parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=barriers_$$barriertype -f scripts/model/sql/break_streams_wrapper.sql ; \
-	done
-	# reload observations (currently required)
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations.sql
-	# break streams at observations
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v point_table=observations -f scripts/model/sql/break_streams_wrapper.sql
-	# re-materialize streams:downstream barriers lookup
-	for barriertype in $(BARRIERS) ; do \
-		parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -v barriertype=$$barriertype -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql ; \
-	done
-	# re-materialize streams:upstream observations lookup
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/refresh_observations_upstr.sql
-	# run the access query
-	parallel -a test_wsg.txt --no-run-if-empty $(PSQL_CMD) -v wsg={1} -f scripts/model/sql/model_access.sql
-	# create a table for reviewing results
-	$(PSQL_CMD) -f scripts/model/sql/model_access_qa.sql
-	# and dump length summary to file
-	psql2csv $(DATABASE_URL) "SELECT \
-	  s.watershed_group_code, \
-	  a.accessibility_model_salmon, \
-	  a.accessibility_model_steelhead, \
-	  a.accessibility_model_wct, \
-	  round((sum(st_length(geom)) / 1000)::numeric, 2) as length_km \
-	FROM bcfishpass.segmented_streams s \
-	LEFT OUTER JOIN bcfishpass.model_access a \
-	ON s.segmented_stream_id = a.segmented_stream_id \
-	WHERE s.watershed_group_code IN ('LNIC','HORS','BULK','ELKR') \
-	GROUP BY s.watershed_group_code, a.accessibility_model_salmon, a.accessibility_model_steelhead, a.accessibility_model_wct;" > model_access_qa.csv
+
 
 
 #.crossings_report:
