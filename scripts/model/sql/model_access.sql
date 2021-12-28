@@ -213,22 +213,24 @@ SELECT
           )
         )
         AND
+        -- do not include areas behind manually defined definite barriers
+        od.barriers_other_definite_dnstr IS NULL AND
+        -- an anthropogenic barrier is downstream
+        anth.barriers_anthropogenic_dnstr IS NOT NULL AND
+        -- but not a pscis barrier
+        pscis.barriers_pscis_dnstr IS NULL AND
+        -- and not remediated
+        rmd.barriers_remediated_dnstr IS NULL AND
         (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
             g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
-            ssf.barriers_subsurfaceflow_dnstr IS NULL AND
-            od.barriers_other_definite_dnstr IS NULL AND
-           -- md.barriers_majordams_dnstr IS NULL AND
-            anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
-            pscis.barriers_pscis_dnstr IS NULL                -- but not a pscis barrier
-          ) OR
-            obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
-            anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- anth barrier present downstream
-            pscis.barriers_pscis_dnstr IS NULL AND            -- but it is not a pscis barrier
-            rmd.barriers_remediated_dnstr IS NULL
+            ssf.barriers_subsurfaceflow_dnstr IS NULL
+            -- md.barriers_majordams_dnstr IS NULL AND
+
+          ) OR obs.obsrvtn_species_codes_upstr && ARRAY['WCT']  -- upstr wct observations override dnst barriers
         )
     THEN 'POTENTIALLY ACCESSIBLE'
     WHEN
@@ -241,20 +243,24 @@ SELECT
         )
         AND
         (
+        -- do not include areas behind manually defined definite barriers
+        od.barriers_other_definite_dnstr IS NULL AND
+        -- an anthropogenic barrier is downstream
+        anth.barriers_anthropogenic_dnstr IS NOT NULL AND
+        -- a pscis barrier is downstream
+        pscis.barriers_pscis_dnstr IS NOT NULL AND
+        -- and not remediated
+        rmd.barriers_remediated_dnstr IS NULL AND
+        (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
             g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
-            ssf.barriers_subsurfaceflow_dnstr IS NULL AND
-            od.barriers_other_definite_dnstr IS NULL AND
+            ssf.barriers_subsurfaceflow_dnstr IS NULL
            -- md.barriers_majordams_dnstr IS NULL AND
-            anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
-            pscis.barriers_pscis_dnstr IS NOT NULL            -- and it is a pscis barrier
-          ) OR
-            obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
-            anth.barriers_anthropogenic_dnstr IS NOT NULL AND -- anth barrier present downstream
-            pscis.barriers_pscis_dnstr IS NOT NULL            -- and it is a pscis barrier
+          ) OR obs.obsrvtn_species_codes_upstr && ARRAY['WCT']    -- upstr wct observations override dnst barriers
+        )
         )
     THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
     WHEN
@@ -266,23 +272,25 @@ SELECT
           )
         )
         AND
+              (
+        -- do not include areas behind manually defined definite barriers
+        od.barriers_other_definite_dnstr IS NULL AND
+        -- no anthropogenic barrier is downstream
+        anth.barriers_anthropogenic_dnstr IS NULL AND
+        -- no pscis barrier is downstream
+        pscis.barriers_pscis_dnstr IS NULL AND
+        -- and not remediated
+        rmd.barriers_remediated_dnstr IS NULL AND
         (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
             g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
-            ssf.barriers_subsurfaceflow_dnstr IS NULL AND
-            od.barriers_other_definite_dnstr IS NULL AND
+            ssf.barriers_subsurfaceflow_dnstr IS NULL
            -- md.barriers_majordams_dnstr IS NULL AND
-            anth.barriers_anthropogenic_dnstr IS NULL AND
-            pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.barriers_remediated_dnstr IS NULL
-          ) OR
-            obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
-            anth.barriers_anthropogenic_dnstr IS NULL AND
-            pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.barriers_remediated_dnstr IS NULL
+          ) OR obs.obsrvtn_species_codes_upstr && ARRAY['WCT']    -- upstr wct observations override dnst barriers
+        )
         )
     THEN 'ACCESSIBLE'
     WHEN
@@ -295,69 +303,56 @@ SELECT
         )
         AND
         (
+        -- do not include areas behind manually defined definite barriers
+        od.barriers_other_definite_dnstr IS NULL AND
+        -- no anthropogenic barrier is downstream
+        anth.barriers_anthropogenic_dnstr IS NULL AND
+        -- no pscis barrier is downstream
+        pscis.barriers_pscis_dnstr IS NULL AND
+        -- remediated
+        rmd.barriers_remediated_dnstr IS NOT NULL AND
+        (
           (
             g20.barriers_gradient_20_dnstr IS NULL AND
             g25.barriers_gradient_25_dnstr IS NULL AND
             g30.barriers_gradient_30_dnstr IS NULL AND
             falls.barriers_falls_dnstr IS NULL AND
-            ssf.barriers_subsurfaceflow_dnstr IS NULL AND
-            od.barriers_other_definite_dnstr IS NULL AND
+            ssf.barriers_subsurfaceflow_dnstr IS NULL
            -- md.barriers_majordams_dnstr IS NULL AND
-            anth.barriers_anthropogenic_dnstr IS NULL AND
-            pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.barriers_remediated_dnstr IS NOT NULL
-          ) OR
-            obs.obsrvtn_species_codes_upstr && ARRAY['WCT'] AND         -- upstr wct observations override dnst barriers
-            anth.barriers_anthropogenic_dnstr IS NULL AND
-            pscis.barriers_pscis_dnstr IS NULL AND
-            rmd.barriers_remediated_dnstr IS NOT NULL
+          ) OR obs.obsrvtn_species_codes_upstr && ARRAY['WCT']    -- upstr wct observations override dnst barriers
+        )
         )
     THEN 'ACCESSIBLE - REMEDIATED'
   END AS accessibility_model_wct
 FROM bcfishpass.segmented_streams s
 LEFT OUTER JOIN bcfishpass.barriers_majordams_dnstr md
-ON s.blue_line_key = md.blue_line_key
-AND s.downstream_route_measure = md.downstream_route_measure
+ON s.segmented_stream_id = md.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_subsurfaceflow_dnstr ssf
-ON s.blue_line_key = ssf.blue_line_key
-AND s.downstream_route_measure = ssf.downstream_route_measure
+ON s.segmented_stream_id = ssf.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_falls_dnstr falls
-ON s.blue_line_key = falls.blue_line_key
-AND s.downstream_route_measure = falls.downstream_route_measure
+ON s.segmented_stream_id = falls.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_05_dnstr g05
-ON s.blue_line_key = g05.blue_line_key
-AND s.downstream_route_measure = g05.downstream_route_measure
+ON s.segmented_stream_id = g05.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_07_dnstr g07
-ON s.blue_line_key = g07.blue_line_key
-AND s.downstream_route_measure = g07.downstream_route_measure
+ON s.segmented_stream_id = g07.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_10_dnstr g10
-ON s.blue_line_key = g10.blue_line_key
-AND s.downstream_route_measure = g10.downstream_route_measure
+ON s.segmented_stream_id = g10.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_15_dnstr g15
-ON s.blue_line_key = g15.blue_line_key
-AND s.downstream_route_measure = g15.downstream_route_measure
+ON s.segmented_stream_id = g15.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_20_dnstr g20
-ON s.blue_line_key = g20.blue_line_key
-AND s.downstream_route_measure = g20.downstream_route_measure
+ON s.segmented_stream_id = g20.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_25_dnstr g25
-ON s.blue_line_key = g25.blue_line_key
-AND s.downstream_route_measure = g25.downstream_route_measure
+ON s.segmented_stream_id = g25.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_gradient_30_dnstr g30
-ON s.blue_line_key = g30.blue_line_key
-AND s.downstream_route_measure = g30.downstream_route_measure
+ON s.segmented_stream_id = g30.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_other_definite_dnstr od
-ON s.blue_line_key = od.blue_line_key
-AND s.downstream_route_measure = od.downstream_route_measure
+ON s.segmented_stream_id = od.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_anthropogenic_dnstr anth
-ON s.blue_line_key = anth.blue_line_key
-AND s.downstream_route_measure = anth.downstream_route_measure
+ON s.segmented_stream_id = anth.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_pscis_dnstr pscis
-ON s.blue_line_key = pscis.blue_line_key
-AND s.downstream_route_measure = pscis.downstream_route_measure
+ON s.segmented_stream_id = pscis.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.barriers_remediated_dnstr rmd
-ON s.blue_line_key = rmd.blue_line_key
-AND s.downstream_route_measure = rmd.downstream_route_measure
+ON s.segmented_stream_id = rmd.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.observations_upstr obs
-ON s.blue_line_key = obs.blue_line_key
-AND s.downstream_route_measure = obs.downstream_route_measure
+ON s.segmented_stream_id = obs.segmented_stream_id
 WHERE s.watershed_group_code = :'wsg';

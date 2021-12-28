@@ -2,22 +2,19 @@ DELETE FROM bcfishpass.observations_upstr WHERE watershed_group_code = :'wsg';
 
 INSERT INTO bcfishpass.observations_upstr
 (
-  blue_line_key,
-  downstream_route_measure,
+  segmented_stream_id,
   watershed_group_code,
   obsrvtn_pnt_distinct_upstr,
   obsrvtn_species_codes_upstr
 )
 SELECT
-    blue_line_key,
-    downstream_route_measure,
+    segmented_stream_id,
     watershed_group_code,
     array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_pnt_distinct_upstr,
     array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as obsrvtn_species_codes_upstr
   FROM (
     SELECT DISTINCT
-      a.blue_line_key,
-      a.downstream_route_measure,
+      a.segmented_stream_id,
       b.watershed_group_code,
       b.wscode_ltree,
       b.localcode_ltree,
@@ -42,4 +39,4 @@ SELECT
       AND a.watershed_group_code = b.watershed_group_code
       WHERE b.watershed_group_code = :'wsg'
   ) as f
-  GROUP BY blue_line_key, downstream_route_measure, watershed_group_code
+  GROUP BY segmented_stream_id, watershed_group_code

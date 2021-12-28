@@ -1,6 +1,7 @@
--- create and load barrier table holding gradient breaks of specified slope percentage
+-- create table holding barriers of given type, plus barrier_dnstr table
+-- holding ids of all streams with barrier of this type downstream
 
-CREATE OR REPLACE FUNCTION bcfishpass.create_barrier_table(barriertype text)
+CREATE OR REPLACE FUNCTION bcfishpass.create_barrier_tables(barriertype text)
   RETURNS VOID
   LANGUAGE plpgsql AS
 $func$
@@ -58,11 +59,9 @@ BEGIN
     EXECUTE format('
         CREATE TABLE IF NOT EXISTS bcfishpass.%I
         (
-            blue_line_key integer,
-            downstream_route_measure double precision,
+            segmented_stream_id text primary key,
             watershed_group_code character varying (4),
-            %I int[],
-            PRIMARY KEY (blue_line_key, downstream_route_measure)
+            %I int[]
         )',
         'barriers_' || barriertype || '_dnstr',
         'barriers_' || barriertype || '_dnstr'

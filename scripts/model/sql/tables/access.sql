@@ -103,15 +103,11 @@ CREATE INDEX IF NOT EXISTS obsrvtn_geom_idx ON bcfishpass.observations USING GIS
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.observations_upstr
 (
-  blue_line_key integer,
-  downstream_route_measure double precision,
+  segmented_stream_id text primary key,
   watershed_group_code character varying(4),
   obsrvtn_pnt_distinct_upstr integer[],
   obsrvtn_species_codes_upstr text[]
 );
-
-CREATE INDEX IF NOT EXISTS obsrvtnupstr_rte_idx ON bcfishpass.observations_upstr (blue_line_key, downstream_route_measure);
-
 
 -- --------------
 -- ACCESS TABLE

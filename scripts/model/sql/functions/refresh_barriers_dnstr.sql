@@ -19,48 +19,36 @@ BEGIN
   EXECUTE format(
     'INSERT INTO bcfishpass.%I
       (
-        blue_line_key,
-        downstream_route_measure,
+        segmented_stream_id,
         watershed_group_code,
         %I
       )
       SELECT
-          blue_line_key,
-          downstream_route_measure,
-          watershed_group_code,
-          array_agg(dnstr_id) FILTER (WHERE dnstr_id IS NOT NULL) AS %I
-        FROM (
-          SELECT
-            a.blue_line_key,
-            a.downstream_route_measure,
-            a.watershed_group_code,
-            b.wscode_ltree,
-            b.localcode_ltree,
-            b.downstream_route_measure as meas_b,
-            b.%I as dnstr_id
-          FROM
-            bcfishpass.segmented_streams a
-          INNER JOIN bcfishpass.%I b ON
-          FWA_Downstream(
-            a.blue_line_key,
-            a.downstream_route_measure,
-            a.wscode_ltree,
-            a.localcode_ltree,
-            b.blue_line_key,
-            b.downstream_route_measure,
-            b.wscode_ltree,
-            b.localcode_ltree,
-            True,
-            1
-          )
-          AND a.watershed_group_code = b.watershed_group_code
-          WHERE b.watershed_group_code = %L
-        ) as f
-      GROUP BY blue_line_key, watershed_group_code, downstream_route_measure;',
-      'barriers_' || barriertype || '_dnstr',
+        a.segmented_stream_id,
+        a.watershed_group_code,
+        array_agg(DISTINCT %I) FILTER (WHERE %I IS NOT NULL) AS %I
+      FROM bcfishpass.segmented_streams a
+      INNER JOIN bcfishpass.%I b ON
+      a.watershed_group_code = b.watershed_group_code
+      AND FWA_Downstream(
+        a.blue_line_key,
+        a.downstream_route_measure,
+        a.wscode_ltree,
+        a.localcode_ltree,
+        b.blue_line_key,
+        b.downstream_route_measure,
+        b.wscode_ltree,
+        b.localcode_ltree,
+        True,
+        1
+      )
+      WHERE b.watershed_group_code = %L
+      GROUP BY a.segmented_stream_id, a.watershed_group_code;',
       'barriers_' || barriertype || '_dnstr',
       'barriers_' || barriertype || '_dnstr',
       'barriers_' || barriertype || '_id',
+      'barriers_' || barriertype || '_id',
+      'barriers_' || barriertype || '_dnstr',
       'barriers_' || barriertype,
       wsg
     );
