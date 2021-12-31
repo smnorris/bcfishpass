@@ -167,6 +167,8 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # INITIAL PROVINCIAL STREAM DATA LOAD
 # -----
 .segmented_streams: .param_watersheds .fwapg scripts/model/sql/load_segmented_streams.sql
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.segmented_streams"
+	$(PSQL_CMD) -f scripts/model/sql/tables/segmented_streams.sql
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(WSG)
 	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id);"
 	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (blue_line_key);"
@@ -248,7 +250,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	# create target
 	mv $(subst .barriers_,.torefresh_,$@) $@
 
-# delete these definite barriers below WCT observations
+# delete these definite barriers below WCT observations in ELKR
 .delete_barriers_below_observations: .barriers_gradient_20 .barriers_gradient_25 .barriers_gradient_30 .barriers_falls .barriers_subsurfaceflow .observations
 	for barriertype in gradient_20 gradient_25 gradient_30 falls subsurfaceflow ;  do \
 		echo "select bcfishpass.delete_barriers_below_observations(:'barriertype', :'species_code', :'wsg')" | \
@@ -264,8 +266,10 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # given barrier type will only be processed if the file is newer than the .broken_ target
 # NOTE - to ensure that make generates targets made with this wild card pattern, a 'static pattern rule' is required
 # https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist
+# NOTE2 - processing in parallel (provincially) eventually crashes the db, process one group at a time or with a
+# modest job count
 $(BARRIERS_BROKEN): .broken_%: .barriers_% .segmented_streams .delete_barriers_below_observations
-	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
+	parallel -a $< --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
 	touch $@
 .broken_observations: .observations .segmented_streams
 	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
@@ -282,7 +286,7 @@ ifneq ($<, .broken_manualhabitat)  # do not process manual habitat classificatio
 	for barriertype in $(BARRIERS) ; do \
 		echo $${barriertype} ;\
 		for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ;  do \
-			echo $${wsg}
+			echo $${wsg} ;\
 			$(PSQL_CMD) -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql -v wsg=$$wsg -v barriertype=$${barriertype} ;\
 		done ; \
 	done
@@ -304,12 +308,15 @@ endif
 # RUN ACCESS MODEL QUERY
 # -----
 # load (or refresh) access model table for each group that has changed
-.model_access: .barriersdnstr .observationsupstr
-	cat .wsg_to_refresh | sort | uniq | parallel --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_access.sql -v wsg={1}
-	rm .wsg_to_refresh
+#.model_access: .barriersdnstr .observationsupstr
+#	cat .wsg_to_refresh | sort | uniq | parallel --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_access.sql -v wsg={1}
+#	rm .wsg_to_refresh
+#	touch $@
+
+.streams: .barriersdnstr .observationsupstr
+	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql # create ouput streams table if not already present
+	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_access_2.sql -v wsg={1}
 	touch $@
-
-
 
 
 #.crossings_report:
