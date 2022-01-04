@@ -4,7 +4,7 @@
 -- - in BC
 -- - not a side channel of unknown location
 -- - in the watershed groups of interest
-INSERT INTO bcfishpass.segmented_streams
+INSERT INTO bcfishpass.streams
  (linear_feature_id,
   edge_type,
   blue_line_key,

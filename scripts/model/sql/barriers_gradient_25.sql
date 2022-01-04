@@ -24,15 +24,36 @@ SELECT
     ST_Force2D((ST_Dump(ST_Locatealong(s.geom, b.downstream_route_measure))).geom)::geometry(Point,3005) as geom
 FROM bcfishpass.gradient_barriers b
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
-ON b.blue_line_key = s.blue_line_key
-AND s.downstream_route_measure <= b.downstream_route_measure
-AND s.upstream_route_measure + .01 > b.downstream_route_measure
+  ON b.blue_line_key = s.blue_line_key
+  AND s.downstream_route_measure <= b.downstream_route_measure
+  AND s.upstream_route_measure + .01 > b.downstream_route_measure
 LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
-ON b.blue_line_key = p.blue_line_key
-AND b.downstream_route_measure = p.downstream_route_measure
+  ON b.blue_line_key = p.blue_line_key
+  AND b.downstream_route_measure = p.downstream_route_measure
+LEFT OUTER JOIN bcfishpass.observations o
+  ON FWA_Upstream(
+      b.blue_line_key,
+      b.downstream_route_measure,
+      s.wscode_ltree,
+      s.localcode_ltree,
+      o.blue_line_key,
+      o.downstream_route_measure,
+      o.wscode_ltree,
+      o.localcode_ltree,
+      False,
+      1
+    )
+  AND s.watershed_group_code = o.watershed_group_code
 WHERE
   b.gradient_class = 25 AND
-  p.blue_line_key IS NULL AND -- do not include any records matched to passable table
-  s.watershed_group_code = :'wsg'
+  -- do not include any records matched to passable table
+  p.blue_line_key IS NULL
+  AND
+  -- do not include any falls downstream of WCT observations
+    (
+      o.species_codes && ARRAY['WCT'] IS FALSE
+      OR o.species_codes IS NULL
+    )
+  AND s.watershed_group_code = :'wsg'
 ORDER BY b.blue_line_key, b.downstream_route_measure
 ON CONFLICT DO NOTHING;

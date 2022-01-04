@@ -1,8 +1,5 @@
 -- Sockeye rearing is simply all lakes >2km2, spawning is in adjacent streams
 
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS rearing_model_sockeye boolean;
-ALTER TABLE bcfishpass.streams ADD COLUMN IF NOT EXISTS spawning_model_sockeye boolean;
-
 -- ---------------------
 -- rearing
 -- ---------------------
@@ -18,7 +15,8 @@ WITH rearing AS
   LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
   ON s.waterbody_key = res.waterbody_key
   WHERE
-    s.accessibility_model_salmon IS NOT NULL AND  -- this takes care of watershed selection as well
+    s.watershed_group_code = :'wsg' AND
+    s.access_model_ch_co_sk IS NOT NULL AND  -- this takes care of watershed selection as well
      (
           lk.area_ha >= h.rear_lake_ha_min OR  -- lakes
           res.area_ha >= h.rear_lake_ha_min    -- reservoirs
@@ -26,7 +24,7 @@ WITH rearing AS
 )
 
 UPDATE bcfishpass.streams s
-SET rearing_model_sockeye = TRUE
+SET rearing_model_sk = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing);
 
 -- ---------------------
@@ -42,7 +40,8 @@ WITH rearing_minimums AS
     s.downstream_route_measure,
     s.blue_line_key
   FROM bcfishpass.streams s
-  WHERE rearing_model_sockeye = True
+  WHERE rearing_model_sk = True
+  AND s.watershed_group_code = :'wsg'
   ORDER BY s.waterbody_key, s.wscode_ltree, s.localcode_ltree, s.downstream_route_measure
 ),
 
@@ -62,6 +61,7 @@ downstream AS
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance to lake correct we do not include side channels in this query
+  AND s.watershed_group_code = :'wsg'
 ),
 
 -- we only want records within 3km of the rearing lakes,
@@ -103,8 +103,8 @@ dnstr_spawning AS
       WHEN
         wsg.model = 'mad' AND
         s.gradient <= sk.spawn_gradient_max AND
-        mad.mad_m3s > sk.spawn_mad_min AND
-        mad.mad_m3s <= sk.spawn_mad_max
+        s.mad_m3s > sk.spawn_mad_min AND
+        s.mad_m3s <= sk.spawn_mad_max
       THEN true
   END AS spawn_sk
   FROM downstream_within_3k a
@@ -112,8 +112,6 @@ dnstr_spawning AS
   ON a.waterbody_key = b.waterbody_key
   INNER JOIN bcfishpass.streams s
   ON a.segmented_stream_id = s.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.param_habitat sk
@@ -122,7 +120,7 @@ dnstr_spawning AS
 )
 
 UPDATE bcfishpass.streams
-SET spawning_model_sockeye = TRUE
+SET spawning_model_sk = TRUE
 WHERE segmented_stream_id IN (SELECT DISTINCT segmented_stream_id FROM dnstr_spawning WHERE spawn_sk IS TRUE);
 
 
@@ -140,8 +138,6 @@ WITH spawn AS
     s.localcode_ltree,
     s.geom
   FROM bcfishpass.streams s
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.param_habitat sk
@@ -149,6 +145,8 @@ WITH spawn AS
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   WHERE
+  s.watershed_group_code = :'wsg' AND
+
   ((
     wsg.model = 'cw' AND
     s.gradient <= sk.spawn_gradient_max AND
@@ -159,9 +157,10 @@ WITH spawn AS
   (
     wsg.model = 'mad' AND
     s.gradient <= sk.spawn_gradient_max AND
-    mad.mad_m3s > sk.spawn_mad_min AND
-    mad.mad_m3s <= sk.spawn_mad_max
+    s.mad_m3s > sk.spawn_mad_min AND
+    s.mad_m3s <= sk.spawn_mad_max
   ))
+
   AND
   (wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
     (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
@@ -185,7 +184,8 @@ spawn_upstream AS
     sp.wscode_ltree,
     sp.localcode_ltree
   )
-  WHERE r.rearing_model_sockeye IS TRUE
+  WHERE r.rearing_model_sk IS TRUE
+  AND r.watershed_group_code = :'wsg'
 ),
 
 -- cluster the spawning
@@ -204,7 +204,7 @@ wb AS
 (
   SELECT DISTINCT waterbody_key
   FROM bcfishpass.streams
-  WHERE rearing_model_sockeye IS TRUE
+  WHERE rearing_model_sk IS TRUE
 ),
 
 -- and geoms of the lakes/reservoirs
@@ -248,50 +248,5 @@ ids AS
 
 -- finally, apply update based on above ids
 UPDATE bcfishpass.streams s
-SET spawning_model_sockeye = TRUE
+SET spawning_model_sk = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM ids);
-
-
-
-
---
--- For Horsefly, all of the above has no effect because Quesnel Lake (where rearing occurs)
--- is outide of the group. Simply apply the spawing model everywhere in HORS.
---
-WITH spawn AS
-(
-  SELECT
-    s.segmented_stream_id,
-    s.blue_line_key,
-    s.downstream_route_measure,
-    s.wscode_ltree,
-    s.localcode_ltree,
-    s.geom
-  FROM bcfishpass.streams s
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
-  INNER JOIN bcfishpass.param_watersheds wsg
-  ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk
-  ON sk.species_code = 'SK'
-  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
-  ON s.waterbody_key = wb.waterbody_key
-  WHERE
-  (
-    wsg.model = 'mad' AND
-    s.gradient <= sk.spawn_gradient_max AND
-    mad.mad_m3s > sk.spawn_mad_min AND
-    mad.mad_m3s <= sk.spawn_mad_max
-  )
-  AND
-  (wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
-    (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
-  )
-  AND s.watershed_group_code = 'HORS'
-  AND s.accessibility_model_salmon IS NOT NULL
-)
-
-
-UPDATE bcfishpass.streams s
-SET spawning_model_sockeye = TRUE
-WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM spawn);

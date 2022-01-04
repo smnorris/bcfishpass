@@ -17,12 +17,10 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
+    s.access_model_salmon IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -38,8 +36,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     )
   AND s.watershed_group_code = :'wsg'
@@ -69,7 +67,7 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
-  WHERE spawn.spawning_model_chinook IS TRUE
+  WHERE spawn.spawning_model_ch IS TRUE
   AND spawn.watershed_group_code = :'wsg'
 ),
 
@@ -85,7 +83,7 @@ rearing_ids AS
 
 -- set rearing as true for these streams
 UPDATE bcfishpass.streams s
-SET rearing_model_chinook = TRUE
+SET rearing_model_ch = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 
@@ -106,12 +104,10 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CO'
   WHERE
-    s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
+    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
@@ -127,8 +123,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     OR s.edge_type IN (1050, 1150)  -- any wetlands are potential rearing
     )
@@ -161,7 +157,7 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
-  WHERE spawn.spawning_model_coho IS TRUE
+  WHERE spawn.spawning_model_co IS TRUE
   AND spawn.watershed_group_code = :'wsg'
 ),
 
@@ -177,7 +173,7 @@ rearing_ids AS
 
 -- set rearing as true for these streams
 UPDATE bcfishpass.streams s
-SET rearing_model_coho = TRUE
+SET rearing_model_co = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 
@@ -198,12 +194,10 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'ST'
   WHERE
-    s.accessibility_model_steelhead IS NOT NULL AND  -- accessibility check
+    s.access_model_st IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
@@ -219,8 +213,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     )
 ),
@@ -249,7 +243,7 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
-  WHERE spawn.spawning_model_steelhead IS TRUE
+  WHERE spawn.spawning_model_st IS TRUE
   AND spawn.watershed_group_code = :'wsg'
 ),
 
@@ -265,7 +259,7 @@ rearing_ids AS
 
 -- set rearing as true for these streams
 UPDATE bcfishpass.streams s
-SET rearing_model_steelhead = TRUE
+SET rearing_model_st = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 
@@ -285,12 +279,10 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'WCT'
   WHERE
-    s.accessibility_model_wct IS NOT NULL AND  -- accessibility check
+    s.access_model_wct IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
@@ -306,8 +298,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     )
 ),

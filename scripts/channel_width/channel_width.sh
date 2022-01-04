@@ -54,3 +54,10 @@ psql2csv $DATABASE_URL "SELECT * FROM bcfishpass.channel_width_analysis" > chann
 # --------
 # run the model as a single query, it doesn't take too long to process
 time $PSQL_CMD -f sql/channel_width_modelled.sql
+
+# --------
+# OUTPUT TABLE
+# --------
+# combine the measured/mapped/modelled data into a single table for easy relating to streams table
+
+$PSQL_CMD -f sql/channel_width.sql

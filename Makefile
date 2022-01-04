@@ -1,4 +1,4 @@
-.PHONY: all settings test #clean clean_sources
+.PHONY: all qa settings test #clean clean_sources
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
@@ -9,9 +9,13 @@ GENERATED_FILES=.fwapg .bcfishobs .schema \
 
 BARRIERS = $(patsubst scripts/model/sql/barriers_%.sql, %, $(wildcard scripts/model/sql/barriers_*.sql))
 BARRIERS_BROKEN = $(patsubst %, .broken_%, $(BARRIERS))
+QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
+QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
 
 # Make all targets - just point to final target to make everything
 all: .model_access
+
+qa: $(QA_OUTPUTS)
 
 settings:
 	echo BARRIERS: $(BARRIERS)
@@ -58,25 +62,20 @@ bcfishobs: .fwapg
 # ***********************************************
 
 # ------
-# CREATE REQUIRED FUNCTIONS AND (EMPTY) TABLES
+# CREATE SCHEMA, PLUS ALL REQUIRED FUNCTIONS AND (EMPTY) TABLES
 # ------
 .schema: $(wildcard scripts/model/sql/tables/*sql) $(wildcard scripts/model/sql/functions/*sql)
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
-	$(PSQL_CMD) -f scripts/model/sql/functions/create_barrier_tables.sql
-	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers.sql
-	$(PSQL_CMD) -f scripts/model/sql/functions/refresh_barriers_dnstr.sql
-	$(PSQL_CMD) -f scripts/model/sql/functions/utmzone.sql
-	$(PSQL_CMD) -f scripts/model/sql/functions/wsg_to_refresh.sql
-	$(PSQL_CMD) -f scripts/model/sql/tables/access.sql
-	$(PSQL_CMD) -f scripts/model/sql/tables/parameters.sql
-	$(PSQL_CMD) -f scripts/model/sql/tables/user.sql
+	for sql in $^ ; do \
+		$(PSQL_CMD) -f $$sql ; \
+	done
 	touch $@
 
 # ------
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
 .%: data/%.csv .schema
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst data/%.csv, %, $<)"
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst data/%.csv,%,$<)"
 	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
 	touch $@
 
@@ -149,37 +148,44 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	touch $@
 
 # -----
-# MANUAL HABITAT CLASSIFICATION ENDPOINTS
-# spawning/rearing habitat can be identified via this user table,
-# but we generate endpoints from lines for stream splitting
+# MODEL CHANNEL WIDTH
 # -----
-#.manual_habitat_classification_endpoints: .manual_habitat_classification scripts/model/sql/manual_habitat_classification_endpoints.sql
-#	$(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql
-#	touch $@
+.channel_width: .fwapg
+	cd scripts/channel_width; ./mean_annual_precip.sh
+	cd scripts/channel_width; ./channel_width.sh
+	touch $@
+
+# -----
+# MODEL DISCHARGE
+# -----
+scripts/discharge/.discharge: .fwapg
+	cd scripts/discharge; make
+
+# -----
+# INITIAL PROVINCIAL STREAM DATA LOAD
+# (channel width and discharge are required as they are loaded directly to this table)
+# -----
+.streams: .param_watersheds .fwapg scripts/model/sql/tables/streams.sql .channel_width scripts/discharge/.discharge
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams"
+	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
+	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_lfeatid_idx ON bcfishpass.streams (linear_feature_id);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_blkey_idx ON bcfishpass.streams (blue_line_key);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_wsg_idx ON bcfishpass.streams (watershed_group_code);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_wbkey_idx ON bcfishpass.streams (waterbody_key);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_wsc_gidx ON bcfishpass.streams USING GIST (wscode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_wsc_bidx ON bcfishpass.streams USING BTREE (wscode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_lc_gidx ON bcfishpass.streams USING GIST (localcode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_lc_bidx ON bcfishpass.streams USING BTREE (localcode_ltree);"
+	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_geom_idx ON bcfishpass.streams USING GIST (geom);"
+	touch $@
+
 
 # ***********************************************
 # **                                           **
 # **      CREATE/UPDATE ACCESS MODEL           **
 # **                                           **
 # ***********************************************
-
-# -----
-# INITIAL PROVINCIAL STREAM DATA LOAD
-# -----
-.segmented_streams: .param_watersheds .fwapg scripts/model/sql/load_segmented_streams.sql
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.segmented_streams"
-	$(PSQL_CMD) -f scripts/model/sql/tables/segmented_streams.sql
-	parallel $(PSQL_CMD) -f scripts/model/sql/load_segmented_streams.sql -v wsg={1} ::: $(WSG)
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (linear_feature_id);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (blue_line_key);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (watershed_group_code);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams (waterbody_key);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING GIST (wscode_ltree);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING BTREE (wscode_ltree);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING GIST (localcode_ltree);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING BTREE (localcode_ltree);"
-	$(PSQL_CMD) -c "CREATE INDEX ON bcfishpass.segmented_streams USING GIST (geom);"
-	touch $@
 
 # ------
 # OBSERVATIONS
@@ -202,7 +208,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # -----
 .barriersource_anthropogenic: .crossings
 	touch $@
-.barriersource_falls: .falls
+.barriersource_falls: .falls .falls_barrier_ind
 	touch $@
 .barriersource_pscis: .crossings
 	touch $@
@@ -229,8 +235,6 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	touch $@
 .barriersource_gradient_30: scripts/gradient_barriers/.gradient_barriers .gradient_barriers_passable
 	touch $@
-.barriersource_manualhabitat: .manual_habitat_classification
-	touch $@
 
 # for every .barriersource file, create barrier table
 # and load/refresh the barrier table for for watershed group(s) where data has had a change
@@ -239,7 +243,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	# clear barrier load table
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.barrier_load"
 	# load all features for given barrier type to barrier_load table
-	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG)
+	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG_PARAM)
 	# find watershed groups requiring updates and write list to file
 	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX >  $(subst .barriers_,.torefresh_,$@)
 	# load above noted watershed groups to barrier table
@@ -249,14 +253,6 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 	cat $(subst .barriers_,.torefresh_,$@) >> .wsg_to_refresh
 	# create target
 	mv $(subst .barriers_,.torefresh_,$@) $@
-
-# delete these definite barriers below WCT observations in ELKR
-.delete_barriers_below_observations: .barriers_gradient_20 .barriers_gradient_25 .barriers_gradient_30 .barriers_falls .barriers_subsurfaceflow .observations
-	for barriertype in gradient_20 gradient_25 gradient_30 falls subsurfaceflow ;  do \
-		echo "select bcfishpass.delete_barriers_below_observations(:'barriertype', :'species_code', :'wsg')" | \
-			$(PSQL_CMD) -v wsg='ELKR' -v barriertype=$$barriertype -v species_code='WCT' ;\
-	done
-	touch $@
 
 # -----
 # BREAK STREAMS
@@ -268,56 +264,27 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist
 # NOTE2 - processing in parallel (provincially) eventually crashes the db, process one group at a time or with a
 # modest job count
-$(BARRIERS_BROKEN): .broken_%: .barriers_% .segmented_streams .delete_barriers_below_observations
+$(BARRIERS_BROKEN): .broken_%: .barriers_% .streams
 	parallel -a $< --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
-	touch $@
-.broken_observations: .observations .segmented_streams
-	parallel -a $< --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
+	parallel -a $< --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql -v wsg={1} -v barriertype=$(subst .broken_,,$@)
 	touch $@
 
-# -----
-# BARRIERS_DNSTR TABLES - INDEX BARRIERS DOWNSTREAM
-# -----
-# refresn all barrier _dnstr lookups for each watershed group that has had streams broken
-.barriersdnstr: $(BARRIERS_BROKEN) .broken_observations
-ifneq ($<, .broken_manualhabitat)  # do not process manual habitat classification endpoints, they are not barriers
-	# process all barrier types, not just individual types that have been updated - all _dnstr tables must be updated
-	# after any breaking of streams
-	for barriertype in $(BARRIERS) ; do \
-		echo $${barriertype} ;\
-		for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ;  do \
-			echo $${wsg} ;\
-			$(PSQL_CMD) -f scripts/model/sql/refresh_barriers_dnstr_wrapper.sql -v wsg=$$wsg -v barriertype=$${barriertype} ;\
-		done ; \
-	done
-endif
+.broken_observations: .observations .streams
+	parallel -a $< --jobs 4 --no-run-if-empty  $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
+	parallel -a $< --jobs 4 --no-run-if-empty  $(PSQL_CMD) -f scripts/model/sql/update_observations_upstr.sql -v wsg={1}
 	touch $@
 
-# -----
-# OBSERVATIONS_UPSTR - INDEX OBSERVATIONS UPSTREAM
-# -----
-# note that not only .broken_observations is a requirement, all barrier stream breaking must also be complete
-.observationsupstr: .broken_observations $(patsubst %, .broken_%, $(BARRIERS))
-	# note that the wrapper query sql file is not needed a file seems simpler than figuring out make/parallel quoting
-	for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ;  do \
-		$(PSQL_CMD) -f scripts/model/sql/refresh_observations_upstr.sql -v wsg=$$wsg ; \
+# once all barriers and observations are processed, update the access model values
+.model_access: $(BARRIERS_BROKEN) .broken_observations
+	for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/update_access.sql -v wsg=$$wsg ; \
 	done
 	touch $@
 
-# -----
-# RUN ACCESS MODEL QUERY
-# -----
-# load (or refresh) access model table for each group that has changed
-#.model_access: .barriersdnstr .observationsupstr
-#	cat .wsg_to_refresh | sort | uniq | parallel --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_access.sql -v wsg={1}
-#	rm .wsg_to_refresh
-#	touch $@
-
-.streams: .barriersdnstr .observationsupstr
-	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql # create ouput streams table if not already present
-	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_access_2.sql -v wsg={1}
-	touch $@
-
+# run qa queries
+qa/%.csv: scripts/qa/sql/%.sql .model_access
+	mkdir -p qa
+	psql2csv $(DATABASE_URL) < $< > $@
 
 #.crossings_report:
 # index barriers_anthropogenic and crossings based on upstream/downstream crossings
@@ -342,42 +309,33 @@ endif
 # ***********************************************
 
 # -----
-# MODEL CHANNEL WIDTH
-# -----
-# todo - create makefile for cw model
-.channel_width: .fwapg
-	cd scripts/channel_width; ./mean_annual_precip.sh
-	cd scripts/channel_width; ./channel_width.sh
-	touch $@
-
-# -----
-# MODEL DISCHARGE
-# -----
-scripts/discharge/.discharge: .fwapg
-	cd scripts/discharge; make
-
-# -----
 # RUN HABITAT MODEL
 # -----
 .model_habitat: .model_access
-	# load cw/discharge directly into the streams table
-	$(PSQL_CMD) -f scripts/model/load_channel_width.sql
-	$(PSQL_CMD) -f scripts/model/load_discharge.sql
+	# spawning model is relatively simple, requires just one query
+	#$(PSQL_CMD) -f scripts/model/model_habitat_spawning.sql
+	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_spawning.sql -v wsg={1}
 
-	# spawning model is relatively simple, run in a single query
-	$(PSQL_CMD) -f scripts/model/model_habitat_spawning.sql
+	# find all potential rearing streams
+	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_rearing_1.sql -v wsg{1}
 
-	# Rearing requires several queries for CO/CH/WCT
-	$(PSQL_CMD) -f scripts/model/model_habitat_rearing_1.sql # find all potential rearing streams
-	time $(PSQL_CMD) -t -P border=0,footer=no \    # find subset of rearing that is downstream of spawning
-	-c "SELECT watershed_group_code FROM bcfishpass.param_watersheds ORDER BY watershed_group_code" \
-	    | parallel $(PSQL_CMD) -f scripts/model/model_habitat_rearing_2.sql -v wsg={1}
-	$(PSQL_CMD) -f scripts/model/model_habitat_rearing_3.sql # find subset of rearing that is upstream of spawning
+	# find subset of rearing downstream of spawning
+	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_rearing_2.sql -v wsg={1}
 
-	# And a separate rearing query for SK because of different life cycle (lake requirement)
-	$(PSQL_CMD) -f scripts/model/model_habitat_sockeye.sql
+	# find subset of rearing upstream of spawning
+	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_rearing_3.sql -v wsg={1}
+
+	# SK habitat modelling is separate because of different life cycle (lake requirement)
+	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_sk.sql
+
+	# plus SK can be watershed specific, run for horsefly
+	$(PSQL_CMD) -f scripts/model/model_habitat_sk_hors.sql
 
 	# override the model where specified by manual_habitat_classification
+	# create endpoitns
+	$(PSQL_CMD) -f scripts/model/manual_habitat_classification_endpoints.sql
+	# break streams at endpoints
+	$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=manual_habitat_classification_endpoints
 	$(PSQL_CMD) -f scripts/model/manual_habitat_classification.sql
 	touch $@
 

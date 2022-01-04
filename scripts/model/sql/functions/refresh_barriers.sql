@@ -1,7 +1,5 @@
--- for given watershed group,
---   - transfer data from temp load table to given barrier table
---   - populate _dnstr table relating streams to barriers downstream
--- this overwrites any existing records for given watershed group
+-- for given watershed group, transfer data from temp load table to given barrier table
+-- (this overwrites any existing records for given watershed group)
 
 CREATE OR REPLACE FUNCTION bcfishpass.refresh_barriers(barriertype text, wsg text)
   RETURNS VOID

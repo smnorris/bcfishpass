@@ -12,28 +12,28 @@ WITH manual_habitat_class AS
       upstream_route_measure,
       CASE
         WHEN h.species_code = 'CH' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS spawning_model_chinook,
+      END AS spawning_model_ch,
       CASE
         WHEN h.species_code = 'CH' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS rearing_model_chinook,
+      END AS rearing_model_ch,
       CASE
         WHEN h.species_code = 'CO' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS spawning_model_coho,
+      END AS spawning_model_co,
       CASE
         WHEN h.species_code = 'CO' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS rearing_model_coho,
+      END AS rearing_model_co,
       CASE
         WHEN h.species_code = 'SK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS spawning_model_sockeye,
+      END AS spawning_model_sk,
       CASE
         WHEN h.species_code = 'SK' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS rearing_model_sockeye,
+      END AS rearing_model_sk,
       CASE
         WHEN h.species_code = 'ST' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS spawning_model_steelhead,
+      END AS spawning_model_st,
       CASE
         WHEN h.species_code = 'ST' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS rearing_model_steelhead,
+      END AS rearing_model_st,
       CASE
         WHEN h.species_code = 'WCT' AND h.habitat_type = 'spawning' THEN h.habitat_ind
       END AS spawning_model_wct,
@@ -55,24 +55,24 @@ SELECT
   s.watershed_group_code,
   s.wscode_ltree,
   s.localcode_ltree,
-  s.spawning_model_chinook,
-  s.rearing_model_chinook,
-  s.spawning_model_coho,
-  s.rearing_model_coho,
-  s.spawning_model_sockeye,
-  s.rearing_model_sockeye,
-  s.spawning_model_steelhead,
-  s.rearing_model_steelhead,
+  s.spawning_model_ch,
+  s.rearing_model_ch,
+  s.spawning_model_co,
+  s.rearing_model_co,
+  s.spawning_model_sk,
+  s.rearing_model_sk,
+  s.spawning_model_st,
+  s.rearing_model_st,
   s.spawning_model_wct,
   s.rearing_model_wct,
-  h.spawning_model_chinook AS spawning_model_chinook_manual,
-  h.rearing_model_chinook AS rearing_model_chinook_manual,
-  h.spawning_model_coho AS spawning_model_coho_manual,
-  h.rearing_model_coho AS rearing_model_coho_manual,
-  h.spawning_model_sockeye AS spawning_model_sockeye_manual,
-  h.rearing_model_sockeye AS rearing_model_sockeye_manual,
-  h.spawning_model_steelhead AS spawning_model_steelhead_manual,
-  h.rearing_model_steelhead AS rearing_model_steelhead_manual,
+  h.spawning_model_ch AS spawning_model_ch_manual,
+  h.rearing_model_ch AS rearing_model_ch_manual,
+  h.spawning_model_co AS spawning_model_co_manual,
+  h.rearing_model_co AS rearing_model_co_manual,
+  h.spawning_model_sk AS spawning_model_sk_manual,
+  h.rearing_model_sk AS rearing_model_sk_manual,
+  h.spawning_model_st AS spawning_model_st_manual,
+  h.rearing_model_st AS rearing_model_st_manual,
   h.spawning_model_wct AS spawning_model_wct_manual,
   h.rearing_model_wct AS rearing_model_wct_manual,
   h.reviewer,
@@ -92,7 +92,7 @@ ORDER BY s.blue_line_key, s.downstream_route_measure, h.blue_line_key;
 -- Because we are conditionally updating many columns, updates are most easily applied
 -- per species/habitat type
 UPDATE bcfishpass.streams s
-SET spawning_model_chinook = h.habitat_ind
+SET spawning_model_ch = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -101,7 +101,7 @@ AND h.species_code = 'CH'
 AND h.habitat_type = 'spawning';
 
 UPDATE bcfishpass.streams s
-SET rearing_model_chinook = h.habitat_ind
+SET rearing_model_ch = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -110,7 +110,7 @@ AND h.species_code = 'CH'
 AND h.habitat_type = 'rearing';
 
 UPDATE bcfishpass.streams s
-SET spawning_model_coho = h.habitat_ind
+SET spawning_model_co = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -119,7 +119,7 @@ AND h.species_code = 'CO'
 AND h.habitat_type = 'spawning';
 
 UPDATE bcfishpass.streams s
-SET rearing_model_coho = h.habitat_ind
+SET rearing_model_co = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -128,7 +128,7 @@ AND h.species_code = 'CO'
 AND h.habitat_type = 'rearing';
 
 UPDATE bcfishpass.streams s
-SET spawning_model_sockeye = h.habitat_ind
+SET spawning_model_sk = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -137,7 +137,7 @@ AND h.species_code = 'SK'
 AND h.habitat_type = 'spawning';
 
 UPDATE bcfishpass.streams s
-SET rearing_model_sockeye = h.habitat_ind
+SET rearing_model_sk = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -146,7 +146,7 @@ AND h.species_code = 'SK'
 AND h.habitat_type = 'rearing';
 
 UPDATE bcfishpass.streams s
-SET spawning_model_steelhead = h.habitat_ind
+SET spawning_model_st = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
@@ -155,7 +155,7 @@ AND h.species_code = 'ST'
 AND h.habitat_type = 'spawning';
 
 UPDATE bcfishpass.streams s
-SET rearing_model_steelhead = h.habitat_ind
+SET rearing_model_st = h.habitat_ind
 FROM bcfishpass.manual_habitat_classification h
 WHERE s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)

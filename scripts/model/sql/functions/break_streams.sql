@@ -31,7 +31,7 @@ BEGIN
         s.upstream_route_measure AS meas_stream_us,
         b.downstream_route_measure AS meas_event
       FROM
-        bcfishpass.segmented_streams s
+        bcfishpass.streams s
         INNER JOIN breakpoints b
         ON s.blue_line_key = b.blue_line_key AND
         -- match based on measure, but only break stream lines where the
@@ -62,11 +62,39 @@ BEGIN
       s.linear_feature_id,
       n.downstream_route_measure,
       n.upstream_route_measure,
+      s.barriers_majordams_dnstr,
+      s.barriers_subsurfaceflow_dnstr,
+      s.barriers_falls_dnstr,
+      s.barriers_gradient_05_dnstr,
+      s.barriers_gradient_07_dnstr,
+      s.barriers_gradient_10_dnstr,
+      s.barriers_gradient_15_dnstr,
+      s.barriers_gradient_20_dnstr,
+      s.barriers_gradient_25_dnstr,
+      s.barriers_gradient_30_dnstr,
+      s.barriers_other_definite_dnstr,
+      s.barriers_anthropogenic_dnstr,
+      s.barriers_pscis_dnstr,
+      s.barriers_remediated_dnstr,
+      s.obsrvtn_pnt_distinct_upstr,
+      s.obsrvtn_species_codes_upstr,
+      s.access_model_ch_co_sk,
+      s.access_model_st,
+      s.access_model_wct,
+      s.access_model_pk,
+      s.access_model_cm,
+      s.channel_width,
+      s.mad_m3s,
+      s.spawning_model_ch,
+      s.spawning_model_co,
+      s.spawning_model_sk,
+      s.spawning_model_st,
+      s.spawning_model_wct,
       (ST_Dump(ST_LocateBetween
         (s.geom, n.downstream_route_measure, n.upstream_route_measure
         ))).geom AS geom
     FROM new_measures n
-    INNER JOIN bcfishpass.segmented_streams s ON n.segmented_stream_id = s.segmented_stream_id;
+    INNER JOIN bcfishpass.streams s ON n.segmented_stream_id = s.segmented_stream_id;
 
 
     ---------------------------------------------------------------
@@ -91,12 +119,12 @@ BEGIN
         ST_Length(ST_LocateBetween(s.geom, s.downstream_route_measure, m.downstream_route_measure)) as length_metre,
         (ST_Dump(ST_LocateBetween (s.geom, s.downstream_route_measure, m.downstream_route_measure))).geom as geom
       FROM min_segs m
-      INNER JOIN bcfishpass.segmented_streams s
+      INNER JOIN bcfishpass.streams s
       ON m.segmented_stream_id = s.segmented_stream_id
     )
 
     UPDATE
-      bcfishpass.segmented_streams a
+      bcfishpass.streams a
     SET
       length_metre = b.length_metre,
       geom = b.geom
@@ -109,7 +137,7 @@ BEGIN
     ---------------------------------------------------------------
     -- now insert new features
     ---------------------------------------------------------------
-    INSERT INTO bcfishpass.segmented_streams
+    INSERT INTO bcfishpass.streams
     (
       linear_feature_id,
       edge_type,
@@ -121,6 +149,34 @@ BEGIN
       waterbody_key,
       wscode_ltree,
       localcode_ltree,
+      barriers_majordams_dnstr,
+      barriers_subsurfaceflow_dnstr,
+      barriers_falls_dnstr,
+      barriers_gradient_05_dnstr,
+      barriers_gradient_07_dnstr,
+      barriers_gradient_10_dnstr,
+      barriers_gradient_15_dnstr,
+      barriers_gradient_20_dnstr,
+      barriers_gradient_25_dnstr,
+      barriers_gradient_30_dnstr,
+      barriers_other_definite_dnstr,
+      barriers_anthropogenic_dnstr,
+      barriers_pscis_dnstr,
+      barriers_remediated_dnstr,
+      obsrvtn_pnt_distinct_upstr,
+      obsrvtn_species_codes_upstr,
+      access_model_ch_co_sk,
+      access_model_st,
+      access_model_wct,
+      access_model_pk,
+      access_model_cm,
+      channel_width,
+      mad_m3s,
+      spawning_model_ch,
+      spawning_model_co,
+      spawning_model_sk,
+      spawning_model_st,
+      spawning_model_wct,
       geom
     )
     SELECT
@@ -134,6 +190,34 @@ BEGIN
       s.waterbody_key,
       s.wscode_ltree,
       s.localcode_ltree,
+      t.barriers_majordams_dnstr,
+      t.barriers_subsurfaceflow_dnstr,
+      t.barriers_falls_dnstr,
+      t.barriers_gradient_05_dnstr,
+      t.barriers_gradient_07_dnstr,
+      t.barriers_gradient_10_dnstr,
+      t.barriers_gradient_15_dnstr,
+      t.barriers_gradient_20_dnstr,
+      t.barriers_gradient_25_dnstr,
+      t.barriers_gradient_30_dnstr,
+      t.barriers_other_definite_dnstr,
+      t.barriers_anthropogenic_dnstr,
+      t.barriers_pscis_dnstr,
+      t.barriers_remediated_dnstr,
+      t.obsrvtn_pnt_distinct_upstr,
+      t.obsrvtn_species_codes_upstr,
+      t.access_model_ch_co_sk,
+      t.access_model_st,
+      t.access_model_wct,
+      t.access_model_pk,
+      t.access_model_cm,
+      t.channel_width,
+      t.mad_m3s,
+      t.spawning_model_ch,
+      t.spawning_model_co,
+      t.spawning_model_sk,
+      t.spawning_model_st,
+      t.spawning_model_wct,
       t.geom
     FROM temp_streams t
     INNER JOIN whse_basemapping.fwa_stream_networks_sp s

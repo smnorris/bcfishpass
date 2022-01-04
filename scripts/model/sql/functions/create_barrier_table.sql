@@ -1,7 +1,6 @@
--- create table holding barriers of given type, plus barrier_dnstr table
--- holding ids of all streams with barrier of this type downstream
+-- create table for holding barriers of given type
 
-CREATE OR REPLACE FUNCTION bcfishpass.create_barrier_tables(barriertype text)
+CREATE OR REPLACE FUNCTION bcfishpass.create_barrier_table(barriertype text)
   RETURNS VOID
   LANGUAGE plpgsql AS
 $func$
@@ -10,7 +9,7 @@ BEGIN
     EXECUTE format('
         CREATE TABLE IF NOT EXISTS bcfishpass.%I
         (
-            %I int primary key,
+            %I bigint primary key,
             barrier_type text,
             barrier_name text,
             linear_feature_id integer,
@@ -54,17 +53,6 @@ BEGIN
         'barriers_' || barriertype,
         'br_' || barriertype || '_geom_idx',
         'barriers_' || barriertype
-    );
-
-    EXECUTE format('
-        CREATE TABLE IF NOT EXISTS bcfishpass.%I
-        (
-            segmented_stream_id text primary key,
-            watershed_group_code character varying (4),
-            %I int[]
-        )',
-        'barriers_' || barriertype || '_dnstr',
-        'barriers_' || barriertype || '_dnstr'
     );
 
 END

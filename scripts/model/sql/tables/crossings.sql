@@ -1,117 +1,3 @@
--- create various empty tables required for access model
-
--- --------------
--- BARRIER_LOAD
---
--- intermediate table for loading various barrier types to consistent structure/location before processing as barriers
--- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.barrier_load
-(
-    barrier_load_id int unique,
-    barrier_type text,
-    barrier_name text,
-    linear_feature_id integer,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    wscode_ltree ltree,
-    localcode_ltree ltree,
-    watershed_group_code character varying (4),
-    geom geometry(Point, 3005),
-    PRIMARY KEY (blue_line_key, downstream_route_measure)
-);
-
--- --------------
--- OBSERVATIONS_LOAD
---
--- initial load target for all latest observation data
--- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.observations_load
-(
-  fish_obsrvtn_pnt_distinct_id integer primary key,
-  linear_feature_id         bigint                           ,
-  blue_line_key             integer                          ,
-  wscode_ltree ltree                                         ,
-  localcode_ltree ltree                                      ,
-  downstream_route_measure  double precision                 ,
-  watershed_group_code      character varying(4)             ,
-  species_codes text[]                                      ,
-  observation_ids int[] ,
-  geom geometry(PointZM, 3005)
-);
-
--- --------------
--- OBSERVATIONS
---
--- observation data to be used in model
--- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.observations
-(
-  fish_obsrvtn_pnt_distinct_id integer primary key,
-  linear_feature_id         bigint                           ,
-  blue_line_key             integer                          ,
-  wscode_ltree ltree                                         ,
-  localcode_ltree ltree                                      ,
-  downstream_route_measure  double precision                 ,
-  watershed_group_code      character varying(4)             ,
-  species_codes text[]                                      ,
-  observation_ids int[] ,
-  geom geometry(PointZM, 3005)
-);
-
-CREATE INDEX IF NOT EXISTS obsrvtn_linear_feature_id_idx ON bcfishpass.observations (linear_feature_id);
-CREATE INDEX IF NOT EXISTS obsrvtn_blue_line_key_idx ON bcfishpass.observations (blue_line_key);
-CREATE INDEX IF NOT EXISTS obsrvtn_watershed_group_code_idx ON bcfishpass.observations (watershed_group_code);
-CREATE INDEX IF NOT EXISTS obsrvtn_wsc_gidx ON bcfishpass.observations USING GIST (wscode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_wsc_bidx ON bcfishpass.observations USING BTREE (wscode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_lc_gidx ON bcfishpass.observations USING GIST (localcode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_lc_bidx ON bcfishpass.observations USING BTREE (localcode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_geom_idx ON bcfishpass.observations USING GIST (geom);
-
-
--- --------------
--- OBSERVATIONS_UPSTR
---
--- lookup relating streams to observations upstream
--- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.observations_upstr
-(
-  segmented_stream_id text primary key,
-  watershed_group_code character varying(4),
-  obsrvtn_pnt_distinct_upstr integer[],
-  obsrvtn_species_codes_upstr text[]
-);
-
--- --------------
--- ACCESS TABLE
--- classify accessibility based on downstream barriers and upstream observations
--- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.model_access
-(
-  segmented_stream_id text primary key,
-  watershed_group_code character varying (4),
-  barriers_majordams_dnstr integer[],
-  barriers_subsurfaceflow_dnstr integer[],
-  barriers_falls_dnstr integer[],
-  barriers_gradient_05_dnstr integer[],
-  barriers_gradient_07_dnstr integer[],
-  barriers_gradient_10_dnstr integer[],
-  barriers_gradient_15_dnstr integer[],
-  barriers_gradient_20_dnstr integer[],
-  barriers_gradient_25_dnstr integer[],
-  barriers_gradient_30_dnstr integer[],
-  barriers_other_definite_dnstr integer[],
-  barriers_anthropogenic_dnstr integer[],
-  barriers_pscis_dnstr integer[],
-  barriers_remediated_dnstr integer[],
-  obsrvtn_pnt_distinct_upstr integer[],
-  accessibility_model_salmon text,
-  accessibility_model_steelhead text,
-  accessibility_model_wct text,
-  accessibility_model_co_ch_sk text,
-  accessibility_model_st text,
-  accessibility_model_pk text,
-  accessibility_model_cm text
-);
 -- --------------
 -- CROSSINGS
 --
@@ -190,10 +76,18 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     watershed_group_code text,
     gnis_stream_name text,
     geom geometry(Point, 3005),
-    -- add a unique constraint on linear location
-    -- (so that we don't have points in the same spot messing up subsequent joins)
+
+    -- reporting columns
+    barriers_anthropogenic_dnstr integer[],
+    barriers_anthropogenic_dnstr_count integer,
+    barriers_anthropogenic_upstr integer[],
+    barriers_anthropogenic_upstr_count integer,
+
+    -- only one crossing per location please
     UNIQUE (blue_line_key, downstream_route_measure)
 );
+
+
 
 
 -- document the columns included
@@ -238,3 +132,9 @@ COMMENT ON COLUMN bcfishpass.crossings.localcode_ltree IS 'A truncated version o
 COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed group code associated with the feature.';
 COMMENT ON COLUMN bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
 COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
+
+COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';
+COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr_count IS 'A count of the barrier crossings downstream of the given crossing';
+COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';
+COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';
+

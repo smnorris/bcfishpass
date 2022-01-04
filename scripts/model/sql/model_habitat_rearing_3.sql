@@ -15,12 +15,11 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
+    s.watershed_group_code = :'wsg' AND
+    s.access_model_salmon IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -36,8 +35,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     )
 ),
@@ -78,7 +77,7 @@ downstream AS
     s.localcode_ltree,
     s.downstream_route_measure,
     s.gradient,
-    s.spawning_model_chinook,
+    s.spawning_model_ch,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
@@ -101,7 +100,7 @@ nearest_spawn AS
   SELECT DISTINCT ON (cid)
   *
   FROM downstream_within_10k
-  WHERE spawning_model_chinook IS TRUE
+  WHERE spawning_model_ch IS TRUE
   ORDER BY cid, wscode_ltree desc, downstream_route_measure desc
 ),
 
@@ -121,7 +120,7 @@ valid_rearing AS
   SELECT
     a.cid,
     a.row_number as row_spawn,
-    a.spawning_model_chinook,
+    a.spawning_model_ch,
     b.row_number as row_barrier,
     b.gradient
   FROM nearest_spawn a
@@ -131,7 +130,7 @@ valid_rearing AS
 )
 
 UPDATE bcfishpass.streams
-SET rearing_model_chinook = TRUE
+SET rearing_model_ch = TRUE
 WHERE segmented_stream_id IN
 (
   SELECT a.segmented_stream_id
@@ -155,12 +154,11 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CO'
   WHERE
-    s.accessibility_model_salmon IS NOT NULL AND  -- accessibility check
+    s.watershed_group_code = :'wsg' AND
+    s.access_model_salmon IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
@@ -176,8 +174,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     OR s.edge_type IN (1050, 1150)  -- any wetlands are potential rearing
     )
@@ -219,7 +217,7 @@ downstream AS
     s.localcode_ltree,
     s.downstream_route_measure,
     s.gradient,
-    s.spawning_model_coho,
+    s.spawning_model_co,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
@@ -242,7 +240,7 @@ nearest_spawn AS
   SELECT DISTINCT ON (cid)
   *
   FROM downstream_within_10k
-  WHERE spawning_model_coho IS TRUE
+  WHERE spawning_model_co IS TRUE
   ORDER BY cid, wscode_ltree desc, downstream_route_measure desc
 ),
 
@@ -262,7 +260,7 @@ valid_rearing AS
   SELECT
     a.cid,
     a.row_number as row_spawn,
-    a.spawning_model_coho,
+    a.spawning_model_co,
     b.row_number as row_barrier,
     b.gradient
   FROM nearest_spawn a
@@ -272,7 +270,7 @@ valid_rearing AS
 )
 
 UPDATE bcfishpass.streams
-SET rearing_model_coho = TRUE
+SET rearing_model_co = TRUE
 WHERE segmented_stream_id IN
 (
   SELECT a.segmented_stream_id
@@ -295,12 +293,11 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'ST'
   WHERE
-    s.accessibility_model_steelhead IS NOT NULL AND  -- accessibility check
+    s.watershed_group_code = :'wsg' AND
+    s.access_model_st IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
@@ -316,8 +313,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     )
 ),
@@ -358,7 +355,7 @@ downstream AS
     s.localcode_ltree,
     s.downstream_route_measure,
     s.gradient,
-    s.spawning_model_steelhead,
+    s.spawning_model_st,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
@@ -381,7 +378,7 @@ nearest_spawn AS
   SELECT DISTINCT ON (cid)
   *
   FROM downstream_within_10k
-  WHERE spawning_model_steelhead IS TRUE
+  WHERE spawning_model_st IS TRUE
   ORDER BY cid, wscode_ltree desc, downstream_route_measure desc
 ),
 
@@ -401,7 +398,7 @@ valid_rearing AS
   SELECT
     a.cid,
     a.row_number as row_spawn,
-    a.spawning_model_steelhead,
+    a.spawning_model_st,
     b.row_number as row_barrier,
     b.gradient
   FROM nearest_spawn a
@@ -411,7 +408,7 @@ valid_rearing AS
 )
 
 UPDATE bcfishpass.streams
-SET rearing_model_steelhead = TRUE
+SET rearing_model_st = TRUE
 WHERE segmented_stream_id IN
 (
   SELECT a.segmented_stream_id
@@ -435,12 +432,11 @@ WITH rearing AS
   ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.discharge mad
-  ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'WCT'
   WHERE
-    s.accessibility_model_wct IS NOT NULL AND  -- accessibility check
+    s.watershed_group_code = :'wsg' AND
+    s.access_model_wct IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
@@ -456,8 +452,8 @@ WITH rearing AS
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        s.mad_m3s > h.rear_mad_min AND
+        s.mad_m3s <= h.rear_mad_max
       )
     )
 ),

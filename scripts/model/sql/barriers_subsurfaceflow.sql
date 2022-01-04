@@ -13,7 +13,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    linear_feature_id as barriers_load_id,
+    s.linear_feature_id as barriers_load_id,
     'SUBSURFACEFLOW' as barrier_type,
     NULL as barrier_name,
     s.linear_feature_id,
@@ -29,6 +29,20 @@ SELECT
         0
     ) as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
+LEFT OUTER JOIN bcfishpass.observations o
+  ON FWA_Upstream(
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    o.blue_line_key,
+    o.downstream_route_measure,
+    o.wscode_ltree,
+    o.localcode_ltree,
+    False,
+    1
+  )
+  AND s.watershed_group_code = o.watershed_group_code
 WHERE
   s.watershed_group_code = :'wsg' AND
   s.edge_type IN (1410, 1425) AND
@@ -41,4 +55,10 @@ WHERE
 -- TODO - add a user table for corrections like this
   AND NOT
   (s.blue_line_key = 356363411 AND s.downstream_route_measure < 213010)
+  AND
+-- do not include any falls downstream of WCT observations
+  (
+    o.species_codes && ARRAY['WCT'] IS FALSE
+    OR o.species_codes IS NULL
+  )
 ON CONFLICT DO NOTHING;
