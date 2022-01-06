@@ -21,6 +21,9 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   waterbody_key            integer                     ,
   wscode_ltree             ltree                       ,
   localcode_ltree          ltree                       ,
+  gnis_name                 character varying(80)      ,
+  stream_order              integer                    ,
+  stream_magnitude          integer                    ,
   gradient                  double precision
     GENERATED ALWAYS AS (round((((ST_Z (ST_PointN (geom, - 1)) - ST_Z (ST_PointN (geom, 1))) / ST_Length (geom))::numeric), 4)) STORED,
   upstream_route_measure    double precision
@@ -61,6 +64,11 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   spawning_model_sk boolean,
   spawning_model_st boolean,
   spawning_model_wct boolean,
+  rearing_model_ch boolean,
+  rearing_model_co boolean,
+  rearing_model_sk boolean,
+  rearing_model_st boolean,
+  rearing_model_wct boolean,
 
   geom geometry(LineStringZM,3005)
 );

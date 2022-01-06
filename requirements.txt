@@ -8,4 +8,3 @@ sqlalchemy-utils==0.36.8
 alembic==1.5.*
 rasterstats==0.16.*
 bcdata==0.5.1
-pgdata

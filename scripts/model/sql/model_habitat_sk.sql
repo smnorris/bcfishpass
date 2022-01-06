@@ -1,5 +1,18 @@
 -- Sockeye rearing is simply all lakes >2km2, spawning is in adjacent streams
 
+-- reset
+UPDATE bcfishpass.streams s
+SET spawning_model_sk = NULL,
+WHERE spawning_model_sk IS NOT NULL,
+AND watershed_group_code = :'wsg';
+
+UPDATE bcfishpass.streams s
+SET rearing_model_sk = NULL,
+WHERE rearing_model_sk IS NOT NULL,
+AND watershed_group_code = :'wsg';
+
+
+
 -- ---------------------
 -- rearing
 -- ---------------------

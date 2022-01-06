@@ -7,7 +7,6 @@ INSERT INTO bcfishpass.crossings
 (
     stream_crossing_id,
     modelled_crossing_id,
-
     crossing_source,
     pscis_status,
     crossing_type_code,
@@ -17,23 +16,18 @@ INSERT INTO bcfishpass.crossings
     pscis_road_name,
     pscis_stream_name,
     pscis_assessment_comment,
-
     transport_line_structured_name_1,
     transport_line_type_description,
     transport_line_surface_description,
-
     ften_forest_file_id,
     ften_file_type_description,
     ften_client_number,
     ften_client_name,
     ften_life_cycle_status_code,
-
     rail_track_name,
     rail_owner_name,
     rail_operator_english_name,
-
     ogc_proponent,
-
     utm_zone,
     utm_easting,
     utm_northing,
@@ -574,51 +568,35 @@ AND p.stream_crossing_id IS NULL  -- don't include PSCIS crossings
 ORDER BY modelled_crossing_id
 ON CONFLICT DO NOTHING;
 
--- --------------------------------
--- index for speed
--- --------------------------------
-CREATE INDEX ON bcfishpass.crossings (dam_id);
-CREATE INDEX ON bcfishpass.crossings (stream_crossing_id);
-CREATE INDEX ON bcfishpass.crossings (modelled_crossing_id);
-CREATE INDEX ON bcfishpass.crossings (linear_feature_id);
-CREATE INDEX ON bcfishpass.crossings (blue_line_key);
-CREATE INDEX ON bcfishpass.crossings (blue_line_key);
-CREATE INDEX ON bcfishpass.crossings (watershed_group_code);
-CREATE INDEX ON bcfishpass.crossings USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.crossings USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.crossings USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.crossings USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.crossings USING GIST (geom);
-
 
 -- --------------------------------
--- populate wcrp_barrier_type column
+-- populate crossing_feature_type column
 -- --------------------------------
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'WEIR'
+SET crossing_feature_type = 'WEIR'
 WHERE crossing_subtype_code = 'WEIR';
 
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'DAM'
+SET crossing_feature_type = 'DAM'
 WHERE crossing_subtype_code = 'DAM';
 
 -- railway
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'RAIL'
+SET crossing_feature_type = 'RAIL'
 WHERE rail_owner_name IS NOT NULL;
 
 -- tenured roads
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER'
+SET crossing_feature_type = 'ROAD, RESOURCE/OTHER'
 WHERE
   ften_forest_file_id IS NOT NULL OR
   ogc_proponent IS NOT NULL;
 
 -- demographic roads
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'ROAD, DEMOGRAPHIC'
+SET crossing_feature_type = 'ROAD, DEMOGRAPHIC'
 WHERE
-  wcrp_barrier_type IS NULL AND
+  crossing_feature_type IS NULL AND
   transport_line_type_description IN (
   'Road alleyway',
   'Road arterial major',
@@ -642,21 +620,38 @@ WHERE
 );
 
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'TRAIL'
+SET crossing_feature_type = 'TRAIL'
 WHERE
-  wcrp_barrier_type IS NULL AND
+  crossing_feature_type IS NULL AND
   UPPER(transport_line_type_description) LIKE 'TRAIL%';
 
 -- everything else from DRA
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER'
+SET crossing_feature_type = 'ROAD, RESOURCE/OTHER'
 WHERE
-  wcrp_barrier_type IS NULL AND
+  crossing_feature_type IS NULL AND
   transport_line_type_description IS NOT NULL;
 
 -- in the absence of any of the above info, assume a PSCIS crossing is on a resource/other road
 UPDATE bcfishpass.crossings
-SET wcrp_barrier_type = 'ROAD, RESOURCE/OTHER'
+SET crossing_feature_type = 'ROAD, RESOURCE/OTHER'
 WHERE
   stream_crossing_id IS NOT NULL AND
-  wcrp_barrier_type IS NULL;
+  crossing_feature_type IS NULL;
+
+
+-- populate map tile column
+WITH tile AS
+(
+    SELECT
+      a.aggregated_crossings_id,
+      b.map_tile_display_name
+    FROM bcfishpass.crossings a
+    INNER JOIN whse_basemapping.dbm_mof_50k_grid b
+    ON ST_Intersects(a.geom, b.geom)
+)
+
+UPDATE bcfishpass.crossings p
+SET dbm_mof_50k_grid = t.map_tile_display_name
+FROM tile t
+WHERE p.aggregated_crossings_id = t.aggregated_crossings_id;

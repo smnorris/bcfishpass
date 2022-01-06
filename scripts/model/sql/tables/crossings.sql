@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     misc_barrier_anthropogenic_id integer UNIQUE,
     modelled_crossing_id integer UNIQUE,
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
-
+    crossing_feature_type text,           -- general type of crossing (rail/road/trail/dam/weir)
     -- basic crossing status/info - use PSCIS where available, insert model info where no PSCIS
     pscis_status text,                    -- ASSESSED/HABITAT CONFIRMATION etc
     crossing_type_code text,              -- PSCIS crossing_type_code where available, model CBS/OBS otherwise
@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     dam_name text,
     dam_owner text,
 
-    -- CWF WCRP specific type (rail/road/trail/dam/weir)
-    wcrp_barrier_type text,
-
     -- coordinates (of the point snapped to the stream)
     utm_zone  integer,
     utm_easting integer,
     utm_northing integer,
+
+    -- map tile for pdfs
+    dbm_mof_50k_grid text,
 
     -- FWA info
     linear_feature_id integer,
@@ -77,18 +77,9 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     gnis_stream_name text,
     geom geometry(Point, 3005),
 
-    -- reporting columns
-    barriers_anthropogenic_dnstr integer[],
-    barriers_anthropogenic_dnstr_count integer,
-    barriers_anthropogenic_upstr integer[],
-    barriers_anthropogenic_upstr_count integer,
-
     -- only one crossing per location please
     UNIQUE (blue_line_key, downstream_route_measure)
 );
-
-
-
 
 -- document the columns included
 COMMENT ON COLUMN bcfishpass.crossings.aggregated_crossings_id IS 'Unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, dam_id + 1100000000, misc_barrier_anthropogenic_id + 1200000000';
@@ -97,6 +88,7 @@ COMMENT ON COLUMN bcfishpass.crossings.dam_id IS 'BC Dams unique identifier';
 COMMENT ON COLUMN bcfishpass.crossings.misc_barrier_anthropogenic_id IS 'Misc anthropogenic barriers unique identifier';
 COMMENT ON COLUMN bcfishpass.crossings.modelled_crossing_id IS 'Modelled crossing unique identifier';
 COMMENT ON COLUMN bcfishpass.crossings.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,BCDAMS,MISC BARRIERS}';
+COMMENT ON COLUMN bcfishpass.crossings.crossing_feature_type IS 'The general type of feature crossing the stream, valid feature types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
 COMMENT ON COLUMN bcfishpass.crossings.pscis_status IS 'From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED,HABITAT CONFIRMATION,DESIGN,REMEDIATED}';
 COMMENT ON COLUMN bcfishpass.crossings.crossing_type_code IS 'Defines the type of crossing present at the location of the stream crossing. Acceptable types are: OBS = Open Bottom Structure CBS = Closed Bottom Structure OTHER = Crossing structure does not fit into the above categories. Eg: ford, wier';
 COMMENT ON COLUMN bcfishpass.crossings.crossing_subtype_code IS 'Further definition of the type of crossing, one of {BRIDGE,CRTBOX,DAM,FORD,OVAL,PIPEARCH,ROUND,WEIR,WOODBOX,NULL}';
@@ -119,10 +111,10 @@ COMMENT ON COLUMN bcfishpass.crossings.rail_operator_english_name IS 'Railway op
 COMMENT ON COLUMN bcfishpass.crossings.ogc_proponent IS 'OGC road tenure proponent (currently modelled crossings only, taken from OGC road that crosses the stream)';
 COMMENT ON COLUMN bcfishpass.crossings.dam_name IS 'Dam name, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers';
 COMMENT ON COLUMN bcfishpass.crossings.dam_owner IS 'Dam owner, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers';
-COMMENT ON COLUMN bcfishpass.crossings.wcrp_barrier_type IS 'Custom barrier type classification for CWF Watershed Connectivity Restoration Planning, based on crossing_type_code, crossing_subtype_code and road info, valid types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
 COMMENT ON COLUMN bcfishpass.crossings.utm_zone IS 'UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees.';
 COMMENT ON COLUMN bcfishpass.crossings.utm_easting IS 'UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698';
 COMMENT ON COLUMN bcfishpass.crossings.utm_northing IS 'UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826';
+COMMENT ON COLUMN bcfishpass.crossings.dbm_mof_50k_grid IS 'WHSE_BASEMAPPING.DBM_MOF_50K_GRID map_tile_display_name, used for generating planning map pdfs';
 COMMENT ON COLUMN bcfishpass.crossings.linear_feature_id IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)';
 COMMENT ON COLUMN bcfishpass.crossings.blue_line_key IS 'From BC FWA, Uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
 COMMENT ON COLUMN bcfishpass.crossings.watershed_key IS 'From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.';
@@ -133,8 +125,15 @@ COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed gr
 COMMENT ON COLUMN bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
 COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
 
-COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';
-COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr_count IS 'A count of the barrier crossings downstream of the given crossing';
-COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';
-COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';
-
+-- index for speed
+CREATE INDEX IF NOT EXISTS crossings_dam_id_idx ON bcfishpass.crossings (dam_id);
+CREATE INDEX IF NOT EXISTS crossings_stream_crossing_id_idx ON bcfishpass.crossings (stream_crossing_id);
+CREATE INDEX IF NOT EXISTS crossings_modelled_crossing_id_idx ON bcfishpass.crossings (modelled_crossing_id);
+CREATE INDEX IF NOT EXISTS crossings_linear_feature_id_idx ON bcfishpass.crossings (linear_feature_id);
+CREATE INDEX IF NOT EXISTS crossings_blk_idx ON bcfishpass.crossings (blue_line_key);
+CREATE INDEX IF NOT EXISTS crossings_wsgcode_idx ON bcfishpass.crossings (watershed_group_code);
+CREATE INDEX IF NOT EXISTS crossings_wscode_gidx ON bcfishpass.crossings USING GIST (wscode_ltree);
+CREATE INDEX IF NOT EXISTS crossings_wscode_bidx ON bcfishpass.crossings USING BTREE (wscode_ltree);
+CREATE INDEX IF NOT EXISTS crossings_localcode_gidx ON bcfishpass.crossings USING GIST (localcode_ltree);
+CREATE INDEX IF NOT EXISTS crossings_localcode_bidx ON bcfishpass.crossings USING BTREE (localcode_ltree);
+CREATE INDEX IF NOT EXISTS crossings_geom_idx ON bcfishpass.crossings USING GIST (geom);

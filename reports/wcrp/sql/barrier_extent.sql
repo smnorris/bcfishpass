@@ -1,7 +1,7 @@
 -- total habitat blocked by each barrier type / SEVERITY
 SELECT
   watershed_group_code,
-  wcrp_barrier_type,
+  crossing_feature_type,
   ROUND(SUM(ch_spawning_belowupstrbarriers_km)::numeric, 2) as ch_spawning_blocked_km,
   ROUND(SUM(ch_rearing_belowupstrbarriers_km)::numeric, 2) as ch_rearing_blocked_km,
   ROUND(SUM(co_spawning_belowupstrbarriers_km)::numeric, 2) as co_spawning_blocked_km,
@@ -19,7 +19,7 @@ AND barrier_status IN ('POTENTIAL', 'BARRIER')
 AND aggregated_crossings_id != 1100001508 -- don't count the Elko Dam in ELKR
 GROUP BY
   watershed_group_code,
-  wcrp_barrier_type
+  crossing_feature_type,
 ORDER BY
   watershed_group_code,
-  wcrp_barrier_type
+  crossing_feature_type,

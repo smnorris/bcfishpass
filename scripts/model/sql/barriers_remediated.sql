@@ -14,7 +14,7 @@ INSERT INTO bcfishpass.barrier_load
 
 SELECT
     aggregated_crossings_id,
-    wcrp_barrier_type,
+    crossing_feature_type as barrier_type,
     crossing_source as barrier_name,
     linear_feature_id,
     blue_line_key,

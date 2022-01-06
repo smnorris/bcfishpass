@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS bcfishpass.channel_width;
 
 CREATE TABLE IF NOT EXISTS bcfishpass.channel_width
 (
-  linear_feature_id bigint,
+  linear_feature_id bigint primary key,
   channel_width double precision
 );
 

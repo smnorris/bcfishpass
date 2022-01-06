@@ -15,6 +15,11 @@ INSERT INTO bcfishpass.streams
   waterbody_key,
   wscode_ltree,
   localcode_ltree,
+  gnis_name,
+  stream_order,
+  stream_magnitude,
+  --channel_width,
+  --mad_m3s,
   geom)
 SELECT
   s.linear_feature_id,
@@ -27,8 +32,15 @@ SELECT
   s.waterbody_key,
   s.wscode_ltree,
   s.localcode_ltree,
+  s.gnis_name,
+  s.stream_order,
+  s.stream_magnitude,
+  --cw.channel_width,
+  --mad.mad_m3s,
   s.geom
 FROM whse_basemapping.fwa_stream_networks_sp s
+--LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
+--LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
 WHERE
   s.watershed_group_code = :'wsg'
   AND s.wscode_ltree <@ '999' IS FALSE

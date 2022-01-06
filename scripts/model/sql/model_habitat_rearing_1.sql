@@ -1,6 +1,27 @@
 -- model rearing that is simply on modelled spawning habitat,
 -- no connectivity analysis required
 
+-- before doing anything, reset to NULL
+UPDATE bcfishpass.streams s
+SET rearing_model_ch = NULL
+WHERE watershed_group_code = :'wsg'
+AND rearing_model_ch IS NOT NULL;
+
+UPDATE bcfishpass.streams s
+SET rearing_model_co = NULL
+WHERE watershed_group_code = :'wsg'
+AND rearing_model_co IS NOT NULL;
+
+UPDATE bcfishpass.streams s
+SET rearing_model_st = NULL
+WHERE watershed_group_code = :'wsg'
+AND rearing_model_st IS NOT NULL;
+
+UPDATE bcfishpass.streams s
+SET rearing_model_wct = NULL
+WHERE watershed_group_code = :'wsg'
+AND rearing_model_wct IS NOT NULL;
+
 -- ----------------------------------------------
 -- CHINOOK
 -- ----------------------------------------------

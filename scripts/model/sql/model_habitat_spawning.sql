@@ -1,5 +1,27 @@
 -- apply ch/co/st/wct spawning models
 
+-- first, reset everything to NULL
+UPDATE bcfishpass.streams s
+SET spawning_model_ch = NULL
+WHERE spawning_model_ch IS NOT NULL
+AND watershed_group_code = :'wsg';
+
+UPDATE bcfishpass.streams s
+SET spawning_model_co = NULL
+WHERE spawning_model_co IS NOT NULL
+AND watershed_group_code = :'wsg';
+
+UPDATE bcfishpass.streams s
+SET spawning_model_st = NULL
+WHERE spawning_model_st IS NOT NULL
+AND watershed_group_code = :'wsg';
+
+UPDATE bcfishpass.streams s
+SET spawning_model_wct = NULL
+WHERE spawning_model_wct IS NOT NULL
+AND watershed_group_code = :'wsg';
+
+-- then do the calculation
 WITH rivers AS  -- get unique river waterbodies, there are some duplicates
 (
   SELECT DISTINCT waterbody_key

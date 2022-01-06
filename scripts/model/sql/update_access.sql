@@ -4,18 +4,18 @@
 
 -- first, set to null
 UPDATE bcfishpass.streams s
-SET accessibility_model_ch_co_sk = NULL
-WHERE accessibility_model_ch_co_sk IS NOT NULL
+SET access_model_ch_co_sk = NULL
+WHERE access_model_ch_co_sk IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET accessibility_model_st = NULL
-WHERE accessibility_model_st IS NOT NULL
+SET access_model_st = NULL
+WHERE access_model_st IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET accessibility_model_wct = NULL
-WHERE accessibility_model_wct IS NOT NULL
+SET access_model_wct = NULL
+WHERE access_model_wct IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 
@@ -104,7 +104,7 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS accessibility_model_ch_co_sk,
+    END AS access_model_ch_co_sk,
 
       -- steelhead accessibility
     CASE
@@ -182,7 +182,7 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS accessibility_model_st,
+    END AS access_model_st,
 
     -- westslope cutthroat trout
     CASE
@@ -305,15 +305,15 @@ WITH model_access AS
           )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS accessibility_model_wct
+    END AS access_model_wct
   FROM bcfishpass.streams s
   WHERE s.watershed_group_code = :'wsg'
 )
 
 UPDATE bcfishpass.streams s
 SET 
-  accessibility_model_ch_co_sk = m.accessibility_model_ch_co_sk,
-  accessibility_model_st = m.accessibility_model_st,
-  accessibility_model_wct = m.accessibility_model_wct
+  access_model_ch_co_sk = m.access_model_ch_co_sk,
+  access_model_st = m.access_model_st,
+  access_model_wct = m.access_model_wct
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;

@@ -1,8 +1,10 @@
-.PHONY: all qa settings test #clean clean_sources
+.PHONY: all qa settings test clean_barrers #clean clean_sources
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG_TEST = HORS BULK LNIC ELKR
+WSG_RAIL = BBAR BONP BRID BULK CHWK COTR DEAD DRIR FRAN FRCN GRNL HARR KISP KLUM LCHL LFRA LILL LKEL LNIC LNTH LSAL LSKE LTRE MIDR MORK MORR MUSK NARC NECR QUES SAJR SALR SETN SHUL STHM STUL SUST TABR TAKL THOM TWAC UFRA UNTH USHU UTRE WILL
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .manual_habitat_classification_endpoints \
 	.segmented_streams .observations .observations_upstr .break_streams .model_access
@@ -26,6 +28,23 @@ clean_sources:
 	rm -Rf fwapg
 	rm -Rf bcfishobs
 	cd scripts/modelled_stream_crossings; make clean
+
+clean_barriers:
+	rm -Rf $(wildcard .barriers_*)
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_anthropogenic"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_falls"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_05"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_07"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_10"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_15"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_20"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_25"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_30"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_majordams"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_other_definite"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_remediated"
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_subsurfaceflow"
 
 # Remove model make targets
 clean:
@@ -54,7 +73,6 @@ bcfishobs: .fwapg
 	cd bcfishobs; make
 	touch $@
 
-
 # ***********************************************
 # **                                           **
 # **      LOAD/PROCESS REQUIRED DATASETS       **
@@ -62,13 +80,14 @@ bcfishobs: .fwapg
 # ***********************************************
 
 # ------
-# CREATE SCHEMA, PLUS ALL REQUIRED FUNCTIONS AND (EMPTY) TABLES
+# CREATE SCHEMA, ADD FUNCTIONS, CREATE EMPTY TABLES AND LOAD MAPPING GRID
 # ------
 .schema: $(wildcard scripts/model/sql/tables/*sql) $(wildcard scripts/model/sql/functions/*sql)
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
 	for sql in $^ ; do \
 		$(PSQL_CMD) -f $$sql ; \
 	done
+	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	touch $@
 
 # ------
@@ -249,6 +268,8 @@ scripts/discharge/.discharge: .fwapg
 	# load above noted watershed groups to barrier table
 	# note that the wrapper query sql file is not needed, the file is just simpler than figuring out make/parallel quoting
 	parallel -a $(subst .barriers_,.torefresh_,$@) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql -v wsg={1} -v barriertype=$(subst .barriers_,,$@)
+	# index the barrier table in order downstream
+	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.$(subst .,,$@) $(subst .,,$@)_id bcfishpass.$(subst .,,$@) $(subst .,,$@)_id dnstr_$(subst .,,$@)
 	# append list of watershed groups to refresh for given barrier type to list of all groups to refresh for all barrier types
 	cat $(subst .barriers_,.torefresh_,$@) >> .wsg_to_refresh
 	# create target
@@ -281,25 +302,27 @@ $(BARRIERS_BROKEN): .broken_%: .barriers_% .streams
 	done
 	touch $@
 
+.index_crossings: .barriers_anthropogenic
+	# index crossings table based on upstream/downstream crossings
+	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id crossings_dnstr
+	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
+	cd scripts/model ; python bcfishpass.py add-upstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_upstr
+	$(PSQL_CMD) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_dnstr_count integer"
+	$(PSQL_CMD) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_dnstr_count = array_length(barriers_anthropogenic_dnstr, 1) WHERE barriers_anthropogenic_dnstr IS NOT NULL";
+	$(PSQL_CMD) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_upstr_count integer"
+	$(PSQL_CMD) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_upstr_count = array_length(barriers_anthropogenic_dnstr, 1) WHERE barriers_anthropogenic_upstr IS NOT NULL";
+	# document these new columns
+	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.crossings_dnstr IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
+	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
+	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr_count IS 'A count of the barrier crossings downstream of the given crossing';"
+	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
+	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';"
+
+
 # run qa queries
 qa/%.csv: scripts/qa/sql/%.sql .model_access
 	mkdir -p qa
 	psql2csv $(DATABASE_URL) < $< > $@
-
-#.crossings_report:
-# index barriers_anthropogenic and crossings based on upstream/downstream crossings
-#cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
-#cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id dnstr_crossings
-#cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id dnstr_barriers_anthropogenic
-#cd scripts/model ; python bcfishpass.py add-upstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic aggregated_crossings_id upstr_barriers_anthropogenic
-
-# document these new columns in the crossings table
-#$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_crossings IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
-#$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
-#$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.upstr_barriers_anthropogenic IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
-#$(PSQL_CMD) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS dnstr_barriers_anthropogenic_count integer"
-#$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.dnstr_barriers_anthropogenic_count IS 'A count of the barrier crossings downstream of the given crossing';"
-#$(PSQL_CMD) -c "UPDATE bcfishpass.crossings SET dnstr_barriers_anthropogenic_count = array_length(dnstr_barriers_anthropogenic, 1) WHERE dnstr_barriers_anthropogenic IS NOT NULL";
 
 
 # ***********************************************
@@ -313,30 +336,30 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 # -----
 .model_habitat: .model_access
 	# spawning model is relatively simple, requires just one query
-	#$(PSQL_CMD) -f scripts/model/model_habitat_spawning.sql
-	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_spawning.sql -v wsg={1}
+	for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_spawning.sql -v wsg=$$wsg ; \
+	done
 
-	# find all potential rearing streams
-	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_rearing_1.sql -v wsg{1}
+	# rearing requires several
+	# first, find all potential rearing streams
+	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
 
-	# find subset of rearing downstream of spawning
-	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_rearing_2.sql -v wsg={1}
+	# then find subset of rearing downstream of spawning
+	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_2.sql -v wsg={1}
 
-	# find subset of rearing upstream of spawning
-	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_rearing_3.sql -v wsg={1}
+	# and finally find subset of rearing upstream of spawning
+	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_3.sql -v wsg={1}
 
-	# SK habitat modelling is separate because of different life cycle (lake requirement)
-	parallel -a .wsg_to_refresh --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/model_habitat_sk.sql
+	# SK spawning/rearing modelling is separate because of different life cycle (lake requirement)
+	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql
 
 	# plus SK can be watershed specific, run for horsefly
 	$(PSQL_CMD) -f scripts/model/model_habitat_sk_hors.sql
 
-	# override the model where specified by manual_habitat_classification
-	# create endpoitns
-	$(PSQL_CMD) -f scripts/model/manual_habitat_classification_endpoints.sql
-	# break streams at endpoints
+	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
+	$(PSQL_CMD) -f scripts/model/sql/manual_habitat_classification_endpoints.sql
 	$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=manual_habitat_classification_endpoints
-	$(PSQL_CMD) -f scripts/model/manual_habitat_classification.sql
+	$(PSQL_CMD) -f scripts/model/sql/manual_habitat_classification.sql
 	touch $@
 
 
@@ -344,29 +367,24 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 # VARIOUS VIEWS FOR VIZ
 # -----
 # todo - currently tables but could likely be views
-.views: .model_habitat
-	$(PSQL_CMD) -f scripts/model/sql/definitebarriers.sql
-	cd scripts/model ; bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
-	cd scripts/model ; bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
-	cd scripts/model ; bcfishpass.py add-upstream-ids bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.observations fish_obsrvtn_pnt_distinct_id upstr_observation_id
-
-	# remove definite barriers below WCT observations
-	# TODO - this should be done for any resident spp being modelled
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE upstr_observation_id IS NOT NULL AND barrier_type NOT IN ('EXCLUSION')"
+.views: .model_access
+	$(PSQL_CMD) -f scripts/model/sql/tables/definitebarriers_ch_co_sk.sql
+	$(PSQL_CMD) -f scripts/model/sql/tables/definitebarriers_st.sql
+	$(PSQL_CMD) -f scripts/model/sql/tables/definitebarriers_wct.sql
 
 	# note minimal definite barriers
 	cd scripts/model ; python bcfishpass.py add-downstream-ids \
-	  bcfishpass.definitebarriers_steelhead \
-	  definitebarriers_steelhead_id \
-	  bcfishpass.definitebarriers_steelhead \
-	  definitebarriers_steelhead_id \
-	  dnstr_definitebarriers_steelhead_id
+	  bcfishpass.definitebarriers_ch_co_sk \
+	  definitebarriers_ch_co_sk_id \
+	  bcfishpass.definitebarriers_ch_co_sk \
+	  definitebarriers_ch_co_sk_id \
+	  dnstr_definitebarriers_ch_co_sk_id
 	cd scripts/model ; python bcfishpass.py add-downstream-ids \
-	  bcfishpass.definitebarriers_salmon \
-	  definitebarriers_salmon_id \
-	  bcfishpass.definitebarriers_salmon \
-	  definitebarriers_salmon_id \
-	  dnstr_definitebarriers_salmon_id
+	  bcfishpass.definitebarriers_st \
+	  definitebarriers_st_id \
+	  bcfishpass.definitebarriers_st \
+	  definitebarriers_st_id \
+	  dnstr_definitebarriers_st_id
 	cd scripts/model ; python bcfishpass.py add-downstream-ids \
 	  bcfishpass.definitebarriers_wct \
 	  definitebarriers_wct_id \
@@ -375,13 +393,13 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 	  dnstr_definitebarriers_wct_id
 
 	# delete non-minimal definite barriers
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.definitebarriers_salmon WHERE dnstr_definitebarriers_salmon_id IS NOT NULL"
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.definitebarriers_steelhead WHERE dnstr_definitebarriers_steelhead_id IS NOT NULL"
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.definitebarriers_ch_co_sk WHERE dnstr_definitebarriers_ch_co_sk_id IS NOT NULL"
+	$(PSQL_CMD) -c "DELETE FROM bcfishpass.definitebarriers_st WHERE dnstr_definitebarriers_steelhead_id IS NOT NULL"
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.definitebarriers_wct WHERE dnstr_definitebarriers_wct_id IS NOT NULL"
 
 	# run report on the combined definite barrier tables
-	python bcfishpass.py report bcfishpass.definitebarriers_salmon definitebarriers_salmon_id bcfishpass.definitebarriers_salmon dnstr_definitebarriers_salmon_id
-	python bcfishpass.py report bcfishpass.definitebarriers_steelhead definitebarriers_steelhead_id bcfishpass.definitebarriers_steelhead dnstr_definitebarriers_steelhead_id
+	python bcfishpass.py report bcfishpass.definitebarriers_co_ch_sk definitebarriers_co_ch_sk_id bcfishpass.definitebarriers_co_ch_sk dnstr_definitebarriers_co_ch_sk_id
+	python bcfishpass.py report bcfishpass.definitebarriers_st definitebarriers_st_id bcfishpass.definitebarriers_st dnstr_definitebarriers_st_id
 	python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
 
 	# generalized streams
@@ -392,19 +410,40 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 # -----
 # REPORT - ADD VARIOUS UPSTR/DNSTR SUMMARY COLUMNS, CREATE SUMMARY REPORTS
 # -----
-.reports: .model_habitat
-	# For qa, report on how much is upstream of various definite barriers
-	python bcfishpass.py report bcfishpass.barriers_ditchflow barriers_ditchflow_id bcfishpass.barriers_ditchflow dnstr_barriers_ditchflow
-	python bcfishpass.py report bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls dnstr_barriers_falls
-	python bcfishpass.py report bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 dnstr_barriers_gradient_15
-	python bcfishpass.py report bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 dnstr_barriers_gradient_20
-	python bcfishpass.py report bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 dnstr_barriers_gradient_30
-	python bcfishpass.py report bcfishpass.barriers_intermittentflow barriers_intermittentflow_id bcfishpass.barriers_intermittentflow dnstr_barriers_intermittentflow
-	python bcfishpass.py report bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams dnstr_barriers_majordams
-	python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow dnstr_barriers_subsurfaceflow
+.test_reports:
+	# add reporting columns to tables
+	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v wsg={1} -v point_table=barriers_anthropogenic
+	# run report per watershed group on barriers_anthropogenic
+	for wsg in $(WSG_RAIL) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
+		-v point_table=barriers_anthropogenic \
+		-v point_id=barriers_anthropogenic_id \
+		-v barriers_table=barriers_anthropogenic \
+		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
+		-v wsg=$$wsg ; \
+	done
+	# run report per watershed group on crossings
+	for wsg in $(WSG_RAIL) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
+		-v point_table=crossings \
+		-v point_id=aggregated_crossings_id \
+		-v barriers_table=barriers_anthropogenic \
+		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
+		-v wsg=$$wsg ; \
+	done
+	touch .test_reports
 
-	# and run the report (requires processing both tables)
-	python bcfishpass.py report bcfishpass.barriers_anthropogenic aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
+.reports: .model_access .index_crossings
+	# report on how much is upstream of various definite barriers
+	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls dnstr_barriers_falls
+	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 dnstr_barriers_gradient_15
+	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 dnstr_barriers_gradient_20
+	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 dnstr_barriers_gradient_30
+	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams dnstr_barriers_majordams
+	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow dnstr_barriers_subsurfaceflow
+
+	# run the report on the crossings table (requires processing both tables)
+	python bcfishpass.py report bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 	python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
 
 	# add habitat per barrier column to crossings table
@@ -413,6 +452,6 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 
 	# populating the belowupstrbarriers for OBS in the crossings table requires a separate query
 	# (because the dnstr_barriers_anthropogenic is used in above report, and that misses the OBS of interest)
-	psql -f sql/00_report_crossings_obs_belowupstrbarriers.sql
+	psql -f sql/report_crossings_obs_belowupstrbarriers.sql
 
 	touch $@

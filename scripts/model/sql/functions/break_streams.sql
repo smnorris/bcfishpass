@@ -90,6 +90,11 @@ BEGIN
       s.spawning_model_sk,
       s.spawning_model_st,
       s.spawning_model_wct,
+      s.rearing_model_ch,
+      s.rearing_model_co,
+      s.rearing_model_sk,
+      s.rearing_model_st,
+      s.rearing_model_wct,
       (ST_Dump(ST_LocateBetween
         (s.geom, n.downstream_route_measure, n.upstream_route_measure
         ))).geom AS geom
@@ -149,6 +154,9 @@ BEGIN
       waterbody_key,
       wscode_ltree,
       localcode_ltree,
+      gnis_name,
+      stream_order,
+      stream_magnitude,
       barriers_majordams_dnstr,
       barriers_subsurfaceflow_dnstr,
       barriers_falls_dnstr,
@@ -177,6 +185,11 @@ BEGIN
       spawning_model_sk,
       spawning_model_st,
       spawning_model_wct,
+      rearing_model_ch,
+      rearing_model_co,
+      rearing_model_sk,
+      rearing_model_st,
+      rearing_model_wct,
       geom
     )
     SELECT
@@ -190,6 +203,9 @@ BEGIN
       s.waterbody_key,
       s.wscode_ltree,
       s.localcode_ltree,
+      s.gnis_name,
+      s.stream_order,
+      s.stream_magnitude,
       t.barriers_majordams_dnstr,
       t.barriers_subsurfaceflow_dnstr,
       t.barriers_falls_dnstr,
@@ -218,6 +234,11 @@ BEGIN
       t.spawning_model_sk,
       t.spawning_model_st,
       t.spawning_model_wct,
+      t.rearing_model_ch,
+      t.rearing_model_co,
+      t.rearing_model_sk,
+      t.rearing_model_st,
+      t.rearing_model_wct,
       t.geom
     FROM temp_streams t
     INNER JOIN whse_basemapping.fwa_stream_networks_sp s
