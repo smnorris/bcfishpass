@@ -11,10 +11,10 @@ Download the BC dam dataset compiled by CWF and match the points to the nearest 
 
 ## Output table
 
-                                                     Table "bcfishpass.dams"
-              Column          |         Type         | Collation | Nullable |                     Default
-    --------------------------+----------------------+-----------+----------+-------------------------------------------------
-     dam_id                   | integer              |           | not null | nextval('bcfishpass.dams_dam_id_seq'::regclass)
+                             Table "bcfishpass.dams"
+              Column          |         Type         | Collation | Nullable | Default
+    --------------------------+----------------------+-----------+----------+---------
+     dam_id                   | integer              |           | not null |
      dam_name                 | text                 |           |          |
      waterbody_name           | text                 |           |          |
      owner                    | text                 |           |          |

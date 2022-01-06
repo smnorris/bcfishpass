@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS bcfishpass.dams;
 
 CREATE TABLE bcfishpass.dams
-(dam_id SERIAL primary key,
+(dam_id integer primary key,
  dam_name text,
  waterbody_name text,
  owner text,
@@ -25,6 +25,7 @@ CREATE TABLE bcfishpass.dams
 
 INSERT INTO bcfishpass.dams
 (
+  dam_id,
   dam_name,
   waterbody_name,
   owner,
@@ -45,6 +46,7 @@ INSERT INTO bcfishpass.dams
 WITH src_pts AS
 (
 SELECT
+  bcdams_id as dam_id,
   dam_name,
   waterbody_name,
   owner,
@@ -59,6 +61,7 @@ FROM bcfishpass.cwf_bcdams
 nearest AS
 (
   SELECT
+    pt.dam_id,
     pt.dam_name,
     pt.waterbody_name,
     pt.owner,
@@ -104,6 +107,7 @@ nearest AS
 )
 
 SELECT
+    dam_id,
     dam_name,
     waterbody_name,
     owner,
