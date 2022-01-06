@@ -269,7 +269,7 @@ scripts/discharge/.discharge: .fwapg
 	# note that the wrapper query sql file is not needed, the file is just simpler than figuring out make/parallel quoting
 	parallel -a $(subst .barriers_,.torefresh_,$@) --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql -v wsg={1} -v barriertype=$(subst .barriers_,,$@)
 	# index the barrier table in order downstream
-	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.$(subst .,,$@) $(subst .,,$@)_id bcfishpass.$(subst .,,$@) $(subst .,,$@)_id dnstr_$(subst .,,$@)
+	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.$(subst .,,$@) $(subst .,,$@)_id bcfishpass.$(subst .,,$@) $(subst .,,$@)_id $(subst .,,$@)_dnstr
 	# append list of watershed groups to refresh for given barrier type to list of all groups to refresh for all barrier types
 	cat $(subst .barriers_,.torefresh_,$@) >> .wsg_to_refresh
 	# create target
