@@ -1,10 +1,9 @@
 -- steelhead barriers (20% scenario)
-
-DROP TABLE IF EXISTS bcfishpass.definitebarriers_st;
-
-CREATE TABLE bcfishpass.definitebarriers_st
+--drop table if exists bcfishpass.definitebarriers_st;
+CREATE TABLE IF NOT EXISTS bcfishpass.definitebarriers_st
 (
-    definitebarriers_st_id serial primary key,
+    definitebarriers_st_id bigint
+     GENERATED ALWAYS AS ((((blue_line_key::bigint + 1) - 354087611) * 10000000) + round(downstream_route_measure::bigint)) STORED PRIMARY KEY,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,
@@ -17,97 +16,11 @@ CREATE TABLE bcfishpass.definitebarriers_st
     UNIQUE (blue_line_key, downstream_route_measure)
 );
 
-
-WITH barriers AS
-
-(SELECT
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM bcfishpass.barriers_gradient_20
-UNION ALL
-SELECT
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM bcfishpass.barriers_gradient_30
-UNION ALL
-SELECT
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM bcfishpass.barriers_falls
-UNION ALL
-SELECT
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM bcfishpass.barriers_subsurfaceflow
-UNION ALL
-SELECT
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-FROM bcfishpass.barriers_other_definite
-)
-
-INSERT INTO bcfishpass.definitebarriers_st
-(   barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
-SELECT b.*
-FROM barriers b
-WHERE watershed_group_code = ANY(
-            ARRAY(
-              SELECT watershed_group_code
-              FROM bcfishpass.wsg_species_presence
-              WHERE st IS TRUE
-            )
-          )
-ON CONFLICT DO NOTHING;
-
-CREATE INDEX ON bcfishpass.definitebarriers_st (linear_feature_id);
-CREATE INDEX ON bcfishpass.definitebarriers_st (blue_line_key);
-CREATE INDEX ON bcfishpass.definitebarriers_st (watershed_group_code);
-CREATE INDEX ON bcfishpass.definitebarriers_st USING GIST (wscode_ltree);
-CREATE INDEX ON bcfishpass.definitebarriers_st USING BTREE (wscode_ltree);
-CREATE INDEX ON bcfishpass.definitebarriers_st USING GIST (localcode_ltree);
-CREATE INDEX ON bcfishpass.definitebarriers_st USING BTREE (localcode_ltree);
-CREATE INDEX ON bcfishpass.definitebarriers_st USING GIST (geom);
+CREATE INDEX IF NOT EXISTS defb_st_lftid_idx ON bcfishpass.definitebarriers_st (linear_feature_id);
+CREATE INDEX IF NOT EXISTS defb_st_blk_idx ON bcfishpass.definitebarriers_st (blue_line_key);
+CREATE INDEX IF NOT EXISTS defb_st_wsg_idx ON bcfishpass.definitebarriers_st (watershed_group_code);
+CREATE INDEX IF NOT EXISTS defb_st_wscode_ltree_gidx ON bcfishpass.definitebarriers_st USING GIST (wscode_ltree);
+CREATE INDEX IF NOT EXISTS defb_st_wscode_ltree_bidx ON bcfishpass.definitebarriers_st USING BTREE (wscode_ltree);
+CREATE INDEX IF NOT EXISTS defb_st_localcode_gltree_idx ON bcfishpass.definitebarriers_st USING GIST (localcode_ltree);
+CREATE INDEX IF NOT EXISTS defb_st_localcode_bltree_idx ON bcfishpass.definitebarriers_st USING BTREE (localcode_ltree);
+CREATE INDEX IF NOT EXISTS defb_st_geom_idx ON bcfishpass.definitebarriers_st USING GIST (geom);

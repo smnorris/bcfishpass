@@ -48,12 +48,6 @@ WHERE
   b.gradient_class = 20
   -- do not include any records matched to passable table
   AND p.blue_line_key IS NULL
-  AND
-  -- do not include any falls downstream of WCT observations
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
   AND s.watershed_group_code = :'wsg'
 ORDER BY b.blue_line_key, b.downstream_route_measure
 ON CONFLICT DO NOTHING;

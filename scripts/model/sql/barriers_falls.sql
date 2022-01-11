@@ -47,10 +47,4 @@ WHERE
       b.barrier_ind IS TRUE OR
         (b.barrier_ind IS NULL AND a.barrier_ind IS TRUE)
     )
-  AND
-  -- do not include any falls downstream of WCT observations
-  (
-    o.species_codes && ARRAY['WCT'] IS FALSE
-    OR o.species_codes IS NULL
-  )
 ON CONFLICT DO NOTHING;

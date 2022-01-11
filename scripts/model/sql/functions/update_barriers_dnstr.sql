@@ -1,6 +1,5 @@
 -- update the barriers_dnstr column for given barrier type / watershed group
-
-CREATE OR REPLACE FUNCTION bcfishpass.update_barriers_dnstr(barriertype text, wsg text)
+CREATE OR REPLACE FUNCTION bcfishpass.update_barriers_dnstr(barriertype text, point_table text, wsg text)
   RETURNS VOID
   LANGUAGE plpgsql AS
 $func$
@@ -50,7 +49,7 @@ BEGIN
     WHERE s.segmented_stream_id = b.segmented_stream_id;',
     'barriers_' || barriertype || '_id',
     'barriers_' || barriertype || '_id',
-    'barriers_' || barriertype,
+    point_table,
     wsg,
     'barriers_' || barriertype || '_dnstr'
   );

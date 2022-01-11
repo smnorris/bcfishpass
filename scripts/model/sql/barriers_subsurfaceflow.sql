@@ -55,10 +55,4 @@ WHERE
 -- TODO - add a user table for corrections like this
   AND NOT
   (s.blue_line_key = 356363411 AND s.downstream_route_measure < 213010)
-  AND
--- do not include any falls downstream of WCT observations
-  (
-    o.species_codes && ARRAY['WCT'] IS FALSE
-    OR o.species_codes IS NULL
-  )
 ON CONFLICT DO NOTHING;
