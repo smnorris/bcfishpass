@@ -1,1 +1,1 @@
-SELECT bcfishpass.update_barriers_dnstr(:'barriertype', :'point_table', :'wsg');
+SELECT bcfishpass.update_barriers_dnstr(:'target_table', :'target_table_id', :'barriertype', :'point_table', :'include_equivalents', :'wsg');

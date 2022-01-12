@@ -1,6 +1,3 @@
-DELETE FROM bcfishpass.definitebarriers_wct
-WHERE watershed_group_code = :'wsg';
-
 WITH barriers AS
 (
     SELECT
@@ -212,8 +209,9 @@ FROM bcfishpass.barriers_other_definite b
 -- DO include these user added features that may be below WCT observations
 )
 
-INSERT INTO bcfishpass.definitebarriers_wct
+INSERT INTO bcfishpass.barrier_load
 (
+    barrier_load_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -224,7 +222,18 @@ INSERT INTO bcfishpass.definitebarriers_wct
     watershed_group_code,
     geom
 )
-SELECT b.*
+-- add a primary key guaranteed to be unique provincially (presuming unique blkey/measure values within 1m)
+SELECT
+  (((blue_line_key::bigint + 1) - 354087611) * 10000000) + round(downstream_route_measure::bigint) as barrier_load_id,
+  barrier_type,
+  barrier_name,
+  linear_feature_id,
+  blue_line_key,
+  downstream_route_measure,
+  wscode_ltree,
+  localcode_ltree,
+  watershed_group_code,
+  geom
 FROM barriers b
 WHERE watershed_group_code = ANY(
             ARRAY(

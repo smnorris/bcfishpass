@@ -27,14 +27,7 @@ WITH model_access AS
     -- salmon accessibility
     CASE
       WHEN
-          barriers_gradient_15_dnstr IS NULL AND
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_ch_co_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
           barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
           watershed_group_code = ANY(
@@ -46,14 +39,7 @@ WITH model_access AS
           )
       THEN 'POTENTIALLY ACCESSIBLE'
       WHEN
-          barriers_gradient_15_dnstr IS NULL AND
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_ch_co_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
           barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
           watershed_group_code = ANY(
@@ -65,14 +51,7 @@ WITH model_access AS
           )
       THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
       WHEN
-          barriers_gradient_15_dnstr IS NULL AND
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_ch_co_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NULL AND
           barriers_pscis_dnstr IS NULL AND
           barriers_remediated_dnstr IS NULL AND
@@ -85,14 +64,7 @@ WITH model_access AS
           )
       THEN 'ACCESSIBLE'
       WHEN
-          barriers_gradient_15_dnstr IS NULL AND
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_ch_co_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NULL AND
           barriers_pscis_dnstr IS NULL AND
           barriers_remediated_dnstr IS NOT NULL AND
@@ -109,13 +81,7 @@ WITH model_access AS
       -- steelhead accessibility
     CASE
       WHEN
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_st_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
           barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
           watershed_group_code = ANY(
@@ -127,13 +93,7 @@ WITH model_access AS
           )
       THEN 'POTENTIALLY ACCESSIBLE'
       WHEN
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_st_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
           barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
           watershed_group_code = ANY(
@@ -145,13 +105,7 @@ WITH model_access AS
           )
       THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
       WHEN
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_st_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NULL AND
           barriers_pscis_dnstr IS NULL AND
           barriers_remediated_dnstr IS NULL AND
@@ -164,13 +118,7 @@ WITH model_access AS
           )
       THEN 'ACCESSIBLE'
       WHEN
-          barriers_gradient_20_dnstr IS NULL AND
-          barriers_gradient_25_dnstr IS NULL AND
-          barriers_gradient_30_dnstr IS NULL AND
-          barriers_falls_dnstr IS NULL AND
-          barriers_subsurfaceflow_dnstr IS NULL AND
-          barriers_other_definite_dnstr IS NULL AND
-          barriers_majordams_dnstr IS NULL AND
+          barriers_st_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NULL AND
           barriers_pscis_dnstr IS NULL AND
           barriers_remediated_dnstr IS NOT NULL AND
@@ -187,6 +135,9 @@ WITH model_access AS
     -- westslope cutthroat trout
     CASE
       WHEN
+          barriers_wct_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
+          barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
           watershed_group_code = ANY(
             ARRAY(
               SELECT watershed_group_code
@@ -194,115 +145,43 @@ WITH model_access AS
               WHERE wct IS TRUE
             )
           )
-          AND
-          -- do not include areas behind manually defined definite barriers
-          barriers_other_definite_dnstr IS NULL AND
-          -- an anthropogenic barrier is downstream
-          barriers_anthropogenic_dnstr IS NOT NULL AND
-          -- but not a pscis barrier
-          barriers_pscis_dnstr IS NULL AND
-          -- and not remediated
-          barriers_remediated_dnstr IS NULL AND
-          (
-            (
-              barriers_gradient_20_dnstr IS NULL AND
-              barriers_gradient_25_dnstr IS NULL AND
-              barriers_gradient_30_dnstr IS NULL AND
-              barriers_falls_dnstr IS NULL AND
-              barriers_subsurfaceflow_dnstr IS NULL
-              -- barriers_majordams_dnstr IS NULL AND
-
-            ) OR obsrvtn_species_codes_upstr && ARRAY['WCT']  -- upstr wct observations override dnst barriers
-          )
       THEN 'POTENTIALLY ACCESSIBLE'
       WHEN
-          s.watershed_group_code = ANY(
+          barriers_wct_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
+          barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
+          watershed_group_code = ANY(
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
               WHERE wct IS TRUE
             )
-          )
-          AND
-          (
-          -- do not include areas behind manually defined definite barriers
-          barriers_other_definite_dnstr IS NULL AND
-          -- an anthropogenic barrier is downstream
-          barriers_anthropogenic_dnstr IS NOT NULL AND
-          -- a pscis barrier is downstream
-          barriers_pscis_dnstr IS NOT NULL AND
-          -- and not remediated
-          barriers_remediated_dnstr IS NULL AND
-          (
-            (
-              barriers_gradient_20_dnstr IS NULL AND
-              barriers_gradient_25_dnstr IS NULL AND
-              barriers_gradient_30_dnstr IS NULL AND
-              barriers_falls_dnstr IS NULL AND
-              barriers_subsurfaceflow_dnstr IS NULL
-             -- barriers_majordams_dnstr IS NULL AND
-            ) OR obsrvtn_species_codes_upstr && ARRAY['WCT']    -- upstr wct observations override dnst barriers
-          )
           )
       THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
       WHEN
-          s.watershed_group_code = ANY(
+          barriers_wct_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NULL AND
+          barriers_pscis_dnstr IS NULL AND
+          barriers_remediated_dnstr IS NULL AND
+          watershed_group_code = ANY(
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
               WHERE wct IS TRUE
             )
-          )
-          AND
-                (
-          -- do not include areas behind manually defined definite barriers
-          barriers_other_definite_dnstr IS NULL AND
-          -- no anthropogenic barrier is downstream
-          barriers_anthropogenic_dnstr IS NULL AND
-          -- no pscis barrier is downstream
-          barriers_pscis_dnstr IS NULL AND
-          -- and not remediated
-          barriers_remediated_dnstr IS NULL AND
-          (
-            (
-              barriers_gradient_20_dnstr IS NULL AND
-              barriers_gradient_25_dnstr IS NULL AND
-              barriers_gradient_30_dnstr IS NULL AND
-              barriers_falls_dnstr IS NULL AND
-              barriers_subsurfaceflow_dnstr IS NULL
-             -- barriers_majordams_dnstr IS NULL AND
-            ) OR obsrvtn_species_codes_upstr && ARRAY['WCT']    -- upstr wct observations override dnst barriers
-          )
           )
       THEN 'ACCESSIBLE'
       WHEN
-          s.watershed_group_code = ANY(
+          barriers_wct_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NULL AND
+          barriers_pscis_dnstr IS NULL AND
+          barriers_remediated_dnstr IS NOT NULL AND
+          watershed_group_code = ANY(
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
               WHERE wct IS TRUE
             )
-          )
-          AND
-          (
-          -- do not include areas behind manually defined definite barriers
-          barriers_other_definite_dnstr IS NULL AND
-          -- no anthropogenic barrier is downstream
-          barriers_anthropogenic_dnstr IS NULL AND
-          -- no pscis barrier is downstream
-          barriers_pscis_dnstr IS NULL AND
-          -- remediated
-          barriers_remediated_dnstr IS NOT NULL AND
-          (
-            (
-              barriers_gradient_20_dnstr IS NULL AND
-              barriers_gradient_25_dnstr IS NULL AND
-              barriers_gradient_30_dnstr IS NULL AND
-              barriers_falls_dnstr IS NULL AND
-              barriers_subsurfaceflow_dnstr IS NULL
-             -- barriers_majordams_dnstr IS NULL AND
-            ) OR obsrvtn_species_codes_upstr && ARRAY['WCT']    -- upstr wct observations override dnst barriers
-          )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
     END AS access_model_wct
