@@ -55,6 +55,9 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   access_model_wct text,
   access_model_pk text,
   access_model_cm text,
+  access_model_bt text,
+  access_model_gr text,
+  access_model_rb text,
 
   -- habitat models and modelled flow/channel width
   channel_width double precision,

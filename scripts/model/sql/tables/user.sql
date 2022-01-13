@@ -179,10 +179,13 @@ CREATE TABLE IF NOT EXISTS bcfishpass.pscis_barrier_result_fixes
 CREATE TABLE IF NOT EXISTS bcfishpass.wsg_species_presence
 (
   watershed_group_code varchar(4),
-  co boolean,
   ch boolean,
+  co boolean,
   sk boolean,
   st boolean,
   wct boolean,
+  bt boolean,
+  gr boolean,
+  rb boolean,
   notes text
 );

@@ -31,7 +31,12 @@ FROM (
     CASE WHEN p.ch is true THEN 'CH' ELSE NULL END as ch,
     CASE WHEN p.sk is true THEN 'SK' ELSE NULL END as sk,
     CASE WHEN p.st is true THEN 'ST' ELSE NULL END as st,
-    CASE WHEN p.wct is true THEN 'WCT' ELSE NULL END as wct
+    CASE WHEN p.wct is true THEN 'WCT' ELSE NULL END as wct,
+    --pk
+    --cm
+    CASE WHEN p.bt is true THEN 'BT' ELSE NULL END as bt,
+    CASE WHEN p.gr is true THEN 'GR' ELSE NULL END as gr,
+    CASE WHEN p.rb is true THEN 'RB' ELSE NULL END as rb
   FROM bcfishpass.wsg_species_presence p
   ) as f
 ),

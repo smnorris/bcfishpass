@@ -1,4 +1,5 @@
 .PHONY: all qa settings test clean_barrers #clean clean_sources
+.SECONDARY:  # do not delete intermediate targets
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
@@ -15,8 +16,8 @@ ANTH_BARRIERS = anthropogenic pscis remediated
 # all potential definite barriers
 DEF_BARRIERS = $(filter-out $(ANTH_BARRIERS), $(BARRIERS))
 # definite barriers collected into per-species tables
-SPP_BARRIERS = $(patsubst scripts/model/sql/definitebarriers_%.sql, %, $(wildcard scripts/model/sql/definitebarriers_*.sql))
-BARRIERS_BROKEN = $(patsubst %,.broken_%,$(ANTH_BARRIERS)) $(patsubst %,.broken_%,$(SPP_BARRIERS))
+SPECIES_GROUPS = $(patsubst scripts/model/sql/definitebarriers_%.sql, %, $(wildcard scripts/model/sql/definitebarriers_*.sql))
+BARRIERS_BROKEN = $(patsubst %,.broken_%,$(ANTH_BARRIERS)) $(patsubst %,.broken_%,$(SPECIES_GROUPS))
 
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
@@ -42,20 +43,14 @@ clean_sources:
 
 clean_barriers:
 	rm -Rf $(wildcard .barriers_*)
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_anthropogenic"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_falls"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_05"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_07"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_10"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_15"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_20"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_25"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_gradient_30"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_majordams"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_other_definite"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_pscis"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_remediated"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.barriers_subsurfaceflow"
+	rm -Rf $(wildcard .xbarriers_*)
+	for barriertype in $(BARRIERS) ; do \
+		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
+	done
+	for barriertype in $(SPECIES_GROUPS) ; do \
+		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
+	done
+
 
 # Remove model make targets
 clean:
@@ -199,7 +194,7 @@ scripts/discharge/.discharge: .fwapg
 .streams: .param_watersheds .fwapg scripts/model/sql/tables/streams.sql .channel_width scripts/discharge/.discharge
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams"
 	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
-	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_TEST)
+	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_lfeatid_idx ON bcfishpass.streams (linear_feature_id);"
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_blkey_idx ON bcfishpass.streams (blue_line_key);"
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_wsg_idx ON bcfishpass.streams (watershed_group_code);"
@@ -275,7 +270,7 @@ scripts/discharge/.discharge: .fwapg
 	# clear barrier load table
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.barrier_load"
 	# load all features for given barrier type to barrier_load table
-	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG_TEST)
+	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG)
 	# find watershed groups requiring updates and write list to file
 	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX >  $(subst .barriers_,.torefresh_,$@)
 	# load above noted watershed groups to barrier table
