@@ -78,7 +78,13 @@ islands AS
 )
 
 INSERT INTO bcfishpass.gradient_barriers
-(blue_line_key, downstream_route_measure, gradient_class)
+(
+  blue_line_key,
+  downstream_route_measure,
+  wscode_ltree,
+  localcode_ltree,
+  watershed_group_code,
+  gradient_class)
 
 -- Because we are measuring each vertex, some adjacent measurements are at almost the same location.
 -- Generally these will be grouped together - but it is possible to have two adjacent gradients
@@ -86,8 +92,21 @@ INSERT INTO bcfishpass.gradient_barriers
 -- (eg .0104 and .0994 at 129.23m on blue_line_key=360293619).
 -- To rectify this, get the maximum gradient at a given location.
 SELECT
-  blue_line_key,
-  downstream_route_measure,
-  max(gradient_class) as gradient_class
-FROM islands
-GROUP BY blue_line_key, downstream_route_measure;
+  i.blue_line_key,
+  i.downstream_route_measure,
+  s.wscode_ltree,
+  s.localcode_ltree,
+  s.watershed_group_code,
+  max(i.gradient_class) as gradient_class
+FROM islands i
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+  on i.blue_line_key = s.blue_line_key
+  and i.downstream_route_measure >= s.downstream_route_measure
+  and i.downstream_route_measure < s.upstream_route_measure + .01
+GROUP BY
+  i.blue_line_key,
+  i.downstream_route_measure,
+  s.wscode_ltree,
+  s.localcode_ltree,
+  s.watershed_group_code
+ON CONFLICT DO NOTHING;  -- max() should ensure records are unique but just in case, ignore any duplicates
