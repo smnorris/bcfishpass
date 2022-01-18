@@ -24,14 +24,19 @@ SELECT
   s.wscode_ltree,
   s.localcode_ltree,
   s.watershed_group_code,
-  max(COALESCE(s.upstream_area_ha, 0)) + 1 as upstream_area_ha
+  max(COALESCE(ua.upstream_area_ha, 0)) + 1 as upstream_area_ha
 FROM whse_basemapping.fwa_stream_networks_sp s
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
+LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
+ON s.linear_feature_id = l.linear_feature_id
+INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
+ON l.watershed_feature_id = ua.watershed_feature_id
 -- we only want widths of streams/rivers
-AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
 AND s.localcode_ltree IS NOT NULL
 GROUP BY s.wscode_ltree, s.localcode_ltree, s.watershed_group_code
+
 )
 
 INSERT INTO bcfishpass.channel_width_modelled
@@ -47,11 +52,13 @@ SELECT
   s.localcode_ltree,
   s.watershed_group_code,
   -- formula for predicting channel width is from Thorley and Irvine 2021
-  round(
-      (EXP(-2.2383120 + 0.3121556 * ln(s.upstream_area_ha / 100) + 0.6546995 * ln(p.map_upstream / 10))
-    )::numeric, 2
-  )
-  as channel_width_modelled
+  --round(
+  --    (EXP(-2.2383120 + 0.3121556 * ln(s.upstream_area_ha / 100) + 0.6546995 * ln(p.map_upstream / 10))
+  --  )::numeric, 2
+  --)
+  -- updated formula, 2022
+  --round(exp(0.3071 + 0.4578 * (ln(s.upstream_area_ha / 100) + ln((coalesce(p.map_upstream, 0) + 1) / 1000)))::numeric, 2) as channel_width_modelled
+  round(exp(0.3071 + 0.4578 * (ln(s.upstream_area_ha) + ln(p.map_upstream) - ln(100) - ln(1000)))) as channel_width_modelled
 FROM streams s
 INNER JOIN bcfishpass.mean_annual_precip p
 ON s.wscode_ltree = p.wscode_ltree
