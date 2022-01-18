@@ -14,7 +14,7 @@ WITH cwmeas AS
     s.linear_feature_id,
     c.channel_width_measured AS cw
   FROM whse_basemapping.fwa_stream_networks_sp s
-  INNER JOIN bcfishpass.param_watersheds pw ON s.watershed_group_code = pw.watershed_group_code
+  --INNER JOIN bcfishpass.param_watersheds pw ON s.watershed_group_code = pw.watershed_group_code
   LEFT OUTER JOIN bcfishpass.channel_width_measured c
     ON s.wscode_ltree = c.wscode_ltree
     AND s.localcode_ltree = c.localcode_ltree
@@ -40,7 +40,7 @@ cwmodel AS
     s.linear_feature_id,
     c.channel_width_modelled AS cw
   FROM whse_basemapping.fwa_stream_networks_sp s
-  INNER JOIN bcfishpass.param_watersheds pw ON s.watershed_group_code = pw.watershed_group_code
+  --INNER JOIN bcfishpass.param_watersheds pw ON s.watershed_group_code = pw.watershed_group_code
   LEFT OUTER JOIN bcfishpass.channel_width_modelled c
     ON s.wscode_ltree = c.wscode_ltree
     AND s.localcode_ltree = c.localcode_ltree
@@ -63,7 +63,7 @@ SELECT
   end as channel_width_source,
   COALESCE(cwmeas.cw, cwmap.cw, cwmodel.cw)
 FROM whse_basemapping.fwa_stream_networks_sp s 
-INNER JOIN bcfishpass.param_watersheds pw ON s.watershed_group_code = pw.watershed_group_code
+--INNER JOIN bcfishpass.param_watersheds pw ON s.watershed_group_code = pw.watershed_group_code
 LEFT OUTER JOIN cwmeas ON s.linear_feature_id = cwmeas.linear_feature_id
 LEFT OUTER JOIN cwmap ON s.linear_feature_id = cwmap.linear_feature_id
 LEFT OUTER JOIN cwmodel ON s.linear_feature_id = cwmodel.linear_feature_id
