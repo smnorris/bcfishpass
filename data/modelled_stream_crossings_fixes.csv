@@ -1906,745 +1906,743 @@ modelled_crossing_id,structure,watershed_group_code,reviewer,notes
 6800648,OBS,HORS,NMW,bridge/OBS
 6800657,FORD,HORS,NMW,no road/structure
 6800520,NONE,HORS,NMW,no road/structure
-1001805549,OBS,BULK,KK,to check
-1024724375,NONE,THOM,KK,stream does not exist as mapped
-1019004716,OBS,SQAM,KK,check crossing to south not marked
-1024716271,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
-1024718499,OBS,PARK,KK,
-1010305182,OBS,LFRA,KK,
-1024741776,NONE,LFRA,KK,no stream present
-1010305128,OBS,LFRA,KK,to check
-1010305149,NONE,LFRA,KK,crossing does not exist
-1019004763,OBS,SQAM,KK,stream not mapped accurately but bridge visible to east
-1024741741,OBS,LFRA,KK,
-1020506038,OBS,THOM,KK,to check
-1020506664,OBS,THOM,KK,to check
-1020506465,OBS,THOM,KK,to check
-1011508230,OBS,LNTH,KK,this should be the stream to the north - obvious bridge but no point on map
-1011508331,OBS,LNTH,KK,to check
-1011508308,OBS,LNTH,KK,to check
-1024718601,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1019004735,OBS,SQAM,KK,to check
-1010305190,OBS,LFRA,KK,to check
-1024741375,OBS,LFRA,KK,
-1024741405,OBS,LFRA,KK,
-1005505715,OBS,FRCN,KK,to check
-1019004787,OBS,SQAM,KK,to check
-1020506584,OBS,THOM,KK,to check
-1020506421,OBS,THOM,KK,to check
-1020506579,OBS,THOM,KK,to check
-1020506572,OBS,THOM,KK,to check
-1024718603,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1014404136,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
-1019004730,OBS,SQAM,KK,to check
-1016112405,OBS,OKAN,KK,
-1019004776,OBS,SQAM,KK,
-1024712663,NONE,LFRA,KK,stream does not exist as mapped
-1019106923,OBS,STHM,KK,
-1005505834,OBS,FRCN,KK,to check
-1020506271,OBS,THOM,KK,to check
-1019500443,OBS,SUST,KK,to check
-1012401281,OBS,LSKE,KK,
-1024716269,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
-1024718599,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718604,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024716270,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
-1024716264,NONE,MURR,KK,no stream visible no bridge visible
-1019004719,OBS,SQAM,KK,to check
-1024727253,OBS,WORC,KK,to check
-1024741558,OBS,LFRA,KK,
-1017907952,OBS,SETN,KK,to check
-1020506751,OBS,THOM,KK,to check
-1017908022,OBS,SETN,KK,to check
-1019004788,OBS,SQAM,KK,to check
-1024718600,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718940,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
-1016112431,OBS,OKAN,KK,
-1018303483,OBS,SHUL,KK,
-1005505755,OBS,FRCN,KK,
-1020506145,OBS,THOM,KK,
-1024718607,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718937,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
-1024718938,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
-1019004728,OBS,SQAM,KK,to check
-1023204180,OBS,UNTH,KK,to check
-1010305148,OBS,LFRA,KK,stream incorrectly mapped
-1018303466,OBS,SHUL,KK,
-1022201990,OBS,UFRA,KK,to check
-1022202129,OBS,UFRA,KK,to check
-1020506479,OBS,THOM,KK,to check
-1020506571,OBS,THOM,KK,to check
-1020506753,OBS,THOM,KK,to check
-1019703287,OBS,TABR,KK,to check
-1024718608,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024716268,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
-1024712979,OBS,LFRA,KK,
-1010300049,OBS,LFRA,KK,
-1010304992,OBS,LFRA,KK,
-1002801609,OBS,CHWK,KK,
-1020506229,OBS,THOM,KK,to check
-1020506580,OBS,THOM,KK,to check
-1020506570,OBS,THOM,KK,to check
-1020506582,OBS,THOM,KK,to check
-1020506469,NONE,THOM,KK,no stream is present
-1020506552,OBS,THOM,KK,to check
-1017907988,OBS,SETN,KK,
-1024718606,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718598,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718602,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024702591,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718605,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
-1024718939,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
-1014404156,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
-1016112425,OBS,OKAN,KK,to check
-1023804134,OBS,USHU,KK,to check
-1006303953,OBS,HARR,KK,to check
-1020506228,OBS,THOM,KK,
-1017907948,OBS,SETN,KK,to check
-1008802593,OBS,KLUM,KK,to check
-1001400112,OBS,BONP,KK,to check - looks like bridge
-1020001009,OBS,TAKL,KK,to check - probable bridge
-1020001029,OBS,TAKL,KK,
-1020001055,OBS,TAKL,KK,to check - probable bridge
-1020001129,OBS,TAKL,KK,
-1020001311,NONE,TAKL,KK,no visible road
-1020001379,OBS,TAKL,KK,to check - looks like bridge
-1001401521,NONE,BONP,KK,no visible crossing
-1001401523,NONE,BONP,KK,no visble crossing
-1024741607,NONE,TAKL,KK,no visible road
-1024741608,NONE,TAKL,KK,no visible road
-1001401587,NONE,BONP,KK,no visible road
-1001401965,OBS,BONP,KK,to check - possible bridge
-1001402048,NONE,BONP,KK,no visible road
-1001402062,OBS,BONP,KK,"to be checked, looks like a bridge in satellite imagery"
-1001402079,OBS,BONP,KK,to check - looks like a bridge in satellite imagery
-1020000581,OBS,TAKL,KK,
-1020000788,OBS,TAKL,KK,
-1020001048,OBS,TAKL,KK,
-1020001368,NONE,TAKL,KK,no road visible
-1020001378,OBS,TAKL,KK,to check - possible bridge
-1012200168,NONE,LSAL,KK,no visible road
-1020001538,NONE,TAKL,KK,no visible road
-1020001391,NONE,TAKL,KK,no visible road
-1001403857,OBS,BONP,KK,to check - probable bridge
-1021501028,OBS,TWAC,KK,
-1021501083,OBS,TWAC,KK,"to check, probably bridge"
-1012201244,FORD,LSAL,KK,no visible structure
-1021501420,OBS,TWAC,KK,"to check, possilbe bridge"
-1021501469,OBS,TWAC,KK,to check - probably bridge
-1001404398,FORD,BONP,KK,no visible structure
-1012200032,OBS,LSAL,KK,to check - possible bridge
-1012200359,NONE,LSAL,KK,no visible road
-1001404656,OBS,BONP,KK,to check - possible bridge
-1022200810,NONE,UFRA,KK,no visible crossing
-1022201016,NONE,UFRA,KK,no visible crossing
-1022201088,NONE,UFRA,KK,no visible road
-1012200825,NONE,LSAL,KK,no visible crossing
-1012201146,FORD,LSAL,KK,no visible structure
-1012201223,OBS,LSAL,KK,to check - possible bridge
-1012201596,NONE,LSAL,KK,no visible crossing
-1023200262,OBS,UNTH,KK,to check - possible bridge
-1023201198,FORD,UNTH,KK,no visible structure
-1023201509,OBS,UNTH,KK,to check - possible bridge
-1012202019,OBS,LSAL,KK,to check - probable bridge
-1012202074,OBS,LSAL,KK,to check - possible bridge
-1012202083,OBS,LSAL,KK,
-1023202200,OBS,UNTH,KK,
-1023202236,OBS,UNTH,KK,
-1023202242,OBS,UNTH,KK,
-1001404846,OBS,BONP,KK,to check - possible bridge
-1001405085,OBS,BONP,KK,to check - possible bridge
-1024727989,OBS,CHWK,KK,to check - probable bridge
-1023203810,OBS,UNTH,KK,
-1023204546,OBS,UNTH,KK,
-1001405493,OBS,BONP,KK,
-1023204866,OBS,UNTH,KK,
-1017501568,NONE,SAJR,KK,no visible stream
-1017500870,NONE,SAJR,KK,no visible road
-1017500877,NONE,SAJR,KK,no visible road
-1017500885,NONE,SAJR,KK,no visible road
-1023800902,OBS,USHU,KK,to check - probable bridge
-1017500856,NONE,SAJR,KK,no visible road
-1017500863,NONE,SAJR,KK,no visible road
-1017500864,NONE,SAJR,KK,no visible road
-1024200608,OBS,UTRE,KK,to check - possible bridge
-1024200013,FORD,UTRE,KK,no visible structure
-1017502395,NONE,SAJR,KK,no visible road
-1023804134,OBS,USHU,KK,to check - possible bridge
-1100002543,OBS,USHU,KK,
-1024200092,NONE,UTRE,KK,no visible road
-1024400557,FORD,WILL,KK,no visible structure
-1024400521,NONE,WILL,KK,no visible road
-1024400522,NONE,WILL,KK,no visible road
-1024400988,NONE,WILL,KK,no visible road
-1024400594,NONE,WILL,KK,no visible road
-1024400717,NONE,WILL,KK,no visible road
-1024401549,NONE,WILL,KK,no visible road
-1024401191,NONE,WILL,KK,no visible road
-1024403851,OBS,WILL,KK,"to check, may be bridge to west"
-1017701352,FORD,SALR,KK,no visible structure
-1024401857,OBS,WILL,KK,to check - possible bridge
-1017701046,OBS,SALR,KK,to check - possible bridge
-1100002308,OBS,CHWK,KK,
-1024727970,OBS,CHWK,KK,
-1003500781,FORD,COTR,KK,no visible structure
-1003500390,NONE,COTR,KK,mapped stream does not follow satellite imagery
-1003501359,NONE,COTR,KK,no visible road
-1003501232,NONE,COTR,KK,no visible stream
-1003501925,NONE,COTR,KK,no visible road
-1003502242,NONE,COTR,KK,no visible road
-1001404043,OBS,BONP,KK,to check - possible bridge
-1003503370,NONE,COTR,KK,no visible road
-1003505828,OBS,COTR,KK,to check - possible bridge
-1003505102,OBS,COTR,KK,
-1003505811,OBS,COTR,KK,to check - possible bridge
-1003505623,OBS,COTR,KK,to check - probable bridge
-1003506289,NONE,COTR,KK,no visible road
-1003900487,NONE,DEAD,KK,no visible crossing
-1003506444,NONE,COTR,KK,no visible road
-1024705873,OBS,COTR,KK,
-1024705883,NONE,COTR,KK,no visible road
-1003900414,NONE,DEAD,KK,no visible road
-1024700255,OBS,COTR,KK,
-1003900283,FORD,DEAD,KK,no visible structure
-1003901030,NONE,DEAD,KK,no visible road
-1003900612,NONE,DEAD,KK,no visible road
-1004300246,NONE,DRIR,KK,no visible road
-1004300004,NONE,DRIR,KK,no visible road
-1004300256,NONE,DRIR,KK,no visible road
-1004300283,OBS,DRIR,KK,
-1004300419,FORD,DRIR,KK,no structure visible
-1004300289,OBS,DRIR,KK,
-1004300293,OBS,DRIR,KK,
-1004300370,OBS,DRIR,KK,
-1004300401,OBS,DRIR,KK,to check - possible bridge
-1004300580,NONE,DRIR,KK,no visible road
-1005402280,OBS,FRAN,KK,
-1004300434,OBS,DRIR,KK,
-1004300556,NONE,DRIR,KK,no visible road
-1004300296,OBS,DRIR,KK,to check - probable bridge
-1004300529,NONE,DRIR,KK,no visible road
-1004300581,NONE,DRIR,KK,no visible road
-1005402286,NONE,FRAN,KK,no visible road
-1004300625,NONE,DRIR,KK,no visible road
-1004300626,NONE,DRIR,KK,no visible road
-1004300658,NONE,DRIR,KK,no visible roads
-1005400606,OBS,FRAN,KK,to check - probable bridge
-1005400625,NONE,FRAN,KK,no visible crossing
-1005400681,FORD,FRAN,KK,no visible structure
-1005401277,NONE,FRAN,KK,no visible crossing
-1005401791,OBS,FRAN,KK,to check - probable bridge
-1005401224,NONE,FRAN,KK,no visible road
-1005401522,OBS,FRAN,KK,to check - probable bridge
-1005401563,NONE,FRAN,KK,no visible road
-1005402064,NONE,FRAN,KK,no visible road
-1005402069,FORD,FRAN,KK,no visible structure
-1005402081,NONE,FRAN,KK,no visible crossing
-1005402380,NONE,FRAN,KK,no visible road
-1005402161,OBS,FRAN,KK,"to check, no road as mapped, but one directly south"
-1005402274,NONE,FRAN,KK,no visible road
-1010300769,OBS,LFRA,KK,to check - possible bridge
-1010301123,OBS,LFRA,KK,to check - probable bridge
-1010302026,OBS,LFRA,KK,
-1010301737,OBS,LFRA,KK,
-1010301330,OBS,LFRA,KK,to check - probable bridge
-1010301379,OBS,LFRA,KK,to check - probable bridge
-1005402573,FORD,FRAN,KK,no visible structure
-1010302204,OBS,LFRA,KK,
-1005402569,OBS,FRAN,KK,to check - possible bridge
-1010303160,OBS,LFRA,KK,
-1010303215,OBS,LFRA,KK,
-1010303231,OBS,LFRA,KK,to check - possible bridge
-1005402576,OBS,FRAN,KK,to check - possible bridge
-1005402539,OBS,FRAN,KK,to check - probable bridge
-1005403018,OBS,FRAN,KK,to check - possible bridge
-1005402542,FORD,FRAN,KK,no visible structure
-1005402883,FORD,FRAN,KK,no visible structure
-1005403480,NONE,FRAN,KK,no visible road
-1005403244,OBS,FRAN,KK,
-1013900338,NONE,MORK,KK,no visible stream
-1013901660,FORD,MORK,KK,no visible structure
-1013900867,NONE,MORK,KK,no road visible
-1013902769,NONE,MORK,KK,to check - possibly no crossing
-1013902631,NONE,MORK,KK,no visible crossing
-1013902251,NONE,MORK,KK,no visible crossing
-1005404764,OBS,FRAN,KK,
-1013903472,OBS,MORK,KK,"to check,- probable bridge"
-1005403860,OBS,FRAN,KK,
-1005404095,OBS,FRAN,KK,to check - probable bridge
-1005404281,OBS,FRAN,KK,
-1005404283,OBS,FRAN,KK,
-1005404577,OBS,FRAN,KK,to check - probable bridge
-1005404604,OBS,FRAN,KK,
-1005403972,OBS,FRAN,KK,
-1005404155,OBS,FRAN,KK,to check - possible bridge
-1005405393,OBS,FRAN,KK,to check -probable bridge
-1005405067,OBS,FRAN,KK,to check - possible bridge
-1005405274,OBS,FRAN,KK,to check - possible bridge
-1005405319,NONE,FRAN,KK,no visible stream
-1005406199,OBS,FRAN,KK,to check - possible bridge
-1005405729,OBS,FRAN,KK,
-1005405659,OBS,FRAN,KK,to check - possible bridge
-1005405821,OBS,FRAN,KK,
-1005406058,OBS,FRAN,KK,
-1005406563,NONE,FRAN,KK,no visible road
-1005406564,NONE,FRAN,KK,no visible road
-1005406583,FORD,FRAN,KK,no visible structure
-1005500018,OBS,FRCN,KK,
-1005406726,NONE,FRAN,KK,no visible road
-1005406753,OBS,FRAN,KK,to check - possible bridge
-1024715834,OBS,MORK,KK,
-1005407274,OBS,FRAN,KK,to check - probable bridge
-1005502352,NONE,FRCN,KK,no road visible
-1005500977,FORD,FRCN,KK,no visible structure
-1005500849,OBS,FRCN,KK,to check - possible bridge
-1005501140,NONE,FRCN,KK,no visible road
-1005501141,NONE,FRCN,KK,no visible road
-1005502694,NONE,FRCN,KK,no visible road
-1005502847,OBS,FRCN,KK,
-1005405607,OBS,FRAN,KK,to check - possible bridge
-1005503236,OBS,FRCN,KK,to check - possible bridge
-1005504361,NONE,FRCN,KK,no visible crossing
-1005400525,OBS,FRAN,KK,
-1005400629,OBS,FRAN,KK,to check - probable bridge
-1005503672,FORD,FRCN,KK,no visible structure
-1014000565,OBS,MORR,KK,to check - possible bridge
-1005505565,OBS,FRCN,KK,to check - possible bridge
-1005406403,NONE,FRAN,KK,no visible road
-1005506419,NONE,FRCN,KK,no visible crossing
-1024740255,NONE,FRCN,KK,no visible road
-1017903638,NONE,SETN,KK,no visible crossing
-1024737730,OBS,SETN,KK,
-1021501499,OBS,TWAC,KK,
-1008300482,OBS,KISP,KK,to check - possible bridge
-1021501578,OBS,TWAC,KK,to check - possible bridge
-1014903168,OBS,NARC,KK,to check - probable bridge
-1021502563,OBS,TWAC,KK,to check - possible bridge
-1008302089,NONE,KISP,KK,no visible crossing
-1008301056,NONE,KISP,KK,no visible crossing
-1008301995,OBS,KISP,KK,
-1024709795,OBS,KISP,KK,
-1008302290,FORD,KISP,KK,no visible structure
-1008302568,OBS,KISP,KK,
-1014901082,FORD,NARC,KK,no structure visible
-1014900549,OBS,NARC,KK,to check - possible bridge
-1014901587,NONE,NARC,KK,no visible road
-1014902214,OBS,NARC,KK,to check - probable bridge
-1009900231,OBS,LCHL,KK,
-1009901057,NONE,LCHL,KK,no visible crossing
-1009900932,OBS,LCHL,KK,
-1009901659,OBS,LCHL,KK,
-1009900960,NONE,LCHL,KK,no visible road
-1009901450,OBS,LCHL,KK,
-1009901139,FORD,LCHL,KK,no visible structure
-1009902638,OBS,LCHL,KK,to check - possible bridge
-1009901721,NONE,LCHL,KK,no visible road
-1024734636,OBS,SHUL,KK,
-1009901872,NONE,LCHL,KK,no visible issue
-1009902419,NONE,LCHL,KK,no visible stream
-1009902539,FORD,LCHL,KK,no visible structure
-1009904540,OBS,LCHL,KK,to check - probable bridge
-1009903238,OBS,LCHL,KK,to check - possible bridge
-1009904422,OBS,LCHL,KK,to check - possible bridge
-1009903723,NONE,LCHL,KK,no visible road
-1009903990,OBS,LCHL,KK,to check - possible bridge
-1009905048,NONE,LCHL,KK,no visible stream
-1009904910,OBS,LCHL,KK,
-1009904592,OBS,LCHL,KK,
-1022201087,FORD,UFRA,KK,no visible structure
-1022201089,FORD,UFRA,KK,no visible structure
-1024704075,FORD,LCHL,KK,no visible structure
-1009905147,NONE,LCHL,KK,no visible road
-1010300394,NONE,LFRA,KK,no visible stream
-1010300395,NONE,LFRA,KK,no visible stream
-1010300430,OBS,LFRA,KK,
-1010300404,OBS,LFRA,KK,
-1010300439,OBS,LFRA,KK,
-1010300510,OBS,LFRA,KK,
-1010300557,OBS,LFRA,KK,
-1010300517,OBS,LFRA,KK,to check - possible bridge
-1010300619,OBS,LFRA,KK,
-1010300553,OBS,LFRA,KK,to check - probable bridge
-1010300751,OBS,LFRA,KK,
-1010300696,OBS,LFRA,KK,
-1010301294,OBS,LFRA,KK,to check - possible bridge
-1010300838,OBS,LFRA,KK,to check - probable bridge
-1010300844,OBS,LFRA,KK,
-1010301009,OBS,LFRA,KK,
-1010301980,OBS,LFRA,KK,
-1010301308,OBS,LFRA,KK,
-1010301354,OBS,LFRA,KK,
-1010302011,OBS,LFRA,KK,to check - possible bridge
-1010303192,OBS,LFRA,KK,
-1010302119,OBS,LFRA,KK,
-1010303129,OBS,LFRA,KK,to check - possible bridge
-1010303171,OBS,LFRA,KK,
-1010301966,OBS,LFRA,KK,
-1010301973,OBS,LFRA,KK,
-1010302666,OBS,LFRA,KK,
-1010303230,OBS,LFRA,KK,to check - possible bridge
-1010303203,OBS,LFRA,KK,
-1010303254,OBS,LFRA,KK,
-1010303190,OBS,LFRA,KK,to check - probable bridge
-1010303205,OBS,LFRA,KK,to check - possible bridge
-1010303209,OBS,LFRA,KK,to check - probable bridge
-1010303372,OBS,LFRA,KK,
-1010303218,OBS,LFRA,KK,to check - possible bridge
-1024730877,OBS,LFRA,KK,
-1024712774,OBS,LFRA,KK,
-1024712979,OBS,LFRA,KK,
-1024713337,FORD,LILL,KK,no visible structure
-1015605785,NONE,NECR,KK,no visible stream
-1015604736,NONE,NECR,KK,no visible crossing
-1015602697,FORD,NECR,KK,no visible structure
-1011501259,OBS,LNTH,KK,to check - possible bridge
-1017101160,NONE,QUES,KK,no visible road
-1011501174,NONE,LNTH,KK,no visible crossing
-1011501632,OBS,LNTH,KK,
-1011507398,OBS,LNTH,KK,to check - probable bridge
-1011503858,OBS,LNTH,KK,to check - possible bridge
-1019102710,FORD,STHM,KK,no visible structure
-1011503040,NONE,LNTH,KK,no crossing visible
-1011503768,OBS,LNTH,KK,
-1011503782,OBS,LNTH,KK,to check - possible bridge
-1011505428,OBS,LNTH,KK,
-1011508823,NONE,LNTH,KK,no visible road
-1011508388,OBS,LNTH,KK,
-1011508825,NONE,LNTH,KK,no visible road
-1012201855,NONE,LSAL,KK,no visible road
-1024714071,OBS,LNTH,KK,to check - probably bridge
-1012200167,NONE,LSAL,KK,no visible road
-1012200181,FORD,LSAL,KK,no visible structure
-1012200053,OBS,LSAL,KK,
-1012200744,FORD,LSAL,KK,to visible road
-1012200777,NONE,LSAL,KK,no visible road
-1012201825,OBS,LSAL,KK,
-1012202258,NONE,LSAL,KK,no visible road
-1012202185,OBS,LSAL,KK,
-1012202021,OBS,LSAL,KK,
-1012600263,NONE,LTRE,KK,no visible road
-1012202304,NONE,LSAL,KK,no visible road
-1012202360,NONE,LSAL,KK,no visible structure
-1012601069,OBS,LTRE,KK,
-1012600461,NONE,LTRE,KK,no visible crossing
-1012600939,NONE,LTRE,KK,no visible road
-1024739495,NONE,LTRE,KK,no visible road
-1024739480,NONE,LTRE,KK,no visible road
-1012601231,NONE,LTRE,KK,no visible road
-1012601232,NONE,LTRE,KK,no visible road
-1013901083,OBS,MORK,KK,to check - probable bridge
-1013900339,NONE,MORK,KK,road not mapped correctly
-1013900340,NONE,MORK,KK,stream appears to be mapped incorrectly
-1013900341,NONE,MORK,KK,no visible crossing
-1013900909,NONE,MORK,KK,no visible road
-1013900096,OBS,MORK,KK,to check - possible bridge
-1013900963,NONE,MORK,KK,no visible road
-1013901135,NONE,MORK,KK,no visible road
-1013901319,NONE,MORK,KK,no visible road
-1013901249,FORD,MORK,KK,no visible crossing
-1013902343,NONE,MORK,KK,no visible road
-1013901484,FORD,MORK,KK,no visible structure
-1013901825,FORD,MORK,KK,no visible structure
-1013901320,NONE,MORK,KK,no visible road
-1013902700,FORD,MORK,KK,no visible structure
-1013903372,NONE,MORK,KK,no visible road
-1013903176,OBS,MORK,KK,to check - possible bridge
-1013902831,NONE,MORK,KK,no visible structure
-1014901149,OBS,NARC,KK,to check - probable bridge
-1013905329,NONE,MORK,KK,no visible road
-1013905732,NONE,MORK,KK,no visible road
-1024732309,OBS,MORK,KK,to check - possible bridge
-1024732313,OBS,MORK,KK,to check - possible bridge
-1024732314,OBS,MORK,KK,to check - possible bridge
-1014900325,FORD,NARC,KK,no visible structure
-1013904475,OBS,MORK,KK,
-1013904486,FORD,MORK,KK,no visible structure
-1013904511,FORD,MORK,KK,no visible structure
-1014900132,OBS,NARC,KK,
-1014901861,NONE,NARC,KK,no visible road
-1014901454,NONE,NARC,KK,no visible crossing
-1014901477,OBS,NARC,KK,to check - possible fridge
-1014901348,OBS,NARC,KK,to check - probable bridge
-1014902211,OBS,NARC,KK,to check - probable bridge
-1014902028,FORD,NARC,KK,no visible structure
-1014902227,OBS,NARC,KK,to check - probable bridge
-1014902088,NONE,NARC,KK,no visible crossing
-1015600232,OBS,NECR,KK,to check - possible bridge
-1014902524,NONE,NARC,KK,no visible road
-1014903682,OBS,NARC,KK,to check - probable bridge
-1014904025,OBS,NARC,KK,
-1015601295,NONE,NECR,KK,no visible stream
-1015601227,NONE,NECR,KK,no visible stream
-1015601192,NONE,NECR,KK,no visible road
-1015601321,NONE,NECR,KK,no visible road
-1015601223,FORD,NECR,KK,no visible structure
-1015601265,NONE,NECR,KK,no visible road
-1015601328,FORD,NECR,KK,no visible structure
-1015601407,FORD,NECR,KK,no visible structure
-1015601527,NONE,NECR,KK,no visible road
-1015601466,NONE,NECR,KK,no visible road
-1015602209,NONE,NECR,KK,no visible road
-1015601635,FORD,NECR,KK,no visible structure
-1015601984,FORD,NECR,KK,no visible structure
-1015602029,FORD,NECR,KK,no visible structure
-1015602213,NONE,NECR,KK,no visible road
-1015602853,FORD,NECR,KK,no visible structure
-1015602669,FORD,NECR,KK,no visible structure
-1015603237,OBS,NECR,KK,
-1015603156,NONE,NECR,KK,no visible crossing
-1015603534,NONE,NECR,KK,no visible road
-1015603162,NONE,NECR,KK,no visible stream
-1015603864,OBS,NECR,KK,to check - possible bridge
-1015603897,FORD,NECR,KK,no visible structure
-1015604294,FORD,NECR,KK,no visible structure
-1015603946,FORD,NECR,KK,no structure visible
-1015605378,NONE,NECR,KK,no visible road
-1015605275,OBS,NECR,KK,
-1015604900,NONE,NECR,KK,no visible road
-1015605248,OBS,NECR,KK,to check - possible bridge
-1017500611,NONE,SAJR,KK,no visible road
-1100001847,FORD,NECR,KK,no visible crossing
-1015605736,NONE,NECR,KK,no visible crossing
-1017100470,OBS,QUES,KK,to check - possible bridge
-1017100396,OBS,QUES,KK,to check - probable bridge
-1017100715,OBS,QUES,KK,to check - probable bridge
-1017100588,NONE,QUES,KK,no visible road
-1017100730,NONE,QUES,KK,no visible road
-1017100693,NONE,QUES,KK,no visible stream
-1017100731,NONE,QUES,KK,no visible road
-1017100759,OBS,QUES,KK,to check - possible bridge
-1017100904,OBS,QUES,KK,to check - probable bridge
-1017101064,OBS,QUES,KK,
-1017102379,NONE,QUES,KK,no visible road
-1017101418,OBS,QUES,KK,to check - possible bridge
-1017101907,NONE,QUES,KK,no visible structure
-1017101175,NONE,QUES,KK,no visible road
-1017101179,OBS,QUES,KK,to check - probable bridge
-1017101185,OBS,QUES,KK,to check - probable bridge
-1017101918,OBS,QUES,KK,to check - probable bridge
-1017102044,NONE,QUES,KK,no visible road
-1017102046,NONE,QUES,KK,no visible road
-1017102084,OBS,QUES,KK,to check - probable bridge
-1017103300,OBS,QUES,KK,to check - probable bridge
-1017103757,OBS,QUES,KK,
-1017103709,FORD,QUES,KK,no visible structure
-1017103813,NONE,QUES,KK,no visible or mapped road at this point
-1017103824,OBS,QUES,KK,to check - possible bridge
-1017500807,NONE,SAJR,KK,no visible road
-1017104010,OBS,QUES,KK,to check - possible bridge
-1017500585,OBS,SAJR,KK,to check - possible bridge
-1017500857,NONE,SAJR,KK,no visible road
-1017500858,NONE,SAJR,KK,no visible road
-1017500865,NONE,SAJR,KK,no visible road
-1017104513,FORD,QUES,KK,no visible structure
-1024740445,NONE,QUES,KK,no visible structure
-1017500480,NONE,SAJR,KK,no visible crossing
-1017500874,NONE,SAJR,KK,no visible road
-1017501073,OBS,SAJR,KK,to check - probable bridge
-1017500875,NONE,SAJR,KK,no visible road
-1017500876,NONE,SAJR,KK,no visible road
-1017500879,NONE,SAJR,KK,no visible road
-1017500880,NONE,SAJR,KK,no visible road
-1017500881,NONE,SAJR,KK,no visible road
-1017500882,NONE,SAJR,KK,no visible road
-1017500884,NONE,SAJR,KK,no visible road
-1017500886,NONE,SAJR,KK,no visible road
-1017500867,NONE,SAJR,KK,no visible road
-1017500869,NONE,SAJR,KK,no visible road
-1017500872,NONE,SAJR,KK,no visible road
-1017500873,NONE,SAJR,KK,no visible road
-1017501557,NONE,SAJR,KK,no visible crossing
-1017501248,NONE,SAJR,KK,no visible road
-1017501401,NONE,SAJR,KK,stream mapped incorrectly no crossing
-1017501402,NONE,SAJR,KK,stream mapped incorrectly no crossing
-1017501415,OBS,SAJR,KK,to check - probable bridge
-1017501268,NONE,SAJR,KK,stream mapped incorrectly no crossing
-1017501271,NONE,SAJR,KK,stream mapped incorrectly no crossing
-1017502394,NONE,SAJR,KK,no visible road
-1017501702,NONE,SAJR,KK,no visible road
-1017502249,NONE,SAJR,KK,no visible road
-1017501647,OBS,SAJR,KK,to check - possible bridge
-1017501846,OBS,SAJR,KK,to check - possible bridge
-1017502351,OBS,SAJR,KK,to check - possible bridge
-1017502396,NONE,SAJR,KK,no visible road
-1017502251,NONE,SAJR,KK,no visible road
-1017502397,NONE,SAJR,KK,no visible road
-1017502398,NONE,SAJR,KK,no visible road
-1017701051,OBS,SALR,KK,
-1017700158,FORD,SALR,KK,no visible structure
-1017903285,NONE,SETN,KK,no visible stream
-1017900419,NONE,SETN,KK,no visible stream or mapped incorrectly
-1018300189,NONE,SHUL,KK,no visible road
-1017903251,OBS,SETN,KK,possible bridge
-1024720378,NONE,SETN,KK,no visible stream
-1018300066,OBS,SHUL,KK,
-1018300191,OBS,SHUL,KK,to check - possible bridge
-1018300279,OBS,SHUL,KK,
-1018300265,OBS,SHUL,KK,to check - possible bridge
-1018300356,OBS,SHUL,KK,to check - possible bridge
-1018303466,OBS,SHUL,KK,
-1018300592,OBS,SHUL,KK,to check - possible bridge
-1018301823,OBS,SHUL,KK,
-1018300421,OBS,SHUL,KK,to check - probable bridge
-1018300776,OBS,SHUL,KK,to check - possible bridge
-1018301074,NONE,SHUL,KK,no visible road
-1018303482,OBS,SHUL,KK,to check - possible bridge
-1018303483,OBS,SHUL,KK,
-1019101980,NONE,STHM,KK,no visible structure
-1019101162,OBS,STHM,KK,"to check, south opening looks like OBS"
-1019101625,OBS,STHM,KK,to check - possible bridge
-1019101792,OBS,STHM,KK,to check - probable bridge
-1019101981,NONE,STHM,KK,no visible structure
-1019102737,OBS,STHM,KK,
-1019102302,NONE,STHM,KK,no visible road
-1019102318,NONE,STHM,KK,no visible road
-1019103909,OBS,STHM,KK,
-1019102829,OBS,STHM,KK,to check - probable bridge
-1019102831,OBS,STHM,KK,
-1019103746,OBS,STHM,KK,to check - possible bridge
-1019107125,NONE,STHM,KK,road mapped incorrectly
-1019104209,OBS,STHM,KK,to check - possible bridge
-1019105117,OBS,STHM,KK,
-1019106064,NONE,STHM,KK,no visible stream
-1019106823,OBS,STHM,KK,to check - probable bridge
-1019300000,OBS,STUL,KK,to check - probable bridge
-1019107261,NONE,STHM,KK,road mapped incorrectly
-1019301497,OBS,STUL,KK,
-1019300476,FORD,STUL,KK,no visible structure
-1019107155,NONE,STHM,KK,road mapped incorrectly
-1019302225,FORD,STUL,KK,no visible structure
-1019301009,FORD,STUL,KK,no visible structure
-1019300658,FORD,STUL,KK,to visible structure
-1019301583,OBS,STUL,KK,to check - possible bridge
-1019300583,FORD,STUL,KK,no visible structure
-1019301107,FORD,STUL,KK,no visible structure
-1019301298,NONE,STUL,KK,no visible stream
-1019300977,OBS,STUL,KK,
-1019301824,OBS,STUL,KK,
-1019700869,OBS,TABR,KK,to check - possible bridge
-1019300495,FORD,STUL,KK,no visible structure
-1019700760,NONE,TABR,KK,no visible road
-1019302329,NONE,STUL,KK,no visible road
-1019500183,NONE,SUST,KK,"no visible stream, or possible fording "
-196200,OBS,TABR,KK,
-1019700613,NONE,TABR,KK,no visible road
-1019700905,NONE,TABR,KK,no visible road
-1019700975,NONE,TABR,KK,no visible road
-1019700909,NONE,TABR,KK,no visible road
-1019700911,NONE,TABR,KK,no visible road
-1019700928,NONE,TABR,KK,no visible road
-1019701054,OBS,TABR,KK,to check - probable bridge
-1019701014,OBS,TABR,KK,
-1019701020,OBS,TABR,KK,
-1019700913,OBS,TABR,KK,to check - probable bridge
-1019700916,OBS,TABR,KK,
-1019700917,NONE,TABR,KK,no visibe road
-1019701073,OBS,TABR,KK,to check - probable bridge
-1019701022,NONE,TABR,KK,no visible road
-1019701286,OBS,TABR,KK,to check - possible bridge
-1019701025,NONE,TABR,KK,no visible road
-1019701034,NONE,TABR,KK,no visible road
-1019701255,OBS,TABR,KK,to check - probable bridge
-1019701113,OBS,TABR,KK,to check - probable bridge
-1019701118,FORD,TABR,KK,no visible structure
-1019701424,NONE,TABR,KK,no visible road
-1019701488,NONE,TABR,KK,no visible road
-1019701305,NONE,TABR,KK,no visible road
-1019702308,NONE,TABR,KK,no visible road
-1019701831,NONE,TABR,KK,no visible crossing
-1019701643,FORD,TABR,KK,no visible structure
-1019702309,NONE,TABR,KK,no visible road
-1019702386,NONE,TABR,KK,no visible road
-1019702363,OBS,TABR,KK,to check - probable bridge
-1019702328,OBS,TABR,KK,to check - possible bridge
-1019703550,NONE,TABR,KK,no visible road
-1019703287,OBS,TABR,KK,to check - probable bridge
-1019703428,OBS,TABR,KK,to check - possible bridge
-1020000339,OBS,TAKL,KK,to check - possible bridge
-1024723678,OBS,TABR,KK,
-1020000184,NONE,TAKL,KK,no visible crossing
-1020000196,NONE,TAKL,KK,"no crossing, stream seems to be mapped incorrectly"
-1020000784,OBS,TAKL,KK,
-1020000529,OBS,TAKL,KK,
-1020000488,OBS,TAKL,KK,
-1005400520,NONE,FRAN,KK,no visible road
-1002800228,NONE,CHWK,KK,"Mapping error, stream does not cross road in satellite imagery"
-1005401264,FORD,FRAN,KK,no visible structure
-1001401526,NONE,BONP,KK,no visible crossing
-1001403039,NONE,BONP,KK,no visible stream
-1005401314,FORD,FRAN,KK,no visible structure
-1004300336,NONE,DRIR,KK,no visible road
-1024706266,OBS,DRIR,KK,
-1005402279,OBS,FRAN,KK,
-1005402960,OBS,FRAN,KK,to check - possible bridge
-1005402526,OBS,FRAN,KK,to check - probable bridge
-1005402527,FORD,FRAN,KK,no visible structure
-1005402490,NONE,FRAN,KK,no visible road
-1005404455,OBS,FRAN,KK,to check - possible bridge
-1005403478,FORD,FRAN,KK,no visible structure
-1005403566,OBS,FRAN,KK,
-1001403795,OBS,BONP,KK,to check - possible bridge
-1005405687,OBS,FRAN,KK,
-1001404083,OBS,BONP,KK,
-1012201316,NONE,LSAL,KK,no visible road
-1012200779,NONE,LSAL,KK,no visible road
-1005502332,NONE,FRCN,KK,no visible road
-1024714690,NONE,LSAL,KK,no visible road
-1009901503,OBS,LCHL,KK,to check - possible bridge
-1009903678,OBS,LCHL,KK,to check - possible bridge
-1009902247,NONE,LCHL,KK,no visible road
-1013500985,NONE,MIDR,KK,no road crossing mapped or visible on satellite
-1009903833,OBS,LCHL,KK,to check - probable bridge
-1009904058,OBS,LCHL,KK,to check - probable bridge
-1013501031,NONE,MIDR,KK,no visible road
-1009904500,OBS,LCHL,KK,
-1013903051,NONE,MORK,KK,no visible crossing
-1017101290,OBS,QUES,KK,to check - probable bridge
-1017100563,NONE,QUES,KK,no visible road
-1014900259,NONE,NARC,KK,no visible road
-1024715892,OBS,MORK,KK,
-1017102703,OBS,QUES,KK,to check - probable bridge
-1020000980,NONE,TAKL,KK,no visible road
-1014903592,OBS,NARC,KK,to check - possible bridge
-1010300968,OBS,LFRA,KK,
-1014001774,NONE,MORR,KK,no visible road
-1010300419,OBS,LFRA,KK,to check - possible bridge
-1010300421,OBS,LFRA,KK,
-1020001535,NONE,TAKL,KK,no visible road
-1020001054,OBS,TAKL,KK,
-1010300396,OBS,LFRA,KK,to check - possible bridge
-1020001700,NONE,TAKL,KK,no visible road
-1010301166,OBS,LFRA,KK,
-1015604539,OBS,NECR,KK,
-1010301165,OBS,LFRA,KK,
-1019701087,NONE,TABR,KK,no visible road
-1015604705,OBS,NECR,KK,to check - possible bridge
-196223,OBS,TABR,KK,to check - probable bridge
-1010303373,OBS,LFRA,KK,
-1019701002,NONE,TABR,KK,no visible crossing
-1019701097,FORD,TABR,KK,no visible structure
-1019701119,NONE,TABR,KK,no visible road
-1015605801,NONE,NECR,KK,no visible road
-1019701245,NONE,TABR,KK,no visible road
-1015605535,OBS,NECR,KK,"to check, bridge visible to north"
-1019702211,NONE,TABR,KK,no visible road
-1019702327,NONE,TABR,KK,no visible stream
-1017900420,NONE,SETN,KK,no visible stream or mapped incorrectly
-1019103564,NONE,STHM,KK,no visible stream
-1017500915,NONE,SAJR,KK,no visible road
-1019702304,OBS,TABR,KK,to check - probable bridge
-1019702307,NONE,TABR,KK,no visible road
-1100000825,NONE,TABR,KK,no visible or mapped road
-1017900422,NONE,SETN,KK,no visible stream or mapped incorrectly
-1017501558,NONE,SAJR,KK,no visible stream
-1021501555,OBS,TWAC,KK,to check - possible bridge
-1021501423,NONE,TWAC,KK,no visible crossing
-1024720363,OBS,SETN,KK,
-1024401001,FORD,WILL,KK,no visible structure
-1019301907,OBS,STUL,KK,
-1019300001,OBS,STUL,KK,to check - probable bridge
-1023202185,OBS,UNTH,KK,
-1024400247,FORD,WILL,KK,no visible structure
-1023800815,OBS,USHU,KK,to check - possible bridge
-1024403889,OBS,WILL,KK,to check - possible bridge
-1017700979,NONE,SALR,KK,no visible road
+1805549,OBS,BULK,KK,to check
+24724375,NONE,THOM,KK,stream does not exist as mapped
+19004716,OBS,SQAM,KK,check crossing to south not marked
+24716271,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
+24718499,OBS,PARK,KK,
+10305182,OBS,LFRA,KK,
+24741776,NONE,LFRA,KK,no stream present
+10305128,OBS,LFRA,KK,to check
+10305149,NONE,LFRA,KK,crossing does not exist
+19004763,OBS,SQAM,KK,stream not mapped accurately but bridge visible to east
+24741741,OBS,LFRA,KK,
+20506038,OBS,THOM,KK,to check
+20506664,OBS,THOM,KK,to check
+20506465,OBS,THOM,KK,to check
+11508230,OBS,LNTH,KK,this should be the stream to the north - obvious bridge but no point on map
+11508331,OBS,LNTH,KK,to check
+11508308,OBS,LNTH,KK,to check
+24718601,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+19004735,OBS,SQAM,KK,to check
+10305190,OBS,LFRA,KK,to check
+24741375,OBS,LFRA,KK,
+24741405,OBS,LFRA,KK,
+5505715,OBS,FRCN,KK,to check
+19004787,OBS,SQAM,KK,to check
+20506584,OBS,THOM,KK,to check
+20506421,OBS,THOM,KK,to check
+20506579,OBS,THOM,KK,to check
+20506572,OBS,THOM,KK,to check
+24718603,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+14404136,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
+19004730,OBS,SQAM,KK,to check
+16112405,OBS,OKAN,KK,
+19004776,OBS,SQAM,KK,
+24712663,NONE,LFRA,KK,stream does not exist as mapped
+19106923,OBS,STHM,KK,
+5505834,OBS,FRCN,KK,to check
+20506271,OBS,THOM,KK,to check
+19500443,OBS,SUST,KK,to check
+12401281,OBS,LSKE,KK,
+24716269,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
+24718599,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718604,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24716270,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
+24716264,NONE,MURR,KK,no stream visible no bridge visible
+19004719,OBS,SQAM,KK,to check
+24727253,OBS,WORC,KK,to check
+24741558,OBS,LFRA,KK,
+17907952,OBS,SETN,KK,to check
+20506751,OBS,THOM,KK,to check
+17908022,OBS,SETN,KK,to check
+19004788,OBS,SQAM,KK,to check
+24718600,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718940,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
+16112431,OBS,OKAN,KK,
+18303483,OBS,SHUL,KK,
+5505755,OBS,FRCN,KK,
+20506145,OBS,THOM,KK,
+24718607,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718937,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
+24718938,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
+19004728,OBS,SQAM,KK,to check
+23204180,OBS,UNTH,KK,to check
+10305148,OBS,LFRA,KK,stream incorrectly mapped
+18303466,OBS,SHUL,KK,
+22201990,OBS,UFRA,KK,to check
+22202129,OBS,UFRA,KK,to check
+20506479,OBS,THOM,KK,to check
+20506571,OBS,THOM,KK,to check
+20506753,OBS,THOM,KK,to check
+19703287,OBS,TABR,KK,to check
+24718608,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24716268,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
+24712979,OBS,LFRA,KK,
+10300049,OBS,LFRA,KK,
+10304992,OBS,LFRA,KK,
+2801609,OBS,CHWK,KK,
+20506229,OBS,THOM,KK,to check
+20506580,OBS,THOM,KK,to check
+20506570,OBS,THOM,KK,to check
+20506582,OBS,THOM,KK,to check
+20506469,NONE,THOM,KK,no stream is present
+20506552,OBS,THOM,KK,to check
+17907988,OBS,SETN,KK,
+24718606,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718598,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718602,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24702591,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718605,NONE,PARS,KK,NO CROSSING PRESENT (TUNNEL)
+24718939,NONE,PINE,KK,NO CROSSING PRESENT (TUNNEL)
+14404156,NONE,MURR,KK,NO CROSSING PRESENT (TUNNEL)
+16112425,OBS,OKAN,KK,to check
+23804134,OBS,USHU,KK,to check
+6303953,OBS,HARR,KK,to check
+20506228,OBS,THOM,KK,
+17907948,OBS,SETN,KK,to check
+8802593,OBS,KLUM,KK,to check
+1400112,OBS,BONP,KK,to check - looks like bridge
+20001009,OBS,TAKL,KK,to check - probable bridge
+20001029,OBS,TAKL,KK,
+20001055,OBS,TAKL,KK,to check - probable bridge
+20001129,OBS,TAKL,KK,
+20001311,NONE,TAKL,KK,no visible road
+20001379,OBS,TAKL,KK,to check - looks like bridge
+1401521,NONE,BONP,KK,no visible crossing
+1401523,NONE,BONP,KK,no visble crossing
+24741607,NONE,TAKL,KK,no visible road
+24741608,NONE,TAKL,KK,no visible road
+1401587,NONE,BONP,KK,no visible road
+1401965,OBS,BONP,KK,to check - possible bridge
+1402048,NONE,BONP,KK,no visible road
+1402062,OBS,BONP,KK,"to be checked, looks like a bridge in satellite imagery"
+1402079,OBS,BONP,KK,to check - looks like a bridge in satellite imagery
+20000581,OBS,TAKL,KK,
+20000788,OBS,TAKL,KK,
+20001048,OBS,TAKL,KK,
+20001368,NONE,TAKL,KK,no road visible
+20001378,OBS,TAKL,KK,to check - possible bridge
+12200168,NONE,LSAL,KK,no visible road
+20001538,NONE,TAKL,KK,no visible road
+20001391,NONE,TAKL,KK,no visible road
+1403857,OBS,BONP,KK,to check - probable bridge
+21501028,OBS,TWAC,KK,
+21501083,OBS,TWAC,KK,"to check, probably bridge"
+12201244,FORD,LSAL,KK,no visible structure
+21501420,OBS,TWAC,KK,"to check, possilbe bridge"
+21501469,OBS,TWAC,KK,to check - probably bridge
+1404398,FORD,BONP,KK,no visible structure
+12200032,OBS,LSAL,KK,to check - possible bridge
+12200359,NONE,LSAL,KK,no visible road
+1404656,OBS,BONP,KK,to check - possible bridge
+22200810,NONE,UFRA,KK,no visible crossing
+22201016,NONE,UFRA,KK,no visible crossing
+22201088,NONE,UFRA,KK,no visible road
+12200825,NONE,LSAL,KK,no visible crossing
+12201146,FORD,LSAL,KK,no visible structure
+12201223,OBS,LSAL,KK,to check - possible bridge
+12201596,NONE,LSAL,KK,no visible crossing
+23200262,OBS,UNTH,KK,to check - possible bridge
+23201198,FORD,UNTH,KK,no visible structure
+23201509,OBS,UNTH,KK,to check - possible bridge
+12202019,OBS,LSAL,KK,to check - probable bridge
+12202074,OBS,LSAL,KK,to check - possible bridge
+12202083,OBS,LSAL,KK,
+23202200,OBS,UNTH,KK,
+23202236,OBS,UNTH,KK,
+23202242,OBS,UNTH,KK,
+1404846,OBS,BONP,KK,to check - possible bridge
+1405085,OBS,BONP,KK,to check - possible bridge
+24727989,OBS,CHWK,KK,to check - probable bridge
+23203810,OBS,UNTH,KK,
+23204546,OBS,UNTH,KK,
+1405493,OBS,BONP,KK,
+23204866,OBS,UNTH,KK,
+23800902,OBS,USHU,KK,to check - probable bridge
+17501568,NONE,SAJR,KK,no visible stream
+17500870,NONE,SAJR,KK,no visible road
+17500877,NONE,SAJR,KK,no visible road
+17500885,NONE,SAJR,KK,no visible road
+17500856,NONE,SAJR,KK,no visible road
+17500863,NONE,SAJR,KK,no visible road
+17500864,NONE,SAJR,KK,no visible road
+100002543,OBS,USHU,KK,
+23804134,OBS,USHU,KK,to check - possible bridge
+24200092,NONE,UTRE,KK,no visible road
+24200013,FORD,UTRE,KK,no visible structure
+17502395,NONE,SAJR,KK,no visible road
+24400557,FORD,WILL,KK,no visible structure
+24200608,OBS,UTRE,KK,to check - possible bridge
+24400521,NONE,WILL,KK,no visible road
+24400522,NONE,WILL,KK,no visible road
+24401549,NONE,WILL,KK,no visible road
+24401191,NONE,WILL,KK,no visible road
+24400594,NONE,WILL,KK,no visible road
+24400717,NONE,WILL,KK,no visible road
+24400988,NONE,WILL,KK,no visible road
+24727970,OBS,CHWK,KK,
+17701352,FORD,SALR,KK,no visible structure
+24401857,OBS,WILL,KK,to check - possible bridge
+17701046,OBS,SALR,KK,to check - possible bridge
+24403851,OBS,WILL,KK,"to check, may be bridge to west"
+1404043,OBS,BONP,KK,to check - possible bridge
+100002308,OBS,CHWK,KK,
+3500390,NONE,COTR,KK,mapped stream does not follow satellite imagery
+3501359,NONE,COTR,KK,no visible road
+3501925,NONE,COTR,KK,no visible road
+3500781,FORD,COTR,KK,no visible structure
+3501232,NONE,COTR,KK,no visible stream
+3502242,NONE,COTR,KK,no visible road
+3503370,NONE,COTR,KK,no visible road
+3505102,OBS,COTR,KK,
+3505811,OBS,COTR,KK,to check - possible bridge
+3505623,OBS,COTR,KK,to check - probable bridge
+3900414,NONE,DEAD,KK,no visible road
+3505828,OBS,COTR,KK,to check - possible bridge
+3506444,NONE,COTR,KK,no visible road
+24700255,OBS,COTR,KK,
+3506289,NONE,COTR,KK,no visible road
+24705873,OBS,COTR,KK,
+24705883,NONE,COTR,KK,no visible road
+3900283,FORD,DEAD,KK,no visible structure
+3901030,NONE,DEAD,KK,no visible road
+3900612,NONE,DEAD,KK,no visible road
+3900487,NONE,DEAD,KK,no visible crossing
+4300283,OBS,DRIR,KK,
+4300246,NONE,DRIR,KK,no visible road
+4300004,NONE,DRIR,KK,no visible road
+4300289,OBS,DRIR,KK,
+4300256,NONE,DRIR,KK,no visible road
+4300293,OBS,DRIR,KK,
+4300370,OBS,DRIR,KK,
+4300296,OBS,DRIR,KK,to check - probable bridge
+4300401,OBS,DRIR,KK,to check - possible bridge
+4300419,FORD,DRIR,KK,no structure visible
+4300529,NONE,DRIR,KK,no visible road
+4300434,OBS,DRIR,KK,
+5402280,OBS,FRAN,KK,
+4300556,NONE,DRIR,KK,no visible road
+4300658,NONE,DRIR,KK,no visible roads
+4300625,NONE,DRIR,KK,no visible road
+4300580,NONE,DRIR,KK,no visible road
+4300581,NONE,DRIR,KK,no visible road
+5400606,OBS,FRAN,KK,to check - probable bridge
+5402286,NONE,FRAN,KK,no visible road
+4300626,NONE,DRIR,KK,no visible road
+5400681,FORD,FRAN,KK,no visible structure
+5400625,NONE,FRAN,KK,no visible crossing
+5401224,NONE,FRAN,KK,no visible road
+5401563,NONE,FRAN,KK,no visible road
+5401277,NONE,FRAN,KK,no visible crossing
+5401522,OBS,FRAN,KK,to check - probable bridge
+5401791,OBS,FRAN,KK,to check - probable bridge
+5402081,NONE,FRAN,KK,no visible crossing
+5402161,OBS,FRAN,KK,"to check, no road as mapped, but one directly south"
+5402064,NONE,FRAN,KK,no visible road
+5402069,FORD,FRAN,KK,no visible structure
+10301123,OBS,LFRA,KK,to check - probable bridge
+5402380,NONE,FRAN,KK,no visible road
+5402274,NONE,FRAN,KK,no visible road
+10301737,OBS,LFRA,KK,
+10301330,OBS,LFRA,KK,to check - probable bridge
+10301379,OBS,LFRA,KK,to check - probable bridge
+10300769,OBS,LFRA,KK,to check - possible bridge
+5402539,OBS,FRAN,KK,to check - probable bridge
+10302026,OBS,LFRA,KK,
+10303160,OBS,LFRA,KK,
+10303215,OBS,LFRA,KK,
+10303231,OBS,LFRA,KK,to check - possible bridge
+10302204,OBS,LFRA,KK,
+5402569,OBS,FRAN,KK,to check - possible bridge
+5402542,FORD,FRAN,KK,no visible structure
+5402573,FORD,FRAN,KK,no visible structure
+5403018,OBS,FRAN,KK,to check - possible bridge
+5402576,OBS,FRAN,KK,to check - possible bridge
+5402883,FORD,FRAN,KK,no visible structure
+5403480,NONE,FRAN,KK,no visible road
+5403244,OBS,FRAN,KK,
+13900338,NONE,MORK,KK,no visible stream
+13901660,FORD,MORK,KK,no visible structure
+13900867,NONE,MORK,KK,no road visible
+13902769,NONE,MORK,KK,to check - possibly no crossing
+13902631,NONE,MORK,KK,no visible crossing
+13902251,NONE,MORK,KK,no visible crossing
+5403972,OBS,FRAN,KK,
+13903472,OBS,MORK,KK,"to check,- probable bridge"
+5403860,OBS,FRAN,KK,
+5405729,OBS,FRAN,KK,
+5404095,OBS,FRAN,KK,to check - probable bridge
+5404281,OBS,FRAN,KK,
+5404283,OBS,FRAN,KK,
+5404764,OBS,FRAN,KK,
+5405274,OBS,FRAN,KK,to check - possible bridge
+5405319,NONE,FRAN,KK,no visible stream
+5404155,OBS,FRAN,KK,to check - possible bridge
+5404577,OBS,FRAN,KK,to check - probable bridge
+5404604,OBS,FRAN,KK,
+5405067,OBS,FRAN,KK,to check - possible bridge
+5405393,OBS,FRAN,KK,to check -probable bridge
+5405659,OBS,FRAN,KK,to check - possible bridge
+5406199,OBS,FRAN,KK,to check - possible bridge
+5406058,OBS,FRAN,KK,
+5405821,OBS,FRAN,KK,
+5406563,NONE,FRAN,KK,no visible road
+5406583,FORD,FRAN,KK,no visible structure
+5406564,NONE,FRAN,KK,no visible road
+5406726,NONE,FRAN,KK,no visible road
+5406753,OBS,FRAN,KK,to check - possible bridge
+5407274,OBS,FRAN,KK,to check - probable bridge
+24715834,OBS,MORK,KK,
+5500018,OBS,FRCN,KK,
+5500977,FORD,FRCN,KK,no visible structure
+5500849,OBS,FRCN,KK,to check - possible bridge
+5502847,OBS,FRCN,KK,
+5501140,NONE,FRCN,KK,no visible road
+5501141,NONE,FRCN,KK,no visible road
+5502352,NONE,FRCN,KK,no road visible
+5502694,NONE,FRCN,KK,no visible road
+14000565,OBS,MORR,KK,to check - possible bridge
+5503236,OBS,FRCN,KK,to check - possible bridge
+5503672,FORD,FRCN,KK,no visible structure
+5406403,NONE,FRAN,KK,no visible road
+5505565,OBS,FRCN,KK,to check - possible bridge
+5400525,OBS,FRAN,KK,
+5504361,NONE,FRCN,KK,no visible crossing
+5506419,NONE,FRCN,KK,no visible crossing
+5405607,OBS,FRAN,KK,to check - possible bridge
+5400629,OBS,FRAN,KK,to check - probable bridge
+21501499,OBS,TWAC,KK,
+24737730,OBS,SETN,KK,
+17903638,NONE,SETN,KK,no visible crossing
+24740255,NONE,FRCN,KK,no visible road
+21502563,OBS,TWAC,KK,to check - possible bridge
+21501578,OBS,TWAC,KK,to check - possible bridge
+24709795,OBS,KISP,KK,
+14903168,OBS,NARC,KK,to check - probable bridge
+8301995,OBS,KISP,KK,
+8300482,OBS,KISP,KK,to check - possible bridge
+8301056,NONE,KISP,KK,no visible crossing
+8302089,NONE,KISP,KK,no visible crossing
+8302290,FORD,KISP,KK,no visible structure
+8302568,OBS,KISP,KK,
+9900932,OBS,LCHL,KK,
+14900549,OBS,NARC,KK,to check - possible bridge
+14902214,OBS,NARC,KK,to check - probable bridge
+14901082,FORD,NARC,KK,no structure visible
+14901587,NONE,NARC,KK,no visible road
+9900231,OBS,LCHL,KK,
+9900960,NONE,LCHL,KK,no visible road
+9901057,NONE,LCHL,KK,no visible crossing
+9901872,NONE,LCHL,KK,no visible issue
+9901450,OBS,LCHL,KK,
+9901659,OBS,LCHL,KK,
+9901139,FORD,LCHL,KK,no visible structure
+9901721,NONE,LCHL,KK,no visible road
+9902419,NONE,LCHL,KK,no visible stream
+24734636,OBS,SHUL,KK,
+9903723,NONE,LCHL,KK,no visible road
+9902539,FORD,LCHL,KK,no visible structure
+9902638,OBS,LCHL,KK,to check - possible bridge
+9903238,OBS,LCHL,KK,to check - possible bridge
+9903990,OBS,LCHL,KK,to check - possible bridge
+9904422,OBS,LCHL,KK,to check - possible bridge
+9904592,OBS,LCHL,KK,
+9904540,OBS,LCHL,KK,to check - probable bridge
+9905048,NONE,LCHL,KK,no visible stream
+22201087,FORD,UFRA,KK,no visible structure
+22201089,FORD,UFRA,KK,no visible structure
+9904910,OBS,LCHL,KK,
+24704075,FORD,LCHL,KK,no visible structure
+9905147,NONE,LCHL,KK,no visible road
+10300430,OBS,LFRA,KK,
+10300394,NONE,LFRA,KK,no visible stream
+10300439,OBS,LFRA,KK,
+10300395,NONE,LFRA,KK,no visible stream
+10300510,OBS,LFRA,KK,
+10300517,OBS,LFRA,KK,to check - possible bridge
+10300557,OBS,LFRA,KK,
+10300553,OBS,LFRA,KK,to check - probable bridge
+10300404,OBS,LFRA,KK,
+10300751,OBS,LFRA,KK,
+10300619,OBS,LFRA,KK,
+10300696,OBS,LFRA,KK,
+10301308,OBS,LFRA,KK,
+10300838,OBS,LFRA,KK,to check - probable bridge
+10300844,OBS,LFRA,KK,
+10301294,OBS,LFRA,KK,to check - possible bridge
+10301009,OBS,LFRA,KK,
+10301354,OBS,LFRA,KK,
+10302119,OBS,LFRA,KK,
+10301980,OBS,LFRA,KK,
+10302011,OBS,LFRA,KK,to check - possible bridge
+10301966,OBS,LFRA,KK,
+10301973,OBS,LFRA,KK,
+10303129,OBS,LFRA,KK,to check - possible bridge
+10302666,OBS,LFRA,KK,
+10303171,OBS,LFRA,KK,
+10303230,OBS,LFRA,KK,to check - possible bridge
+10303192,OBS,LFRA,KK,
+10303203,OBS,LFRA,KK,
+10303190,OBS,LFRA,KK,to check - probable bridge
+10303205,OBS,LFRA,KK,to check - possible bridge
+10303254,OBS,LFRA,KK,
+10303372,OBS,LFRA,KK,
+10303209,OBS,LFRA,KK,to check - probable bridge
+10303218,OBS,LFRA,KK,to check - possible bridge
+24712979,OBS,LFRA,KK,
+24712774,OBS,LFRA,KK,
+15602697,FORD,NECR,KK,no visible structure
+15605785,NONE,NECR,KK,no visible stream
+24713337,FORD,LILL,KK,no visible structure
+15604736,NONE,NECR,KK,no visible crossing
+24730877,OBS,LFRA,KK,
+17101160,NONE,QUES,KK,no visible road
+11501632,OBS,LNTH,KK,
+11501174,NONE,LNTH,KK,no visible crossing
+11501259,OBS,LNTH,KK,to check - possible bridge
+11505428,OBS,LNTH,KK,
+19102710,FORD,STHM,KK,no visible structure
+11503768,OBS,LNTH,KK,
+11503782,OBS,LNTH,KK,to check - possible bridge
+11503040,NONE,LNTH,KK,no crossing visible
+11503858,OBS,LNTH,KK,to check - possible bridge
+11508823,NONE,LNTH,KK,no visible road
+11508388,OBS,LNTH,KK,
+11507398,OBS,LNTH,KK,to check - probable bridge
+11508825,NONE,LNTH,KK,no visible road
+12200744,FORD,LSAL,KK,to visible road
+24714071,OBS,LNTH,KK,to check - probably bridge
+12200167,NONE,LSAL,KK,no visible road
+12200181,FORD,LSAL,KK,no visible structure
+12200053,OBS,LSAL,KK,
+12200777,NONE,LSAL,KK,no visible road
+12201855,NONE,LSAL,KK,no visible road
+12202258,NONE,LSAL,KK,no visible road
+12201825,OBS,LSAL,KK,
+12202021,OBS,LSAL,KK,
+12600939,NONE,LTRE,KK,no visible road
+12202304,NONE,LSAL,KK,no visible road
+12600263,NONE,LTRE,KK,no visible road
+12600461,NONE,LTRE,KK,no visible crossing
+12202185,OBS,LSAL,KK,
+12202360,NONE,LSAL,KK,no visible structure
+24739480,NONE,LTRE,KK,no visible road
+12601069,OBS,LTRE,KK,
+12601231,NONE,LTRE,KK,no visible road
+13900909,NONE,MORK,KK,no visible road
+12601232,NONE,LTRE,KK,no visible road
+13900339,NONE,MORK,KK,road not mapped correctly
+13900340,NONE,MORK,KK,stream appears to be mapped incorrectly
+13900341,NONE,MORK,KK,no visible crossing
+13900963,NONE,MORK,KK,no visible road
+24739495,NONE,LTRE,KK,no visible road
+13900096,OBS,MORK,KK,to check - possible bridge
+13901249,FORD,MORK,KK,no visible crossing
+13901083,OBS,MORK,KK,to check - probable bridge
+13901484,FORD,MORK,KK,no visible structure
+13901135,NONE,MORK,KK,no visible road
+13901319,NONE,MORK,KK,no visible road
+13901320,NONE,MORK,KK,no visible road
+13902343,NONE,MORK,KK,no visible road
+13901825,FORD,MORK,KK,no visible structure
+13902831,NONE,MORK,KK,no visible structure
+13903372,NONE,MORK,KK,no visible road
+13902700,FORD,MORK,KK,no visible structure
+13903176,OBS,MORK,KK,to check - possible bridge
+13905329,NONE,MORK,KK,no visible road
+13904475,OBS,MORK,KK,
+13904486,FORD,MORK,KK,no visible structure
+13904511,FORD,MORK,KK,no visible structure
+24732309,OBS,MORK,KK,to check - possible bridge
+13905732,NONE,MORK,KK,no visible road
+24732313,OBS,MORK,KK,to check - possible bridge
+24732314,OBS,MORK,KK,to check - possible bridge
+14900325,FORD,NARC,KK,no visible structure
+14900132,OBS,NARC,KK,
+14901149,OBS,NARC,KK,to check - probable bridge
+14902088,NONE,NARC,KK,no visible crossing
+14901454,NONE,NARC,KK,no visible crossing
+14901477,OBS,NARC,KK,to check - possible fridge
+14901861,NONE,NARC,KK,no visible road
+14901348,OBS,NARC,KK,to check - probable bridge
+14902028,FORD,NARC,KK,no visible structure
+14904025,OBS,NARC,KK,
+14902227,OBS,NARC,KK,to check - probable bridge
+14902524,NONE,NARC,KK,no visible road
+14902211,OBS,NARC,KK,to check - probable bridge
+14903682,OBS,NARC,KK,to check - probable bridge
+15601227,NONE,NECR,KK,no visible stream
+15600232,OBS,NECR,KK,to check - possible bridge
+15601192,NONE,NECR,KK,no visible road
+15601265,NONE,NECR,KK,no visible road
+15601223,FORD,NECR,KK,no visible structure
+15601295,NONE,NECR,KK,no visible stream
+15601407,FORD,NECR,KK,no visible structure
+15601321,NONE,NECR,KK,no visible road
+15601328,FORD,NECR,KK,no visible structure
+15601527,NONE,NECR,KK,no visible road
+15601466,NONE,NECR,KK,no visible road
+15602213,NONE,NECR,KK,no visible road
+15601635,FORD,NECR,KK,no visible structure
+15601984,FORD,NECR,KK,no visible structure
+15602029,FORD,NECR,KK,no visible structure
+15602209,NONE,NECR,KK,no visible road
+15602669,FORD,NECR,KK,no visible structure
+15603156,NONE,NECR,KK,no visible crossing
+15602853,FORD,NECR,KK,no visible structure
+15603162,NONE,NECR,KK,no visible stream
+15603237,OBS,NECR,KK,
+15603864,OBS,NECR,KK,to check - possible bridge
+15603534,NONE,NECR,KK,no visible road
+15603946,FORD,NECR,KK,no structure visible
+15603897,FORD,NECR,KK,no visible structure
+15604294,FORD,NECR,KK,no visible structure
+15605248,OBS,NECR,KK,to check - possible bridge
+15604900,NONE,NECR,KK,no visible road
+15605275,OBS,NECR,KK,
+100001847,FORD,NECR,KK,no visible crossing
+15605378,NONE,NECR,KK,no visible road
+15605736,NONE,NECR,KK,no visible crossing
+17100396,OBS,QUES,KK,to check - probable bridge
+17500611,NONE,SAJR,KK,no visible road
+17100588,NONE,QUES,KK,no visible road
+17100470,OBS,QUES,KK,to check - possible bridge
+17100759,OBS,QUES,KK,to check - possible bridge
+17100715,OBS,QUES,KK,to check - probable bridge
+17100730,NONE,QUES,KK,no visible road
+17100693,NONE,QUES,KK,no visible stream
+17100904,OBS,QUES,KK,to check - probable bridge
+17100731,NONE,QUES,KK,no visible road
+17101064,OBS,QUES,KK,
+17102379,NONE,QUES,KK,no visible road
+17101175,NONE,QUES,KK,no visible road
+17101179,OBS,QUES,KK,to check - probable bridge
+17101185,OBS,QUES,KK,to check - probable bridge
+17101918,OBS,QUES,KK,to check - probable bridge
+17102044,NONE,QUES,KK,no visible road
+17102046,NONE,QUES,KK,no visible road
+17102084,OBS,QUES,KK,to check - probable bridge
+17101418,OBS,QUES,KK,to check - possible bridge
+17101907,NONE,QUES,KK,no visible structure
+17103824,OBS,QUES,KK,to check - possible bridge
+17103300,OBS,QUES,KK,to check - probable bridge
+17103757,OBS,QUES,KK,
+17103709,FORD,QUES,KK,no visible structure
+17500874,NONE,SAJR,KK,no visible road
+17104010,OBS,QUES,KK,to check - possible bridge
+17104513,FORD,QUES,KK,no visible structure
+24740445,NONE,QUES,KK,no visible structure
+17500480,NONE,SAJR,KK,no visible crossing
+17500807,NONE,SAJR,KK,no visible road
+17103813,NONE,QUES,KK,no visible or mapped road at this point
+17500585,OBS,SAJR,KK,to check - possible bridge
+17500857,NONE,SAJR,KK,no visible road
+17500858,NONE,SAJR,KK,no visible road
+17500865,NONE,SAJR,KK,no visible road
+17500867,NONE,SAJR,KK,no visible road
+17500869,NONE,SAJR,KK,no visible road
+17500875,NONE,SAJR,KK,no visible road
+17500872,NONE,SAJR,KK,no visible road
+17500876,NONE,SAJR,KK,no visible road
+17500873,NONE,SAJR,KK,no visible road
+17500879,NONE,SAJR,KK,no visible road
+17500880,NONE,SAJR,KK,no visible road
+17501073,OBS,SAJR,KK,to check - probable bridge
+17500881,NONE,SAJR,KK,no visible road
+17500882,NONE,SAJR,KK,no visible road
+17500884,NONE,SAJR,KK,no visible road
+17500886,NONE,SAJR,KK,no visible road
+17501401,NONE,SAJR,KK,stream mapped incorrectly no crossing
+17501268,NONE,SAJR,KK,stream mapped incorrectly no crossing
+17501271,NONE,SAJR,KK,stream mapped incorrectly no crossing
+17501248,NONE,SAJR,KK,no visible road
+17501402,NONE,SAJR,KK,stream mapped incorrectly no crossing
+17501415,OBS,SAJR,KK,to check - probable bridge
+17501702,NONE,SAJR,KK,no visible road
+17501647,OBS,SAJR,KK,to check - possible bridge
+17501557,NONE,SAJR,KK,no visible crossing
+17502249,NONE,SAJR,KK,no visible road
+17501846,OBS,SAJR,KK,to check - possible bridge
+17502251,NONE,SAJR,KK,no visible road
+17502394,NONE,SAJR,KK,no visible road
+17502351,OBS,SAJR,KK,to check - possible bridge
+17903285,NONE,SETN,KK,no visible stream
+17700158,FORD,SALR,KK,no visible structure
+17701051,OBS,SALR,KK,
+17900419,NONE,SETN,KK,no visible stream or mapped incorrectly
+17903251,OBS,SETN,KK,possible bridge
+17502396,NONE,SAJR,KK,no visible road
+17502397,NONE,SAJR,KK,no visible road
+17502398,NONE,SAJR,KK,no visible road
+18300189,NONE,SHUL,KK,no visible road
+18300066,OBS,SHUL,KK,
+24720378,NONE,SETN,KK,no visible stream
+18300191,OBS,SHUL,KK,to check - possible bridge
+18300265,OBS,SHUL,KK,to check - possible bridge
+18300279,OBS,SHUL,KK,
+18300592,OBS,SHUL,KK,to check - possible bridge
+18300421,OBS,SHUL,KK,to check - probable bridge
+18300356,OBS,SHUL,KK,to check - possible bridge
+18301074,NONE,SHUL,KK,no visible road
+18300776,OBS,SHUL,KK,to check - possible bridge
+19101162,OBS,STHM,KK,"to check, south opening looks like OBS"
+18301823,OBS,SHUL,KK,
+18303466,OBS,SHUL,KK,
+18303482,OBS,SHUL,KK,to check - possible bridge
+18303483,OBS,SHUL,KK,
+19101792,OBS,STHM,KK,to check - probable bridge
+19101625,OBS,STHM,KK,to check - possible bridge
+19101980,NONE,STHM,KK,no visible structure
+19101981,NONE,STHM,KK,no visible structure
+19102737,OBS,STHM,KK,
+19102302,NONE,STHM,KK,no visible road
+19102318,NONE,STHM,KK,no visible road
+19103909,OBS,STHM,KK,
+19102829,OBS,STHM,KK,to check - probable bridge
+19102831,OBS,STHM,KK,
+19103746,OBS,STHM,KK,to check - possible bridge
+19106064,NONE,STHM,KK,no visible stream
+19104209,OBS,STHM,KK,to check - possible bridge
+19105117,OBS,STHM,KK,
+19106823,OBS,STHM,KK,to check - probable bridge
+19107261,NONE,STHM,KK,road mapped incorrectly
+19107125,NONE,STHM,KK,road mapped incorrectly
+19107155,NONE,STHM,KK,road mapped incorrectly
+19300658,FORD,STUL,KK,to visible structure
+19301497,OBS,STUL,KK,
+19302225,FORD,STUL,KK,no visible structure
+19301009,FORD,STUL,KK,no visible structure
+19300476,FORD,STUL,KK,no visible structure
+19301583,OBS,STUL,KK,to check - possible bridge
+19301824,OBS,STUL,KK,
+19300000,OBS,STUL,KK,to check - probable bridge
+19301298,NONE,STUL,KK,no visible stream
+19301107,FORD,STUL,KK,no visible structure
+19300977,OBS,STUL,KK,
+19700613,NONE,TABR,KK,no visible road
+19300583,FORD,STUL,KK,no visible structure
+19302329,NONE,STUL,KK,no visible road
+19300495,FORD,STUL,KK,no visible structure
+19500183,NONE,SUST,KK,"no visible stream, or possible fording "
+19700869,OBS,TABR,KK,to check - possible bridge
+19700760,NONE,TABR,KK,no visible road
+19700975,NONE,TABR,KK,no visible road
+19700928,NONE,TABR,KK,no visible road
+19700905,NONE,TABR,KK,no visible road
+19700909,NONE,TABR,KK,no visible road
+19701054,OBS,TABR,KK,to check - probable bridge
+19700911,NONE,TABR,KK,no visible road
+19700913,OBS,TABR,KK,to check - probable bridge
+19700916,OBS,TABR,KK,
+19701014,OBS,TABR,KK,
+19701073,OBS,TABR,KK,to check - probable bridge
+19701020,OBS,TABR,KK,
+19701022,NONE,TABR,KK,no visible road
+19701025,NONE,TABR,KK,no visible road
+19700917,NONE,TABR,KK,no visibe road
+19701305,NONE,TABR,KK,no visible road
+19701113,OBS,TABR,KK,to check - probable bridge
+19701118,FORD,TABR,KK,no visible structure
+19701034,NONE,TABR,KK,no visible road
+19701255,OBS,TABR,KK,to check - probable bridge
+19702308,NONE,TABR,KK,no visible road
+19701424,NONE,TABR,KK,no visible road
+19701643,FORD,TABR,KK,no visible structure
+19701831,NONE,TABR,KK,no visible crossing
+19701286,OBS,TABR,KK,to check - possible bridge
+19701488,NONE,TABR,KK,no visible road
+19702309,NONE,TABR,KK,no visible road
+19702363,OBS,TABR,KK,to check - probable bridge
+19702386,NONE,TABR,KK,no visible road
+19702328,OBS,TABR,KK,to check - possible bridge
+24723678,OBS,TABR,KK,
+19703287,OBS,TABR,KK,to check - probable bridge
+19703550,NONE,TABR,KK,no visible road
+19703428,OBS,TABR,KK,to check - possible bridge
+20000488,OBS,TAKL,KK,
+20000339,OBS,TAKL,KK,to check - possible bridge
+20000184,NONE,TAKL,KK,no visible crossing
+20000196,NONE,TAKL,KK,"no crossing, stream seems to be mapped incorrectly"
+20000529,OBS,TAKL,KK,
+2800228,NONE,CHWK,KK,"Mapping error, stream does not cross road in satellite imagery"
+20000784,OBS,TAKL,KK,
+1403039,NONE,BONP,KK,no visible stream
+5400520,NONE,FRAN,KK,no visible road
+5402526,OBS,FRAN,KK,to check - probable bridge
+5401264,FORD,FRAN,KK,no visible structure
+5401314,FORD,FRAN,KK,no visible structure
+24706266,OBS,DRIR,KK,
+5402279,OBS,FRAN,KK,
+1401526,NONE,BONP,KK,no visible crossing
+4300336,NONE,DRIR,KK,no visible road
+5402490,NONE,FRAN,KK,no visible road
+5402527,FORD,FRAN,KK,no visible structure
+5404455,OBS,FRAN,KK,to check - possible bridge
+5403478,FORD,FRAN,KK,no visible structure
+5402960,OBS,FRAN,KK,to check - possible bridge
+12201316,NONE,LSAL,KK,no visible road
+1403795,OBS,BONP,KK,to check - possible bridge
+1404083,OBS,BONP,KK,
+5403566,OBS,FRAN,KK,
+5405687,OBS,FRAN,KK,
+12200779,NONE,LSAL,KK,no visible road
+9902247,NONE,LCHL,KK,no visible road
+5502332,NONE,FRCN,KK,no visible road
+24714690,NONE,LSAL,KK,no visible road
+9901503,OBS,LCHL,KK,to check - possible bridge
+9903833,OBS,LCHL,KK,to check - probable bridge
+9903678,OBS,LCHL,KK,to check - possible bridge
+13500985,NONE,MIDR,KK,no road crossing mapped or visible on satellite
+9904058,OBS,LCHL,KK,to check - probable bridge
+13501031,NONE,MIDR,KK,no visible road
+13903051,NONE,MORK,KK,no visible crossing
+9904500,OBS,LCHL,KK,
+14900259,NONE,NARC,KK,no visible road
+17101290,OBS,QUES,KK,to check - probable bridge
+17100563,NONE,QUES,KK,no visible road
+24715892,OBS,MORK,KK,
+20000980,NONE,TAKL,KK,no visible road
+14903592,OBS,NARC,KK,to check - possible bridge
+17102703,OBS,QUES,KK,to check - probable bridge
+10300419,OBS,LFRA,KK,to check - possible bridge
+20001054,OBS,TAKL,KK,
+14001774,NONE,MORR,KK,no visible road
+10300421,OBS,LFRA,KK,
+20001535,NONE,TAKL,KK,no visible road
+10300396,OBS,LFRA,KK,to check - possible bridge
+10300968,OBS,LFRA,KK,
+20001700,NONE,TAKL,KK,no visible road
+15604705,OBS,NECR,KK,to check - possible bridge
+10301166,OBS,LFRA,KK,
+10301165,OBS,LFRA,KK,
+15604539,OBS,NECR,KK,
+10303373,OBS,LFRA,KK,
+19701119,NONE,TABR,KK,no visible road
+19701087,NONE,TABR,KK,no visible road
+19701097,FORD,TABR,KK,no visible structure
+19701002,NONE,TABR,KK,no visible crossing
+15605535,OBS,NECR,KK,"to check, bridge visible to north"
+19701245,NONE,TABR,KK,no visible road
+19702327,NONE,TABR,KK,no visible stream
+15605801,NONE,NECR,KK,no visible road
+19103564,NONE,STHM,KK,no visible stream
+100000825,NONE,TABR,KK,no visible or mapped road
+19702211,NONE,TABR,KK,no visible road
+19702304,OBS,TABR,KK,to check - probable bridge
+19702307,NONE,TABR,KK,no visible road
+17900420,NONE,SETN,KK,no visible stream or mapped incorrectly
+17500915,NONE,SAJR,KK,no visible road
+17900422,NONE,SETN,KK,no visible stream or mapped incorrectly
+21501555,OBS,TWAC,KK,to check - possible bridge
+17501558,NONE,SAJR,KK,no visible stream
+21501423,NONE,TWAC,KK,no visible crossing
+23202185,OBS,UNTH,KK,
+24720363,OBS,SETN,KK,
+19300001,OBS,STUL,KK,to check - probable bridge
+19301907,OBS,STUL,KK,
+24400247,FORD,WILL,KK,no visible structure
+24403889,OBS,WILL,KK,to check - possible bridge
+24401001,FORD,WILL,KK,no visible structure
+23800815,OBS,USHU,KK,to check - possible bridge
+17700979,NONE,SALR,KK,no visible road
