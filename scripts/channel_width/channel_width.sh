@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-$PSQL_CMD='psql $DATABASE_URL'
+PSQL_CMD='psql $DATABASE_URL'
 # calculate channel width - measured / mapped / modelled
 
 # --------

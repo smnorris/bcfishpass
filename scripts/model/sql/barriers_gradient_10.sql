@@ -12,7 +12,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    (watershed_group_id * 100000) + row_number() over() as barrier_load_id,
+    (((b.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(b.downstream_route_measure::bigint) as barrier_load_id,
     'GRADIENT_10' as barrier_type,
     NULL as barrier_name,
     s.linear_feature_id,

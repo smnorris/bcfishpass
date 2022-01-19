@@ -132,9 +132,9 @@ CREATE TABLE IF NOT EXISTS bcfishpass.misc_barriers_definite
 CREATE TABLE IF NOT EXISTS bcfishpass.modelled_stream_crossings_fixes
 (
   modelled_crossing_id integer,
-  reviewer text,
-  watershed_group_code text,
   structure text,
+  watershed_group_code text,
+  reviewer text,
   notes text
 );
 CREATE INDEX ON bcfishpass.modelled_stream_crossings_fixes (modelled_crossing_id);

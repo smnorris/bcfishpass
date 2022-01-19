@@ -14,7 +14,7 @@ INSERT INTO bcfishpass.barrier_load
 )
 
 SELECT
-    (s.watershed_group_id * 100000) + row_number() over() as barrier_load_id,
+    (((a.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(a.downstream_route_measure::bigint) as barrier_load_id,
     'EXCLUSION' as barrier_type,
     a.barrier_name,
     s.linear_feature_id,
@@ -48,7 +48,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    (g.watershed_group_id * 100000) + (row_number() over()) + 1000 as barrier_load_id,
+    (((e.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(e.downstream_route_measure::bigint) as barrier_load_id,
     'PSCIS_NOT_ACCESSIBLE',
     NULL as barrier_name,
     e.linear_feature_id,
@@ -84,7 +84,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    (s.watershed_group_id * 100000) + (row_number() over()) + 10000 as barrier_load_id,
+    (((a.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(a.downstream_route_measure::bigint) as barrier_load_id,
     'MISC' as barrier_type,
     a.barrier_name,
     s.linear_feature_id,

@@ -6,6 +6,7 @@ WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemap
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 WSG_TEST = HORS BULK LNIC ELKR
 WSG_RAIL = BBAR BONP BRID BULK CHWK COTR DEAD DRIR FRAN FRCN GRNL HARR KISP KLUM LCHL LFRA LILL LKEL LNIC LNTH LSAL LSKE LTRE MIDR MORK MORR MUSK NARC NECR QUES SAJR SALR SETN SHUL STHM STUL SUST TABR TAKL THOM TWAC UFRA UNTH USHU UTRE WILL
+WSG_NON_RAIL = ADMS ALBN ATNA BABL BABR BARR BELA BLAR BOWR BRKS CAMB CARR CHES CHIL CHIR CLAY CLWR COMX COWN DOGC ELKR EUCH EUCL GLAR GOLD GRAI GUIC HERR HOLB HOMA HORS INKR JENR JERV KEEC KHTZ KINR KITL KITR KLIN KNIG KSHR KTSU KUMR LBIR LCHR LDEN LISR LNAR LRDO LSTR MAHD MBNK MCGR MESC MFRA MORI MSKE MSTR NAHR NAKR NASC NASR NAZR NBNK NECL NEVI NICL NIEL NIMP OKAN OWIK PARK PARS PORI SALM SANJ SEYM SHER SQAM STIR STUR SWIR TAHR TAHS TASR TATR TAYR TESR TOBA TSAY TSIT UBIR UCHR UJER UNAR UNUR USKE USTK VICT WORC ZYMO
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .manual_habitat_classification_endpoints \
 	.streams .observations .observations_upstr .model_access
@@ -163,7 +164,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # CROSSINGS
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
-.crossings: scripts/model/sql/load_crossings.sql .tiles \
+.crossings: scripts/model/sql/crossings.sql .tiles \
 	.misc_barriers_anthropogenic \
 	.modelled_stream_crossings_fixes \
 	.pscis_barrier_result_fixes \
@@ -279,8 +280,6 @@ scripts/discharge/.discharge: .fwapg
 		$(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql \
 		-v wsg={1} \
 		-v barriertype=$(subst .barriers_,,$@)
-	# index the barrier table in order downstream
-	# cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.$(subst .,,$@) $(subst .,,$@)_id bcfishpass.$(subst .,,$@) $(subst .,,$@)_id $(subst .,,$@)_dnstr
 	# append list of watershed groups to refresh for given barrier type to list of all groups to refresh for all barrier types
 	cat $(subst .barriers_,.torefresh_,$@) >> .wsg_to_refresh
 	# create target
@@ -382,22 +381,26 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 # -----
 .model_habitat: .model_access
 	# spawning model is relatively simple, requires just one query
-	for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ; do \
+	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_spawning.sql -v wsg=$$wsg ; \
 	done
 
-	# rearing requires several
+	# rearing requires several queries
 	# first, find all potential rearing streams
-	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
+	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
+	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1} ::: $(WSG_TEST)
 
 	# then find subset of rearing downstream of spawning
-	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_2.sql -v wsg={1}
+	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_2.sql -v wsg={1}
+	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_2.sql -v wsg={1} ::: $(WSG_TEST)
 
 	# and finally find subset of rearing upstream of spawning
-	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_3.sql -v wsg={1}
+	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_3.sql -v wsg={1}
+	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_3.sql -v wsg={1} ::: $(WSG_TEST)
 
 	# SK spawning/rearing modelling is separate because of different life cycle (lake requirement)
-	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql
+	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql
+	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql ::: $(WSG_TEST)
 
 	# plus SK can be watershed specific, run for horsefly
 	$(PSQL_CMD) -f scripts/model/model_habitat_sk_hors.sql
@@ -417,7 +420,7 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 
 
 	# run report on the combined definite barrier tables
-	python bcfishpass.py report bcfishpass.definitebarriers_co_ch_sk definitebarriers_co_ch_sk_id bcfishpass.definitebarriers_co_ch_sk dnstr_definitebarriers_co_ch_sk_id
+	python bcfishpass.py report bcfishpass.definitebarriers_ch_co_sk definitebarriers_ch_co_sk_id bcfishpass.definitebarriers_ch_co_sk dnstr_definitebarriers_ch_co_sk_id
 	python bcfishpass.py report bcfishpass.definitebarriers_st definitebarriers_st_id bcfishpass.definitebarriers_st dnstr_definitebarriers_st_id
 	python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
 
@@ -443,7 +446,7 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 	#done
 	# run report per watershed group on crossings
 	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v wsg={1} -v point_table=crossings
-	for wsg in $(WSG_RAIL) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
@@ -475,3 +478,8 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 	psql -f sql/report_crossings_obs_belowupstrbarriers.sql
 
 	touch $@
+
+
+
+scripts/lateral/.lateral: .model_access
+	cd scripts/lateral; make

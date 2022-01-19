@@ -26,20 +26,6 @@ FROM bcfishpass.falls a
 LEFT OUTER JOIN bcfishpass.falls_barrier_ind b
   ON a.blue_line_key = b.blue_line_key AND
   abs(a.downstream_route_measure - b.downstream_route_measure) < 1
-LEFT OUTER JOIN bcfishpass.observations o
-  ON FWA_Upstream(
-    a.blue_line_key,
-    a.downstream_route_measure,
-    a.wscode_ltree,
-    a.localcode_ltree,
-    o.blue_line_key,
-    o.downstream_route_measure,
-    o.wscode_ltree,
-    o.localcode_ltree,
-    False,
-    1
-  )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   a.watershed_group_code = :'wsg'
   AND

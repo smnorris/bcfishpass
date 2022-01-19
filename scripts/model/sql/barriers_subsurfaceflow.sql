@@ -13,7 +13,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    s.linear_feature_id as barriers_load_id,
+    (((s.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(s.downstream_route_measure::bigint) as barrier_load_id,
     'SUBSURFACEFLOW' as barrier_type,
     NULL as barrier_name,
     s.linear_feature_id,
