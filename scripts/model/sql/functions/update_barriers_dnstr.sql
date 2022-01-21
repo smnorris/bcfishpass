@@ -34,8 +34,7 @@ BEGIN
         array_agg(DISTINCT b.%I) FILTER (WHERE b.%I IS NOT NULL) AS barriers_dnstr
       FROM bcfishpass.%I a
       INNER JOIN bcfishpass.%I b ON
-      a.watershed_group_code = b.watershed_group_code
-      AND FWA_Downstream(
+      FWA_Downstream(
         a.blue_line_key,
         a.downstream_route_measure,
         a.wscode_ltree,
@@ -46,7 +45,7 @@ BEGIN
         b.localcode_ltree,
         %L,
         1
-    )
+      )
     WHERE b.watershed_group_code = %L
     GROUP BY a.%I, a.watershed_group_code
     )

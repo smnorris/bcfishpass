@@ -96,9 +96,9 @@ FROM bcfishpass.barriers_other_definite
 WHERE watershed_group_code = :'wsg'
 )
 
-INSERT INTO bcfishpass.barrier_load
+INSERT INTO bcfishpass.barriers_st
 (
-    barrier_load_id,
+    barriers_st_id,
     barrier_type,
     barrier_name,
     linear_feature_id,

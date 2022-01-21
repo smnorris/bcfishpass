@@ -16,13 +16,24 @@ BARRIERS = $(patsubst scripts/model/sql/barriers_%.sql, %, $(wildcard scripts/mo
 ANTH_BARRIERS = anthropogenic pscis remediated
 # all potential definite barriers
 DEF_BARRIERS = $(filter-out $(ANTH_BARRIERS), $(BARRIERS))
-# definite barriers collected into per-species tables
-SPECIES_GROUPS = $(patsubst scripts/model/sql/definitebarriers_%.sql, %, $(wildcard scripts/model/sql/definitebarriers_*.sql))
-BARRIERS_BROKEN = $(patsubst %,.broken_%,$(ANTH_BARRIERS)) $(patsubst %,.broken_%,$(SPECIES_GROUPS))
+# definite barriers collected into per-species access model tables
+SPPGROUPS = $(patsubst scripts/model/sql/model_access_%.sql, %, $(wildcard scripts/model/sql/model_access_*.sql))
+
+BROKEN_ANTHROPOGENIC = $(patsubst %,.broken_%,$(ANTH_BARRIERS))
+BROKEN_SPPGROUPS = $(patsubst %,.broken_%,$(SPPGROUPS))
 
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
 
+# which watershed groups to be refreshed are defined by reading target file of barrier creation recipies
+# wsg_to_refresh_def is all wsg that have been refreshed by individual definite barrier tables, plus observations,
+# this defines which watersheds to break with spp group definite barriers
+#WSG_TO_REFRESH_DEF = $(shell cat $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations | sort | uniq)
+# if running a new spp scenario with no changes to individual source barrier tables, override above with this:
+ WSG_TO_REFRESH_DEF = $(WSG_PARAM)
+# wsg_to_refresh is anywhere that a change has taken place (definite plus anthropogenic and observations),
+# this defines where to run the model updates
+WSG_TO_REFRESH = $(shell cat $(patsubst %,.barriers_%,$(BARRIERS)) .observations | sort | uniq)
 
 # Make all targets - just point to final target to make everything
 all: .model_access
@@ -226,13 +237,13 @@ scripts/discharge/.discharge: .fwapg
 	# find watershed groups with changed observation data
 	echo "select * from bcfishpass.wsg_to_refresh('observations_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > .torefresh_observations
 	parallel -a .torefresh_observations --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
-	cat .torefresh_observations >> .wsg_to_refresh
 	mv .torefresh_observations $@
 
 # -----
 # BARRIER TABLES
-# create barrier tables, load data, create (empty) views listing barriers of given type downstream of each stream
 # -----
+
+# define the prereqs for each type of barrier table that is being generated
 .barriersource_majordams: .dams
 	touch $@
 .barriersource_falls: .falls .falls_barrier_ind
@@ -264,25 +275,24 @@ scripts/discharge/.discharge: .fwapg
 .barriersource_remediated: .crossings
 	touch $@
 
-# for every .barriersource file, create barrier table
-# and load/refresh the barrier table for for watershed group(s) where data has had a change
+# For every .barriersource file created above:
+# - create output barrier table if it does not exist
+# - load all records to barrier_load table
+# - find watershed groups where data has changed
+# - refresh data in barrier table from barrier_load for wsg where there has been a change
 .barriers_%: .barriersource_% .param_watersheds
-	echo "SELECT bcfishpass.create_barrier_tables(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .barriers_,,$@)
+	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .barriers_,,$@)
 	# clear barrier load table
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.barrier_load"
-	# load all features for given barrier type to barrier_load table
+	# load all features for given barrier type to barrier_load table - run barrier_<type>.sql for all watershed groups
 	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG)
-	# find watershed groups requiring updates and write list to file
-	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX >  $(subst .barriers_,.torefresh_,$@)
-	# load above noted watershed groups to barrier table
-	# note that the wrapper query sql file is not needed, the file is just simpler than figuring out make/parallel quoting
-	parallel -a $(subst .barriers_,.torefresh_,$@) --no-run-if-empty \
-		$(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql \
-		-v wsg={1} \
-		-v barriertype=$(subst .barriers_,,$@)
-	# append list of watershed groups to refresh for given barrier type to list of all groups to refresh for all barrier types
-	cat $(subst .barriers_,.torefresh_,$@) >> .wsg_to_refresh
-	# create target
+	# find watershed groups requiring updates and write list to file .torefresh_<type>
+	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $(subst .barriers_,.torefresh_,$@)
+	# for noted watershed groups, delete everything in barrier table and re-load
+	cat $(subst .barriers_,.torefresh_,$@) | sort | uniq | \
+		parallel --no-run-if-empty "echo \"SELECT bcfishpass.refresh_barriers(:'barriertype', :'wsg');\" | \
+        $(PSQL_CMD) -v wsg={1} -v barriertype=$(subst .barriers_,,$@)"
+	# move .torefresh file to create target
 	mv $(subst .barriers_,.torefresh_,$@) $@
 
 # tag anthropogenic barriers as barriers for breaking streams (xbarriers_ prefix)
@@ -290,22 +300,20 @@ $(patsubst %, .xbarriers_%, $(ANTH_BARRIERS)): .xbarriers_%: .barriers_%
 	cp $(subst .x,.,$@) $@
 
 # for each species/species group being modelled, combine definite barriers into a single table for that species/species group
-.xbarriers_%: scripts/model/sql/definitebarriers_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
-	# create barrier table if it does not already exist
-	echo "SELECT bcfishpass.create_barrier_tables(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .xbarriers_,,$@)
-	# clear barrier load table
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.barrier_load"
+# Because we only retain minimal features, we can't tell where changes have occured (as in above) - so process the entire study area
+.xbarriers_%: scripts/model/sql/model_access_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
+	# drop barrier table if already present
+	echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=$(subst .xbarriers_,barriers_,$@)
+	# create/recreate barrier table
+	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .xbarriers_,,$@)
 	# load all features for given spp scenario to barrier_load table
-	cat .wsg_to_refresh | sort | uniq | parallel --no-run-if-empty $(PSQL_CMD) -f $< -v wsg={1}
-	cat .wsg_to_refresh | sort | uniq | parallel --no-run-if-empty \
-		$(PSQL_CMD) -f scripts/model/sql/refresh_barriers_wrapper.sql \
-		-v wsg={1} \
-		-v barriertype=$(subst .xbarriers_,,$@)
-	# index downstream. bcfishpass.py indexes the entire table rather than the watershed groups required,
-	# but works well despite this redundancy - running updates is far too slow. Fastest might be to create
-	# individual tables for each watershed group to be processed and work on them in parallel
-	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.$(subst .x,,$@) $(subst .x,,$@)_id bcfishpass.$(subst .x,,$@) $(subst .x,,$@)_id $(subst .x,,$@)_dnstr
-	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | $(PSQL_CMD) -v id=$(subst .x,,$@)_dnstr -v table=$(subst .x,,$@)
+	parallel --no-run-if-empty $(PSQL_CMD) -f $< -v wsg={1} ::: $(WSG_PARAM)
+	# index downstream
+	cd scripts/model ; python bcfishpass.py add-downstream-ids \
+		bcfishpass.$(subst .x,,$@) $(subst .x,,$@)_id bcfishpass.$(subst .x,,$@) $(subst .x,,$@)_id $(subst .x,,$@)_dnstr
+	# remove non-minimal barriers
+	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | \
+		$(PSQL_CMD) -v id=$(subst .x,,$@)_dnstr -v table=$(subst .x,,$@)
 	touch $@
 
 # -----
@@ -314,17 +322,35 @@ $(patsubst %, .xbarriers_%, $(ANTH_BARRIERS)): .xbarriers_%: .barriers_%
 # break at various barrier types and observations
 # NOTE - to ensure that make generates targets made with this wild card pattern, a 'static pattern rule' is required
 # https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist
-# NOTE2 - processing in parallel (provincially) eventually crashes the db, process one group at a time or with a
-# modest job count
-# break streams and index
-$(BARRIERS_BROKEN): .broken_%: .xbarriers_% .streams
-	cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty \
-		$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql \
-		-v wsg={1} -v point_table=$(subst .x,,$<)
-	#cat .wsg_to_refresh | sort | uniq | parallel -a $< --jobs 4 --no-run-if-empty \
-	# concurrent updates locks the db, process wsg individually
-	for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ; do \
+# NOTE2 - processing in parallel (provincially) eventually crashes the db, process one group at a time or with a modest job count
+
+# break streams at minimal definite barriers for each spp scenario
+# process for every group specified in parameters for now, could be just subset
+# of where observations and barriers have been updated
+$(BROKEN_SPPGROUPS): .broken_%: .xbarriers_% .streams
+	parallel --jobs 4 --no-run-if-empty \
+		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .x,,$<)" ::: $(WSG_TO_REFRESH_DEF)
+	# concurrent updates lock the db, process each wsg individually
+	for wsg in $(WSG_TO_REFRESH_DEF) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
+		-v target_table=streams \
+		-v target_table_id=segmented_stream_id \
+		-v barriertype=$(subst .broken_,,$@) \
+		-v point_table=$(subst .broken_,barriers_,$@) \
+		-v include_equivalents=true \
+		-v wsg=$$wsg ;\
+	done
+	touch $@
+
+# break streams at anthropogenic barriers (for watershed groups noted as having updates)
+$(BROKEN_ANTHROPOGENIC): .broken_%: .xbarriers_% .streams
+	parallel -a $< --jobs 4 --no-run-if-empty \
+		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .x,,$<)"
+	# concurrent updates lock the db, process each wsg individually
+	for wsg in $(shell cat $<) ; do \
+		$(PSQL_CMD) -c scripts/model/sql/update_barriers_dnstr_wrapper.sql \
 		-v target_table=streams \
 		-v target_table_id=segmented_stream_id \
 		-v barriertype=$(subst .broken_,,$@) \
@@ -342,7 +368,7 @@ $(BARRIERS_BROKEN): .broken_%: .xbarriers_% .streams
 
 # once all barriers and observations are processed, update the access model values
 .model_access: $(BARRIERS_BROKEN) .broken_observations
-	for wsg in $(shell cat .wsg_to_refresh | sort | uniq) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/update_access.sql -v wsg=$$wsg ; \
 	done
 	touch $@
@@ -436,17 +462,17 @@ qa/%.csv: scripts/qa/sql/%.sql .model_access
 	# add reporting columns to tables
 	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v wsg={1} -v point_table=barriers_anthropogenic
 	# run report per watershed group on barriers_anthropogenic
-	#for wsg in $(WSG_RAIL) ; do \
-	#	$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
-	#	-v point_table=barriers_anthropogenic \
-	#	-v point_id=barriers_anthropogenic_id \
-	#	-v barriers_table=barriers_anthropogenic \
-	#	-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
-	#	-v wsg=$$wsg ; \
-	#done
+	for wsg in $(WSG_RAIL) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
+		-v point_table=barriers_anthropogenic \
+		-v point_id=barriers_anthropogenic_id \
+		-v barriers_table=barriers_anthropogenic \
+		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
+		-v wsg=$$wsg ; \
+	done
 	# run report per watershed group on crossings
 	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v wsg={1} -v point_table=crossings
-	for wsg in $(WSG_PARAM) ; do \
+	for wsg in $(WSG_RAIL) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
