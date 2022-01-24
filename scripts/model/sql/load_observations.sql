@@ -17,14 +17,13 @@ INSERT INTO bcfishpass.observations_load
   geom
 )
 
--- convert the boolean species columns in wsg_species_presence into array of species presence for each wsg
+-- Convert the boolean species columns in wsg_species_presence into array of species presence for each wsg
 -- (We could modify the input file's multiple spp columns into a single column of spp codes but current
--- design works fine and is easy to validate. Down side is that this query has to be modified if more spp
--- are added)
+-- design works fine and is easy to validate. Down side is that this query must be modified when spp are added)
 WITH wsg_spp AS
 (
 SELECT
-  watershed_group_code, string_to_array(array_to_string(ARRAY[co, ch, sk, st, wct], ','),',') as species_codes
+  watershed_group_code, string_to_array(array_to_string(ARRAY[co, ch, sk, st, wct, bt, gr, rb], ','),',') as species_codes
 FROM (
   SELECT
     p.watershed_group_code,

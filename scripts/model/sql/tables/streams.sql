@@ -31,6 +31,10 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   upstream_route_measure    double precision
     GENERATED ALWAYS AS (ST_M(ST_PointN(geom, -1))) STORED,
 
+  -- channel width/discharge models
+  channel_width double precision,
+  mad_m3s double precision,
+
   -- anthropogenic features downstream
   barriers_anthropogenic_dnstr bigint[],
   barriers_pscis_dnstr bigint[],
@@ -62,9 +66,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   access_model_gr text,
   access_model_rb text,
 
-  -- habitat models and modelled flow/channel width
-  channel_width double precision,
-  mad_m3s double precision,
+  -- habitat models
   spawning_model_ch boolean,
   spawning_model_co boolean,
   spawning_model_sk boolean,

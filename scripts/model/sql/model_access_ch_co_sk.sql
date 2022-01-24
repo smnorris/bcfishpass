@@ -1,4 +1,4 @@
-delete from bcfishpass.definitebarriers_ch_co_sk
+delete from bcfishpass.barriers_ch_co_sk
 where watershed_group_code = :'wsg';
 
 with barriers as

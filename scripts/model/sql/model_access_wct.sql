@@ -1,3 +1,7 @@
+delete from bcfishpass.barriers_wct
+where watershed_group_code = :'wsg';
+
+
 WITH barriers AS
 (
     SELECT

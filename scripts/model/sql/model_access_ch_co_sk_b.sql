@@ -1,3 +1,7 @@
+delete from bcfishpass.barriers_ch_co_sk_b
+where watershed_group_code = :'wsg';
+
+
 -- extract all ch/co/sk observations to cancel barriers downstream
 with obs as
 (
@@ -224,7 +228,7 @@ SELECT DISTINCT
     b.localcode_ltree,
     b.watershed_group_code,
     b.geom
-FROM bcfishpass.barriers_other_definite b
+FROM bcfishpass.barriers_user_definite b
 LEFT OUTER JOIN obs o
 ON FWA_Upstream(
       b.blue_line_key,
@@ -246,7 +250,7 @@ WHERE
 
 INSERT INTO bcfishpass.barriers_ch_co_sk_b
 (
-    barriers_barrier_ch_co_sk_b_id,
+    barriers_ch_co_sk_b_id,
     barrier_type,
     barrier_name,
     linear_feature_id,

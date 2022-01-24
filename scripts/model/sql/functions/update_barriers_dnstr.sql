@@ -46,7 +46,7 @@ BEGIN
         %L,
         1
       )
-    WHERE b.watershed_group_code = %L
+    WHERE a.watershed_group_code = %L
     GROUP BY a.%I, a.watershed_group_code
     )
 

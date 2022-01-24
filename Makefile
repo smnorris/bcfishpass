@@ -2,12 +2,10 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG_TEST = HORS BULK LNIC ELKR VICT LFRA QUES CARR UFRA MORK PARS COWN
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
-#WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-WSG_PARAM = $(WSG_TEST)
-WSG_RAIL = BBAR BONP BRID BULK CHWK COTR DEAD DRIR FRAN FRCN GRNL HARR KISP KLUM LCHL LFRA LILL LKEL LNIC LNTH LSAL LSKE LTRE MIDR MORK MORR MUSK NARC NECR QUES SAJR SALR SETN SHUL STHM STUL SUST TABR TAKL THOM TWAC UFRA UNTH USHU UTRE WILL
-WSG_NON_RAIL = ADMS ALBN ATNA BABL BABR BARR BELA BLAR BOWR BRKS CAMB CARR CHES CHIL CHIR CLAY CLWR COMX COWN DOGC ELKR EUCH EUCL GLAR GOLD GRAI GUIC HERR HOLB HOMA HORS INKR JENR JERV KEEC KHTZ KINR KITL KITR KLIN KNIG KSHR KTSU KUMR LBIR LCHR LDEN LISR LNAR LRDO LSTR MAHD MBNK MCGR MESC MFRA MORI MSKE MSTR NAHR NAKR NASC NASR NAZR NBNK NECL NEVI NICL NIEL NIMP OKAN OWIK PARK PARS PORI SALM SANJ SEYM SHER SQAM STIR STUR SWIR TAHR TAHS TASR TATR TAYR TESR TOBA TSAY TSIT UBIR UCHR UJER UNAR UNUR USKE USTK VICT WORC ZYMO
+WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+#WSG_TEST = HORS BULK LNIC ELKR VICT LFRA QUES CARR UFRA MORK PARS COWN
+#WSG_PARAM = $(WSG_TEST)
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
 	.streams .observations .observations_upstr .update_access
@@ -57,10 +55,15 @@ clean_sources:
 
 clean_barriers:
 	rm -Rf $(wildcard .barriers_*)
-	rm -Rf $(wildcard .xbarriers_*)
+	rm -Rf $(wildcard .barriersource_*)
 	for barriertype in $(BARRIERS) ; do \
 		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
 	done
+
+clean_access:
+	rm -Rf $(wildcard .broken_*)
+	rm -Rf $(wildcard .breakpts_*)
+	rm -rf .update_access
 	for barriertype in $(SPPGROUPS) ; do \
 		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
 	done
@@ -298,24 +301,24 @@ scripts/discharge/.discharge: .fwapg
 	mv $(subst .barriers_,.torefresh_,$@) $@
 
 # tag anthropogenic barriers as barriers for breaking streams (xbarriers_ prefix)
-$(patsubst %, .xbarriers_%, $(ANTH_BARRIERS)): .xbarriers_%: .barriers_%
-	cp $(subst .x,.,$@) $@
+$(patsubst %, .breakpts_%, $(ANTH_BARRIERS)): .breakpts_%: .barriers_%
+	cp $(subst .breakpts,.barriers,$@) $@
 
 # for each species/species group being modelled, combine definite barriers into a single table for that species/species group
 # Because we only retain minimal features, we can't tell where changes have occured (as in above) - so process the entire study area
-.xbarriers_%: scripts/model/sql/model_access_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
+.breakpts_%: scripts/model/sql/model_access_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
 	# drop barrier table if already present
-	echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=$(subst .xbarriers_,barriers_,$@)
+	echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=$(subst .breakpts_,barriers_,$@)
 	# create/recreate barrier table
-	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .xbarriers_,,$@)
+	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL_CMD) -v barriertype=$(subst .breakpts_,,$@)
 	# load all features for given spp scenario to barrier_load table, for all groups listed in parameters
 	parallel --no-run-if-empty $(PSQL_CMD) -f $< -v wsg={1} ::: $(WSG_PARAM)
 	# index downstream
 	cd scripts/model ; python bcfishpass.py add-downstream-ids \
-		bcfishpass.$(subst .x,,$@) $(subst .x,,$@)_id bcfishpass.$(subst .x,,$@) $(subst .x,,$@)_id $(subst .x,,$@)_dnstr
+		bcfishpass.$(subst .breakpts,barriers,$@) $(subst .breakpts,barriers,$@)_id bcfishpass.$(subst .breakpts,barriers,$@) $(subst .breakpts,barriers,$@)_id $(subst .breakpts,barriers,$@)_dnstr
 	# remove non-minimal barriers
 	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | \
-		$(PSQL_CMD) -v id=$(subst .x,,$@)_dnstr -v table=$(subst .x,,$@)
+		$(PSQL_CMD) -v id=$(subst .breakpts,barriers,$@)_dnstr -v table=$(subst .breakpts,barriers,$@)
 	touch $@
 
 # -----
@@ -329,10 +332,10 @@ $(patsubst %, .xbarriers_%, $(ANTH_BARRIERS)): .xbarriers_%: .barriers_%
 # break streams at minimal definite barriers for each spp scenario
 # process for every group specified in parameters for now, could be just subset
 # of where observations and barriers have been updated
-$(BROKEN_SPPGROUPS): .broken_%: .xbarriers_% .streams
+$(BROKEN_SPPGROUPS): .broken_%: .breakpts_% .streams
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .x,,$<)" ::: $(WSG_TO_REFRESH_DEF)
+		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)" ::: $(WSG_TO_REFRESH_DEF)
 	# concurrent updates lock the db, process each wsg individually
 	for wsg in $(WSG_TO_REFRESH_DEF) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
@@ -345,14 +348,15 @@ $(BROKEN_SPPGROUPS): .broken_%: .xbarriers_% .streams
 	done
 	touch $@
 
+
 # break streams at anthropogenic barriers (for watershed groups noted as having updates)
-$(BROKEN_ANTHROPOGENIC): .broken_%: .xbarriers_% .streams
+$(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 	parallel -a $< --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .x,,$<)"
+		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)"
 	# concurrent updates lock the db, process each wsg individually
 	for wsg in $(shell cat $<) ; do \
-		$(PSQL_CMD) -c scripts/model/sql/update_barriers_dnstr_wrapper.sql \
+		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
 		-v target_table=streams \
 		-v target_table_id=segmented_stream_id \
 		-v barriertype=$(subst .broken_,,$@) \

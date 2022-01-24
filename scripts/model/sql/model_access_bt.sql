@@ -1,3 +1,6 @@
+delete from bcfishpass.barriers_bt
+where watershed_group_code = :'wsg';
+
 WITH barriers AS
 (
     SELECT
@@ -24,7 +27,6 @@ ON FWA_Upstream(
       False,
       1
     )
-  AND b.watershed_group_code = o.watershed_group_code
 -- do not include any features downstream of BT observations
 WHERE b.watershed_group_code = :'wsg' AND
     (
@@ -57,7 +59,6 @@ ON FWA_Upstream(
       False,
       1
     )
-  AND b.watershed_group_code = o.watershed_group_code
 -- do not include any features downstream of BT observations
 WHERE b.watershed_group_code = :'wsg' AND
     (
@@ -90,7 +91,6 @@ ON FWA_Upstream(
       False,
       1
     )
-  AND b.watershed_group_code = o.watershed_group_code
 -- do not include any features downstream of BT observations
 WHERE b.watershed_group_code = :'wsg' AND
     (
@@ -122,7 +122,6 @@ ON FWA_Upstream(
       False,
       1
     )
-  AND b.watershed_group_code = o.watershed_group_code
 -- do not include any features downstream of BT observations
 WHERE b.watershed_group_code = :'wsg' AND
     (
@@ -154,7 +153,6 @@ ON FWA_Upstream(
       False,
       1
     )
-  AND b.watershed_group_code = o.watershed_group_code
 -- do not include any features downstream of BT observations
 WHERE b.watershed_group_code = :'wsg' AND
     (
@@ -177,7 +175,7 @@ FROM bcfishpass.barriers_user_definite b
 
 INSERT INTO bcfishpass.barriers_bt
 (
-    barriers_id,
+    barriers_bt_id,
     barrier_type,
     barrier_name,
     linear_feature_id,

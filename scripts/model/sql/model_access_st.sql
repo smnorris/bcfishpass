@@ -1,4 +1,4 @@
-DELETE FROM bcfishpass.definitebarriers_st
+DELETE FROM bcfishpass.barriers_st
 WHERE watershed_group_code = :'wsg';
 
 with barriers as
