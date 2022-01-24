@@ -55,55 +55,19 @@ BEGIN
         to_break
     )
 
-    -- create new geoms
+    -- create new geoms and load them into a separate column so we can retain all columns
+    -- from source without listing them out
     SELECT
-      row_number() OVER () AS id,
-      n.segmented_stream_id,
-      s.linear_feature_id,
-      n.downstream_route_measure,
-      n.upstream_route_measure,
-      --s.barriers_majordams_dnstr,
-      --s.barriers_subsurfaceflow_dnstr,
-      --s.barriers_falls_dnstr,
-      --s.barriers_gradient_05_dnstr,
-      --s.barriers_gradient_07_dnstr,
-      --s.barriers_gradient_10_dnstr,
-      --s.barriers_gradient_15_dnstr,
-      --s.barriers_gradient_20_dnstr,
-      --s.barriers_gradient_25_dnstr,
-      --s.barriers_gradient_30_dnstr,
-      --s.barriers_other_definite_dnstr,
-      s.barriers_anthropogenic_dnstr,
-      s.barriers_pscis_dnstr,
-      s.barriers_remediated_dnstr,
-      s.obsrvtn_pnt_distinct_upstr,
-      s.obsrvtn_species_codes_upstr,
-      s.access_model_ch_co_sk,
-      s.access_model_st,
-      s.access_model_wct,
-      s.access_model_pk,
-      s.access_model_cm,
-      s.access_model_bt,
-      s.access_model_gr,
-      s.access_model_rb,
-      s.channel_width,
-      s.mad_m3s,
-      s.spawning_model_ch,
-      s.spawning_model_co,
-      s.spawning_model_sk,
-      s.spawning_model_st,
-      s.spawning_model_wct,
-      s.rearing_model_ch,
-      s.rearing_model_co,
-      s.rearing_model_sk,
-      s.rearing_model_st,
-      s.rearing_model_wct,
+      s.*,
       (ST_Dump(ST_LocateBetween
         (s.geom, n.downstream_route_measure, n.upstream_route_measure
-        ))).geom AS geom
+        ))).geom AS geom_new
     FROM new_measures n
     INNER JOIN bcfishpass.streams s ON n.segmented_stream_id = s.segmented_stream_id;
 
+    -- drop the old geom from temp table, retain the new shorter geoms
+    ALTER TABLE temp_streams DROP COLUMN geom;
+    ALTER TABLE temp_streams RENAME COLUMN geom_new TO geom;
 
     ---------------------------------------------------------------
     -- shorten existing stream features
@@ -124,7 +88,6 @@ BEGIN
     (
       SELECT
         m.segmented_stream_id,
-        ST_Length(ST_LocateBetween(s.geom, s.downstream_route_measure, m.downstream_route_measure)) as length_metre,
         (ST_Dump(ST_LocateBetween (s.geom, s.downstream_route_measure, m.downstream_route_measure))).geom as geom
       FROM min_segs m
       INNER JOIN bcfishpass.streams s
@@ -134,7 +97,6 @@ BEGIN
     UPDATE
       bcfishpass.streams a
     SET
-      length_metre = b.length_metre,
       geom = b.geom
     FROM
       shortened b
@@ -144,6 +106,9 @@ BEGIN
 
     ---------------------------------------------------------------
     -- now insert new features
+    -- note that required columns need to be explicitly listed because we cannot
+    -- automatically exclude generated columns without getting into dynamic sql/introspection
+    -- https://stackoverflow.com/questions/44100163/postgresql-copy-row-minus-a-few-columns
     ---------------------------------------------------------------
     INSERT INTO bcfishpass.streams
     (
@@ -152,31 +117,28 @@ BEGIN
       blue_line_key,
       watershed_key,
       watershed_group_code,
-      downstream_route_measure,
-      length_metre,
       waterbody_key,
       wscode_ltree,
       localcode_ltree,
       gnis_name,
       stream_order,
       stream_magnitude,
-      --barriers_majordams_dnstr,
-      --barriers_subsurfaceflow_dnstr,
-      --barriers_falls_dnstr,
-      --barriers_gradient_05_dnstr,
-      --barriers_gradient_07_dnstr,
-      --barriers_gradient_10_dnstr,
-      --barriers_gradient_15_dnstr,
-      --barriers_gradient_20_dnstr,
-      --barriers_gradient_25_dnstr,
-      --barriers_gradient_30_dnstr,
-      --barriers_other_definite_dnstr,
       barriers_anthropogenic_dnstr,
       barriers_pscis_dnstr,
       barriers_remediated_dnstr,
+      barriers_ch_co_sk_dnstr,
+      barriers_ch_co_sk_b_dnstr,
+      barriers_st_dnstr,
+      barriers_pk_dnstr,
+      barriers_cm_dnstr,
+      barriers_bt_dnstr,
+      barriers_wct_dnstr,
+      barriers_gr_dnstr,
+      barriers_rb_dnstr,
       obsrvtn_pnt_distinct_upstr,
       obsrvtn_species_codes_upstr,
       access_model_ch_co_sk,
+      access_model_ch_co_sk_b,
       access_model_st,
       access_model_wct,
       access_model_pk,
@@ -199,59 +161,54 @@ BEGIN
       geom
     )
     SELECT
-      t.linear_feature_id,
-      s.edge_type,
-      s.blue_line_key,
-      s.watershed_key,
-      s.watershed_group_code,
-      t.downstream_route_measure,
-      ST_Length(t.geom) as length_metre,
-      s.waterbody_key,
-      s.wscode_ltree,
-      s.localcode_ltree,
-      s.gnis_name,
-      s.stream_order,
-      s.stream_magnitude,
-      --t.barriers_majordams_dnstr,
-      --t.barriers_subsurfaceflow_dnstr,
-      --t.barriers_falls_dnstr,
-      --t.barriers_gradient_05_dnstr,
-      --t.barriers_gradient_07_dnstr,
-      --t.barriers_gradient_10_dnstr,
-      --t.barriers_gradient_15_dnstr,
-      --t.barriers_gradient_20_dnstr,
-      --t.barriers_gradient_25_dnstr,
-      --t.barriers_gradient_30_dnstr,
-      --t.barriers_other_definite_dnstr,
-      t.barriers_anthropogenic_dnstr,
-      t.barriers_pscis_dnstr,
-      t.barriers_remediated_dnstr,
-      t.obsrvtn_pnt_distinct_upstr,
-      t.obsrvtn_species_codes_upstr,
-      t.access_model_ch_co_sk,
-      t.access_model_st,
-      t.access_model_wct,
-      t.access_model_pk,
-      t.access_model_cm,
-      t.access_model_bt,
-      t.access_model_gr,
-      t.access_model_rb,
-      t.channel_width,
-      t.mad_m3s,
-      t.spawning_model_ch,
-      t.spawning_model_co,
-      t.spawning_model_sk,
-      t.spawning_model_st,
-      t.spawning_model_wct,
-      t.rearing_model_ch,
-      t.rearing_model_co,
-      t.rearing_model_sk,
-      t.rearing_model_st,
-      t.rearing_model_wct,
-      t.geom
+      linear_feature_id,
+      edge_type,
+      blue_line_key,
+      watershed_key,
+      watershed_group_code,
+      waterbody_key,
+      wscode_ltree,
+      localcode_ltree,
+      gnis_name,
+      stream_order,
+      stream_magnitude,
+      barriers_anthropogenic_dnstr,
+      barriers_pscis_dnstr,
+      barriers_remediated_dnstr,
+      barriers_ch_co_sk_dnstr,
+      barriers_ch_co_sk_b_dnstr,
+      barriers_st_dnstr,
+      barriers_pk_dnstr,
+      barriers_cm_dnstr,
+      barriers_bt_dnstr,
+      barriers_wct_dnstr,
+      barriers_gr_dnstr,
+      barriers_rb_dnstr,
+      obsrvtn_pnt_distinct_upstr,
+      obsrvtn_species_codes_upstr,
+      access_model_ch_co_sk,
+      access_model_ch_co_sk_b,
+      access_model_st,
+      access_model_wct,
+      access_model_pk,
+      access_model_cm,
+      access_model_bt,
+      access_model_gr,
+      access_model_rb,
+      channel_width,
+      mad_m3s,
+      spawning_model_ch,
+      spawning_model_co,
+      spawning_model_sk,
+      spawning_model_st,
+      spawning_model_wct,
+      rearing_model_ch,
+      rearing_model_co,
+      rearing_model_sk,
+      rearing_model_st,
+      rearing_model_wct,
+      geom
     FROM temp_streams t
-    INNER JOIN whse_basemapping.fwa_stream_networks_sp s
-    ON t.linear_feature_id = s.linear_feature_id
     ON CONFLICT DO NOTHING;',
     point_table,
     wsg
@@ -259,3 +216,6 @@ BEGIN
 
 END
 $func$;
+
+
+

@@ -116,7 +116,8 @@ CREATE TABLE bcfishpass.falls
  source                   text             ,
  height                   double precision ,
  barrier_ind              boolean          ,
- reviewer                 text             ,
+ falls_name               text             ,
+ reviewer_name            text             ,
  notes                    text             ,
  distance_to_stream       double precision ,
  linear_feature_id        bigint           ,
@@ -410,7 +411,8 @@ INSERT INTO bcfishpass.falls
  source,
  height,
  barrier_ind,
- reviewer,
+ falls_name,
+ reviewer_name,
  notes,
  linear_feature_id,
  blue_line_key,
@@ -423,7 +425,8 @@ SELECT
   p.source,
   p.height,
   p.barrier_ind,
-  p.reviewer,
+  p.falls_name,
+  p.reviewer_name,
   p.notes,
   s.linear_feature_id,
   p.blue_line_key,
@@ -432,7 +435,7 @@ SELECT
   s.localcode_ltree,
   s.watershed_group_code,
   (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, p.downstream_route_measure)))).geom as geom
-FROM bcfishpass.falls_other p
+FROM bcfishpass.user_falls p
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON p.blue_line_key = s.blue_line_key AND
 p.downstream_route_measure > s.downstream_route_measure - .001 AND
@@ -454,8 +457,7 @@ DROP TABLE bcfishpass.fiss_obstacles_unpublished;
 
 
 -- --------------------------
--- set barrier status for fiss/fwa records and user input corrections
--- (any additional falls loaded include their barrier status)
+-- set default barrier status for fiss/fwa records
 -- --------------------------
 
 -- fiss falls < 5m or NULL default to passable
@@ -472,3 +474,11 @@ WHERE source = 'FISS' AND height >= 5;
 UPDATE bcfishpass.falls
 SET barrier_ind = True
 WHERE source = 'FWA';
+
+-- --------------------------
+-- finalize barrier status from the user control table
+-- --------------------------
+UPDATE bcfishpass.falls a
+SET barrier_ind = b.barrier_ind
+FROM bcfishpass.user_barriers_definite_control b
+WHERE a.blue_line_key = b.blue_line_key and abs(a.downstream_route_measure - b.downstream_route_measure) < 1;

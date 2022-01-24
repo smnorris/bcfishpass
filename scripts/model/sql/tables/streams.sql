@@ -8,7 +8,7 @@
 CREATE TABLE IF NOT EXISTS bcfishpass.streams 
 (
   segmented_stream_id       text
-     GENERATED ALWAYS AS (blue_line_key::text|| '.' || round((downstream_route_measure) * 1000)::text) STORED PRIMARY KEY,
+     GENERATED ALWAYS AS (blue_line_key::text|| '.' || round((ST_M(ST_PointN(geom, 1))) * 1000)::text) STORED PRIMARY KEY,
 
   -- standard fwa columns
   linear_feature_id        bigint                      ,
@@ -16,8 +16,10 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   blue_line_key            integer                     ,
   watershed_key            integer                     ,
   watershed_group_code     character varying(4)        ,
-  downstream_route_measure double precision            ,
-  length_metre             double precision            ,
+  downstream_route_measure double precision
+    GENERATED ALWAYS AS (ST_M(ST_PointN(geom, 1))) STORED,
+  length_metre             double precision
+    GENERATED ALWAYS AS (ST_Length(geom)) STORED         ,
   waterbody_key            integer                     ,
   wscode_ltree             ltree                       ,
   localcode_ltree          ltree                       ,
@@ -25,25 +27,25 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   stream_order              integer                    ,
   stream_magnitude          integer                    ,
   gradient                  double precision
-    GENERATED ALWAYS AS (round((((ST_Z (ST_PointN (geom, - 1)) - ST_Z (ST_PointN (geom, 1))) / ST_Length (geom))::numeric), 4)) STORED,
+    GENERATED ALWAYS AS (round((((ST_Z (ST_PointN (geom, -1)) - ST_Z (ST_PointN (geom, 1))) / ST_Length (geom))::numeric), 4)) STORED,
   upstream_route_measure    double precision
-    GENERATED ALWAYS AS (downstream_route_measure + ST_Length (geom)) STORED,
+    GENERATED ALWAYS AS (ST_M(ST_PointN(geom, -1))) STORED,
 
-  -- barriers downstream
-  --barriers_majordams_dnstr bigint[],
-  --barriers_subsurfaceflow_dnstr bigint[],
-  --barriers_falls_dnstr bigint[],
-  --barriers_gradient_05_dnstr bigint[],
-  --barriers_gradient_07_dnstr bigint[],
-  --barriers_gradient_10_dnstr bigint[],
-  --barriers_gradient_15_dnstr bigint[],
-  --barriers_gradient_20_dnstr bigint[],
-  --barriers_gradient_25_dnstr bigint[],
-  --barriers_gradient_30_dnstr bigint[],
-  --barriers_other_definite_dnstr bigint[],
+  -- anthropogenic features downstream
   barriers_anthropogenic_dnstr bigint[],
   barriers_pscis_dnstr bigint[],
   barriers_remediated_dnstr bigint[],
+
+  -- definite barriers downstream (per spp scenario)
+  barriers_ch_co_sk_dnstr bigint[],
+  barriers_ch_co_sk_b_dnstr bigint[],
+  barriers_st_dnstr bigint[],
+  barriers_pk_dnstr bigint[],
+  barriers_cm_dnstr bigint[],
+  barriers_bt_dnstr bigint[],
+  barriers_wct_dnstr bigint[],
+  barriers_gr_dnstr bigint[],
+  barriers_rb_dnstr bigint[],
 
   -- observations upstream
   obsrvtn_pnt_distinct_upstr integer[],
@@ -51,6 +53,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
 
   -- access models
   access_model_ch_co_sk text,
+  access_model_ch_co_sk_b text,
   access_model_st text,
   access_model_wct text,
   access_model_pk text,

@@ -1,0 +1,2648 @@
+modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,source,notes
+100151,OBS,ADMS,PK,2021-01-01,Bing/Google/ESRI imagery,
+100553,NONE,ADMS,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+101833,OBS,ADMS,PK,2021-01-01,Bing/Google/ESRI imagery,
+102295,OBS,ADMS,PK,2021-01-01,Bing/Google/ESRI imagery,
+200073,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+200080,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+200141,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+200223,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+200772,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+201136,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+201160,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+201772,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+201921,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+201927,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+202405,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+202554,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+202812,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+203158,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+203306,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+203655,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+204057,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+204059,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+205052,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+205157,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+205297,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+205382,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+205573,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+205615,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+206263,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+206309,OBS,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,
+206560,NONE,ALBN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+500499,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+500555,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+500623,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+500624,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+500646,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+500808,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+501268,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,second opinion
+501692,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502157,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502159,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502170,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502182,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502187,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502449,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+502595,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502711,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502713,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502716,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502726,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502786,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502789,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+502975,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+503204,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+503341,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+503588,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+503611,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+503887,OBS,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+504214,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+504224,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+504327,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+600318,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+600370,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600371,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600379,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600387,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600459,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+600468,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600557,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+600564,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+600637,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600645,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600712,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600798,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600801,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600827,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+600849,OBS,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,
+601026,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+601064,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+601073,NONE,BABR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+800528,OBS,BBAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+801533,NONE,BBAR,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+802542,OBS,BBAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+802636,NONE,BBAR,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+802738,OBS,BBAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+1200069,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1200369,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1200516,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1200551,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1200924,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1200926,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1201321,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201555,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201561,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201643,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201681,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201707,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201711,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1201926,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1201966,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1202200,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1202206,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1202207,OBS,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1202270,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1202271,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1202744,NONE,BLAR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1400107,OBS,BONP,SN,2021-01-01,Bing/Google/ESRI imagery,
+1400183,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1400300,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1401942,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1402216,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1402246,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1402798,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1402825,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1402866,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1402869,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1403134,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1403674,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1404049,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1404365,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1404790,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1404823,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1500050,NONE,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1500666,NONE,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1501337,NONE,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1501338,NONE,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1501882,NONE,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+1502083,NONE,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+1502410,OBS,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1502807,OBS,BOWR,AL,2021-01-01,Bing/Google/ESRI imagery,
+1800003,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1800049,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1800066,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1800076,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1800154,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1800334,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1800472,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,Assessment pre load (Irvine 2020)
+1800644,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1800661,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800808,NONE,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+1800819,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1801041,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801067,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1801069,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,Assessment pre load (Irvine 2020) - actually a passable CBS but noted here for convenience (Irvine 2020)
+1801088,NONE,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+1801117,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1801156,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801167,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801188,NONE,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing visible
+1801208,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1801258,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801332,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1801559,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801590,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801613,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801847,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801858,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801895,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801925,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802180,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802262,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802343,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1802406,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1802430,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802474,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1802475,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802642,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1802792,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802938,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1802980,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803021,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803222,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803235,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803244,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803306,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1803367,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803384,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803403,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803588,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1803643,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803651,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1803663,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803709,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1803821,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1803828,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803830,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803934,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803946,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803962,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1803970,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804035,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804057,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804061,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804114,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804145,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804151,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804153,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,Assessment pre load (Irvine 2020)
+1804174,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804233,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804238,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804275,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1804416,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1804417,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1804450,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1804478,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1804492,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1804543,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804695,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804698,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804707,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804756,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804808,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804818,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804824,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804825,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804830,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804851,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804861,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804884,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1804950,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1804956,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805004,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805036,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805037,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805091,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805092,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805133,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805146,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805155,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805158,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805182,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,Assessment pre load (Irvine 2020)
+1805183,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805197,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805214,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805227,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805278,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805331,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805348,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1805409,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805530,OBS,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,
+1805593,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805595,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805733,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805771,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805793,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805804,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1805843,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805876,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805954,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805986,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805991,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+1806159,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806180,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806181,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806264,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806265,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806271,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806276,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806281,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806308,NONE,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806316,OBS,BULK,PK,2021-01-01,Bing/Google/ESRI imagery,
+1900049,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900060,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900120,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900126,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900152,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900240,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1900241,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1900287,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900339,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900346,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900393,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1900414,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1900691,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1900748,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1900767,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1900992,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901006,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901079,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1901105,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901214,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1901218,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901230,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901247,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901438,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901556,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1901795,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1902096,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1902173,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902183,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902188,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902189,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902411,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902426,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902474,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902475,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1902552,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1902943,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903028,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903030,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903036,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903045,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903184,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903247,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903280,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903282,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903353,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903429,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1903431,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1903473,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903580,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1903658,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903662,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903709,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903776,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903782,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903784,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903842,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1903845,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1904125,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1904391,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1904626,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1904677,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1904682,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1904810,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1904828,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1905132,NONE,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1905293,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1905301,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+1905318,OBS,BULL,OB,2021-01-01,Bing/Google/ESRI imagery,
+2300203,NONE,CARR,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+2300602,NONE,CARR,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+2300641,NONE,CARR,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+2301274,NONE,CARR,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+2301417,NONE,CARR,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+2301418,OBS,CARR,PK,2021-01-01,Bing/Google/ESRI imagery,
+2400259,NONE,CHES,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+2400265,NONE,CHES,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+2400804,OBS,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,
+2400805,OBS,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,
+2400877,OBS,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,
+2400878,OBS,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,
+2400880,OBS,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,
+2401131,NONE,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2401162,NONE,CHES,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2500038,OBS,CHIL,SN,2021-01-01,Bing/Google/ESRI imagery,
+2500039,NONE,CHIL,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+2500727,OBS,CHIL,AL,2021-01-01,Bing/Google/ESRI imagery,
+2500753,OBS,CHIL,AL,2021-01-01,Bing/Google/ESRI imagery,
+2800090,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800109,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800393,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800394,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800396,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800397,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800398,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800399,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800536,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800541,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800543,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800544,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800587,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800591,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800655,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800679,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800725,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800730,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2800735,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800905,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800906,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2800976,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801241,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801332,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801590,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801591,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801767,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801825,OBS,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,
+2801864,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+2801872,NONE,CHWK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3100138,OBS,CLWR,PK,2021-01-01,Bing/Google/ESRI imagery,
+3100666,OBS,CLWR,PK,2021-01-01,Bing/Google/ESRI imagery,
+3400078,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3400192,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3400311,NONE,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3400367,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3400756,NONE,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+3400762,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3400765,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3402369,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3402462,NONE,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3402463,NONE,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3402474,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3403156,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3403172,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3403173,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3403318,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3403490,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3403564,OBS,COMX,AL,2021-01-01,Bing/Google/ESRI imagery,
+3500213,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3500337,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3500690,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3500938,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3500997,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3501015,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3501016,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3501037,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3501041,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3501049,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3501148,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3501623,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3501798,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3501872,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3502050,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3502060,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3502315,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3502316,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3502411,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3502426,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3502883,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3502968,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3503057,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3503077,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3503116,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3503148,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3503362,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3503935,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3503936,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3504348,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3504354,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3504485,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3504549,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3504729,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3504796,NONE,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3504860,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3505184,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3505634,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3505819,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
+3506023,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3506389,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3506390,NONE,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3506628,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+3600026,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3600159,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3600265,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3601388,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3602963,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3603038,NONE,COWN,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+3603113,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3603261,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3604896,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3605125,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3605388,OBS,COWN,AL,2021-01-01,Bing/Google/ESRI imagery,
+3605474,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3605481,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3605720,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3605732,OBS,COWN,AL,2021-01-01,Bing/Google/ESRI imagery,
+3605765,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3605809,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3606064,OBS,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,
+3606095,OBS,COWN,AL,2021-01-01,Bing/Google/ESRI imagery,
+3606840,NONE,COWN,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3900006,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3900024,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3900071,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3900094,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3900134,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3900574,NONE,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3900837,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3901178,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+3901195,NONE,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+3901594,OBS,DEAD,AL,2021-01-01,Bing/Google/ESRI imagery,
+4200247,NONE,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4200249,NONE,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+4200299,NONE,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+4200300,NONE,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+4200866,NONE,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+4201715,OBS,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,
+4201920,NONE,DOGC,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+4600014,OBS,ELKR,AI,2021-01-01,Bing/Google/ESRI imagery,bridge
+4600122,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4600123,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4600137,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600214,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600240,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4600242,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4600246,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600248,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600249,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600251,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600252,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600254,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600255,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600256,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600257,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600258,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600262,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600321,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600322,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600480,OBS,ELKR,AI,2021-01-01,Bing/Google/ESRI imagery,bridge
+4600633,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600733,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600772,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4600836,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600950,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600996,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4601018,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601035,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601119,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601138,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,only a single crossing at this location (stream is incorrectly mapped) - PSCIS 62423 / model 4601130
+4601256,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601257,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601275,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing visible
+4601292,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601378,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4601412,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4601494,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4601524,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4601559,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+4601832,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4601981,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602172,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4602182,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602220,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602221,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602266,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602280,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602319,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602392,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602413,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602414,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602415,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602531,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602532,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602534,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602538,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602539,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602624,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602645,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602693,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602694,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602714,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602747,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602803,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602864,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4602883,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4602974,OBS,ELKR,AI,2021-01-01,Bing/Google/ESRI imagery,bridge
+4603111,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4603133,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603202,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4603295,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing as per survey (Irvine 2020)
+4603296,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing as per survey (Irvine 2020)
+4603311,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4603394,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603401,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603403,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603407,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603408,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603431,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603456,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603478,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603482,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603484,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603506,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603528,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603544,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603562,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603594,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603611,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603612,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603719,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603721,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603727,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603826,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603832,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603903,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603906,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603964,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603988,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604051,OBS,ELKR,AI,2021-01-01,Bing/Google/ESRI imagery,bridge
+4604054,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604057,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4604133,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604151,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604219,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4604258,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4604259,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4604265,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604271,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604273,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604274,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604275,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604278,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604280,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604281,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604282,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604285,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604287,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604465,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604583,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604680,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4604776,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4604903,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604976,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4605015,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605184,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605256,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4605261,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4605344,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4605391,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605392,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605396,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605419,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605447,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605452,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605467,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4605470,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605472,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4605512,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605564,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605593,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605607,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4605608,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605613,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605718,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605748,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605791,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605826,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605838,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605863,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605910,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605911,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605923,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605925,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605927,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4605962,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606046,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606091,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606122,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606146,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606158,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606183,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606205,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606207,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606233,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4606239,OBS,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,
+4606288,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606297,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606322,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606387,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606428,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606430,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606476,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606507,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606518,OBS,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,Bridge as per survey (Irvine 2020)
+4606524,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606549,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606613,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606616,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606627,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606630,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606635,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606843,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4606868,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606899,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606900,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606901,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606905,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606906,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606912,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606962,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606968,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4607138,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4607189,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4607266,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
+4607304,NONE,ELKR,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4607434,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4607453,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4607599,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24706616,OBS,ELKR,AI,2021-01-01,Bing/Google/ESRI imagery,bridge
+24732547,OBS,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,bridge visible and obvious
+24732660,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing as per survey (Irvine 2020)
+24734087,OBS,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,bridge visible and obvious
+24734160,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+24734192,OBS,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,Bridge visible
+24734470,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+24734719,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing structure mentioned here in habitat conf for PSCIS 50181
+4700107,NONE,EUCH,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+4700160,OBS,EUCH,SN,2021-01-01,Bing/Google/ESRI imagery,
+4800017,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800030,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800038,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800041,OBS,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,
+4800045,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800058,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800077,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+4800090,OBS,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,
+4800132,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800149,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800187,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800290,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+4800388,OBS,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,
+5400050,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5400155,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5400156,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5400211,OBS,FRAN,SN,2021-01-01,Bing/Google/ESRI imagery,
+5400307,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5400504,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5400530,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5400685,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5400732,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5400926,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5400936,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5401132,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5401281,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5402039,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402152,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402166,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5402408,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402452,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402533,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402580,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402658,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5402892,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5403476,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5403707,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5403981,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5404034,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5404047,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5404114,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5404642,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5404687,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5404964,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405112,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405113,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405181,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405329,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405709,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405717,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405923,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405933,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5405972,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5406090,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5406110,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5406163,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5406200,OBS,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+5406332,NONE,FRAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+5500066,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5500089,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5500401,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5501022,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5501023,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5501082,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5501172,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5501183,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5501740,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+5502058,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5502939,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5503321,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5503326,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5503339,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5503838,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5504314,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5504362,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+5504379,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+5505342,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+5505346,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+5505476,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5506065,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5506116,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5506456,NONE,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+5506497,OBS,FRCN,OB,2021-01-01,Bing/Google/ESRI imagery,
+5800047,NONE,GLAR,PK,2021-01-01,Bing/Google/ESRI imagery,no structure
+6200551,NONE,GUIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6201657,OBS,GUIC,AL,2021-01-01,Bing/Google/ESRI imagery,
+6201689,OBS,GUIC,AL,2021-01-01,Bing/Google/ESRI imagery,
+6300064,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6300078,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6300166,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6300171,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6300264,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6300480,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6300919,NONE,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+6301134,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6301568,NONE,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+6301885,NONE,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+6303105,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6303502,NONE,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6303589,NONE,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+6303601,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6303626,OBS,HARR,OB,2021-01-01,Bing/Google/ESRI imagery,
+6500060,NONE,HERR,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+6500260,NONE,HERR,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+6500638,OBS,HERR,PK,2021-01-01,Bing/Google/ESRI imagery,
+6700295,NONE,HOMA,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+6700590,OBS,HOMA,OB,2021-01-01,Bing/Google/ESRI imagery,
+6700720,OBS,HOMA,OB,2021-01-01,Bing/Google/ESRI imagery,
+6701602,NONE,HOMA,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+6800051,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6800058,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800118,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800143,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800181,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6800186,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6800207,NONE,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+6800279,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800300,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800313,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6800370,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800445,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800509,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6800513,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6800523,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6800543,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6800547,NONE,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+6800587,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800686,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800687,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800784,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800823,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801019,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801104,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6801256,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801297,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801306,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801511,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6801574,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6801691,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801747,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6801749,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6801751,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6801900,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6801945,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6801959,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6802146,OBS,HORS,SN,2021-01-01,Bing/Google/ESRI imagery,
+6802158,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6802228,OBS,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,
+6802238,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802255,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802258,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802272,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6802292,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,
+6802359,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802412,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802417,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802433,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802439,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802442,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6802462,NONE,HORS,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7800084,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7800085,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7800310,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7800387,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7800763,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801021,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801022,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801037,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801042,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801290,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801557,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801560,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801590,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801807,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801849,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7801945,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802101,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802240,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802633,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802634,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802845,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802848,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802887,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7802988,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7803005,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803022,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803052,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803126,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803192,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803517,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803518,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803553,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803718,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7803963,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7804658,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7804701,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7804936,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805002,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805053,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805091,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805219,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805259,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805260,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805261,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805263,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805285,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805582,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805608,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805881,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805966,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7805997,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7806553,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7807289,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7807985,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7808642,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7808645,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7808749,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7809321,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7809689,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7809691,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7810370,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7810620,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7810649,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7810705,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7810981,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7811043,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7811082,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7811241,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7811728,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7811729,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7811733,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7811735,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7811948,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7812120,OBS,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+7812449,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7812450,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7812764,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7812794,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813016,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813138,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813268,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813270,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813421,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813597,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+7813598,NONE,KETL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8000151,OBS,KHTZ,PK,2021-01-01,Bing/Google/ESRI imagery,
+8000345,NONE,KHTZ,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+8000363,NONE,KHTZ,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+8000584,NONE,KHTZ,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+8500311,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+8500378,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+8500689,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+8500956,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+8501045,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+8501451,OBS,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,
+8501468,OBS,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,
+8501529,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+8501569,NONE,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+8501715,OBS,KITR,OB,2021-01-01,Bing/Google/ESRI imagery,
+8700854,OBS,KLIN,AL,2021-01-01,Bing/Google/ESRI imagery,
+8701221,OBS,KLIN,AL,2021-01-01,Bing/Google/ESRI imagery,
+8900076,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8901172,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8901208,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8901239,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8901383,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8901843,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8901882,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8902058,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8902487,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8902711,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8902826,OBS,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,
+8902885,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903205,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903343,OBS,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,
+8903490,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903531,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903532,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903536,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903538,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903539,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903619,OBS,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,
+8903745,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903746,OBS,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,
+8903765,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903779,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8903780,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8904110,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+8904194,NONE,KNIG,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9200073,OBS,KSHR,PK,2021-01-01,Bing/Google/ESRI imagery,
+9200120,NONE,KSHR,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+9200219,OBS,KSHR,PK,2021-01-01,Bing/Google/ESRI imagery,
+9300007,NONE,KTSU,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+9400025,OBS,KUMR,PK,2021-01-01,Bing/Google/ESRI imagery,
+9600588,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9601318,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9601648,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9602485,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9602938,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9602939,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9602940,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9602941,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9602946,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9603721,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9603775,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9604878,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9604933,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9604990,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605016,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605297,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605361,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605388,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9605522,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605762,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605769,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605886,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9605892,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606036,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606297,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606312,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606314,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606318,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606638,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9606676,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9607070,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9607289,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9607409,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9607437,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9608144,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9608733,OBS,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,
+9608762,NONE,LARF,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9900258,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9900449,OBS,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,
+9900467,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9900511,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9900584,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9900601,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9900620,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9900634,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9900852,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9900854,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9901206,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9901448,OBS,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,
+9901650,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9901748,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9901758,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9902020,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9902033,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9902062,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9902299,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9902364,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9903384,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9903518,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9903569,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9903588,OBS,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,
+9903961,OBS,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+9904673,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9904999,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9905000,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9905001,NONE,LCHL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9905002,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+9905120,NONE,LCHL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10001958,NONE,LCHR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+10002077,OBS,LCHR,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300122,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300368,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300449,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300466,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300469,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300636,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300637,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300638,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300641,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300689,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300803,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300807,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10300917,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301013,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301054,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301055,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301179,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301234,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301448,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301451,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301952,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10301960,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302139,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302150,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302159,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302192,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302224,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302770,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302816,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302819,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10302820,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10302860,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303079,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10303246,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10303590,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10303609,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10303657,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10303684,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303828,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303884,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303886,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303892,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303894,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10303895,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10304207,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10304367,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10304554,NONE,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+10304689,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10304942,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10304946,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10304949,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10305124,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10305407,OBS,LFRA,AL,2021-01-01,Bing/Google/ESRI imagery,
+10700178,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10700202,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10700203,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10700213,OBS,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+10700250,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10700265,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+10700800,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10700850,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+10701032,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10701045,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10701107,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+10701313,NONE,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+10702237,OBS,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+10702283,OBS,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+10702639,OBS,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+10702840,OBS,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+10703125,OBS,LILL,OB,2021-01-01,Bing/Google/ESRI imagery,
+11000015,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000019,NONE,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11000086,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000089,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000187,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000221,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000261,NONE,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11000271,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000272,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000274,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11000276,OBS,LKEL,AL,2021-01-01,Bing/Google/ESRI imagery,
+11200073,OBS,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+11200147,NONE,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+11200257,NONE,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+11200302,NONE,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+11200333,NONE,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+11200465,OBS,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+11200530,NONE,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+11200780,OBS,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+11200995,OBS,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+11201184,OBS,LNAR,OB,2021-01-01,Bing/Google/ESRI imagery,
+11300340,OBS,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,
+11300647,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,
+11300867,OBS,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,
+11300875,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no stream
+11301008,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11301020,NONE,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+11301076,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11301113,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11301390,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11301411,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11301452,OBS,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,
+11302224,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11302239,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11302432,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11302863,OBS,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,
+11302976,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,either OBS or no crossing (hard to tell from imagery) but no barrier at this point
+11302990,NONE,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+11303021,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303025,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303027,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303028,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303038,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303154,NONE,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing visible and workshop indicates this stream is passable
+11303166,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303245,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure no stream
+11303247,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303292,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303293,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303300,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303301,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303312,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11303318,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303319,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303320,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure road deactivated
+11303359,NONE,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing visible
+11303360,NONE,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing visible
+11303361,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303362,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303363,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11303370,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303384,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11303414,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303424,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11303442,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11303458,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11303706,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure no stream
+11303784,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303842,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303905,NONE,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+11303979,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,
+11303992,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11304171,OBS,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,bridge
+11304177,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304178,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304238,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,
+11304284,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,workshop indicates this stream is passible
+11304295,OBS,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,bridge
+11304315,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,Braumandl 2017 assessment on upstr Coldwater Rd (crossing 197037) indicates this KVR crossing is passable
+11304419,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304425,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11304439,OBS,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,bridge
+11304460,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,no stream
+11304469,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304470,OBS,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,bridge
+11304521,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure road deactivated
+11304571,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure road deactivated
+11304578,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,no stream
+11304585,OBS,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,
+11304728,OBS,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,
+11304856,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304858,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304859,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11304877,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11304913,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,no stream
+11305005,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11305006,NONE,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11305019,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11305043,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure road deactivated
+11305070,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure no stream
+11305071,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11305254,OBS,LNIC,SN,2021-01-01,Bing/Google/ESRI imagery,duplicate road
+11305451,OBS,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,
+11305593,OBS,LNIC,PK,2021-01-01,Bing/Google/ESRI imagery,
+11305622,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11305686,OBS,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,
+11305718,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure road deactivated
+11305741,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11305748,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,no stream
+11305876,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11305878,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure no stream
+11305886,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11305985,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure
+11305988,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,no stream
+11305995,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,no stream
+11306022,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure watercourse mismapped
+11306023,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11306024,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No strucutre watercourse mismapped
+11306025,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11306115,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No structure road deactivated; approaches should be vegetated to prevent siltation
+11306146,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11306512,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+11306513,NONE,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,No stream
+24713774,OBS,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge
+24713775,OBS,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge
+24713787,OBS,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,bridge
+24713789,OBS,LNIC,NJO,2021-01-01,Bing/Google/ESRI imagery,bridge
+11501086,NONE,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+11501488,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11501706,NONE,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+11501707,NONE,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+11502428,NONE,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+11504167,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11506266,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11506420,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11507054,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11507102,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11507495,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11507565,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11508009,NONE,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+11508230,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11508419,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+11509136,OBS,LNTH,AL,2021-01-01,Bing/Google/ESRI imagery,
+12200423,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+12200461,NONE,LSAL,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+12200481,NONE,LSAL,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+12200482,NONE,LSAL,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+12200486,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12200665,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+12200755,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+12200773,NONE,LSAL,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+12201039,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+12201496,NONE,LSAL,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+12201545,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12201598,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+12201726,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12201861,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12201873,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12201879,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12201892,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12201949,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+12201958,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
+12600059,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+12600060,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+12600251,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+12600252,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+12600253,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+12600830,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
+12600942,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
+12600978,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+12601052,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
+12601160,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
+12601343,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
+13500026,NONE,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+13500797,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13500848,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13500944,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13500966,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13501048,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13501095,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13501106,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13501137,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
+13800160,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13800203,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13800318,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13800320,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13800550,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13800857,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13800859,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13801031,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13801206,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13801225,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801344,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801364,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801398,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801407,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801637,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+13801842,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801851,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13801941,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13802147,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13802148,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13802159,OBS,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,
+13802341,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13900032,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13900257,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13900681,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13901240,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13901260,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13901316,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+13901696,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+13902037,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+13902083,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13902478,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13902525,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13902649,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904035,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904224,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904258,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13904346,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904381,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904563,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904582,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+13904922,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13905125,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13905269,OBS,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,
+13905765,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+13905779,NONE,MORK,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+14000007,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000043,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000172,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000254,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000297,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000334,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000335,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000340,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000346,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000347,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000351,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000353,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000362,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000421,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000450,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000451,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000487,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000488,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000492,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000494,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000508,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000515,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000532,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000541,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000550,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000643,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000668,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000677,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000689,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000719,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000725,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000732,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000733,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000861,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000872,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000876,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14000897,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000937,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14000965,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001004,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001017,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001058,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001073,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001076,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001095,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001103,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001131,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001163,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001276,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001336,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001344,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001374,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001386,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001406,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001413,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001449,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001462,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001529,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001530,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001531,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001535,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001568,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001569,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001585,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001614,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001628,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001632,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001636,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001691,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001697,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001698,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001714,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001721,OBS,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14001724,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001726,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001727,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14001728,NONE,MORR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+14200013,NONE,MSKE,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+14200251,OBS,MSKE,PK,2021-01-01,Bing/Google/ESRI imagery,
+14300000,OBS,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14300077,OBS,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,
+14300114,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300189,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300215,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+14300227,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300237,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300254,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300257,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+14300264,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+14300284,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+14300327,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300335,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+14300343,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+14300414,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+14300419,NONE,MSTR,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+14900484,NONE,NARC,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+14900759,NONE,NARC,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+14901261,NONE,NARC,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+14901692,NONE,NARC,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+14901717,NONE,NARC,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15300257,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15300382,NONE,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15300442,NONE,NAZR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15300470,NONE,NAZR,SN,2021-01-01,Bing/Google/ESRI imagery,no structure/road
+15300471,NONE,NAZR,SN,2021-01-01,Bing/Google/ESRI imagery,no structure/road
+15300597,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15300685,NONE,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15301104,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15301472,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15301742,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15301850,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15301954,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15302097,NONE,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15302432,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15302437,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15302778,OBS,NAZR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15600081,OBS,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15600143,OBS,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,
+15600161,OBS,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+15600398,OBS,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+15600577,OBS,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+15601039,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15601467,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15601492,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15601504,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15601615,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15602103,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15602108,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15602169,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15602194,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15602201,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15602287,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15602498,OBS,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+15602628,OBS,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+15602634,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15602708,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15602783,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15603292,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15604196,NONE,NECR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+15604253,OBS,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+15605256,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15605480,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15605929,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15606190,NONE,NECR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+15800029,OBS,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,
+15800584,NONE,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15800729,NONE,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15800733,OBS,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,
+15800950,OBS,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,
+15800961,NONE,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15801243,NONE,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+15801297,NONE,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,inconclusive
+15801553,NONE,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,inconclusive but does not appear to be a road
+15802651,OBS,NICL,SN,2021-01-01,Bing/Google/ESRI imagery,
+16103401,NONE,OKAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+16104828,OBS,OKAN,NMW,2021-01-01,Bing/Google/ESRI imagery,
+16106874,NONE,OKAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+16112844,NONE,OKAN,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+17000064,OBS,PORI,PK,2021-01-01,Bing/Google/ESRI imagery,
+17100303,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17101242,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17101551,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+17101680,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+17101769,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17101852,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17101862,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17102076,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17102143,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17102981,OBS,QUES,NMW,2021-01-01,Bing/Google/ESRI imagery,
+17103349,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17103354,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17103355,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17103617,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17103780,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17103994,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17103995,OBS,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,
+17104181,NONE,QUES,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+17104260,NONE,QUES,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+17104295,NONE,QUES,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+17104408,NONE,QUES,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+17104409,NONE,QUES,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+17500143,OBS,SAJR,SN,2021-01-01,Bing/Google/ESRI imagery,
+17700736,OBS,SALR,OB,2021-01-01,Bing/Google/ESRI imagery,
+17701052,NONE,SALR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+17701084,OBS,SALR,OB,2021-01-01,Bing/Google/ESRI imagery,
+17701304,NONE,SALR,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1605,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+17800311,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+17800711,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+17801299,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+17801332,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+17801349,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+17801374,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17802400,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+17804545,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+17804794,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+17805417,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17805443,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17805521,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17805591,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+17805777,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+17806000,NONE,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+17806586,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17806587,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17807320,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17807813,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17808345,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17808851,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+17808866,OBS,SANJ,OB,2021-01-01,Bing/Google/ESRI imagery,
+385,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+18000168,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+18000216,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+18000248,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+18000620,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18000886,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18001158,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18001170,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18001308,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+18001549,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18001895,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18002083,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
+18002366,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+18002471,OBS,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,
+18002527,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no structure
+18002815,NONE,SEYM,OB,2021-01-01,Bing/Google/ESRI imagery,no road
+19101752,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19102203,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19102725,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19102756,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19102958,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19102974,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
+19102988,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19103227,NONE,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+19103272,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
+19103274,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
+19103305,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
+19104909,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
+19300009,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19300178,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300290,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300295,NONE,STUL,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+19300357,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19300396,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300410,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300424,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19300485,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19300490,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300498,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300502,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300576,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300581,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19300588,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19300597,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300643,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300755,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300768,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19300993,OBS,STUL,SN,2021-01-01,Bing/Google/ESRI imagery,
+19301036,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19301062,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19301069,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19301080,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19301081,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19301201,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19301353,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19301391,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19301405,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19301524,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19301706,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19301843,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19302144,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19302230,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19302293,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302294,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302344,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302444,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302451,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302485,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302489,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302490,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302491,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302492,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302493,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302494,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302512,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302517,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302525,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302528,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302529,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302530,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302554,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19302645,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302646,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302647,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302652,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
+19302666,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302671,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302672,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302677,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19302678,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19401338,NONE,STUR,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
+19401414,OBS,STUR,AL,2021-01-01,Bing/Google/ESRI imagery,
+19600061,OBS,SWIR,PK,2021-01-01,Bing/Google/ESRI imagery,
+19700281,OBS,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,
+19700363,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19700600,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19700712,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19701104,OBS,TABR,SN,2021-01-01,Bing/Google/ESRI imagery,
+19701111,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19701112,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19701651,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19701784,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19702046,OBS,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,
+19702787,OBS,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,
+19703054,OBS,TABR,SN,2021-01-01,Bing/Google/ESRI imagery,
+19703115,OBS,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,
+19703203,OBS,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,
+19703431,NONE,TABR,SN,2021-01-01,Bing/Google/ESRI imagery,no road
+19703574,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+19703578,NONE,TABR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
+19703632,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+20000000,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000195,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20000238,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000349,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000428,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000429,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000435,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000453,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000496,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000711,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000776,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000941,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20000943,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+20000971,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20001172,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001201,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20001265,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20001275,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20001309,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001373,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
+20001659,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001660,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001698,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001699,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001706,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+20001718,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001828,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001834,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+20001854,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
+20500191,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
+20500653,OBS,THOM,PK,2021-01-01,Bing/Google/ESRI imagery,
+20501101,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
+20501126,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
+20501377,NONE,THOM,PK,2021-01-01,Bing/Google/ESRI imagery,no crossing
+20501482,NONE,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+20501817,NONE,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+20503199,NONE,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+20503452,NONE,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+20504345,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
+20505102,NONE,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+20506360,OBS,THOM,PK,2021-01-01,Bing/Google/ESRI imagery,
+20506370,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
+20506391,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
+20900034,OBS,TSAY,PK,2021-01-01,Bing/Google/ESRI imagery,
+20900090,NONE,TSAY,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+20900350,OBS,TSAY,PK,2021-01-01,Bing/Google/ESRI imagery,
+21500636,OBS,TWAC,AL,2021-01-01,Bing/Google/ESRI imagery,
+21501289,NONE,TWAC,AL,2021-01-01,Bing/Google/ESRI imagery,no road
+21502186,OBS,TWAC,AL,2021-01-01,Bing/Google/ESRI imagery,
+21900011,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+21900023,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900103,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900145,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900219,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900317,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900401,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+21900437,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+21900489,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900495,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900499,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900500,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900505,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900506,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900530,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900536,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900577,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900611,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900617,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21900684,OBS,UCHR,SN,2021-01-01,Bing/Google/ESRI imagery,
+21900760,NONE,UCHR,SN,2021-01-01,Bing/Google/ESRI imagery,historic channel
+21900764,NONE,UCHR,SN,2021-01-01,Bing/Google/ESRI imagery,historic channel
+21901063,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21901159,OBS,UCHR,SN,2021-01-01,Bing/Google/ESRI imagery,equivalent to 21901160
+21901160,OBS,UCHR,SN,2021-01-01,Bing/Google/ESRI imagery,
+21901260,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21901293,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21901328,NONE,UCHR,SN,2021-01-01,Bing/Google/ESRI imagery,historic channel
+21901341,NONE,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+21901834,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+21901960,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+21901962,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+21901986,OBS,UCHR,NMW,2021-01-01,Bing/Google/ESRI imagery,
+23800000,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800079,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800303,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800332,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23800377,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800620,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23800621,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800626,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800694,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800704,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23800705,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23800741,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800877,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800892,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23800912,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23800914,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23800922,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801220,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801404,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801408,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801422,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801517,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801524,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23801619,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23801626,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802108,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802198,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23802367,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802495,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802527,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802547,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802779,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23802837,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803033,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803075,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803141,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803163,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803234,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23803250,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803294,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803296,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803325,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803327,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803426,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803438,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803495,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803564,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803758,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23803810,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803881,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23803882,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23803949,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23803992,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23804049,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23804471,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23804514,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23804516,OBS,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,
+23804804,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23804805,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+23804806,NONE,USHU,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24000139,NONE,USKE,PK,2021-01-01,Bing/Google/ESRI imagery,no road
+2402788,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24400405,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400407,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400596,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400693,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400695,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400696,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400697,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24400962,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24401061,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24401062,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24401063,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24401215,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24401769,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24401788,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24401848,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24401986,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24402294,OBS,WILL,SN,2021-01-01,Bing/Google/ESRI imagery,
+24402297,OBS,WILL,SN,2021-01-01,Bing/Google/ESRI imagery,
+24402669,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24402682,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24402683,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24402686,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24402796,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24402857,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24402986,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24403099,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24403141,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403142,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403271,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24403279,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403318,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403503,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403534,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403561,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403595,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24403661,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403704,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403719,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403722,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24403767,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24403924,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24404047,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24404231,OBS,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,
+24404451,NONE,WILL,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+100891,NONE,ADMS,SN,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+103543,NONE,ADMS,SN,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802320,NONE,BULK,SN,2021-01-01,Bing/Google/ESRI imagery,duplicate covered by 1803518
+24734349,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1806301,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801876,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803455,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800619,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803155,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803152,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800675,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1803142,OBS,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge
+1801920,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801036,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800624,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800421,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800420,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1801081,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1802104,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800562,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1800855,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24738065,NONE,BULK,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11303724,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+11300876,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no stream
+11300022,NONE,LNIC,NMW,2021-01-01,Bing/Google/ESRI imagery,no stream
+4600069,NONE,ELKR,NJO,2021-01-01,Bing/Google/ESRI imagery,Local knowledge - Passable
+4600183,OBS,ELKR,NJO,2021-01-01,Bing/Google/ESRI imagery,Local Knowledge - Barrier - Highway Culvert
+4600070,OBS,ELKR,NJO,2021-01-01,Bing/Google/ESRI imagery,Local Knowledge - Barrier - Highway Culvert
+4600667,CBS,ELKR,NJO,2021-01-01,Bing/Google/ESRI imagery,Local knowledge - Passable - box culvert
+4603269,CBS,ELKR,NJO,2021-01-01,Bing/Google/ESRI imagery,Local knowledge - Passable - box culvert
+4606915,OBS,ELKR,NJO,2021-01-01,Bing/Google/ESRI imagery,Local knowledge - Passable - Teck Restoration Work - Bridge
+4600944,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no road/stream not as mapped
+24740590,NONE,ELKR,SN,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24735392,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,stream does not cross road
+24735391,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,stream does not cross road
+4606504,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4604441,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4600526,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603287,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4603788,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+4606377,OBS,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge/OBS
+4603555,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+24734790,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,Local knowledge; cut block site visited by partner and no road/structure exists
+4602684,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800319,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge/OBS
+6800240,FORD,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800648,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge/OBS
+6800657,FORD,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800520,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+1805549,OBS,BULK,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24724375,NONE,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,stream does not exist as mapped
+19004716,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,check crossing to south not marked
+24716271,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718499,OBS,PARK,KK,2022-01-01,Bing/Google/ESRI imagery,
+10305182,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+24741776,NONE,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no stream present
+10305128,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+10305149,NONE,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,crossing does not exist
+19004763,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,stream not mapped accurately but bridge visible to east
+24741741,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+20506038,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506664,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506465,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+11508230,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,this should be the stream to the north - obvious bridge but no point on map
+11508331,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+11508308,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24718601,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+19004735,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+10305190,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24741375,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+24741405,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+5505715,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+19004787,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506584,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506421,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506579,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506572,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24718603,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+14404136,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+19004730,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+16112405,OBS,OKAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+19004776,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,
+24712663,NONE,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,stream does not exist as mapped
+19106923,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,
+5505834,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506271,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+19500443,OBS,SUST,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+12401281,OBS,LSKE,KK,2022-01-01,Bing/Google/ESRI imagery,
+24716269,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718599,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718604,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24716270,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24716264,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,no stream visible no bridge visible
+19004719,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24727253,OBS,WORC,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24741558,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+17907952,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506751,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+17908022,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+19004788,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24718600,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718940,NONE,PINE,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+16112431,OBS,OKAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+18303483,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+5505755,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,
+20506145,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,
+24718607,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718937,NONE,PINE,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718938,NONE,PINE,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+19004728,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+23204180,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+10305148,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,stream incorrectly mapped
+18303466,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+22201990,OBS,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+22202129,OBS,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506479,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506571,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506753,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+19703287,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+24718608,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24716268,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24712979,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300049,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10304992,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+2801609,OBS,CHWK,KK,2022-01-01,Bing/Google/ESRI imagery,
+20506229,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506580,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506570,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506582,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506469,NONE,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,no stream is present
+20506552,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+17907988,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,
+24718606,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718598,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718602,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24702591,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718605,NONE,PARS,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+24718939,NONE,PINE,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+14404156,NONE,MURR,KK,2022-01-01,Bing/Google/ESRI imagery,NO CROSSING PRESENT (TUNNEL)
+16112425,OBS,OKAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+23804134,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+6303953,OBS,HARR,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+20506228,OBS,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,
+17907948,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+8802593,OBS,KLUM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
+1400112,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - looks like bridge
+20001009,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+20001029,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+20001055,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+20001129,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+20001311,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+20001379,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - looks like bridge
+1401521,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+1401523,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visble crossing
+24741607,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24741608,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+1401587,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+1401965,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+1402048,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+1402062,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,"to be checked, looks like a bridge in satellite imagery"
+1402079,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - looks like a bridge in satellite imagery
+20000581,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+20000788,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+20001048,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+20001368,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no road visible
+20001378,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+12200168,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+20001538,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+20001391,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+1403857,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+21501028,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,
+21501083,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, probably bridge"
+12201244,FORD,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+21501420,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, possilbe bridge"
+21501469,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probably bridge
+1404398,FORD,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+12200032,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+12200359,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+1404656,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+22200810,NONE,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+22201016,NONE,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+22201088,NONE,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12200825,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+12201146,FORD,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+12201223,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+12201596,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+23200262,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+23201198,FORD,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+23201509,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+12202019,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+12202074,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+12202083,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
+23202200,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+23202236,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+23202242,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+1404846,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+1405085,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24727989,OBS,CHWK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+23203810,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+23204546,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+1405493,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,
+23204866,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+23800902,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17501568,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+17500870,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500877,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500885,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500856,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500863,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500864,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+100002543,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,
+23804134,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24200092,NONE,UTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24200013,FORD,UTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+17502395,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24400557,FORD,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24200608,OBS,UTRE,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24400521,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24400522,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24401549,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24401191,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24400594,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24400717,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24400988,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24727970,OBS,CHWK,KK,2022-01-01,Bing/Google/ESRI imagery,
+17701352,FORD,SALR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24401857,OBS,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17701046,OBS,SALR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24403851,OBS,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, may be bridge to west"
+1404043,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+100002308,OBS,CHWK,KK,2022-01-01,Bing/Google/ESRI imagery,
+3500390,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,mapped stream does not follow satellite imagery
+3501359,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3501925,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3500781,FORD,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+3501232,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+3502242,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3503370,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3505102,OBS,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,
+3505811,OBS,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+3505623,OBS,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+3900414,NONE,DEAD,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3505828,OBS,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+3506444,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24700255,OBS,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,
+3506289,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24705873,OBS,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,
+24705883,NONE,COTR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3900283,FORD,DEAD,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+3901030,NONE,DEAD,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3900612,NONE,DEAD,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+3900487,NONE,DEAD,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+4300283,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,
+4300246,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300004,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300289,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,
+4300256,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300293,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,
+4300370,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,
+4300296,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+4300401,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+4300419,FORD,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no structure visible
+4300529,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300434,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,
+5402280,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+4300556,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300658,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible roads
+4300625,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300580,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300581,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5400606,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5402286,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+4300626,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5400681,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5400625,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+5401224,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5401563,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5401277,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+5401522,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5401791,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5402081,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+5402161,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, no road as mapped, but one directly south"
+5402064,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5402069,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+10301123,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5402380,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5402274,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+10301737,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301330,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10301379,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10300769,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5402539,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10302026,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303160,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303215,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303231,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10302204,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+5402569,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5402542,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5402573,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5403018,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5402576,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5402883,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5403480,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5403244,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+13900338,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+13901660,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+13900867,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no road visible
+13902769,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possibly no crossing
+13902631,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+13902251,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+5403972,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+13903472,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,"to check,- probable bridge"
+5403860,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5405729,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5404095,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5404281,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5404283,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5404764,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5405274,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5405319,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+5404155,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5404577,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5404604,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5405067,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5405393,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check -probable bridge
+5405659,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5406199,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5406058,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5405821,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5406563,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5406583,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5406564,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5406726,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5406753,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5407274,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+24715834,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,
+5500018,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5500977,FORD,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5500849,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5502847,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5501140,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5501141,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5502352,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no road visible
+5502694,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+14000565,OBS,MORR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5503236,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5503672,FORD,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5406403,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5505565,OBS,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5400525,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5504361,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+5506419,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+5405607,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5400629,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+21501499,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,
+24737730,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,
+17903638,NONE,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+24740255,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+21502563,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+21501578,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24709795,OBS,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,
+14903168,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+8301995,OBS,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,
+8300482,OBS,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+8301056,NONE,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+8302089,NONE,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+8302290,FORD,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+8302568,OBS,KISP,KK,2022-01-01,Bing/Google/ESRI imagery,
+9900932,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+14900549,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+14902214,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+14901082,FORD,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no structure visible
+14901587,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+9900231,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+9900960,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+9901057,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+9901872,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible issue
+9901450,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+9901659,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+9901139,FORD,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+9901721,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+9902419,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+24734636,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+9903723,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+9902539,FORD,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+9902638,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+9903238,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+9903990,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+9904422,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+9904592,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+9904540,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+9905048,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+22201087,FORD,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+22201089,FORD,UFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+9904910,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+24704075,FORD,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+9905147,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+10300430,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300394,NONE,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+10300439,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300395,NONE,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+10300510,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300517,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10300557,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300553,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10300404,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300751,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300619,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300696,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301308,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10300838,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10300844,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301294,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10301009,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301354,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10302119,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301980,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10302011,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10301966,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301973,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303129,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10302666,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303171,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303230,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10303192,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303203,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303190,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10303205,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10303254,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303372,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303209,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10303218,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24712979,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+24712774,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+15602697,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15605785,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+24713337,FORD,LILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15604736,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+24730877,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+17101160,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+11501632,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+11501174,NONE,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+11501259,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+11505428,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+19102710,FORD,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+11503768,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+11503782,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+11503040,NONE,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,no crossing visible
+11503858,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+11508823,NONE,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+11508388,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+11507398,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+11508825,NONE,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12200744,FORD,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,to visible road
+24714071,OBS,LNTH,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probably bridge
+12200167,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12200181,FORD,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+12200053,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
+12200777,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12201855,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12202258,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12201825,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
+12202021,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
+12600939,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12202304,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12600263,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12600461,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+12202185,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
+12202360,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24739480,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12601069,OBS,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,
+12601231,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13900909,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+12601232,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13900339,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,road not mapped correctly
+13900340,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,stream appears to be mapped incorrectly
+13900341,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+13900963,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24739495,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13900096,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+13901249,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+13901083,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+13901484,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+13901135,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13901319,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13901320,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13902343,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13901825,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+13902831,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+13903372,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13902700,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+13903176,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+13905329,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13904475,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,
+13904486,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+13904511,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24732309,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+13905732,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24732313,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24732314,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+14900325,FORD,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+14900132,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,
+14901149,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+14902088,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+14901454,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+14901477,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible fridge
+14901861,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+14901348,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+14902028,FORD,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+14904025,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,
+14902227,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+14902524,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+14902211,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+14903682,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+15601227,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+15600232,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+15601192,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15601265,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15601223,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15601295,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+15601407,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15601321,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15601328,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15601527,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15601466,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15602213,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15601635,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15601984,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15602029,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15602209,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15602669,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15603156,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+15602853,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15603162,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+15603237,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,
+15603864,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+15603534,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15603946,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no structure visible
+15603897,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15604294,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+15605248,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+15604900,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15605275,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,
+100001847,FORD,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+15605378,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15605736,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+17100396,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17500611,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17100588,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17100470,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17100759,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17100715,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17100730,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17100693,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+17100904,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17100731,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17101064,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,
+17102379,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17101175,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17101179,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17101185,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17101918,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17102044,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17102046,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17102084,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17101418,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17101907,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+17103824,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17103300,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17103757,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,
+17103709,FORD,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+17500874,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17104010,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17104513,FORD,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24740445,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+17500480,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+17500807,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17103813,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible or mapped road at this point
+17500585,OBS,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17500857,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500858,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500865,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500867,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500869,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500875,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500872,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500876,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500873,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500879,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500880,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17501073,OBS,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17500881,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500882,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500884,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17500886,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17501401,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,stream mapped incorrectly no crossing
+17501268,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,stream mapped incorrectly no crossing
+17501271,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,stream mapped incorrectly no crossing
+17501248,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17501402,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,stream mapped incorrectly no crossing
+17501415,OBS,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17501702,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17501647,OBS,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17501557,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+17502249,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17501846,OBS,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17502251,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17502394,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17502351,OBS,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17903285,NONE,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+17700158,FORD,SALR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+17701051,OBS,SALR,KK,2022-01-01,Bing/Google/ESRI imagery,
+17900419,NONE,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream or mapped incorrectly
+17903251,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,possible bridge
+17502396,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17502397,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17502398,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+18300189,NONE,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+18300066,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+24720378,NONE,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+18300191,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+18300265,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+18300279,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+18300592,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+18300421,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+18300356,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+18301074,NONE,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+18300776,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19101162,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, south opening looks like OBS"
+18301823,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+18303466,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+18303482,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+18303483,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+19101792,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19101625,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19101980,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19101981,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19102737,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,
+19102302,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19102318,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19103909,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,
+19102829,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19102831,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,
+19103746,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19106064,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+19104209,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19105117,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,
+19106823,OBS,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19107261,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,road mapped incorrectly
+19107125,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,road mapped incorrectly
+19107155,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,road mapped incorrectly
+19300658,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to visible structure
+19301497,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+19302225,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19301009,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19300476,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19301583,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19301824,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+19300000,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19301298,NONE,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+19301107,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19300977,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+19700613,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19300583,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19302329,NONE,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19300495,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19500183,NONE,SUST,KK,2022-01-01,Bing/Google/ESRI imagery,"no visible stream, or possible fording "
+19700869,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19700760,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19700975,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19700928,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19700905,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19700909,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701054,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19700911,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19700913,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19700916,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,
+19701014,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,
+19701073,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19701020,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,
+19701022,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701025,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19700917,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visibe road
+19701305,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701113,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19701118,FORD,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19701034,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701255,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19702308,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701424,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701643,FORD,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19701831,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+19701286,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+19701488,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19702309,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19702363,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19702386,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19702328,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24723678,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,
+19703287,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19703550,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19703428,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+20000488,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+20000339,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+20000184,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+20000196,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,"no crossing, stream seems to be mapped incorrectly"
+20000529,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+2800228,NONE,CHWK,KK,2022-01-01,Bing/Google/ESRI imagery,"Mapping error, stream does not cross road in satellite imagery"
+20000784,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+1403039,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+5400520,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5402526,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+5401264,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5401314,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24706266,OBS,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,
+5402279,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+1401526,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+4300336,NONE,DRIR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5402490,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5402527,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5404455,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+5403478,FORD,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+5402960,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+12201316,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+1403795,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+1404083,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,
+5403566,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+5405687,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,
+12200779,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+9902247,NONE,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+5502332,NONE,FRCN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24714690,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+9901503,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+9903833,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+9903678,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+13500985,NONE,MIDR,KK,2022-01-01,Bing/Google/ESRI imagery,no road crossing mapped or visible on satellite
+9904058,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+13501031,NONE,MIDR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+13903051,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+9904500,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
+14900259,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17101290,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+17100563,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+24715892,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,
+20000980,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+14903592,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17102703,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+10300419,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+20001054,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
+14001774,NONE,MORR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+10300421,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+20001535,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+10300396,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10300968,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+20001700,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+15604705,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+10301166,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+10301165,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+15604539,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,
+10303373,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
+19701119,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701087,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19701097,FORD,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+19701002,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+15605535,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, bridge visible to north"
+19701245,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19702327,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+15605801,NONE,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19103564,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+100000825,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible or mapped road
+19702211,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+19702304,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19702307,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17900420,NONE,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream or mapped incorrectly
+17500915,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
+17900422,NONE,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream or mapped incorrectly
+21501555,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17501558,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
+21501423,NONE,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
+23202185,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
+24720363,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,
+19300001,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
+19301907,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
+24400247,FORD,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+24403889,OBS,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+24401001,FORD,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
+23800815,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
+17700979,NONE,SALR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road

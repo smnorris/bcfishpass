@@ -172,8 +172,7 @@ SELECT
     b.localcode_ltree,
     b.watershed_group_code,
     b.geom
-FROM bcfishpass.barriers_other_definite b
--- DO include these user added features that may be below BT observations
+FROM bcfishpass.barriers_user_definite b
 )
 
 INSERT INTO bcfishpass.barriers_bt

@@ -29,16 +29,13 @@ SELECT
         0
     ) as geom
 FROM whse_basemapping.fwa_stream_networks_sp s
+LEFT OUTER JOIN bcfishpass.user_barriers_definite_control c
+ON s.blue_line_key = c.blue_line_key and abs(s.downstream_route_measure - c.downstream_route_measure) < 1
 WHERE
   s.watershed_group_code = :'wsg' AND
   s.edge_type IN (1410, 1425) AND
   s.local_watershed_code IS NOT NULL AND
   s.blue_line_key = s.watershed_key AND
-  s.fwa_watershed_code NOT LIKE '999%%'
--- Do not include subsurface flows on the Chilcotin at the Clusco.
--- The subsurface flow is a side channel, the Chilcotin merges
--- with the Clusco farther upstream
--- TODO - add a user table for corrections like this
-  AND NOT
-  (s.blue_line_key = 356363411 AND s.downstream_route_measure < 213010)
+  s.fwa_watershed_code NOT LIKE '999%%' AND
+  c.barrier_ind is not false
 ON CONFLICT DO NOTHING;

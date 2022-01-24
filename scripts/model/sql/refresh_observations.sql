@@ -12,6 +12,7 @@ INSERT INTO bcfishpass.observations
   watershed_group_code,
   species_codes,
   observation_ids,
+  observation_dates,
   geom
 )
 SELECT 
@@ -24,6 +25,7 @@ SELECT
   watershed_group_code,
   species_codes,
   observation_ids,
+  observation_dates,
   geom
 FROM bcfishpass.observations_load
 WHERE watershed_group_code = :'wsg';

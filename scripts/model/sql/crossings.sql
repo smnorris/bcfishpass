@@ -19,22 +19,26 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
   -- (but of course it could be broken down further if neeeded)
 
     aggregated_crossings_id integer PRIMARY KEY GENERATED ALWAYS AS
-       (COALESCE(COALESCE(COALESCE(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1100000000), misc_barrier_anthropogenic_id + 1200000000)) STORED,
+       (COALESCE(COALESCE(COALESCE(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1100000000), user_barrier_anthropogenic_id + 1200000000)) STORED,
     stream_crossing_id integer UNIQUE,
     dam_id integer UNIQUE,
-    misc_barrier_anthropogenic_id integer UNIQUE,
+    user_barrier_anthropogenic_id bigint UNIQUE,
     modelled_crossing_id integer UNIQUE,
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
     crossing_feature_type text,           -- general type of crossing (rail/road/trail/dam/weir)
-    -- basic crossing status/info - use PSCIS where available, insert model info where no PSCIS
+    -- basic crossing status/info
     pscis_status text,                    -- ASSESSED/HABITAT CONFIRMATION etc
     crossing_type_code text,              -- PSCIS crossing_type_code where available, model CBS/OBS otherwise
     crossing_subtype_code text,           -- PSCIS crossing_subtype_code info (BRIDGE, FORD, ROUND etc) (NULL for modelled crossings)
     modelled_crossing_type_source text[], -- for modelled crossings, what data source(s) indicate that a modelled crossing is OBS
     barrier_status text,                  -- PSCIS barrier status if available, otherwise 'POTENTIAL' for modelled CBS, 'PASSABLE' for modelled OBS
+
+    -- basic PSCIS info
     pscis_road_name text,                 -- road name from pscis assessment
     pscis_stream_name text,               -- stream name from pscis assessment
     pscis_assessment_comment text,        -- comments from pscis assessment
+    pscis_assessment_date date,
+    pscis_final_score integer,
 
     -- DRA info
     transport_line_structured_name_1 text,
@@ -84,10 +88,10 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
 );
 
 -- document the columns included
-COMMENT ON COLUMN bcfishpass.crossings.aggregated_crossings_id IS 'Unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, dam_id + 1100000000, misc_barrier_anthropogenic_id + 1200000000';
+COMMENT ON COLUMN bcfishpass.crossings.aggregated_crossings_id IS 'Unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, dam_id + 1100000000, user_barrier_anthropogenic_id + 1200000000';
 COMMENT ON COLUMN bcfishpass.crossings.stream_crossing_id IS 'PSCIS stream crossing unique identifier';
 COMMENT ON COLUMN bcfishpass.crossings.dam_id IS 'BC Dams unique identifier';
-COMMENT ON COLUMN bcfishpass.crossings.misc_barrier_anthropogenic_id IS 'Misc anthropogenic barriers unique identifier';
+COMMENT ON COLUMN bcfishpass.crossings.user_barrier_anthropogenic_id IS 'User added misc anthropogenic barriers unique identifier';
 COMMENT ON COLUMN bcfishpass.crossings.modelled_crossing_id IS 'Modelled crossing unique identifier';
 COMMENT ON COLUMN bcfishpass.crossings.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,BCDAMS,MISC BARRIERS}';
 COMMENT ON COLUMN bcfishpass.crossings.crossing_feature_type IS 'The general type of feature crossing the stream, valid feature types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
@@ -99,6 +103,8 @@ COMMENT ON COLUMN bcfishpass.crossings.barrier_status IS 'The evaluation of the 
 COMMENT ON COLUMN bcfishpass.crossings.pscis_road_name  IS 'PSCIS road name, taken from the PSCIS assessment data submission';
 COMMENT ON COLUMN bcfishpass.crossings.pscis_stream_name  IS 'PSCIS stream name, taken from the PSCIS assessment data submission';
 COMMENT ON COLUMN bcfishpass.crossings.pscis_assessment_comment  IS 'PSCIS assessment_comment, taken from the PSCIS assessment data submission';
+COMMENT ON COLUMN bcfishpass.crossings.pscis_assessment_date  IS 'PSCIS assessment_date, taken from the PSCIS assessment data submission';
+COMMENT ON COLUMN bcfishpass.crossings.pscis_final_score IS 'PSCIS final_score, taken from the PSCIS assessment data submission';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_structured_name_1 IS 'DRA road name, taken from the nearest DRA road (within 30m)';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_type_description IS 'DRA road type, taken from the nearest DRA road (within 30m)';
 COMMENT ON COLUMN bcfishpass.crossings.transport_line_surface_description IS 'DRA road surface, taken from the nearest DRA road (within 30m)';
@@ -159,6 +165,8 @@ INSERT INTO bcfishpass.crossings
     pscis_road_name,
     pscis_stream_name,
     pscis_assessment_comment,
+    pscis_assessment_date,
+    pscis_final_score,
     transport_line_structured_name_1,
     transport_line_type_description,
     transport_line_surface_description,
@@ -197,14 +205,15 @@ SELECT
       ELSE m.modelled_crossing_type_source
     END AS modelled_crossing_type_source,
     CASE
-      WHEN f.updated_barrier_result_code IN ('PASSABLE','POTENTIAL','BARRIER') -- use manually updated barrier result code if available (but filter out NOT ACCESSIBLE)
-      THEN f.updated_barrier_result_code
+      WHEN f.user_barrier_status IS NOT NULL THEN f.user_barrier_status
       ELSE  e.current_barrier_result_code
     END as barrier_status,
 
     a.road_name as pscis_road_name,
     a.stream_name as pscis_stream_name,
     a.assessment_comment as pscis_assessment_comment,
+    a.assessment_date as pscis_assessment_date,
+    a.final_score as pscis_final_score,
 
     dra.structured_name_1 as transport_line_structured_name_1,
     dratype.description as transport_line_type_description,
@@ -235,13 +244,13 @@ SELECT
     s.gnis_name as gnis_stream_name,
     e.geom
 FROM bcfishpass.pscis e
-LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
+LEFT OUTER JOIN bcfishpass.user_pscis_barrier_status f
 ON e.stream_crossing_id = f.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
 LEFT OUTER JOIN bcfishpass.modelled_stream_crossings m
 ON e.modelled_crossing_id = m.modelled_crossing_id
-LEFT OUTER JOIN bcfishpass.modelled_stream_crossings_fixes mf
+LEFT OUTER JOIN bcfishpass.user_modelled_crossing_fixes mf
 ON m.modelled_crossing_id = mf.modelled_crossing_id
 LEFT OUTER JOIN whse_basemapping.gba_railway_tracks_sp rail
 ON m.railway_track_id = rail.railway_track_id
@@ -397,7 +406,8 @@ INSERT INTO bcfishpass.crossings
     pscis_road_name,
     pscis_stream_name,
     pscis_assessment_comment,
-
+    pscis_assessment_date,
+    pscis_final_score,
     transport_line_structured_name_1,
     transport_line_type_description,
     transport_line_surface_description,
@@ -433,14 +443,14 @@ SELECT DISTINCT ON (stream_crossing_id)
     e.current_crossing_type_code as crossing_type_code,
     e.current_crossing_subtype_code as crossing_subtype_code,
     CASE
-      WHEN f.updated_barrier_result_code IN ('PASSABLE','POTENTIAL','BARRIER') -- use manually updated barrier result code if available (but filter out NOT ACCESSIBLE)
-      THEN f.updated_barrier_result_code
+      WHEN f.user_barrier_status IS NOT NULL THEN f.user_barrier_status
       ELSE  e.current_barrier_result_code
     END as barrier_status,
     a.road_name as pscis_road_name,
     a.stream_name as pscis_stream_name,
     a.assessment_comment as pscis_assessment_comment,
-
+    a.assessment_date as pscis_assessment_date,
+    a.final_score as pscis_final_score,
     r.transport_line_structured_name_1,
     r.transport_line_type_description,
     r.transport_line_surface_description,
@@ -470,7 +480,7 @@ LEFT OUTER JOIN road_and_rail r
 ON r.stream_crossing_id = e.stream_crossing_id
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
-LEFT OUTER JOIN bcfishpass.pscis_barrier_result_fixes f
+LEFT OUTER JOIN bcfishpass.user_pscis_barrier_status f
 ON e.stream_crossing_id = f.stream_crossing_id
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id
@@ -543,7 +553,7 @@ ON CONFLICT DO NOTHING;
 WITH misc_barriers AS
 (
   SELECT
-    b.misc_barrier_anthropogenic_id,
+    b.user_barrier_anthropogenic_id,
     b.blue_line_key,
     s.watershed_key,
     b.downstream_route_measure,
@@ -554,7 +564,7 @@ WITH misc_barriers AS
     s.watershed_group_code,
     s.gnis_name as gnis_stream_name,
     ST_Force2D((ST_Dump(ST_LocateAlong(s.geom, b.downstream_route_measure))).geom) as geom
-  FROM bcfishpass.misc_barriers_anthropogenic b
+  FROM bcfishpass.user_barriers_anthropogenic b
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s
   ON b.blue_line_key = s.blue_line_key
   AND b.downstream_route_measure > s.downstream_route_measure - .001
@@ -563,7 +573,7 @@ WITH misc_barriers AS
 
 INSERT INTO bcfishpass.crossings
 (
-    misc_barrier_anthropogenic_id,
+    user_barrier_anthropogenic_id,
     crossing_source,
     crossing_type_code,
     crossing_subtype_code,
@@ -582,7 +592,7 @@ INSERT INTO bcfishpass.crossings
     geom
 )
 SELECT
-    b.misc_barrier_anthropogenic_id,
+    b.user_barrier_anthropogenic_id,
     'MISC BARRIERS' as crossing_source,
     'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
     b.barrier_type AS crossing_subtype_code,
@@ -600,7 +610,7 @@ SELECT
     b.gnis_stream_name,
     ST_Force2D((st_Dump(b.geom)).geom)
 FROM misc_barriers b
-ORDER BY misc_barrier_anthropogenic_id
+ORDER BY user_barrier_anthropogenic_id
 ON CONFLICT DO NOTHING;
 
 
@@ -689,7 +699,7 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN bcfishpass.pscis p
 ON b.modelled_crossing_id = p.modelled_crossing_id
-LEFT OUTER JOIN bcfishpass.modelled_stream_crossings_fixes f
+LEFT OUTER JOIN bcfishpass.user_modelled_crossing_fixes f
 ON b.modelled_crossing_id = f.modelled_crossing_id
 LEFT OUTER JOIN whse_basemapping.gba_railway_tracks_sp rail
 ON b.railway_track_id = rail.railway_track_id

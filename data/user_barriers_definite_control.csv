@@ -1,0 +1,65 @@
+barrier_type,barrier_name,barrier_ind,blue_line_key,downstream_route_measure,watershed_group_code,reviewer_name,review_date,source,notes
+FALLS,,f,356363343,16669,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,16716,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356364690,47306,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,41571,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,47662,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,29243,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,41467,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,28023,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,20066,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,29130,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,20176,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364690,27785,THOM,SN,2021-01-01,,non-barrier FWA falls on Thompson River
+FALLS,,f,356364114,212049,FRCN,SN,2021-01-01,,Fish ladder in place around Hells gate falls
+FALLS,,f,354155148,34041,COWN,SN,2021-01-01,,non-barrier (fish ladder)
+FALLS,,f,354155148,29835,COWN,SN,2021-01-01,,non-barrier (height 20m is incorrect)
+FALLS,,f,354155148,34202,COWN,SN,2021-01-01,,non-barrier (fish ladder)
+FALLS,,f,360800595,4872,BABL,BR,2021-12-31,,Two falls with same ID number. Reference doc places falls at 9U 690318 6068411. Referenc e document for Sockeye point upstream makes no mention of where Sockeye are found in stream. This point should be removed.
+FALLS,,f,360873822,242072,BULK,NMW;SN,2021-01-01,,FISS falls appears to be an error - no 8m falls visible on Bulkley River at this location
+FALLS,,f,360875378,3616,BULK,NJO,2021-01-01,,Falls seeems to be an error - no white water or falls at this location
+FALLS,,f,360873822,194306,BULK,NJO,2021-01-01,,Falls seems to an error - no white water at this location
+FALLS,,f,356264650,171,LNIC,NJO,2021-01-01,,Does not exist
+FALLS,,f,356342228,2700,HORS,NJO,2021-01-01,,Does not exist
+FALLS,,f,356252974,0,HORS,NJO,2021-01-01,,Does not exist
+FALLS,,f,356363343,5922,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,5999,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,6748,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,6811,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,8621,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,8866,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,9171,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,9247,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,9821,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,10079,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,11262,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,11380,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,11919,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,12216,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,14725,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,14890,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,15224,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,15288,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,15760,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,356363343,15924,LNIC,SN,2021-01-01,,non-barrier FWA falls on Nicola River (note that these features are also present in CANVEC source)
+FALLS,,f,360800595,4908,BABL,BR,2021-12-31,,Two falls with same ID number. Reference doc places falls at 9U 690318 6068411. Referenc e document for Sockeye point upstream makes no mention of where Sockeye are found in stream. This point should be removed.
+FALLS,,f,360886269,0,BABL,BR,2021-12-31,,This point is in the wrong location. Falls reference document 1 says falls is 23 m tall located 3.2 km upstream from mouth (DFO Catalogue of Salmon Streams). Second reference (lakes inventory) notes a 20 ft falls 1 mile and 2 miles downstream from Camsell Lake in approx location of falls 4061560 and 4062768.
+FALLS,,f,360870390,3255,BABR,BR,2021-12-31,,No falls on record. Inconclusive - only fish records are through RAB database
+FALLS,,f,360864582,11540,KLUM,BR,2021-12-31,,Falls is located farther north from 430-523000-60300-55200 tributary where salmon point is in HabitatWizard. Chinook point in this tributary references a document that states there are no fish in this stream however.
+FALLS,,f,360887399,34311,LSKE,BR,2021-12-31,,Reference points for salmon are RAB surveys so can't verify. Falls reference is supposedly Catalogue of Salmon Streams….Lower Skeena. There is no mention of a falls in document and document notes salmon distributed throughout system. Remove falls
+FALLS,,f,356355229,0,MORK,BR,2021-12-31,,Falls reference is a pers comm from DFO. May not be in the correct spot. Chinook point in Everett Ck should be 500 m upstream from mouth. This is the upstream-most place where Chinook were found in the reference study. Study notes rapids with no resting places at the downstream end of the creek.
+FALLS,,f,360504144,148,MORR,BR,2021-12-31,,"Reference report notes that lower 20 m of stream only is fish-bearing. Coho point should be in side channel of mainstem Nanika at 9U 601391, 598269 (note coordinate is not a typo - consultant only reports northing to 6 digits for some reason"
+FALLS,,f,360882037,22015,MORR,BR,2021-12-31,,"Falls reference does not show a falls in this location. There is mention of an impassable falls 5 km upstream of Starr Creek confluence, but not downstream. The only other falls mentioned is a 2 m falls located 100 m downstream from stream TH52. TH52 location is not provided, but TH 53 and TH51 are both several kms upstream of Starr Creek confluence. Other references seem to confirm anadromous fish presence upstream of this point, and aerial photos of the mouth of Denys Creek do not show any falls on the Thautil mainstem."
+FALLS,,f,360740192,31,MSKE,BR,2021-12-31,,Chinook point is correct. 8 m falls should be approx 400 m upstream from mouth on 400-614500
+FALLS,,f,356363034,13,NARC,BR,2021-12-31,,Same falls number on map twice. Reference document note that The distribution of Chinook is limited to below the 5 meter falls located approximately 200 m upstream from the confluence with Narcosoli Creek. Second reference document seems to be a transferred FISS point and likely inaccurate. Downstream falls point is likely incorrect. Upstream falls point should have no Chinook upstream.
+FALLS,,f,356336020,1201,USHU,BR,2021-12-31,,reference document notes falls 100 m from road restricting fish passage UTM 11 378200 5599300 as location of 10 m falls. Coho point should also be located here remove upstream point.
+FALLS,,f,360842858,0,ZYMO,BR,2021-12-31,,Several fish studies indicate that this falls is not a barrier. Note of a 2 m falls that is passable have been mentioned but none that are 15 m high. Change falls height
+FALLS,,f,356353731,1598,TAKL,BR,2021-12-31,,No falls in reference document. Falls do not exist. Known anadromous river. Falls can be removed.
+FALLS,,f,356363010,23160,CARR,BR,2021-12-31,,Only 1 of 2 references to falls could be verified. Reference makes no mention of falls in Cariboo River but notes several falls in lower 1/8 mile of Six Mile Creek. Likely meant to be snapped to Six Mile
+FALLS,,f,356363594,10728,BONP,BR,2021-12-31,,Falls do not exist here - reference document only notes the falls with fishway 2.6 km upstream from mouth.
+FALLS,,f,356363594,3604,BONP,BR,2021-12-31,,Bonaparte Fishway allows anadromous passage beyond this point
+FALLS,,f,360873822,67,KISP,BR,2021-12-31,,Reference document for falls only makes mention of Moricetown falls near Moricetown. This falls is an error and can be removed.
+FALLS,,f,360880688,30928,SUST,BR,2021-12-31,,No falls on record in this location. None visible on satellite imagery. Can be removed.
+GRADIENT,,f,356364485,67492.17,LSAL,SN,2021-01-01,imagery,an odd point on Salmon River that looks like a data error
+SUBSURFACEFLOW,,f,356363411,201296,UCHR,SN,2021-01-01,imagery,"The subsurface flow is a side channel, the Chilcotin merges with the Clusco farther upstream"
+SUBSURFACEFLOW,,f,356363411,201503,UCHR,SN,2021-01-01,imagery,"The subsurface flow is a side channel, the Chilcotin merges with the Clusco farther upstream"

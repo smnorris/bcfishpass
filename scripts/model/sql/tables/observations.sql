@@ -12,8 +12,9 @@ CREATE TABLE IF NOT EXISTS bcfishpass.observations_load
   localcode_ltree ltree                                      ,
   downstream_route_measure  double precision                 ,
   watershed_group_code      character varying(4)             ,
-  species_codes text[]                                      ,
-  observation_ids int[] ,
+  species_codes text[]                                       ,
+  observation_ids int[]                                      ,
+  observation_dates date[]                                    ,
   geom geometry(PointZM, 3005)
 );
 
@@ -31,8 +32,9 @@ CREATE TABLE IF NOT EXISTS bcfishpass.observations
   localcode_ltree ltree                                      ,
   downstream_route_measure  double precision                 ,
   watershed_group_code      character varying(4)             ,
-  species_codes text[]                                      ,
-  observation_ids int[] ,
+  species_codes text[]                                       ,
+  observation_ids int[]                                      ,
+  observation_dates date[]                                    ,
   geom geometry(PointZM, 3005)
 );
 

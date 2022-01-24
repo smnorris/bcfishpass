@@ -27,9 +27,9 @@ INNER JOIN whse_basemapping.fwa_stream_networks_sp s
   ON b.blue_line_key = s.blue_line_key
   AND s.downstream_route_measure <= b.downstream_route_measure
   AND s.upstream_route_measure + .01 > b.downstream_route_measure
-LEFT OUTER JOIN bcfishpass.gradient_barriers_passable p
-  ON b.blue_line_key = p.blue_line_key
-  AND b.downstream_route_measure = p.downstream_route_measure
+LEFT OUTER JOIN bcfishpass.user_barriers_definite_control c
+  ON b.blue_line_key = c.blue_line_key
+  AND abs(b.downstream_route_measure - p.downstream_route_measure) < 1
 WHERE
   b.gradient_class = 25 AND
   -- do not include any records matched to passable table
