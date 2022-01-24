@@ -1,14 +1,49 @@
 # Data files
 
-## falls_barrier_ind.csv
+User editable inputs.
 
-Modifies the barrier status of falls.
-Get location of falls as `blue_line_key`/`downstream_route_measure` from `bcfishpass.falls`
 
-## falls_other.csv
+## pscis_modelledcrossings_streams_xref.csv
 
-Add user/community submitted falls not present in other data sources to this table.
-Location of falls is recorded as `blue_line_key`/`downstream_route_measure`.
+Correct/force linkage of PSCIS crossings to FWA streams and/or modelled crossings.
+
+
+## user_barriers_anthropogenic.csv
+
+Add built stream crossing features that are not dams or culverts here (eg weirs, flood control structures, other)
+
+
+## user_barriers_definite.csv
+
+Add known locations of barriers to fish passage not present in other sources. Includes interpretation of PSCIS
+assessment comments where stream is not accessible (unmapped falls downstream or similar)
+
+
+## user_barriers_definite_control.csv
+
+Control the barrier status of input data. Eg, set a known FISS falls of unknown height to be a barrier.
+
+
+## user_falls.csv
+
+Falls not present in FWA/FISS. Both barriers and non-barriers may be included.
+
+
+## user_habitat_classification.csv
+
+Manually specify known segments of rearing/spawning habitat for target species.
+
+
+## user_modelled_crossing_fixes.csv
+
+Update the barrier status of modelled culverts
+(based primarily on imagery review, finding locations where bridges are present or no road is present)
+
+
+## user_pscis_barrier_status.csv
+
+Update the barrier status of PSCIS crossings (for bcfishpass modelling only). PSCIS submissions can be slow,
+support planning by adding barrier status of a crossing before a submission is made.
 
 
 ## wsg_species_presence.csv
