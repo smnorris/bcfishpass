@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 TMP=~/tmp
-$PSQL_CMD='psql $DATABASE_URL'
+PSQL_CMD="psql $DATABASE_URL"
 
 wget --trust-server-names -qNP "$TMP" http://raster.climatebc.ca/download/Normal_1981_2010MSY/Normal_1981_2010_annual.zip
 unzip $TMP/Normal_1981_2010_annual.zip -d $TMP/climatebc
