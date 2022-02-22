@@ -19,7 +19,7 @@ WITH rearing AS
   ON h.species_code = 'CH'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.access_model_salmon IS NOT NULL AND  -- accessibility check
+    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -158,7 +158,7 @@ WITH rearing AS
   ON h.species_code = 'CO'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.access_model_salmon IS NOT NULL AND  -- accessibility check
+    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR

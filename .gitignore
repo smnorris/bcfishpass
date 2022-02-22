@@ -17,5 +17,12 @@ bcfishobs
 # ignore data download folders and their contents
 scripts/**/data
 
+# ignore rasters and associated files
+*tif
+*tif.aux.xml
+
 # docker postgres data folder
 postgres-data
+
+# qa folder
+qa

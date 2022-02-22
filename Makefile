@@ -4,7 +4,7 @@
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-#WSG_TEST = HORS BULK LNIC ELKR VICT LFRA QUES CARR UFRA MORK PARS COWN
+WSG_TEST = HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
 #WSG_PARAM = $(WSG_TEST)
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
@@ -67,6 +67,7 @@ clean_access:
 	for barriertype in $(SPPGROUPS) ; do \
 		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
 	done
+
 
 
 # Remove model make targets
@@ -207,10 +208,10 @@ scripts/discharge/.discharge: .fwapg
 # INITIAL PROVINCIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
 # -----
-.streams: .param_watersheds .fwapg scripts/model/sql/tables/streams.sql .channel_width scripts/discharge/.discharge
+.streams: .param_watersheds .fwapg scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql .channel_width scripts/discharge/.discharge
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams"
 	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
-	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
+	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG)
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_lfeatid_idx ON bcfishpass.streams (linear_feature_id);"
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_blkey_idx ON bcfishpass.streams (blue_line_key);"
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_wsg_idx ON bcfishpass.streams (watershed_group_code);"

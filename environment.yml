@@ -8,6 +8,7 @@ dependencies:
   - zip
   - unzip
   - parallel
+  - cdo
   - libpq
   - gdal>=3.4
   - python=3.9
@@ -17,7 +18,6 @@ dependencies:
   - geopandas>=0.10.2
   - psycopg2
   - jq
-  - parallel
   - rasterstats
   - pip:
       - bcdata>=0.5.1

@@ -16,8 +16,8 @@ INSERT INTO bcfishpass.streams
   gnis_name,
   stream_order,
   stream_magnitude,
-  --channel_width,
-  --mad_m3s,
+  channel_width,
+  mad_m3s,
   geom)
 SELECT
   s.linear_feature_id,
@@ -31,12 +31,13 @@ SELECT
   s.gnis_name,
   s.stream_order,
   s.stream_magnitude,
-  --cw.channel_width,
-  --mad.mad_m3s,
+  cw.channel_width,
+  COALESCE(mad_fndry.mad_m3s, mad.mad_m3s) as mad_m3s,  -- default to foundry data where available
   s.geom
 FROM whse_basemapping.fwa_stream_networks_sp s
---LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
---LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
+LEFT OUTER JOIN foundry.fwa_streams_mad mad_fndry ON s.linear_feature_id = mad_fndry.linear_feature_id
+LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
 WHERE
   s.watershed_group_code = :'wsg'
   AND s.wscode_ltree <@ '999' IS FALSE

@@ -53,6 +53,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 
 ## Load watershed discharge raster to postgres
 .discharge01_raster: data/discharge.nc
+	psql -c "CREATE EXTENSION postgis_raster;"
 	raster2pgsql data/discharge.nc bcfishpass.discharge01_raster -s 4326 | psql
 	touch $@
 

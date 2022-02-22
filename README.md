@@ -57,7 +57,9 @@ Presuming PostgreSQL/PostGIS are already installed, the easiest way to install d
 A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file as required (to match your database connection parameters) and then create/activate the environment:
 
     conda env create -f environment.yml
-    conda activate bcfpenv
+    conda activate bcfishpass
+
+Note that `cdo` is not currently available on `conda-forge` for ARM based Macs. If you're using an ARM based mac, comment out `cdo` in `environment.yml` and install `cdo` separately (compiling from source).
 
 If the database you are working with does not already exist, create it:
 

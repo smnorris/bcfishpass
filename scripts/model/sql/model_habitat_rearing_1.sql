@@ -39,8 +39,8 @@ WITH rearing AS
   ON h.species_code = 'CH'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.spawning_model_chinook IS TRUE AND          -- on spawning habitat
-    s.access_model_salmon IS NOT NULL AND  -- accessibility check
+    s.spawning_model_ch IS TRUE AND          -- on spawning habitat
+    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -85,8 +85,8 @@ WITH rearing AS
   ON h.species_code = 'CO'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.spawning_model_coho IS TRUE AND             -- on spawning habitat
-    s.access_model_salmon IS NOT NULL AND  -- accessibility check
+    s.spawning_model_co IS TRUE AND             -- on spawning habitat
+    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
@@ -132,8 +132,8 @@ WITH rearing AS
   ON h.species_code = 'ST'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.spawning_model_steelhead IS TRUE AND        -- on spawning habitat
-    s.access_model_steelhead IS NOT NULL AND  -- accessibility check
+    s.spawning_model_st IS TRUE AND        -- on spawning habitat
+    s.access_model_st IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
