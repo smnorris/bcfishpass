@@ -4,8 +4,8 @@
 
 WITH lengths_a AS
 (SELECT
-  SUM(ST_Length(geom)) FILTER (WHERE dnstr_barriers_anthropogenic = ARRAY[1100001508]) as length_accessible,
-  SUM(ST_Length(geom)) FILTER (WHERE dnstr_barriers_anthropogenic <> ARRAY[1100001508]) as length_inaccessible
+  SUM(ST_Length(geom)) FILTER (WHERE dnstr_barriers_anthropogenic = ARRAY[1100002536]) as length_accessible,
+  SUM(ST_Length(geom)) FILTER (WHERE dnstr_barriers_anthropogenic <> ARRAY[1100002536]) as length_inaccessible
 FROM bcfishpass.streams
 WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
 AND FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- only above Elko Dam
