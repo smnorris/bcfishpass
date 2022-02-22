@@ -40,7 +40,7 @@ WITH manual_habitat_class AS
       CASE
         WHEN h.species_code = 'WCT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
       END AS rearing_model_wct,
-      h.reviewer,
+      h.reviewer_name,
       h.source,
       h.notes
     FROM bcfishpass.user_habitat_classification h
@@ -75,7 +75,7 @@ SELECT
   h.rearing_model_st AS rearing_model_st_manual,
   h.spawning_model_wct AS spawning_model_wct_manual,
   h.rearing_model_wct AS rearing_model_wct_manual,
-  h.reviewer,
+  h.reviewer_name,
   h.source,
   h.notes,
   s.geom

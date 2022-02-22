@@ -4,7 +4,7 @@
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-WSG_TEST = HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
+WSG_TEST = ELKR #HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
 #WSG_PARAM = $(WSG_TEST)
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
@@ -440,7 +440,10 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification_endpoints.sql
-	$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=user_habitat_classification_endpoints
+	for wsg in $(WSG_TEST) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
+	done
+	
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification.sql
 	touch $@
 
@@ -467,9 +470,9 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 .test_reports:
 	# add reporting columns to tables
-	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v wsg={1} -v point_table=barriers_anthropogenic
+	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v point_table=barriers_anthropogenic
 	# run report per watershed group on barriers_anthropogenic
-	for wsg in $(WSG_RAIL) ; do \
+	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
@@ -478,8 +481,8 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 		-v wsg=$$wsg ; \
 	done
 	# run report per watershed group on crossings
-	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v wsg={1} -v point_table=crossings
-	for wsg in $(WSG_RAIL) ; do \
+	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v point_table=crossings
+	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
