@@ -7,7 +7,7 @@ WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemap
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # watersheds for testing
-#WSG_TEST = ELKR #HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
+WSG_TEST = ELKR #HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
 #WSG=$(WSG_TEST)
 #WSG_PARAM=$(WSG_TEST)
 
@@ -488,9 +488,8 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 .point_reports: .model_habitat .index_crossings
 	# run report per watershed group on barriers_anthropogenic
-	$(PSQL_CMD) -f scripts/model/sql/point_report_add_columns.sql -v point_table=barriers_anthropogenic
 	for wsg in $(WSG_TEST) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/point_report_populate.sql \
+		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
 		-v barriers_table=barriers_anthropogenic \
@@ -498,19 +497,24 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 		-v wsg=$$wsg ; \
 	done
 	## run report per watershed group on crossings
-	$(PSQL_CMD) -f scripts/model/sql/point_report_add_columns.sql -v point_table=crossings
 	for wsg in $(WSG_TEST) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/point_report_populate.sql \
+		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
 		-v barriers_table=barriers_anthropogenic \
 		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
 		-v wsg=$$wsg ; \
 	done
+	
 	# For OBS in the crossings table, report on belowupstrbarriers columns.
 	# This requires a separate query # (because the dnstr_barriers_anthropogenic is used in above report, 
 	# and that misses the OBS of interest)
 	$(PSQL_CMD) -f scripts/model/sql/point_report_obs_belowupstrbarriers.sql
+
+	# add habitat per barrier column to crossings table
+	for wsg in $(WSG_TEST) ; do \
+		psql -f scripts/model/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
+	done
 	touch $@
 
 # wcrp reports - dump results of each query in reports/wcrp/sql/ to csv

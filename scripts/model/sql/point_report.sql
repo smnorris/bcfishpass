@@ -130,7 +130,6 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS all_rearing_belowupstrbarriers_km                        double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS all_spawningrearing_km                                   double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS all_spawningrearing_belowupstrbarriers_km                double precision DEFAULT 0,
-  ADD COLUMN IF NOT EXISTS all_spawningrearing_per_barrier                          double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_betweenbarriers_network_km                           double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_spawning_betweenbarriers_km                          double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_rearing_betweenbarriers_km                           double precision DEFAULT 0,
@@ -268,7 +267,6 @@ COMMENT ON COLUMN bcfishpass.:point_table.all_rearing_km IS 'Length of stream up
 COMMENT ON COLUMN bcfishpass.:point_table.all_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential rearing habitat (all CH,CO,SK,ST,WCT)';
 COMMENT ON COLUMN bcfishpass.:point_table.all_spawningrearing_km IS 'Length of all spawning and rearing habitat upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.all_spawningrearing_belowupstrbarriers_km IS 'Length of all spawning and rearing habitat upstream of point';
-COMMENT ON COLUMN bcfishpass.crossings.all_spawningrearing_per_barrier IS 'If the given barrier and all barriers downstream were remediated, the amount of connected spawning/rearing habitat that would be added, per barrier. (ie the sum of all_spawningrearing_belowupstrbarriers_km for all barriers, divided by n barriers)';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_betweenbarriers_network_km IS 'Westslope Cutthroat Trout model, total length of potentially accessible stream network between crossing and all in-stream adjacent barriers';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_spawning_betweenbarriers_km IS 'Westslope Cutthroat Trout model, total length of spawning habitat between crossing and all in-stream adjacent barriers';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_rearing_betweenbarriers_km IS 'Westslope Cutthroat Trout model, total length of rearing habitat between crossing and all in-stream adjacent barriers';
@@ -877,7 +875,6 @@ SET
 FROM report r
 WHERE p.:point_id = r.:point_id;
 
-
 -- ELK River WCT specific reporting, but run it everywhere
 UPDATE bcfishpass.:point_table p
 SET wct_betweenbarriers_network_km = ROUND((p.wct_belowupstrbarriers_network_km + b.wct_belowupstrbarriers_network_km)::numeric, 2),
@@ -898,24 +895,3 @@ SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km,
 WHERE :dnstr_barriers_id IS NULL
 AND wct_network_km != 0
 AND watershed_group_code = :'wsg';
-
-WITH summary AS
-(
-    SELECT 
-      a.aggregated_crossings_id,
-      ROUND((SUM(b.all_spawningrearing_belowupstrbarriers_km) / (COALESCE(array_length(array_remove(a.barriers_anthropogenic_dnstr, 1100002536), 1), 0) + 1))::numeric, 2) as all_spawningrearing_per_barrier
-    FROM bcfishpass.crossings a 
-    INNER JOIN bcfishpass.crossings b
-    ON FWA_Downstream(a.blue_line_key, a.downstream_route_measure, a.wscode_ltree, a.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree, true)
-    AND a.watershed_group_code = b.watershed_group_code
-    WHERE a.watershed_group_code = :'wsg'
-    AND b.barrier_status IN ('BARRIER','POTENTIAL')
-    AND b.aggregated_crossings_id != 1100002536
-    AND a.all_spawningrearing_belowupstrbarriers_km != 0
-    GROUP BY a.aggregated_crossings_id
-)
-
-UPDATE bcfishpass.crossings a
-SET all_spawningrearing_per_barrier = b.all_spawningrearing_per_barrier
-FROM summary b
-WHERE a.aggregated_crossings_id = b.aggregated_crossings_id;

@@ -4,7 +4,7 @@
 -- get total stream lengths for DCI_a for habitat ONLY
 WITH columbia_dams AS 
 (
-  select barriers_anthropogenic_dnstr 
+  select distinct barriers_anthropogenic_dnstr 
   from bcfishpass.streams
   where linear_feature_id = 706872063
 ),

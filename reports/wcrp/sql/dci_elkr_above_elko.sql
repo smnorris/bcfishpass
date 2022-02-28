@@ -2,14 +2,20 @@
 
 -- First, get total stream lengths for DCI_a (aka Longest Fragment) for habitat ONLY
 
-WITH lengths_a AS
+WITH barriers_below_elko AS 
+(
+  select barriers_anthropogenic_dnstr 
+  from bcfishpass.streams
+  where segmented_stream_id = '356570562.22911000'
+),
+
+lengths_a AS
 (SELECT
-  SUM(ST_Length(geom)) FILTER (WHERE barriers_anthropogenic_dnstr = ARRAY[1100002536::bigint]) as length_accessible,
-  SUM(ST_Length(geom)) FILTER (WHERE barriers_anthropogenic_dnstr <> ARRAY[1100002536::bigint]) as length_inaccessible
+  SUM(ST_Length(geom)) FILTER (WHERE barriers_anthropogenic_dnstr = (select barriers_anthropogenic_dnstr from barriers_below_elko)) as length_accessible,
+  SUM(ST_Length(geom)) FILTER (WHERE barriers_anthropogenic_dnstr != (select barriers_anthropogenic_dnstr from barriers_below_elko)) as length_inaccessible
 FROM bcfishpass.streams
 WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
 AND FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- only above Elko Dam
-
 ),
 
 -- Second, find the lengths of each portion of stream between barriers/potential barriers for habitat ONLY
