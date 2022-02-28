@@ -4,8 +4,8 @@
 
 WITH lengths_a AS
 (SELECT
-  SUM(ST_Length(geom)) FILTER (WHERE dnstr_barriers_anthropogenic = ARRAY[1100002536]) as length_accessible,
-  SUM(ST_Length(geom)) FILTER (WHERE dnstr_barriers_anthropogenic <> ARRAY[1100002536]) as length_inaccessible
+  SUM(ST_Length(geom)) FILTER (WHERE barriers_anthropogenic_dnstr = ARRAY[1100002536::bigint]) as length_accessible,
+  SUM(ST_Length(geom)) FILTER (WHERE barriers_anthropogenic_dnstr <> ARRAY[1100002536::bigint]) as length_inaccessible
 FROM bcfishpass.streams
 WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
 AND FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- only above Elko Dam
@@ -17,12 +17,12 @@ segments AS
 (
   SELECT
     watershed_group_code,
-    dnstr_barriers_anthropogenic,
+    barriers_anthropogenic_dnstr,
     SUM(ST_Length(geom)) as length_segment
   FROM bcfishpass.streams
   WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
   AND FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- only above Elko Dam
-  GROUP BY watershed_group_code, dnstr_barriers_anthropogenic
+  GROUP BY watershed_group_code, barriers_anthropogenic_dnstr
 ),
 
 -- find the total length of all streams selected above

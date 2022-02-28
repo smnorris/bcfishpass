@@ -16,10 +16,10 @@ SELECT
 FROM bcfishpass.crossings
 WHERE watershed_group_code in ('BULK','LNIC','HORS','ELKR')
 AND barrier_status IN ('POTENTIAL', 'BARRIER')
-AND aggregated_crossings_id != 1100001508 -- don't count the Elko Dam in ELKR
+AND aggregated_crossings_id != 1100002536 -- don't count the Elko Dam in ELKR
 GROUP BY
   watershed_group_code,
-  crossing_feature_type,
+  crossing_feature_type
 ORDER BY
   watershed_group_code,
-  crossing_feature_type,
+  crossing_feature_type

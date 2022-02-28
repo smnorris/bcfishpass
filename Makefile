@@ -1,11 +1,16 @@
-.PHONY: all qa settings test clean_barrers #clean clean_sources
+.PHONY: all qa wcrp settings test clean_barrers #clean clean_sources
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
+
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-WSG_TEST = ELKR #HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
-#WSG_PARAM = $(WSG_TEST)
+
+# watersheds for testing
+#WSG_TEST = ELKR #HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
+#WSG=$(WSG_TEST)
+#WSG_PARAM=$(WSG_TEST)
+
 GENERATED_FILES=.fwapg .bcfishobs .schema \
 	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
 	.streams .observations .observations_upstr .update_access
@@ -25,6 +30,9 @@ BROKEN = $(BROKEN_SPPGROUPS) $(BROKEN_ANTHROPOGENIC) .broken_observations
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
 
+WCRP_SCRIPTS = $(wildcard reports/wcrp/sql/*.sql)
+WCRP_OUTPUTS = $(patsubst reports/wcrp/sql/%.sql,reports/wcrp/reports/%.csv,$(WCRP_SCRIPTS))
+
 # which watershed groups to be refreshed are defined by reading target file of barrier creation recipies
 # wsg_to_refresh_def is all wsg that have been refreshed by individual definite barrier tables, plus observations,
 # this defines which watersheds to break with spp group definite barriers
@@ -39,6 +47,8 @@ WSG_TO_REFRESH = $(shell cat $(patsubst %,.barriers_%,$(BARRIERS)) .observations
 all: .update_access
 
 qa: $(QA_OUTPUTS)
+
+wcrp: $(WCRP_OUTPUTS)
 
 settings:
 	echo BARRIERS: $(BARRIERS)
@@ -68,8 +78,6 @@ clean_access:
 		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
 	done
 
-
-
 # Remove model make targets
 clean:
 	rm -Rf $(GENERATED_FILES)
@@ -95,6 +103,13 @@ bcfishobs: .fwapg
 	cd bcfishobs; make
 	touch $@
 
+.schema:
+	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
+	touch $@
+
+.db: .fwapg .bcfishobs .schema
+	touch $@
+
 # ***********************************************
 # **                                           **
 # **      LOAD/PROCESS REQUIRED DATASETS       **
@@ -104,21 +119,21 @@ bcfishobs: .fwapg
 # ------
 # CREATE SCHEMA, ADD FUNCTIONS, CREATE EMPTY TABLES AND LOAD MAPPING GRID
 # ------
-.schema: $(wildcard scripts/model/sql/tables/*sql) $(wildcard scripts/model/sql/functions/*sql)
-	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
+.functions: $(wildcard scripts/model/sql/functions/*sql) .db
 	for sql in $^ ; do \
 		$(PSQL_CMD) -f $$sql ; \
 	done
 	touch $@
 
-.tiles: .schema
+.tiles: .db
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	touch $@
 
 # ------
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
-.%: data/%.csv .schema
+.%: data/%.csv .db
+	$(PSQL_CMD) -f scripts/model/sql/tables/user.sql
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst data/%.csv,%,$<)"
 	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
 	touch $@
@@ -126,7 +141,8 @@ bcfishobs: .fwapg
 # ------
 # LOAD PARAMETERS
 # ------
-.param_%: parameters/%.csv .schema
+.param_%: parameters/%.csv .db
+	$(PSQL_CMD) -f scripts/model/sql/tables/parameters.sql
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst parameters/%.csv, param_%, $<)"
 	$(PSQL_CMD) -c "\copy bcfishpass.$(patsubst parameters/%.csv, param_%, $<) FROM '$<' delimiter ',' csv header"
 	touch $@
@@ -137,7 +153,7 @@ bcfishobs: .fwapg
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
-.falls: .fwapg .user_falls .user_barriers_definite_control scripts/falls/falls.sh scripts/falls/sql/falls.sql
+.falls: .db .user_falls .user_barriers_definite_control scripts/falls/falls.sh scripts/falls/sql/falls.sql
 	cd scripts/falls; ./falls.sh
 	touch $@
 
@@ -148,7 +164,7 @@ bcfishobs: .fwapg
 # barriers *and* anthropogenic barriers. Delete the .dams target file if an update is required.
 # (todo - consider consolidating CWF dams.geojson into the bcfishpass data folder so updates
 # are easily picked up)
-.dams: .fwapg scripts/dams/dams.sh scripts/dams/sql/dams.sql .schema
+.dams: .db scripts/dams/dams.sh scripts/dams/sql/dams.sql
 	cd scripts/dams; ./dams.sh
 	touch $@
 
@@ -157,7 +173,7 @@ bcfishobs: .fwapg
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 # Todo - consider including only watershed groups listed in parameters
-scripts/gradient_barriers/.gradient_barriers: .fwapg .schema
+scripts/gradient_barriers/.gradient_barriers: .db
 	cd scripts/gradient_barriers; make
 
 # ------
@@ -165,7 +181,7 @@ scripts/gradient_barriers/.gradient_barriers: .fwapg .schema
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
-scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
+scripts/modelled_stream_crossings/.modelled_stream_crossings: .db
 	cd scripts/modelled_stream_crossings; make
 	touch $@
 
@@ -173,7 +189,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # PSCIS
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
-.pscis_load: scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
+.pscis_load: .db scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
 	cd scripts/pscis; ./pscis.sh
 	touch $@
 
@@ -181,7 +197,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # CROSSINGS
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
-.crossings: scripts/model/sql/crossings.sql .tiles \
+.crossings: scripts/model/sql/crossings.sql .tiles .functions \
 	.user_barriers_anthropogenic \
 	.user_modelled_crossing_fixes \
 	.user_pscis_barrier_status \
@@ -193,7 +209,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # -----
 # MODEL CHANNEL WIDTH
 # -----
-.channel_width: .fwapg
+.channel_width: .db
 	cd scripts/channel_width; ./mean_annual_precip.sh
 	cd scripts/channel_width; ./channel_width.sh
 	touch $@
@@ -201,15 +217,15 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .fwapg .schema
 # -----
 # MODEL DISCHARGE
 # -----
-scripts/discharge/.discharge: .fwapg
+scripts/discharge/.discharge: .db
 	cd scripts/discharge; make
 
 # -----
 # INITIAL PROVINCIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
 # -----
-.streams: .param_watersheds .fwapg scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql .channel_width scripts/discharge/.discharge
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams"
+.streams: .param_watersheds .db scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql .channel_width scripts/discharge/.discharge
+	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams CASCADE" # cascade the user_habitat_classification_svw
 	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG)
 	$(PSQL_CMD) -c "CREATE INDEX IF NOT EXISTS streams_lfeatid_idx ON bcfishpass.streams (linear_feature_id);"
@@ -237,7 +253,7 @@ scripts/discharge/.discharge: .fwapg
 # note that this done in two steps not for speed (loading observations is fast), but to
 # track which watershed groups have had changes (new data / data fixes via potential user lookup)
 # TODO - add user table dependency for excluding invalid observation records
-.observations: scripts/model/sql/load_observations.sql .param_watersheds .param_habitat .bcfishobs .wsg_species_presence
+.observations: .db scripts/model/sql/load_observations.sql .param_watersheds .param_habitat .wsg_species_presence
 	# first, load *all* observation data to _load table
 	$(PSQL_CMD) -f $<
 	# find watershed groups with changed observation data
@@ -301,7 +317,7 @@ scripts/discharge/.discharge: .fwapg
 	# move .torefresh file to create target
 	mv $(subst .barriers_,.torefresh_,$@) $@
 
-# tag anthropogenic barriers as barriers for breaking streams (xbarriers_ prefix)
+# tag anthropogenic barriers as barriers for breaking streams 
 $(patsubst %, .breakpts_%, $(ANTH_BARRIERS)): .breakpts_%: .barriers_%
 	cp $(subst .breakpts,.barriers,$@) $@
 
@@ -331,14 +347,12 @@ $(patsubst %, .breakpts_%, $(ANTH_BARRIERS)): .breakpts_%: .barriers_%
 # NOTE2 - processing in parallel (provincially) eventually crashes the db, process one group at a time or with a modest job count
 
 # break streams at minimal definite barriers for each spp scenario
-# process for every group specified in parameters for now, could be just subset
-# of where observations and barriers have been updated
 $(BROKEN_SPPGROUPS): .broken_%: .breakpts_% .streams
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)" ::: $(WSG_TO_REFRESH_DEF)
+		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)" ::: $(WSG_PARAM)
 	# concurrent updates lock the db, process each wsg individually
-	for wsg in $(WSG_TO_REFRESH_DEF) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
 		-v target_table=streams \
 		-v target_table_id=segmented_stream_id \
@@ -349,14 +363,13 @@ $(BROKEN_SPPGROUPS): .broken_%: .breakpts_% .streams
 	done
 	touch $@
 
-
-# break streams at anthropogenic barriers (for watershed groups noted as having updates)
+# break streams at anthropogenic barriers 
 $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
-	parallel -a $< --jobs 4 --no-run-if-empty \
+	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)"
+		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)" ::: $(WSG_PARAM)
 	# concurrent updates lock the db, process each wsg individually
-	for wsg in $(shell cat $<) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
 		-v target_table=streams \
 		-v target_table_id=segmented_stream_id \
@@ -369,8 +382,10 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 
 # break streams and index at all observations (of target species)
 .broken_observations: .observations .streams
-	parallel -a $< --jobs 4 --no-run-if-empty  $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<)
-	parallel -a $< --jobs 4 --no-run-if-empty  $(PSQL_CMD) -f scripts/model/sql/update_observations_upstr.sql -v wsg={1}
+	parallel --jobs 4 --no-run-if-empty \
+	  $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .,,$<) ::: $(WSG_PARAM)
+	parallel --jobs 4 --no-run-if-empty \
+	  $(PSQL_CMD) -f scripts/model/sql/update_observations_upstr.sql -v wsg={1} ::: $(WSG_PARAM)
 	touch $@
 
 # once all barriers and observations are processed, update the access model values
@@ -396,6 +411,9 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
 	$(PSQL_CMD) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';"
 
+	# also index barriers_anthropogenic
+	cd scripts/model; python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
+	touch $@
 
 # run qa queries
 qa/%.csv: scripts/qa/sql/%.sql .update_access
@@ -412,7 +430,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 # RUN HABITAT MODEL
 # -----
-.model_habitat: .update_access
+.model_habitat: .update_access .user_habitat_classification
 	# spawning model is relatively simple, requires just one query
 	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_spawning.sql -v wsg=$$wsg ; \
@@ -433,10 +451,10 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 
 	# SK spawning/rearing modelling is separate because of different life cycle (lake requirement)
 	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql
-	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql ::: $(WSG_TEST)
+	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg={1} ::: $(WSG_TEST)
 
 	# plus SK can be watershed specific, run for horsefly
-	$(PSQL_CMD) -f scripts/model/model_habitat_sk_hors.sql
+	$(PSQL_CMD) -f scripts/model/sql/model_habitat_sk_hors.sql
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification_endpoints.sql
@@ -452,7 +470,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # VARIOUS VIEWS FOR VIZ
 # -----
 # todo - currently tables but could likely be views
-.views: .update_access
+.views: .update_access .index_crossings
 
 
 	# run report on the combined definite barrier tables
@@ -468,54 +486,37 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 # REPORT - ADD VARIOUS UPSTR/DNSTR SUMMARY COLUMNS, CREATE SUMMARY REPORTS
 # -----
-.test_reports:
-	# add reporting columns to tables
-	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v point_table=barriers_anthropogenic
+.point_reports: .model_habitat .index_crossings
 	# run report per watershed group on barriers_anthropogenic
+	$(PSQL_CMD) -f scripts/model/sql/point_report_add_columns.sql -v point_table=barriers_anthropogenic
 	for wsg in $(WSG_TEST) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
+		$(PSQL_CMD) -f scripts/model/sql/point_report_populate.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
 		-v barriers_table=barriers_anthropogenic \
 		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
 		-v wsg=$$wsg ; \
 	done
-	# run report per watershed group on crossings
-	$(PSQL_CMD) -f scripts/model/sql/test_point_report1.sql -v point_table=crossings
+	## run report per watershed group on crossings
+	$(PSQL_CMD) -f scripts/model/sql/point_report_add_columns.sql -v point_table=crossings
 	for wsg in $(WSG_TEST) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/test_point_report2.sql \
+		$(PSQL_CMD) -f scripts/model/sql/point_report_populate.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
 		-v barriers_table=barriers_anthropogenic \
 		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
 		-v wsg=$$wsg ; \
 	done
-	touch .test_reports
-
-.reports: .update_access .index_crossings
-	# report on how much is upstream of various definite barriers
-	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_falls barriers_falls_id bcfishpass.barriers_falls dnstr_barriers_falls
-	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_gradient_15 barriers_gradient_15_id bcfishpass.barriers_gradient_15 dnstr_barriers_gradient_15
-	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_gradient_20 barriers_gradient_20_id bcfishpass.barriers_gradient_20 dnstr_barriers_gradient_20
-	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_gradient_30 barriers_gradient_30_id bcfishpass.barriers_gradient_30 dnstr_barriers_gradient_30
-	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_majordams barriers_majordams_id bcfishpass.barriers_majordams dnstr_barriers_majordams
-	cd scripts/model ; python bcfishpass.py report bcfishpass.barriers_subsurfaceflow barriers_subsurfaceflow_id bcfishpass.barriers_subsurfaceflow dnstr_barriers_subsurfaceflow
-
-	# run the report on the crossings table (requires processing both tables)
-	python bcfishpass.py report bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
-	python bcfishpass.py report bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic dnstr_barriers_anthropogenic
-
-	# add habitat per barrier column to crossings table
-	# this could potentially be included in the report.sql and added to all barrier tables, but it is only required for the
-	psql -f sql/all_spawningrearing_per_barrier.sql
-
-	# populating the belowupstrbarriers for OBS in the crossings table requires a separate query
-	# (because the dnstr_barriers_anthropogenic is used in above report, and that misses the OBS of interest)
-	psql -f sql/report_crossings_obs_belowupstrbarriers.sql
-
+	# For OBS in the crossings table, report on belowupstrbarriers columns.
+	# This requires a separate query # (because the dnstr_barriers_anthropogenic is used in above report, 
+	# and that misses the OBS of interest)
+	$(PSQL_CMD) -f scripts/model/sql/point_report_obs_belowupstrbarriers.sql
 	touch $@
 
-
-
+# wcrp reports - dump results of each query in reports/wcrp/sql/ to csv
+reports/wcrp/reports/%.csv: reports/wcrp/sql/%.sql .point_reports
+	mkdir -p reports/wcrp/reports
+	psql2csv $(DATABASE_URL) < $< > $@
+	
 scripts/lateral/.lateral: .update_access
 	cd scripts/lateral; make

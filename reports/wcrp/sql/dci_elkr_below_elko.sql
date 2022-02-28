@@ -2,13 +2,26 @@
 
 
 -- get total stream lengths for DCI_a for habitat ONLY
-WITH lengths_a AS
+WITH columbia_dams AS 
+(
+  select barriers_anthropogenic_dnstr 
+  from bcfishpass.streams
+  where linear_feature_id = 706872063
+),
+
+lengths_a AS
 (SELECT
-    SUM(ST_Length(geom)) FILTER (WHERE accessibility_model_wct = 'ACCESSIBLE') as length_accessible,
-    SUM(ST_Length(geom)) FILTER (WHERE accessibility_model_wct IN ('POTENTIALLY ACCESSIBLE', 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM')) as length_inaccessible
+    SUM(ST_Length(geom)) FILTER (
+        WHERE access_model_wct = 'ACCESSIBLE' OR 
+              barriers_anthropogenic_dnstr = (select barriers_anthropogenic_dnstr from columbia_dams)
+        ) as length_accessible,
+    SUM(ST_Length(geom)) FILTER (
+        WHERE access_model_wct IN ('POTENTIALLY ACCESSIBLE', 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM') AND
+              barriers_anthropogenic_dnstr != (select barriers_anthropogenic_dnstr from columbia_dams)
+        ) as length_inaccessible
   FROM bcfishpass.streams
   WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
-  AND wscode_ltree <@ '300.625474.584724'::ltree
+  AND wscode_ltree <@ '300.625474.584724'::ltree  -- on the elk system and not above elko dam
   AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree)
 ),
 
@@ -17,13 +30,13 @@ segments AS
 (
   SELECT
     watershed_group_code,
-    dnstr_barriers_anthropogenic,
+    barriers_anthropogenic_dnstr,
     SUM(ST_Length(geom)) as length_segment
   FROM bcfishpass.streams
   WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
-  AND wscode_ltree <@ '300.625474.584724'::ltree
+  AND wscode_ltree <@ '300.625474.584724'::ltree -- on the elk system and not above elko dam
   AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- below Elko Dam
-  GROUP BY watershed_group_code, dnstr_barriers_anthropogenic
+  GROUP BY watershed_group_code, barriers_anthropogenic_dnstr
 ),
 
 -- find the total length of all segments selected above

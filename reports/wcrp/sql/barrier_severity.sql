@@ -13,11 +13,11 @@ WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
 -- do not include flathead in ELKR
 AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
 AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
-AND (accessibility_model_salmon IS NOT NULL
+AND (access_model_ch_co_sk IS NOT NULL
     OR
-    accessibility_model_steelhead IS NOT NULL
+    access_model_st IS NOT NULL
     OR
-    accessibility_model_wct IS NOT NULL
+    access_model_wct IS NOT NULL
     )
 GROUP BY watershed_group_code, crossing_feature_type
 ORDER BY watershed_group_code, crossing_feature_type
@@ -34,11 +34,11 @@ WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
 AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
 AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
 AND barrier_status in ('BARRIER', 'POTENTIAL')
-AND (accessibility_model_salmon IS NOT NULL
+AND (access_model_ch_co_sk IS NOT NULL
     OR
-    accessibility_model_steelhead IS NOT NULL
+    access_model_st IS NOT NULL
     OR
-    accessibility_model_wct IS NOT NULL
+    access_model_wct IS NOT NULL
     )
 GROUP BY watershed_group_code, crossing_feature_type
 )

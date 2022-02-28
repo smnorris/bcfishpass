@@ -1,4 +1,4 @@
--- Create a view for visualizing where manual updates have been applied
+-- Create a table for visualizing where manual updates have been applied
 -- and to track whether the manual classification agrees with the model output
 -- (to keep the streams table somewhat simple, model outputs get overwritten by
 -- manual classification in below updates)
