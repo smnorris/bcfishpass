@@ -139,6 +139,7 @@ CREATE INDEX IF NOT EXISTS crossings_stream_crossing_id_idx ON bcfishpass.crossi
 CREATE INDEX IF NOT EXISTS crossings_modelled_crossing_id_idx ON bcfishpass.crossings (modelled_crossing_id);
 CREATE INDEX IF NOT EXISTS crossings_linear_feature_id_idx ON bcfishpass.crossings (linear_feature_id);
 CREATE INDEX IF NOT EXISTS crossings_blk_idx ON bcfishpass.crossings (blue_line_key);
+CREATE INDEX IF NOT EXISTS crossings_wsk_idx ON bcfishpass.crossings (watershed_key);
 CREATE INDEX IF NOT EXISTS crossings_wsgcode_idx ON bcfishpass.crossings (watershed_group_code);
 CREATE INDEX IF NOT EXISTS crossings_wscode_gidx ON bcfishpass.crossings USING GIST (wscode_ltree);
 CREATE INDEX IF NOT EXISTS crossings_wscode_bidx ON bcfishpass.crossings USING BTREE (wscode_ltree);

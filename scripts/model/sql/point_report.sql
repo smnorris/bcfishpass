@@ -485,8 +485,10 @@ LEFT OUTER JOIN spp_downstream spd
 ON a.:point_id = spd.:point_id
 LEFT OUTER JOIN grade b
 ON a.:point_id = b.:point_id
-WHERE a.watershed_group_code = :'wsg'
-AND s.watershed_group_code = :'wsg'
+WHERE 
+  a.watershed_group_code = :'wsg' AND 
+  s.watershed_group_code = :'wsg' AND 
+  a.blue_line_key = a.watershed_key -- do not include points in side channels
 GROUP BY
   a.:point_id,
   b.stream_order,
@@ -588,7 +590,8 @@ WITH lake_wetland_rearing AS
      )
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  WHERE a.watershed_group_code = :'wsg'
+  WHERE a.watershed_group_code = :'wsg' AND 
+  a.blue_line_key = a.watershed_key -- do not include points in side channels
   GROUP BY a.:point_id
 )
 
@@ -636,8 +639,10 @@ LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly manmade
 ON s.waterbody_key = manmade.waterbody_key
 LEFT OUTER JOIN whse_basemapping.fwa_wetlands_poly wetland
 ON s.waterbody_key = wetland.waterbody_key
-WHERE s.waterbody_key IS NOT NULL
-AND a.watershed_group_code = :'wsg'
+WHERE 
+  s.waterbody_key IS NOT NULL AND 
+  a.watershed_group_code = :'wsg' AND 
+  a.blue_line_key = a.watershed_key -- do not include points in side channels
 ORDER BY a.:point_id
 ),
 
@@ -745,7 +750,8 @@ SET
   all_spawning_belowupstrbarriers_km = all_spawning_km,
   all_rearing_belowupstrbarriers_km = all_rearing_km,
   all_spawningrearing_belowupstrbarriers_km = all_spawningrearing_km
-WHERE watershed_group_code = :'wsg';
+WHERE watershed_group_code = :'wsg' 
+AND blue_line_key = watershed_key; -- do not include points in side channels
 
 -- then calculate the rest where there is/are anthropogenic crossings upstream
 WITH report AS
@@ -811,7 +817,9 @@ WITH report AS
 FROM bcfishpass.:point_table a
 INNER JOIN bcfishpass.:barriers_table b
 ON a.:point_id = b.:dnstr_barriers_id[1]
-WHERE a.watershed_group_code = :'wsg'
+WHERE 
+  a.watershed_group_code = :'wsg' AND
+  a.blue_line_key = a.watershed_key
 GROUP BY a.:point_id
 )
 
@@ -882,9 +890,11 @@ SET wct_betweenbarriers_network_km = ROUND((p.wct_belowupstrbarriers_network_km 
     wct_rearing_betweenbarriers_km = ROUND((p.wct_rearing_belowupstrbarriers_km + b.wct_rearing_belowupstrbarriers_km)::numeric, 2),
     wct_spawningrearing_betweenbarriers_km = ROUND((p.all_spawningrearing_belowupstrbarriers_km + b.all_spawningrearing_belowupstrbarriers_km)::numeric, 2)
 FROM bcfishpass.:point_table b
-WHERE p.:dnstr_barriers_id[1] = b.:point_id
-AND p.wct_network_km != 0
-AND p.watershed_group_code = :'wsg';
+WHERE 
+  p.:dnstr_barriers_id[1] = b.:point_id AND 
+  p.wct_network_km != 0 AND 
+  p.watershed_group_code = :'wsg' AND 
+  p.blue_line_key = p.watershed_key;
 
 -- separate update for where there are no barriers downstream
 UPDATE bcfishpass.:point_table
@@ -892,6 +902,8 @@ SET wct_betweenbarriers_network_km = wct_belowupstrbarriers_network_km,
     wct_spawning_betweenbarriers_km = wct_spawning_belowupstrbarriers_km,
     wct_rearing_betweenbarriers_km = wct_rearing_belowupstrbarriers_km,
     wct_spawningrearing_betweenbarriers_km = all_spawningrearing_belowupstrbarriers_km
-WHERE :dnstr_barriers_id IS NULL
-AND wct_network_km != 0
-AND watershed_group_code = :'wsg';
+WHERE 
+  :dnstr_barriers_id IS NULL AND 
+  wct_network_km != 0 AND 
+  watershed_group_code = :'wsg' AND 
+  blue_line_key = watershed_key;

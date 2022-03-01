@@ -47,13 +47,15 @@ BEGIN
         1
       )
     WHERE a.watershed_group_code = %L
+    AND a.blue_line_key = a.watershed_key
     GROUP BY a.%I, a.watershed_group_code
     )
 
     UPDATE bcfishpass.%I s
     SET %I = b.barriers_dnstr
     FROM barriers_dnstr b
-    WHERE s.%I = b.%I;',
+    WHERE s.%I = b.%I
+    AND s.blue_line_key = s.watershed_key;',
     target_table_id,
     'barriers_' || barriertype || '_id',
     'barriers_' || barriertype || '_id',

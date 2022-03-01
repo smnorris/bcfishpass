@@ -432,7 +432,10 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # RUN HABITAT MODEL
 # -----
 .model_habitat: .update_access .user_habitat_classification
+	# first, ensure the spatial index gets used, 
+	# spatial clustering in rearing queries is basically non-functional without it
 	$(PSQL_CMD) -c "VACUUM ANALYZE bcfishpass.streams"
+	
 	# spawning model is relatively simple, requires just one query
 	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_spawning.sql -v wsg=$$wsg ; \
@@ -487,7 +490,10 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 # REPORT - ADD VARIOUS UPSTR/DNSTR SUMMARY COLUMNS, CREATE SUMMARY REPORTS
 # -----
-.point_reports: .model_habitat .index_crossings
+.point_reports: .model_habitat .index_crossings \
+	scripts/model/sql/point_report.sql \
+	scripts/model/sql/point_report_obs_belowupstrbarriers.sql \
+	scripts/model/sql/all_spawningrearing_per_barrier.sql
 	# run report per watershed group on barriers_anthropogenic
 	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \

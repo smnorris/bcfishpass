@@ -14,6 +14,7 @@ BEGIN
             barrier_name text,
             linear_feature_id integer,
             blue_line_key integer,
+            watershed_key integer,
             downstream_route_measure double precision,
             wscode_ltree ltree,
             localcode_ltree ltree,
@@ -28,6 +29,7 @@ BEGIN
     EXECUTE format('
         CREATE INDEX IF NOT EXISTS %I ON bcfishpass.%I (linear_feature_id);
         CREATE INDEX IF NOT EXISTS %I ON bcfishpass.%I (blue_line_key);
+        CREATE INDEX IF NOT EXISTS %I ON bcfishpass.%I (watershed_key);
         CREATE INDEX IF NOT EXISTS %I ON bcfishpass.%I (blue_line_key, downstream_route_measure);
         CREATE INDEX IF NOT EXISTS %I ON bcfishpass.%I (watershed_group_code);
         CREATE INDEX IF NOT EXISTS %I ON bcfishpass.%I USING GIST (wscode_ltree);
@@ -38,6 +40,8 @@ BEGIN
         'br_' || barriertype || '_linear_feature_id_idx',
         'barriers_' || barriertype,
         'br_' || barriertype || '_blue_line_key_idx',
+        'barriers_' || barriertype,
+        'br_' || barriertype || '_wskey_idx',
         'barriers_' || barriertype,
         'br_' || barriertype || '_blk_meas_idx',
         'barriers_' || barriertype,

@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.barrier_load
     barrier_name text,
     linear_feature_id integer,
     blue_line_key integer,
+    watershed_key integer,
     downstream_route_measure double precision,
     wscode_ltree ltree,
     localcode_ltree ltree,

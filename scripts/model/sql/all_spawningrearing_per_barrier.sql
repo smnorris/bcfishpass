@@ -13,10 +13,12 @@ WITH summary AS
     INNER JOIN bcfishpass.crossings b
     ON FWA_Downstream(a.blue_line_key, a.downstream_route_measure, a.wscode_ltree, a.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree, true)
     AND a.watershed_group_code = b.watershed_group_code
-    WHERE a.watershed_group_code = :'wsg'
-    AND b.barrier_status IN ('BARRIER','POTENTIAL')
-    AND b.aggregated_crossings_id != 1100002536
-    AND a.all_spawningrearing_belowupstrbarriers_km != 0
+    WHERE 
+      a.watershed_group_code = :'wsg' AND 
+      b.barrier_status IN ('BARRIER','POTENTIAL') AND 
+      b.aggregated_crossings_id != 1100002536 AND 
+      a.all_spawningrearing_belowupstrbarriers_km != 0 AND 
+      a.blue_line_key = a.watershed_key
     GROUP BY a.aggregated_crossings_id
 )
 

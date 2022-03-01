@@ -23,6 +23,7 @@ BEGIN
           barrier_name,
           linear_feature_id,
           blue_line_key,
+          watershed_key,
           downstream_route_measure,
           wscode_ltree,
           localcode_ltree,

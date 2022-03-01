@@ -63,8 +63,10 @@ WITH report AS
 FROM bcfishpass.crossings a
 INNER JOIN bcfishpass.crossings b
 ON a.aggregated_crossings_id = b.crossings_dnstr[1]
-WHERE b.barrier_status IN ('BARRIER', 'POTENTIAL')
-AND a.barrier_status = 'PASSABLE'
+WHERE 
+  b.barrier_status IN ('BARRIER', 'POTENTIAL') AND 
+  a.barrier_status = 'PASSABLE' AND 
+  a.blue_line_key = a.watershed_key
 GROUP BY a.aggregated_crossings_id
 )
 
