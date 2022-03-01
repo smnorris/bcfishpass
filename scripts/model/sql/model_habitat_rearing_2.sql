@@ -217,6 +217,7 @@ WITH rearing AS
         s.mad_m3s <= h.rear_mad_max
       )
     )
+    AND s.watershed_group_code = :'wsg'
 ),
 
 cluster_minimums AS
@@ -302,6 +303,7 @@ WITH rearing AS
         s.mad_m3s <= h.rear_mad_max
       )
     )
+  AND s.watershed_group_code = :'wsg'
 ),
 
 cluster_minimums AS

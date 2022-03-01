@@ -83,6 +83,7 @@ downstream AS
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
+  AND s.watershed_group_code = 'wsg'      -- restrict downstream trace to within watershed group
 ),
 
 -- we don't have a specific threshold but lets cap the distance between rear/spawn at 10k for now
@@ -223,6 +224,7 @@ downstream AS
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
+  AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),
 
 -- we don't have a specific threshold but lets cap the distance between rear/spawn at 10k for now
@@ -361,6 +363,7 @@ downstream AS
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
+  AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),
 
 -- we don't have a specific threshold but lets cap the distance between rear/spawn at 10k for now
@@ -500,6 +503,7 @@ downstream AS
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
+  AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),
 
 -- we don't have a specific threshold but lets cap the distance between rear/spawn at 10k for now

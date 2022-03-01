@@ -7,7 +7,7 @@ WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemap
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # watersheds for testing
-WSG_TEST = ELKR #HORS BULK LNIC ELKR #VICT LFRA QUES CARR UFRA MORK PARS COWN
+WSG_TEST = ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
 #WSG=$(WSG_TEST)
 #WSG_PARAM=$(WSG_TEST)
 
@@ -461,7 +461,6 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	for wsg in $(WSG_TEST) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
 	done
-	
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification.sql
 	touch $@
 
