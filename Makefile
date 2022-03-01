@@ -308,7 +308,7 @@ scripts/discharge/.discharge: .db
 	# clear barrier load table
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.barrier_load"
 	# load all features for given barrier type to barrier_load table - run barrier_<type>.sql for all watershed groups
-	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG_PARAM)
+	parallel $(PSQL_CMD) -f scripts/model/sql/$(subst .,,$@).sql -v wsg={1} ::: $(WSG)
 	# find watershed groups requiring updates and write list to file .torefresh_<type>
 	echo "select * from bcfishpass.wsg_to_refresh('barrier_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > $(subst .barriers_,.torefresh_,$@)
 	# for noted watershed groups, delete everything in barrier table and re-load

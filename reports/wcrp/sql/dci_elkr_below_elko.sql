@@ -17,7 +17,7 @@ lengths_a AS
         ) as length_accessible,
     SUM(ST_Length(geom)) FILTER (
         WHERE access_model_wct IN ('POTENTIALLY ACCESSIBLE', 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM') AND
-              barriers_anthropogenic_dnstr != (select barriers_anthropogenic_dnstr from columbia_dams)
+              barriers_anthropogenic_dnstr != (select barriers_anthropogenic_dnstr from columbia_dams) and barriers_anthropogenic_dnstr is not null -- just in case dnstr barriers are not loaded
         ) as length_inaccessible
   FROM bcfishpass.streams
   WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
