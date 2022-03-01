@@ -1,6 +1,6 @@
 # QGIS
 
-### FishPassage_30k.qlr
+## FishPassage_30k.qlr
 
 This is a QGIS layer file defining and symbolizing all layers required for general fish passage mapping ([see samples](https://www.hillcrestgeo.ca/outgoing/fishpassage/projects/)).
 
@@ -9,8 +9,15 @@ Generally QGIS works well with large provincial datasets, but in your database c
     [x] Don't resolve types of unrestricted columns (GEOMETRY)
     [x] Use estimated table metadata
 
+### Change data sources
 
-### 48x36 30k pdfs
+`bcfishpass` database connection is set as `postgresql://postgres@localhost:5432/bcfishpass`.
+If your database connection parameters differ:
+- install [`changeDataSource`](https://geogear.wordpress.com/2016/01/29/changedatasourceplugin-plugin-release-2-0/) plugin
+- modify the database connection parameters for all `bcfishpass` layers using the find and replace boxes
+
+
+## 48x36 30k pdfs
 
 When generating pdfs, use the supplied layer file and remember to:
 - edit title
