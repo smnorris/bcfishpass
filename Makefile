@@ -495,7 +495,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	scripts/model/sql/point_report_obs_belowupstrbarriers.sql \
 	scripts/model/sql/all_spawningrearing_per_barrier.sql
 	# run report per watershed group on barriers_anthropogenic
-	for wsg in $(WSG_TEST) ; do \
+	for wsg in $(WSG) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
@@ -504,7 +504,8 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 		-v wsg=$$wsg ; \
 	done
 	## run report per watershed group on crossings
-	for wsg in $(WSG_TEST) ; do \
+	# run this provincially
+	for wsg in $(WSG) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
