@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   stream_magnitude          integer                    ,
   gradient                  double precision
     GENERATED ALWAYS AS (round((((ST_Z (ST_PointN (geom, -1)) - ST_Z (ST_PointN (geom, 1))) / ST_Length (geom))::numeric), 4)) STORED,
+  feature_code              character varying(10)      ,
   upstream_route_measure    double precision
     GENERATED ALWAYS AS (ST_M(ST_PointN(geom, -1))) STORED,
 

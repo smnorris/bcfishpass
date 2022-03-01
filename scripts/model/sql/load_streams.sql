@@ -16,6 +16,7 @@ INSERT INTO bcfishpass.streams
   gnis_name,
   stream_order,
   stream_magnitude,
+  feature_code,
   channel_width,
   mad_m3s,
   geom)
@@ -31,6 +32,7 @@ SELECT
   s.gnis_name,
   s.stream_order,
   s.stream_magnitude,
+  s.feature_code,
   cw.channel_width,
   COALESCE(mad_fndry.mad_m3s, mad.mad_m3s) as mad_m3s,  -- default to foundry data where available
   s.geom
