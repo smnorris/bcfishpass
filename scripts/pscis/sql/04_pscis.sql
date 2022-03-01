@@ -43,7 +43,7 @@ SELECT
   m.watershed_group_code,
   999 as stream_match_score,
   CASE
-    WHEN hc.stream_crossing_id IS NOT NULL
+    WHEN hc.stream_crossing_id IS NOT NULL AND p.current_pscis_status NOT IN ('REMEDIATED', 'DESIGN')
     THEN 'HABITAT CONFIRMATION'
     ELSE p.current_pscis_status
   END AS pscis_status,
@@ -81,7 +81,7 @@ referenced_streams AS
     s.watershed_group_code,
     999 as stream_match_score,
     CASE
-      WHEN hc.stream_crossing_id IS NOT NULL
+      WHEN hc.stream_crossing_id IS NOT NULL AND p.current_pscis_status NOT IN ('REMEDIATED', 'DESIGN')
       THEN 'HABITAT CONFIRMATION'
       ELSE p.current_pscis_status
     END AS pscis_status,
@@ -241,7 +241,7 @@ SELECT
   p.watershed_group_code,
   p.match_score as stream_match_score,
   CASE
-    WHEN hc.stream_crossing_id IS NOT NULL
+    WHEN hc.stream_crossing_id IS NOT NULL AND pa.current_pscis_status NOT IN ('REMEDIATED', 'DESIGN')
     THEN 'HABITAT CONFIRMATION'
     ELSE pa.current_pscis_status
   END AS pscis_status,
