@@ -3483,4 +3483,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62244,,,ELKR,SN,duplicate of 62245 - do not link to stream
 62245,4605728,,ELKR,SN,matched to nearest modelled crossing - this is the PSCIS id of interest for this location (not 62244)
 61618,,,ELKR,SN,not on mapped stream
-197868,4602849,,ELKR,SN,This latest assessment at this location has incorrect coord in PSCIS but takes precedence over 50090 at the same locaion
+197868,4602849,,ELKR,SN,Latest assessment at this location has incorrect coord in PSCIS but takes precedence over 50090 at the same location
