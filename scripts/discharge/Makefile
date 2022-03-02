@@ -7,7 +7,8 @@ TARGETS = data/baseflow.nc \
 	data/discharge.nc \
 	.discharge02_load \
 	.discharge03_wsd \
-	.discharge
+	.discharge \
+	.foundry
 
 TABLES = discharge01_raster \
 	discharge02_load \
@@ -103,3 +104,13 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	done
 	touch $@
 	echo 'Discharge processing complete, see bcfishpass.discharge columns mad_mm, mad_m3s'
+
+# for users without access to foundry discharge data, create 
+# empty schema and discharge table
+.foundry:
+	psql -c "CREATE SCHEMA IF NOT EXISTS foundry"
+	psql -c "CREATE TABLE IF NOT EXISTS foundry.fwa_streams_mad \
+	( linear_feature_id bigint primary key, \
+	    watershed_group_code character varying(4), \
+	    mad_m3s double precision );"
+	touch $@
