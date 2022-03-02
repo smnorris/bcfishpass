@@ -37,48 +37,67 @@ To improve prioritization of barriers, `bcfishpass` also includes basic habitat 
 Streams meeting the criteria for a given species are classified as spawning or rearing habitat and the amount of spawning/rearing habitat upstream of barriers can be summarized for barrier prioritization.
 
 
-## Requirements
+## General requirements
 
-- bash (primarily tested on macOS but should work on Linux or Windows Subsystem for Linux)
-- PostgreSQL/PostGIS (tested with 13.2/3.1.1, requires Postgres >= 12)
+- bash or similar
+- GDAL (>= 3.4)
+- a PostgreSQL / PostGIS database (tested with v14/v3.1)
 - Python >= 3.7
 - [bcdata](https://github.com/smnorris/bcdata)
-- a FWA database loaded via [`fwapg`](https://github.com/smnorris/fwapg) >= v0.1.1
-- [bcfishobs](https://github.com/smnorris/bcfishobs) (BC fish observations and obstacles, loaded and processed)
 
 
 ## Installation / Setup
 
-`bcfishpass` is a collection of shell/sql/Python scripts - no installation is required, just download the scripts:
+`bcfishpass` is a collection of shell/sql/Python scripts - no installation is required. To download and use the latest:
 
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
 
 Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
-A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file
-as required (to match your database connection) and then create/activate the environment:
+A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file as required (to match your database connection parameters) and then create/activate the environment:
 
-    conda create -f environment.yml
-    conda activate bcfpenv
+    conda env create -f environment.yml
+    conda activate bcfishpass
 
-Once you have an environment created and can connect to the database successfully, load the base data and fish observations using scripts in these repositories:
+Note that `cdo` is not currently available on `conda-forge` for ARM based Macs. If you're using an ARM based mac, comment out `cdo` in `environment.yml` and install `cdo` separately (compiling from source).
 
-- [Freshwater Atlas](https://github.com/smnorris/fwapg)
-- [Known Fish Observations](https://github.com/smnorris/bcfishobs)
+If the database you are working with does not already exist, create it:
+
+    psql -c "CREATE DATABASE bcfishpass" postgres
 
 
-## Usage
+## Docker
 
-All data preparation scripts (`01_data`) must be run before running the final stream classification models (`02_model`).
-As usage of `bcfishpass` will generally depend on study area and species of interest, improved documentation is under development.
+Rename `.env.docker` to `.env` and edit the ports to be exposed as required. The defaults are fine, the option is only provided to avoid conflicts in case of other Docker services running at these ports.
 
-### Data preparation
+Download the repo, create containers, create database, load all data:
 
-See the instructions in the various folders in [`01_prep`](01_prep) for how to run these scripts.
+    git clone https://github.com/smnorris/bcfishpass.git
+    cd bcfishpass
 
-### Model
+Edit the ports mappings as required in `.env` (to avoid conflicts with ports already in use), then build and start the services:
 
-See the instructions in [`02_model`](02_model) for how to run the access and habitat models, creating the output `streams` and `crossings` tables for analysis and mapping.
+    docker-compose build
+    docker-compose up -d
+    docker-compose run --rm client psql -c "CREATE DATABASE bcfishpass" postgres
+    docker-compose run --rm client make
+
+A `postgres-data` folder is created by the database container as a volume for all postgres data.
+
+If you have shut down Docker or the container, start it up again with this command:
+
+    docker-compose up -d
+
+Connect to the db and tilesev/featureserv clients from your host OS via the ports specified in `.env`:
+
+    psql -p 8000 -U postgres fwapg
+    http://localhost:7800/
+    http://localhost:9000/
+
+Delete the containers (and associated data):
+
+    docker-compose down
+
 
 ## Credits
 

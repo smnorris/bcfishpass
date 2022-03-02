@@ -4,7 +4,25 @@
 # do not ignore these files
 !.gitignore
 !.github
+!.env.docker
 
 # Sphinx documentation
 docs/_build/
 .buildinfo
+
+# these requirements get copied into local folder by make
+fwapg
+bcfishobs
+
+# ignore data download folders and their contents
+scripts/**/data
+
+# ignore rasters and associated files
+*tif
+*tif.aux.xml
+
+# docker postgres data folder
+postgres-data
+
+# qa folder
+qa

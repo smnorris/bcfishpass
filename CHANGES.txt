@@ -4,3 +4,9 @@ Changes
 All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
 
+3.0.0a (2021)
+------------------
+- process accessibility (CH/CO/SK/ST) for all known salmon watersheds (#36)
+- condolidate and improve usage documentation (#25)
+- build database with Makefile for easier/quicker updates
+- provide Docker dev environment
