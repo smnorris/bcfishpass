@@ -296,9 +296,7 @@ report AS
   b.access_model_ch_co_sk,
   b.access_model_st,
   b.access_model_wct,
-  spd.species_codes as observedspp_dnstr,
-  spu.species_codes as observedspp_upstr,
-
+  
 -- totals
   COALESCE(ROUND((SUM(ST_Length(s.geom)::numeric) / 1000), 2), 0) AS total_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))) / 1000)::numeric, 2), 0) AS total_stream_km,
