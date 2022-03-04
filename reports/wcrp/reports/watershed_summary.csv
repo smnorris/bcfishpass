@@ -1,4 +1,4 @@
 watershed_group_code,total_km,total_potentially_accessible_km,total_accessible_km,spawning_km,spawning_accessible_km,rearing_km,rearing_accessible_km,total_pct_accessible,spawning_pct_accessible,rearing_pct_accessible
-BULK,14642.10,6018.48,2602.87,1247.55,1049.51,2124.25,1376.71,17.78,84.13,64.81
-HORS,4475.46,1049.23,658.24,164.78,159.20,537.70,504.73,14.71,96.61,93.87
-LNIC,7299.99,2289.54,732.91,348.33,334.07,565.84,471.61,10.04,95.91,83.35
+BULK,14642.10,6018.48,2602.90,1247.55,1049.51,2124.25,1376.71,17.78,84.13,64.81
+HORS,4475.46,1049.23,658.24,164.78,159.20,537.78,504.81,14.71,96.61,93.87
+LNIC,7299.99,2289.39,732.96,348.33,334.07,565.84,471.61,10.04,95.91,83.35

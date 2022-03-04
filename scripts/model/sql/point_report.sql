@@ -573,7 +573,7 @@ report AS
           SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.access_model_st LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS st_lakereservoir_ha,
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_model_st LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS st_wetland_ha,
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.access_model_wct LIKE '%ACCESSIBLE%') +
-          SUM(uwb.area_manmade) FILTER (WHERE uwb.access_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
+          SUM(COALESCE(uwb.area_manmade,0)) FILTER (WHERE uwb.access_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_model_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_wetland_ha,
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.rearing_model_co = True)) / 10000)::numeric, 2) AS co_rearing_ha,
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.rearing_model_sk = True) +
