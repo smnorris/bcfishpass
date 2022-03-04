@@ -37,3 +37,7 @@ Indexes:
     "mean_annual_precip_wscode_ltree_idx" gist (wscode_ltree)
     "mean_annual_precip_wscode_ltree_idx1" btree (wscode_ltree)
 ```
+
+## References
+
+- Wang, T., Hamann, A., Spittlehouse, D.L., Murdock, T., 2012. *ClimateWNA - High-Resolution Spatial Climate Data for Western North America*. Journal of Applied Meteorology and Climatology, 51: 16-29.*
