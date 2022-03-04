@@ -194,6 +194,26 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .db
 	touch $@
 
 # -----
+# DOWNLOAD AND PROCESS MEAN ANNUAL PRECIPITATION
+# -----
+scripts/precipitation/.map: .db
+	cd scripts/precipitation; ./mean_annual_precip.sh
+	touch $@
+
+# -----
+# MODEL CHANNEL WIDTH
+# -----
+.channel_width: scripts/precipitation/.map
+	cd scripts/channel_width; ./channel_width.sh
+	touch $@
+
+# -----
+# MODEL DISCHARGE
+# -----
+scripts/discharge/.discharge: .db
+	cd scripts/discharge; make
+
+# -----
 # CROSSINGS
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
@@ -206,19 +226,6 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings: .db
 	$(PSQL_CMD) -f $<
 	touch $@
 
-# -----
-# MODEL CHANNEL WIDTH
-# -----
-.channel_width: .db
-	cd scripts/channel_width; ./mean_annual_precip.sh
-	cd scripts/channel_width; ./channel_width.sh
-	touch $@
-
-# -----
-# MODEL DISCHARGE
-# -----
-scripts/discharge/.discharge: .db
-	cd scripts/discharge; make
 
 # -----
 # INITIAL PROVINCIAL STREAM DATA LOAD

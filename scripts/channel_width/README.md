@@ -2,15 +2,8 @@
 
 Modelled channel width can be used as an input to model spawning/rearing habitat (combined with stream gradient - and potentially with valley confinement).
 
-Most channel width predictors are available in the FWA, but we also need Mean Annual Precip.
+Most channel width predictors are available in the FWA, but we also need Mean Annual Precip, run scripts in ../precipitation first.
 
-## Mean annual precipitation
-
-Mean annual precipitation (MAP) is taken from ClimateBC, using the [1981-2010 climate normal grid](http://raster.climatebc.ca/download/Normal_1981_2010MSY/Normal_1981_2010_annual.zip).  MAP is derived for each fundamental watershed, and an area-weighted average upstream MAP is calculated for each stream segment.
-
-To download, process and generate mean annual precipitation for each stream segment:
-
-    ./mean_annual_precip.sh
 
 ## Channel width
 

@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     modelled_crossing_id integer UNIQUE,
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
     crossing_feature_type text,           -- general type of crossing (rail/road/trail/dam/weir)
+    
     -- basic crossing status/info
     pscis_status text,                    -- ASSESSED/HABITAT CONFIRMATION etc
     crossing_type_code text,              -- PSCIS crossing_type_code where available, model CBS/OBS otherwise
@@ -72,7 +73,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     -- map tile for pdfs
     dbm_mof_50k_grid text,
 
-    -- FWA info
+    -- basic FWA info
     linear_feature_id integer,
     blue_line_key integer,
     watershed_key integer,
@@ -81,6 +82,11 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     localcode_ltree ltree,
     watershed_group_code text,
     gnis_stream_name text,
+    
+    -- area upstream (derived by fwapg)
+
+    -- upstream mean annual precip 
+
     geom geometry(Point, 3005),
 
     -- only one crossing per location please
