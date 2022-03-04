@@ -22,7 +22,7 @@ To create and load the gradient barrier table:
 
     make
 
-The script identifies potential gradient barriers at 5/7/10/12/15/20/25/30 percent thresholds, finding slope over 100m. 
+This tool creates potential gradient barriers at 5/7/10/12/15/20/25/30 percent thresholds, finding slope over 100m. 
 To change the slope thresholds of interest or the interval over which slope is measured, edit `sql/gradient_barriers.sql`.
 
 Note that this tool identifies the locations of *all* potential gradient barriers based on *all* given thresholds. The gradient
