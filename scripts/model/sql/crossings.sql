@@ -7,6 +7,7 @@
 -- 3. Modelled crossings (culverts and bridges)
 -- 4. Other ?
 -- --------------
+
 DROP TABLE IF EXISTS bcfishpass.crossings;
 
 CREATE TABLE IF NOT EXISTS bcfishpass.crossings
@@ -83,10 +84,16 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     watershed_group_code text,
     gnis_stream_name text,
     
+    stream_order integer,
+    stream_magnitude integer,
+
     -- area upstream (derived by fwapg)
+    watershed_upstr_ha double precision DEFAULT 0,
 
-    -- upstream mean annual precip 
-
+    -- distinct species upstream/downstream, derived from bcfishobs
+    observedspp_dnstr text[],
+    observedspp_upstr text[],
+  
     geom geometry(Point, 3005),
 
     -- only one crossing per location please
@@ -137,6 +144,11 @@ COMMENT ON COLUMN bcfishpass.crossings.wscode_ltree IS 'A truncated version of t
 COMMENT ON COLUMN bcfishpass.crossings.localcode_ltree IS 'A truncated version of the BC FWA local_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';;
 COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed group code associated with the feature.';
 COMMENT ON COLUMN bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
+COMMENT ON COLUMN bcfishpass.crossings.stream_order IS 'Order of FWA stream at point';
+COMMENT ON COLUMN bcfishpass.crossings.stream_magnitude IS 'Magnitude of FWA stream at point';
+COMMENT ON COLUMN bcfishpass.crossings.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
+COMMENT ON COLUMN bcfishpass.crossings.observedspp_dnstr IS 'Fish species observed downstream of point *within the same watershed group*';
+COMMENT ON COLUMN bcfishpass.crossings.observedspp_upstr IS 'Fish species observed upstream of point *within the same watershed group*';
 COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
 
 -- index for speed
@@ -197,6 +209,8 @@ INSERT INTO bcfishpass.crossings
     localcode_ltree,
     watershed_group_code,
     gnis_stream_name,
+    stream_order,
+    stream_magnitude,
     geom
 )
 
@@ -249,6 +263,8 @@ SELECT
     e.localcode_ltree,
     e.watershed_group_code,
     s.gnis_name as gnis_stream_name,
+    s.stream_order,
+    s.stream_magnitude,
     e.geom
 FROM bcfishpass.pscis e
 LEFT OUTER JOIN bcfishpass.user_pscis_barrier_status f
@@ -440,6 +456,8 @@ INSERT INTO bcfishpass.crossings
     localcode_ltree,
     watershed_group_code,
     gnis_stream_name,
+    stream_order,
+    stream_magnitude,
     geom
 )
 
@@ -481,6 +499,8 @@ SELECT DISTINCT ON (stream_crossing_id)
     e.localcode_ltree,
     e.watershed_group_code,
     s.gnis_name as gnis_stream_name,
+    s.stream_order,
+    s.stream_magnitude,
     e.geom
 FROM bcfishpass.pscis e
 LEFT OUTER JOIN road_and_rail r
@@ -518,6 +538,8 @@ INSERT INTO bcfishpass.crossings
     localcode_ltree,
     watershed_group_code,
     gnis_stream_name,
+    stream_order,
+    stream_magnitude,
     geom
 )
 SELECT
@@ -544,6 +566,8 @@ SELECT
     d.localcode_ltree,
     d.watershed_group_code,
     s.gnis_name as gnis_stream_name,
+    s.stream_order,
+    s.stream_magnitude,
     ST_Force2D((st_Dump(d.geom)).geom)
 FROM bcfishpass.dams d
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -570,6 +594,8 @@ WITH misc_barriers AS
     s.localcode_ltree,
     s.watershed_group_code,
     s.gnis_name as gnis_stream_name,
+    s.stream_order,
+    s.stream_magnitude,
     ST_Force2D((ST_Dump(ST_LocateAlong(s.geom, b.downstream_route_measure))).geom) as geom
   FROM bcfishpass.user_barriers_anthropogenic b
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -596,6 +622,8 @@ INSERT INTO bcfishpass.crossings
     localcode_ltree,
     watershed_group_code,
     gnis_stream_name,
+    stream_order,
+    stream_magnitude,
     geom
 )
 SELECT
@@ -615,6 +643,8 @@ SELECT
     b.localcode_ltree,
     b.watershed_group_code,
     b.gnis_stream_name,
+    b.stream_order,
+    b.stream_magnitude,
     ST_Force2D((st_Dump(b.geom)).geom)
 FROM misc_barriers b
 ORDER BY user_barrier_anthropogenic_id
@@ -655,6 +685,8 @@ INSERT INTO bcfishpass.crossings
     localcode_ltree,
     watershed_group_code,
     gnis_stream_name,
+    stream_order,
+    stream_magnitude,
     geom
 )
 
@@ -700,6 +732,8 @@ SELECT
     b.localcode_ltree,
     b.watershed_group_code,
     s.gnis_name as gnis_stream_name,
+    s.stream_order,
+    s.stream_magnitude,
     ST_Force2D((ST_Dump(b.geom)).geom) as geom
 FROM bcfishpass.modelled_stream_crossings b
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
@@ -815,3 +849,72 @@ UPDATE bcfishpass.crossings p
 SET dbm_mof_50k_grid = t.map_tile_display_name
 FROM tile t
 WHERE p.aggregated_crossings_id = t.aggregated_crossings_id;
+
+
+-- downstream observations ***within the same watershed group***
+WITH spp_downstream AS
+(
+  SELECT
+    aggregated_crossings_id,
+    array_agg(species_code) as species_codes
+  FROM
+    (
+      SELECT DISTINCT
+        a.aggregated_crossings_id,
+        unnest(species_codes) as species_code
+      FROM bcfishpass.crossings a
+      LEFT OUTER JOIN bcfishobs.fiss_fish_obsrvtn_events fo
+      ON FWA_Downstream(
+      a.blue_line_key,
+      a.downstream_route_measure,
+      a.wscode_ltree,
+      a.localcode_ltree,
+      fo.blue_line_key,
+      fo.downstream_route_measure,
+      fo.wscode_ltree,
+      fo.localcode_ltree
+     )
+    and a.watershed_group_code = fo.watershed_group_code
+    ORDER BY a.aggregated_crossings_id, species_code
+    ) AS f
+  GROUP BY aggregated_crossings_id
+)
+
+update bcfishpass.crossings c
+set observedspp_dnstr = d.species_codes
+from spp_downstream d
+where c.aggregated_crossings_id = d.aggregated_crossings_id;
+
+-- upstream observations ***within the same watershed group***
+WITH spp_upstream AS
+(
+  SELECT
+    aggregated_crossings_id,
+    array_agg(species_code) as species_codes
+  FROM
+    (
+      SELECT DISTINCT
+        a.aggregated_crossings_id,
+        unnest(species_codes) as species_code
+      FROM bcfishpass.crossings a
+      LEFT OUTER JOIN bcfishobs.fiss_fish_obsrvtn_events fo
+      ON FWA_Upstream(
+        a.blue_line_key,
+        a.downstream_route_measure,
+        a.wscode_ltree,
+        a.localcode_ltree,
+        fo.blue_line_key,
+        fo.downstream_route_measure,
+        fo.wscode_ltree,
+        fo.localcode_ltree
+       )
+      and a.watershed_group_code = fo.watershed_group_code
+      ORDER BY a.aggregated_crossings_id, species_code
+    ) AS f
+  GROUP BY aggregated_crossings_id
+)
+update bcfishpass.crossings c
+set observedspp_upstr = u.species_codes
+from spp_upstream u
+where c.aggregated_crossings_id = u.aggregated_crossings_id;
+
