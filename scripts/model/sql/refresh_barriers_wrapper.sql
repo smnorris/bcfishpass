@@ -1,1 +1,0 @@
-SELECT bcfishpass.refresh_barriers(:'barriertype', :'wsg');

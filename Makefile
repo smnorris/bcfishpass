@@ -226,7 +226,6 @@ scripts/discharge/.discharge: .db
 	$(PSQL_CMD) -f $<
 	touch $@
 
-
 # -----
 # INITIAL PROVINCIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
@@ -443,30 +442,15 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	# spatial clustering in rearing queries is basically non-functional without it
 	$(PSQL_CMD) -c "VACUUM ANALYZE bcfishpass.streams"
 	
-	# spawning model is relatively simple, requires just one query
-	for wsg in $(WSG_TEST) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_spawning.sql -v wsg=$$wsg ; \
-	done
-
-	# rearing requires several queries
-	# first, find all potential rearing streams
+	# run per-species models
 	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
-	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1} ::: $(WSG_TEST)
-
-	# then find subset of rearing downstream of spawning
-	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_2.sql -v wsg={1}
-	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_2.sql -v wsg={1} ::: $(WSG_TEST)
-
-	# and finally find subset of rearing upstream of spawning
-	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_3.sql -v wsg={1}
-	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_3.sql -v wsg={1} ::: $(WSG_TEST)
-
-	# SK spawning/rearing modelling is separate because of different life cycle (lake requirement)
-	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql
-	parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg={1} ::: $(WSG_TEST)
-
-	# plus SK can be watershed specific, run for horsefly
-	$(PSQL_CMD) -f scripts/model/sql/model_habitat_sk_hors.sql
+	for wsg in $(WSG_TEST) ; do \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_ch.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_co.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_st.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_wct.sql -v wsg=$$wsg ; \
+	done
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification_endpoints.sql
@@ -482,8 +466,6 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 # todo - currently tables but could likely be views
 .views: .update_access .index_crossings
-
-
 	# run report on the combined definite barrier tables
 	python bcfishpass.py report bcfishpass.definitebarriers_ch_co_sk definitebarriers_ch_co_sk_id bcfishpass.definitebarriers_ch_co_sk dnstr_definitebarriers_ch_co_sk_id
 	python bcfishpass.py report bcfishpass.definitebarriers_st definitebarriers_st_id bcfishpass.definitebarriers_st dnstr_definitebarriers_st_id
