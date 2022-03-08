@@ -11,7 +11,7 @@ Lower Josephine Falls,,f,356568903,19098,ELKR,CWF,2021-01-01,WWD,
 Middle Josephine Falls,,f,356568903,19718,ELKR,CWF,2021-01-01,WWD,
 Nivelle Creek Falls,,f,356546150,17,ELKR,CWF,2021-01-01,WWD,
 Josephine Falls,,f,356568903,20200,ELKR,CWF,2021-01-01,WWD,
-Morrissey Falls,,f,356562350,10858,ELKR,CWF,2021-01-01,WWD,
+Morrissey Falls,,t,356562350,10858,ELKR,SN,2022-03-08,WWD,Noted as 15m barrier by New Graph
 Upper Fairy Creek Falls,,f,356570035,5615,ELKR,CWF,2021-01-01,WWD,
 Elk River Falls,,f,356570562,21797,ELKR,CWF,2021-01-01,WWD,
 Waterfall Creek Falls,,f,356266320,184,LNIC,CWF,2021-01-01,WWD,
@@ -69,3 +69,4 @@ Findlay Falls,,f,360788426,9899,BULK,CWF,2021-01-01,Irvine 2020,
 Black Creek Falls,,t,356317730,2087,HORS,SH,2021-01-01,Hocquard 2021,
 Wilson Falls,,t,360869846,6617,BULK,AI,2021-01-01,Irvine 2020,
 ,,t,360875378,3800,BULK,AI,2021-01-01,ECOCAT,McQuarrie Creek 4-5 confirmed impassable falls - http://a100.gov.bc.ca/appsdata/acat/documents/r8931/Mid-BulkleyDetailedFishHabitatRiparian.ChannelAss_1169052197910_e76ab8bf05ee4953b589da961b220f69.pdf
+Grave Canyon,,t,356528119,344,ELKR,NMW,2021-01-01,CWF WCRP,Large canyon seperating fish species (WCT are present above the barrier)
