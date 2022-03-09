@@ -9,6 +9,21 @@ Generally QGIS works well with large provincial datasets, but in your database c
     [x] Don't resolve types of unrestricted columns (GEOMETRY)
     [x] Use estimated table metadata
 
+
+### Load additional base data
+
+The QGIS layer file includes several data sources that are not loaded to the `bcfishpass` database by default.
+To load these data:
+
+First, load NTS 250k tiles (required before downloading contours):
+    
+    bcdata bc2pg WHSE_BASEMAPPING.NTS_250K_GRID
+
+Load everything else:
+
+    make
+
+
 ### Change data sources
 
 `bcfishpass` database connection is set as `postgresql://postgres@localhost:5432/bcfishpass`.
