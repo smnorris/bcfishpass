@@ -22,8 +22,8 @@ BASIC_TABLES = WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES \
 	WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW \
 
 # 250k tiles
-TILES = $(shell $(PSQL_CMD) -AtX -c "select distinct map_tile from whse_basemapping.nts_250k_grid")
-TILE_TARGETS = $(addprefix CONTOURS, $(TILES))
+TILES = $(shell cat tctr_tiles.txt)
+TILE_TARGETS = $(addprefix TCTR_, $(TILES))
 
 # temp folder
 TMP=/tmp
@@ -31,15 +31,11 @@ TMP=/tmp
 all: $(BASIC_TABLES) $(TILE_TARGETS) WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
 
 
-WHSE_BASEMAPPING.NTS_250K_GRID:
-	bcdata bc2pg $@
-	touch $@
-
 $(BASIC_TABLES):
 	bcdata bc2pg $@
 	touch $@
 
-WHSE_BASEMAPPING.TRIM_CONTOUR_LINES: WHSE_BASEMAPPING.NTS_250K_GRID
+WHSE_BASEMAPPING.TRIM_CONTOUR_LINES: 
 	$(PSQL_CMD) -c "create table whse_basemapping.trim_contour_lines ( \
 	ogc_fid       integer                        , \
 	fcode         character varying(10)          , \
@@ -76,7 +72,7 @@ WHSE_BASEMAPPING.TRIM_CONTOUR_LINES: WHSE_BASEMAPPING.NTS_250K_GRID
 
 # Download contours per 250k tile
 $(TILE_TARGETS): WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
-	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES --query "BCGS_TILE LIKE '$(subst CONTOURS,,$@)%'"
+	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES --query "BCGS_TILE LIKE '$(subst TCTR_,,$@)%'"
 	touch $@
 
 # download veg .gdb, load and index
