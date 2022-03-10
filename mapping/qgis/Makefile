@@ -25,17 +25,24 @@ BASIC_TABLES = WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES \
 TILES = $(shell cat tctr_tiles.txt)
 TILE_TARGETS = $(addprefix TCTR_, $(TILES))
 
+GENERATED_FILES = $(BASIC_TABLES) \
+	WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
+	$(TILE_TARGETS) \
+	TRIM_CONTOUR_LINES_INDEX \
+	WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
+	WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
+
 # temp folder
 TMP=/tmp
 
-all: $(BASIC_TABLES) $(TILE_TARGETS) WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
-
+all: $(GENERATED_FILES)
 
 $(BASIC_TABLES):
 	bcdata bc2pg $@
 	touch $@
 
 WHSE_BASEMAPPING.TRIM_CONTOUR_LINES: 
+	$(PSQL_CMD) -c "drop table if exists whse_basemapping.trim_contour_lines"
 	$(PSQL_CMD) -c "create table whse_basemapping.trim_contour_lines ( \
 	ogc_fid       integer                        , \
 	fcode         character varying(10)          , \
@@ -72,12 +79,17 @@ WHSE_BASEMAPPING.TRIM_CONTOUR_LINES:
 
 # Download contours per 250k tile
 $(TILE_TARGETS): WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
-	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES --query "BCGS_TILE LIKE '$(subst TCTR_,,$@)%'"
+	# to handle interrupted downloads, delete any existing features for given tile
+	$(PSQL_CMD) -c "delete from whse_basemapping.trim_contour_lines where bcgs_tile like '$(subst TCTR_,,$@)%'"
+	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
+		--append \
+		--promote_to_multi \
+		--query "BCGS_TILE LIKE '$(subst TCTR_,,$@)%'"
 	touch $@
 
 # download veg .gdb, load and index
 WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
-	psql -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
+	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
 	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2020.gdb.zip
 	ogr2ogr \
 	   -progress \
@@ -92,7 +104,7 @@ WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
 	   -lco FID=FEATURE_ID \
 	   -lco FID64=TRUE \
 	   -nln whse_forest_vegetation.veg_comp_lyr_r1_poly \
-	   $(TMP)/VEG_COMP_LYR_R1_POLY_2020.gdb.zip
+	   $(TMP)/VEG_COMP_LYR_R1_POLY_2020.gdb.zip \
 	   VEG_COMP_LYR_R1_POLY
 	$(PSQL_CMD) -c "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (inventory_standard_cd); \
@@ -124,11 +136,12 @@ WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW:
 	   -lco GEOMETRY_NAME=geom \
 	   -lco FID=PARCEL_FABRIC_POLY_ID \
 	   -nln whse_cadastre.pmbc_parcel_fabric_poly_svw \
-	   $(TMP)/pmbc_parcel_fabric_poly_svw.gdb.zip \
+	   $(TMP)/pmbc_parcel_fabric_poly_svw.zip \
 	   pmbc_parcel_fabric_poly_svw
 	touch $@
 
 clean:
+	rm -f $(GENERATED_FILES)
 	# drop all target tables
 	for table in $(BASIC_TABLES) \
 		WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
