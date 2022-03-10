@@ -21,7 +21,7 @@ BASIC_TABLES = WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES \
 	WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP \
 	WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW \
 
-# 250k tiles
+# find 250k tiles present in control file
 TILES = $(shell cat tctr_tiles.txt)
 TILE_TARGETS = $(addprefix TCTR_, $(TILES))
 
