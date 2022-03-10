@@ -21,7 +21,7 @@ ANTH_BARRIERS = anthropogenic pscis remediated
 # all potential definite barriers
 DEF_BARRIERS = $(filter-out $(ANTH_BARRIERS), $(BARRIERS))
 # definite barriers collected into per-species access model tables
-SPPGROUPS = $(patsubst scripts/model/sql/model_access_%.sql, %, $(wildcard scripts/model/sql/model_access_*.sql))
+SPPGROUPS = $(patsubst scripts/model/sql/model_barriers_%.sql, %, $(wildcard scripts/model/sql/model_barriers_*.sql))
 
 BROKEN_ANTHROPOGENIC = $(patsubst %,.broken_%,$(ANTH_BARRIERS))
 BROKEN_SPPGROUPS = $(patsubst %,.broken_%,$(SPPGROUPS))
@@ -330,7 +330,7 @@ $(patsubst %, .breakpts_%, $(ANTH_BARRIERS)): .breakpts_%: .barriers_%
 
 # for each species/species group being modelled, combine definite barriers into a single table for that species/species group
 # Because we only retain minimal features, we can't tell where changes have occured (as in above) - so process the entire study area
-.breakpts_%: scripts/model/sql/model_access_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
+.breakpts_%: scripts/model/sql/model_barriers_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
 	# drop barrier table if already present
 	echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=$(subst .breakpts_,barriers_,$@)
 	# create/recreate barrier table
@@ -398,7 +398,11 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 # once all barriers and observations are processed, update the access model values
 .update_access: $(BROKEN)
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/update_access.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_access_bt.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk_b.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_access_st.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_access_wct.sql -v wsg=$$wsg ; \
 	done
 	touch $@
 

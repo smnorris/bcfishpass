@@ -1,209 +1,78 @@
-delete from bcfishpass.barriers_bt
-where watershed_group_code = :'wsg';
+-- --------------------
+-- refresh access model for given watershed group
+-- --------------------
 
-WITH barriers AS
+-- first, set to null
+UPDATE bcfishpass.streams s
+SET access_model_bt = NULL
+WHERE access_model_bt IS NOT NULL
+AND watershed_group_code = :'wsg';
+
+
+-- then re-calculate accessibility
+WITH model_access AS 
 (
-    SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_majordams b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
--- do not include any features downstream of BT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['BT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_gradient_25 b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
--- do not include any features downstream of BT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['BT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_gradient_30 b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
--- do not include any features downstream of BT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['BT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_falls b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
--- do not include any features downstream of BT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['BT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_subsurfaceflow b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
--- do not include any features downstream of BT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['BT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_user_definite b
-)
-
-INSERT INTO bcfishpass.barriers_bt
-(
-    barriers_bt_id,
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
--- add a primary key guaranteed to be unique provincially (presuming unique blkey/measure values within 1m)
-SELECT
-  (((blue_line_key::bigint + 1) - 354087611) * 10000000) + round(downstream_route_measure::bigint) as barrier_load_id,
-  barrier_type,
-  barrier_name,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  geom
-FROM barriers b
-WHERE watershed_group_code = ANY(
+  SELECT
+    s.segmented_stream_id,
+      -- steelhead accessibility
+    CASE
+      WHEN
+          barriers_bt_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
+          barriers_pscis_dnstr IS NULL AND            -- but not a pscis barrier
+          watershed_group_code = ANY(
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
               WHERE bt IS TRUE
             )
           )
-ON CONFLICT DO NOTHING;
+      THEN 'POTENTIALLY ACCESSIBLE'
+      WHEN
+          barriers_bt_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
+          barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
+          watershed_group_code = ANY(
+            ARRAY(
+              SELECT watershed_group_code
+              FROM bcfishpass.wsg_species_presence
+              WHERE bt IS TRUE
+            )
+          )
+      THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
+      WHEN
+          barriers_bt_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NULL AND
+          barriers_pscis_dnstr IS NULL AND
+          barriers_remediated_dnstr IS NULL AND
+          watershed_group_code = ANY(
+            ARRAY(
+              SELECT watershed_group_code
+              FROM bcfishpass.wsg_species_presence
+              WHERE bt IS TRUE
+            )
+          )
+      THEN 'ACCESSIBLE'
+      WHEN
+          barriers_bt_dnstr IS NULL AND
+          barriers_anthropogenic_dnstr IS NULL AND
+          barriers_pscis_dnstr IS NULL AND
+          barriers_remediated_dnstr IS NOT NULL AND
+          watershed_group_code = ANY(
+            ARRAY(
+              SELECT watershed_group_code
+              FROM bcfishpass.wsg_species_presence
+              WHERE bt IS TRUE
+            )
+          )
+      THEN 'ACCESSIBLE - REMEDIATED'
+    END AS access_model_bt
+  FROM bcfishpass.streams s
+  WHERE s.watershed_group_code = :'wsg'
+)
+
+UPDATE bcfishpass.streams s
+SET 
+  access_model_bt = m.access_model_bt
+FROM model_access m
+WHERE s.segmented_stream_id = m.segmented_stream_id;
