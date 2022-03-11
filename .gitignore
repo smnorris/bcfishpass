@@ -27,6 +27,5 @@ postgres-data
 # qa folder
 qa
 
-# empty make targets for base data
-mapping/qgis/WHSE_*
-mapping/qgis/TCTR_*
+# empty make targets
+.make/
