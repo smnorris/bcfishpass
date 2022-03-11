@@ -28,7 +28,6 @@ TILE_TARGETS = $(addprefix TCTR_, $(TILES))
 GENERATED_FILES = $(BASIC_TABLES) \
 	WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 	$(TILE_TARGETS) \
-	TRIM_CONTOUR_LINES_INDEX \
 	WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
 	WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
 
@@ -122,7 +121,10 @@ WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
 	touch $@	
 
 WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW:
-	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
+	# rename downloaded file so ogr can read without unzipping
+	wget --trust-server-names -qN \
+		-O $(TMP)/pmbc_parcel_fabric_poly_svw.gdb.zip \
+		https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_cadastre"
 	# load to pg
 	ogr2ogr \
@@ -136,7 +138,7 @@ WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW:
 	   -lco GEOMETRY_NAME=geom \
 	   -lco FID=PARCEL_FABRIC_POLY_ID \
 	   -nln whse_cadastre.pmbc_parcel_fabric_poly_svw \
-	   $(TMP)/pmbc_parcel_fabric_poly_svw.zip \
+	   $(TMP)/pmbc_parcel_fabric_poly_svw.gdb.zip \
 	   pmbc_parcel_fabric_poly_svw
 	touch $@
 
