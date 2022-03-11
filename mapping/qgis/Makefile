@@ -19,28 +19,29 @@ BASIC_TABLES = WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES \
 	WHSE_BASEMAPPING.UTMG_UTM_ZONES_SP \
 	WHSE_ENVIRONMENTAL_MONITORING.ENVCAN_HYDROMETRIC_STN_SP \
 	WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP \
-	WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW \
+	WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW
+BASIC_TARGETS = $(addprefix .make/, $(BASIC_TABLES))
 
 # find 250k tiles present in control file
 TILES = $(shell cat tctr_tiles.txt)
-TILE_TARGETS = $(addprefix TCTR_, $(TILES))
+TILE_TARGETS = $(addprefix .make/TCTR_, $(TILES))
 
-GENERATED_FILES = $(BASIC_TABLES) \
-	WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
+GENERATED_FILES = $(BASIC_TARGETS) \
+	.make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 	$(TILE_TARGETS) \
-	WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
-	WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
+	.make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
+	.make/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
 
 # temp folder
 TMP=/tmp
 
 all: $(GENERATED_FILES)
 
-$(BASIC_TABLES):
-	bcdata bc2pg $@
+$(BASIC_TARGETS):
+	bcdata bc2pg $(subst .make/,,$@)
 	touch $@
 
-WHSE_BASEMAPPING.TRIM_CONTOUR_LINES: 
+.make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES:
 	$(PSQL_CMD) -c "drop table if exists whse_basemapping.trim_contour_lines"
 	$(PSQL_CMD) -c "create table whse_basemapping.trim_contour_lines ( \
 	ogc_fid       integer                        , \
@@ -77,17 +78,17 @@ WHSE_BASEMAPPING.TRIM_CONTOUR_LINES:
 	touch $@
 
 # Download contours per 250k tile
-$(TILE_TARGETS): WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
+$(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	# to handle interrupted downloads, delete any existing features for given tile
 	$(PSQL_CMD) -c "delete from whse_basemapping.trim_contour_lines where bcgs_tile like '$(subst TCTR_,,$@)%'"
 	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 		--append \
 		--promote_to_multi \
-		--query "BCGS_TILE LIKE '$(subst TCTR_,,$@)%'"
+		--query "BCGS_TILE LIKE '$(subst .make/TCTR_,,$@)%'"
 	touch $@
 
 # download veg .gdb, load and index
-WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
+.make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
 	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2020.gdb.zip
 	ogr2ogr \
@@ -120,7 +121,7 @@ WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING GIST (geom);" 
 	touch $@	
 
-WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW:
+.make/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW:
 	# rename downloaded file so ogr can read without unzipping
 	wget --trust-server-names -qN \
 		-O $(TMP)/pmbc_parcel_fabric_poly_svw.gdb.zip \
