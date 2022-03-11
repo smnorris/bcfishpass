@@ -8,7 +8,7 @@
       <customproperties>
         <Option/>
       </customproperties>
-      <layer-tree-layer id="gns_geographical_names_sp_bc9fbef1_e7ed_4330_8ed4_4b657efbbd1c" checked="Qt::Unchecked" legend_exp="" name="gns_geographical_names_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPoint checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;gns_geographical_names_sp&quot; (geom) sql=feature_class = 'Terrain Features' AND feature_category = 'Elevated'" patch_size="-1,-1">
+      <layer-tree-layer id="gns_geographical_names_sp_c7ea9807_ee4b_4ca2_99a3_ee86680b9150" checked="Qt::Unchecked" legend_exp="" name="gns_geographical_names_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPoint checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;gns_geographical_names_sp&quot; (geom) sql=feature_class = 'Terrain Features' AND feature_category = 'Elevated'" patch_size="-1,-1">
         <customproperties>
           <Option type="Map">
             <Option type="QString" name="cached_name" value="gns_geographical_names_sp"/>
@@ -19,28 +19,28 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="Crossings___Salmon_3a3cc69a_f9a9_4436_bf17_f427919a39fa" checked="Qt::Unchecked" legend_exp="" name="Crossings - Salmon" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;crossings&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Crossings___Salmon_334c5357_60c4_4065_b1b0_c7f43dec550d" checked="Qt::Unchecked" legend_exp="" name="Crossings - Salmon" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;crossings&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Crossings - Salmon"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Crossings___Steelhead_c81f178b_5968_4824_b986_f2666f917761" checked="Qt::Checked" legend_exp="" name="Crossings - Steelhead" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;crossings&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Crossings___Steelhead_193df933_a02e_4a27_a533_f8c439962f86" checked="Qt::Checked" legend_exp="" name="Crossings - Steelhead" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;crossings&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Crossings - Steelhead"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Crossings___Westslope_Cutthroat_Trout_f2237179_8dd1_4ae4_adec_ba90e9f56cc1" checked="Qt::Unchecked" legend_exp="" name="Crossings - Westslope Cutthroat Trout" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;crossings&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Crossings___Westslope_Cutthroat_Trout_e2a4d478_2009_48d6_8a35_458b2027acba" checked="Qt::Unchecked" legend_exp="" name="Crossings - Westslope Cutthroat Trout" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;crossings&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Crossings - Westslope Cutthroat Trout"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="PSCIS_crossings___NOT_MATCHED_TO_STREAMS_1dbe6929_6619_4e25_8239_283e22629671" checked="Qt::Checked" legend_exp="" name="PSCIS crossings - NOT MATCHED TO STREAMS" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='stream_crossing_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;pscis_not_matched_to_streams_vw&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="PSCIS_crossings___NOT_MATCHED_TO_STREAMS_5de4d93d_7c6c_4095_a79e_fe7f463cf6c2" checked="Qt::Checked" legend_exp="" name="PSCIS crossings - NOT MATCHED TO STREAMS" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='stream_crossing_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;pscis_not_matched_to_streams_vw&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="PSCIS crossings - NOT MATCHED TO STREAMS"/>
@@ -52,25 +52,24 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="Definite_barriers__Salmon_cd2b551b_efd2_4aae_8b6a_20a88f455e59" checked="Qt::Unchecked" legend_exp="" name="Definite barriers, Salmon" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='postgis' host=localhost port=5432 user='postgres' sslmode=disable key='definitebarriers_salmon_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;definitebarriers_salmon&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="barriers_bt_58fb7fa8_feb7_48fb_97e5_1222fe40faf7" checked="Qt::Unchecked" legend_exp="" name="barriers_bt" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_bt_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;barriers_bt&quot; (geom)" patch_size="-1,-1">
           <customproperties>
-            <Option type="Map">
-              <Option type="QString" name="cached_name" value="Definite barriers, Salmon"/>
-            </Option>
+            <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Definite_barriers__Steelhead_e7515ace_8ae8_4c8a_bfe3_7c6959a67d37" checked="Qt::Checked" legend_exp="" name="Definite barriers, Steelhead" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='postgis' host=localhost port=5432 user='postgres' sslmode=disable key='definitebarriers_steelhead_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;definitebarriers_steelhead&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="barriers_ch_co_sk_3285e5d7_106e_4fa3_87f3_ac328dcb5807" checked="Qt::Unchecked" legend_exp="" name="barriers_ch_co_sk" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_ch_co_sk_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;barriers_ch_co_sk&quot; (geom)" patch_size="-1,-1">
           <customproperties>
-            <Option type="Map">
-              <Option type="QString" name="cached_name" value="Definite barriers, Steelhead"/>
-            </Option>
+            <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Definite_barriers__Westslope_Cutthroat_Trout_8af5ee91_c575_4cd4_a6b2_0b0d682fa774" checked="Qt::Unchecked" legend_exp="" name="Definite barriers, Westslope Cutthroat Trout" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='definitebarriers_wct_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;definitebarriers_wct&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="barriers_st_e6eda517_6810_4743_a605_f8e08a3c76b8" checked="Qt::Checked" legend_exp="" name="barriers_st" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_st_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;barriers_st&quot; (geom)" patch_size="-1,-1">
           <customproperties>
-            <Option type="Map">
-              <Option type="QString" name="cached_name" value="Definite barriers, Westslope Cutthroat Trout"/>
-            </Option>
+            <Option/>
+          </customproperties>
+        </layer-tree-layer>
+        <layer-tree-layer id="barriers_wct_334b4232_1845_4a8f_a100_d954f7719b18" checked="Qt::Unchecked" legend_exp="" name="barriers_wct" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_wct_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;barriers_wct&quot; (geom)" patch_size="-1,-1">
+          <customproperties>
+            <Option/>
           </customproperties>
         </layer-tree-layer>
       </layer-tree-group>
@@ -78,22 +77,22 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="FISS_stream_sample_site_d20de39c_2f52_4741_8cdc_b40683375b4b" checked="Qt::Checked" legend_exp="" name="FISS stream sample site" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;whse_fish&quot;.&quot;fiss_stream_sample_sites_sp&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="FISS_stream_sample_site_9217c051_b08f_44ae_9389_b3c3578bfc32" checked="Qt::Checked" legend_exp="" name="FISS stream sample site" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;whse_fish&quot;.&quot;fiss_stream_sample_sites_sp&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="FISS_fish_observation_64a7fb9e_cdc7_4887_bc74_64e5b8a1b984" checked="Qt::Checked" legend_exp="" name="FISS fish observation" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='postgis' host=localhost port=5432 user='postgres' sslmode=disable key='fish_obsrvtn_pnt_distinct_id' estimatedmetadata=true checkPrimaryKeyUnicity='1' table=&quot;(SELECT    fish_obsrvtn_pnt_distinct_id,   array_to_string(array_agg(species_code), ' ') as species_code,   geom FROM  (SELECT DISTINCT   fish_obsrvtn_pnt_distinct_id,   unnest(species_codes) species_code,   geom FROM whse_fish.fiss_fish_obsrvtn_pnt_distinct ORDER BY fish_obsrvtn_pnt_distinct_id, species_code ) as f GROUP BY  fish_obsrvtn_pnt_distinct_id, geom&#xa;)&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="FISS_fish_observation_ff48d1c6_3e96_4a51_b8e9_6e5f5eee7593" checked="Qt::Checked" legend_exp="" name="FISS fish observation" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='postgis' host=localhost port=5432 user='postgres' sslmode=disable key='fish_obsrvtn_pnt_distinct_id' estimatedmetadata=true checkPrimaryKeyUnicity='1' table=&quot;(SELECT    fish_obsrvtn_pnt_distinct_id,   array_to_string(array_agg(species_code), ' ') as species_code,   geom FROM  (SELECT DISTINCT   fish_obsrvtn_pnt_distinct_id,   unnest(species_codes) species_code,   geom FROM whse_fish.fiss_fish_obsrvtn_pnt_distinct ORDER BY fish_obsrvtn_pnt_distinct_id, species_code ) as f GROUP BY  fish_obsrvtn_pnt_distinct_id, geom&#xa;)&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="FISS_obstacles_7e7ff66c_585a_45e4_ad5c_165940f5bdd2" checked="Qt::Checked" legend_exp="" name="FISS obstacles" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;whse_fish&quot;.&quot;fiss_obstacles_pnt_sp&quot; (geom) sql=&quot;obstacle_name&quot; != 'Culvert'" patch_size="-1,-1">
+        <layer-tree-layer id="FISS_obstacles_163b89c0_df9e_4dd4_922d_b032490bbb30" checked="Qt::Checked" legend_exp="" name="FISS obstacles" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table=&quot;whse_fish&quot;.&quot;fiss_obstacles_pnt_sp&quot; (geom) sql=&quot;obstacle_name&quot; != 'Culvert'" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Environment_Canada_hydrometric_station_7a071ddb_ef7a_47c3_9803_7cf763ad8e72" checked="Qt::Checked" legend_exp="" name="Environment Canada hydrometric station" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPoint checkPrimaryKeyUnicity='1' table=&quot;whse_environmental_monitoring&quot;.&quot;envcan_hydrometric_stn_sp&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Environment_Canada_hydrometric_station_f55fe388_497c_4594_a204_a41e8ae39341" checked="Qt::Checked" legend_exp="" name="Environment Canada hydrometric station" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPoint checkPrimaryKeyUnicity='1' table=&quot;whse_environmental_monitoring&quot;.&quot;envcan_hydrometric_stn_sp&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
@@ -103,24 +102,24 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="Transmission_line_a2b281c7_2dca_4cb2_8f07_e12f52c0f6ac" checked="Qt::Checked" legend_exp="" name="Transmission line" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;gba_transmission_lines_sp&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Transmission_line_12c90fa1_6290_4eb1_b9e6_370c9c7f447c" checked="Qt::Checked" legend_exp="" name="Transmission line" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;gba_transmission_lines_sp&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Railway_a35091ef_fa2b_449b_a777_2e1f15cdf587" checked="Qt::Checked" legend_exp="" name="Railway" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='railway_track_id' estimatedmetadata=true srid=3005 type=LineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;gba_railway_tracks_sp&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Railway_08317b65_0650_42d9_a5b8_9939bf88498d" checked="Qt::Checked" legend_exp="" name="Railway" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='railway_track_id' estimatedmetadata=true srid=3005 type=LineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;gba_railway_tracks_sp&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Roads___FTEN_7df3e8e3_43a7_49da_ba8d_361d7ad8aede" checked="Qt::Checked" legend_exp="" name="Roads - FTEN" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_forest_tenure&quot;.&quot;ften_road_section_lines_svw&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Roads___FTEN_8d744a4e_f709_4abd_92a0_5aba88bb35a4" checked="Qt::Checked" legend_exp="" name="Roads - FTEN" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_forest_tenure&quot;.&quot;ften_road_section_lines_svw&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Roads - FTEN"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Roads___DRA_71fb26f2_f8be_4d57_a8b3_1f3dd7c4ca98" checked="Qt::Checked" legend_exp="" name="Roads - DRA" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='transport_line_id' estimatedmetadata=true srid=3005 type=MultiLineStringZ checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;transport_line&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Roads___DRA_8927aa4b_944e_45bd_b914_fb7c7e26dc60" checked="Qt::Checked" legend_exp="" name="Roads - DRA" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='transport_line_id' estimatedmetadata=true srid=3005 type=MultiLineStringZ checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;transport_line&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Roads - DRA"/>
@@ -132,26 +131,26 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="fwa_named_streams_09e6d59c_3902_4189_bd3c_924617bcb9ce" checked="Qt::Checked" legend_exp="" name="fwa_named_streams" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='named_streams_id' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_named_streams&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="fwa_named_streams_178a7c07_d73e_4b9b_941a_483a8d9cfb07" checked="Qt::Checked" legend_exp="" name="fwa_named_streams" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='named_streams_id' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_named_streams&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Streams___accessibility_model___habitat_model_a0293412_3a5d_414c_8507_948e12d242e5" checked="Qt::Unchecked" legend_exp="" name="Streams - accessibility model / habitat model" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Streams___accessibility_model___habitat_model_39078187_d378_4ae9_9de8_b56b6a1086e2" checked="Qt::Unchecked" legend_exp="" name="Streams - accessibility model / habitat model" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Streams - accessibility model / habitat model"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Streams___accessibility_model___gradient_ce435a83_fc34_479f_8a04_13f4e1eb0420" checked="Qt::Checked" legend_exp="" name="Streams - accessibility model / gradient" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Streams___accessibility_model___gradient_33b4688e_d5e5_424e_b4b1_c99c0e35c70b" checked="Qt::Checked" legend_exp="" name="Streams - accessibility model / gradient" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Streams - accessibility model / gradient"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Streams___habitat_model_d86326ea_2c26_44b6_8dd9_2e40c192b1f3" checked="Qt::Unchecked" legend_exp="" name="Streams - habitat model" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Streams___habitat_model_b7b6e6d8_b6ab_4bb5_9d98_23025c3ae75e" checked="Qt::Unchecked" legend_exp="" name="Streams - habitat model" providerKey="postgres" expanded="0" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Streams - habitat model"/>
@@ -163,14 +162,14 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="Watershed_group_boundary_fd9552fa_b0a5_4381_9ae3_cabc3ba16b87" checked="Qt::Checked" legend_exp="" name="Watershed group boundary" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='watershed_group_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_watershed_groups_poly&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Watershed_group_boundary_5baacf3a_a41f_4bbd_abbc_aac34e1456a7" checked="Qt::Checked" legend_exp="" name="Watershed group boundary" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='watershed_group_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_watershed_groups_poly&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Watershed group boundary"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="abms_municipalities_sp_cbe716b3_dc3c_4c81_8936_57d30ae86f43" checked="Qt::Checked" legend_exp="" name="abms_municipalities_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table=&quot;whse_legal_admin_boundaries&quot;.&quot;abms_municipalities_sp&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="abms_municipalities_sp_319f2673_a672_4241_872d_ad5c3a34e3d8" checked="Qt::Checked" legend_exp="" name="abms_municipalities_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table=&quot;whse_legal_admin_boundaries&quot;.&quot;abms_municipalities_sp&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="abms_municipalities_sp"/>
@@ -181,37 +180,37 @@
           <customproperties>
             <Option/>
           </customproperties>
-          <layer-tree-layer id="Glaicier_2f05e2e8_7c3c_4591_8aef_ff88e6a5e0ad" checked="Qt::Checked" legend_exp="" name="Glaicier" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_glaciers_poly&quot; (geom)" patch_size="-1,-1">
+          <layer-tree-layer id="Glaicier_7fe0fa9b_e262_414d_bf7b_c77c2cb9b517" checked="Qt::Checked" legend_exp="" name="Glaicier" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_glaciers_poly&quot; (geom)" patch_size="-1,-1">
             <customproperties>
               <Option/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer id="Lake_7027549c_ddf0_40f5_b207_4e15572d55e6" checked="Qt::Checked" legend_exp="" name="Lake" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_lakes_poly&quot; (geom)" patch_size="-1,-1">
+          <layer-tree-layer id="Lake_93382962_d896_4a3e_bd79_f419d63cedf6" checked="Qt::Checked" legend_exp="" name="Lake" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_lakes_poly&quot; (geom)" patch_size="-1,-1">
             <customproperties>
               <Option/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer id="Reservoir_93a688c5_4b10_49fc_b98e_027eb2359667" checked="Qt::Checked" legend_exp="" name="Reservoir" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_manmade_waterbodies_poly&quot; (geom)" patch_size="-1,-1">
+          <layer-tree-layer id="Reservoir_949b5b5f_f5e1_4a06_b3b3_668f3691c957" checked="Qt::Checked" legend_exp="" name="Reservoir" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_manmade_waterbodies_poly&quot; (geom)" patch_size="-1,-1">
             <customproperties>
               <Option/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer id="fwa_linear_boundaries_sp_fab818a6_e075_4705_a211_e9943f119939" checked="Qt::Checked" legend_exp="" name="fwa_linear_boundaries_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='linear_feature_id' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_linear_boundaries_sp&quot; (geom) sql=edge_type IN (1500,1800,1850,1600,1900,1950,1825,1625,1525)" patch_size="-1,-1">
+          <layer-tree-layer id="fwa_linear_boundaries_sp_ec579200_54ce_4106_8c96_31ab0a2867a5" checked="Qt::Checked" legend_exp="" name="fwa_linear_boundaries_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='linear_feature_id' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_linear_boundaries_sp&quot; (geom) sql=edge_type IN (1500,1800,1850,1600,1900,1950,1825,1625,1525)" patch_size="-1,-1">
             <customproperties>
               <Option/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer id="River_2a1d108c_929b_4929_82e4_7562641d0f37" checked="Qt::Checked" legend_exp="" name="River" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_rivers_poly&quot; (geom)" patch_size="-1,-1">
+          <layer-tree-layer id="River_8d652a20_1ad3_4703_99f8_f833446c0896" checked="Qt::Checked" legend_exp="" name="River" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_rivers_poly&quot; (geom)" patch_size="-1,-1">
             <customproperties>
               <Option/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer id="Wetland_88e2aa4a_b953_451d_9d02_2a868f03f2e4" checked="Qt::Checked" legend_exp="" name="Wetland" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_wetlands_poly&quot; (geom)" patch_size="-1,-1">
+          <layer-tree-layer id="Wetland_c551a962_7d43_4bd5_8371_fd4874e42e9e" checked="Qt::Checked" legend_exp="" name="Wetland" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_wetlands_poly&quot; (geom)" patch_size="-1,-1">
             <customproperties>
               <Option/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer id="Streams___non_accessible_1afc902b_4776_4d07_a278_fceabd44b574" checked="Qt::Checked" legend_exp="" name="Streams - non accessible" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom) sql=&quot;access_model_ch_co_sk&quot; IS NULL AND &quot;access_model_st&quot; IS NULL AND &quot;access_model_wct&quot; IS NULL " patch_size="-1,-1">
+          <layer-tree-layer id="Streams___non_accessible_0edac447_89a4_41df_a6b3_4ada8c995c43" checked="Qt::Checked" legend_exp="" name="Streams - non accessible" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table=&quot;bcfishpass&quot;.&quot;streams&quot; (geom) sql=&quot;access_model_ch_co_sk&quot; IS NULL AND &quot;access_model_st&quot; IS NULL AND &quot;access_model_wct&quot; IS NULL " patch_size="-1,-1">
             <customproperties>
               <Option type="Map">
                 <Option type="QString" name="cached_name" value="Streams - non accessible"/>
@@ -219,63 +218,63 @@
             </customproperties>
           </layer-tree-layer>
         </layer-tree-group>
-        <layer-tree-layer id="trim_contour_lines_2dbcc10d_f938_4068_a2e9_4eb4392f9ee1" checked="Qt::Checked" legend_exp="" name="trim_contour_lines" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;trim_contour_lines&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="trim_contour_lines_b338dac7_c41b_42bc_8796_4bfcff37193c" checked="Qt::Checked" legend_exp="" name="trim_contour_lines" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;trim_contour_lines&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="trim_contour_lines"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Provincial_National_Park_61d245de_3f48_410c_9725_cd7abfff0f5f" checked="Qt::Checked" legend_exp="" name="Provincial/National Park" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_admin_boundaries&quot;.&quot;clab_national_parks&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Provincial_National_Park_bff0e76b_a93f_4266_8b27_f0cbee6d58c2" checked="Qt::Checked" legend_exp="" name="Provincial/National Park" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_admin_boundaries&quot;.&quot;clab_national_parks&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Provincial/National Park"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Provincial_Park_5c9aae10_de96_47be_9695_a357abc02245" checked="Qt::Checked" legend_exp="" name="Provincial Park" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table=&quot;whse_tantalis&quot;.&quot;ta_park_ecores_pa_svw&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="Provincial_Park_51467bc5_5fa1_4dca_a630_230d40a31a49" checked="Qt::Checked" legend_exp="" name="Provincial Park" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table=&quot;whse_tantalis&quot;.&quot;ta_park_ecores_pa_svw&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Provincial Park"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="First_Nations_Reserve_39bcae02_02cd_4897_89cc_4ba64577f3e5" checked="Qt::Checked" legend_exp="" name="First Nations Reserve" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_admin_boundaries&quot;.&quot;clab_indian_reserves&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="First_Nations_Reserve_c8843ca0_5799_4d27_8716_7306006819b5" checked="Qt::Checked" legend_exp="" name="First Nations Reserve" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_admin_boundaries&quot;.&quot;clab_indian_reserves&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="First Nations Reserve"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Private_land__PMBC__8d168671_b4f6_4db8_b729_92e70aebae6d" checked="Qt::Checked" legend_exp="" name="Private land (PMBC)" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='parcel_fabric_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_cadastre&quot;.&quot;pmbc_parcel_fabric_poly_svw&quot; (geom) sql=&quot;owner_type&quot; = 'Private' and &quot;municipality&quot; = 'Rural'" patch_size="-1,-1">
+        <layer-tree-layer id="Private_land__PMBC__ec13f364_835a_471c_93b8_3809d663327a" checked="Qt::Checked" legend_exp="" name="Private land (PMBC)" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='parcel_fabric_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_cadastre&quot;.&quot;pmbc_parcel_fabric_poly_svw&quot; (geom) sql=&quot;owner_type&quot; = 'Private' and &quot;municipality&quot; = 'Rural'" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Private land (PMBC)"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="fwa_watersheds_poly_6415c42d_87de_4b1c_840d_35b6854ead34" checked="Qt::Unchecked" legend_exp="" name="fwa_watersheds_poly" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='watershed_feature_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_watersheds_poly&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="fwa_watersheds_poly_04bde4ac_41e4_41af_98e5_2a8bd4fc508a" checked="Qt::Unchecked" legend_exp="" name="fwa_watersheds_poly" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='watershed_feature_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_watersheds_poly&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="fwa_watersheds_poly"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Forested_area_606e7acc_777b_4a73_9d18_da1dcf915ffc" checked="Qt::Checked" legend_exp="" name="Forested area" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='feature_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_forest_vegetation&quot;.&quot;veg_comp_lyr_r1_poly&quot; (geom) sql=bclcs_level_1 = 'V' AND bclcs_level_2 = 'T' " patch_size="-1,-1">
+        <layer-tree-layer id="Forested_area_68a10352_4cf5_47fb_8459_528381a6aec3" checked="Qt::Checked" legend_exp="" name="Forested area" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='feature_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_forest_vegetation&quot;.&quot;veg_comp_lyr_r1_poly&quot; (geom) sql=bclcs_level_1 = 'V' AND bclcs_level_2 = 'T' " patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Forested area"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="trim_ebm_ocean_8c2a2c97_572c_49b6_989f_f4dd7e1b5947" checked="Qt::Checked" legend_exp="" name="trim_ebm_ocean" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;trim_ebm_ocean&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="trim_ebm_ocean_e938459c_a88b_4558_9a65_7913085b7660" checked="Qt::Checked" legend_exp="" name="trim_ebm_ocean" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;trim_ebm_ocean&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="trim_ebm_ocean"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="bc_hshd_tif_35d8657a_a73e_4bd8_9ece_8270e20d57f4" checked="Qt::Checked" legend_exp="" name="bc_hshd.tif" providerKey="gdal" expanded="0" legend_split_behavior="0" source="/vsis3/geobc/bc_hshd.tif" patch_size="-1,-1">
+        <layer-tree-layer id="bc_hshd_tif_60d9675e_6cde_4b24_a2f4_154249862cc2" checked="Qt::Checked" legend_exp="" name="bc_hshd.tif" providerKey="gdal" expanded="0" legend_split_behavior="0" source="/vsis3/geobc/bc_hshd.tif" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="bc_hshd.tif"/>
@@ -287,38 +286,38 @@
         <customproperties>
           <Option/>
         </customproperties>
-        <layer-tree-layer id="Bing_VirtualEarth_7c6400b3_ce05_4f65_bc04_7cf8a9be94e7" checked="Qt::Unchecked" legend_exp="" name="Bing VirtualEarth" providerKey="wms" expanded="0" legend_split_behavior="0" source="crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=http://ecn.t3.tiles.virtualearth.net/tiles/a%7Bq%7D.jpeg?g%3D1&amp;zmax=19&amp;zmin=1" patch_size="-1,-1">
+        <layer-tree-layer id="Bing_VirtualEarth_6f45a3e4_4009_4f7b_9da4_47674b62a5d0" checked="Qt::Unchecked" legend_exp="" name="Bing VirtualEarth" providerKey="wms" expanded="0" legend_split_behavior="0" source="crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=http://ecn.t3.tiles.virtualearth.net/tiles/a%7Bq%7D.jpeg?g%3D1&amp;zmax=19&amp;zmin=1" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Bing VirtualEarth"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Google_Satellite_6a153ab2_b351_4585_b169_0a80389b3ad9" checked="Qt::Unchecked" legend_exp="" name="Google Satellite" providerKey="wms" expanded="0" legend_split_behavior="0" source="crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=https://mt1.google.com/vt/lyrs%3Ds%26x%3D%7Bx%7D%26y%3D%7By%7D%26z%3D%7Bz%7D&amp;zmax=19&amp;zmin=0" patch_size="-1,-1">
+        <layer-tree-layer id="Google_Satellite_d883f871_1965_466f_945a_924238b51d24" checked="Qt::Unchecked" legend_exp="" name="Google Satellite" providerKey="wms" expanded="0" legend_split_behavior="0" source="crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=https://mt1.google.com/vt/lyrs%3Ds%26x%3D%7Bx%7D%26y%3D%7By%7D%26z%3D%7Bz%7D&amp;zmax=19&amp;zmin=0" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Google Satellite"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Watershed_group_boundary_e8dfec38_9133_4d67_a77e_779f2a93da54" checked="Qt::Checked" legend_exp="" name="Watershed group boundary" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='watershed_group_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_watershed_groups_poly&quot; (geom) sql=&quot;watershed_group_code&quot; IN ('HORS','BULK','MORR','LNIC','ELKR')" patch_size="-1,-1">
+        <layer-tree-layer id="Watershed_group_boundary_2b3048a0_a708_46a4_9021_4a767ec049a3" checked="Qt::Checked" legend_exp="" name="Watershed group boundary" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='watershed_group_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;fwa_watershed_groups_poly&quot; (geom) sql=&quot;watershed_group_code&quot; IN ('HORS','BULK','MORR','LNIC','ELKR')" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="Esri_Topo_World_bfd870d9_aaf8_4969_8221_799a911d1830" checked="Qt::Checked" legend_exp="" name="Esri Topo World" providerKey="wms" expanded="0" legend_split_behavior="0" source="crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/%7Bz%7D/%7By%7D/%7Bx%7D&amp;zmax=20&amp;zmin=0" patch_size="-1,-1">
+        <layer-tree-layer id="Esri_Topo_World_9a40ecb5_bb7f_4020_951a_bd940f5f2db5" checked="Qt::Checked" legend_exp="" name="Esri Topo World" providerKey="wms" expanded="0" legend_split_behavior="0" source="crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/%7Bz%7D/%7By%7D/%7Bx%7D&amp;zmax=20&amp;zmin=0" patch_size="-1,-1">
           <customproperties>
             <Option type="Map">
               <Option type="QString" name="cached_name" value="Esri Topo World"/>
             </Option>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="utmg_utm_zones_sp_e452d53f_daf9_4171_9859_ef6797f1ae6d" checked="Qt::Checked" legend_exp="" name="utmg_utm_zones_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;utmg_utm_zones_sp&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="utmg_utm_zones_sp_42896466_98a2_45c5_b0d5_f4f128318760" checked="Qt::Checked" legend_exp="" name="utmg_utm_zones_sp" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;utmg_utm_zones_sp&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer id="bcgs_20k_grid_e5706c94_47e5_4e29_b417_09db725008fc" checked="Qt::Unchecked" legend_exp="" name="bcgs_20k_grid" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;bcgs_20k_grid&quot; (geom)" patch_size="-1,-1">
+        <layer-tree-layer id="bcgs_20k_grid_84b3bc4e_f9f5_4a1a_b503_f78bf3d017b5" checked="Qt::Unchecked" legend_exp="" name="bcgs_20k_grid" providerKey="postgres" expanded="1" legend_split_behavior="0" source="dbname='bcfishpass' host=localhost port=5432 user='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table=&quot;whse_basemapping&quot;.&quot;bcgs_20k_grid&quot; (geom)" patch_size="-1,-1">
           <customproperties>
             <Option/>
           </customproperties>
@@ -340,7 +339,7 @@
         <xmax>-110.44402128384740536</xmax>
         <ymax>60.59881175896641281</ymax>
       </wgs84extent>
-      <id>gns_geographical_names_sp_bc9fbef1_e7ed_4330_8ed4_4b657efbbd1c</id>
+      <id>gns_geographical_names_sp_c7ea9807_ee4b_4ca2_99a3_ee86680b9150</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPoint checkPrimaryKeyUnicity='1' table="whse_basemapping"."gns_geographical_names_sp" (geom) sql=feature_class = 'Terrain Features' AND feature_category = 'Elevated'</datasource>
       <keywordList>
         <value></value>
@@ -1148,7 +1147,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.51980714601417333</xmax>
         <ymax>60.43460901599659962</ymax>
       </wgs84extent>
-      <id>Crossings___Salmon_3a3cc69a_f9a9_4436_bf17_f427919a39fa</id>
+      <id>Crossings___Salmon_334c5357_60c4_4065_b1b0_c7f43dec550d</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."crossings" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -4913,7 +4912,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.51980714601417333</xmax>
         <ymax>60.43460901599659962</ymax>
       </wgs84extent>
-      <id>Crossings___Steelhead_c81f178b_5968_4824_b986_f2666f917761</id>
+      <id>Crossings___Steelhead_193df933_a02e_4a27_a533_f8c439962f86</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."crossings" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -8678,7 +8677,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.51980714601417333</xmax>
         <ymax>60.43460901599659962</ymax>
       </wgs84extent>
-      <id>Crossings___Westslope_Cutthroat_Trout_f2237179_8dd1_4ae4_adec_ba90e9f56cc1</id>
+      <id>Crossings___Westslope_Cutthroat_Trout_e2a4d478_2009_48d6_8a35_458b2027acba</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='aggregated_crossings_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."crossings" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -12443,7 +12442,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-112.26128205255348291</xmax>
         <ymax>57.07674278890257824</ymax>
       </wgs84extent>
-      <id>PSCIS_crossings___NOT_MATCHED_TO_STREAMS_1dbe6929_6619_4e25_8239_283e22629671</id>
+      <id>PSCIS_crossings___NOT_MATCHED_TO_STREAMS_5de4d93d_7c6c_4095_a79e_fe7f463cf6c2</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='stream_crossing_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."pscis_not_matched_to_streams_vw" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -15103,12 +15102,24 @@ def my_form_open(dialog, layer, feature):
       <mapTip></mapTip>
     </maplayer>
     <maplayer symbologyReferenceScale="-1" geometry="Point" autoRefreshTime="0" simplifyDrawingTol="1" simplifyLocal="1" minScale="100000000" autoRefreshEnabled="0" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" labelsEnabled="0" legendPlaceholderImage="" wkbType="Point" styleCategories="AllStyleCategories" readOnly="0" simplifyAlgorithm="0" refreshOnNotifyMessage="" maxScale="0" simplifyDrawingHints="0" refreshOnNotifyEnabled="0">
-      <id>Definite_barriers__Salmon_cd2b551b_efd2_4aae_8b6a_20a88f455e59</id>
-      <datasource>dbname='postgis' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='definitebarriers_salmon_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."definitebarriers_salmon" (geom)</datasource>
+      <extent>
+        <xmin>886359.19128151482436806</xmin>
+        <ymin>507345.11354708892758936</ymin>
+        <xmax>1868602.99493438890203834</xmax>
+        <ymax>1164077.88633415498770773</ymax>
+      </extent>
+      <wgs84extent>
+        <xmin>-127.80129472718351735</xmin>
+        <ymin>48.9242026636266516</ymin>
+        <xmax>-112.3988618774107664</xmax>
+        <ymax>55.4733444007877452</ymax>
+      </wgs84extent>
+      <id>barriers_bt_58fb7fa8_feb7_48fb_97e5_1222fe40faf7</id>
+      <datasource>dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_bt_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."barriers_bt" (geom)</datasource>
       <keywordList>
         <value></value>
       </keywordList>
-      <layername>Definite barriers, Salmon</layername>
+      <layername>barriers_bt</layername>
       <srs>
         <spatialrefsys nativeFormat="Wkt">
           <wkt>PROJCRS["NAD83 / BC Albers",BASEGEOGCRS["NAD83",DATUM["North American Datum 1983",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4269]],CONVERSION["British Columbia Albers",METHOD["Albers Equal Area",ID["EPSG",9822]],PARAMETER["Latitude of false origin",45,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],PARAMETER["Longitude of false origin",-126,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],PARAMETER["Latitude of 1st standard parallel",50,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],PARAMETER["Latitude of 2nd standard parallel",58.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],PARAMETER["Easting at false origin",1000000,LENGTHUNIT["metre",1],ID["EPSG",8826]],PARAMETER["Northing at false origin",0,LENGTHUNIT["metre",1],ID["EPSG",8827]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Province-wide spatial data management."],AREA["Canada - British Columbia."],BBOX[48.25,-139.04,60.01,-114.08]],ID["EPSG",3005]]</wkt>
@@ -15129,15 +15140,6 @@ def my_form_open(dialog, layer, feature):
         <type>dataset</type>
         <title></title>
         <abstract></abstract>
-        <contact>
-          <name></name>
-          <organization></organization>
-          <position></position>
-          <voice></voice>
-          <fax></fax>
-          <email></email>
-          <role></role>
-        </contact>
         <links/>
         <fees></fees>
         <encoding></encoding>
@@ -15154,15 +15156,7 @@ def my_form_open(dialog, layer, feature):
             <geographicflag>false</geographicflag>
           </spatialrefsys>
         </crs>
-        <extent>
-          <spatial crs="EPSG:3005" minx="0" maxz="0" miny="0" maxy="0" dimensions="2" maxx="0" minz="0"/>
-          <temporal>
-            <period>
-              <start></start>
-              <end></end>
-            </period>
-          </temporal>
-        </extent>
+        <extent/>
       </resourceMetadata>
       <provider encoding="">postgres</provider>
       <vectorjoins/>
@@ -15482,18 +15476,143 @@ def my_form_open(dialog, layer, feature):
       </geometryOptions>
       <legend type="default-vector" showLabelLegend="0"/>
       <referencedLayers/>
-      <fieldConfiguration/>
-      <aliases/>
-      <defaults/>
-      <constraints/>
-      <constraintExpressions/>
+      <fieldConfiguration>
+        <field name="barriers_bt_id" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barrier_type" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barrier_name" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="linear_feature_id" configurationFlags="None">
+          <editWidget type="Range">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="blue_line_key" configurationFlags="None">
+          <editWidget type="Range">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="watershed_key" configurationFlags="None">
+          <editWidget type="Range">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="downstream_route_measure" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="wscode_ltree" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="localcode_ltree" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="watershed_group_code" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barriers_bt_dnstr" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="barriers_bt_id" name="" index="0"/>
+        <alias field="barrier_type" name="" index="1"/>
+        <alias field="barrier_name" name="" index="2"/>
+        <alias field="linear_feature_id" name="" index="3"/>
+        <alias field="blue_line_key" name="" index="4"/>
+        <alias field="watershed_key" name="" index="5"/>
+        <alias field="downstream_route_measure" name="" index="6"/>
+        <alias field="wscode_ltree" name="" index="7"/>
+        <alias field="localcode_ltree" name="" index="8"/>
+        <alias field="watershed_group_code" name="" index="9"/>
+        <alias field="barriers_bt_dnstr" name="" index="10"/>
+      </aliases>
+      <defaults>
+        <default field="barriers_bt_id" expression="" applyOnUpdate="0"/>
+        <default field="barrier_type" expression="" applyOnUpdate="0"/>
+        <default field="barrier_name" expression="" applyOnUpdate="0"/>
+        <default field="linear_feature_id" expression="" applyOnUpdate="0"/>
+        <default field="blue_line_key" expression="" applyOnUpdate="0"/>
+        <default field="watershed_key" expression="" applyOnUpdate="0"/>
+        <default field="downstream_route_measure" expression="" applyOnUpdate="0"/>
+        <default field="wscode_ltree" expression="" applyOnUpdate="0"/>
+        <default field="localcode_ltree" expression="" applyOnUpdate="0"/>
+        <default field="watershed_group_code" expression="" applyOnUpdate="0"/>
+        <default field="barriers_bt_dnstr" expression="" applyOnUpdate="0"/>
+      </defaults>
+      <constraints>
+        <constraint notnull_strength="1" exp_strength="0" field="barriers_bt_id" constraints="3" unique_strength="1"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barrier_type" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barrier_name" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="linear_feature_id" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="blue_line_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="downstream_route_measure" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="wscode_ltree" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="localcode_ltree" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_group_code" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barriers_bt_dnstr" constraints="0" unique_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="barriers_bt_id" desc="" exp=""/>
+        <constraint field="barrier_type" desc="" exp=""/>
+        <constraint field="barrier_name" desc="" exp=""/>
+        <constraint field="linear_feature_id" desc="" exp=""/>
+        <constraint field="blue_line_key" desc="" exp=""/>
+        <constraint field="watershed_key" desc="" exp=""/>
+        <constraint field="downstream_route_measure" desc="" exp=""/>
+        <constraint field="wscode_ltree" desc="" exp=""/>
+        <constraint field="localcode_ltree" desc="" exp=""/>
+        <constraint field="watershed_group_code" desc="" exp=""/>
+        <constraint field="barriers_bt_dnstr" desc="" exp=""/>
+      </constraintExpressions>
       <expressionfields/>
       <attributeactions>
         <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
       </attributeactions>
       <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
         <columns>
-          <column type="field" width="-1" name="definitebarriers_salmon_id" hidden="0"/>
           <column type="field" width="-1" name="barrier_type" hidden="0"/>
           <column type="field" width="-1" name="barrier_name" hidden="0"/>
           <column type="field" width="-1" name="linear_feature_id" hidden="0"/>
@@ -15502,129 +15621,10 @@ def my_form_open(dialog, layer, feature):
           <column type="field" width="-1" name="wscode_ltree" hidden="0"/>
           <column type="field" width="-1" name="localcode_ltree" hidden="0"/>
           <column type="field" width="-1" name="watershed_group_code" hidden="0"/>
-          <column type="field" width="-1" name="upstr_observation_id" hidden="0"/>
-          <column type="field" width="-1" name="dnstr_definitebarriers_salmon_id" hidden="0"/>
-          <column type="field" width="-1" name="observedspp_dnstr" hidden="0"/>
-          <column type="field" width="-1" name="observedspp_upstr" hidden="0"/>
-          <column type="field" width="-1" name="stream_order" hidden="0"/>
-          <column type="field" width="-1" name="stream_magnitude" hidden="0"/>
-          <column type="field" width="-1" name="gradient" hidden="0"/>
-          <column type="field" width="-1" name="watershed_upstr_ha" hidden="0"/>
-          <column type="field" width="-1" name="total_network_km" hidden="0"/>
-          <column type="field" width="-1" name="total_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="total_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="total_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="total_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_network_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="total_belowupstrbarriers_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_network_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="salmon_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_network_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="salmon_belowupstrbarriers_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_network_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_network_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="steelhead_belowupstrbarriers_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_network_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="wct_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_network_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_stream_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_lakereservoir_ha" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_wetland_ha" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass03_waterbodies_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass03_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass05_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass08_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass15_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass22_km" hidden="0"/>
-          <column type="field" width="-1" name="wct_belowupstrbarriers_slopeclass30_km" hidden="0"/>
-          <column type="field" width="-1" name="ch_spawning_km" hidden="0"/>
-          <column type="field" width="-1" name="ch_rearing_km" hidden="0"/>
-          <column type="field" width="-1" name="ch_spawning_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="ch_rearing_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="co_spawning_km" hidden="0"/>
-          <column type="field" width="-1" name="co_rearing_km" hidden="0"/>
-          <column type="field" width="-1" name="co_spawning_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="co_rearing_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="sk_spawning_km" hidden="0"/>
-          <column type="field" width="-1" name="sk_rearing_km" hidden="0"/>
-          <column type="field" width="-1" name="sk_spawning_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="sk_rearing_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="st_spawning_km" hidden="0"/>
-          <column type="field" width="-1" name="st_rearing_km" hidden="0"/>
-          <column type="field" width="-1" name="st_spawning_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="st_rearing_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="all_spawning_km" hidden="0"/>
-          <column type="field" width="-1" name="all_spawning_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="all_rearing_km" hidden="0"/>
-          <column type="field" width="-1" name="all_rearing_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="all_spawningrearing_km" hidden="0"/>
-          <column type="field" width="-1" name="all_spawningrearing_belowupstrbarriers_km" hidden="0"/>
-          <column type="field" width="-1" name="dbm_mof_50k_grid" hidden="0"/>
+          <column type="field" width="-1" name="barriers_ch_co_sk_id" hidden="0"/>
+          <column type="field" width="-1" name="watershed_key" hidden="0"/>
+          <column type="field" width="-1" name="barriers_ch_co_sk_dnstr" hidden="0"/>
           <column type="actions" width="-1" hidden="1"/>
-          <column type="field" width="-1" name="access_model_ch_co_sk" hidden="0"/>
-          <column type="field" width="-1" name="access_model_st" hidden="0"/>
-          <column type="field" width="-1" name="access_model_wct" hidden="0"/>
         </columns>
       </attributetableconfig>
       <conditionalstyles>
@@ -15667,6 +15667,8 @@ def my_form_open(dialog, layer, feature):
         <field name="all_spawningrearing_km" editable="1"/>
         <field name="barrier_name" editable="1"/>
         <field name="barrier_type" editable="1"/>
+        <field name="barriers_ch_co_sk_dnstr" editable="1"/>
+        <field name="barriers_ch_co_sk_id" editable="1"/>
         <field name="blue_line_key" editable="1"/>
         <field name="ch_rearing_belowupstrbarriers_km" editable="1"/>
         <field name="ch_rearing_km" editable="1"/>
@@ -15763,6 +15765,7 @@ def my_form_open(dialog, layer, feature):
         <field name="total_wetland_ha" editable="1"/>
         <field name="upstr_observation_id" editable="1"/>
         <field name="watershed_group_code" editable="1"/>
+        <field name="watershed_key" editable="1"/>
         <field name="watershed_upstr_ha" editable="1"/>
         <field name="wct_belowupstrbarriers_lakereservoir_ha" editable="1"/>
         <field name="wct_belowupstrbarriers_network_km" editable="1"/>
@@ -15800,6 +15803,8 @@ def my_form_open(dialog, layer, feature):
         <field name="all_spawningrearing_km" labelOnTop="0"/>
         <field name="barrier_name" labelOnTop="0"/>
         <field name="barrier_type" labelOnTop="0"/>
+        <field name="barriers_ch_co_sk_dnstr" labelOnTop="0"/>
+        <field name="barriers_ch_co_sk_id" labelOnTop="0"/>
         <field name="blue_line_key" labelOnTop="0"/>
         <field name="ch_rearing_belowupstrbarriers_km" labelOnTop="0"/>
         <field name="ch_rearing_km" labelOnTop="0"/>
@@ -15896,6 +15901,7 @@ def my_form_open(dialog, layer, feature):
         <field name="total_wetland_ha" labelOnTop="0"/>
         <field name="upstr_observation_id" labelOnTop="0"/>
         <field name="watershed_group_code" labelOnTop="0"/>
+        <field name="watershed_key" labelOnTop="0"/>
         <field name="watershed_upstr_ha" labelOnTop="0"/>
         <field name="wct_belowupstrbarriers_lakereservoir_ha" labelOnTop="0"/>
         <field name="wct_belowupstrbarriers_network_km" labelOnTop="0"/>
@@ -15921,19 +15927,43 @@ def my_form_open(dialog, layer, feature):
         <field name="wct_wetland_ha" labelOnTop="0"/>
         <field name="wscode_ltree" labelOnTop="0"/>
       </labelOnTop>
-      <reuseLastValue/>
+      <reuseLastValue>
+        <field name="barrier_name" reuseLastValue="0"/>
+        <field name="barrier_type" reuseLastValue="0"/>
+        <field name="barriers_ch_co_sk_dnstr" reuseLastValue="0"/>
+        <field name="barriers_ch_co_sk_id" reuseLastValue="0"/>
+        <field name="blue_line_key" reuseLastValue="0"/>
+        <field name="downstream_route_measure" reuseLastValue="0"/>
+        <field name="linear_feature_id" reuseLastValue="0"/>
+        <field name="localcode_ltree" reuseLastValue="0"/>
+        <field name="watershed_group_code" reuseLastValue="0"/>
+        <field name="watershed_key" reuseLastValue="0"/>
+        <field name="wscode_ltree" reuseLastValue="0"/>
+      </reuseLastValue>
       <dataDefinedFieldProperties/>
       <widgets/>
       <previewExpression>"barrier_name"</previewExpression>
       <mapTip></mapTip>
     </maplayer>
     <maplayer symbologyReferenceScale="-1" geometry="Point" autoRefreshTime="0" simplifyDrawingTol="1" simplifyLocal="1" minScale="100000000" autoRefreshEnabled="0" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" labelsEnabled="0" legendPlaceholderImage="" wkbType="Point" styleCategories="AllStyleCategories" readOnly="0" simplifyAlgorithm="0" refreshOnNotifyMessage="" maxScale="0" simplifyDrawingHints="0" refreshOnNotifyEnabled="0">
-      <id>Definite_barriers__Steelhead_e7515ace_8ae8_4c8a_bfe3_7c6959a67d37</id>
-      <datasource>dbname='postgis' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='definitebarriers_steelhead_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."definitebarriers_steelhead" (geom)</datasource>
+      <extent>
+        <xmin>886425.97574510890990496</xmin>
+        <ymin>523673.41240988468052819</ymin>
+        <xmax>1398117.01374355470761657</xmax>
+        <ymax>1163458.18562952056527138</ymax>
+      </extent>
+      <wgs84extent>
+        <xmin>-127.79998689439743487</xmin>
+        <ymin>49.58983851151224798</ymin>
+        <xmax>-119.70569018150902707</xmax>
+        <ymax>55.46788244480743657</ymax>
+      </wgs84extent>
+      <id>barriers_ch_co_sk_3285e5d7_106e_4fa3_87f3_ac328dcb5807</id>
+      <datasource>dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_ch_co_sk_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."barriers_ch_co_sk" (geom)</datasource>
       <keywordList>
         <value></value>
       </keywordList>
-      <layername>Definite barriers, Steelhead</layername>
+      <layername>barriers_ch_co_sk</layername>
       <srs>
         <spatialrefsys nativeFormat="Wkt">
           <wkt>PROJCRS["NAD83 / BC Albers",BASEGEOGCRS["NAD83",DATUM["North American Datum 1983",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4269]],CONVERSION["British Columbia Albers",METHOD["Albers Equal Area",ID["EPSG",9822]],PARAMETER["Latitude of false origin",45,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],PARAMETER["Longitude of false origin",-126,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],PARAMETER["Latitude of 1st standard parallel",50,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],PARAMETER["Latitude of 2nd standard parallel",58.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],PARAMETER["Easting at false origin",1000000,LENGTHUNIT["metre",1],ID["EPSG",8826]],PARAMETER["Northing at false origin",0,LENGTHUNIT["metre",1],ID["EPSG",8827]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Province-wide spatial data management."],AREA["Canada - British Columbia."],BBOX[48.25,-139.04,60.01,-114.08]],ID["EPSG",3005]]</wkt>
@@ -15988,6 +16018,850 @@ def my_form_open(dialog, layer, feature):
             </period>
           </temporal>
         </extent>
+      </resourceMetadata>
+      <provider encoding="">postgres</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <metadataUrls/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+        <Private>0</Private>
+      </flags>
+      <temporal endExpression="" limitMode="0" startField="" durationField="" mode="0" accumulate="0" enabled="0" fixedDuration="0" startExpression="" endField="" durationUnit="min">
+        <fixedRange>
+          <start></start>
+          <end></end>
+        </fixedRange>
+      </temporal>
+      <renderer-v2 symbollevels="0" enableorderby="0" type="categorizedSymbol" referencescale="-1" forceraster="0" attr="barrier_type">
+        <categories>
+          <category type="string" label="FALLS" symbol="0" value="FALLS" render="true"/>
+          <category label="LOCAL KNOWLEDGE,PSCIS_NOT_ACCESSIBLE,SUBSURFACEFLOW,GRADIENT_15,GRADIENT_20,GRADIENT_30" symbol="1" render="true">
+            <val type="string" value="LOCAL KNOWLEDGE"/>
+            <val type="string" value="PSCIS_NOT_ACCESSIBLE"/>
+            <val type="string" value="SUBSURFACEFLOW"/>
+            <val type="string" value="GRADIENT_15"/>
+            <val type="string" value="GRADIENT_20"/>
+            <val type="string" value="GRADIENT_30"/>
+          </category>
+        </categories>
+        <symbols>
+          <symbol alpha="1" type="marker" name="0" clip_to_extent="1" force_rhr="0">
+            <data_defined_properties>
+              <Option type="Map">
+                <Option type="QString" name="name" value=""/>
+                <Option name="properties"/>
+                <Option type="QString" name="type" value="collection"/>
+              </Option>
+            </data_defined_properties>
+            <layer pass="0" class="FontMarker" enabled="1" locked="0">
+              <Option type="Map">
+                <Option type="QString" name="angle" value="0"/>
+                <Option type="QString" name="chr" value="/"/>
+                <Option type="QString" name="color" value="255,1,1,255"/>
+                <Option type="QString" name="font" value="BCMELP Fisheries Symbols"/>
+                <Option type="QString" name="font_style" value="Regular"/>
+                <Option type="QString" name="horizontal_anchor_point" value="1"/>
+                <Option type="QString" name="joinstyle" value="bevel"/>
+                <Option type="QString" name="offset" value="0,0"/>
+                <Option type="QString" name="offset_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="offset_unit" value="MM"/>
+                <Option type="QString" name="outline_color" value="255,1,1,255"/>
+                <Option type="QString" name="outline_width" value="0.2"/>
+                <Option type="QString" name="outline_width_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="outline_width_unit" value="MM"/>
+                <Option type="QString" name="size" value="4.6"/>
+                <Option type="QString" name="size_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="size_unit" value="MM"/>
+                <Option type="QString" name="vertical_anchor_point" value="1"/>
+              </Option>
+              <prop k="angle" v="0"/>
+              <prop k="chr" v="/"/>
+              <prop k="color" v="255,1,1,255"/>
+              <prop k="font" v="BCMELP Fisheries Symbols"/>
+              <prop k="font_style" v="Regular"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="255,1,1,255"/>
+              <prop k="outline_width" v="0.2"/>
+              <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="size" v="4.6"/>
+              <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+          <symbol alpha="1" type="marker" name="1" clip_to_extent="1" force_rhr="0">
+            <data_defined_properties>
+              <Option type="Map">
+                <Option type="QString" name="name" value=""/>
+                <Option name="properties"/>
+                <Option type="QString" name="type" value="collection"/>
+              </Option>
+            </data_defined_properties>
+            <layer pass="0" class="FontMarker" enabled="1" locked="0">
+              <Option type="Map">
+                <Option type="QString" name="angle" value="0"/>
+                <Option type="QString" name="chr" value="x"/>
+                <Option type="QString" name="color" value="0,0,0,255"/>
+                <Option type="QString" name="font" value="Courier"/>
+                <Option type="QString" name="font_style" value="Bold Oblique"/>
+                <Option type="QString" name="horizontal_anchor_point" value="1"/>
+                <Option type="QString" name="joinstyle" value="bevel"/>
+                <Option type="QString" name="offset" value="0,0"/>
+                <Option type="QString" name="offset_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="offset_unit" value="MM"/>
+                <Option type="QString" name="outline_color" value="48,48,48,255"/>
+                <Option type="QString" name="outline_width" value="0.2"/>
+                <Option type="QString" name="outline_width_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="outline_width_unit" value="MM"/>
+                <Option type="QString" name="size" value="10"/>
+                <Option type="QString" name="size_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="size_unit" value="Point"/>
+                <Option type="QString" name="vertical_anchor_point" value="1"/>
+              </Option>
+              <prop k="angle" v="0"/>
+              <prop k="chr" v="x"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="font" v="Courier"/>
+              <prop k="font_style" v="Bold Oblique"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="48,48,48,255"/>
+              <prop k="outline_width" v="0.2"/>
+              <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="size" v="10"/>
+              <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="size_unit" v="Point"/>
+              <prop k="vertical_anchor_point" v="1"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <source-symbol>
+          <symbol alpha="1" type="marker" name="0" clip_to_extent="1" force_rhr="0">
+            <data_defined_properties>
+              <Option type="Map">
+                <Option type="QString" name="name" value=""/>
+                <Option name="properties"/>
+                <Option type="QString" name="type" value="collection"/>
+              </Option>
+            </data_defined_properties>
+            <layer pass="0" class="SimpleMarker" enabled="1" locked="0">
+              <Option type="Map">
+                <Option type="QString" name="angle" value="0"/>
+                <Option type="QString" name="cap_style" value="square"/>
+                <Option type="QString" name="color" value="213,180,60,255"/>
+                <Option type="QString" name="horizontal_anchor_point" value="1"/>
+                <Option type="QString" name="joinstyle" value="bevel"/>
+                <Option type="QString" name="name" value="circle"/>
+                <Option type="QString" name="offset" value="0,0"/>
+                <Option type="QString" name="offset_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="offset_unit" value="MM"/>
+                <Option type="QString" name="outline_color" value="35,35,35,255"/>
+                <Option type="QString" name="outline_style" value="solid"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_width_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="outline_width_unit" value="MM"/>
+                <Option type="QString" name="scale_method" value="diameter"/>
+                <Option type="QString" name="size" value="2"/>
+                <Option type="QString" name="size_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                <Option type="QString" name="size_unit" value="MM"/>
+                <Option type="QString" name="vertical_anchor_point" value="1"/>
+              </Option>
+              <prop k="angle" v="0"/>
+              <prop k="cap_style" v="square"/>
+              <prop k="color" v="213,180,60,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="35,35,35,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </source-symbol>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <Option type="Map">
+          <Option type="QString" name="embeddedWidgets/count" value="0"/>
+          <Option name="variableNames"/>
+          <Option name="variableValues"/>
+        </Option>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
+        <DiagramCategory spacingUnit="MM" penWidth="0" backgroundAlpha="255" lineSizeType="MM" showAxis="1" backgroundColor="#ffffff" penAlpha="255" enabled="0" lineSizeScale="3x:0,0,0,0,0,0" rotationOffset="270" spacingUnitScale="3x:0,0,0,0,0,0" height="15" maxScaleDenominator="1e+08" labelPlacementMethod="XHeight" barWidth="5" spacing="5" penColor="#000000" sizeType="MM" direction="0" width="15" minimumSize="0" sizeScale="3x:0,0,0,0,0,0" opacity="1" scaleBasedVisibility="0" scaleDependency="Area" minScaleDenominator="0" diagramOrientation="Up">
+          <fontProperties description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0" style=""/>
+          <attribute color="#000000" field="" label=""/>
+          <axisSymbol>
+            <symbol alpha="1" type="line" name="" clip_to_extent="1" force_rhr="0">
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+              <layer pass="0" class="SimpleLine" enabled="1" locked="0">
+                <Option type="Map">
+                  <Option type="QString" name="align_dash_pattern" value="0"/>
+                  <Option type="QString" name="capstyle" value="square"/>
+                  <Option type="QString" name="customdash" value="5;2"/>
+                  <Option type="QString" name="customdash_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                  <Option type="QString" name="customdash_unit" value="MM"/>
+                  <Option type="QString" name="dash_pattern_offset" value="0"/>
+                  <Option type="QString" name="dash_pattern_offset_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                  <Option type="QString" name="dash_pattern_offset_unit" value="MM"/>
+                  <Option type="QString" name="draw_inside_polygon" value="0"/>
+                  <Option type="QString" name="joinstyle" value="bevel"/>
+                  <Option type="QString" name="line_color" value="35,35,35,255"/>
+                  <Option type="QString" name="line_style" value="solid"/>
+                  <Option type="QString" name="line_width" value="0.26"/>
+                  <Option type="QString" name="line_width_unit" value="MM"/>
+                  <Option type="QString" name="offset" value="0"/>
+                  <Option type="QString" name="offset_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                  <Option type="QString" name="offset_unit" value="MM"/>
+                  <Option type="QString" name="ring_filter" value="0"/>
+                  <Option type="QString" name="trim_distance_end" value="0"/>
+                  <Option type="QString" name="trim_distance_end_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                  <Option type="QString" name="trim_distance_end_unit" value="MM"/>
+                  <Option type="QString" name="trim_distance_start" value="0"/>
+                  <Option type="QString" name="trim_distance_start_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                  <Option type="QString" name="trim_distance_start_unit" value="MM"/>
+                  <Option type="QString" name="tweak_dash_pattern_on_corners" value="0"/>
+                  <Option type="QString" name="use_custom_dash" value="0"/>
+                  <Option type="QString" name="width_map_unit_scale" value="3x:0,0,0,0,0,0"/>
+                </Option>
+                <prop k="align_dash_pattern" v="0"/>
+                <prop k="capstyle" v="square"/>
+                <prop k="customdash" v="5;2"/>
+                <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="customdash_unit" v="MM"/>
+                <prop k="dash_pattern_offset" v="0"/>
+                <prop k="dash_pattern_offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="dash_pattern_offset_unit" v="MM"/>
+                <prop k="draw_inside_polygon" v="0"/>
+                <prop k="joinstyle" v="bevel"/>
+                <prop k="line_color" v="35,35,35,255"/>
+                <prop k="line_style" v="solid"/>
+                <prop k="line_width" v="0.26"/>
+                <prop k="line_width_unit" v="MM"/>
+                <prop k="offset" v="0"/>
+                <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="offset_unit" v="MM"/>
+                <prop k="ring_filter" v="0"/>
+                <prop k="trim_distance_end" v="0"/>
+                <prop k="trim_distance_end_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="trim_distance_end_unit" v="MM"/>
+                <prop k="trim_distance_start" v="0"/>
+                <prop k="trim_distance_start_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="trim_distance_start_unit" v="MM"/>
+                <prop k="tweak_dash_pattern_on_corners" v="0"/>
+                <prop k="use_custom_dash" v="0"/>
+                <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <data_defined_properties>
+                  <Option type="Map">
+                    <Option type="QString" name="name" value=""/>
+                    <Option name="properties"/>
+                    <Option type="QString" name="type" value="collection"/>
+                  </Option>
+                </data_defined_properties>
+              </layer>
+            </symbol>
+          </axisSymbol>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings obstacle="0" showAll="1" linePlacementFlags="18" zIndex="0" dist="0" placement="0" priority="0">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <legend type="default-vector" showLabelLegend="0"/>
+      <referencedLayers/>
+      <fieldConfiguration>
+        <field name="barriers_ch_co_sk_id" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barrier_type" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barrier_name" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="linear_feature_id" configurationFlags="None">
+          <editWidget type="Range">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="blue_line_key" configurationFlags="None">
+          <editWidget type="Range">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="watershed_key" configurationFlags="None">
+          <editWidget type="Range">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="downstream_route_measure" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="wscode_ltree" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="localcode_ltree" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="watershed_group_code" configurationFlags="None">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barriers_ch_co_sk_dnstr" configurationFlags="None">
+          <editWidget type="List">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="barriers_ch_co_sk_id" name="" index="0"/>
+        <alias field="barrier_type" name="" index="1"/>
+        <alias field="barrier_name" name="" index="2"/>
+        <alias field="linear_feature_id" name="" index="3"/>
+        <alias field="blue_line_key" name="" index="4"/>
+        <alias field="watershed_key" name="" index="5"/>
+        <alias field="downstream_route_measure" name="" index="6"/>
+        <alias field="wscode_ltree" name="" index="7"/>
+        <alias field="localcode_ltree" name="" index="8"/>
+        <alias field="watershed_group_code" name="" index="9"/>
+        <alias field="barriers_ch_co_sk_dnstr" name="" index="10"/>
+      </aliases>
+      <defaults>
+        <default field="barriers_ch_co_sk_id" expression="" applyOnUpdate="0"/>
+        <default field="barrier_type" expression="" applyOnUpdate="0"/>
+        <default field="barrier_name" expression="" applyOnUpdate="0"/>
+        <default field="linear_feature_id" expression="" applyOnUpdate="0"/>
+        <default field="blue_line_key" expression="" applyOnUpdate="0"/>
+        <default field="watershed_key" expression="" applyOnUpdate="0"/>
+        <default field="downstream_route_measure" expression="" applyOnUpdate="0"/>
+        <default field="wscode_ltree" expression="" applyOnUpdate="0"/>
+        <default field="localcode_ltree" expression="" applyOnUpdate="0"/>
+        <default field="watershed_group_code" expression="" applyOnUpdate="0"/>
+        <default field="barriers_ch_co_sk_dnstr" expression="" applyOnUpdate="0"/>
+      </defaults>
+      <constraints>
+        <constraint notnull_strength="1" exp_strength="0" field="barriers_ch_co_sk_id" constraints="3" unique_strength="1"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barrier_type" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barrier_name" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="linear_feature_id" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="blue_line_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="downstream_route_measure" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="wscode_ltree" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="localcode_ltree" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_group_code" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barriers_ch_co_sk_dnstr" constraints="0" unique_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="barriers_ch_co_sk_id" desc="" exp=""/>
+        <constraint field="barrier_type" desc="" exp=""/>
+        <constraint field="barrier_name" desc="" exp=""/>
+        <constraint field="linear_feature_id" desc="" exp=""/>
+        <constraint field="blue_line_key" desc="" exp=""/>
+        <constraint field="watershed_key" desc="" exp=""/>
+        <constraint field="downstream_route_measure" desc="" exp=""/>
+        <constraint field="wscode_ltree" desc="" exp=""/>
+        <constraint field="localcode_ltree" desc="" exp=""/>
+        <constraint field="watershed_group_code" desc="" exp=""/>
+        <constraint field="barriers_ch_co_sk_dnstr" desc="" exp=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
+        <columns>
+          <column type="field" width="-1" name="barrier_type" hidden="0"/>
+          <column type="field" width="-1" name="barrier_name" hidden="0"/>
+          <column type="field" width="-1" name="linear_feature_id" hidden="0"/>
+          <column type="field" width="-1" name="blue_line_key" hidden="0"/>
+          <column type="field" width="-1" name="downstream_route_measure" hidden="0"/>
+          <column type="field" width="-1" name="wscode_ltree" hidden="0"/>
+          <column type="field" width="-1" name="localcode_ltree" hidden="0"/>
+          <column type="field" width="-1" name="watershed_group_code" hidden="0"/>
+          <column type="field" width="-1" name="barriers_ch_co_sk_id" hidden="0"/>
+          <column type="field" width="-1" name="watershed_key" hidden="0"/>
+          <column type="field" width="-1" name="barriers_ch_co_sk_dnstr" hidden="0"/>
+          <column type="actions" width="-1" hidden="1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <storedexpressions/>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field name="access_model_ch_co_sk" editable="1"/>
+        <field name="access_model_st" editable="1"/>
+        <field name="access_model_wct" editable="1"/>
+        <field name="all_rearing_belowupstrbarriers_km" editable="1"/>
+        <field name="all_rearing_km" editable="1"/>
+        <field name="all_spawning_belowupstrbarriers_km" editable="1"/>
+        <field name="all_spawning_km" editable="1"/>
+        <field name="all_spawningrearing_belowupstrbarriers_km" editable="1"/>
+        <field name="all_spawningrearing_km" editable="1"/>
+        <field name="barrier_name" editable="1"/>
+        <field name="barrier_type" editable="1"/>
+        <field name="barriers_ch_co_sk_dnstr" editable="1"/>
+        <field name="barriers_ch_co_sk_id" editable="1"/>
+        <field name="blue_line_key" editable="1"/>
+        <field name="ch_rearing_belowupstrbarriers_km" editable="1"/>
+        <field name="ch_rearing_km" editable="1"/>
+        <field name="ch_spawning_belowupstrbarriers_km" editable="1"/>
+        <field name="ch_spawning_km" editable="1"/>
+        <field name="co_rearing_belowupstrbarriers_km" editable="1"/>
+        <field name="co_rearing_km" editable="1"/>
+        <field name="co_spawning_belowupstrbarriers_km" editable="1"/>
+        <field name="co_spawning_km" editable="1"/>
+        <field name="dbm_mof_50k_grid" editable="1"/>
+        <field name="definitebarriers_salmon_id" editable="1"/>
+        <field name="dnstr_definitebarriers_salmon_id" editable="1"/>
+        <field name="downstream_route_measure" editable="1"/>
+        <field name="gradient" editable="1"/>
+        <field name="linear_feature_id" editable="1"/>
+        <field name="localcode_ltree" editable="1"/>
+        <field name="observedspp_dnstr" editable="1"/>
+        <field name="observedspp_upstr" editable="1"/>
+        <field name="salmon_belowupstrbarriers_lakereservoir_ha" editable="1"/>
+        <field name="salmon_belowupstrbarriers_network_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass03_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass05_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass08_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass15_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass22_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_slopeclass30_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_stream_km" editable="1"/>
+        <field name="salmon_belowupstrbarriers_wetland_ha" editable="1"/>
+        <field name="salmon_lakereservoir_ha" editable="1"/>
+        <field name="salmon_network_km" editable="1"/>
+        <field name="salmon_slopeclass03_km" editable="1"/>
+        <field name="salmon_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="salmon_slopeclass05_km" editable="1"/>
+        <field name="salmon_slopeclass08_km" editable="1"/>
+        <field name="salmon_slopeclass15_km" editable="1"/>
+        <field name="salmon_slopeclass22_km" editable="1"/>
+        <field name="salmon_slopeclass30_km" editable="1"/>
+        <field name="salmon_stream_km" editable="1"/>
+        <field name="salmon_wetland_ha" editable="1"/>
+        <field name="sk_rearing_belowupstrbarriers_km" editable="1"/>
+        <field name="sk_rearing_km" editable="1"/>
+        <field name="sk_spawning_belowupstrbarriers_km" editable="1"/>
+        <field name="sk_spawning_km" editable="1"/>
+        <field name="st_rearing_belowupstrbarriers_km" editable="1"/>
+        <field name="st_rearing_km" editable="1"/>
+        <field name="st_spawning_belowupstrbarriers_km" editable="1"/>
+        <field name="st_spawning_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_lakereservoir_ha" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_network_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass03_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass05_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass08_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass15_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass22_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass30_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_stream_km" editable="1"/>
+        <field name="steelhead_belowupstrbarriers_wetland_ha" editable="1"/>
+        <field name="steelhead_lakereservoir_ha" editable="1"/>
+        <field name="steelhead_network_km" editable="1"/>
+        <field name="steelhead_slopeclass03_km" editable="1"/>
+        <field name="steelhead_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="steelhead_slopeclass05_km" editable="1"/>
+        <field name="steelhead_slopeclass08_km" editable="1"/>
+        <field name="steelhead_slopeclass15_km" editable="1"/>
+        <field name="steelhead_slopeclass22_km" editable="1"/>
+        <field name="steelhead_slopeclass30_km" editable="1"/>
+        <field name="steelhead_stream_km" editable="1"/>
+        <field name="steelhead_wetland_ha" editable="1"/>
+        <field name="stream_magnitude" editable="1"/>
+        <field name="stream_order" editable="1"/>
+        <field name="total_belowupstrbarriers_lakereservoir_ha" editable="1"/>
+        <field name="total_belowupstrbarriers_network_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass03_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass05_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass08_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass15_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass22_km" editable="1"/>
+        <field name="total_belowupstrbarriers_slopeclass30_km" editable="1"/>
+        <field name="total_belowupstrbarriers_stream_km" editable="1"/>
+        <field name="total_belowupstrbarriers_wetland_ha" editable="1"/>
+        <field name="total_lakereservoir_ha" editable="1"/>
+        <field name="total_network_km" editable="1"/>
+        <field name="total_slopeclass03_km" editable="1"/>
+        <field name="total_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="total_slopeclass05_km" editable="1"/>
+        <field name="total_slopeclass08_km" editable="1"/>
+        <field name="total_slopeclass15_km" editable="1"/>
+        <field name="total_slopeclass22_km" editable="1"/>
+        <field name="total_slopeclass30_km" editable="1"/>
+        <field name="total_stream_km" editable="1"/>
+        <field name="total_wetland_ha" editable="1"/>
+        <field name="upstr_observation_id" editable="1"/>
+        <field name="watershed_group_code" editable="1"/>
+        <field name="watershed_key" editable="1"/>
+        <field name="watershed_upstr_ha" editable="1"/>
+        <field name="wct_belowupstrbarriers_lakereservoir_ha" editable="1"/>
+        <field name="wct_belowupstrbarriers_network_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass03_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass05_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass08_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass15_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass22_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_slopeclass30_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_stream_km" editable="1"/>
+        <field name="wct_belowupstrbarriers_wetland_ha" editable="1"/>
+        <field name="wct_lakereservoir_ha" editable="1"/>
+        <field name="wct_network_km" editable="1"/>
+        <field name="wct_slopeclass03_km" editable="1"/>
+        <field name="wct_slopeclass03_waterbodies_km" editable="1"/>
+        <field name="wct_slopeclass05_km" editable="1"/>
+        <field name="wct_slopeclass08_km" editable="1"/>
+        <field name="wct_slopeclass15_km" editable="1"/>
+        <field name="wct_slopeclass22_km" editable="1"/>
+        <field name="wct_slopeclass30_km" editable="1"/>
+        <field name="wct_stream_km" editable="1"/>
+        <field name="wct_wetland_ha" editable="1"/>
+        <field name="wscode_ltree" editable="1"/>
+      </editable>
+      <labelOnTop>
+        <field name="access_model_ch_co_sk" labelOnTop="0"/>
+        <field name="access_model_st" labelOnTop="0"/>
+        <field name="access_model_wct" labelOnTop="0"/>
+        <field name="all_rearing_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="all_rearing_km" labelOnTop="0"/>
+        <field name="all_spawning_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="all_spawning_km" labelOnTop="0"/>
+        <field name="all_spawningrearing_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="all_spawningrearing_km" labelOnTop="0"/>
+        <field name="barrier_name" labelOnTop="0"/>
+        <field name="barrier_type" labelOnTop="0"/>
+        <field name="barriers_ch_co_sk_dnstr" labelOnTop="0"/>
+        <field name="barriers_ch_co_sk_id" labelOnTop="0"/>
+        <field name="blue_line_key" labelOnTop="0"/>
+        <field name="ch_rearing_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="ch_rearing_km" labelOnTop="0"/>
+        <field name="ch_spawning_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="ch_spawning_km" labelOnTop="0"/>
+        <field name="co_rearing_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="co_rearing_km" labelOnTop="0"/>
+        <field name="co_spawning_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="co_spawning_km" labelOnTop="0"/>
+        <field name="dbm_mof_50k_grid" labelOnTop="0"/>
+        <field name="definitebarriers_salmon_id" labelOnTop="0"/>
+        <field name="dnstr_definitebarriers_salmon_id" labelOnTop="0"/>
+        <field name="downstream_route_measure" labelOnTop="0"/>
+        <field name="gradient" labelOnTop="0"/>
+        <field name="linear_feature_id" labelOnTop="0"/>
+        <field name="localcode_ltree" labelOnTop="0"/>
+        <field name="observedspp_dnstr" labelOnTop="0"/>
+        <field name="observedspp_upstr" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_lakereservoir_ha" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_network_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass03_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass05_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass08_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass15_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass22_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_slopeclass30_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_stream_km" labelOnTop="0"/>
+        <field name="salmon_belowupstrbarriers_wetland_ha" labelOnTop="0"/>
+        <field name="salmon_lakereservoir_ha" labelOnTop="0"/>
+        <field name="salmon_network_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass03_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass05_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass08_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass15_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass22_km" labelOnTop="0"/>
+        <field name="salmon_slopeclass30_km" labelOnTop="0"/>
+        <field name="salmon_stream_km" labelOnTop="0"/>
+        <field name="salmon_wetland_ha" labelOnTop="0"/>
+        <field name="sk_rearing_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="sk_rearing_km" labelOnTop="0"/>
+        <field name="sk_spawning_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="sk_spawning_km" labelOnTop="0"/>
+        <field name="st_rearing_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="st_rearing_km" labelOnTop="0"/>
+        <field name="st_spawning_belowupstrbarriers_km" labelOnTop="0"/>
+        <field name="st_spawning_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_lakereservoir_ha" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_network_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass03_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass05_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass08_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass15_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass22_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_slopeclass30_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_stream_km" labelOnTop="0"/>
+        <field name="steelhead_belowupstrbarriers_wetland_ha" labelOnTop="0"/>
+        <field name="steelhead_lakereservoir_ha" labelOnTop="0"/>
+        <field name="steelhead_network_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass03_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass05_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass08_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass15_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass22_km" labelOnTop="0"/>
+        <field name="steelhead_slopeclass30_km" labelOnTop="0"/>
+        <field name="steelhead_stream_km" labelOnTop="0"/>
+        <field name="steelhead_wetland_ha" labelOnTop="0"/>
+        <field name="stream_magnitude" labelOnTop="0"/>
+        <field name="stream_order" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_lakereservoir_ha" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_network_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass03_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass05_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass08_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass15_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass22_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_slopeclass30_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_stream_km" labelOnTop="0"/>
+        <field name="total_belowupstrbarriers_wetland_ha" labelOnTop="0"/>
+        <field name="total_lakereservoir_ha" labelOnTop="0"/>
+        <field name="total_network_km" labelOnTop="0"/>
+        <field name="total_slopeclass03_km" labelOnTop="0"/>
+        <field name="total_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="total_slopeclass05_km" labelOnTop="0"/>
+        <field name="total_slopeclass08_km" labelOnTop="0"/>
+        <field name="total_slopeclass15_km" labelOnTop="0"/>
+        <field name="total_slopeclass22_km" labelOnTop="0"/>
+        <field name="total_slopeclass30_km" labelOnTop="0"/>
+        <field name="total_stream_km" labelOnTop="0"/>
+        <field name="total_wetland_ha" labelOnTop="0"/>
+        <field name="upstr_observation_id" labelOnTop="0"/>
+        <field name="watershed_group_code" labelOnTop="0"/>
+        <field name="watershed_key" labelOnTop="0"/>
+        <field name="watershed_upstr_ha" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_lakereservoir_ha" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_network_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass03_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass05_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass08_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass15_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass22_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_slopeclass30_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_stream_km" labelOnTop="0"/>
+        <field name="wct_belowupstrbarriers_wetland_ha" labelOnTop="0"/>
+        <field name="wct_lakereservoir_ha" labelOnTop="0"/>
+        <field name="wct_network_km" labelOnTop="0"/>
+        <field name="wct_slopeclass03_km" labelOnTop="0"/>
+        <field name="wct_slopeclass03_waterbodies_km" labelOnTop="0"/>
+        <field name="wct_slopeclass05_km" labelOnTop="0"/>
+        <field name="wct_slopeclass08_km" labelOnTop="0"/>
+        <field name="wct_slopeclass15_km" labelOnTop="0"/>
+        <field name="wct_slopeclass22_km" labelOnTop="0"/>
+        <field name="wct_slopeclass30_km" labelOnTop="0"/>
+        <field name="wct_stream_km" labelOnTop="0"/>
+        <field name="wct_wetland_ha" labelOnTop="0"/>
+        <field name="wscode_ltree" labelOnTop="0"/>
+      </labelOnTop>
+      <reuseLastValue>
+        <field name="barrier_name" reuseLastValue="0"/>
+        <field name="barrier_type" reuseLastValue="0"/>
+        <field name="barriers_ch_co_sk_dnstr" reuseLastValue="0"/>
+        <field name="barriers_ch_co_sk_id" reuseLastValue="0"/>
+        <field name="blue_line_key" reuseLastValue="0"/>
+        <field name="downstream_route_measure" reuseLastValue="0"/>
+        <field name="linear_feature_id" reuseLastValue="0"/>
+        <field name="localcode_ltree" reuseLastValue="0"/>
+        <field name="watershed_group_code" reuseLastValue="0"/>
+        <field name="watershed_key" reuseLastValue="0"/>
+        <field name="wscode_ltree" reuseLastValue="0"/>
+      </reuseLastValue>
+      <dataDefinedFieldProperties/>
+      <widgets/>
+      <previewExpression>"barrier_name"</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer symbologyReferenceScale="-1" geometry="Point" autoRefreshTime="0" simplifyDrawingTol="1" simplifyLocal="1" minScale="100000000" autoRefreshEnabled="0" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" labelsEnabled="0" legendPlaceholderImage="" wkbType="Point" styleCategories="AllStyleCategories" readOnly="0" simplifyAlgorithm="0" refreshOnNotifyMessage="" maxScale="0" simplifyDrawingHints="0" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>886392.00261624006088823</xmin>
+        <ymin>523537.7207724780892022</ymin>
+        <xmax>1398300.47596206329762936</xmax>
+        <ymax>1164027.60681837587617338</ymax>
+      </extent>
+      <wgs84extent>
+        <xmin>-127.80075459810917948</xmin>
+        <ymin>49.58849325187683377</ymin>
+        <xmax>-119.702006071016541</xmax>
+        <ymax>55.47298392006428713</ymax>
+      </wgs84extent>
+      <id>barriers_st_e6eda517_6810_4743_a605_f8e08a3c76b8</id>
+      <datasource>dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_st_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."barriers_st" (geom)</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>barriers_st</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>PROJCRS["NAD83 / BC Albers",BASEGEOGCRS["NAD83",DATUM["North American Datum 1983",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4269]],CONVERSION["British Columbia Albers",METHOD["Albers Equal Area",ID["EPSG",9822]],PARAMETER["Latitude of false origin",45,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],PARAMETER["Longitude of false origin",-126,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],PARAMETER["Latitude of 1st standard parallel",50,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],PARAMETER["Latitude of 2nd standard parallel",58.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],PARAMETER["Easting at false origin",1000000,LENGTHUNIT["metre",1],ID["EPSG",8826]],PARAMETER["Northing at false origin",0,LENGTHUNIT["metre",1],ID["EPSG",8827]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Province-wide spatial data management."],AREA["Canada - British Columbia."],BBOX[48.25,-139.04,60.01,-114.08]],ID["EPSG",3005]]</wkt>
+          <proj4>+proj=aea +lat_0=45 +lon_0=-126 +lat_1=50 +lat_2=58.5 +x_0=1000000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>970</srsid>
+          <srid>3005</srid>
+          <authid>EPSG:3005</authid>
+          <description>NAD83 / BC Albers</description>
+          <projectionacronym>aea</projectionacronym>
+          <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys nativeFormat="Wkt">
+            <wkt>PROJCRS["NAD83 / BC Albers",BASEGEOGCRS["NAD83",DATUM["North American Datum 1983",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4269]],CONVERSION["British Columbia Albers",METHOD["Albers Equal Area",ID["EPSG",9822]],PARAMETER["Latitude of false origin",45,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],PARAMETER["Longitude of false origin",-126,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],PARAMETER["Latitude of 1st standard parallel",50,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],PARAMETER["Latitude of 2nd standard parallel",58.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],PARAMETER["Easting at false origin",1000000,LENGTHUNIT["metre",1],ID["EPSG",8826]],PARAMETER["Northing at false origin",0,LENGTHUNIT["metre",1],ID["EPSG",8827]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Province-wide spatial data management."],AREA["Canada - British Columbia."],BBOX[48.25,-139.04,60.01,-114.08]],ID["EPSG",3005]]</wkt>
+            <proj4>+proj=aea +lat_0=45 +lon_0=-126 +lat_1=50 +lat_2=58.5 +x_0=1000000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+            <srsid>970</srsid>
+            <srid>3005</srid>
+            <authid>EPSG:3005</authid>
+            <description>NAD83 / BC Albers</description>
+            <projectionacronym>aea</projectionacronym>
+            <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+            <geographicflag>false</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
       </resourceMetadata>
       <provider encoding="">postgres</provider>
       <vectorjoins/>
@@ -16306,11 +17180,137 @@ def my_form_open(dialog, layer, feature):
       </geometryOptions>
       <legend type="default-vector" showLabelLegend="0"/>
       <referencedLayers/>
-      <fieldConfiguration/>
-      <aliases/>
-      <defaults/>
-      <constraints/>
-      <constraintExpressions/>
+      <fieldConfiguration>
+        <field name="barriers_st_id" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barrier_type" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barrier_name" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="linear_feature_id" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="blue_line_key" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="watershed_key" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="downstream_route_measure" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="wscode_ltree" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="localcode_ltree" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="watershed_group_code" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="barriers_st_dnstr" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="barriers_st_id" name="" index="0"/>
+        <alias field="barrier_type" name="" index="1"/>
+        <alias field="barrier_name" name="" index="2"/>
+        <alias field="linear_feature_id" name="" index="3"/>
+        <alias field="blue_line_key" name="" index="4"/>
+        <alias field="watershed_key" name="" index="5"/>
+        <alias field="downstream_route_measure" name="" index="6"/>
+        <alias field="wscode_ltree" name="" index="7"/>
+        <alias field="localcode_ltree" name="" index="8"/>
+        <alias field="watershed_group_code" name="" index="9"/>
+        <alias field="barriers_st_dnstr" name="" index="10"/>
+      </aliases>
+      <defaults>
+        <default field="barriers_st_id" expression="" applyOnUpdate="0"/>
+        <default field="barrier_type" expression="" applyOnUpdate="0"/>
+        <default field="barrier_name" expression="" applyOnUpdate="0"/>
+        <default field="linear_feature_id" expression="" applyOnUpdate="0"/>
+        <default field="blue_line_key" expression="" applyOnUpdate="0"/>
+        <default field="watershed_key" expression="" applyOnUpdate="0"/>
+        <default field="downstream_route_measure" expression="" applyOnUpdate="0"/>
+        <default field="wscode_ltree" expression="" applyOnUpdate="0"/>
+        <default field="localcode_ltree" expression="" applyOnUpdate="0"/>
+        <default field="watershed_group_code" expression="" applyOnUpdate="0"/>
+        <default field="barriers_st_dnstr" expression="" applyOnUpdate="0"/>
+      </defaults>
+      <constraints>
+        <constraint notnull_strength="1" exp_strength="0" field="barriers_st_id" constraints="3" unique_strength="1"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barrier_type" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barrier_name" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="linear_feature_id" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="blue_line_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="downstream_route_measure" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="wscode_ltree" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="localcode_ltree" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_group_code" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barriers_st_dnstr" constraints="0" unique_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="barriers_st_id" desc="" exp=""/>
+        <constraint field="barrier_type" desc="" exp=""/>
+        <constraint field="barrier_name" desc="" exp=""/>
+        <constraint field="linear_feature_id" desc="" exp=""/>
+        <constraint field="blue_line_key" desc="" exp=""/>
+        <constraint field="watershed_key" desc="" exp=""/>
+        <constraint field="downstream_route_measure" desc="" exp=""/>
+        <constraint field="wscode_ltree" desc="" exp=""/>
+        <constraint field="localcode_ltree" desc="" exp=""/>
+        <constraint field="watershed_group_code" desc="" exp=""/>
+        <constraint field="barriers_st_dnstr" desc="" exp=""/>
+      </constraintExpressions>
       <expressionfields/>
       <attributeactions>
         <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
@@ -16747,12 +17747,24 @@ def my_form_open(dialog, layer, feature):
       <mapTip></mapTip>
     </maplayer>
     <maplayer symbologyReferenceScale="-1" geometry="Point" autoRefreshTime="0" simplifyDrawingTol="1" simplifyLocal="1" minScale="100000000" autoRefreshEnabled="0" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" labelsEnabled="0" legendPlaceholderImage="" wkbType="Point" styleCategories="AllStyleCategories" readOnly="0" simplifyAlgorithm="0" refreshOnNotifyMessage="" maxScale="0" simplifyDrawingHints="0" refreshOnNotifyEnabled="0">
-      <id>Definite_barriers__Westslope_Cutthroat_Trout_8af5ee91_c575_4cd4_a6b2_0b0d682fa774</id>
-      <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='definitebarriers_wct_id' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."definitebarriers_wct" (geom)</datasource>
+      <extent>
+        <xmin>1766031.50674088834784925</xmin>
+        <ymin>507393.30618016776861623</ymin>
+        <xmax>1869121.13825450907461345</xmax>
+        <ymax>677920.45690088893752545</ymax>
+      </extent>
+      <wgs84extent>
+        <xmin>-115.49019897596909345</xmin>
+        <ymin>48.92385018129881047</ymin>
+        <xmax>-113.69904137410870248</xmax>
+        <ymax>50.58622134087827504</ymax>
+      </wgs84extent>
+      <id>barriers_wct_334b4232_1845_4a8f_a100_d954f7719b18</id>
+      <datasource>dbname='bcfishpass' host=localhost port=5432 sslmode=disable key='barriers_wct_id' srid=3005 type=Point checkPrimaryKeyUnicity='1' table="bcfishpass"."barriers_wct" (geom)</datasource>
       <keywordList>
         <value></value>
       </keywordList>
-      <layername>Definite barriers, Westslope Cutthroat Trout</layername>
+      <layername>barriers_wct</layername>
       <srs>
         <spatialrefsys nativeFormat="Wkt">
           <wkt>PROJCRS["NAD83 / BC Albers",BASEGEOGCRS["NAD83",DATUM["North American Datum 1983",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4269]],CONVERSION["British Columbia Albers",METHOD["Albers Equal Area",ID["EPSG",9822]],PARAMETER["Latitude of false origin",45,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],PARAMETER["Longitude of false origin",-126,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],PARAMETER["Latitude of 1st standard parallel",50,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],PARAMETER["Latitude of 2nd standard parallel",58.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],PARAMETER["Easting at false origin",1000000,LENGTHUNIT["metre",1],ID["EPSG",8826]],PARAMETER["Northing at false origin",0,LENGTHUNIT["metre",1],ID["EPSG",8827]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Province-wide spatial data management."],AREA["Canada - British Columbia."],BBOX[48.25,-139.04,60.01,-114.08]],ID["EPSG",3005]]</wkt>
@@ -16773,15 +17785,6 @@ def my_form_open(dialog, layer, feature):
         <type>dataset</type>
         <title></title>
         <abstract></abstract>
-        <contact>
-          <name></name>
-          <organization></organization>
-          <position></position>
-          <voice></voice>
-          <fax></fax>
-          <email></email>
-          <role></role>
-        </contact>
         <links/>
         <fees></fees>
         <encoding></encoding>
@@ -16798,15 +17801,7 @@ def my_form_open(dialog, layer, feature):
             <geographicflag>false</geographicflag>
           </spatialrefsys>
         </crs>
-        <extent>
-          <spatial crs="EPSG:3005" minx="0" maxz="0" miny="0" maxy="0" dimensions="2" maxx="0" minz="0"/>
-          <temporal>
-            <period>
-              <start></start>
-              <end></end>
-            </period>
-          </temporal>
-        </extent>
+        <extent/>
       </resourceMetadata>
       <provider encoding="">postgres</provider>
       <vectorjoins/>
@@ -17126,8 +18121,8 @@ def my_form_open(dialog, layer, feature):
       <legend type="default-vector" showLabelLegend="0"/>
       <referencedLayers/>
       <fieldConfiguration>
-        <field name="definitebarriers_wct_id" configurationFlags="None">
-          <editWidget type="Range">
+        <field name="barriers_wct_id" configurationFlags="None">
+          <editWidget type="">
             <config>
               <Option/>
             </config>
@@ -17161,6 +18156,13 @@ def my_form_open(dialog, layer, feature):
             </config>
           </editWidget>
         </field>
+        <field name="watershed_key" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
         <field name="downstream_route_measure" configurationFlags="None">
           <editWidget type="TextEdit">
             <config>
@@ -17189,50 +18191,65 @@ def my_form_open(dialog, layer, feature):
             </config>
           </editWidget>
         </field>
+        <field name="barriers_wct_dnstr" configurationFlags="None">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
       </fieldConfiguration>
       <aliases>
-        <alias field="definitebarriers_wct_id" name="" index="0"/>
+        <alias field="barriers_wct_id" name="" index="0"/>
         <alias field="barrier_type" name="" index="1"/>
         <alias field="barrier_name" name="" index="2"/>
         <alias field="linear_feature_id" name="" index="3"/>
         <alias field="blue_line_key" name="" index="4"/>
-        <alias field="downstream_route_measure" name="" index="5"/>
-        <alias field="wscode_ltree" name="" index="6"/>
-        <alias field="localcode_ltree" name="" index="7"/>
-        <alias field="watershed_group_code" name="" index="8"/>
+        <alias field="watershed_key" name="" index="5"/>
+        <alias field="downstream_route_measure" name="" index="6"/>
+        <alias field="wscode_ltree" name="" index="7"/>
+        <alias field="localcode_ltree" name="" index="8"/>
+        <alias field="watershed_group_code" name="" index="9"/>
+        <alias field="barriers_wct_dnstr" name="" index="10"/>
       </aliases>
       <defaults>
-        <default field="definitebarriers_wct_id" expression="" applyOnUpdate="0"/>
+        <default field="barriers_wct_id" expression="" applyOnUpdate="0"/>
         <default field="barrier_type" expression="" applyOnUpdate="0"/>
         <default field="barrier_name" expression="" applyOnUpdate="0"/>
         <default field="linear_feature_id" expression="" applyOnUpdate="0"/>
         <default field="blue_line_key" expression="" applyOnUpdate="0"/>
+        <default field="watershed_key" expression="" applyOnUpdate="0"/>
         <default field="downstream_route_measure" expression="" applyOnUpdate="0"/>
         <default field="wscode_ltree" expression="" applyOnUpdate="0"/>
         <default field="localcode_ltree" expression="" applyOnUpdate="0"/>
         <default field="watershed_group_code" expression="" applyOnUpdate="0"/>
+        <default field="barriers_wct_dnstr" expression="" applyOnUpdate="0"/>
       </defaults>
       <constraints>
-        <constraint notnull_strength="1" exp_strength="0" field="definitebarriers_wct_id" constraints="3" unique_strength="1"/>
+        <constraint notnull_strength="1" exp_strength="0" field="barriers_wct_id" constraints="3" unique_strength="1"/>
         <constraint notnull_strength="0" exp_strength="0" field="barrier_type" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="barrier_name" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="linear_feature_id" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="blue_line_key" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="watershed_key" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="downstream_route_measure" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="wscode_ltree" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="localcode_ltree" constraints="0" unique_strength="0"/>
         <constraint notnull_strength="0" exp_strength="0" field="watershed_group_code" constraints="0" unique_strength="0"/>
+        <constraint notnull_strength="0" exp_strength="0" field="barriers_wct_dnstr" constraints="0" unique_strength="0"/>
       </constraints>
       <constraintExpressions>
-        <constraint field="definitebarriers_wct_id" desc="" exp=""/>
+        <constraint field="barriers_wct_id" desc="" exp=""/>
         <constraint field="barrier_type" desc="" exp=""/>
         <constraint field="barrier_name" desc="" exp=""/>
         <constraint field="linear_feature_id" desc="" exp=""/>
         <constraint field="blue_line_key" desc="" exp=""/>
+        <constraint field="watershed_key" desc="" exp=""/>
         <constraint field="downstream_route_measure" desc="" exp=""/>
         <constraint field="wscode_ltree" desc="" exp=""/>
         <constraint field="localcode_ltree" desc="" exp=""/>
         <constraint field="watershed_group_code" desc="" exp=""/>
+        <constraint field="barriers_wct_dnstr" desc="" exp=""/>
       </constraintExpressions>
       <expressionfields/>
       <attributeactions>
@@ -17682,7 +18699,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.633147870779041</xmax>
         <ymax>60.15448373548640149</ymax>
       </wgs84extent>
-      <id>FISS_stream_sample_site_d20de39c_2f52_4741_8cdc_b40683375b4b</id>
+      <id>FISS_stream_sample_site_9217c051_b08f_44ae_9389_b3c3578bfc32</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="whse_fish"."fiss_stream_sample_sites_sp" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -19356,7 +20373,7 @@ def my_form_open(dialog, layer, feature):
       <mapTip></mapTip>
     </maplayer>
     <maplayer symbologyReferenceScale="-1" geometry="Point" autoRefreshTime="0" simplifyDrawingTol="1" simplifyLocal="1" minScale="100000000" autoRefreshEnabled="0" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" labelsEnabled="1" legendPlaceholderImage="" wkbType="Point" styleCategories="AllStyleCategories" readOnly="0" simplifyAlgorithm="0" refreshOnNotifyMessage="" maxScale="0" simplifyDrawingHints="0" refreshOnNotifyEnabled="0">
-      <id>FISS_fish_observation_64a7fb9e_cdc7_4887_bc74_64e5b8a1b984</id>
+      <id>FISS_fish_observation_ff48d1c6_3e96_4a51_b8e9_6e5f5eee7593</id>
       <datasource>dbname='postgis' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='fish_obsrvtn_pnt_distinct_id' estimatedmetadata=true checkPrimaryKeyUnicity='1' table="(SELECT    fish_obsrvtn_pnt_distinct_id,   array_to_string(array_agg(species_code), ' ') as species_code,   geom FROM  (SELECT DISTINCT   fish_obsrvtn_pnt_distinct_id,   unnest(species_codes) species_code,   geom FROM whse_fish.fiss_fish_obsrvtn_pnt_distinct ORDER BY fish_obsrvtn_pnt_distinct_id, species_code ) as f GROUP BY  fish_obsrvtn_pnt_distinct_id, geom
 )" (geom)</datasource>
       <keywordList>
@@ -19836,7 +20853,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.65525939271741152</xmax>
         <ymax>60.32314744133471152</ymax>
       </wgs84extent>
-      <id>FISS_obstacles_7e7ff66c_585a_45e4_ad5c_165940f5bdd2</id>
+      <id>FISS_obstacles_163b89c0_df9e_4dd4_922d_b032490bbb30</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=Point checkPrimaryKeyUnicity='1' table="whse_fish"."fiss_obstacles_pnt_sp" (geom) sql="obstacle_name" != 'Culvert'</datasource>
       <keywordList>
         <value></value>
@@ -20661,7 +21678,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.20197004403189567</xmax>
         <ymax>60.1948407760382409</ymax>
       </wgs84extent>
-      <id>Environment_Canada_hydrometric_station_7a071ddb_ef7a_47c3_9803_7cf763ad8e72</id>
+      <id>Environment_Canada_hydrometric_station_f55fe388_497c_4594_a204_a41e8ae39341</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPoint checkPrimaryKeyUnicity='1' table="whse_environmental_monitoring"."envcan_hydrometric_stn_sp" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -21400,7 +22417,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.96031666608558908</xmax>
         <ymax>58.91509685066721858</ymax>
       </wgs84extent>
-      <id>Transmission_line_a2b281c7_2dca_4cb2_8f07_e12f52c0f6ac</id>
+      <id>Transmission_line_12c90fa1_6290_4eb1_b9e6_370c9c7f447c</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table="whse_basemapping"."gba_transmission_lines_sp" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -21894,7 +22911,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.48956870008747444</xmax>
         <ymax>60.28165792149437863</ymax>
       </wgs84extent>
-      <id>Railway_a35091ef_fa2b_449b_a777_2e1f15cdf587</id>
+      <id>Railway_08317b65_0650_42d9_a5b8_9939bf88498d</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='railway_track_id' estimatedmetadata=true srid=3005 type=LineString checkPrimaryKeyUnicity='1' table="whse_basemapping"."gba_railway_tracks_sp" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -22993,7 +24010,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.6952937490410136</xmax>
         <ymax>60.08840643618788135</ymax>
       </wgs84extent>
-      <id>Roads___FTEN_7df3e8e3_43a7_49da_ba8d_361d7ad8aede</id>
+      <id>Roads___FTEN_8d744a4e_f709_4abd_92a0_5aba88bb35a4</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table="whse_forest_tenure"."ften_road_section_lines_svw" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -24203,7 +25220,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.06001263900297715</xmax>
         <ymax>61.28454864397247803</ymax>
       </wgs84extent>
-      <id>Roads___DRA_71fb26f2_f8be_4d57_a8b3_1f3dd7c4ca98</id>
+      <id>Roads___DRA_8927aa4b_944e_45bd_b914_fb7c7e26dc60</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='transport_line_id' estimatedmetadata=true srid=3005 type=MultiLineStringZ checkPrimaryKeyUnicity='1' table="whse_basemapping"."transport_line" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -26878,7 +27895,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.49736567460038827</xmax>
         <ymax>60.51639863495617533</ymax>
       </wgs84extent>
-      <id>fwa_named_streams_09e6d59c_3902_4189_bd3c_924617bcb9ce</id>
+      <id>fwa_named_streams_178a7c07_d73e_4b9b_941a_483a8d9cfb07</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='named_streams_id' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_named_streams" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -27618,7 +28635,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-112.37630827019840751</xmax>
         <ymax>55.48287528879821195</ymax>
       </wgs84extent>
-      <id>Streams___accessibility_model___habitat_model_a0293412_3a5d_414c_8507_948e12d242e5</id>
+      <id>Streams___accessibility_model___habitat_model_39078187_d378_4ae9_9de8_b56b6a1086e2</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table="bcfishpass"."streams" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -30546,7 +31563,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-112.37630827019840751</xmax>
         <ymax>55.48287528879821195</ymax>
       </wgs84extent>
-      <id>Streams___accessibility_model___gradient_ce435a83_fc34_479f_8a04_13f4e1eb0420</id>
+      <id>Streams___accessibility_model___gradient_33b4688e_d5e5_424e_b4b1_c99c0e35c70b</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table="bcfishpass"."streams" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -34096,7 +35113,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-112.37630827019840751</xmax>
         <ymax>55.48287528879821195</ymax>
       </wgs84extent>
-      <id>Streams___habitat_model_d86326ea_2c26_44b6_8dd9_2e40c192b1f3</id>
+      <id>Streams___habitat_model_b7b6e6d8_b6ab_4bb5_9d98_23025c3ae75e</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table="bcfishpass"."streams" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -35285,7 +36302,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.42592629245142177</xmax>
         <ymax>60.60490342377047313</ymax>
       </wgs84extent>
-      <id>Watershed_group_boundary_fd9552fa_b0a5_4381_9ae3_cabc3ba16b87</id>
+      <id>Watershed_group_boundary_5baacf3a_a41f_4bbd_abbc_aac34e1456a7</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='watershed_group_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_watershed_groups_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -35739,7 +36756,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.47416843299890843</xmax>
         <ymax>60.1283466511891973</ymax>
       </wgs84extent>
-      <id>abms_municipalities_sp_cbe716b3_dc3c_4c81_8936_57d30ae86f43</id>
+      <id>abms_municipalities_sp_319f2673_a672_4241_872d_ad5c3a34e3d8</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table="whse_legal_admin_boundaries"."abms_municipalities_sp" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -36554,7 +37571,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.94713301106102676</xmax>
         <ymax>60.60515843666482283</ymax>
       </wgs84extent>
-      <id>Glaicier_2f05e2e8_7c3c_4591_8aef_ff88e6a5e0ad</id>
+      <id>Glaicier_7fe0fa9b_e262_414d_bf7b_c77c2cb9b517</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_glaciers_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -37251,7 +38268,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.49100484023513502</xmax>
         <ymax>60.49659752580388528</ymax>
       </wgs84extent>
-      <id>Lake_7027549c_ddf0_40f5_b207_4e15572d55e6</id>
+      <id>Lake_93382962_d896_4a3e_bd79_f419d63cedf6</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_lakes_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -38231,7 +39248,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.20583857640841074</xmax>
         <ymax>59.99448343847035403</ymax>
       </wgs84extent>
-      <id>Reservoir_93a688c5_4b10_49fc_b98e_027eb2359667</id>
+      <id>Reservoir_949b5b5f_f5e1_4a06_b3b3_668f3691c957</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_manmade_waterbodies_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -38864,7 +39881,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.42592629245142177</xmax>
         <ymax>60.60490342377047313</ymax>
       </wgs84extent>
-      <id>fwa_linear_boundaries_sp_fab818a6_e075_4705_a211_e9943f119939</id>
+      <id>fwa_linear_boundaries_sp_ec579200_54ce_4106_8c96_31ab0a2867a5</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='linear_feature_id' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_linear_boundaries_sp" (geom) sql=edge_type IN (1500,1800,1850,1600,1900,1950,1825,1625,1525)</datasource>
       <keywordList>
         <value></value>
@@ -39414,7 +40431,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.67064167300409849</xmax>
         <ymax>60.51391724802207506</ymax>
       </wgs84extent>
-      <id>River_2a1d108c_929b_4929_82e4_7562641d0f37</id>
+      <id>River_8d652a20_1ad3_4703_99f8_f833446c0896</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_rivers_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -40047,7 +41064,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.48737306302886907</xmax>
         <ymax>60.49429048882863924</ymax>
       </wgs84extent>
-      <id>Wetland_88e2aa4a_b953_451d_9d02_2a868f03f2e4</id>
+      <id>Wetland_c551a962_7d43_4bd5_8371_fd4874e42e9e</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='waterbody_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_wetlands_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -40799,7 +41816,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-112.37630827019840751</xmax>
         <ymax>55.48287528879821195</ymax>
       </wgs84extent>
-      <id>Streams___non_accessible_1afc902b_4776_4d07_a278_fceabd44b574</id>
+      <id>Streams___non_accessible_0edac447_89a4_41df_a6b3_4ada8c995c43</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='segmented_stream_id' estimatedmetadata=true srid=3005 type=LineStringZM checkPrimaryKeyUnicity='1' table="bcfishpass"."streams" (geom) sql="access_model_ch_co_sk" IS NULL AND "access_model_st" IS NULL AND "access_model_wct" IS NULL </datasource>
       <keywordList>
         <value></value>
@@ -42071,7 +43088,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.34745754740414725</xmax>
         <ymax>60.61304126281645921</ymax>
       </wgs84extent>
-      <id>trim_contour_lines_2dbcc10d_f938_4068_a2e9_4eb4392f9ee1</id>
+      <id>trim_contour_lines_b338dac7_c41b_42bc_8796_4bfcff37193c</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiLineString checkPrimaryKeyUnicity='1' table="whse_basemapping"."trim_contour_lines" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -43013,7 +44030,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-115.35862216727274188</xmax>
         <ymax>52.94633569821963448</ymax>
       </wgs84extent>
-      <id>Provincial_National_Park_61d245de_3f48_410c_9725_cd7abfff0f5f</id>
+      <id>Provincial_National_Park_bff0e76b_a93f_4266_8b27_f0cbee6d58c2</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_admin_boundaries"."clab_national_parks" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -43646,7 +44663,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.42724424954876383</xmax>
         <ymax>60.60445063457326142</ymax>
       </wgs84extent>
-      <id>Provincial_Park_5c9aae10_de96_47be_9695_a357abc02245</id>
+      <id>Provincial_Park_51467bc5_5fa1_4dca_a630_230d40a31a49</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table="whse_tantalis"."ta_park_ecores_pa_svw" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -44341,7 +45358,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-111.92186021508572935</xmax>
         <ymax>59.9604559910430055</ymax>
       </wgs84extent>
-      <id>First_Nations_Reserve_39bcae02_02cd_4897_89cc_4ba64577f3e5</id>
+      <id>First_Nations_Reserve_c8843ca0_5799_4d27_8716_7306006819b5</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_admin_boundaries"."clab_indian_reserves" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -44807,7 +45824,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.94443463975443365</xmax>
         <ymax>60.41678484804707239</ymax>
       </wgs84extent>
-      <id>Private_land__PMBC__8d168671_b4f6_4db8_b729_92e70aebae6d</id>
+      <id>Private_land__PMBC__ec13f364_835a_471c_93b8_3809d663327a</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='parcel_fabric_poly_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_cadastre"."pmbc_parcel_fabric_poly_svw" (geom) sql="owner_type" = 'Private' and "municipality" = 'Rural'</datasource>
       <keywordList>
         <value></value>
@@ -45331,7 +46348,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.42592629245142177</xmax>
         <ymax>60.60490342377047313</ymax>
       </wgs84extent>
-      <id>fwa_watersheds_poly_6415c42d_87de_4b1c_840d_35b6854ead34</id>
+      <id>fwa_watersheds_poly_04bde4ac_41e4_41af_98e5_2a8bd4fc508a</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='watershed_feature_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_watersheds_poly" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -46149,7 +47166,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.42722911058123714</xmax>
         <ymax>60.60491336734946799</ymax>
       </wgs84extent>
-      <id>Forested_area_606e7acc_777b_4a73_9d18_da1dcf915ffc</id>
+      <id>Forested_area_68a10352_4cf5_47fb_8459_528381a6aec3</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='feature_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_forest_vegetation"."veg_comp_lyr_r1_poly" (geom) sql=bclcs_level_1 = 'V' AND bclcs_level_2 = 'T' </datasource>
       <keywordList>
         <value></value>
@@ -49151,7 +50168,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-121.81648247661397022</xmax>
         <ymax>59.50592698238894229</ymax>
       </wgs84extent>
-      <id>trim_ebm_ocean_8c2a2c97_572c_49b6_989f_f4dd7e1b5947</id>
+      <id>trim_ebm_ocean_e938459c_a88b_4558_9a65_7913085b7660</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiSurface checkPrimaryKeyUnicity='1' table="whse_basemapping"."trim_ebm_ocean" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -49585,7 +50602,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.30548663659220665</xmax>
         <ymax>60.69714921017146025</ymax>
       </wgs84extent>
-      <id>bc_hshd_tif_35d8657a_a73e_4bd8_9ece_8270e20d57f4</id>
+      <id>bc_hshd_tif_60d9675e_6cde_4b24_a2f4_154249862cc2</id>
       <datasource>/vsis3/geobc/bc_hshd.tif</datasource>
       <keywordList>
         <value></value>
@@ -49751,7 +50768,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>179.99999999999997158</xmax>
         <ymax>85.05112877980660357</ymax>
       </wgs84extent>
-      <id>Bing_VirtualEarth_7c6400b3_ce05_4f65_bc04_7cf8a9be94e7</id>
+      <id>Bing_VirtualEarth_6f45a3e4_4009_4f7b_9da4_47674b62a5d0</id>
       <datasource>crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=http://ecn.t3.tiles.virtualearth.net/tiles/a%7Bq%7D.jpeg?g%3D1&amp;zmax=19&amp;zmin=1</datasource>
       <keywordList>
         <value></value>
@@ -49862,7 +50879,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>179.99999999999997158</xmax>
         <ymax>85.05112877980660357</ymax>
       </wgs84extent>
-      <id>Google_Satellite_6a153ab2_b351_4585_b169_0a80389b3ad9</id>
+      <id>Google_Satellite_d883f871_1965_466f_945a_924238b51d24</id>
       <datasource>crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=https://mt1.google.com/vt/lyrs%3Ds%26x%3D%7Bx%7D%26y%3D%7By%7D%26z%3D%7Bz%7D&amp;zmax=19&amp;zmin=0</datasource>
       <keywordList>
         <value></value>
@@ -49973,7 +50990,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.42592629245142177</xmax>
         <ymax>60.60490342377047313</ymax>
       </wgs84extent>
-      <id>Watershed_group_boundary_e8dfec38_9133_4d67_a77e_779f2a93da54</id>
+      <id>Watershed_group_boundary_2b3048a0_a708_46a4_9021_4a767ec049a3</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='watershed_group_id' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."fwa_watershed_groups_poly" (geom) sql="watershed_group_code" IN ('HORS','BULK','MORR','LNIC','ELKR')</datasource>
       <keywordList>
         <value></value>
@@ -50427,7 +51444,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>179.99999999999997158</xmax>
         <ymax>85.05112877980660357</ymax>
       </wgs84extent>
-      <id>Esri_Topo_World_bfd870d9_aaf8_4969_8221_799a911d1830</id>
+      <id>Esri_Topo_World_9a40ecb5_bb7f_4020_951a_bd940f5f2db5</id>
       <datasource>crs=EPSG:3857&amp;format&amp;type=xyz&amp;url=http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/%7Bz%7D/%7By%7D/%7Bx%7D&amp;zmax=20&amp;zmin=0</datasource>
       <keywordList>
         <value></value>
@@ -50558,7 +51575,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-109.65821203297193165</xmax>
         <ymax>61.18394880337616826</ymax>
       </wgs84extent>
-      <id>utmg_utm_zones_sp_e452d53f_daf9_4171_9859_ef6797f1ae6d</id>
+      <id>utmg_utm_zones_sp_42896466_98a2_45c5_b0d5_f4f128318760</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."utmg_utm_zones_sp" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -50984,7 +52001,7 @@ def my_form_open(dialog, layer, feature):
         <xmax>-110.3453660621222383</xmax>
         <ymax>60.61770092088063677</ymax>
       </wgs84extent>
-      <id>bcgs_20k_grid_e5706c94_47e5_4e29_b417_09db725008fc</id>
+      <id>bcgs_20k_grid_84b3bc4e_f9f5_4a1a_b503_f78bf3d017b5</id>
       <datasource>dbname='bcfishpass' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='ogc_fid' estimatedmetadata=true srid=3005 type=MultiPolygon checkPrimaryKeyUnicity='1' table="whse_basemapping"."bcgs_20k_grid" (geom)</datasource>
       <keywordList>
         <value></value>
@@ -51272,8 +52289,8 @@ def my_form_open(dialog, layer, feature):
       <customproperties>
         <Option type="Map">
           <Option type="QString" name="embeddedWidgets/count" value="0"/>
-          <Option name="variableNames"/>
-          <Option name="variableValues"/>
+          <Option type="invalid" name="variableNames"/>
+          <Option type="invalid" name="variableValues"/>
         </Option>
       </customproperties>
       <blendMode>0</blendMode>
