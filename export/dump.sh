@@ -205,6 +205,7 @@ ogr2ogr \
     -sql "select * from bcfishpass.pscis_not_matched_to_streams_vw"
 
 # dump streams
+# NOTE - discharge is not currently included (just to make data management easier)
 ogr2ogr \
     -f GPKG \
     -append \
