@@ -1,5 +1,10 @@
-mkdir -p outputs
-# crossings
+#!/bin/bash
+set -euxo pipefail
+
+#rm -r outputs       # remove existing dump
+mkdir -p outputs    # make fresh dump folder
+
+# dump crossings
 ogr2ogr \
     -f GPKG \
     outputs/bcfishpass.gpkg \
@@ -189,7 +194,17 @@ ogr2ogr \
     geom
     from bcfishpass.crossings"
 
-# streams
+# pscis not matched to streams
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln pscis_not_matched_to_streams \
+    -sql "select * from bcfishpass.pscis_not_matched_to_streams_vw"
+
+# dump streams
 ogr2ogr \
     -f GPKG \
     -append \
@@ -233,14 +248,9 @@ ogr2ogr \
      array_to_string(obsrvtn_pnt_distinct_upstr, ';') as obsrvtn_pnt_distinct_upstr,
      array_to_string(obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
      access_model_ch_co_sk,
-     access_model_ch_co_sk_b,
      access_model_st,
      access_model_wct,
-     access_model_pk,
-     access_model_cm,
      access_model_bt,
-     access_model_gr,
-     access_model_rb,
      spawning_model_ch,
      spawning_model_co,
      spawning_model_sk,
@@ -254,9 +264,10 @@ ogr2ogr \
      geom
      from bcfishpass.streams"
 
-zip -r outputs/bcfishpass.gpkg.zip outputs/bcfishpass.gpkg
-rm outputs/bcfishpass.gpkg
+#zip -Dr outputs/bcfishpass.gpkg.zip outputs/bcfishpass.gpkg
+#rm outputs/bcfishpass.gpkg
 
+# dump column descriptions for each table
 psql2csv "SELECT a.attname As column_name,  d.description
 FROM pg_class As c
 INNER JOIN pg_attribute As a ON c.oid = a.attrelid
