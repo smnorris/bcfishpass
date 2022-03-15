@@ -4,7 +4,7 @@
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
-WSG_PARAM = ELKR HORS BULK LNIC #$(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # watersheds for testing
 WSG_TEST = ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
@@ -401,6 +401,7 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 		$(PSQL_CMD) -f scripts/model/sql/model_access_bt.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk_b.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_access_pk.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_access_st.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_access_wct.sql -v wsg=$$wsg ; \
 	done
@@ -448,7 +449,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	
 	# run per-species models
 	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
-	for wsg in $(WSG_TEST) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_ch.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_co.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg=$$wsg ; \
@@ -458,7 +459,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification_endpoints.sql
-	for wsg in $(WSG_TEST) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
 	done
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification.sql
@@ -513,7 +514,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	$(PSQL_CMD) -f scripts/model/sql/point_report_obs_belowupstrbarriers.sql
 
 	# add habitat per barrier column to crossings table
-	for wsg in $(WSG_TEST) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		psql -f scripts/model/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
 	done
 	touch $@

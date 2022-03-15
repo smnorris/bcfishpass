@@ -50,6 +50,31 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS ch_co_sk_belowupstrbarriers_slopeclass15_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_co_sk_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_co_sk_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
+
+  ADD COLUMN IF NOT EXISTS access_model_pk                                    text,
+  ADD COLUMN IF NOT EXISTS pk_network_km                                      double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_stream_km                                       double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_lakereservoir_ha                                double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_wetland_ha                                      double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass03_waterbodies_km                     double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass03_km                                 double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass05_km                                 double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass08_km                                 double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass15_km                                 double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass22_km                                 double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_slopeclass30_km                                 double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_network_km                   double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_stream_km                    double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_lakereservoir_ha             double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_wetland_ha                   double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass03_waterbodies_km  double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass03_km              double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass05_km              double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass08_km              double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass15_km              double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
+
   ADD COLUMN IF NOT EXISTS access_model_st                                          text,
   ADD COLUMN IF NOT EXISTS st_network_km                                            double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_stream_km                                             double precision DEFAULT 0,
@@ -159,7 +184,7 @@ COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass08_
 COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass15_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
 COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass22_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass30_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
-COMMENT ON COLUMN bcfishpass.:point_table.access_model_ch_co_sk IS 'Modelled accessibility to Salmon (15% max)';
+COMMENT ON COLUMN bcfishpass.:point_table.access_model_ch_co_sk IS 'Modelled accessibility to Chinook/Coho/Sockeye Salmon (15% max)';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_network_km IS 'Chinook/Coho/Sockeye salmon model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_stream_km IS 'Chinook/Coho/Sockeye salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_lakereservoir_ha IS 'Chinook/Coho/Sockeye salmon model, total area lakes and reservoirs potentially accessible upstream of point ';
@@ -182,6 +207,31 @@ COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass15_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass22_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass30_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
+
+COMMENT ON COLUMN bcfishpass.:point_table.access_model_pk IS 'Modelled accessibility to Pink Salmon (12% max)';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_network_km IS 'Chinook/Coho/Sockeye salmon model, total length of stream network potentially accessible upstream of point';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_stream_km IS 'Chinook/Coho/Sockeye salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_lakereservoir_ha IS 'Chinook/Coho/Sockeye salmon model, total area lakes and reservoirs potentially accessible upstream of point ';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_wetland_ha IS 'Chinook/Coho/Sockeye salmon model, total area wetlands potentially accessible upstream of point ';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass03_waterbodies_km IS 'Chinook/Coho/Sockeye salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass03_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point with slope 0-3%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass05_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point with slope 3-5%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass08_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point with slope 5-8%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass15_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point with slope 8-15%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass22_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point with slope 15-22%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_slopeclass30_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point with slope 22-30%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_network_km IS 'Chinook/Coho/Sockeye salmon model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_stream_km IS 'Chinook/Coho/Sockeye salmon model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_lakereservoir_ha IS 'Chinook/Coho/Sockeye salmon model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_wetland_ha IS 'Chinook/Coho/Sockeye salmon model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass03_waterbodies_km IS 'Chinook/Coho/Sockeye salmon model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass03_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass05_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass08_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass15_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass22_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
+COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass30_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
+
 COMMENT ON COLUMN bcfishpass.:point_table.access_model_st IS 'Modelled accessibility to Steelhead (20% max)';
 COMMENT ON COLUMN bcfishpass.:point_table.st_network_km IS 'Steelhead model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.st_stream_km IS 'Steelhead model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
@@ -312,7 +362,7 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .15 AND s.gradient < .22) / 1000))::numeric, 2), 0) as total_slopeclass22_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .22 AND s.gradient < .30) / 1000))::numeric, 2), 0) as total_slopeclass30_km,
 
--- salmon model
+-- ch/co/sk salmon model
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS ch_co_sk_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS ch_co_sk_stream_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
@@ -326,6 +376,21 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass15_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass22_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass30_km,
+
+-- pink salmon model
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS pk_network_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS pk_stream_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
+    WHERE (s.access_model_pk LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
+  )) / 1000)::numeric, 2), 0) AS pk_slopeclass03_waterbodies_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
+    WHERE (s.access_model_pk LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+  )) / 1000)::numeric, 2), 0) AS pk_slopeclass03_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as pk_slopeclass05_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as pk_slopeclass08_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as pk_slopeclass15_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as pk_slopeclass22_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_pk LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as pk_slopeclass30_km,
 
 -- steelhead
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_st LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS st_network_km,
@@ -444,6 +509,15 @@ SET
   ch_co_sk_slopeclass15_km = r.ch_co_sk_slopeclass15_km,
   ch_co_sk_slopeclass22_km = r.ch_co_sk_slopeclass22_km,
   ch_co_sk_slopeclass30_km = r.ch_co_sk_slopeclass30_km,
+  pk_network_km = r.pk_network_km,
+  pk_stream_km = r.pk_stream_km,
+  pk_slopeclass03_waterbodies_km = r.pk_slopeclass03_waterbodies_km,
+  pk_slopeclass03_km = r.pk_slopeclass03_km,
+  pk_slopeclass05_km = r.pk_slopeclass05_km,
+  pk_slopeclass08_km = r.pk_slopeclass08_km,
+  pk_slopeclass15_km = r.pk_slopeclass15_km,
+  pk_slopeclass22_km = r.pk_slopeclass22_km,
+  pk_slopeclass30_km = r.pk_slopeclass30_km,
   st_network_km = r.st_network_km,
   st_stream_km = r.st_stream_km,
   st_slopeclass03_waterbodies_km = r.st_slopeclass03_waterbodies_km,
@@ -525,6 +599,7 @@ WITH upstr_wb AS
   a.:point_id,
   s.waterbody_key,
   s.access_model_ch_co_sk,
+  s.access_model_pk,
   s.access_model_st,
   s.access_model_wct,
   s.rearing_model_co,
@@ -569,6 +644,11 @@ report AS
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.access_model_ch_co_sk LIKE '%ACCESSIBLE%') +
           SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.access_model_ch_co_sk LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS ch_co_sk_lakereservoir_ha,
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_model_ch_co_sk LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS ch_co_sk_wetland_ha,
+
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.access_model_pk LIKE '%ACCESSIBLE%') +
+          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.access_model_pk LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS pk_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_model_pk LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS pk_wetland_ha,
+
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.access_model_st LIKE '%ACCESSIBLE%') +
           SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.access_model_st LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS st_lakereservoir_ha,
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_model_st LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS st_wetland_ha,
@@ -588,6 +668,8 @@ SET
   total_wetland_ha = r.total_wetland_ha,
   ch_co_sk_lakereservoir_ha = r.ch_co_sk_lakereservoir_ha,
   ch_co_sk_wetland_ha = r.ch_co_sk_wetland_ha,
+  pk_lakereservoir_ha = r.pk_lakereservoir_ha,
+  pk_wetland_ha = r.pk_wetland_ha,
   st_lakereservoir_ha = r.st_lakereservoir_ha,
   st_wetland_ha = r.st_wetland_ha,
   wct_lakereservoir_ha = r.wct_lakereservoir_ha,
@@ -630,6 +712,19 @@ SET
   ch_co_sk_belowupstrbarriers_slopeclass15_km = ch_co_sk_slopeclass15_km,
   ch_co_sk_belowupstrbarriers_slopeclass22_km = ch_co_sk_slopeclass22_km,
   ch_co_sk_belowupstrbarriers_slopeclass30_km = ch_co_sk_slopeclass30_km,
+
+  pk_belowupstrbarriers_network_km = pk_network_km,
+  pk_belowupstrbarriers_stream_km = pk_stream_km,
+  pk_belowupstrbarriers_lakereservoir_ha = pk_lakereservoir_ha,
+  pk_belowupstrbarriers_wetland_ha = pk_wetland_ha,
+  pk_belowupstrbarriers_slopeclass03_waterbodies_km = pk_slopeclass03_waterbodies_km,
+  pk_belowupstrbarriers_slopeclass03_km = pk_slopeclass03_km,
+  pk_belowupstrbarriers_slopeclass05_km = pk_slopeclass05_km,
+  pk_belowupstrbarriers_slopeclass08_km = pk_slopeclass08_km,
+  pk_belowupstrbarriers_slopeclass15_km = pk_slopeclass15_km,
+  pk_belowupstrbarriers_slopeclass22_km = pk_slopeclass22_km,
+  pk_belowupstrbarriers_slopeclass30_km = pk_slopeclass30_km,
+
   st_belowupstrbarriers_network_km = st_network_km,
   st_belowupstrbarriers_stream_km = st_stream_km,
   st_belowupstrbarriers_lakereservoir_ha = st_lakereservoir_ha,
@@ -692,6 +787,19 @@ WITH report AS
   ROUND((COALESCE(a.ch_co_sk_slopeclass15_km, 0) - SUM(COALESCE(b.ch_co_sk_slopeclass15_km, 0)))::numeric, 2) ch_co_sk_belowupstrbarriers_slopeclass15_km,
   ROUND((COALESCE(a.ch_co_sk_slopeclass22_km, 0) - SUM(COALESCE(b.ch_co_sk_slopeclass22_km, 0)))::numeric, 2) ch_co_sk_belowupstrbarriers_slopeclass22_km,
   ROUND((COALESCE(a.ch_co_sk_slopeclass30_km, 0) - SUM(COALESCE(b.ch_co_sk_slopeclass30_km, 0)))::numeric, 2) ch_co_sk_belowupstrbarriers_slopeclass30_km,
+
+  ROUND((COALESCE(a.pk_network_km, 0) - SUM(COALESCE(b.pk_network_km, 0)))::numeric, 2) pk_belowupstrbarriers_network_km,
+  ROUND((COALESCE(a.pk_stream_km, 0) - SUM(COALESCE(b.pk_stream_km, 0)))::numeric, 2) pk_belowupstrbarriers_stream_km,
+  ROUND((COALESCE(a.pk_lakereservoir_ha, 0) - SUM(COALESCE(b.pk_lakereservoir_ha, 0)))::numeric, 2) pk_belowupstrbarriers_lakereservoir_ha,
+  ROUND((COALESCE(a.pk_wetland_ha, 0) - SUM(COALESCE(b.pk_wetland_ha, 0)))::numeric, 2) pk_belowupstrbarriers_wetland_ha,
+  ROUND((COALESCE(a.pk_slopeclass03_waterbodies_km, 0) - SUM(COALESCE(b.pk_slopeclass03_waterbodies_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass03_waterbodies_km,
+  ROUND((COALESCE(a.pk_slopeclass03_km, 0) - SUM(COALESCE(b.pk_slopeclass03_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass03_km,
+  ROUND((COALESCE(a.pk_slopeclass05_km, 0) - SUM(COALESCE(b.pk_slopeclass05_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass05_km,
+  ROUND((COALESCE(a.pk_slopeclass08_km, 0) - SUM(COALESCE(b.pk_slopeclass08_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass08_km,
+  ROUND((COALESCE(a.pk_slopeclass15_km, 0) - SUM(COALESCE(b.pk_slopeclass15_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass15_km,
+  ROUND((COALESCE(a.pk_slopeclass22_km, 0) - SUM(COALESCE(b.pk_slopeclass22_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass22_km,
+  ROUND((COALESCE(a.pk_slopeclass30_km, 0) - SUM(COALESCE(b.pk_slopeclass30_km, 0)))::numeric, 2) pk_belowupstrbarriers_slopeclass30_km,
+
   ROUND((COALESCE(a.st_network_km, 0) - SUM(COALESCE(b.st_network_km, 0)))::numeric, 2) st_belowupstrbarriers_network_km,
   ROUND((COALESCE(a.st_stream_km, 0) - SUM(COALESCE(b.st_stream_km, 0)))::numeric, 2) st_belowupstrbarriers_stream_km,
   ROUND((COALESCE(a.st_lakereservoir_ha, 0) - SUM(COALESCE(b.st_lakereservoir_ha, 0)))::numeric, 2) st_belowupstrbarriers_lakereservoir_ha,
@@ -760,6 +868,19 @@ SET
   ch_co_sk_belowupstrbarriers_slopeclass15_km = r.ch_co_sk_belowupstrbarriers_slopeclass15_km,
   ch_co_sk_belowupstrbarriers_slopeclass22_km = r.ch_co_sk_belowupstrbarriers_slopeclass22_km,
   ch_co_sk_belowupstrbarriers_slopeclass30_km = r.ch_co_sk_belowupstrbarriers_slopeclass30_km,
+
+  pk_belowupstrbarriers_network_km = r.pk_belowupstrbarriers_network_km,
+  pk_belowupstrbarriers_stream_km = r.pk_belowupstrbarriers_stream_km,
+  pk_belowupstrbarriers_lakereservoir_ha = r.pk_belowupstrbarriers_lakereservoir_ha,
+  pk_belowupstrbarriers_wetland_ha = r.pk_belowupstrbarriers_wetland_ha,
+  pk_belowupstrbarriers_slopeclass03_waterbodies_km = r.pk_belowupstrbarriers_slopeclass03_waterbodies_km,
+  pk_belowupstrbarriers_slopeclass03_km = r.pk_belowupstrbarriers_slopeclass03_km,
+  pk_belowupstrbarriers_slopeclass05_km = r.pk_belowupstrbarriers_slopeclass05_km,
+  pk_belowupstrbarriers_slopeclass08_km = r.pk_belowupstrbarriers_slopeclass08_km,
+  pk_belowupstrbarriers_slopeclass15_km = r.pk_belowupstrbarriers_slopeclass15_km,
+  pk_belowupstrbarriers_slopeclass22_km = r.pk_belowupstrbarriers_slopeclass22_km,
+  pk_belowupstrbarriers_slopeclass30_km = r.pk_belowupstrbarriers_slopeclass30_km,
+
   st_belowupstrbarriers_network_km = r.st_belowupstrbarriers_network_km,
   st_belowupstrbarriers_stream_km = r.st_belowupstrbarriers_stream_km,
   st_belowupstrbarriers_lakereservoir_ha = r.st_belowupstrbarriers_lakereservoir_ha,

@@ -167,6 +167,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.wsg_species_presence
   watershed_group_code varchar(4),
   ch boolean,
   co boolean,
+  pk boolean,
   sk boolean,
   st boolean,
   wct boolean,
