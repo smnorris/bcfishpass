@@ -7,6 +7,7 @@ psql2csv bcfishpass "with wsg as
 from bcfishobs.fiss_fish_obsrvtn_events_sp o
 where species_code = 'PK' and observation_date >= '1990-01-01'::date
 group by watershed_group_code
+having count(*) >= 5
 )
 select
   a.watershed_group_code,
@@ -22,5 +23,4 @@ select
   a.notes
 from bcfishpass.wsg_species_presence a
 left outer join wsg on a.watershed_group_code = wsg.watershed_group_code
-where wsg.n > 5
 order by a.watershed_group_code;" > wsg_species_presence.csv
