@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.crossings
     stream_magnitude integer,
 
     -- area upstream (derived by fwapg)
-    watershed_upstr_ha double precision DEFAULT 0,
+    -- watershed_upstr_ha double precision DEFAULT 0,
 
     -- distinct species upstream/downstream, derived from bcfishobs
     observedspp_dnstr text[],
@@ -146,7 +146,7 @@ COMMENT ON COLUMN bcfishpass.crossings.watershed_group_code IS 'The watershed gr
 COMMENT ON COLUMN bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
 COMMENT ON COLUMN bcfishpass.crossings.stream_order IS 'Order of FWA stream at point';
 COMMENT ON COLUMN bcfishpass.crossings.stream_magnitude IS 'Magnitude of FWA stream at point';
-COMMENT ON COLUMN bcfishpass.crossings.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
+--COMMENT ON COLUMN bcfishpass.crossings.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
 COMMENT ON COLUMN bcfishpass.crossings.observedspp_dnstr IS 'Fish species observed downstream of point *within the same watershed group*';
 COMMENT ON COLUMN bcfishpass.crossings.observedspp_upstr IS 'Fish species observed upstream of point *within the same watershed group*';
 COMMENT ON COLUMN bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
@@ -918,3 +918,19 @@ set observedspp_upstr = u.species_codes
 from spp_upstream u
 where c.aggregated_crossings_id = u.aggregated_crossings_id;
 
+-- upstream area
+-- with upstr_ha as
+-- (
+-- select
+--   c.aggregated_crossings_id,
+--   ua.upstream_area_ha
+-- from bcfishpass.crossings c
+-- inner join whse_basemapping.fwa_streams_watersheds_lut l
+-- on c.linear_feature_id = l.linear_feature_id
+-- inner join whse_basemapping.fwa_watersheds_upstream_area ua
+-- on l.watershed_feature_id = ua.watershed_feature_id
+-- )
+-- update bcfishpass.crossings c
+-- set watershed_upstr_ha = upstr_ha.upstream_area_ha
+-- from upstr_ha
+-- where c.aggregated_crossings_id = upstr_ha.aggregated_crossings_id;
