@@ -475,8 +475,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.wate
 LEFT OUTER JOIN grade b ON a.:point_id = b.:point_id
 WHERE 
   a.watershed_group_code = :'wsg' AND 
-  s.watershed_group_code = :'wsg' AND 
-  a.blue_line_key = a.watershed_key -- do not include points in side channels
+  s.watershed_group_code = :'wsg'
 GROUP BY
   a.:point_id,
   b.gradient,
@@ -550,7 +549,8 @@ SET
   all_rearing_km = r.all_rearing_km,
   all_spawningrearing_km = r.all_spawningrearing_km
 FROM report r
-WHERE p.:point_id = r.:point_id;
+WHERE p.:point_id = r.:point_id
+AND p.blue_line_key = p.watershed_key; -- do not update points in side channels
 
 
 -- increase linear total for co and sk rearing by 50% within wetlands/lakes
@@ -577,8 +577,7 @@ WITH lake_wetland_rearing AS
      )
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
-  WHERE a.watershed_group_code = :'wsg' AND 
-  a.blue_line_key = a.watershed_key -- do not include points in side channels
+  WHERE a.watershed_group_code = :'wsg'
   GROUP BY a.:point_id
 )
 
@@ -590,7 +589,8 @@ SET
   all_spawningrearing_km = all_spawningrearing_km + (r.co_rearing_km_wetland * .5) + (r.sk_rearing_km_lake * .5)
 FROM lake_wetland_rearing r
 WHERE p.watershed_group_code = :'wsg'
-AND p.:point_id = r.:point_id;
+AND p.:point_id = r.:point_id
+AND p.blue_line_key = p.watershed_key; -- do not update points in side channels
 
 
 -- populate upstream area stats
@@ -629,8 +629,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_wetlands_poly wetland
 ON s.waterbody_key = wetland.waterbody_key
 WHERE 
   s.waterbody_key IS NOT NULL AND 
-  a.watershed_group_code = :'wsg' AND 
-  a.blue_line_key = a.watershed_key -- do not include points in side channels
+  a.watershed_group_code = :'wsg'
 ORDER BY a.:point_id
 ),
 
@@ -677,7 +676,8 @@ SET
   co_rearing_ha = r.co_rearing_ha,
   sk_rearing_ha = r.sk_rearing_ha
 FROM report r
-WHERE p.:point_id = r.:point_id;
+WHERE p.:point_id = r.:point_id
+AND p.blue_line_key = p.watershed_key;  -- do not update points on side channels
 
 
 
@@ -839,8 +839,7 @@ FROM bcfishpass.:point_table a
 INNER JOIN bcfishpass.:barriers_table b
 ON a.:point_id = b.:dnstr_barriers_id[1]
 WHERE 
-  a.watershed_group_code = :'wsg' AND
-  a.blue_line_key = a.watershed_key
+  a.watershed_group_code = :'wsg'
 GROUP BY a.:point_id
 )
 
@@ -915,7 +914,8 @@ SET
   all_rearing_belowupstrbarriers_km = r.all_rearing_belowupstrbarriers_km,
   all_spawningrearing_belowupstrbarriers_km = r.all_spawningrearing_belowupstrbarriers_km
 FROM report r
-WHERE p.:point_id = r.:point_id;
+WHERE p.:point_id = r.:point_id
+AND p.blue_line_key = p.watershed_key; -- do not update points in side channels
 
 -- ELK River WCT specific reporting, but run it everywhere
 UPDATE bcfishpass.:point_table p
