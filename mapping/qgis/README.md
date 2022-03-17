@@ -42,12 +42,9 @@ When generating pdfs, use the supplied layer file and remember to:
 - if adding additional legend/text items, check that font matches (arial)
 - check that map frame/project CRS matches UTM zone of study area
 - modify atlas as required
-- export atlas to tif (to reduce file size)
-- convert tif to pdf with gdal
+- export atlas to pdf @ 150dpi using these options
 
-        for i in $( ls *.tif ); do
-            gdal_translate -of PDF "$i" "${i%.tif}.pdf" --config GDAL_PAM_ENABLED NO
-        done
+![pdf_export options](pdf_export_options.png)
 
 - upload to `https://www.hillcrestgeo.ca/outgoing/fishpassage/projects/<project>/archive/<date>`
 - create a single archive holding all the maps for easy download (zip)
