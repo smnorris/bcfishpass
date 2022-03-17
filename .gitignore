@@ -29,3 +29,9 @@ qa
 
 # empty make targets
 .make/
+
+# qgis
+*.qgs~
+
+# data dumps
+export/outputs

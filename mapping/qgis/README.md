@@ -14,12 +14,12 @@ Generally QGIS works well with large provincial datasets, but in your database c
 
 The QGIS layer file includes several data sources that are not loaded to the `bcfishpass` database by default.
 
-Before downloading, consider editing `tctr_tiles.txt` to specify only NTS 250k tiles within your area of interest.
-
-Download all data to the postgres db specified by `$DATABASE_URL`:
+To download these additional sources to the postgres db specified by `$DATABASE_URL`:
 
     make
 
+The makefile downloads most layers provincially, but contours are split up into chunks (1:250k tiles).
+To minimize bandwidth use, consider editing `tctr_tiles.txt` to include only the NTS 250k tiles within your area of interest.
 
 ### Change data sources
 
@@ -31,18 +31,18 @@ If your database connection parameters differ:
 
 ## 48x36 30k pdfs
 
-When generating pdfs, use the supplied layer file and remember to:
+When generating pdfs, remember to:
 
 - edit title
 - modify selection for records in dbm_mof_50k_grid to match area of interest
 - double check that the model displayed is correct:
-    + crossings (salmon/steelhead/wct)
-    + definite barriers (salmon/steelhead/wct)
+    + crossings (salmon/steelhead/wct etc)
+    + definite barriers (salmon/steelhead/wct etc)
     + streams (width=gradient or width=habitat)
 - if adding additional legend/text items, check that font matches (arial)
 - check that map frame/project CRS matches UTM zone of study area
 - modify atlas as required
-- export atlas to pdf @ 150dpi using these options
+- export atlas to pdf @ 150dpi using these options:
 
 ![pdf_export options](pdf_export_options.png)
 

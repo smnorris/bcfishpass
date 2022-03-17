@@ -1,9 +1,8 @@
-Dump primary bcfishpass output tables to file:
+Dump these bcfishpass tables to file:
 
 - crossings
 - streams
-
-Plus pscis_not_matched_to_streams for reference/completeness
+- pscis_not_matched_to_streams
 
 To run:
 
