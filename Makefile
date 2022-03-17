@@ -30,8 +30,8 @@ BROKEN = $(BROKEN_SPPGROUPS) $(BROKEN_ANTHROPOGENIC) .broken_observations
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
 
-WCRP_SCRIPTS = $(wildcard reports/wcrp/sql/*.sql)
-WCRP_OUTPUTS = $(patsubst reports/wcrp/sql/%.sql,reports/wcrp/reports/%.csv,$(WCRP_SCRIPTS))
+WCRP_SCRIPTS = $(wildcard wcrp/reports/sql/*.sql)
+WCRP_OUTPUTS = $(patsubst wcrp/reports/sql/%.sql,wcrp/reports/reports/%.csv,$(WCRP_SCRIPTS))
 
 # which watershed groups to be refreshed are defined by reading target file of barrier creation recipies
 # wsg_to_refresh_def is all wsg that have been refreshed by individual definite barrier tables, plus observations,
@@ -522,7 +522,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	touch $@
 
 # wcrp reports - dump results of each query in reports/wcrp/sql/ to csv
-reports/wcrp/reports/%.csv: reports/wcrp/sql/%.sql .point_reports
+wcrp/reports/reports/%.csv: wcrp/reports/sql/%.sql .point_reports
 	mkdir -p reports/wcrp/reports
 	psql2csv $(DATABASE_URL) < $< > $@
 	
