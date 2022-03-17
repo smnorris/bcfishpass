@@ -32,6 +32,7 @@ If your database connection parameters differ:
 ## 48x36 30k pdfs
 
 When generating pdfs, use the supplied layer file and remember to:
+
 - edit title
 - modify selection for records in dbm_mof_50k_grid to match area of interest
 - double check that the model displayed is correct:
@@ -44,4 +45,15 @@ When generating pdfs, use the supplied layer file and remember to:
 - export atlas to tif (to reduce file size)
 - convert tif to pdf with gdal
 
+        for i in $( ls *.tif ); do
+            gdal_translate -of PDF "$i" "${i%.tif}.pdf" --config GDAL_PAM_ENABLED NO
+        done
 
+- upload to `https://www.hillcrestgeo.ca/outgoing/fishpassage/projects/<project>/archive/<date>`
+- create a single archive holding all the maps for easy download (zip)
+
+        zip -r elk_2022-03-17.zip *pdf
+
+- update symbolic links in `https://www.hillcrestgeo.ca/outgoing/fishpassage/projects/<project>` to point to the latest files
+
+        ln -s archive/2022-03-17/* .
