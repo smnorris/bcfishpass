@@ -427,6 +427,8 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 
 	# also index barriers_anthropogenic
 	cd scripts/model; python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
+	$(PSQL_CMD) -c "VACUUM ANALYZE bcfishpass.crossings"
+	$(PSQL_CMD) -c "VACUUM ANALYZE bcfishpass.barriers_anthropogenic"
 	touch $@
 
 # run qa queries
@@ -491,6 +493,8 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	scripts/model/sql/point_report_obs_belowupstrbarriers.sql \
 	scripts/model/sql/all_spawningrearing_per_barrier.sql
 	# run report per watershed group on barriers_anthropogenic
+	$(PSQL_CMD) -f scripts/model/sql/point_report_columns.sql \
+		-v point_table=barriers_anthropogenic
 	for wsg in $(WSG) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
@@ -501,6 +505,8 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	done
 	## run report per watershed group on crossings
 	# run this provincially
+	$(PSQL_CMD) -f scripts/model/sql/point_report_columns.sql \
+		-v point_table=crossings
 	for wsg in $(WSG) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=crossings \
