@@ -82,7 +82,7 @@ with upstr as materialized
 
 report AS
 (SELECT
-  a.:point_id,
+  s.:point_id,
 
 -- totals
   COALESCE(ROUND((SUM(ST_Length(s.geom)::numeric) / 1000), 2), 0) AS total_network_km,
@@ -194,11 +194,9 @@ report AS
                                                         s.rearing_model_wct IS TRUE
                                                   ) / 1000))::numeric, 2), 0) AS all_spawningrearing_km
 
-FROM bcfishpass.:point_table a
-inner join upstr s on a.:point_id = s.:point_id
+FROM upstr s
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-WHERE a.watershed_group_code = :'wsg'
-GROUP BY a.:point_id
+GROUP BY s.:point_id
 )
 
 UPDATE bcfishpass.:point_table p
