@@ -14,8 +14,7 @@ SELECT
   ROUND(SUM(all_rearing_belowupstrbarriers_km)::numeric, 2) as all_rearing_blocked_km,
   ROUND(SUM(all_spawningrearing_belowupstrbarriers_km)::numeric, 2) as all_spawningrearing_blocked_km
 FROM bcfishpass.crossings
-WHERE watershed_group_code in ('BULK','LNIC','HORS','ELKR')
-AND barrier_status IN ('POTENTIAL', 'BARRIER')
+WHERE barrier_status IN ('POTENTIAL', 'BARRIER')
 AND aggregated_crossings_id != 1100002536 -- don't count the Elko Dam in ELKR
 GROUP BY
   watershed_group_code,
