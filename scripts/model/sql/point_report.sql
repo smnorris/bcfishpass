@@ -327,6 +327,7 @@ SELECT
   a.:point_id,
   s.gradient,
   s.access_model_ch_co_sk,
+  s.access_model_pk,
   s.access_model_st,
   s.access_model_wct
 FROM bcfishpass.:point_table a
@@ -344,6 +345,7 @@ report AS
   a.:point_id,
   b.gradient,
   b.access_model_ch_co_sk,
+  b.access_model_pk,
   b.access_model_st,
   b.access_model_wct,
   
@@ -480,6 +482,7 @@ GROUP BY
   a.:point_id,
   b.gradient,
   b.access_model_ch_co_sk,
+  b.access_model_pk,
   b.access_model_st,
   b.access_model_wct
 )
@@ -488,6 +491,7 @@ UPDATE bcfishpass.:point_table p
 SET
   gradient = r.gradient,
   access_model_ch_co_sk = r.access_model_ch_co_sk,
+  access_model_pk = r.access_model_pk,
   access_model_st = r.access_model_st,
   access_model_wct = r.access_model_wct,
   total_network_km = r.total_network_km,
