@@ -594,7 +594,7 @@ AND p.blue_line_key = p.watershed_key; -- do not update points in side channels
 
 
 -- populate upstream area stats
-WITH upstr_wb AS
+WITH upstr_wb AS MATERIALIZED  -- force this query to materialize so the wbkey filter does not get pushed down and ruin performance
 (SELECT DISTINCT
   a.:point_id,
   s.waterbody_key,
@@ -627,9 +627,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly manmade
 ON s.waterbody_key = manmade.waterbody_key
 LEFT OUTER JOIN whse_basemapping.fwa_wetlands_poly wetland
 ON s.waterbody_key = wetland.waterbody_key
-WHERE 
-  s.waterbody_key IS NOT NULL AND 
-  a.watershed_group_code = :'wsg'
+WHERE a.watershed_group_code = :'wsg'
 ORDER BY a.:point_id
 ),
 
@@ -658,6 +656,7 @@ report AS
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.rearing_model_sk = True) +
           SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.rearing_model_sk = True)) / 10000)::numeric, 2) AS sk_rearing_ha
 FROM upstr_wb uwb
+WHERE waterbody_key IS NOT NULL
 GROUP BY :point_id
 )
 
