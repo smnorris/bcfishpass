@@ -141,7 +141,6 @@ obs_upstr as
         false,
         1
       )
-    and b.watershed_group_code = o.watershed_group_code
   where o.species_codes && array['CH','CO','SK']
 ),
 

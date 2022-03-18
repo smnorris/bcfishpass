@@ -56,7 +56,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL
@@ -87,7 +86,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL
@@ -118,7 +116,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL
@@ -149,7 +146,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL
@@ -180,7 +176,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL
@@ -211,7 +206,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL
@@ -242,7 +236,6 @@ ON FWA_Upstream(
       False,
       50
     )
-  AND b.watershed_group_code = o.watershed_group_code
 WHERE
   b.watershed_group_code = :'wsg' AND
   o.fish_obsrvtn_pnt_distinct_id IS NULL

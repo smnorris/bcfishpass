@@ -195,7 +195,6 @@ ON FWA_Upstream(
       False,
       1
     )
-  AND b.watershed_group_code = o.watershed_group_code
 -- do not include any features downstream of WCT observations
 WHERE b.watershed_group_code = :'wsg' AND
     (
