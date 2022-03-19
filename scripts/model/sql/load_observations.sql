@@ -23,17 +23,17 @@ INSERT INTO bcfishpass.observations_load
 WITH wsg_spp AS
 (
 SELECT
-  watershed_group_code, string_to_array(array_to_string(ARRAY[co, ch, sk, st, wct, bt, gr, rb], ','),',') as species_codes
+  watershed_group_code, string_to_array(array_to_string(ARRAY[ch, co, pk, sk, st, wct, bt, gr, rb], ','),',') as species_codes
 FROM (
   SELECT
     p.watershed_group_code,
-    CASE WHEN p.co is true THEN 'CO' ELSE NULL END as co,
     CASE WHEN p.ch is true THEN 'CH' ELSE NULL END as ch,
+    CASE WHEN p.co is true THEN 'CO' ELSE NULL END as co,
+    --CASE WHEN p.cm is true THEN 'CM' ELSE NULL END as cm,
+    CASE WHEN p.pk is true THEN 'PK' ELSE NULL END as pk,
     CASE WHEN p.sk is true THEN 'SK' ELSE NULL END as sk,
     CASE WHEN p.st is true THEN 'ST' ELSE NULL END as st,
     CASE WHEN p.wct is true THEN 'WCT' ELSE NULL END as wct,
-    --pk
-    --cm
     CASE WHEN p.bt is true THEN 'BT' ELSE NULL END as bt,
     CASE WHEN p.gr is true THEN 'GR' ELSE NULL END as gr,
     CASE WHEN p.rb is true THEN 'RB' ELSE NULL END as rb
@@ -89,9 +89,7 @@ by_wsg AS
   INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
   WHERE e.species_code = ANY (
-    ARRAY(SELECT species_code
-          FROM bcfishpass.param_habitat
-          )
+    ARRAY['CH','CO','PK','SK','ST','WCT','BT','GR','RB']
     )
   GROUP BY
     e.fish_obsrvtn_pnt_distinct_id,

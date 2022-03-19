@@ -99,6 +99,21 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .15 AND s.gradient < .22) / 1000))::numeric, 2), 0) as total_slopeclass22_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .22 AND s.gradient < .30) / 1000))::numeric, 2), 0) as total_slopeclass30_km,
 
+-- bull trout model
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS bt_network_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS bt_stream_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
+    WHERE (s.access_model_bt LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
+  )) / 1000)::numeric, 2), 0) AS bt_slopeclass03_waterbodies_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
+    WHERE (s.access_model_bt LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+  )) / 1000)::numeric, 2), 0) AS bt_slopeclass03_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as bt_slopeclass05_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as bt_slopeclass08_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as bt_slopeclass15_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as bt_slopeclass22_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as bt_slopeclass30_km,
+
 -- ch/co/sk salmon model
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS ch_co_sk_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_model_ch_co_sk LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS ch_co_sk_stream_km,

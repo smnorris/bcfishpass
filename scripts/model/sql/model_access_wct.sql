@@ -76,3 +76,7 @@ SET
   access_model_wct = m.access_model_wct
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;
+
+UPDATE bcfishpass.streams
+SET access_model_wct = access_model_wct||' - OBSRVTN UPSTR'
+WHERE access_model_wct is not null and obsrvtn_species_codes_upstr && ARRAY['WCT'];

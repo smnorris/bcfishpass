@@ -76,3 +76,8 @@ SET
   access_model_bt = m.access_model_bt
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;
+
+-- note streams with BT observations upstream
+UPDATE bcfishpass.streams
+SET access_model_bt = access_model_bt||' - OBSRVTN UPSTR'
+WHERE access_model_bt is not null and obsrvtn_species_codes_upstr && ARRAY['BT'];
