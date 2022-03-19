@@ -260,9 +260,9 @@ scripts/discharge/.discharge: .db
 # note that this done in two steps not for speed (loading observations is fast), but to
 # track which watershed groups have had changes (new data / data fixes via potential user lookup)
 # TODO - add user table dependency for excluding invalid observation records
-.observations: .db scripts/model/sql/load_observations.sql .param_watersheds .param_habitat .wsg_species_presence
+.observations: scripts/model/sql/load_observations.sql .db .param_watersheds .param_habitat .wsg_species_presence
 	# first, load *all* observation data to _load table
-	$(PSQL_CMD) -f $<
+	$(PSQL_CMD) -f scripts/model/sql/load_observations.sql
 	# find watershed groups with changed observation data
 	echo "select * from bcfishpass.wsg_to_refresh('observations_load', '$(subst .,,$@)')" | $(PSQL_CMD) -AtX > .torefresh_observations
 	parallel -a .torefresh_observations --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/refresh_observations.sql -v wsg={1}
