@@ -345,6 +345,10 @@ $(patsubst %, .breakpts_%, $(ANTH_BARRIERS)): .breakpts_%: .barriers_%
 	# remove non-minimal barriers
 	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | \
 		$(PSQL_CMD) -v id=$(subst .breakpts,barriers,$@)_dnstr -v table=$(subst .breakpts,barriers,$@)
+	# add upstream length summary to the table for QA of high impact barriers
+	$(PSQL_CMD) -f scripts/model/sql/add_length_upstream.sql \
+		-v src_table=$(subst .breakpts_,barriers_,$@) \
+		-v src_id=$(subst .breakpts_,barriers_,$@)_id
 	touch $@
 
 # -----
@@ -437,6 +441,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	psql2csv $(DATABASE_URL) < $< > $@
 
 
+
 # ***********************************************
 # **                                           **
 # **      CREATE/UPDATE HABITAT MODEL          **
@@ -467,22 +472,6 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 		$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
 	done
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification.sql
-	touch $@
-
-
-# -----
-# VARIOUS VIEWS FOR VIZ
-# -----
-# todo - currently tables but could likely be views
-.views: .update_access .index_crossings
-	# run report on the combined definite barrier tables
-	python bcfishpass.py report bcfishpass.definitebarriers_ch_co_sk definitebarriers_ch_co_sk_id bcfishpass.definitebarriers_ch_co_sk dnstr_definitebarriers_ch_co_sk_id
-	python bcfishpass.py report bcfishpass.definitebarriers_st definitebarriers_st_id bcfishpass.definitebarriers_st dnstr_definitebarriers_st_id
-	python bcfishpass.py report bcfishpass.definitebarriers_wct definitebarriers_wct_id bcfishpass.definitebarriers_wct dnstr_definitebarriers_wct_id
-
-	# generalized streams
-	$(PSQL_CMD) -f scripts/model/sql/carto.sql
-
 	touch $@
 
 # -----
@@ -536,6 +525,17 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	for wsg in $(WSG_PARAM) ; do \
 		psql -f scripts/model/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
 	done
+	touch $@
+
+# ***********************************************
+# **                                           **
+# **      REPORTING/MAPPING/MISC               **
+# **                                           **
+# ***********************************************
+
+# generalized streams for mapping
+.carto: .point_reports
+	$(PSQL_CMD) -f scripts/model/sql/carto.sql
 	touch $@
 
 # wcrp reports - dump results of each query in reports/wcrp/sql/ to csv
