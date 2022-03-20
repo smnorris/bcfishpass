@@ -6,6 +6,7 @@ WITH at_point AS
   SELECT
     a.:point_id,
     coalesce(s.gradient, s2.gradient) as gradient,
+    s.access_model_bt,
     s.access_model_ch_co_sk,
     s.access_model_pk,
     s.access_model_st,
@@ -29,6 +30,7 @@ WITH at_point AS
 UPDATE bcfishpass.:point_table p
 SET
   gradient = u.gradient,
+  access_model_bt = u.access_model_bt,
   access_model_ch_co_sk = u.access_model_ch_co_sk,
   access_model_pk = u.access_model_pk,
   access_model_st = u.access_model_st,
@@ -48,6 +50,7 @@ with upstr as materialized
     s.gradient,
     s.edge_type,
     s.waterbody_key,
+    s.access_model_bt,
     s.access_model_ch_co_sk,
     s.access_model_pk,
     s.access_model_st,
