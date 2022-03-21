@@ -19,9 +19,10 @@ Requires these environment variables are set:
 1. Ensure local test db exists, plus required extensions
 
         psql -c "create database bcfishpass_test"
-        psql $DATABASE_URL_TEST -c "create extension postgis"
-        psql $DATABASE_URL_TEST -c "create extension ltree"
-        psql $DATABASE_URL_TEST -c "create extension intarray"
+        psql bcfishpass_test -c "create extension postgis"
+        psql bcfishpass_test -c "create extension ltree"
+        psql bcfishpass_test -c "create extension intarray"
+        psql bcfishpass_test -c "create extension postgis_raster"
 
 2. Copy key output tables from local dev db to local test db
 
