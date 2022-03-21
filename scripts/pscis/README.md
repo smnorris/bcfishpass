@@ -79,7 +79,7 @@ Note that PSCIS crossings not on mapped streams cannot be included in habitat re
 
     - first, insert PSCIS crossings that have been manually matched to streams/modelled crossings in `pscis_modelledcrossings_streams_xref.csv`
     - next, insert PSCIS crossings from `pscis_events_prelim2`, filtering out duplicates and matches that score very poorly
-    - create a view holding PSCIS crossings that do not make it into the output `pscis` table: `pscis_not_matched_to_streams_vw`
+    - create a table holding PSCIS crossings that do not make it into the output `pscis` table: `pscis_not_matched_to_streams`
 
 5. `sql/05_pscis_points_duplicates.sql`
 
@@ -150,13 +150,16 @@ Duplicate PSCIS crossings (for QA):
 
 PSCIS crossings that are not matched to streams:
 
-                   View "bcfishpass.pscis_not_matched_to_streams_vw"
+                Table "bcfishpass.pscis_not_matched_to_streams"
                 Column             |         Type         | Collation | Nullable | Default
     -------------------------------+----------------------+-----------+----------+---------
-     stream_crossing_id            | integer              |           |          |
+     stream_crossing_id            | integer              |           | not null |
      current_pscis_status          | text                 |           |          |
      current_barrier_result_code   | text                 |           |          |
      current_crossing_type_code    | text                 |           |          |
      current_crossing_subtype_code | text                 |           |          |
      watershed_group_code          | character varying    |           |          |
      geom                          | geometry(Point,3005) |           |          |
+    Indexes:
+        "pscis_not_matched_to_streams_pkey" PRIMARY KEY, btree (stream_crossing_id)
+        "pscis_not_matched_to_streams_geom_idx" gist (geom)

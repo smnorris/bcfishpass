@@ -271,9 +271,10 @@ CREATE INDEX ON bcfishpass.pscis USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.pscis USING GIST (geom);
 
 
--- for mapping, also create a view that shows PSCIS crossings that
--- are not in bcfishpass.pscis- are not matched to a stream
-CREATE VIEW bcfishpass.pscis_not_matched_to_streams_vw AS
+-- note PSCIS crossings that we do not include in bcfishpass.pscis* and
+-- bcfishpass.crossings - not matched to streams
+DROP TABLE IF EXISTS bcfishpass.pscis_not_matched_to_streams;
+CREATE TABLE bcfishpass.pscis_not_matched_to_streams AS
 SELECT
     a.stream_crossing_id,
     a.current_pscis_status,
@@ -292,3 +293,5 @@ LEFT OUTER JOIN whse_basemapping.fwa_watershed_groups_poly w
 ON ST_Intersects(a.geom, w.geom)
 WHERE b.stream_crossing_id IS NULL;
 
+ALTER TABLE bcfishpass.pscis_not_matched_to_streams ADD PRIMARY KEY (stream_crossing_id);
+CREATE INDEX ON bcfishpass.pscis_not_matched_to_streams USING GIST (geom);
