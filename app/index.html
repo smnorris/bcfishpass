@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>BC Fish Passage mapping</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+      .map-overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.8);
+        margin-right: 20px;
+        font-family: Arial, sans-serif;
+        overflow: auto;
+        border-radius: 3px;
+      }
+
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 18px;
+  height: 250px;
+  margin-bottom: 40px;
+  width: 250px;
+}
+
+.legend-key-circle {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-style: solid;
+  border-width: thin;
+  vertical-align: middle;
+}
+
+.legend-key-line {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 3px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.legend-header {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+</style>
+
+<div id="map"></div>
+<div class='map-overlay' id='legend'></div>
+
+<script>
+
+// Utility to convert feature properties into html
+function featureHtml(f) {
+  var h = "";
+  var p = f.properties;
+  for (var k in p) {
+    h += "<b>" + k + ":</b> " + p[k] + "<br/>";
+  }
+  return "<p>" + h + "</p>";
+};
+
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'style.json',
+    center: [-120.728285,52.195932], // starting position
+    zoom: 6 // starting zoom
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+
+map.on('load', function () {
+
+    // ASSESSMENTS
+    map.on('click', 'crossings-pscis-assessments', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-pscis-assessments', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-pscis-assessments', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // CONFIRMATIONS
+    map.on('click', 'crossings-pscis-confirmations', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-pscis-confirmations', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-pscis-confirmations', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // DESIGNS
+    map.on('click', 'crossings-pscis-designs', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-pscis-designs', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-pscis-designs', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // REMEDIATIONS
+    map.on('click', 'crossings-pscis-remediations', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-pscis-remediations', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-pscis-remediations', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    // MODELLED CROSSINGS
+    map.on('click', 'crossings-modelled', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-modelled', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-modelled', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    var item = document.createElement('div');
+    var groupheader = document.createElement('span');
+    groupheader.className = 'legend-header'
+    groupheader.innerHTML = 'PSCIS'
+    item.appendChild(groupheader)
+    legend.appendChild(item)
+
+    var layers = ['Barrier', 'Potential', 'Passable', 'Unknown'];
+    var colors = ["#ff3d37", "#fce82c", "#b2df8a","#aaaaaa"];
+
+    for (i = 0; i < layers.length; i++) {
+      var layer = layers[i];
+      var color = colors[i];
+      var item = document.createElement('div');
+      var key = document.createElement('span');
+      key.className = 'legend-key-circle';
+      key.style.backgroundColor = color;
+      key.style.borderRadius = "50%";
+
+      var value = document.createElement('span');
+      value.innerHTML = layer;
+      item.appendChild(key);
+      item.appendChild(value);
+      legend.appendChild(item);
+    }
+
+    var item = document.createElement('div');
+    var groupheader = document.createElement('span');
+    groupheader.className = 'legend-header'
+    groupheader.innerHTML = 'Model'
+    item.appendChild(groupheader)
+    legend.appendChild(item)
+
+    var layers = ['Closed bottom', 'Open bottom'];
+    var colors = ["#ffae00", "#b2df8a"];
+
+    for (i = 0; i < layers.length; i++) {
+      var layer = layers[i];
+      var color = colors[i];
+      var item = document.createElement('div');
+      var key = document.createElement('span');
+      key.className = 'legend-key-circle';
+      key.style.backgroundColor = color;
+      key.style.borderRadius = "50%";
+      key.style.height = "7px";
+      key.style.width = "7px";
+
+      var value = document.createElement('span');
+      value.innerHTML = layer;
+      item.appendChild(key);
+      item.appendChild(value);
+      legend.appendChild(item);
+    }
+
+    var item = document.createElement('div');
+    var groupheader = document.createElement('span');
+    groupheader.className = 'legend-header'
+    groupheader.innerHTML = 'Streams'
+    item.appendChild(groupheader)
+    legend.appendChild(item)
+
+    var layers = ['Accessible', 'Potentially accessible', 'Not accessible', 'Accessible - remediated'];
+    var colors = ["#129bdb", "#ff9f85", "#ff6b6b", "#33a02c"];
+    for (i = 0; i < layers.length; i++) {
+      var layer = layers[i];
+      var color = colors[i];
+      var item = document.createElement('div');
+      var key = document.createElement('span');
+      key.className = 'legend-key-line';
+      key.style.backgroundColor = color;
+
+      var value = document.createElement('span');
+      value.innerHTML = layer;
+      item.appendChild(key);
+      item.appendChild(value);
+      legend.appendChild(item);
+    }
+
+});
+
+
+
+</script>
+
+</body>
+</html>
