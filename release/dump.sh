@@ -56,7 +56,6 @@ ogr2ogr \
     gnis_stream_name,
     stream_order,
     stream_magnitude,
-    watershed_upstr_ha,
     array_to_string(observedspp_dnstr, ';') as observedspp_dnstr,
     array_to_string(observedspp_upstr, ';') as observedspp_upstr,
     array_to_string(crossings_dnstr, ';') as crossings_dnstr,
@@ -87,6 +86,31 @@ ogr2ogr \
     total_belowupstrbarriers_slopeclass15_km,
     total_belowupstrbarriers_slopeclass22_km,
     total_belowupstrbarriers_slopeclass30_km,
+
+    access_model_bt,
+    bt_network_km,
+    bt_stream_km,
+    bt_lakereservoir_ha,
+    bt_wetland_ha,
+    bt_slopeclass03_waterbodies_km,
+    bt_slopeclass03_km,
+    bt_slopeclass05_km,
+    bt_slopeclass08_km,
+    bt_slopeclass15_km,
+    bt_slopeclass22_km,
+    bt_slopeclass30_km,
+    bt_belowupstrbarriers_network_km,
+    bt_belowupstrbarriers_stream_km,
+    bt_belowupstrbarriers_lakereservoir_ha,
+    bt_belowupstrbarriers_wetland_ha,
+    bt_belowupstrbarriers_slopeclass03_waterbodies_km,
+    bt_belowupstrbarriers_slopeclass03_km,
+    bt_belowupstrbarriers_slopeclass05_km,
+    bt_belowupstrbarriers_slopeclass08_km,
+    bt_belowupstrbarriers_slopeclass15_km,
+    bt_belowupstrbarriers_slopeclass22_km,
+    bt_belowupstrbarriers_slopeclass30_km,
+
     access_model_ch_co_sk,
     ch_co_sk_network_km,
     ch_co_sk_stream_km,
@@ -110,6 +134,31 @@ ogr2ogr \
     ch_co_sk_belowupstrbarriers_slopeclass15_km,
     ch_co_sk_belowupstrbarriers_slopeclass22_km,
     ch_co_sk_belowupstrbarriers_slopeclass30_km,
+
+    access_model_pk,
+    pk_network_km,
+    pk_stream_km,
+    pk_lakereservoir_ha,
+    pk_wetland_ha,
+    pk_slopeclass03_waterbodies_km,
+    pk_slopeclass03_km,
+    pk_slopeclass05_km,
+    pk_slopeclass08_km,
+    pk_slopeclass15_km,
+    pk_slopeclass22_km,
+    pk_slopeclass30_km,
+    pk_belowupstrbarriers_network_km,
+    pk_belowupstrbarriers_stream_km,
+    pk_belowupstrbarriers_lakereservoir_ha,
+    pk_belowupstrbarriers_wetland_ha,
+    pk_belowupstrbarriers_slopeclass03_waterbodies_km,
+    pk_belowupstrbarriers_slopeclass03_km,
+    pk_belowupstrbarriers_slopeclass05_km,
+    pk_belowupstrbarriers_slopeclass08_km,
+    pk_belowupstrbarriers_slopeclass15_km,
+    pk_belowupstrbarriers_slopeclass22_km,
+    pk_belowupstrbarriers_slopeclass30_km,
+
     access_model_st,
     st_network_km,
     st_stream_km,
@@ -205,7 +254,7 @@ ogr2ogr \
     -sql "select * from bcfishpass.pscis_not_matched_to_streams"
 
 # dump streams
-# NOTE - discharge is not currently included (just to make data management easier)
+# NOTE - do not include proprietary Foundry discharge in BULK, ELKR, HORS
 ogr2ogr \
     -f GPKG \
     -append \
@@ -233,25 +282,27 @@ ogr2ogr \
      upstream_area_ha,
      map_upstream,
      channel_width,
-     null as mad_m3s,
+     case
+       when watershed_group_code in ('BULK','HORS','ELKR') then null
+       else mad_m3s
+     end as mad_m3s,
      array_to_string(barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
      array_to_string(barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
      array_to_string(barriers_remediated_dnstr, ';') as barriers_remediated_dnstr,
+     array_to_string(barriers_ch_co_sk_dnstr, ';') as barriers_bt_dnstr,
      array_to_string(barriers_ch_co_sk_dnstr, ';') as barriers_ch_co_sk_dnstr,
      array_to_string(barriers_ch_co_sk_b_dnstr, ';') as barriers_ch_co_sk_b_dnstr,
-     array_to_string(barriers_st_dnstr, ';') as barriers_st_dnstr,
      array_to_string(barriers_pk_dnstr, ';') as barriers_pk_dnstr,
-     array_to_string(barriers_cm_dnstr, ';') as barriers_cm_dnstr,
-     array_to_string(barriers_bt_dnstr, ';') as barriers_bt_dnstr,
+     array_to_string(barriers_st_dnstr, ';') as barriers_st_dnstr,
      array_to_string(barriers_wct_dnstr, ';') as barriers_wct_dnstr,
-     array_to_string(barriers_gr_dnstr, ';') as barriers_gr_dnstr,
-     array_to_string(barriers_rb_dnstr, ';') as barriers_rb_dnstr,
      array_to_string(obsrvtn_pnt_distinct_upstr, ';') as obsrvtn_pnt_distinct_upstr,
      array_to_string(obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+     access_model_bt,
      access_model_ch_co_sk,
+     access_model_ch_co_sk_b,
+     access_model_pk,
      access_model_st,
      access_model_wct,
-     access_model_bt,
      spawning_model_ch,
      spawning_model_co,
      spawning_model_sk,
@@ -265,10 +316,167 @@ ogr2ogr \
      geom
      from bcfishpass.streams"
 
-#zip -Dr outputs/bcfishpass.gpkg.zip outputs/bcfishpass.gpkg
-#rm outputs/bcfishpass.gpkg
+# per species barrier tables
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_bt \
+    -sql "select
+         barriers_bt_id,
+         barrier_type,
+         barrier_name,
+         linear_feature_id,
+         blue_line_key,
+         watershed_key,
+         downstream_route_measure,
+         wscode_ltree,
+         localcode_ltree,
+         watershed_group_code,
+         total_network_km,
+         geom
+         from
+        bcfishpass.barriers_bt"
 
-# dump column descriptions for each table
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_ch_co_sk \
+    -sql "select
+         barriers_ch_co_sk_id,
+         barrier_type,
+         barrier_name,
+         linear_feature_id,
+         blue_line_key,
+         watershed_key,
+         downstream_route_measure,
+         wscode_ltree,
+         localcode_ltree,
+         watershed_group_code,
+         total_network_km,
+         geom
+         from
+        bcfishpass.bcfishpass.barriers_ch_co_sk"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_ch_co_sk_b \
+    -sql "select
+         barriers_ch_co_sk_b_id,
+         barrier_type,
+         barrier_name,
+         linear_feature_id,
+         blue_line_key,
+         watershed_key,
+         downstream_route_measure,
+         wscode_ltree,
+         localcode_ltree,
+         watershed_group_code,
+         total_network_km,
+         geom
+         from
+        bcfishpass.bcfishpass.barriers_ch_co_sk_b"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_pk \
+    -sql "select
+         barriers_pk_id,
+         barrier_type,
+         barrier_name,
+         linear_feature_id,
+         blue_line_key,
+         watershed_key,
+         downstream_route_measure,
+         wscode_ltree,
+         localcode_ltree,
+         watershed_group_code,
+         total_network_km,
+         geom
+         from
+        bcfishpass.bcfishpass.barriers_pk"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_st \
+    -sql "select
+         barriers_st_id,
+         barrier_type,
+         barrier_name,
+         linear_feature_id,
+         blue_line_key,
+         watershed_key,
+         downstream_route_measure,
+         wscode_ltree,
+         localcode_ltree,
+         watershed_group_code,
+         total_network_km,
+         geom
+         from
+        bcfishpass.bcfishpass.barriers_st"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_wct \
+    -sql "select
+         barriers_wct_id,
+         barrier_type,
+         barrier_name,
+         linear_feature_id,
+         blue_line_key,
+         watershed_key,
+         downstream_route_measure,
+         wscode_ltree,
+         localcode_ltree,
+         watershed_group_code,
+         total_network_km,
+         geom
+         from
+        bcfishpass.bcfishpass.barriers_wct"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    outputs/bcfishpass.gpkg \
+    PG:$DATABASE_URL \
+    -nln observations \
+    -sql "select
+         fish_obsrvtn_pnt_distinct_id,
+         linear_feature_id,
+         blue_line_key,
+         wscode_ltree,
+         localcode_ltree,
+         downstream_route_measure,
+         watershed_group_code,
+         species_codes,
+         observation_ids,
+         observation_dates,
+         geom
+        from bcfishpass.observations"
+
+# dump column descriptions
 psql2csv "SELECT a.attname As column_name,  d.description
 FROM pg_class As c
 INNER JOIN pg_attribute As a ON c.oid = a.attrelid
@@ -286,3 +494,6 @@ LEFT JOIN pg_tablespace t ON t.oid = c.reltablespace
 LEFT JOIN pg_description As d ON (d.objoid = c.oid AND d.objsubid = a.attnum)
 WHERE  c.relkind IN('r', 'v') AND  n.nspname = 'bcfishpass' AND c.relname = 'streams'
 AND a.attname not in ('cmax','cmin','tableoid','xmax','xmin','ctid','geom');" > outputs/bcfishpass_streams_column_descriptions.csv
+
+#zip -Dr outputs/bcfishpass.gpkg.zip outputs/bcfishpass.gpkg
+#rm outputs/bcfishpass.gpkg

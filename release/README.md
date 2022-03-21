@@ -24,11 +24,11 @@ Requires these environment variables are set:
         psql bcfishpass_test -c "create extension intarray"
         psql bcfishpass_test -c "create extension postgis_raster"
 
-2. Copy key output tables from local dev db to local test db
+2. Copy full bcfishpass schema from dev to test
 
         ./dev2test.sh
 
-3. Push `bcfishpass` schema from local test db to production db
+3. Copy tables for publication from test to production db
 
         ./test2prod.sh
 
