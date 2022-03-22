@@ -3,6 +3,7 @@ set -euxo pipefail
 
 # ===============================
 # load bcfishpass from test/staging database to prod database for use by pg_tileserv, pg_featureserv
+# note that we do not currently include bcfishobs schema as it can easily be generated on server
 # ===============================
 
 # create ssh tunnel and forward the port https://gist.github.com/scy/6781836
