@@ -78,6 +78,9 @@ FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;
 
 -- note streams with observations upstream
-UPDATE bcfishpass.streams
-SET access_model_pk = access_model_pk||' - OBSRVTN UPSTR'
-WHERE access_model_pk is not null and obsrvtn_species_codes_upstr && ARRAY['PK'];
+--UPDATE bcfishpass.streams
+--SET access_model_pk = access_model_pk||' - OBSRVTN UPSTR'
+--WHERE
+--  access_model_pk is not null and
+--  obsrvtn_species_codes_upstr && ARRAY['PK'] and
+--  watershed_group_code = :'wsg';

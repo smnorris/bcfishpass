@@ -1,6 +1,7 @@
-# BC Fish Passage web mapping
+# Draft bcfishpass web map
 
-Very basic web map for displaying data created by [bcfishpass](https://github.com/smnorris/bcfishpass)
+Basic mapbox gl style for displaying output `streams` and `crossings`
+
 Requires MVT served from `tiles.hillcrestge.ca/bcfishpass`
 
 ## Development
