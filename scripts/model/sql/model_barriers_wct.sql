@@ -1,10 +1,107 @@
 delete from bcfishpass.barriers_wct
 where watershed_group_code = :'wsg';
 
-
-WITH barriers AS
+with all_barriers as
 (
-    SELECT
+  select
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.barriers_majordams
+  where watershed_group_code = :'wsg'
+
+  union all
+
+  select
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.barriers_gradient_20
+  where watershed_group_code = :'wsg'
+
+  union all
+
+  select
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.barriers_gradient_25
+  where watershed_group_code = :'wsg'
+
+  union all
+
+  select
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.barriers_gradient_30
+  where watershed_group_code = :'wsg'
+
+  union all
+
+  select
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.barriers_falls
+  where watershed_group_code = :'wsg'
+
+  union all
+
+  select
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.barriers_subsurfaceflow
+  where watershed_group_code = :'wsg'
+),
+
+obs as
+(
+  select *
+  from bcfishpass.observations
+  where species_codes && array['WCT'] IS TRUE
+),
+
+barriers as
+(
+  select distinct
     b.barrier_type,
     b.barrier_name,
     b.linear_feature_id,
@@ -14,211 +111,40 @@ WITH barriers AS
     b.localcode_ltree,
     b.watershed_group_code,
     b.geom
-FROM bcfishpass.barriers_majordams b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
+  from all_barriers b
+  left outer join obs o
+  on fwa_upstream(
+        b.blue_line_key,
+        b.downstream_route_measure,
+        b.wscode_ltree,
+        b.localcode_ltree,
+        o.blue_line_key,
+        o.downstream_route_measure,
+        o.wscode_ltree,
+        o.localcode_ltree,
+        False,
+        1
+      )
+  where o.species_codes is null
+
+  union all
+
+    -- include *all* user added features, even those below wct observations
+  select
+      b.barrier_type,
+      b.barrier_name,
+      b.linear_feature_id,
       b.blue_line_key,
       b.downstream_route_measure,
       b.wscode_ltree,
       b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
-  AND b.watershed_group_code = o.watershed_group_code
--- do not include any features downstream of WCT observations, even major dams,
--- we are modelling resident populations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_gradient_20 b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
-  AND b.watershed_group_code = o.watershed_group_code
--- do not include any features downstream of WCT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_gradient_25 b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
-  AND b.watershed_group_code = o.watershed_group_code
--- do not include any features downstream of WCT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-
-UNION ALL
-
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_gradient_30 b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
-  AND b.watershed_group_code = o.watershed_group_code
--- do not include any features downstream of WCT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-
-UNION ALL
-
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_falls b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
-  AND b.watershed_group_code = o.watershed_group_code
--- do not include any features downstream of WCT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-UNION ALL
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_subsurfaceflow b
-LEFT OUTER JOIN bcfishpass.observations o
-ON FWA_Upstream(
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      o.blue_line_key,
-      o.downstream_route_measure,
-      o.wscode_ltree,
-      o.localcode_ltree,
-      False,
-      1
-    )
--- do not include any features downstream of WCT observations
-WHERE b.watershed_group_code = :'wsg' AND
-    (
-      o.species_codes && ARRAY['WCT'] IS FALSE
-      OR o.species_codes IS NULL
-    )
-
-UNION ALL
-
--- include all user added features, even those below WCT observations
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_user_definite b
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_user_definite b
+  where watershed_group_code = :'wsg'
 )
 
-INSERT INTO bcfishpass.barriers_wct
+insert into bcfishpass.barriers_wct
 (
     barriers_wct_id,
     barrier_type,
@@ -232,7 +158,7 @@ INSERT INTO bcfishpass.barriers_wct
     geom
 )
 -- add a primary key guaranteed to be unique provincially (presuming unique blkey/measure values within 1m)
-SELECT
+select
   (((blue_line_key::bigint + 1) - 354087611) * 10000000) + round(downstream_route_measure::bigint) as barrier_load_id,
   barrier_type,
   barrier_name,
@@ -243,12 +169,12 @@ SELECT
   localcode_ltree,
   watershed_group_code,
   geom
-FROM barriers b
-WHERE watershed_group_code = ANY(
-            ARRAY(
-              SELECT watershed_group_code
-              FROM bcfishpass.wsg_species_presence
-              WHERE wct IS TRUE
+from barriers b
+where watershed_group_code = any(
+            array(
+              select watershed_group_code
+              from bcfishpass.wsg_species_presence
+              where wct is true
             )
           )
-ON CONFLICT DO NOTHING;
+on conflict do nothing;
