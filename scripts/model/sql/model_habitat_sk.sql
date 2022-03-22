@@ -219,40 +219,32 @@ clusters as
   ORDER BY segmented_stream_id
 ),
 
--- get waterbody keys of rearing lakes/reservoirs
-wb AS
+-- find the rearing lakes nearby
+-- (spatial query on just a few lake geoms is much faster than relating
+-- streams classified as rearing back to lakes, and then to the geoms)
+clusters_near_rearing as
 (
-  SELECT DISTINCT waterbody_key
-  FROM bcfishpass.streams
-  WHERE rearing_model_sk IS TRUE
-),
-
--- and geoms of the lakes/reservoirs
-wb_geom AS
-(
-  SELECT
-    waterbody_key,
-    geom
-  FROM whse_basemapping.fwa_lakes_poly l
-  WHERE waterbody_key IN (SELECT waterbody_key from wb)
-  UNION ALL
-  SELECT
-    waterbody_key,
-    geom
-  FROM whse_basemapping.fwa_manmade_waterbodies_poly l
-  WHERE waterbody_key IN (SELECT waterbody_key from wb)
-),
-
--- find all spawning clusters adjacent to lake (give or take a metre or so)
-clusters_near_rearing AS
-(
-  SELECT DISTINCT
-    s1.cid,
-    bool_or(l.waterbody_key IS NOT NULL) as wb
-  FROM clusters s1
-  LEFT OUTER JOIN wb_geom l
-  ON ST_DWithin(s1.geom, l.geom, 2)
-  GROUP BY s1.cid
+  select
+    c.cid,
+    bool_or(lk.waterbody_key IS NOT NULL) as wb
+  from clusters c
+  left outer join whse_basemapping.fwa_lakes_poly lk
+  on st_dwithin(c.geom, lk.geom, 2)
+  LEFT OUTER JOIN bcfishpass.param_habitat h
+  ON h.species_code = 'SK'
+  where lk.area_ha >= h.rear_lake_ha_min  -- lakes
+  group by c.cid
+  union all
+  select distinct
+    c.cid,
+    bool_or(res.waterbody_key IS NOT NULL) as wb
+  from clusters c
+  left outer join whse_basemapping.fwa_manmade_waterbodies_poly res
+  on st_dwithin(c.geom, res.geom, 2)
+  LEFT OUTER JOIN bcfishpass.param_habitat h
+  ON h.species_code = 'SK'
+  where res.area_ha >= h.rear_lake_ha_min    -- reservoirs
+  group by c.cid
 ),
 
 -- and get the ids of the streams that compose the clusters connected to lakes
@@ -263,7 +255,7 @@ ids AS
   FROM clusters_near_rearing a
   INNER JOIN clusters b
   ON a.cid = b.cid
-  WHERE a.wb IS TRUE
+  WHERE a.wb is true
 )
 
 -- finally, apply update based on above ids
