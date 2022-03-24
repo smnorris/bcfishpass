@@ -89,4 +89,4 @@ Indexes:
 
 ## References
 
-- Thorley and Irvine 2021 [*Channel Width 2021*](https://github.com/NewGraphEnvironment/fish_passage_bulkley_2020_reporting/blob/master/docs/channel-width-21.pdf)
+- Thorley, J.L., Norris, S. & Irvine A. (2021) [*Channel Width 2021b. A Poisson Consulting Analysis Appendix*](https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/)
