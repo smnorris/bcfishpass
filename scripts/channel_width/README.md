@@ -89,4 +89,4 @@ Indexes:
 
 ## References
 
-- Thorley, J.L., Norris, S. & Irvine A. (2021) [*Channel Width 2021b. A Poisson Consulting Analysis Appendix*](https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/)
+- Thorley, J.L., Norris, S. & Irvine A. (2021) [*Channel Width 2021b. A Poisson Consulting Analysis Appendix*](https://www.poissonconsulting.ca/f/859859031)
