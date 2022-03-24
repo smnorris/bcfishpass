@@ -57,7 +57,10 @@ SELECT
   --  )::numeric, 2
   --)
   -- updated formula, Thorley and Irvine 2021b
-  round(exp(0.3071300 + 0.4577882 * (ln(s.upstream_area_ha) + ln(coalesce(p.map_upstream, 0) + 1) - ln(100) - ln(1000)))::numeric, 2) as channel_width_modelled
+  round(
+    exp(0.3071300 + 0.4577882 *
+        (ln(s.upstream_area_ha) + ln(coalesce(p.map_upstream, 0) + 1) - ln(100) - ln(1000))
+      )::numeric, 2) as channel_width_modelled
 FROM streams s
 INNER JOIN bcfishpass.mean_annual_precip p
 ON s.wscode_ltree = p.wscode_ltree
