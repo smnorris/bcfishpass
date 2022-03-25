@@ -90,63 +90,7 @@ map.addControl(new mapboxgl.NavigationControl());
 
 map.on('load', function () {
 
-    // ASSESSMENTS
-    map.on('click', 'crossings-pscis-assessments', function (e) {
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(featureHtml(e.features[0]))
-    .addTo(map);
-    });
-    map.on('mouseenter', 'crossings-pscis-assessments', function () {
-    map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'crossings-pscis-assessments', function () {
-    map.getCanvas().style.cursor = '';
-    });
-
-    // CONFIRMATIONS
-    map.on('click', 'crossings-pscis-confirmations', function (e) {
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(featureHtml(e.features[0]))
-    .addTo(map);
-    });
-    map.on('mouseenter', 'crossings-pscis-confirmations', function () {
-    map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'crossings-pscis-confirmations', function () {
-    map.getCanvas().style.cursor = '';
-    });
-
-    // DESIGNS
-    map.on('click', 'crossings-pscis-designs', function (e) {
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(featureHtml(e.features[0]))
-    .addTo(map);
-    });
-    map.on('mouseenter', 'crossings-pscis-designs', function () {
-    map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'crossings-pscis-designs', function () {
-    map.getCanvas().style.cursor = '';
-    });
-
-    // REMEDIATIONS
-    map.on('click', 'crossings-pscis-remediations', function (e) {
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(featureHtml(e.features[0]))
-    .addTo(map);
-    });
-    map.on('mouseenter', 'crossings-pscis-remediations', function () {
-    map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'crossings-pscis-remediations', function () {
-    map.getCanvas().style.cursor = '';
-    });
-
-    // MODELLED CROSSINGS
+    // CROSSINGS
     map.on('click', 'crossings-modelled', function (e) {
     new mapboxgl.Popup()
     .setLngLat(e.lngLat)
@@ -157,6 +101,18 @@ map.on('load', function () {
     map.getCanvas().style.cursor = 'pointer';
     });
     map.on('mouseleave', 'crossings-modelled', function () {
+    map.getCanvas().style.cursor = '';
+    });
+    map.on('click', 'crossings-pscis', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-pscis', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-pscis', function () {
     map.getCanvas().style.cursor = '';
     });
 
@@ -178,6 +134,8 @@ map.on('load', function () {
       key.className = 'legend-key-circle';
       key.style.backgroundColor = color;
       key.style.borderRadius = "50%";
+      key.style.borderWidth = "2px";
+
 
       var value = document.createElement('span');
       value.innerHTML = layer;
@@ -194,7 +152,7 @@ map.on('load', function () {
     legend.appendChild(item)
 
     var layers = ['Closed bottom', 'Open bottom'];
-    var colors = ["#ffae00", "#b2df8a"];
+    var colors = ["#fce82c", "#b2df8a"];
 
     for (i = 0; i < layers.length; i++) {
       var layer = layers[i];

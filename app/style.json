@@ -278,7 +278,7 @@
       "type": "line",
       "source": "streams_large",
       "source-layer": "bcfishpass.carto_streams_large",
-      "filter": ["in", "accessibility_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      "filter": ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
       ,
       "maxzoom": 10,
       "minzoom": 7,
@@ -286,7 +286,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "accessibility_model_wct"],
+            ["get", "access_model_wct"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -306,7 +306,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "accessibility_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["!=", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -314,7 +314,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "accessibility_model_wct"],
+            ["get", "access_model_wct"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -342,7 +342,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "accessibility_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["==", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -350,7 +350,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "accessibility_model_wct"],
+            ["get", "access_model_wct"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -373,7 +373,7 @@
           "line-dasharray": [3, 3]
       }
     },
-       {
+    {
     "id": "crossings-modelled",
     "type": "circle",
     "source": "crossings",
@@ -390,18 +390,22 @@
       ],
       ["all",
         ["==", "crossing_source", "MODELLED CROSSINGS"],
-        ["in", "accessibility_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+        ["in", "access_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
       ]
     ],
     "paint": {
       "circle-color": [
             "match",
             ["get", "barrier_status"],
+            "BARRIER",
+            "#ff3d37",
             "POTENTIAL",
-            "#ffae00",
+            "#fce82c",
             "PASSABLE",
             "#b2df8a",
-            "#b2df8a"
+            "UNKNOWN",
+            "#aaaaaa",
+            "#aaaaaa"
             ],
       "circle-opacity": 1,
       "circle-stroke-width": 1,
@@ -414,7 +418,46 @@
         18, 10,
         19, 15
     ]
-      }
+    }
+    },
+    {
+    "id": "crossings-pscis",
+    "type": "circle",
+    "source": "crossings",
+    "source-layer": "bcfishpass.crossings",
+    "minzoom": 9,
+    "filter": ["any",
+      ["all",
+        ["==", "crossing_source", "PSCIS"]
+      ]
+    ],
+    "paint": {
+      "circle-color": [
+            "match",
+            ["get", "barrier_status"],
+            "BARRIER",
+            "#ff3d37",
+            "POTENTIAL",
+            "#fce82c",
+            "PASSABLE",
+            "#b2df8a",
+            "UNKNOWN",
+            "#aaaaaa",
+            "#aaaaaa"
+            ],
+      "circle-opacity": 1,
+      "circle-stroke-width": 2,
+      "circle-stroke-opacity": 0.75,
+       "circle-radius": [
+    "interpolate", ["exponential", 2], ["zoom"],
+        7, 3,
+        10, 5,
+        14, 8,
+        16, 13,
+        18, 19,
+        19, 22
+    ]
+    }
     },
    {
     "id": "crossing-label",
@@ -426,7 +469,7 @@
     "filter": ["any",
         ["in", "access_model_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
         ["in", "access_model_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
-        ["in", "accessibility_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "access_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
         ["in", "crossing_source", "PSCIS"]
     ],
     "layout": {
