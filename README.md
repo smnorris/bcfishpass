@@ -11,8 +11,9 @@
 
 Also provided are tools for mapping features in the database:
 
+- [basic web viewer](https://www.hillcrestgeo.ca/projects/bcfishpass/)
 - comprehensive QGIS layer file
-- basic MapboxGL stylesheet and web page
+
 
 
 ## General Methodology
