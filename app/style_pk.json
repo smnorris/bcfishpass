@@ -1,0 +1,543 @@
+{
+  "version": 8,
+  "name": "bcfishpass mapping",
+  "center": [-120.728285,52.195932],
+  "zoom": 6,
+  "sources": {
+    "satellite": {
+      "type": "raster",
+      "tiles": [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 19
+    },
+    "esri-topo": {
+      "type": "raster",
+      "tiles": [
+        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 19
+    },
+    "private": {
+      "type": "vector",
+      "tiles": [
+        "https://tiles.hillcrestgeo.ca/bcfishpass/whse_cadastre.pmbc_parcel_fabric_poly_svw/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    },
+    "streams": {
+      "type": "vector",
+      "tiles": [
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.streams/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    },
+    "streams_large": {
+      "type": "vector",
+      "tiles": [
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.carto_streams_large/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 7,
+      "maxzoom": 19
+    },
+    "crossings": {
+      "type": "vector",
+      "tiles": [
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.crossings/{z}/{x}/{y}.pbf?properties=aggregated_crossing_id,stream_crossing_id,modelled_crossing_id,crossing_source,crossing_feature_type,pscis_status,barrier_status,observedspp_upstr,observedspp_dnstr,barriers_anthropogenic_dnstr_count,barriers_anthropogenic_upstr_count,access_model_bt,access_model_ch_co_sk,access_model_st,access_model_wct,all_spawningrearing_km,all_spawningrearing_belowupstrbarriers_km,watershed_group_code"
+      ],
+      "minzoom": 8,
+      "maxzoom": 19
+    }
+  },
+  "glyphs": "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "esri-topo",
+      "type": "raster",
+      "source": "esri-topo",
+       "layout": {
+        "visibility": "visible"
+      },
+      "maxzoom": 19
+    },
+    {
+      "id": "satellite",
+      "type": "raster",
+      "source": "satellite",
+      "layout": {
+        "visibility": "none"
+      },
+      "maxzoom": 19
+    },
+    {
+      "id": "streams-steelhead-large",
+      "type": "line",
+      "source": "streams_large",
+      "source-layer": "bcfishpass.carto_streams_large",
+      "filter": ["in", "access_model_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      ,
+      "maxzoom": 10,
+      "minzoom": 7,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_st"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": 2.5
+      }
+    },
+    {
+      "id": "streams-steelhead",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "access_model_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["!=", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_st"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                3,
+                0.2,
+                0.5
+          ]
+      }
+    },
+    {
+      "id": "streams-steelhead-intermittent",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "access_model_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["==", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_st"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                2.5,
+                0.2,
+                0.5
+          ],
+          "line-dasharray": [3, 3]
+      }
+    },
+    {
+      "id": "streams-salmon-large",
+      "type": "line",
+      "source": "streams_large",
+      "source-layer": "bcfishpass.carto_streams_large",
+      "filter": ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      ,
+      "maxzoom": 10,
+      "minzoom": 7,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_ch_co_sk"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": 2.5
+      }
+    },
+    {
+      "id": "streams-salmon",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["!=", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_ch_co_sk"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                3,
+                0.2,
+                0.5
+          ]
+      }
+    },
+    {
+      "id": "streams-salmon-intermittent",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["==", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_ch_co_sk"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                2.5,
+                0.2,
+                0.5
+          ],
+          "line-dasharray": [3, 3]
+      }
+    },
+    {
+      "id": "streams-wct-large",
+      "type": "line",
+      "source": "streams_large",
+      "source-layer": "bcfishpass.carto_streams_large",
+      "filter": ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      ,
+      "maxzoom": 10,
+      "minzoom": 7,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_wct"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": 2.5
+      }
+    },
+    {
+      "id": "streams-wct",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["!=", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_wct"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                3,
+                0.2,
+                0.5
+          ]
+      }
+    },
+    {
+      "id": "streams-wct-intermittent",
+      "type": "line",
+      "source": "streams",
+      "source-layer": "bcfishpass.streams",
+      "filter": ["all",
+        ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["==", "feature_code", "GA24850150"]
+      ],
+      "minzoom": 10,
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+          "line-color": [
+            "match",
+            ["get", "access_model_wct"],
+            "ACCESSIBLE",
+            "#129bdb",
+            "POTENTIALLY ACCESSIBLE",
+            "#ff9f85",
+            "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM",
+            "#ff6b6b",
+            "ACCESSIBLE - REMEDIATED",
+            "#33a02c",
+            "#ff9f85"
+            ],
+          "line-width": [
+            "interpolate",
+                ["linear"],
+                ["get", "gradient"],
+                0,
+                2.5,
+                0.2,
+                0.5
+          ],
+          "line-dasharray": [3, 3]
+      }
+    },
+    {
+    "id": "crossings-modelled",
+    "type": "circle",
+    "source": "crossings",
+    "source-layer": "bcfishpass.crossings",
+    "minzoom": 9,
+    "filter": ["any",
+      ["all",
+        ["==", "crossing_source", "MODELLED CROSSINGS"],
+        ["in", "access_model_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+      ],
+      ["all",
+        ["==", "crossing_source", "MODELLED CROSSINGS"],
+        ["in", "access_model_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+      ],
+      ["all",
+        ["==", "crossing_source", "MODELLED CROSSINGS"],
+        ["in", "access_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+      ]
+    ],
+    "paint": {
+      "circle-color": [
+            "match",
+            ["get", "barrier_status"],
+            "BARRIER",
+            "#ff3d37",
+            "POTENTIAL",
+            "#fce82c",
+            "PASSABLE",
+            "#b2df8a",
+            "UNKNOWN",
+            "#aaaaaa",
+            "#aaaaaa"
+            ],
+      "circle-opacity": 1,
+      "circle-stroke-width": 1,
+      "circle-stroke-opacity": 0.75,
+      "circle-radius": [
+        "interpolate", ["exponential", 2], ["zoom"],
+        9, 3,
+        14, 5,
+        16, 7,
+        18, 10,
+        19, 15
+    ]
+    }
+    },
+    {
+    "id": "crossings-pscis",
+    "type": "circle",
+    "source": "crossings",
+    "source-layer": "bcfishpass.crossings",
+    "minzoom": 9,
+    "filter": ["any",
+      ["all",
+        ["==", "crossing_source", "PSCIS"]
+      ]
+    ],
+    "paint": {
+      "circle-color": [
+            "match",
+            ["get", "barrier_status"],
+            "BARRIER",
+            "#ff3d37",
+            "POTENTIAL",
+            "#fce82c",
+            "PASSABLE",
+            "#b2df8a",
+            "UNKNOWN",
+            "#aaaaaa",
+            "#aaaaaa"
+            ],
+      "circle-opacity": 1,
+      "circle-stroke-width": 2,
+      "circle-stroke-opacity": 0.75,
+       "circle-radius": [
+    "interpolate", ["exponential", 2], ["zoom"],
+        7, 3,
+        10, 5,
+        14, 8,
+        16, 13,
+        18, 19,
+        19, 22
+    ]
+    }
+    },
+   {
+    "id": "crossing-label",
+    "type": "symbol",
+    "source": "crossings",
+    "source-layer": "bcfishpass.crossings",
+    "minzoom": 12,
+    "maxzoom": 19,
+    "filter": ["any",
+        ["in", "access_model_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "access_model_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "access_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "crossing_source", "PSCIS"]
+    ],
+    "layout": {
+        "text-line-height": 1.2,
+        "text-size": {"base": 1, "stops": [[12, 9], [19, 18]]},
+        "text-max-angle": 38,
+        "symbol-spacing": 250,
+        "text-padding": 2,
+        "text-offset": [0, 0],
+        "text-font": ["Open Sans Bold"],
+        "text-rotation-alignment": "viewport",
+        "text-letter-spacing": 0.01,
+        "text-max-width": 7,
+        "text-variable-anchor": ["bottom-right","bottom-left","top","bottom"],
+        "text-radial-offset": 0.5,
+       "text-field": [
+            "match",
+            ["get", "crossing_source"],
+            "PSCIS",
+            ["get", "stream_crossing_id"],
+            "MODELLED CROSSINGS",
+            ["get", "modelled_crossing_id"],
+            "BCDAMS",
+            ["get", "dam_id"],
+            ["get", "dam_id"]
+            ]
+    },
+    "paint": {
+        "text-color": "hsl(230, 29%, 35%)",
+        "text-halo-color": "hsl(0, 0%, 100%)",
+        "text-halo-width": 1
+    },
+    "interactive": true
+  },
+
+  {
+    "id": "pscis-status-label",
+    "type": "symbol",
+    "source": "crossings",
+    "source-layer": "bcfishpass.crossings",
+    "minzoom": 13,
+    "maxzoom": 19,
+    "filter": ["==", "crossing_source", "PSCIS"],
+    "layout": {
+        "text-line-height": 1.2,
+        "text-size": {"base": 1, "stops": [[12, 9], [19, 20]]},
+        "text-max-angle": 38,
+        "symbol-spacing": 250,
+        "text-padding": 0,
+        "text-offset": [0, 0],
+        "text-font": ["Open Sans Bold"],
+        "text-rotation-alignment": "viewport",
+        "text-letter-spacing": 0.01,
+        "text-max-width": 7,
+        "text-variable-anchor": ["center"],
+        "text-justify": "center",
+        "text-radial-offset": 0.0,
+        "text-field": ["slice", ["get", "pscis_status"], 0, 1],
+        "text-ignore-placement": true,
+        "text-padding": 1
+    },
+    "paint": {
+        "text-color": "hsl(230, 29%, 35%)",
+        "text-halo-color": "hsl(0, 0%, 100%)",
+        "text-halo-width": 0
+    },
+    "interactive": true
+  }
+
+  ]
+}

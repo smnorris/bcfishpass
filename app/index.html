@@ -62,9 +62,28 @@
   font-weight: bold;
 }
 
+#menu {
+position: absolute;
+background: #efefef;
+padding: 10px;
+font-family: 'Open Sans', sans-serif;
+}
+
 </style>
 
 <div id="map"></div>
+<div id="menu">
+<input id="ch_co_sk" type="radio" name="rtoggle" value="ch_co_sk" checked="checked">
+<label for="ch_co_sk">Chinook/Coho/Sockeye</label>
+<input id="pk" type="radio" name="rtoggle" value="pk">
+<label for="pk">Pink</label>
+<input id="st" type="radio" name="rtoggle" value="st">
+<label for="st">Steelhead</label>
+<input id="wct" type="radio" name="rtoggle" value="wct">
+<label for="wct">Westslope Cutthroat Trout</label>
+<input id="bt" type="radio" name="rtoggle" value="bt">
+<label for="bt">Bull Trout</label>
+</div>
 <div class='map-overlay' id='legend'></div>
 
 <script>
@@ -81,7 +100,7 @@ function featureHtml(f) {
 
 var map = new mapboxgl.Map({
 container: 'map',
-style: 'style.json',
+style: 'style_ch_co_sk.json',
     center: [-120.728285,52.195932], // starting position
     zoom: 6 // starting zoom
 });
@@ -195,9 +214,17 @@ map.on('load', function () {
       item.appendChild(value);
       legend.appendChild(item);
     }
-
 });
 
+const layerList = document.getElementById('menu');
+const inputs = layerList.getElementsByTagName('input');
+
+for (const input of inputs) {
+input.onclick = (layer) => {
+const layerId = layer.target.id;
+map.setStyle('style_' + layerId + '.json');
+};
+}
 
 
 </script>
