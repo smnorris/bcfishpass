@@ -109,6 +109,52 @@ map.addControl(new mapboxgl.NavigationControl());
 
 map.on('load', function () {
 
+    // GL-JS cannot cluster mvt sources. Get crossings as geojson
+    // and set the 'cluster' option to true. GL-JS will
+    // adds the point_count property to source data.
+    map.addSource('crossing-pts', {
+    type: 'geojson',
+    data: 'https://features.hillcrestgeo.ca/bcfishpass/collections/bcfishpass.crossings/items.json?properties=aggregated_crossings_id&barrier_status=BARRIER',
+    cluster: true,
+    clusterMaxZoom: 6, // Max zoom to cluster points on
+    clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+    });
+
+    map.addLayer({
+    id: 'clusters',
+    type: 'circle',
+    source: 'crossing-pts',
+    filter: ['has', 'point_count'],
+    paint: {
+    // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+    // with three steps to implement three types of circles:
+    //   * Blue, 20px circles when point count is less than 100
+    //   * Yellow, 30px circles when point count is between 100 and 750
+    //   * Pink, 40px circles when point count is greater than or equal to 750
+    'circle-color': "#ff9c83",
+     "circle-stroke-width": 2,
+    'circle-radius': [
+    'step',
+    ['get', 'point_count'],
+    20,
+    100,
+    30,
+    750,
+    40
+    ]
+    }
+    });
+
+    map.addLayer({
+    id: 'cluster-count',
+    type: 'symbol',
+    source: 'crossing-pts',
+    filter: ['has', 'point_count'],
+    layout: {
+    'text-field': '{point_count_abbreviated}',
+    'text-font': ['Klokantech Noto Sans Bold']  // https://github.com/openmaptiles/fonts/issues/7
+    }
+    });
     // CROSSINGS
     map.on('click', 'crossings-modelled', function (e) {
     new mapboxgl.Popup()
