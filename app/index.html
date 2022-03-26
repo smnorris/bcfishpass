@@ -73,6 +73,8 @@ font-family: 'Open Sans', sans-serif;
 
 <div id="map"></div>
 <div id="menu">
+<input id="all" type="radio" name="rtoggle" value="all">
+<label for="">All features/species</label>
 <input id="ch_co_sk" type="radio" name="rtoggle" value="ch_co_sk" checked="checked">
 <label for="ch_co_sk">Chinook/Coho/Sockeye</label>
 <input id="pk" type="radio" name="rtoggle" value="pk">
@@ -84,6 +86,7 @@ font-family: 'Open Sans', sans-serif;
 <input id="bt" type="radio" name="rtoggle" value="bt">
 <label for="bt">Bull Trout</label>
 </div>
+
 <div class='map-overlay' id='legend'></div>
 
 <script>
@@ -126,11 +129,6 @@ map.on('load', function () {
     source: 'crossing-pts',
     filter: ['has', 'point_count'],
     paint: {
-    // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-    // with three steps to implement three types of circles:
-    //   * Blue, 20px circles when point count is less than 100
-    //   * Yellow, 30px circles when point count is between 100 and 750
-    //   * Pink, 40px circles when point count is greater than or equal to 750
     'circle-color': "#ff9c83",
      "circle-stroke-width": 2,
     'circle-radius': [
@@ -168,6 +166,7 @@ map.on('load', function () {
     map.on('mouseleave', 'crossings-modelled', function () {
     map.getCanvas().style.cursor = '';
     });
+
     map.on('click', 'crossings-pscis', function (e) {
     new mapboxgl.Popup()
     .setLngLat(e.lngLat)
@@ -181,10 +180,62 @@ map.on('load', function () {
     map.getCanvas().style.cursor = '';
     });
 
+    map.on('click', 'crossings-dams', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'crossings-dams', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'crossings-dams', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'observations', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'observations', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'observations', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'barriers-ch-co-sk-falls', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'barriers-ch-co-sk-falls', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'barriers-ch-co-sk-falls', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'barriers-ch-co-sk-other', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'barriers-ch-co-sk-other', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'barriers-ch-co-sk-other', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
     var item = document.createElement('div');
     var groupheader = document.createElement('span');
     groupheader.className = 'legend-header'
-    groupheader.innerHTML = 'PSCIS'
+    groupheader.innerHTML = 'PSCISCrossings'
     item.appendChild(groupheader)
     legend.appendChild(item)
 
@@ -212,7 +263,7 @@ map.on('load', function () {
     var item = document.createElement('div');
     var groupheader = document.createElement('span');
     groupheader.className = 'legend-header'
-    groupheader.innerHTML = 'Model'
+    groupheader.innerHTML = 'ModelledCrossings'
     item.appendChild(groupheader)
     legend.appendChild(item)
 
@@ -240,11 +291,11 @@ map.on('load', function () {
     var item = document.createElement('div');
     var groupheader = document.createElement('span');
     groupheader.className = 'legend-header'
-    groupheader.innerHTML = 'Streams'
+    groupheader.innerHTML = 'PotentiallyAccessibleStreams'
     item.appendChild(groupheader)
     legend.appendChild(item)
 
-    var layers = ['Accessible', 'Potentially accessible', 'Not accessible', 'Accessible - remediated'];
+    var layers = ['No known barrier', 'Modelled potential barrier', 'Known PSCIS barrier', 'Remediated'];
     var colors = ["#129bdb", "#ff9f85", "#ff6b6b", "#33a02c"];
     for (i = 0; i < layers.length; i++) {
       var layer = layers[i];
