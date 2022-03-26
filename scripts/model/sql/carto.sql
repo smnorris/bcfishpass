@@ -39,7 +39,9 @@ SELECT
   access_model_wct,
   (ST_Dump(ST_UNION(ST_Force2D(geom)))).geom as geom
 FROM bcfishpass.streams
-WHERE stream_order >= 3
+WHERE
+  stream_order >= 3 and
+  edge_type in (1000,1050,1100,1150,1250,1350,2000,2300)
 GROUP BY blue_line_key,
   gnis_name,
   stream_order,

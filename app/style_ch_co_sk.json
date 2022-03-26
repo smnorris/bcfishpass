@@ -159,7 +159,8 @@
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
         ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
-        ["!=", "feature_code", "GA24850150"]
+        ["!=", "feature_code", "GA24850150"],
+        ["in", "edge_type",1000,1050,1100,1150,1250,1350,2000,2300]
       ],
       "minzoom": 10,
       "layout": {"line-join": "round", "line-cap": "round"},
@@ -323,7 +324,7 @@
     }
     },
     {
-    "id": "crossings-pscis-not-matched-to-streams",
+    "id": "pscis-not-matched-to-streams",
     "type": "circle",
     "source": "pscis_not_matched_to_streams",
     "source-layer": "bcfishpass.pscis_not_matched_to_streams",

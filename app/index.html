@@ -180,6 +180,19 @@ map.on('load', function () {
     map.getCanvas().style.cursor = '';
     });
 
+    map.on('click', 'pscis-not-matched-to-streams', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(featureHtml(e.features[0]))
+    .addTo(map);
+    });
+    map.on('mouseenter', 'pscis-not-matched-to-streams', function () {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'pscis-not-matched-to-streams', function () {
+    map.getCanvas().style.cursor = '';
+    });
+
     map.on('click', 'crossings-dams', function (e) {
     new mapboxgl.Popup()
     .setLngLat(e.lngLat)
