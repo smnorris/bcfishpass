@@ -496,7 +496,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	# run report per watershed group on barriers_anthropogenic
 	$(PSQL_CMD) -f scripts/model/sql/point_report_columns.sql \
 		-v point_table=barriers_anthropogenic
-	for wsg in $(WSG) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
@@ -507,7 +507,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	## run report per watershed group on crossings
 	$(PSQL_CMD) -f scripts/model/sql/point_report_columns.sql \
 		-v point_table=crossings
-	for wsg in $(WSG) ; do \
+	for wsg in $(WSG_PARAM) ; do \
 		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
