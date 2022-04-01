@@ -1,4 +1,5 @@
--- create rough study area, a 1 km buffer of rail lines within Fraser and Skeena
+-- create rough study area, a 1 km buffer of rail lines within Fraser and Skeena,
+-- partitioned by bcgs 20k tiles
 
 drop table if exists bcfishpass.lat_study_area;
 
