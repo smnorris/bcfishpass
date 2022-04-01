@@ -35,3 +35,7 @@ qa
 
 # data dumps
 export/outputs
+
+# ignore current parameters, just track param in subfolders
+parameters/habitat.csv
+parameters/watersheds.csv
