@@ -332,7 +332,7 @@ $(patsubst %, .breakpts_%, $(ANTH_BARRIERS)): .breakpts_%: .barriers_%
 
 # for each species/species group being modelled, combine definite barriers into a single table for that species/species group
 # Because we only retain minimal features, we can't tell where changes have occured (as in above) - so process the entire study area
-.breakpts_%: scripts/model/sql/model_barriers_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations
+.breakpts_%: scripts/model/sql/model_barriers_%.sql $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations .streams
 	# drop barrier table if already present
 	echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=$(subst .breakpts_,barriers_,$@)
 	# create/recreate barrier table
