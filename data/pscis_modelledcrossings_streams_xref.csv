@@ -3484,3 +3484,45 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62245,4605728,,ELKR,SN,matched to nearest modelled crossing - this is the PSCIS id of interest for this location (not 62244)
 61618,,,ELKR,SN,not on mapped stream
 197868,4602849,,ELKR,SN,Latest assessment at this location has incorrect coord in PSCIS but takes precedence over 50090 at the same location
+8577,,,SANJ,SN,trib to San Juan
+1186,,,SANJ,SN,trib to Gordon
+4611,,,ALBN,SN,likely ephemeral
+2072,,,ALBN,SN,trib to Klanawa
+2073,,,ALBN,SN,trib to Klanawa
+1312,,,ALBN,SN,side channel to Taylor
+4174,,,GOLD,SN,unmapped trib
+4173,,,GOLD,SN,unmapped trib
+4255,,,GOLD,SN,unmapped trib
+4256,,,GOLD,SN,unmapped trib
+4260,,,GOLD,SN,unmapped trib
+102749,,,HOLB,SN,trib to San Josef R.
+103385,,,NEVI,SN,Unnamed Trib to Quatse R.
+1625,,,HOMA,SN,trib to Southgate River
+1653,,,JERV,SN,trib to Lang Creek
+52079,,,LFRA,SN,Trib to Alouette R
+1668,,,SQAM,SN,No Stream
+63477,,,LILL,SN,Tributary to Lillooet River
+63504,,,LILL,SN,Tributary to Lillooet River
+1483,,,FRCN,SN,A 50cm pipe on this 50m wide river is not possible
+63446,,,LILL,SN,60cm pipe on this channel is not possible
+1474,,,CHWK,SN,appears to be unmapped stream or side channle - cannot be the Chilliwack River main channel
+1472,2801698,,CHWK,SN,80cm pipe cannot be on the Chilliwack River
+51440,,,HARR,SN,Tributary to Cogburn Creek
+51495,,,HARR,SN,Tributary to Cogburn Creek
+197287,,,DEAD,SN,Trib to Deadman
+197291,,,DEAD,SN,unmapped side channel
+4097,,,SHUL,SN,Trib to Eagle
+3619,,,SHUL,SN,Trib to Eagle
+3646,,,SHUL,SN,unk trib to Perry River
+6836,,,BOWR,SN,UNN trib of Bowron
+8229,,,MORK,SN,stream is too big for the assessed culvert to be plausible
+6708,,,MCGR,SN,assessment is on unmapped stream
+6687,,,MCGR,SN,assessment is on unmapped stream
+5650,,,MCGR,SN,Trib to Otter Crk
+2943,,,LKEL,SN,Lakelse River far too wide to be culverted
+123318,,,KLUM,SN,Kitsumkalum River far too large to be culverted
+123319,,,KLUM,SN,Kitsumkalum River far too large to be culverted
+123326,,,KLUM,SN,Kitsumkalum River far too large to be culverted
+123325,,,KLUM,SN,Kitsumkalum River far too large to be culverted
+1463,,,BELA,SN,Unnamed Trib to Bella Coola River
+1434,16301284,,OWIK,SN,Crossing is on trib to Sheemahant River
