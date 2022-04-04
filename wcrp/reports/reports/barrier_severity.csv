@@ -1,8 +1,8 @@
 watershed_group_code,crossing_feature_type,n_assessed_barrier,n_assessed_total,pct_assessed_barriers
 BULK,DAM,23,24,95.8
-BULK,RAIL,5,7,71.4
-BULK,"ROAD, DEMOGRAPHIC",198,245,80.8
-BULK,"ROAD, RESOURCE/OTHER",429,687,62.4
+BULK,RAIL,10,17,58.8
+BULK,"ROAD, DEMOGRAPHIC",207,256,80.9
+BULK,"ROAD, RESOURCE/OTHER",438,716,61.2
 BULK,TRAIL,0,2,0.0
 ELKR,DAM,6,8,75.0
 ELKR,RAIL,6,15,40.0
