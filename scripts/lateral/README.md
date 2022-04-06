@@ -47,30 +47,24 @@ These scripts attempt to quantify lateral habitat isolated by active railway cor
 
 ## Background
 
-From the [Riparian Areas Protection Act](https://www.canlii.org/en/bc/laws/regu/bc-reg-178-2019/latest/bc-reg-178-2019.html), BC's definition of active floodplain and riparian assessment area:
+From BC's [Riparian Areas Protection Act](https://www.canlii.org/en/bc/laws/regu/bc-reg-178-2019/latest/bc-reg-178-2019.html), definitions of active floodplain and riparian assessment area are useful guides for our ad-hoc buffering of streams:
 
 
->"active floodplain", in relation to a stream, means land that is
+### Active floodplain
+> In relation to a stream, means land that is
 
->(a)adjacent to the stream,
+>(a) adjacent to the stream,  
 
->(b)inundated by the 1 in 5 year return period flow of the stream, and
+>(b) inundated by the 1 in 5 year return period flow of the stream, and
 
->Riparian assessment area
->8   (1)Subject to subsection (2), the riparian assessment area for a stream consists
->of a 30 m strip on each side of the stream, measured from the stream boundary.
->
->(2)If a stream is in a ravine, the riparian assessment area for the stream consists
->of the following areas, as applicable:
->
->(a)if the ravine is less than 60 m wide, a strip on each side of the stream that
->is measured from the stream boundary to a point that is 30 m beyond the top of the
->ravine bank;
->
->(b)if the ravine is 60 or more metres wide, a strip on each side of the stream that
->is measured from the stream boundary to a point that is 10 m beyond the top of the
->ravine bank.
->
->(c)capable of supporting plant species that are typical of inundated or saturated
->soil conditions and distinct from plant species on freely drained upland sites adjacent
->to the land;
+>(c) capable of supporting plant species that are typical of inundated or saturated soil conditions and distinct from plant species on freely drained upland sites adjacent to the land;
+
+
+### Riparian assessment area
+>(1) Subject to subsection (2), the riparian assessment area for a stream consists of a 30 m strip on each side of the stream, measured from the stream boundary.
+
+> (2) If a stream is in a ravine, the riparian assessment area for the stream consists of the following areas, as applicable:
+
+> (a) if the ravine is less than 60 m wide, a strip on each side of the stream that is measured from the stream boundary to a point that is 30 m beyond the top of the ravine bank;
+
+> (b) if the ravine is 60 or more metres wide, a strip on each side of the stream that is measured from the stream boundary to a point that is 10 m beyond the top of the ravine bank.
