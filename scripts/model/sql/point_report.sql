@@ -23,7 +23,7 @@ WITH at_point AS
   AND a.downstream_route_measure + .001 < s2.upstream_route_measure
   AND a.watershed_group_code = s2.watershed_group_code
   WHERE a.watershed_group_code = :'wsg'
-  AND a.blue_line_key = a.watershed_key             -- do not update points in side channels
+  --AND a.blue_line_key = a.watershed_key             -- do not update points in side channels
   ORDER BY a.:point_id
 )
 

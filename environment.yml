@@ -17,8 +17,10 @@ dependencies:
   - owslib
   - geopandas>=0.10.2
   - psycopg2
+  - sqlalchemy
   - jq
   - rasterstats
+  - scikit-image
   - pip:
       - bcdata>=0.5.1
 variables:
