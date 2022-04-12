@@ -777,7 +777,29 @@ WHERE crossing_subtype_code = 'DAM';
 -- railway
 UPDATE bcfishpass.crossings
 SET crossing_feature_type = 'RAIL'
-WHERE rail_owner_name IS NOT NULL;
+WHERE rail_owner_name IS NOT NULL
+-- make sure some that either the pscis crossing is < 10m from a railway,
+-- or within 25m and includes 'RAIL' in assessment road name
+and
+   (
+    aggregated_crossings_id in
+      (
+        select aggregated_crossings_id
+        from bcfishpass.crossings c
+        inner join whse_basemapping.gba_railway_tracks_sp r
+        on st_dwithin(c.geom, r.geom, 20)
+        where crossing_source = 'PSCIS'
+        and upper(pscis_road_name) like '%RAIL%' and upper(pscis_road_name) not like '%TRAIL%'
+      )
+    or aggregated_crossings_id in
+    (
+      select aggregated_crossings_id
+      from bcfishpass.crossings c
+      inner join whse_basemapping.gba_railway_tracks_sp r
+      on st_dwithin(c.geom, r.geom, 10)
+      where crossing_source = 'PSCIS'
+    )
+);
 
 -- tenured roads
 UPDATE bcfishpass.crossings
