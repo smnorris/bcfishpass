@@ -22,7 +22,13 @@ with buf as
   inner join whse_basemapping.fwa_watershed_groups_poly wsg
   on st_intersects(r.geom, wsg.geom)
   where wsg.watershed_group_code in
-  ('BBAR','BONP','BRID','BULK','CHWK','COTR','DEAD','DRIR','FRAN','FRCN','GRNL','HARR','KISP','KLUM','LCHL','LFRA','LILL','LKEL','LNIC','LNTH','LSAL','LSKE','LTRE','MIDR','MORK','MORR','MUSK','NARC','NECR','QUES','SAJR','SALR','SETN','SHUL','STHM','STUL','SUST','TABR','TAKL','THOM','TWAC','UFRA','UNTH','USHU','UTRE','WILL')
+  (
+    'BBAR','BONP','BRID','BULK','CHWK','COTR','DEAD','DRIR','FRAN','FRCN','GRNL',
+    'HARR','KISP','KLUM','LCHL','LFRA','LILL','LKEL','LNIC','LNTH','LSAL','LSKE',
+    'LTRE','MIDR','MORK','MORR','MUSK','NARC','NECR','QUES','SAJR','SALR','SETN',
+    'SHUL','STHM','STUL','SUST','TABR','TAKL','THOM','TWAC','UFRA','UNTH','USHU',
+    'UTRE','WILL'
+  )
   and track_classification != 'Ferry Route'
 )
 

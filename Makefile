@@ -543,5 +543,5 @@ wcrp/reports/reports/%.csv: wcrp/reports/sql/%.sql .point_reports
 	mkdir -p reports/wcrp/reports
 	psql2csv $(DATABASE_URL) < $< > $@
 	
-scripts/lateral/.lateral: .update_access
-	cd scripts/lateral; make
+scripts/lateral/data/lateral.tif: .point_reports
+	cd scripts/lateral; rm .make/lateral_polys; make

@@ -1,5 +1,8 @@
 import os
+from pathlib import Path
+import logging
 
+import click
 import geopandas
 import numpy
 import rasterio
@@ -8,245 +11,204 @@ from skimage.filters.rank import majority
 import skimage.morphology as morphology
 from sqlalchemy import create_engine
 
-def load_pg(shape, transform):
-    """load slope and rasterize data from postgis layers"""
-    data = {}
+LOG = logging.getLogger(__name__)
 
+
+def load_rasters(shape, transform, temp_path=False):
+    """Load input slope raster and additional boolean rasters"""
+    LOG.info("Loading data")
+    # define key and code values for additional features
+    queries = {
+        "studyarea": 0,
+        "waterbodies": 1,
+        "floodplain": 2,
+        "sidechannels": 3,
+        "linear_habitat": 4,
+        "linear_accessible": 5,
+        "linear_habitat_below_rail": 6,
+        "rail": 7,
+        "rail_bridges": 8,
+        "urban_btm": 9,
+    }
+    rasters = {}
+    # if provided a temp_path, try and load everything from there
+    if temp_path:
+        for key in queries.keys():
+            temp_raster = os.path.join(temp_path, key + ".tif")
+            if os.path.exists(temp_raster):
+                with rasterio.open(temp_raster) as src:
+                    rasters[key] = src.read(1)
+
+    # initialize database connection
     con = create_engine(os.environ.get("DATABASE_URL"))
-    studyarea_polys = geopandas.GeoDataFrame.from_postgis(
-        "select * from bcfishpass.lateral_studyarea", con
-    )
-    class1_polys = geopandas.GeoDataFrame.from_postgis(
-        "select * from bcfishpass.lateral_poly where habitat_class = 1", con
-    )
-    class2_polys = geopandas.GeoDataFrame.from_postgis(
-        "select * from bcfishpass.lateral_poly where habitat_class = 2", con
-    )
-    class3_polys = geopandas.GeoDataFrame.from_postgis(
-        "select * from bcfishpass.lateral_poly where habitat_class = 3", con
-    )
-    potentialhabitat_polys = geopandas.GeoDataFrame.from_postgis(
-        "select * from bcfishpass.lateral_poly where habitat_class = 4", con
-    )
-    accessiblehabitat_polys = geopandas.GeoDataFrame.from_postgis(
-        "select * from bcfishpass.lateral_poly where habitat_class = 5", con
-    )
-    rail_polys = geopandas.GeoDataFrame.from_postgis(
-        "select st_buffer(geom, 25) as geom from whse_basemapping.gba_railway_tracks_sp", con)
 
-    rail_bridge_polys = geopandas.GeoDataFrame.from_postgis(
-        (
-            "select st_buffer(geom, 30) as geom from "
-            "bcfishpass.crossings where crossing_feature_type = 'RAIL' "
-            "and barrier_status NOT IN ('POTENTIAL','BARRIER')"
-        ), con
-    )
-    btm_urban_polys = geopandas.GeoDataFrame.from_postgis(
-        (
-            "select geom from "
-            "whse_basemapping.btm_present_land_use_v1_svw "
-            "where present_land_use_label = 'Urban'"
-        ), con
-    )
+    # load all features from lateral_poly table
+    for key in queries:
+        if key not in rasters.keys():
+            LOG.info("Loading " + key)
+            query = "select geom from bcfishpass.lateral_poly where code = " + str(
+                queries[key]
+            )
+            polys = geopandas.GeoDataFrame.from_postgis(query, con)
+            # rasterize polygon features, creating boolean array
+            rasters[key] = features.rasterize(
+                ((geom, 1) for geom in polys.geometry),
+                out_shape=shape,
+                transform=transform,
+                all_touched=False,
+                dtype=numpy.uint8,
+            )
 
-    data["studyarea"] = features.rasterize(
-        ((geom, 1) for geom in studyarea_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
+    # load esa land use raster
+    with rasterio.open(r"data/esa_bc.tif") as src:
+        rasters["urban_esa"] = src.read(1)
+    # extract only urban (50) areas
+    rasters["urban_esa"] = numpy.where(rasters["urban_esa"] == 50, 1, 0)
 
-    data["mask"] = data["studyarea"] == 0
-    data["studyarea_mask"] = data["studyarea"] != 0
+    return rasters
 
-    data["class1"] = features.rasterize(
-        ((geom, 1) for geom in class1_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["class2"] = features.rasterize(
-        ((geom, 2) for geom in class2_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["class3"] = features.rasterize(
-        ((geom, 3) for geom in class3_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["potentialhabitat"] = features.rasterize(
-        ((geom, 1) for geom in potentialhabitat_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["accessiblehabitat"] = features.rasterize(
-        ((geom, 1) for geom in accessiblehabitat_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["rail"] = features.rasterize(
-        ((geom, 1) for geom in rail_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["rail_bridges"] = features.rasterize(
-        ((geom, 1) for geom in rail_bridge_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    data["btm_urban"] = features.rasterize(
-        ((geom, 1) for geom in btm_urban_polys.geometry),
-        out_shape=shape,
-        transform=transform,
-        all_touched=False,
-        dtype=numpy.uint8,
-    )
-    return data
 
 def filter_connected(in_array, habitat_array):
-    """Return portions of in_array that are connected to habitat_array cells = 1
     """
-    # label
+    Return portions of in_array that are connected to cells with value 1
+    in habitat_array
+    """
+    # label distinct patches of in_array
     labels = morphology.label(in_array, connectivity=1)
 
-    # find labels intersecting habitat
+    # find labels that intersect habitat_array
     mask = habitat_array == 1
     habitat_labels = labels[mask]
     connected_mask = numpy.isin(labels, numpy.unique(habitat_labels))
+
     # return only areas with labels that intersect habitat
     return numpy.where(connected_mask == 1, in_array, 0)
 
 
-data = {}
+@click.command()
+@click.argument("path_to_slope_raster", type=click.Path(exists=True))
+@click.option("--out_file", "-o", default="lateral.tif")
+@click.option("--temp_path")
+def lateral(path_to_slope_raster, out_file, temp_path):
+    """Find areas that may be lateral/off channel habitat areas"""
+    rasters = {}
 
-# load slope
-with rasterio.open(
-    r"/Users/snorris/Projects/repo/bcfishpass/scripts/lateral/data/slope.tif"
-) as src:
-    data["slope"] = src.read(1)
-    shape = src.shape
-    transform = src.transform
+    # load slope raster that defines transform/shape of all other rasters
+    with rasterio.open(path_to_slope_raster) as src:
+        slope = src.read(1).astype(numpy.uint8)
+        shape = src.shape
+        transform = src.transform
 
-# add sources from postgres
-data = data | load_pg(shape, transform)
+    # add sources from postgres
+    rasters = load_rasters(shape, transform, temp_path)
 
-# process slope
-# be fairly generous and include everything 5pct and below
-# (5pct is our spawning slope threshold, and our dem is fairly coarse at 25m)
+    # set slope to zero for 20m around rail lines (so they do not
+    # create exclusions to *potential* lateral habitat)
+    #slope = numpy.where(rasters["rail"] == 1, 0, slope)
 
-# apply mask
-data["slope"][data["mask"]] = 255
+    # initialize the output surface
+    LOG.info("Creating initial surface")
+    rasters["lateral1"] = numpy.zeros(shape).astype(numpy.uint8)
 
-# convert to integer
-data["slope"] = data["slope"].astype(numpy.uint8)
+    # load slope<=4pct
+    rasters["slope_low"] = numpy.where(slope <= 4, 1, 0).astype(numpy.uint8)
 
-# extract slope 4pct and less
-data["slope_low"] = numpy.where(
-    data["slope"] <= 4, 1, 0
-)
+    # add slope
+    rasters["lateral1"] = numpy.where(
+        rasters["slope_low"] == 1,
+        1,
+        rasters["lateral1"],
+    )
 
-# extract slope 10pct and more
-data["slope_high"] = numpy.where(
-    data["slope"] >= 10, 1, 0
-)
+    # remove small holes from the initial surface
+    rasters["lateral2"] = morphology.remove_small_holes(
+        rasters["lateral1"], 4, connectivity=1
+    )
 
-# build basic 'potential lateral habitat'
+    # remove areas not connected to habitat
+    rasters["lateral3"] = filter_connected(
+        rasters["lateral2"], rasters["linear_habitat"]
+    )
 
-# initialize with everything as zero
-data["lateral"] = numpy.where(
-    data["studyarea"] == 1, 0, 0
-)
+    # add stream buffers
+    rasters["lateral4"] = numpy.where(
+        rasters["linear_accessible"] == 1, 1, rasters["lateral3"]
+    )
 
-# load slope<=5pct, floodplain, waterbodies, code everything as 1
-data["lateral"] = numpy.where(
-    ((data["studyarea"] == 1) & ((data["slope_low"] == 1) | (data["class1"] == 1) | (data["class3"] == 3))), 1, data["lateral"]
-)
+    # extract slope 10pct and more
+    rasters["slope_high"] = numpy.where(
+        slope >= 10, 1, 0
+    ).astype(numpy.uint8)
 
-# remove small holes from above
-data["lateral"] = morphology.remove_small_holes(
-    data["lateral"], 4, connectivity=1
-)
+    # filter out steep areas
+    rasters["lateral5"] = numpy.where(
+        rasters["slope_high"] == 1, 0, rasters["lateral4"]
+    )
 
-# remove areas not connected to habitat
-data["lateral_connected"] = filter_connected(data["lateral"], data["potentialhabitat"])
+    # add floodplain
+    rasters["lateral6"] = numpy.where(
+        rasters["floodplain"] == 1, 1, rasters["lateral5"]
+    )
 
-# add stream buffers
-data["lateral_connected"] = numpy.where(
-    data["class2"] == 2, 1, data["lateral_connected"]
-)
+    # filter out urban/built up areas
+    rasters["lateral7"] = numpy.where(
+        (rasters["urban_esa"] == 1) | (rasters["urban_btm"] == 1),
+        0,
+        rasters["lateral6"]
+    )
 
-# another pass, filtering out any very steep areas
-data["lateral_connected"] = numpy.where(
-    data["slope_high"] == 1, 0, data["lateral_connected"]
-)
+    # finally, add waterbodies and sidechannels
+    rasters["lateral8"] = numpy.where(
+        (rasters["waterbodies"] == 1)
+        | (rasters["sidechannels"] == 1), 1, rasters["lateral7"]
+    )
 
-# and urban/built up areas
-# esa class 50, 'Built-up' or BTM 'Urban'
-with rasterio.open(
-    r"/Users/snorris/Projects/repo/bcfishpass/scripts/lateral/data/esa_bc.tif"
-) as src:
-    data["esa"] = src.read(1)
+    # again remove areas not connected to habitat
+    rasters["lateral9"] = filter_connected(
+        rasters["lateral8"], rasters["linear_habitat"]
+    )
 
-data["lateral_connected"] = numpy.where(
-    ((data["esa"] == 50) | (data["btm_urban"] == 1)) & (data["studyarea"] == 1), 0, data["lateral_connected"]
-)
+    # and fill small holes
+    rasters["lateral_potential"] = morphology.remove_small_holes(
+        rasters["lateral9"], 4, connectivity=1
+    )
 
-# remove areas not connected to habitat again, to remove orphan stream buffers
-data["lateral_connected"] = filter_connected(data["lateral_connected"], data["potentialhabitat"])
+    # --------------------------
+    # find areas isolated by rail
+    # --------------------------
+    LOG.info("Finding areas disconnected by railways")
+    # remove bridges from rail raster
+    rasters["rail_breached"] = numpy.where(
+        rasters["rail_bridges"] == 1, 0, rasters["rail"]
+    )
 
-# set everything outside of study area to 255
-data["lateral_connected"] = numpy.where(
-    data["studyarea"] == 1, data["lateral_connected"], 255
-)
+    # remove rail area from output raster
+    rasters["lateral_minusrail"] = numpy.where(rasters["rail_breached"], 0, rasters["lateral_potential"])
 
-# find areas isolated by rail
+    # remove disconnected areas
+    rasters["lateral_minusrail2"] = filter_connected(
+        rasters["lateral_minusrail"], rasters["linear_habitat_below_rail"]
+    )
 
-# remove bridges from rail raster
-data["rail"] = numpy.where(data["rail_bridges"] == 1, 0, data["rail"])
+    # create output raster with values:
+    # 1=connected lateral habitat
+    # 2=lateral habitat disconnected by rail
+    rasters["lateral"] = numpy.where(rasters["lateral_potential"] == 1, 2, 0)
+    rasters["lateral"] = numpy.where(rasters["lateral_minusrail2"] == 1, 1, rasters["lateral"])
 
-# remove rail areas from lateral
-data["lateral_rail"] = numpy.where(data["rail"], 0, data["lateral_connected"])
-
-# remove disconnected areas
-# note that the 'accessiblehabitat' needs to be refined, this is cut by road barriers
-data["lateral_minus_rail"] = filter_connected(data["lateral_rail"], data["accessiblehabitat"])
-
-# create output raster - 1=potential, non-isolated, 2=potential, isolated by rail
-data["lateral_output"] = numpy.where(
-    data["lateral_connected"] == 1,
-    2,
-    data["lateral_connected"]
-)
-data["lateral_output"] = numpy.where(
-    data["lateral_minus_rail"] == 1,
-    1,
-    data["lateral_output"]
-)
-
-# write output(s) to file
-#qa_dumps = [d for d in data.keys() if type(data[d]) == numpy.ndarray]
-qa_dumps = ["lateral_output"]
-# read slope to get crs / width / height etc
-with rasterio.open(r"/Users/snorris/Projects/repo/bcfishpass/scripts/lateral/data/slope.tif") as src:
-    for i, raster in enumerate(qa_dumps):
-        out_qa_tif = raster + ".tif"
+    # --------------------------
+    # write output(s) to file
+    # --------------------------
+    # re-read slope to get crs / width / height etc
+    LOG.info("Writing output raster(s)")
+    with rasterio.open(path_to_slope_raster) as src:
+        # double check output is cut to study area
+        rasters["lateral"] = numpy.where(
+            rasters["studyarea"] == 1, rasters["lateral"], 255
+        )
+        # write output raster
         with rasterio.open(
-            out_qa_tif,
+            out_file,
             "w",
             driver="GTiff",
             dtype=rasterio.uint8,
@@ -257,4 +219,36 @@ with rasterio.open(r"/Users/snorris/Projects/repo/bcfishpass/scripts/lateral/dat
             transform=src.transform,
             nodata=255,
         ) as dst:
-            dst.write(data[raster].astype(numpy.uint8), indexes=1)
+            dst.write(rasters["lateral"].astype(numpy.uint8), indexes=1)
+
+        # write tempfiles if so directed
+        if temp_path:
+            # create folder to dump temp files
+            Path(temp_path).mkdir(parents=True, exist_ok=True)
+            dumps = [
+                d
+                for d in rasters.keys()
+                if type(rasters[d]) == numpy.ndarray
+                and rasters[d].shape == shape
+                and d != "lateral"
+            ]
+            for key in dumps:
+                # ensure dump is cut to study area
+                rasters[key] = numpy.where(rasters["studyarea"] == 1, rasters[key], 255)
+                with rasterio.open(
+                    os.path.join(temp_path, key + ".tif"),
+                    "w",
+                    driver="GTiff",
+                    dtype=rasterio.uint8,
+                    count=1,
+                    width=src.width,
+                    height=src.height,
+                    crs=src.crs,
+                    transform=src.transform,
+                    nodata=255,
+                ) as dst:
+                    dst.write(rasters[key].astype(numpy.uint8), indexes=1)
+
+
+if __name__ == "__main__":
+    lateral()

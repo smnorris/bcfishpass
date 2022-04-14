@@ -3,7 +3,7 @@
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
 
-all: .make/sources .make/studyarea .make/lateral_polys data/dem.tif data/slope.tif
+all: data/lateral.tif
 
 .make/sources:
 	mkdir -p .make
@@ -12,11 +12,8 @@ all: .make/sources .make/studyarea .make/lateral_polys data/dem.tif data/slope.t
 	bcdata bc2pg WHSE_BASEMAPPING.BTM_PRESENT_LAND_USE_V1_SVW
 	touch $@
 
-data/studyarea.tif: .make/sources
+.make/lateral_polys: .make/sources sql/studyarea.sql sql/lateral_polys.sql
 	$(PSQL_CMD) -f sql/studyarea.sql
-	# rasterize, writing to data/studyarea.tif
-
-.make/lateral_polys: .make/sources .make/studyarea sql/lateral_polys.sql
 	$(PSQL_CMD) -f sql/lateral_polys.sql
 	touch $@
 
@@ -96,10 +93,9 @@ data/esa_bc.tif:
 		$(TMP)/esa_merged.vrt \
 		$@
 
-# rasterize study area, various polygons, merge into single raster
-data/lateral.tif: slope.tif .make/lateral_polys
-	python lateral.py
-
+# run lateral analysis, writing output lateral.tif
+data/lateral.tif: data/slope.tif .make/lateral_polys data/esa_bc.tif lateral.py
+	python lateral.py data/slope.tif -o $@ --temp_path temp_tifs
 
 clean:
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS whse_basemapping.cwb_floodplains_bc_area_svw"
