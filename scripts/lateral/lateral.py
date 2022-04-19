@@ -104,14 +104,14 @@ def lateral(path_to_slope_raster, out_file, temp_path):
 
     # set slope to zero for 20m around rail lines (so they do not
     # create exclusions to *potential* lateral habitat)
-    #slope = numpy.where(rasters["rail"] == 1, 0, slope)
+    # slope = numpy.where(rasters["rail"] == 1, 0, slope)
 
     # initialize the output surface
     LOG.info("Creating initial surface")
     rasters["lateral1"] = numpy.zeros(shape).astype(numpy.uint8)
 
-    # load slope<=4pct
-    rasters["slope_low"] = numpy.where(slope <= 4, 1, 0).astype(numpy.uint8)
+    # load slope<=3pct
+    rasters["slope_low"] = numpy.where(slope <= 3.5, 1, 0).astype(numpy.uint8)
 
     # add slope
     rasters["lateral1"] = numpy.where(
@@ -135,10 +135,11 @@ def lateral(path_to_slope_raster, out_file, temp_path):
         rasters["linear_accessible"] == 1, 1, rasters["lateral3"]
     )
 
-    # extract slope 10pct and more
-    rasters["slope_high"] = numpy.where(
-        slope >= 10, 1, 0
-    ).astype(numpy.uint8)
+    # extract slope 5pct and more
+    rasters["slope_high"] = numpy.where(slope >= 5, 1, 0).astype(numpy.uint8)
+
+    # remove rail embankments from steep slope raster
+    rasters["slope_high"] = numpy.where(rasters["rail"] != 1, rasters["slope_high"], 0)
 
     # filter out steep areas
     rasters["lateral5"] = numpy.where(
@@ -154,13 +155,14 @@ def lateral(path_to_slope_raster, out_file, temp_path):
     rasters["lateral7"] = numpy.where(
         (rasters["urban_esa"] == 1) | (rasters["urban_btm"] == 1),
         0,
-        rasters["lateral6"]
+        rasters["lateral6"],
     )
 
     # finally, add waterbodies and sidechannels
     rasters["lateral8"] = numpy.where(
-        (rasters["waterbodies"] == 1)
-        | (rasters["sidechannels"] == 1), 1, rasters["lateral7"]
+        (rasters["waterbodies"] == 1) | (rasters["sidechannels"] == 1),
+        1,
+        rasters["lateral7"],
     )
 
     # again remove areas not connected to habitat
@@ -171,7 +173,28 @@ def lateral(path_to_slope_raster, out_file, temp_path):
     # and fill small holes
     rasters["lateral_potential"] = morphology.remove_small_holes(
         rasters["lateral9"], 4, connectivity=1
+    ).astype(numpy.uint8)
+
+    # write to postgis
+    # cut to study area
+    rasters["lateral_potential_sa"] = numpy.where(
+            rasters["studyarea"] == 1, rasters["lateral_potential"], 255
     )
+    con = create_engine(os.environ.get("DATABASE_URL"))
+    df = geopandas.GeoDataFrame.from_features(
+        list(
+            (
+                {"properties": {"raster_val": v}, "geometry": s}
+                for i, (s, v) in enumerate(
+                    features.shapes(
+                        rasters["lateral_potential_sa"], mask=None, transform=transform
+                    )
+                )
+            )
+        )
+    )
+    df.crs = "EPSG:3005"
+    df.to_postgis("lateral_potential", con, schema="bcfishpass", if_exists="replace")
 
     # --------------------------
     # find areas isolated by rail
@@ -183,7 +206,9 @@ def lateral(path_to_slope_raster, out_file, temp_path):
     )
 
     # remove rail area from output raster
-    rasters["lateral_minusrail"] = numpy.where(rasters["rail_breached"], 0, rasters["lateral_potential"])
+    rasters["lateral_minusrail"] = numpy.where(
+        rasters["rail_breached"], 0, rasters["lateral_potential"]
+    )
 
     # remove disconnected areas
     rasters["lateral_minusrail2"] = filter_connected(
@@ -194,10 +219,37 @@ def lateral(path_to_slope_raster, out_file, temp_path):
     # 1=connected lateral habitat
     # 2=lateral habitat disconnected by rail
     rasters["lateral"] = numpy.where(rasters["lateral_potential"] == 1, 2, 0)
-    rasters["lateral"] = numpy.where(rasters["lateral_minusrail2"] == 1, 1, rasters["lateral"])
+    rasters["lateral"] = numpy.where(
+        rasters["lateral_minusrail2"] == 1, 1, rasters["lateral"]
+    )
+
+    # extract areas disconnected by rail and remove rail
+    rasters["lateral_disconnected"] = numpy.where(
+        rasters["rail"] == 1, 0, numpy.where(rasters["lateral"] == 2, 1, 0)
+    ).astype(numpy.uint8)
+    # cut to study area
+    rasters["lateral_disconnected"] = numpy.where(
+            rasters["studyarea"] == 1, rasters["lateral_disconnected"], 255
+    )
+    # convert to polygon and write to db
+    df = geopandas.GeoDataFrame.from_features(
+        list(
+            (
+                {"properties": {"raster_val": v}, "geometry": s}
+                for i, (s, v) in enumerate(
+                    features.shapes(
+                        rasters["lateral_disconnected"], mask=None, transform=transform
+                    )
+                )
+            )
+        )
+    )
+    df.crs = "EPSG:3005"
+    df.to_postgis("lateral_disconnected", con, schema="bcfishpass", if_exists="replace")
+
 
     # --------------------------
-    # write output(s) to file
+    # write output raster(s) to file
     # --------------------------
     # re-read slope to get crs / width / height etc
     LOG.info("Writing output raster(s)")

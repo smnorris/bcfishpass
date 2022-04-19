@@ -3,7 +3,7 @@
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
 
-all: data/lateral.tif
+all: .make/lateral_disconnected_rail
 
 .make/sources:
 	mkdir -p .make
@@ -96,6 +96,19 @@ data/esa_bc.tif:
 # run lateral analysis, writing output lateral.tif
 data/lateral.tif: data/slope.tif .make/lateral_polys data/esa_bc.tif lateral.py
 	python lateral.py data/slope.tif -o $@ --temp_path temp_tifs
+	# clean up lateral potential table
+	$(PSQL_CMD) -c "create table bcfishpass.lateral_potential2 as \
+		select raster_val, st_subdivide(geometry) as geom \
+		from bcfishpass.lateral_potential \
+		where raster_val = 1; \
+		drop table bcfishpass.lateral_potential; \
+		alter table bcfishpass.lateral_potential2 rename to lateral_potential;"
+
+# above loads to postgres all lateral polys disconnected by rail
+# clean up and label here
+.make/lateral_disconnected_rail: data/lateral.tif
+	$(PSQL_CMD) -f sql/lateral_disconnected_rail.sql
+	touch $@
 
 clean:
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS whse_basemapping.cwb_floodplains_bc_area_svw"

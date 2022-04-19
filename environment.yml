@@ -18,6 +18,7 @@ dependencies:
   - geopandas>=0.10.2
   - psycopg2
   - sqlalchemy
+  - geoalchemy2
   - jq
   - rasterstats
   - scikit-image

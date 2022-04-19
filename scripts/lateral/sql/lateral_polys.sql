@@ -123,7 +123,8 @@ WHERE
 
 -- ----------------------------------------
 -- CLASS 4, 30M STREAM BUFFER
--- ALL POTENTIAL SPAWN/REAR (OR ACCESSIBLE ORDER >= 7)
+-- - POTENTIAL SPAWN/REAR STREAMS WITH ORDER >=3 OR PARENT_ORDER >=5
+-- - ACCESSIBLE STREAMS WITH ORDER >= 7
 -- ----------------------------------------
 insert into bcfishpass.lateral_poly (
   code,
@@ -147,6 +148,7 @@ WHERE
   )
   or
   (
+    (
     spawning_model_ch is true or
     spawning_model_co is true or
     spawning_model_sk is true or
@@ -155,6 +157,12 @@ WHERE
     rearing_model_co is true or
     rearing_model_sk is true or
     rearing_model_st is true
+    )
+    and
+    (
+      stream_order >= 3 or
+      p.stream_order_parent >= 5
+    )
   );
 
 -- ----------------------------------------
