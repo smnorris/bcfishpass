@@ -42,7 +42,7 @@ When generating pdfs, remember to:
 - if adding additional legend/text items, check that font matches (arial)
 - check that map frame/project CRS matches UTM zone of study area
 - modify atlas as required
-- set layout `Export Settings` `Export Resolution` to 150dpi (layout side panel, layout tab)
+- to minimize file sizes, set layout `Export Settings` `Export Resolution` to 150dpi (layout side panel, layout tab) and check the `Print as raster` box
 - export to pdf with these options:
 
 ![pdf_export options](pdf_export_options.png)
