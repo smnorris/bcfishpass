@@ -23,3 +23,7 @@ ogr2ogr -f PostgreSQL \
 
 # match the dams to streams
 $PSQL_CMD -f sql/dams.sql
+
+# remove Merton Creek dam - it gets snapped to Salmon River and
+# does not appear to be a barrier
+$PSQL_CMD -c "delete from bcfishpass.dams where dam_id = 209"
