@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
     GENERATED ALWAYS AS (ST_M(ST_PointN(geom, -1))) STORED,
 
   -- value added fwapg columns
-  upstream_area_ha integer,
+  upstream_area_ha double precision,
   
   -- precipitation, channel width, discharge models
   map_upstream integer,

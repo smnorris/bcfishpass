@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.param_habitat (
   spawn_mad_max numeric,
   rear_gradient_max numeric,
   rear_channel_width_max numeric,
+  rear_channel_width_min numeric,
   rear_mad_min numeric,
   rear_mad_max numeric,
   rear_lake_ha_min integer,
