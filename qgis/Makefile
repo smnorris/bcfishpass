@@ -39,10 +39,12 @@ TMP=/tmp
 all: $(GENERATED_FILES)
 
 $(BASIC_TARGETS):
+	mkdir -p .make
 	bcdata bc2pg $(subst .make/,,$@)
 	touch $@
 
 .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES:
+	mkdir -p .make
 	$(PSQL_CMD) -c "drop table if exists whse_basemapping.trim_contour_lines"
 	$(PSQL_CMD) -c "create table whse_basemapping.trim_contour_lines ( \
 	ogc_fid       integer                        , \
@@ -90,6 +92,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 
 # download veg .gdb, load and index
 .make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
+	mkdir -p .make
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
 	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2020.gdb.zip
 	ogr2ogr \
@@ -123,6 +126,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	touch $@	
 
 .make/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW:
+	mkdir -p .make
 	# rename downloaded file so ogr can read without unzipping
 	wget --trust-server-names -qN \
 		-O $(TMP)/pmbc_parcel_fabric_poly_svw.gdb.zip \
