@@ -3,7 +3,8 @@
 --
 -- specify which watersheds to include, what species to include, and what habitat model to use
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.param_watersheds
+DROP TABLE IF EXISTS bcfishpass.param_watersheds;
+CREATE TABLE bcfishpass.param_watersheds
 (
   watershed_group_code character varying(4),
   model text
@@ -14,7 +15,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.param_watersheds
 --
 -- define various spawning/rearing thresholds for species to be modelled
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.param_habitat (
+DROP TABLE IF EXISTS bcfishpass.param_habitat;
+CREATE TABLE bcfishpass.param_habitat (
   species_code text,
   spawn_gradient_max numeric,
   spawn_channel_width_min numeric,

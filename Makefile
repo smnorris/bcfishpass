@@ -141,7 +141,7 @@ bcfishobs: .fwapg
 # ------
 # LOAD PARAMETERS
 # ------
-.param_%: parameters/%.csv .db
+.param_%: parameters/%.csv .db scripts/model/sql/tables/parameters.sql
 	$(PSQL_CMD) -f scripts/model/sql/tables/parameters.sql
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst parameters/%.csv, param_%, $<)"
 	$(PSQL_CMD) -c "\copy bcfishpass.$(patsubst parameters/%.csv, param_%, $<) FROM '$<' delimiter ',' csv header"
