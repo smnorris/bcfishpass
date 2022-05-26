@@ -15,8 +15,9 @@ Channel width is derived via three methods:
 
 To run these calculations and load the data:
 
-    ./channel_width.sh
+    make
 
+Note that a modelled channel width is generated for *all* segments in the stream network where no field measurement or river polygon is available. Filter the results as per your requirements (ie, remove network connections where a channel width value does not make sense - lakes, wetlands, etc)
 
 ## Output tables
 

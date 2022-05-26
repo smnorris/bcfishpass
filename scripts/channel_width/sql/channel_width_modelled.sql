@@ -33,8 +33,8 @@ ON s.linear_feature_id = l.linear_feature_id
 INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
 ON l.watershed_feature_id = ua.watershed_feature_id
 -- we only want widths of streams/rivers
-WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
-AND s.localcode_ltree IS NOT NULL
+-- WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+WHERE s.localcode_ltree IS NOT NULL
 GROUP BY s.wscode_ltree, s.localcode_ltree, s.watershed_group_code
 
 )
