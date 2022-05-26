@@ -171,6 +171,12 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS wct_rearing_km                                           double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_spawning_belowupstrbarriers_km                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_rearing_belowupstrbarriers_km                        double precision DEFAULT 0,
+
+  ADD COLUMN IF NOT EXISTS bt_spawning_km                                          double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS bt_rearing_km                                           double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS bt_spawning_belowupstrbarriers_km                       double precision DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS bt_rearing_belowupstrbarriers_km                        double precision DEFAULT 0,
+
   ADD COLUMN IF NOT EXISTS all_spawning_km                                          double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS all_spawning_belowupstrbarriers_km                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS all_rearing_km                                           double precision DEFAULT 0,
@@ -350,13 +356,20 @@ COMMENT ON COLUMN bcfishpass.:point_table.st_spawning_km IS 'Length of stream up
 COMMENT ON COLUMN bcfishpass.:point_table.st_rearing_km IS 'Length of stream upstream of point modelled as potential Steelhead rearing habitat';
 COMMENT ON COLUMN bcfishpass.:point_table.st_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Steelhead spawning habitat';
 COMMENT ON COLUMN bcfishpass.:point_table.st_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Steelhead rearing habitat';
+
 COMMENT ON COLUMN bcfishpass.:point_table.wct_spawning_km IS 'Length of stream upstream of point modelled as potential Westslope Cutthroat spawning habitat';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_rearing_km IS 'Length of stream upstream of point modelled as potential Westslope Cutthroat rearing habitat';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Westslope Cutthroat spawning habitat';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Westslope Cutthroat rearing habitat';
-COMMENT ON COLUMN bcfishpass.:point_table.all_spawning_km IS 'Length of stream upstream of point modelled as potential spawning habitat (all CH,CO,SK,ST,WCT)';
-COMMENT ON COLUMN bcfishpass.:point_table.all_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point modelled as potential rearing habitat (all CH,CO,SK,ST,WCT)';
-COMMENT ON COLUMN bcfishpass.:point_table.all_rearing_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential spawning habitat (all CH,CO,SK,ST,WCT)';
+
+COMMENT ON COLUMN bcfishpass.:point_table.bt_spawning_km IS 'Length of stream upstream of point modelled as potential Bull Trout spawning habitat';
+COMMENT ON COLUMN bcfishpass.:point_table.bt_rearing_km IS 'Length of stream upstream of point modelled as potential Bull Trout rearing habitat';
+COMMENT ON COLUMN bcfishpass.:point_table.bt_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Bull Trout spawning habitat';
+COMMENT ON COLUMN bcfishpass.:point_table.bt_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential Bull Trout rearing habitat';
+
+COMMENT ON COLUMN bcfishpass.:point_table.all_spawning_km IS 'Length of stream upstream of point modelled as potential spawning habitat for all modelled species (currently BT,CH,CO,SK,ST,WCT)';
+COMMENT ON COLUMN bcfishpass.:point_table.all_spawning_belowupstrbarriers_km IS 'Length of stream upstream of point modelled as potential rearing habitat for all modelled species (currently BT,CH,CO,SK,ST,WCT)';
+COMMENT ON COLUMN bcfishpass.:point_table.all_rearing_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential spawning habitat for all modelled species (currently BT,CH,CO,SK,ST,WCT)';
 COMMENT ON COLUMN bcfishpass.:point_table.all_rearing_belowupstrbarriers_km IS 'Length of stream upstream of point and below any additional upstream barriers, modelled as potential rearing habitat (all CH,CO,SK,ST,WCT)';
 COMMENT ON COLUMN bcfishpass.:point_table.all_spawningrearing_km IS 'Length of all spawning and rearing habitat upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.all_spawningrearing_belowupstrbarriers_km IS 'Length of all spawning and rearing habitat upstream of point';

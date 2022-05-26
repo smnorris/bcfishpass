@@ -60,11 +60,13 @@ with upstr as materialized
     s.spawning_model_sk,
     s.spawning_model_st,
     s.spawning_model_wct,
+    s.spawning_model_bt,
     s.rearing_model_ch,
     s.rearing_model_co,
     s.rearing_model_sk,
     s.rearing_model_st,
     s.rearing_model_wct,
+    s.rearing_model_bt,
     s.geom
   from bcfishpass.:point_table a
   LEFT OUTER JOIN bcfishpass.streams s
@@ -188,28 +190,35 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_st IS TRUE) / 1000))::numeric, 2), 0) AS st_rearing_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.spawning_model_wct IS TRUE) / 1000))::numeric, 2), 0) AS wct_spawning_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_wct IS TRUE) / 1000))::numeric, 2), 0) AS wct_rearing_km ,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.spawning_model_bt IS TRUE) / 1000))::numeric, 2), 0) AS bt_spawning_km ,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_bt IS TRUE) / 1000))::numeric, 2), 0) AS bt_rearing_km ,
+
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.spawning_model_ch IS TRUE OR
                                                         s.spawning_model_co IS TRUE OR
                                                         s.spawning_model_sk IS TRUE OR
                                                         s.spawning_model_st IS TRUE OR
-                                                        s.spawning_model_wct IS TRUE
+                                                        s.spawning_model_wct IS TRUE OR
+                                                        s.spawning_model_bt IS TRUE
                                                   ) / 1000))::numeric, 2), 0)  AS all_spawning_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.rearing_model_ch IS TRUE OR
                                                         s.rearing_model_co IS TRUE OR
                                                         s.rearing_model_sk IS TRUE OR
                                                         s.rearing_model_st IS TRUE OR
-                                                        s.rearing_model_wct IS TRUE
+                                                        s.rearing_model_wct IS TRUE OR
+                                                        s.rearing_model_bt IS TRUE
                                                   ) / 1000))::numeric, 2), 0) AS all_rearing_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.spawning_model_ch IS TRUE OR
                                                         s.spawning_model_co IS TRUE OR
                                                         s.spawning_model_sk IS TRUE OR
                                                         s.spawning_model_st IS TRUE OR
                                                         s.spawning_model_wct IS TRUE OR
+                                                        s.spawning_model_bt IS TRUE OR
                                                         s.rearing_model_ch IS TRUE OR
                                                         s.rearing_model_co IS TRUE OR
                                                         s.rearing_model_sk IS TRUE OR
                                                         s.rearing_model_st IS TRUE OR
-                                                        s.rearing_model_wct IS TRUE
+                                                        s.rearing_model_wct IS TRUE OR
+                                                        s.rearing_model_bt IS TRUE
                                                   ) / 1000))::numeric, 2), 0) AS all_spawningrearing_km
 
 FROM upstr s
@@ -264,6 +273,15 @@ SET
   wct_slopeclass15_km = r.wct_slopeclass15_km,
   wct_slopeclass22_km = r.wct_slopeclass22_km,
   wct_slopeclass30_km = r.wct_slopeclass30_km,
+  bt_network_km = r.bt_network_km,
+  bt_stream_km = r.bt_stream_km,
+  bt_slopeclass03_waterbodies_km = r.bt_slopeclass03_waterbodies_km,
+  bt_slopeclass03_km = r.bt_slopeclass03_km,
+  bt_slopeclass05_km = r.bt_slopeclass05_km,
+  bt_slopeclass08_km = r.bt_slopeclass08_km,
+  bt_slopeclass15_km = r.bt_slopeclass15_km,
+  bt_slopeclass22_km = r.bt_slopeclass22_km,
+  bt_slopeclass30_km = r.bt_slopeclass30_km,
   ch_spawning_km = r.ch_spawning_km,
   ch_rearing_km = r.ch_rearing_km,
   co_spawning_km = r.co_spawning_km,
@@ -274,6 +292,8 @@ SET
   st_rearing_km = r.st_rearing_km,
   wct_spawning_km = r.wct_spawning_km,
   wct_rearing_km = r.wct_rearing_km,
+  bt_spawning_km = r.bt_spawning_km,
+  bt_rearing_km = r.bt_rearing_km,
   all_spawning_km = r.all_spawning_km,
   all_rearing_km = r.all_rearing_km,
   all_spawningrearing_km = r.all_spawningrearing_km
@@ -473,6 +493,16 @@ SET
   wct_belowupstrbarriers_slopeclass15_km = wct_slopeclass15_km,
   wct_belowupstrbarriers_slopeclass22_km = wct_slopeclass22_km,
   wct_belowupstrbarriers_slopeclass30_km = wct_slopeclass30_km,
+  bt_belowupstrbarriers_network_km = bt_network_km,
+  bt_belowupstrbarriers_stream_km = bt_stream_km,
+  bt_belowupstrbarriers_lakereservoir_ha = bt_lakereservoir_ha,
+  bt_belowupstrbarriers_wetland_ha = bt_wetland_ha,
+  bt_belowupstrbarriers_slopeclass03_km = bt_slopeclass03_km,
+  bt_belowupstrbarriers_slopeclass05_km = bt_slopeclass05_km,
+  bt_belowupstrbarriers_slopeclass08_km = bt_slopeclass08_km,
+  bt_belowupstrbarriers_slopeclass15_km = bt_slopeclass15_km,
+  bt_belowupstrbarriers_slopeclass22_km = bt_slopeclass22_km,
+  bt_belowupstrbarriers_slopeclass30_km = bt_slopeclass30_km,
   ch_spawning_belowupstrbarriers_km = ch_spawning_km,
   ch_rearing_belowupstrbarriers_km = ch_rearing_km,
   co_spawning_belowupstrbarriers_km = co_spawning_km,
@@ -483,6 +513,8 @@ SET
   st_rearing_belowupstrbarriers_km = st_rearing_km,
   wct_spawning_belowupstrbarriers_km = wct_spawning_km,
   wct_rearing_belowupstrbarriers_km = wct_rearing_km,
+  bt_spawning_belowupstrbarriers_km = bt_spawning_km,
+  bt_rearing_belowupstrbarriers_km = bt_rearing_km,
   all_spawning_belowupstrbarriers_km = all_spawning_km,
   all_rearing_belowupstrbarriers_km = all_rearing_km,
   all_spawningrearing_belowupstrbarriers_km = all_spawningrearing_km
@@ -560,6 +592,8 @@ WITH report AS
   ROUND((COALESCE(a.st_rearing_km, 0) - SUM(COALESCE(b.st_rearing_km, 0)))::numeric, 2) st_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.wct_spawning_km, 0) - SUM(COALESCE(b.wct_spawning_km, 0)))::numeric, 2) wct_spawning_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.wct_rearing_km, 0) - SUM(COALESCE(b.wct_rearing_km, 0)))::numeric, 2) wct_rearing_belowupstrbarriers_km  ,
+  ROUND((COALESCE(a.bt_spawning_km, 0) - SUM(COALESCE(b.bt_spawning_km, 0)))::numeric, 2) bt_spawning_belowupstrbarriers_km  ,
+  ROUND((COALESCE(a.bt_rearing_km, 0) - SUM(COALESCE(b.bt_rearing_km, 0)))::numeric, 2) bt_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.all_spawning_km, 0) - SUM(COALESCE(b.all_spawning_km, 0)))::numeric, 2) all_spawning_belowupstrbarriers_km,
   ROUND((COALESCE(a.all_rearing_km, 0) - SUM(COALESCE(b.all_rearing_km, 0)))::numeric, 2) all_rearing_belowupstrbarriers_km  ,
   ROUND((COALESCE(a.all_spawningrearing_km, 0) - SUM(COALESCE(b.all_spawningrearing_km, 0)))::numeric, 2) all_spawningrearing_belowupstrbarriers_km
@@ -638,6 +672,8 @@ SET
   st_rearing_belowupstrbarriers_km = r.st_rearing_belowupstrbarriers_km,
   wct_spawning_belowupstrbarriers_km = r.wct_spawning_belowupstrbarriers_km,
   wct_rearing_belowupstrbarriers_km = r.wct_rearing_belowupstrbarriers_km,
+  bt_spawning_belowupstrbarriers_km = r.bt_spawning_belowupstrbarriers_km,
+  bt_rearing_belowupstrbarriers_km = r.bt_rearing_belowupstrbarriers_km,
   all_spawning_belowupstrbarriers_km = r.all_spawning_belowupstrbarriers_km,
   all_rearing_belowupstrbarriers_km = r.all_rearing_belowupstrbarriers_km,
   all_spawningrearing_belowupstrbarriers_km = r.all_spawningrearing_belowupstrbarriers_km
