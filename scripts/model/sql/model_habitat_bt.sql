@@ -60,7 +60,10 @@ LEFT OUTER JOIN bcfishpass.param_habitat bt
 ON bt.species_code = 'BT'
 LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key
-WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)) -- apply to streams/rivers only
+WHERE
+  -- spawning is in lakes and rivers only
+  wb.waterbody_type = 'R' OR
+  (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
 AND s.watershed_group_code = :'wsg'
 )
 
@@ -93,12 +96,6 @@ WITH rearing AS
     s.spawning_model_bt IS TRUE AND               -- on spawning habitat
     s.access_model_bt IS NOT NULL AND             -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
-    ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
-      ( wb.waterbody_type IS NULL OR
-        s.edge_type IN (1000,1100,2000,2300)
-      )
-    ) AND
-
     (
       ( -- channel width based model
         wsg.model = 'cw' AND
@@ -149,11 +146,6 @@ WITH rearing AS
   WHERE
     s.access_model_bt IS NOT NULL AND             -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
-    ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
-      ( wb.waterbody_type IS NULL OR
-        s.edge_type IN (1000,1100,2000,2300)
-      )
-    ) AND
 
     (
       ( -- channel width based model
@@ -243,11 +235,6 @@ WITH rearing AS
     s.watershed_group_code = :'wsg' AND
     s.access_model_bt IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
-    ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
-      ( wb.waterbody_type IS NULL OR
-        s.edge_type IN (1000,1100,2000,2300)
-      )
-    ) AND
 
     (
       ( -- channel width based model
