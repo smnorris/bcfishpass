@@ -7,7 +7,7 @@ WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemap
 WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # watersheds for testing
-WSG_TEST = ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
+#WSG_TEST = ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
 #WSG=$(WSG_TEST)
 #WSG_PARAM=$(WSG_TEST)
 
@@ -141,10 +141,14 @@ bcfishobs: .fwapg
 # ------
 # LOAD PARAMETERS
 # ------
-.param_%: parameters/%.csv .db scripts/model/sql/tables/parameters.sql
-	$(PSQL_CMD) -f scripts/model/sql/tables/parameters.sql
-	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst parameters/%.csv, param_%, $<)"
-	$(PSQL_CMD) -c "\copy bcfishpass.$(patsubst parameters/%.csv, param_%, $<) FROM '$<' delimiter ',' csv header"
+.param_watersheds: parameters/watersheds.csv .db scripts/model/sql/tables/param_watersheds.sql
+	$(PSQL_CMD) -f scripts/model/sql/tables/param_watersheds.sql
+	$(PSQL_CMD) -c "\copy bcfishpass.param_watersheds FROM '$<' delimiter ',' csv header"
+	touch $@
+
+.param_habitat: parameters/habitat.csv .db scripts/model/sql/tables/param_habitat.sql
+	$(PSQL_CMD) -f scripts/model/sql/tables/param_habitat.sql
+	$(PSQL_CMD) -c "\copy bcfishpass.param_habitat FROM '$<' delimiter ',' csv header"
 	touch $@
 
 # ------
@@ -464,6 +468,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_st.sql -v wsg=$$wsg ; \
 		$(PSQL_CMD) -f scripts/model/sql/model_habitat_wct.sql -v wsg=$$wsg ; \
+		$(PSQL_CMD) -f scripts/model/sql/model_habitat_bt.sql -v wsg=$$wsg ; \
 	done
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
