@@ -208,8 +208,7 @@ scripts/precipitation/.map: .db
 # MODEL CHANNEL WIDTH
 # -----
 .channel_width: scripts/precipitation/.map
-	cd scripts/channel_width; ./channel_width.sh
-	touch $@
+	cd scripts/channel_width; make
 
 # -----
 # MODEL DISCHARGE
@@ -234,7 +233,7 @@ scripts/discharge/.discharge: .db
 # INITIAL PROVINCIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
 # -----
-.streams: .param_watersheds .db scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql .channel_width scripts/discharge/.discharge
+.streams: .param_watersheds .db scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql scripts/channel_width/.make/channel_width scripts/discharge/.discharge
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams CASCADE" # cascade the user_habitat_classification_svw
 	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
