@@ -30,6 +30,7 @@ TILE_TARGETS = $(addprefix .make/TCTR_, $(TILES))
 GENERATED_FILES = $(BASIC_TARGETS) \
 	.make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 	$(TILE_TARGETS) \
+	.make/TCTR \
 	.make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
 	.make/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
 
@@ -88,6 +89,10 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 		--append \
 		--promote_to_multi \
 		--query "BCGS_TILE LIKE '$(subst .make/TCTR_,,$@)%'"
+	touch $@
+
+# empty target for downloading all contours
+make/TCTR: $(TILE_TARGETS)
 	touch $@
 
 # download veg .gdb, load and index
