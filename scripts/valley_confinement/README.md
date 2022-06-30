@@ -8,7 +8,7 @@ An adaptation of the USDA's [Valley Confinement Algorithm (VCA)](https://www.fs.
 - USDA [script and toolbox ](https://www.fs.fed.us/rm/boise/AWAE/projects/valley_confinement/downloads/VCA_Toolbox.zip) (ESRI/ArcPy)
 - blueGeo open source [VCA implementation](https://github.com/bluegeo/bluegeo) (grass/gdal/scipy/skimage)
 
-The code in this repository is primarily taken directly from the blueGeo source and adapted/simplified for using with the BC FWA and BC DEM.
+The code in this repository is primarily taken directly from the blueGeo source and adapted/simplified for use with the BC FWA and BC DEM.
 
 ## Usage
 

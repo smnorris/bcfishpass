@@ -19,10 +19,166 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 OTHER DEALINGS IN THE SOFTWARE.
 """
 
+import rasterio
+import numpy
+from skimage.graph import MCP_Geometric
+from scipy.ndimage import distance_transform_edt
+
+def distance(sources):
+    """
+    Calculate distance to sources everywhere in the dataset
+    :param sources: Raster with sources as legitimate data
+    :return: distance array
+    """
+    r = Raster(sources)
+    out = r.astype('float32')
+    out[:] = distance_transform_edt(r.array == r.nodata, [r.csx, r.csy])
+    return out
+
+def cost_surface(sources, cost, reverse=False):
+    """
+    Generate a cost surface using a source Raster and a cost Raster
+    :return:
+    """
+    # Generate cost surface
+    cost = Raster(cost).astype('float32')
+    sources = Raster(sources).match_raster(cost)
+    sources = sources.array != sources.nodata
+    _cost = cost.array
+    m = _cost != cost.nodata
+
+    if reverse:
+        data = _cost[m]
+        _cost[m] = data.max() - data
+
+    _cost[~m] = numpy.inf # Fill no data with infinity
+    _cost[sources] = 0
+
+    # Compute cost network
+    mcp = MCP_Geometric(_cost, sampling=(cost.csy, cost.csx))
+    cost_network, traceback = mcp.find_costs(numpy.array(numpy.where(sources)).T)
+
+    # Prepare output
+    out = cost.astype('float32')
+    cost_network[numpy.isnan(cost_network) | numpy.isinf(cost_network) | ~m] = out.nodata
+    out[:] = cost_network
+
+    return out
+
+def bankfull(dem, average_annual_precip=250, contributing_area=None, flood_factor=1, max_width=5000,
+             streams=None, min_stream_area=None):
+    """
+    Calculate a bankfull depth using the given precipitation and flood factor
+    :param dem: Input elevation Raster
+    :param average_annual_precip: Average annaul precipitation (cm) as a scalar, Vector, or Raster
+    :param contributing_area: A contributing area (km**2) Raster. It will be calculated using the DEM if not provided.
+    :param flood_factor: Coefficient to amplify the bankfull depth
+    :param streams: Input stream Vector or Raster.  They will be calculated using the min_stream_area if not provided
+    :param min_stream_area: If no streams are provided, this is used to derived streams.  Units are m**2
+    :return: Raster instance of the bankful depth
+    """
+    dem = Raster(dem)
+
+    # Grab the streams
+    if streams is not None:
+        streams = assert_type(streams)(streams)
+        if isinstance(streams, Vector):
+            streams = streams.rasterize(dem)
+        elif isinstance(streams, Raster):
+            streams = streams.match_raster(dem)
+    else:
+        if min_stream_area is None:
+            raise WaterError(
+                'Either one of streams or minimum stream contributing area must be specified')
+        streams = bluegrass.stream_extract(dem, min_stream_area)
+
+    streams = streams.array != streams.nodata
+
+    # Check if contributing area needs to be calculated
+    if contributing_area is None:
+        contrib = bluegrass.watershed(
+            dem)[1] * (dem.csx * dem.csy / 1E6)  # in km**2
+    else:
+        contrib = Raster(contributing_area)
+
+    # Parse the precip input and create the precip variable
+    if any([isinstance(average_annual_precip, t) for t in [int, float, numpy.ndarray]]):
+        # Scalar or array
+        precip = dem.full(average_annual_precip) ** 0.355
+    else:
+        precip = assert_type(average_annual_precip)(
+            average_annual_precip) ** 0.355
+
+    # Calculate bankfull depth
+    bankfull = (contrib ** 0.280) * 0.196
+    bankfull = bankfull * precip
+    # bankfull = bankfull ** 0.607 * 0.145
+    # bankfull *= flood_factor
+
+    # Add the dem to the bankfull depth where streams exists, and extrapolate outwards
+    bnkfl = bankfull.array
+    bnkfl[~streams] = bankfull.nodata
+    bankfull[:] = bnkfl
+
+    return bankfull
+
+    bankfull += dem
+    bnkfl = bankfull.array
+
+    # Buffer by the max width
+    mask = distance_transform_edt(
+        bnkfl == bankfull.nodata, (bankfull.csy, bankfull.csx)) < max_width
+
+    # Extrapolate the bankfull values to the buffer
+    xi = (bnkfl == bankfull.nodata) & mask
+    points = bnkfl != bankfull.nodata
+    values = bnkfl[points]
+    points = numpy.where(points)
+    points = numpy.vstack(
+        [points[0] * bankfull.csy, points[1] * bankfull.csx]).T
+    xi = numpy.where(xi)
+    bnkfl[xi] = griddata(
+        points, values, (xi[0] * bankfull.csy, xi[1] * bankfull.csx), 'linear')
+    bnkfl[numpy.isnan(bnkfl) | numpy.isinf(bnkfl)] = bankfull.nodata
+    bankfull[:] = bnkfl
+
+    # Create a flood depth by subtracting the dem
+    bankfull -= dem
+    bnkfl = bankfull.array
+    bnkfl[bnkfl < 0] = bankfull.nodata
+    bnkfl[streams] = 0
+    bankfull[:] = bnkfl
+
+    return bankfull
+
+def most_common(input_raster, size=(3, 3)):
+    """
+    -- ?? https://scikit-image.org/docs/stable/api/skimage.filters.rank.html?highlight=majority#skimage.filters.rank.modal
+    Perform a mode filter
+    :param size: Window size
+    :return: Raster with most frequent local value
+    """
+    # Allocate output
+    input_raster = Raster(input_raster)
+    mode_raster = input_raster.empty()
+    if input_raster.useChunks:
+        # Iterate chunks and calculate mode (memory-intensive, so don't fill cache)
+        for a, s in input_raster.iterchunks(expand=size, fill_cache=False):
+            s_ = util.truncate_slice(s, size)
+            try:
+                mode_raster[s_] = util.mode(util.window_on_last_axis(a, size), 2)[0]
+            except:
+                mode_raster[s_] = mode_raster.nodata
+                continue
+    else:
+        # Calculate over all data
+        mode_raster[1:-1, 1:-1] = util.mode(util.window_on_last_axis(input_raster.array, size), 2)[0]
+
+    return mode_raster
 
 def valley_confinement(
     dem,
-    min_stream_area,
+    #min_stream_area,
     cost_threshold=2500,
     streams=None,
     waterbodies=None,
@@ -53,7 +209,9 @@ def valley_confinement(
     :param min_valley_bottom_area: (float) The minimum area for valey bottom polygons.
     :return: Raster instance (of the valley bottom)
     """
+
     # Create a Raster instance from the DEM
+    # -- just open with rasterio
     dem = Raster(dem)
 
     # The moving mask is a mask of input datasets as they are calculated
@@ -61,6 +219,7 @@ def valley_confinement(
 
     # Calculate slope
     print("Calculating topographic slope")
+    # -- calc with gdal? see becmodel
     slope = topo(dem).slope("percent_rise")
 
     # Add slope to the mask
@@ -68,19 +227,18 @@ def valley_confinement(
         moving_mask[(slope <= slope_threshold).array] = 1
 
     # Calculate cumulative drainage (flow accumulation)
+    # -- can we do this with pysheds rather than grass?
     fa = bluegrass.watershed(dem)[1]
     fa.mode = "r+"
     fa *= fa.csx * fa.csy / 1e6
 
-    # Calculate streams if they are not provided
-    if streams is not None:
-        streams = assert_type(streams)(streams)
-        if isinstance(streams, Vector):
-            streams = streams.rasterize(dem)
-        elif isinstance(streams, Raster):
-            streams = streams.match_raster(dem)
-    else:
-        streams = bluegrass.stream_extract(dem, min_stream_area)
+    # -- rasterize streams. consider filtering based on min drainage area
+    # -- *before* rasterizing, the fwa area should work well enough
+    streams = assert_type(streams)(streams)
+    if isinstance(streams, Vector):
+        streams = streams.rasterize(dem)
+    elif isinstance(streams, Raster):
+        streams = streams.match_raster(dem)
 
     # Remove streams below the minimum_drainage_area
     if minimum_drainage_area > 0:
@@ -117,14 +275,14 @@ def valley_confinement(
     # Remove waterbodies
     # Segment water bodies from the DEM if they are not specified in the input
     print("Removing waterbodies")
-    if waterbodies is not None:
-        waterbodies = assert_type(waterbodies)(waterbodies)
-        if isinstance(waterbodies, Vector):
-            waterbodies = waterbodies.rasterize(dem)
-        elif isinstance(waterbodies, Raster):
-            waterbodies = waterbodies.match_raster(dem)
-    else:
-        waterbodies = segment_water(dem, slope=slope)
+    #if waterbodies is not None:
+    waterbodies = assert_type(waterbodies)(waterbodies)
+    if isinstance(waterbodies, Vector):
+        waterbodies = waterbodies.rasterize(dem)
+    elif isinstance(waterbodies, Raster):
+        waterbodies = waterbodies.match_raster(dem)
+    #else:
+    #    waterbodies = segment_water(dem, slope=slope)
     moving_mask[waterbodies.array] = 0
 
     # Create a Raster from the moving mask and run a mode filter
