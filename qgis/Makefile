@@ -101,7 +101,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 .make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
 	mkdir -p .make
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
-	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2020.gdb.zip
+	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2021.gdb.zip
 	ogr2ogr \
 	   -progress \
 	   --config PG_USE_COPY YES \
@@ -115,7 +115,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	   -lco FID=FEATURE_ID \
 	   -lco FID64=TRUE \
 	   -nln whse_forest_vegetation.veg_comp_lyr_r1_poly \
-	   $(TMP)/VEG_COMP_LYR_R1_POLY_2020.gdb.zip \
+	   $(TMP)/VEG_COMP_LYR_R1_POLY_2021.gdb.zip \
 	   VEG_COMP_LYR_R1_POLY
 	$(PSQL_CMD) -c "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (inventory_standard_cd); \
