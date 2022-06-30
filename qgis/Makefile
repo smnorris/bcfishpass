@@ -94,7 +94,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	touch $@
 
 # empty target for downloading all contours
-.make/TCTR: .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES $(TILE_TARGETS)
+.make/TCTR: $(TILE_TARGETS)
 	touch $@
 
 # download veg .gdb, load and index
