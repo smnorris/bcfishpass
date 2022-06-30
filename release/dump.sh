@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euxo pipefail
 
+# always dump from test
+DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
+
+echo "dumping bcfishpass data from "$DATABASE_URL
+
 #rm -r outputs       # remove existing dump
 mkdir -p outputs    # make fresh dump folder
 
@@ -361,7 +366,7 @@ ogr2ogr \
          total_network_km,
          geom
          from
-        bcfishpass.bcfishpass.barriers_ch_co_sk"
+bcfishpass.bcfishpass.barriers_ch_co_sk"
 
 ogr2ogr \
     -f GPKG \
@@ -384,7 +389,7 @@ ogr2ogr \
          total_network_km,
          geom
          from
-        bcfishpass.bcfishpass.barriers_ch_co_sk_b"
+        bcfishpass.barriers_ch_co_sk_b"
 
 ogr2ogr \
     -f GPKG \
@@ -407,7 +412,7 @@ ogr2ogr \
          total_network_km,
          geom
          from
-        bcfishpass.bcfishpass.barriers_pk"
+        bcfishpass.barriers_pk"
 
 ogr2ogr \
     -f GPKG \
@@ -430,7 +435,7 @@ ogr2ogr \
          total_network_km,
          geom
          from
-        bcfishpass.bcfishpass.barriers_st"
+        bcfishpass.barriers_st"
 
 ogr2ogr \
     -f GPKG \
@@ -453,7 +458,7 @@ ogr2ogr \
          total_network_km,
          geom
          from
-        bcfishpass.bcfishpass.barriers_wct"
+        bcfishpass.barriers_wct"
 
 ogr2ogr \
     -f GPKG \

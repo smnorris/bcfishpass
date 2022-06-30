@@ -34,7 +34,15 @@ If your database connection parameters differ:
 When generating pdfs, remember to:
 
 - edit title
-- modify selection for records in dbm_mof_50k_grid to match area of interest
+- modify selection for records in dbm_mof_50k_grid to match area of interest eg, for `ZYMO` group:
+
+        select distinct map_tile 
+        from whse_basemapping.dbm_mof_50k_grid a
+        inner join whse_basemapping.fwa_watershed_groups_poly b
+        on st_intersects(a.geom, b.geom)
+        where b.watershed_group_code = 'KISP'
+        order by map_tile
+
 - double check that the model displayed is correct:
     + crossings (salmon/steelhead/wct etc)
     + definite barriers (salmon/steelhead/wct etc)
