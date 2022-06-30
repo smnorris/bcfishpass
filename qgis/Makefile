@@ -49,6 +49,7 @@ $(BASIC_TARGETS):
 	$(PSQL_CMD) -c "drop table if exists whse_basemapping.trim_contour_lines"
 	$(PSQL_CMD) -c "create table whse_basemapping.trim_contour_lines ( \
 	ogc_fid       integer                        , \
+	objectid      integer                        , \
 	fcode         character varying(10)          , \
 	elevation     integer                        , \
 	admit_year    smallint                       , \
@@ -87,6 +88,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	$(PSQL_CMD) -c "delete from whse_basemapping.trim_contour_lines where bcgs_tile like '$(subst TCTR_,,$@)%'"
 	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 		--append \
+		--fid OBJECTID \
 		--promote_to_multi \
 		--query "BCGS_TILE LIKE '$(subst .make/TCTR_,,$@)%'"
 	touch $@
