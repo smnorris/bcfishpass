@@ -20,7 +20,10 @@ BASIC_TABLES = WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES \
 	WHSE_ENVIRONMENTAL_MONITORING.ENVCAN_HYDROMETRIC_STN_SP \
 	WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP \
 	WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW \
-	WHSE_FOREST_TENURE.FTEN_RANGE_POLY_SVW
+	WHSE_FOREST_TENURE.FTEN_RANGE_POLY_SVW \
+	WHSE_FISH.FISS_STREAM_SAMPLE_SITES_SP \
+	WHSE_FISH.FISS_OBSTACLES_PNT_SP
+
 BASIC_TARGETS = $(addprefix .make/, $(BASIC_TABLES))
 
 # find 250k tiles present in control file
@@ -103,20 +106,20 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
 	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2021.gdb.zip
 	ogr2ogr \
-	   -progress \
-	   --config PG_USE_COPY YES \
-	   -t_srs EPSG:3005 \
-	   -dim XY \
-	   -f PostgreSQL \
-	   PG:$(DATABASE_URL) \
-	   -overwrite \
-	   -lco GEOMETRY_NAME=geom \
-	   -lco SPATIAL_INDEX=NONE \
-	   -lco FID=FEATURE_ID \
-	   -lco FID64=TRUE \
-	   -nln whse_forest_vegetation.veg_comp_lyr_r1_poly \
-	   $(TMP)/VEG_COMP_LYR_R1_POLY_2021.gdb.zip \
-	   VEG_COMP_LYR_R1_POLY
+		-progress \
+		--config PG_USE_COPY YES \
+		-t_srs EPSG:3005 \
+		-dim XY \
+		-f PostgreSQL \
+		PG:$(DATABASE_URL) \
+		-overwrite \
+		-lco GEOMETRY_NAME=geom \
+		-lco SPATIAL_INDEX=NONE \
+		-lco FID=FEATURE_ID \
+		-lco FID64=TRUE \
+		-nln whse_forest_vegetation.veg_comp_lyr_r1_poly \
+		$(TMP)/VEG_COMP_LYR_R1_POLY_2021.gdb.zip \
+		VEG_COMP_LYR_R1_POLY
 	$(PSQL_CMD) -c "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (inventory_standard_cd); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (non_productive_descriptor_cd); \
