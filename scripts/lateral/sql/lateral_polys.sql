@@ -142,7 +142,9 @@ WHERE
   (
     (
       access_model_st is not null or
-      access_model_ch_co_sk is not null
+      access_model_ch_co_sk is not null or
+      access_model_pk is not null or
+      access_model_cm is not null
     )
     and stream_order >= 7
   )
@@ -153,9 +155,13 @@ WHERE
     spawning_model_co is true or
     spawning_model_sk is true or
     spawning_model_st is true or
+    spawning_model_pk is true or
+    spawning_model_cm is true or
     rearing_model_ch is true or
     rearing_model_co is true or
     rearing_model_sk is true or
+    rearing_model_pk is true or
+    rearing_model_cm is true or
     rearing_model_st is true
     )
     and
@@ -186,7 +192,9 @@ WHERE
   and
   (
     access_model_ch_co_sk is not null or
-    access_model_st is not null
+    access_model_st is not null or 
+    access_model_pk is not null or
+    access_model_cm is not null
   );
 
 
@@ -209,7 +217,7 @@ with xings as
   from bcfishpass.crossings
   where
     crossing_feature_type = 'RAIL' and
-    (access_model_ch_co_sk is not null or access_model_st is not null) and
+    (access_model_ch_co_sk is not null or access_model_st is not null or access_model_pk is not null or access_model_cm is not null) and
     (
       barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
       or crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -247,9 +255,13 @@ and
     s.spawning_model_co is true or
     s.spawning_model_sk is true or
     s.spawning_model_st is true or
+    s.spawning_model_pk is true or
+    s.spawning_model_cm is true or
     s.rearing_model_ch is true or
     s.rearing_model_co is true or
     s.rearing_model_sk is true or
+    s.rearing_model_cm is true or
+    s.rearing_model_pk is true or
     s.rearing_model_st is true
   )
   or s.stream_order >= 7

@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   access_model_bt text,
   access_model_gr text,
   access_model_rb text,
+  access_model_cm text,
+  access_model_pk text,
 
   -- habitat models
   spawning_model_ch boolean,
@@ -78,12 +80,16 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   spawning_model_st boolean,
   spawning_model_wct boolean,
   spawning_model_bt boolean,
+  spawning_model_cm boolean,
+  spawning_model_pk boolean,
   rearing_model_ch boolean,
   rearing_model_co boolean,
   rearing_model_sk boolean,
   rearing_model_st boolean,
   rearing_model_wct boolean,
   rearing_model_bt boolean,
+  rearing_model_cm boolean,
+  rearing_model_pk boolean,
 
   geom geometry(LineStringZM,3005)
 );

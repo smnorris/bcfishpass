@@ -40,6 +40,12 @@ WITH manual_habitat_class AS
       CASE
         WHEN h.species_code = 'WCT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
       END AS rearing_model_wct,
+      CASE
+        WHEN h.species_code = 'CM' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+      END AS rearing_model_cm,
+      CASE
+        WHEN h.species_code = 'PK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+      END AS rearing_model_pk,
       h.reviewer_name,
       h.source,
       h.notes
@@ -65,6 +71,8 @@ SELECT
   s.rearing_model_st,
   s.spawning_model_wct,
   s.rearing_model_wct,
+  s.spawning_model_cm, 
+  s.spawning_model_pk,
   h.spawning_model_ch AS spawning_model_ch_manual,
   h.rearing_model_ch AS rearing_model_ch_manual,
   h.spawning_model_co AS spawning_model_co_manual,
@@ -75,6 +83,8 @@ SELECT
   h.rearing_model_st AS rearing_model_st_manual,
   h.spawning_model_wct AS spawning_model_wct_manual,
   h.rearing_model_wct AS rearing_model_wct_manual,
+  h.spawning_model_cm AS spawning_model_cm_manual,
+  h.spawning_model_pk AS spawning_model_pk_manual,
   h.reviewer_name,
   h.source,
   h.notes,
@@ -180,3 +190,21 @@ AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measu
 AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
 AND h.species_code = 'WCT'
 AND h.habitat_type = 'rearing';
+
+UPDATE bcfishpass.streams s
+SET spawning_model_cm = h.habitat_ind
+FROM bcfishpass.user_habitat_classification h
+WHERE s.blue_line_key = h.blue_line_key
+AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
+AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
+AND h.species_code = 'CM'
+AND h.habitat_type = 'spawning';
+
+UPDATE bcfishpass.streams s
+SET spawning_model_pk = h.habitat_ind
+FROM bcfishpass.user_habitat_classification h
+WHERE s.blue_line_key = h.blue_line_key
+AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
+AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
+AND h.species_code = 'PK'
+AND h.habitat_type = 'spawning';
