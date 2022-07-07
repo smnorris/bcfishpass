@@ -17,11 +17,23 @@ WITH manual_habitat_class AS
         WHEN h.species_code = 'CH' AND h.habitat_type = 'rearing' THEN h.habitat_ind
       END AS rearing_model_ch,
       CASE
+        WHEN h.species_code = 'CM' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+      END AS spawning_model_cm,
+      CASE
+        WHEN h.species_code = 'CM' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_model_cm,
+      CASE
         WHEN h.species_code = 'CO' AND h.habitat_type = 'spawning' THEN h.habitat_ind
       END AS spawning_model_co,
       CASE
         WHEN h.species_code = 'CO' AND h.habitat_type = 'rearing' THEN h.habitat_ind
       END AS rearing_model_co,
+      CASE
+        WHEN h.species_code = 'PK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+      END AS spawning_model_pk,
+      CASE
+        WHEN h.species_code = 'PK' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_model_pk,
       CASE
         WHEN h.species_code = 'SK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
       END AS spawning_model_sk,
@@ -40,12 +52,6 @@ WITH manual_habitat_class AS
       CASE
         WHEN h.species_code = 'WCT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
       END AS rearing_model_wct,
-      CASE
-        WHEN h.species_code = 'CM' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS rearing_model_cm,
-      CASE
-        WHEN h.species_code = 'PK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS rearing_model_pk,
       h.reviewer_name,
       h.source,
       h.notes

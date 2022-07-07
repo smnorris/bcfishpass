@@ -239,7 +239,7 @@ WITH rearing AS
   ON h.species_code = 'PK'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.access_model_pk_co_sk IS NOT NULL AND  -- accessibility check
+    s.access_model_pk IS NOT NULL AND             -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND

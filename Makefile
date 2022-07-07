@@ -112,7 +112,7 @@ clean:
 # ------
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
-.%: data/%.csv .db
+.%: data/%.csv scripts/model/sql/tables/user.sql .db
 	$(PSQL_CMD) -f scripts/model/sql/tables/user.sql
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst data/%.csv,%,$<)"
 	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
@@ -349,7 +349,7 @@ $(BROKEN_SPPGROUPS): .broken_%: .breakpts_% .streams
 		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)" ::: $(WSG_PARAM)
 	# concurrent updates lock the db, process each wsg individually
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
 		-v target_table=streams \
 		-v target_table_id=segmented_stream_id \
 		-v barriertype=$(subst .broken_,,$@) \
@@ -366,7 +366,7 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 		$(PSQL_CMD) -v wsg={1} -v point_table=$(subst .breakpts_,barriers_,$<)" ::: $(WSG_PARAM)
 	# concurrent updates lock the db, process each wsg individually
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/update_barriers_dnstr_wrapper.sql \
 		-v target_table=streams \
 		-v target_table_id=segmented_stream_id \
 		-v barriertype=$(subst .broken_,,$@) \
@@ -387,12 +387,13 @@ $(BROKEN_ANTHROPOGENIC): .broken_%: .breakpts_% .streams
 # once all barriers and observations are processed, update the access model values
 .update_access: $(BROKEN)
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/model_access_bt.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk_b.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_access_pk.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_access_st.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_access_wct.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_bt.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_ch_co_sk_b.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_cm.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_pk.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_st.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_access_wct.sql -v wsg=$$wsg ; \
 	done
 	touch $@
 
@@ -434,7 +435,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 # RUN HABITAT MODEL
 # -----
-.model_habitat: .update_access .user_habitat_classification
+.model_habitat: .update_access .user_habitat_classification .param_habitat
 	# first, ensure the spatial index gets used, 
 	# spatial clustering in rearing queries is basically non-functional without it
 	$(PSQL_CMD) -c "VACUUM ANALYZE bcfishpass.streams"
@@ -442,18 +443,20 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	# run per-species models
 	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL_CMD) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_ch.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_co.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_st.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_wct.sql -v wsg=$$wsg ; \
-		$(PSQL_CMD) -f scripts/model/sql/model_habitat_bt.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_bt.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_ch.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_cm.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_co.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_pk.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_sk.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_st.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/model_habitat_wct.sql -v wsg=$$wsg ; \
 	done
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification_endpoints.sql
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
 	done
 	$(PSQL_CMD) -f scripts/model/sql/user_habitat_classification.sql
 	touch $@
@@ -481,7 +484,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	$(PSQL_CMD) -f scripts/model/sql/point_report_columns.sql \
 		-v point_table=barriers_anthropogenic
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
 		-v barriers_table=barriers_anthropogenic \
@@ -492,7 +495,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	$(PSQL_CMD) -f scripts/model/sql/point_report_columns.sql \
 		-v point_table=crossings
 	for wsg in $(WSG_PARAM) ; do \
-		$(PSQL_CMD) -f scripts/model/sql/point_report.sql \
+		set -e ; $(PSQL_CMD) -f scripts/model/sql/point_report.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
 		-v barriers_table=barriers_anthropogenic \

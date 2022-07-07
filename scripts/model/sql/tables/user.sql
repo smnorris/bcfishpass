@@ -7,7 +7,8 @@
 -- additional falls, from various sources
 -- (not grouped in with user_barriers_definite because tracking non-barrier falls is useful)
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_falls
+DROP TABLE IF EXISTS bcfishpass.user_falls;
+CREATE TABLE bcfishpass.user_falls
 (
   falls_name text,
   height numeric,
@@ -28,7 +29,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.user_falls
 --
 -- User added Non-falls definite barrers (exclusions, misc, other)
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_barriers_definite
+DROP TABLE IF EXISTS bcfishpass.user_barriers_definite;
+CREATE TABLE bcfishpass.user_barriers_definite
 (
     barrier_type text,
     barrier_name text,
@@ -47,7 +49,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.user_barriers_definite
 --
 -- Modify barrier status of features (fiss/fwa falls, gradient barriers, subsurface flow)
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_barriers_definite_control
+DROP TABLE IF EXISTS bcfishpass.user_barriers_definite_control;
+CREATE TABLE bcfishpass.user_barriers_definite_control
 (
     barrier_type text,
     barrier_name text,
@@ -67,7 +70,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.user_barriers_definite_control
 --
 -- designate stream segments as known rearing/spawning
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_habitat_classification
+DROP TABLE IF EXISTS bcfishpass.user_habitat_classification CASCADE;
+CREATE TABLE bcfishpass.user_habitat_classification
 (
   blue_line_key integer,
   downstream_route_measure double precision,
@@ -90,7 +94,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.user_habitat_classification
 -- Note that we want simple integer unique ids for all anthropogenic barriers that remain constant.
 -- So do not autogenerate, maintain them in the csv manually for now
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_barriers_anthropogenic
+DROP TABLE IF EXISTS bcfishpass.user_barriers_anthropogenic;
+CREATE TABLE bcfishpass.user_barriers_anthropogenic
 (
     user_barrier_anthropogenic_id integer PRIMARY KEY,
     blue_line_key integer,
@@ -112,7 +117,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.user_barriers_anthropogenic
 -- user defined override for modelled crossings that are either OBS or non-existent
 -- note that this table uses modelled_crossing_id as identifier rather than blkey/measure
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_modelled_crossing_fixes
+DROP TABLE IF EXISTS bcfishpass.user_modelled_crossing_fixes;
+CREATE TABLE bcfishpass.user_modelled_crossing_fixes
 (
   modelled_crossing_id integer,
   structure text,
@@ -131,7 +137,8 @@ CREATE INDEX ON bcfishpass.user_modelled_crossing_fixes (modelled_crossing_id);
 -- (via smallest distance or matched name) does not match correctly
 -- ***PSCIS crossings present in the lookup with no stream/modelled crossing do not get matched to a stream***
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.pscis_modelledcrossings_streams_xref
+DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref;
+CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
 (
   stream_crossing_id integer PRIMARY KEY,
   modelled_crossing_id integer UNIQUE,
@@ -146,7 +153,8 @@ CREATE TABLE IF NOT EXISTS bcfishpass.pscis_modelledcrossings_streams_xref
 --
 -- manual override of PSCIS status
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.user_pscis_barrier_status
+DROP TABLE IF EXISTS bcfishpass.user_pscis_barrier_status;
+CREATE TABLE bcfishpass.user_pscis_barrier_status
 (
   stream_crossing_id integer PRIMARY KEY,
   user_barrier_status text,
@@ -162,10 +170,12 @@ CREATE TABLE IF NOT EXISTS bcfishpass.user_pscis_barrier_status
 -- presence/absence of target species within all BC watershed groups
 -- SOURCE - CWF WCRP project area scoping (2020)
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.wsg_species_presence
+DROP TABLE IF EXISTS bcfishpass.wsg_species_presence;
+CREATE TABLE bcfishpass.wsg_species_presence
 (
   watershed_group_code varchar(4),
   ch boolean,
+  cm boolean,
   co boolean,
   pk boolean,
   sk boolean,

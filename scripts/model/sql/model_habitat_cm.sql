@@ -41,13 +41,13 @@ model AS
         s.gradient <= cm.spawn_gradient_max AND
         (s.channel_width > cm.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         s.channel_width <= cm.spawn_channel_width_max AND
-        s.access_model_cm IS NOT NULL  -- note: this also ensures only wsg where ch occur are included
+        s.access_model_cm IS NOT NULL  -- note: this also ensures only wsg where cm occur are included
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= cm.spawn_gradient_max AND
         s.mad_m3s > cm.spawn_mad_min AND
         s.mad_m3s <= cm.spawn_mad_max AND
-        s.access_model_cm_co_sk IS NOT NULL
+        s.access_model_cm IS NOT NULL
       THEN true
     END AS spawn_cm
   FROM bcfishpass.streams s
