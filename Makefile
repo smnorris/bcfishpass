@@ -11,7 +11,7 @@ WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfish
 #WSG=$(WSG_TEST)
 #WSG_PARAM=$(WSG_TEST)
 
-GENERATED_FILES=.fwapg .bcfishobs .schema \
+GENERATED_FILES=.db \
 	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
 	.streams .observations .observations_upstr .update_access
 
@@ -44,7 +44,7 @@ WSG_TO_REFRESH_DEF = $(WSG_PARAM)
 WSG_TO_REFRESH = $(shell cat $(patsubst %,.barriers_%,$(BARRIERS)) .observations | sort | uniq)
 
 # Make all targets - just point to final target to make everything
-all: .update_access
+all: .carto
 
 qa: $(QA_OUTPUTS)
 
@@ -84,30 +84,10 @@ clean:
 	rm -Rf $(wildcard .barriers_*)
 
 
-# *********************************************************
-# **                                                     **
-# ** LOAD DATA FROM OTHER REPOSITORIES (fwapg/bcfishobs) **
-# **                                                     **
-# *********************************************************
-fwapg:
-	git clone https://github.com/smnorris/fwapg.git
 
-.fwapg: fwapg
-	cd fwapg; make
-	touch $@
 
-bcfishobs: .fwapg
-	git clone https://github.com/smnorris/bcfishobs.git
-
-.bcfishobs: bcfishobs
-	cd bcfishobs; make
-	touch $@
-
-.schema:
+.db:
 	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
-	touch $@
-
-.db: .fwapg .bcfishobs .schema
 	touch $@
 
 # ***********************************************
@@ -300,7 +280,7 @@ scripts/discharge/.discharge: .db
 .barriersource_user_definite: .user_barriers_definite
 	touch $@
 # subsurface flow barrier type only depends on fwa
-.barriersource_subsurfaceflow: .fwapg
+.barriersource_subsurfaceflow:
 	touch $@
 .barriersource_anthropogenic: .crossings
 	touch $@

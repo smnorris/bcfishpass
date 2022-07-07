@@ -26,6 +26,8 @@ pg_dump bcfishpass_test -t bcfishpass.pscis_not_matched_to_streams | psql -h loc
 pg_dump bcfishpass_test -t bcfishpass.streams | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
 pg_dump bcfishpass_test -t bcfishpass.streams_carto_order3gt | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
 pg_dump bcfishpass_test -t bcfishpass.streams_carto_order6gt | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
+
+# load views
 pg_dump bcfishpass_test -t bcfishpass.observations_bt_vw | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
 pg_dump bcfishpass_test -t bcfishpass.observations_ch_co_sk_vw | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
 pg_dump bcfishpass_test -t bcfishpass.observations_pk_vw | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
