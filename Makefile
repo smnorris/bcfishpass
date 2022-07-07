@@ -44,7 +44,7 @@ WSG_TO_REFRESH_DEF = $(WSG_PARAM)
 WSG_TO_REFRESH = $(shell cat $(patsubst %,.barriers_%,$(BARRIERS)) .observations | sort | uniq)
 
 # Make all targets - just point to final target to make everything
-all: .update_access
+all: .carto
 
 qa: $(QA_OUTPUTS)
 
