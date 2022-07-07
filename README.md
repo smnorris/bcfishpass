@@ -42,9 +42,11 @@ Streams meeting the criteria for a given species are classified as spawning or r
 
 - bash or similar
 - GDAL (>= 3.4)
-- a PostgreSQL / PostGIS database (tested with v14/v3.1)
+- a PostgreSQL / PostGIS database (tested with v14/v3.2)
 - Python >= 3.7
 - [bcdata](https://github.com/smnorris/bcdata)
+- [fwapg](https://github.com/smnorris/fwapg)
+- [bcfishobs](https://github.com/smnorris/bcfishobs)
 
 
 ## Installation / Setup
@@ -66,38 +68,14 @@ If the database you are working with does not already exist, create it:
 
     psql -c "CREATE DATABASE bcfishpass" postgres
 
+Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
 
-## Docker
+## Usage
 
-Rename `.env.docker` to `.env` and edit the ports to be exposed as required. The defaults are fine, the option is only provided to avoid conflicts in case of other Docker services running at these ports.
+Processing is controlled by the `Makefile`.
+To run the entire model:
 
-Download the repo, create containers, create database, load all data:
-
-    git clone https://github.com/smnorris/bcfishpass.git
-    cd bcfishpass
-
-Edit the ports mappings as required in `.env` (to avoid conflicts with ports already in use), then build and start the services:
-
-    docker-compose build
-    docker-compose up -d
-    docker-compose run --rm client psql -c "CREATE DATABASE bcfishpass" postgres
-    docker-compose run --rm client make
-
-A `postgres-data` folder is created by the database container as a volume for all postgres data.
-
-If you have shut down Docker or the container, start it up again with this command:
-
-    docker-compose up -d
-
-Connect to the db and tilesev/featureserv clients from your host OS via the ports specified in `.env`:
-
-    psql -p 8000 -U postgres fwapg
-    http://localhost:7800/
-    http://localhost:9000/
-
-Delete the containers (and associated data):
-
-    docker-compose down
+`make`
 
 
 ## Credits
