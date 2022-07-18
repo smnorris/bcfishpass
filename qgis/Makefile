@@ -50,40 +50,8 @@ $(BASIC_TARGETS):
 
 .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES:
 	mkdir -p .make
-	$(PSQL_CMD) -c "drop table if exists whse_basemapping.trim_contour_lines"
-	$(PSQL_CMD) -c "create table whse_basemapping.trim_contour_lines ( \
-	ogc_fid       integer                        , \
-	objectid      integer                        , \
-	fcode         character varying(10)          , \
-	elevation     integer                        , \
-	admit_year    smallint                       , \
-	admit_mnth    smallint                       , \
-	admit_day     smallint                       , \
-	asrc_year     smallint                       , \
-	asrc_mnth     smallint                       , \
-	asrc_day      smallint                       , \
-	admit_rfc     character varying(30)          , \
-	admit_srel    character varying(10)          , \
-	admit_rkey    character varying(10)          , \
-	retir_year    smallint                       , \
-	retir_mnth    smallint                       , \
-	retir_day     smallint                       , \
-	rsrc_year     smallint                       , \
-	rsrc_mnth     smallint                       , \
-	rsrc_day      smallint                       , \
-	retir_rfc     character varying(30)          , \
-	retir_srel    character varying(10)          , \
-	retir_rkey    character varying(10)          , \
-	x_level       character varying(10)          , \
-	x_reason      character varying(2)           , \
-	x_supplier    character varying(45)          , \
-	x_capture     character varying(15)          , \
-	x_accuracy    smallint                       , \
-	bcgs_tile     character varying(7)           , \
-	source_id     character varying(52)          , \
-	geometry_len  double precision               , \
-	shape_length  double precision               , \
-	geom          geometry(MultiLineString,3005) )"
+	bcdata bc2pg whse_basemapping.trim_contour_lines --schema_only
+	$(PSQL_CMD) "create index on whse_basemapping.trim_contour_lines (bcgs_tile);"
 	touch $@
 
 # Download contours per 250k tile
@@ -92,8 +60,6 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	$(PSQL_CMD) -c "delete from whse_basemapping.trim_contour_lines where bcgs_tile like '$(subst TCTR_,,$@)%'"
 	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 		--append \
-		--fid OBJECTID \
-		--promote_to_multi \
 		--query "BCGS_TILE LIKE '$(subst .make/TCTR_,,$@)%'"
 	touch $@
 
