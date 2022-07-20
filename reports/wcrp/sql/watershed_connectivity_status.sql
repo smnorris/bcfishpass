@@ -1,6 +1,6 @@
-DROP FUNCTION bcfishpass.watershed_connectivity_status(TEXT,TEXT);
+DROP FUNCTION postgisftw.watershed_connectivity_status(TEXT,TEXT);
 
-CREATE OR REPLACE FUNCTION bcfishpass.watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT)
+CREATE OR REPLACE FUNCTION postgisftw.watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --habitat_type: SPAWN, REAR or ALL
   RETURNS TABLE(

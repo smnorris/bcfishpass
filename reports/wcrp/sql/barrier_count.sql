@@ -1,6 +1,6 @@
-DROP FUNCTION bcfishpass.barrier_count(text,text);
+DROP FUNCTION postgisftw.barrier_count(text,text);
 
-CREATE FUNCTION bcfishpass.barrier_count(watershed_group TEXT, barrier_type TEXT)
+CREATE FUNCTION postgisftw.barrier_count(watershed_group TEXT, barrier_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
     RETURNS TABLE(
