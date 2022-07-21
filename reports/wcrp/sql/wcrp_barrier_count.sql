@@ -1,6 +1,6 @@
-DROP FUNCTION bcfishpass.barrier_count(text,text);
+DROP FUNCTION bcfishpass.wcrp_barrier_count(text,text);
 
-CREATE FUNCTION bcfishpass.barrier_count(watershed_group TEXT, barrier_type TEXT)
+CREATE FUNCTION bcfishpass.wcrp_barrier_count(watershed_group TEXT, barrier_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
     RETURNS TABLE(
@@ -129,7 +129,7 @@ END
 
 $$;
 
-COMMENT ON FUNCTION bcfishpass.barrier_count IS
+COMMENT ON FUNCTION bcfishpass.wcrp_barrier_count IS
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.
 The output is a percentage of the sum of the crossing feature within the watershed relative to the
 sum of all crossing feature types in the watershed.';
