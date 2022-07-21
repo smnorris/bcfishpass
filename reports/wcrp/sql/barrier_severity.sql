@@ -1,6 +1,6 @@
-DROP FUNCTION postgisftw.barrier_severity(text,text);
+DROP FUNCTION bcfishpass.barrier_severity(text,text);
 
-CREATE FUNCTION postgisftw.barrier_severity(watershed_group TEXT, barrier_type TEXT)
+CREATE FUNCTION bcfishpass.barrier_severity(watershed_group TEXT, barrier_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
     RETURNS TABLE(
@@ -154,9 +154,6 @@ END
 
 
 $$;
-
-ALTER FUNCTION bcfishpass.barrier_severity(text,text)
-    OWNER TO tomasm;
 
 COMMENT ON FUNCTION bcfishpass.barrier_severity IS 
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.

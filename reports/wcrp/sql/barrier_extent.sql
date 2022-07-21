@@ -1,6 +1,6 @@
-DROP FUNCTION postgisftw.barrier_extent(TEXT, TEXT);
+DROP FUNCTION bcfishpass.barrier_extent(TEXT, TEXT);
 
-CREATE FUNCTION postgisftw.barrier_extent(watershed_group TEXT, barrier_type TEXT)
+CREATE FUNCTION bcfishpass.barrier_extent(watershed_group TEXT, barrier_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
   RETURNS TABLE(
@@ -136,14 +136,6 @@ END
 
 
 $$;
-
-ALTER FUNCTION bcfishpass.barrier_extent(text,text)
-    OWNER TO tomasm;
-
---all_spawningrearing_blocked_km as well as pct_test
-
-
---language 'sql' immutable strict parallel safe;
 
 COMMENT ON FUNCTION bcfishpass.barrier_extent IS 
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.

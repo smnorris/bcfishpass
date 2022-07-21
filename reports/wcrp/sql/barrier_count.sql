@@ -1,6 +1,6 @@
-DROP FUNCTION postgisftw.barrier_count(text,text);
+DROP FUNCTION bcfishpass.barrier_count(text,text);
 
-CREATE FUNCTION postgisftw.barrier_count(watershed_group TEXT, barrier_type TEXT)
+CREATE FUNCTION bcfishpass.barrier_count(watershed_group TEXT, barrier_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
     RETURNS TABLE(
@@ -52,10 +52,10 @@ IF (v_feat = 'ALL')
                     SELECT 
                         watershed_group_code,
                         crossing_feature_type,
-                        max(case when barrier_status = 'PASSABLE' then n_total else 0 end) as n_passable,
-                        max(case when barrier_status = 'BARRIER' then n_total else 0 end) as n_barrier,
-                        max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as n_potential,
-                        max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as n_unknown
+                        max(case when barrier_status = 'PASSABLE' then n_total else 0 end) as passable,
+                        max(case when barrier_status = 'BARRIER' then n_total else 0 end) as barrier,
+                        max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
+                        max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
                     FROM barriers
                     WHERE watershed_group_code = v_water
                     --AND crossing_feature_type = v_feat
@@ -66,10 +66,10 @@ IF (v_feat = 'ALL')
         SELECT 
             watershed_group_code,
             crossing_feature_type,
-            n_passable,
-            n_barrier,
-            n_potential,
-            n_unknown
+            passable,
+            barrier,
+            potential,
+            unknown
         FROM divided;
 
 
@@ -102,10 +102,10 @@ ELSE
                     SELECT 
                         watershed_group_code,
                         crossing_feature_type,
-                        max(case when barrier_status = 'PASSABLE' then n_total else 0 end) as n_passable,
-                        max(case when barrier_status = 'BARRIER' then n_total else 0 end) as n_barrier,
-                        max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as n_potential,
-                        max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as n_unknown
+                        max(case when barrier_status = 'PASSABLE' then n_total else 0 end) as passable,
+                        max(case when barrier_status = 'BARRIER' then n_total else 0 end) as barrier,
+                        max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
+                        max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
                     FROM barriers
                     WHERE watershed_group_code = v_water
                     AND crossing_feature_type = v_feat
@@ -116,10 +116,10 @@ ELSE
         SELECT 
             watershed_group_code,
             crossing_feature_type,
-            n_passable,
-            n_barrier,
-            n_potential,
-            n_unknown
+            passable,
+            barrier,
+            potential,
+            unknown
         FROM divided;
 
 END IF;
@@ -129,10 +129,7 @@ END
 
 $$;
 
-ALTER FUNCTION bcfishpass.barrier_count(text,text)
-    OWNER TO tomasm;
-
-COMMENT ON FUNCTION bcfishpass.barrier_count IS 
+COMMENT ON FUNCTION bcfishpass.barrier_count IS
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.
 The output is a percentage of the sum of the crossing feature within the watershed relative to the
-sum of all crossing feature types in the watershed. ';
+sum of all crossing feature types in the watershed.';
