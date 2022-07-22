@@ -1,6 +1,6 @@
-DROP FUNCTION bcfishpass.wcrp_watershed_connectivity_status(TEXT,TEXT);
+DROP FUNCTION postgisftw.wcrp_watershed_connectivity_status(TEXT,TEXT);
 
-CREATE OR REPLACE FUNCTION bcfishpass.wcrp_watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT)
+CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT)
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --habitat_type: SPAWN, REAR or ALL
   RETURNS TABLE(
@@ -512,7 +512,7 @@ END
 $$;
 
 
-COMMENT ON FUNCTION bcfishpass.wcrp_watershed_connectivity_status IS
+COMMENT ON FUNCTION postgisftw.wcrp_watershed_connectivity_status IS
 'Provided is a watershed name according to the structure of bcbarriers.
 The output is a percentage of combined spawning and rearing accessible 
 habitat over the total modelled habitat for that particular watershed';
