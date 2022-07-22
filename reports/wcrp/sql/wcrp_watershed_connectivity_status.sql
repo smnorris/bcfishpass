@@ -1,6 +1,6 @@
 DROP FUNCTION postgisftw.wcrp_watershed_connectivity_status(TEXT,TEXT);
 
-CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT)
+CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT, default 'ALL')
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --habitat_type: SPAWN, REAR or ALL
   RETURNS TABLE(

@@ -1,6 +1,6 @@
 DROP FUNCTION postgisftw.wcrp_barrier_extent(TEXT, TEXT);
 
-CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group TEXT, barrier_type TEXT)
+CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group TEXT, barrier_type TEXT default 'ALL')
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
   RETURNS TABLE(
