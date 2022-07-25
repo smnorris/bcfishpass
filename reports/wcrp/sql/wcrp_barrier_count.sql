@@ -33,7 +33,7 @@ IF (v_feat = 'ALL')
             c.barrier_status,
             count(*) as n_total
         FROM bcfishpass.crossings c
-        WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+        WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
         -- do not include flathead in ELKR
         AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
         AND (c.aggregated_crossings_id IS NOT NULL OR c.dam_id IS NOT NULL)
