@@ -1,11 +1,11 @@
 DROP FUNCTION postgisftw.wcrp_watershed_connectivity_status(TEXT,TEXT);
 
-CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watershed_group TEXT, habitat_type TEXT default 'ALL')
+CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watershed_group_code TEXT, habitat_type TEXT default 'ALL')
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --habitat_type: SPAWN, REAR or ALL
   RETURNS TABLE(
-  	 watershed varchar (4),
-	 connectivity_status NUMERIC
+    watershed_group_cd varchar (4),
+	  connectivity_status NUMERIC
   )
   LANGUAGE 'plpgsql'
   IMMUTABLE PARALLEL SAFE 
@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watersh
 AS $$
 
 DECLARE
-   v_water   text := watershed_group;
+   v_wsg   text := watershed_group;
    v_hab  text := habitat_type;
 
 BEGIN
@@ -165,7 +165,7 @@ IF (v_hab = 'REAR')
 
   FROM bcfishpass.streams
   --WHERE watershed_group_code IN ('LNIC','BULK','HORS')
-  WHERE watershed_group_code = v_water
+  WHERE watershed_group_code = v_wsg
   GROUP BY watershed_group_code
   ),
 
@@ -327,7 +327,7 @@ ELSIF (v_hab = 'SPAWN')
 
   FROM bcfishpass.streams
   --WHERE watershed_group_code IN ('LNIC','BULK','HORS')
-  WHERE watershed_group_code = v_water
+  WHERE watershed_group_code = v_wsg
   GROUP BY watershed_group_code
   ),
 
@@ -488,7 +488,7 @@ ELSE
 
   FROM bcfishpass.streams
   --WHERE watershed_group_code IN ('LNIC','BULK','HORS')
-  WHERE watershed_group_code = v_water
+  WHERE watershed_group_code = v_wsg
   GROUP BY watershed_group_code
   ),
 
@@ -516,3 +516,5 @@ COMMENT ON FUNCTION postgisftw.wcrp_watershed_connectivity_status IS
 'Provided is a watershed name according to the structure of bcbarriers.
 The output is a percentage of combined spawning and rearing accessible 
 habitat over the total modelled habitat for that particular watershed';
+
+REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_watershed_connectivity_status FROM public;

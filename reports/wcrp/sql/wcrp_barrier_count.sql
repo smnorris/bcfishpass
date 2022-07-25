@@ -1,10 +1,10 @@
 DROP FUNCTION postgisftw.wcrp_barrier_count(text,text);
 
-CREATE FUNCTION postgisftw.wcrp_barrier_count(watershed_group TEXT, barrier_type TEXT default 'ALL')
+CREATE FUNCTION postgisftw.wcrp_barrier_count(watershed_group_code TEXT, barrier_type TEXT default 'ALL')
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
     RETURNS TABLE(
-        watershed TEXT,
+        watershed_group_cd TEXT,
         structure_type TEXT,
         n_passable bigint,
         n_barrier bigint,
@@ -17,7 +17,7 @@ CREATE FUNCTION postgisftw.wcrp_barrier_count(watershed_group TEXT, barrier_type
 AS $$
 
 DECLARE
-   v_water   text := watershed_group;
+   v_wsg   text := watershed_group_code;
    v_feat  text := barrier_type;
 
 BEGIN
@@ -57,7 +57,7 @@ IF (v_feat = 'ALL')
                         max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
                         max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
                     FROM barriers
-                    WHERE watershed_group_code = v_water
+                    WHERE watershed_group_code = v_wsg
                     --AND crossing_feature_type = v_feat
                     GROUP BY watershed_group_code, crossing_feature_type
                 )
@@ -107,7 +107,7 @@ ELSE
                         max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
                         max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
                     FROM barriers
-                    WHERE watershed_group_code = v_water
+                    WHERE watershed_group_code = v_wsg
                     AND crossing_feature_type = v_feat
                     GROUP BY watershed_group_code, crossing_feature_type
                 )
@@ -133,3 +133,5 @@ COMMENT ON FUNCTION postgisftw.wcrp_barrier_count IS
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.
 The output is a percentage of the sum of the crossing feature within the watershed relative to the
 sum of all crossing feature types in the watershed.';
+
+REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_barrier_count FROM public;

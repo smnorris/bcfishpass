@@ -1,10 +1,10 @@
 DROP FUNCTION postgisftw.wcrp_barrier_severity(text,text);
 
-CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group TEXT, barrier_type TEXT default 'ALL')
+CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group_code TEXT, barrier_type TEXT default 'ALL')
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
     RETURNS TABLE(
-        watershed TEXT,
+        watershed_group_cd TEXT,
         structure_type TEXT,
         n_assessed_barrier bigint,
         n_assess_total bigint,
@@ -16,7 +16,7 @@ CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group TEXT, barrier_t
 AS $$
 
 DECLARE
-   v_water   text := watershed_group;
+   v_wsg   text := watershed_group;
    v_feat  text := barrier_type;
 
 BEGIN
@@ -33,7 +33,7 @@ IF (v_feat = 'ALL')
     count(*) as n_total
     FROM bcfishpass.crossings
     WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-	AND watershed_group_code = v_water
+	AND watershed_group_code = v_wsg
     --AND crossing_feature_type = v_feat
     -- do not include flathead in ELKR
     AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
@@ -56,7 +56,7 @@ IF (v_feat = 'ALL')
     count(*) as n_barrier
     FROM bcfishpass.crossings
     WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-    AND watershed_group_code = v_water
+    AND watershed_group_code = v_wsg
     --AND crossing_feature_type = v_feat
     AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
     AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
@@ -97,7 +97,7 @@ ELSE
     count(*) as n_total
     FROM bcfishpass.crossings
     WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-	AND watershed_group_code = v_water
+	AND watershed_group_code = v_wsg
     AND crossing_feature_type = v_feat
     -- do not include flathead in ELKR
     AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
@@ -120,7 +120,7 @@ ELSE
     count(*) as n_barrier
     FROM bcfishpass.crossings
     WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-    AND watershed_group_code = v_water
+    AND watershed_group_code = v_wsg
     AND crossing_feature_type = v_feat
     AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
     AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
@@ -145,9 +145,6 @@ ELSE
     ON t.watershed_group_code = b.watershed_group_code
     AND t.crossing_feature_type = b.crossing_feature_type;
 
-
-
-
 END IF;
 
 END
@@ -159,3 +156,5 @@ COMMENT ON FUNCTION postgisftw.wcrp_barrier_severity IS
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.
 The output is a percentage of the sum of the crossing feature within the watershed relative to the
 sum of all crossing feature types in the watershed. ';
+
+REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_barrier_severity FROM public;

@@ -1,10 +1,10 @@
 DROP FUNCTION postgisftw.wcrp_barrier_extent(TEXT, TEXT);
 
-CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group TEXT, barrier_type TEXT default 'ALL')
+CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group_code TEXT, barrier_type TEXT default 'ALL')
 --watershed_group: watershed group codes from db e.g. HORS, BULK, etc.
 --barrier_type: eg. DAM, RAIL, etc. or if you wish to choose all within watershed ... ALL
   RETURNS TABLE(
-    watershed TEXT,
+    watershed_group_cd TEXT,
     structure_type TEXT,
     all_habitat_blocked_km numeric,
     all_habitat_blocked_pct numeric
@@ -16,7 +16,7 @@ CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group TEXT, barrier_typ
 AS $$
 
 DECLARE
-   v_water   text := watershed_group;
+   v_wsg   text := watershed_group;
    v_feat  text := barrier_type;
 
 BEGIN
@@ -64,7 +64,7 @@ IF (v_feat = 'ALL')
             WHERE all_spawningrearing_blocked_km != 0
             group by watershed_group_code
             )as num USING (watershed_group_code)
-            WHERE n.watershed_group_code = v_water
+            WHERE n.watershed_group_code = v_wsg
             --AND n.crossing_feature_type = feature
       )
 
@@ -119,7 +119,7 @@ ELSE
             WHERE all_spawningrearing_blocked_km != 0
             group by watershed_group_code
             )as num USING (watershed_group_code)
-            WHERE n.watershed_group_code = v_water
+            WHERE n.watershed_group_code = v_wsg
             AND n.crossing_feature_type = v_feat
       )
 
@@ -141,3 +141,6 @@ COMMENT ON FUNCTION postgisftw.wcrp_barrier_extent IS
 'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.
 The output is a percentage of the sum of the crossing feature within the watershed relative to the
 sum of all crossing feature types in the watershed. ';
+
+
+REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_barrier_extent FROM public;
