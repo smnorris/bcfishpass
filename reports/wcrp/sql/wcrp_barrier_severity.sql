@@ -31,7 +31,7 @@ IF (v_feat = 'ALL')
       c.watershed_group_code,
       c.crossing_feature_type,
     count(*) as n_total
-    FROM bcfishpass.crossings
+    FROM bcfishpass.crossings c
     WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
 	AND c.watershed_group_code = v_wsg
     --AND crossing_feature_type = v_feat
