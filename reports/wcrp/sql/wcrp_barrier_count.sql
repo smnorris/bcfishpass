@@ -28,49 +28,49 @@ IF (v_feat = 'ALL')
 
     with barriers as (
         SELECT
-            watershed_group_code,
-            crossing_feature_type,
-            barrier_status,
+            c.watershed_group_code,
+            c.crossing_feature_type,
+            c.barrier_status,
             count(*) as n_total
-        FROM bcfishpass.crossings
+        FROM bcfishpass.crossings c
         WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
         -- do not include flathead in ELKR
-        AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
-        AND (aggregated_crossings_id IS NOT NULL OR dam_id IS NOT NULL)
-        AND (access_model_ch_co_sk IS NOT NULL
+        AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+        AND (c.aggregated_crossings_id IS NOT NULL OR c.dam_id IS NOT NULL)
+        AND (c.access_model_ch_co_sk IS NOT NULL
             OR
-            access_model_st IS NOT NULL
+            c.access_model_st IS NOT NULL
             OR
-            access_model_wct IS NOT NULL
+            c.access_model_wct IS NOT NULL
             )
-        AND all_spawningrearing_km > 0
-        GROUP BY watershed_group_code, crossing_feature_type, barrier_status
-        ORDER BY watershed_group_code, crossing_feature_type
+        AND c.all_spawningrearing_km > 0
+        GROUP BY c.watershed_group_code, c.crossing_feature_type, c.barrier_status
+        ORDER BY c.watershed_group_code, c.crossing_feature_type
         ),
 
         divided as (
                     SELECT 
-                        watershed_group_code,
-                        crossing_feature_type,
-                        max(case when barrier_status = 'PASSABLE' then n_total else 0 end) as passable,
-                        max(case when barrier_status = 'BARRIER' then n_total else 0 end) as barrier,
-                        max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
-                        max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
-                    FROM barriers
-                    WHERE watershed_group_code = v_wsg
+                        b.watershed_group_code,
+                        b.crossing_feature_type,
+                        max(case when b.barrier_status = 'PASSABLE' then n_total else 0 end) as passable,
+                        max(case when b.barrier_status = 'BARRIER' then n_total else 0 end) as barrier,
+                        max(case when b.barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
+                        max(case when b.barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
+                    FROM barriers b
+                    WHERE b.watershed_group_code = v_wsg
                     --AND crossing_feature_type = v_feat
-                    GROUP BY watershed_group_code, crossing_feature_type
+                    GROUP BY b.watershed_group_code, b.crossing_feature_type
                 )
 
 
         SELECT 
-            watershed_group_code,
-            crossing_feature_type,
-            passable,
-            barrier,
-            potential,
-            unknown
-        FROM divided;
+            d.watershed_group_code,
+            d.crossing_feature_type,
+            d.passable,
+            d.barrier,
+            d.potential,
+            d.unknown
+        FROM divided d;
 
 
 ELSE
@@ -78,49 +78,49 @@ ELSE
 
     with barriers as (
         SELECT
-            watershed_group_code,
-            crossing_feature_type,
-            barrier_status,
+            c.watershed_group_code,
+            c.crossing_feature_type,
+            c.barrier_status,
             count(*) as n_total
-        FROM bcfishpass.crossings
-        WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+        FROM bcfishpass.crossings c
+        WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
         -- do not include flathead in ELKR
-        AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
-        AND (aggregated_crossings_id IS NOT NULL OR dam_id IS NOT NULL)
-        AND (access_model_ch_co_sk IS NOT NULL
+        AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+        AND (c.aggregated_crossings_id IS NOT NULL OR c.dam_id IS NOT NULL)
+        AND (c.access_model_ch_co_sk IS NOT NULL
             OR
-            access_model_st IS NOT NULL
+            c.access_model_st IS NOT NULL
             OR
-            access_model_wct IS NOT NULL
+            c.access_model_wct IS NOT NULL
             )
-        AND all_spawningrearing_km > 0
-        GROUP BY watershed_group_code, crossing_feature_type, barrier_status
-        ORDER BY watershed_group_code, crossing_feature_type
+        AND c.all_spawningrearing_km > 0
+        GROUP BY c.watershed_group_code, c.crossing_feature_type, c.barrier_status
+        ORDER BY c.watershed_group_code, c.crossing_feature_type
         ),
 
         divided as (
                     SELECT 
-                        watershed_group_code,
-                        crossing_feature_type,
-                        max(case when barrier_status = 'PASSABLE' then n_total else 0 end) as passable,
-                        max(case when barrier_status = 'BARRIER' then n_total else 0 end) as barrier,
-                        max(case when barrier_status = 'POTENTIAL' then n_total else 0 end) as potential,
-                        max(case when barrier_status = 'UNKNOWN' then n_total else 0 end) as unknown
-                    FROM barriers
-                    WHERE watershed_group_code = v_wsg
-                    AND crossing_feature_type = v_feat
-                    GROUP BY watershed_group_code, crossing_feature_type
+                        b.watershed_group_code,
+                        b.crossing_feature_type,
+                        max(case when b.barrier_status = 'PASSABLE' then b.n_total else 0 end) as passable,
+                        max(case when b.barrier_status = 'BARRIER' then b.n_total else 0 end) as barrier,
+                        max(case when b.barrier_status = 'POTENTIAL' then b.n_total else 0 end) as potential,
+                        max(case when b.barrier_status = 'UNKNOWN' then b.n_total else 0 end) as unknown
+                    FROM barriers b
+                    WHERE b.watershed_group_code = v_wsg
+                    AND b.crossing_feature_type = v_feat
+                    GROUP BY b.watershed_group_code, b.crossing_feature_type
                 )
 
 
         SELECT 
-            watershed_group_code,
-            crossing_feature_type,
-            passable,
-            barrier,
-            potential,
-            unknown
-        FROM divided;
+            d.watershed_group_code,
+            d.crossing_feature_type,
+            d.passable,
+            d.barrier,
+            d.potential,
+            d.unknown
+        FROM divided d;
 
 END IF;
 

@@ -16,7 +16,7 @@ CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group_code TEXT, barr
 AS $$
 
 DECLARE
-   v_wsg   text := watershed_group;
+   v_wsg   text := watershed_group_code;
    v_feat  text := barrier_type;
 
 BEGIN
@@ -28,46 +28,46 @@ IF (v_feat = 'ALL')
     WITH totals AS
     (
     SELECT
-    watershed_group_code,
-    crossing_feature_type,
+      c.watershed_group_code,
+      c.crossing_feature_type,
     count(*) as n_total
     FROM bcfishpass.crossings
-    WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-	AND watershed_group_code = v_wsg
+    WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+	AND c.watershed_group_code = v_wsg
     --AND crossing_feature_type = v_feat
     -- do not include flathead in ELKR
-    AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
-    AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
-    AND (access_model_ch_co_sk IS NOT NULL
+    AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+    AND (c.stream_crossing_id IS NOT NULL OR c.dam_id IS NOT NULL)
+    AND (c.access_model_ch_co_sk IS NOT NULL
         OR
-        access_model_st IS NOT NULL
+        c.access_model_st IS NOT NULL
         OR
-        access_model_wct IS NOT NULL
+        c.access_model_wct IS NOT NULL
         )
-    GROUP BY watershed_group_code, crossing_feature_type
-    ORDER BY watershed_group_code, crossing_feature_type
+    GROUP BY c.watershed_group_code, c.crossing_feature_type
+    ORDER BY c.watershed_group_code, c.crossing_feature_type
     ),
 
     barrier_potential AS
     (
     SELECT
-    watershed_group_code,
-    crossing_feature_type,
-    count(*) as n_barrier
-    FROM bcfishpass.crossings
-    WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-    AND watershed_group_code = v_wsg
+      c.watershed_group_code,
+      c.crossing_feature_type,
+      count(*) as n_barrier
+    FROM bcfishpass.crossings c
+    WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+    AND c.watershed_group_code = v_wsg
     --AND crossing_feature_type = v_feat
-    AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
-    AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
-    AND barrier_status in ('BARRIER', 'POTENTIAL')
-    AND (access_model_ch_co_sk IS NOT NULL
+    AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+    AND (c.stream_crossing_id IS NOT NULL OR c.dam_id IS NOT NULL)
+    AND c.barrier_status in ('BARRIER', 'POTENTIAL')
+    AND (c.access_model_ch_co_sk IS NOT NULL
         OR
-        access_model_st IS NOT NULL
+        c.access_model_st IS NOT NULL
         OR
-        access_model_wct IS NOT NULL
+        c.access_model_wct IS NOT NULL
         )
-    GROUP BY watershed_group_code, crossing_feature_type
+    GROUP BY c.watershed_group_code, c.crossing_feature_type
     )
 
     SELECT
@@ -92,46 +92,46 @@ ELSE
     WITH totals AS
     (
     SELECT
-    watershed_group_code,
-    crossing_feature_type,
-    count(*) as n_total
-    FROM bcfishpass.crossings
-    WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-	AND watershed_group_code = v_wsg
-    AND crossing_feature_type = v_feat
+      c.watershed_group_code,
+      c.crossing_feature_type,
+      count(*) as n_total
+    FROM bcfishpass.crossings c
+    WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+    AND c.watershed_group_code = v_wsg
+    AND c.crossing_feature_type = v_feat
     -- do not include flathead in ELKR
-    AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
-    AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
-    AND (access_model_ch_co_sk IS NOT NULL
+    AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+    AND (c.stream_crossing_id IS NOT NULL OR c.dam_id IS NOT NULL)
+    AND (c.access_model_ch_co_sk IS NOT NULL
         OR
-        access_model_st IS NOT NULL
+        c.access_model_st IS NOT NULL
         OR
-        access_model_wct IS NOT NULL
+        c.access_model_wct IS NOT NULL
         )
-    GROUP BY watershed_group_code, crossing_feature_type
-    ORDER BY watershed_group_code, crossing_feature_type
+    GROUP BY c.watershed_group_code, c.crossing_feature_type
+    ORDER BY c.watershed_group_code, c.crossing_feature_type
     ),
 
     barrier_potential AS
     (
     SELECT
-    watershed_group_code,
-    crossing_feature_type,
-    count(*) as n_barrier
-    FROM bcfishpass.crossings
-    WHERE watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
-    AND watershed_group_code = v_wsg
-    AND crossing_feature_type = v_feat
-    AND wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
-    AND (stream_crossing_id IS NOT NULL OR dam_id IS NOT NULL)
-    AND barrier_status in ('BARRIER', 'POTENTIAL')
-    AND (access_model_ch_co_sk IS NOT NULL
+      c.watershed_group_code,
+      c.crossing_feature_type,
+      count(*) as n_barrier
+    FROM bcfishpass.crossings c
+    WHERE c.watershed_group_code IN ('BULK','LNIC','HORS','ELKR')
+    AND c.watershed_group_code = v_wsg
+    AND c.crossing_feature_type = v_feat
+    AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+    AND (c.stream_crossing_id IS NOT NULL OR c.dam_id IS NOT NULL)
+    AND c.barrier_status in ('BARRIER', 'POTENTIAL')
+    AND (c.access_model_ch_co_sk IS NOT NULL
         OR
-        access_model_st IS NOT NULL
+        c.access_model_st IS NOT NULL
         OR
-        access_model_wct IS NOT NULL
+        c.access_model_wct IS NOT NULL
         )
-    GROUP BY watershed_group_code, crossing_feature_type
+    GROUP BY c.watershed_group_code, c.crossing_feature_type
     )
 
     SELECT

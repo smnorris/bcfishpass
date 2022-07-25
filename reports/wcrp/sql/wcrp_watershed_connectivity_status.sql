@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watersh
 AS $$
 
 DECLARE
-   v_wsg   text := watershed_group;
+   v_wsg   text := watershed_group_code;
    v_hab  text := habitat_type;
 
 BEGIN
@@ -29,11 +29,10 @@ IF (v_hab = 'REAR')
   (
   SELECT
 
-    watershed_group_code,
+    s.watershed_group_code,
 
-
-  -- SPAWNING length
-  -- ---------------
+    -- SPAWNING length
+    -- ---------------
     -- all spawning habitat is simple, just add it up
     round((SUM(ST_Length(geom)) FILTER (
       WHERE spawning_model_ch IS TRUE
@@ -163,10 +162,10 @@ IF (v_hab = 'REAR')
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
-  FROM bcfishpass.streams
+  FROM bcfishpass.streams s
   --WHERE watershed_group_code IN ('LNIC','BULK','HORS')
-  WHERE watershed_group_code = v_wsg
-  GROUP BY watershed_group_code
+  WHERE s.watershed_group_code = v_wsg
+  GROUP BY s.watershed_group_code
   ),
 
   access AS (
@@ -179,9 +178,9 @@ IF (v_hab = 'REAR')
   )
 
 SELECT
-      watershed_group_code,
-      rearing_pct_accessible
-  FROM access;
+      a.watershed_group_code,
+      a.rearing_pct_accessible
+  FROM access a;
 
 ELSIF (v_hab = 'SPAWN')
 
@@ -191,7 +190,7 @@ ELSIF (v_hab = 'SPAWN')
   (
   SELECT
 
-    watershed_group_code,
+    s.watershed_group_code,
 
     
   -- SPAWNING length
@@ -325,10 +324,10 @@ ELSIF (v_hab = 'SPAWN')
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
-  FROM bcfishpass.streams
+  FROM bcfishpass.streams s
   --WHERE watershed_group_code IN ('LNIC','BULK','HORS')
-  WHERE watershed_group_code = v_wsg
-  GROUP BY watershed_group_code
+  WHERE s.watershed_group_code = v_wsg
+  GROUP BY s.watershed_group_code
   ),
 
   access AS (
@@ -341,18 +340,19 @@ ELSIF (v_hab = 'SPAWN')
   )
 
 SELECT
-      watershed_group_code,
-      spawning_pct_accessible
-  FROM access;
-ELSE
+      a.watershed_group_code,
+      a.spawning_pct_accessible
+  FROM access a;
 
+
+ELSE
   RETURN query
 
   with numbers AS
   (
   SELECT
 
-    watershed_group_code,
+    s.watershed_group_code,
 
     
   -- SPAWNING length
@@ -486,10 +486,10 @@ ELSE
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
-  FROM bcfishpass.streams
+  FROM bcfishpass.streams s
   --WHERE watershed_group_code IN ('LNIC','BULK','HORS')
-  WHERE watershed_group_code = v_wsg
-  GROUP BY watershed_group_code
+  WHERE s.watershed_group_code = v_wsg
+  GROUP BY s.watershed_group_code
   ),
 
   access AS (
@@ -502,9 +502,9 @@ ELSE
   )
 
 SELECT
-      watershed_group_code,
-      all_habitat_pct_accessible
-  FROM access;
+      a.watershed_group_code,
+      a.all_habitat_pct_accessible
+  FROM access a;
 
 END IF;
 
