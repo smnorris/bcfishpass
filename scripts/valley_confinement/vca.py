@@ -35,35 +35,7 @@ def distance(sources):
     out[:] = distance_transform_edt(r.array == r.nodata, [r.csx, r.csy])
     return out
 
-def cost_surface(sources, cost, reverse=False):
-    """
-    Generate a cost surface using a source Raster and a cost Raster
-    :return:
-    """
-    # Generate cost surface
-    cost = Raster(cost).astype('float32')
-    sources = Raster(sources).match_raster(cost)
-    sources = sources.array != sources.nodata
-    _cost = cost.array
-    m = _cost != cost.nodata
 
-    if reverse:
-        data = _cost[m]
-        _cost[m] = data.max() - data
-
-    _cost[~m] = numpy.inf # Fill no data with infinity
-    _cost[sources] = 0
-
-    # Compute cost network
-    mcp = MCP_Geometric(_cost, sampling=(cost.csy, cost.csx))
-    cost_network, traceback = mcp.find_costs(numpy.array(numpy.where(sources)).T)
-
-    # Prepare output
-    out = cost.astype('float32')
-    cost_network[numpy.isnan(cost_network) | numpy.isinf(cost_network) | ~m] = out.nodata
-    out[:] = cost_network
-
-    return out
 
 def bankfull(dem, average_annual_precip=250, contributing_area=None, flood_factor=1, max_width=5000,
              streams=None, min_stream_area=None):
