@@ -24,14 +24,14 @@ Valleys defined by this script are derived primarily as described by [Nagel et a
 Ground slope is generated from the upsampled BC DEM. Only cell values less than the user-defined slope criteria will be included in the output unconfined valley bottom layer (default 9%)
 
 ### 2. Slope cost distance 
-The cost at each cell is computed as the cell size (10 or 30 m) multiplied by the cell slope (percent). As distance from the stream channel increases, the accumulated product of slope and distance are computed. In wide unconfined valleys with relatively low ground slope values, the slope cost distance measure increases gradually, whereas in confined valleys with steep side slopes the value increases rapidly
+The cost at each cell is computed as the cell size multiplied by the cell slope (percent). As distance from the stream channel increases, the accumulated product of slope and distance are computed. In wide unconfined valleys with relatively low ground slope values, the slope cost distance measure increases gradually, whereas in confined valleys with steep side slopes the value increases rapidly. Only cells with a value less than the `cost_threshold` parameter are included in the output valley definitions (default 2500).
 
 ### 3. Flood factor
 Using the DEM, valleys are “flooded” to a specific height above the elevation of the channel. The height of the flood is equal to the predicted bankfull depth multiplied by a flood factor (default 9). Bankfull depth is predicted as `bankfull_width**0.607 * 0.145` (Hall, 2007). Bankfull width is as defined by the `channel_width` model, or alternatively as `(contributing area**0.280) * 0.196 * mean annual precipitation` (as used in the source VCA). Stream segments are defined by the Freshwater Atlas.
 
 
 ### 4. Maximum valley width
-This parameter confines the valley extent to a maximum distance from the stream segment. Note that the width parameter includes the entire valley width on both sides of the stream.
+This parameter confines the valley extent to a maximum distance from the stream segment. Note that the width parameter includes the entire valley width on both sides of the stream (default 2000m).
 
 ### 5. Contributing area / parent stream order
 Only streams meeting at least one of these conditions are processed:
@@ -43,7 +43,7 @@ Only streams meeting at least one of these conditions are processed:
 Only streams with no known non-anthropogenic barriers (ie falls, gradient barriers) downstream are processed.
 
 ### 7. Valley area
-Only contiguous areas above this size threshold are retained (defaults to 0.5ha).
+Only contiguous areas above this size threshold are retained (defaults 0.5ha).
 
 ## Resources / References
 
