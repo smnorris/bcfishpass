@@ -39,7 +39,6 @@ from scipy.ndimage import distance_transform_edt
 from scipy.interpolate import griddata
 from skimage.filters.rank import majority
 import skimage.morphology as morphology
-from matplotlib import pyplot
 
 import bcdata
 
