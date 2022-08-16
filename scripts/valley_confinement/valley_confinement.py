@@ -27,8 +27,12 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import logging
 import subprocess
+import sys
+import configparser
 
+import click
 import numpy
+import pandas
 import geopandas
 from sqlalchemy import create_engine
 import rasterio
@@ -39,6 +43,7 @@ from scipy.ndimage import distance_transform_edt
 from scipy.interpolate import griddata
 from skimage.filters.rank import majority
 import skimage.morphology as morphology
+from cligj import verbose_opt, quiet_opt
 
 import bcdata
 
@@ -74,8 +79,37 @@ def cost_surface(sources, cost):
     return out
 
 
-def prep_inputs(bounds, data_path, con, minimum_drainage_area):
-    """Download/extract and prep source data (dem, slope, streams, precip)"""
+def valley_confinement(
+    watershed_group_code,
+    db_url,
+    data_path="data",
+    minimum_drainage_area=1000,
+    slope_threshold=9,
+    max_width=2000,
+    cost_threshold=2500,
+    flood_factor=6,
+    size_threshold=5000,
+    hole_removal_threshold=2500,
+):
+    """Define 'unconfined' valleys"""
+    db = create_engine(db_url)
+    sql = """select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom)
+    from whse_basemapping.fwa_watershed_groups_poly
+    where watershed_group_code = %(wsg)s"""
+    bbox = pandas.read_sql_query(
+        sql,
+        db,
+        params={
+            "wsg": watershed_group_code,
+        },
+    )
+    bounds = [
+        bbox["st_xmin"][0],
+        bbox["st_ymin"][0],
+        bbox["st_xmax"][0],
+        bbox["st_ymax"][0],
+    ]
+    LOG.debug("Processing extent " + ",".join([str(b) for b in bounds]))
     LOG.info("Downloading and resampling DEM to 10m")
     with bcdata.get_dem(
         bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True
@@ -139,7 +173,7 @@ def prep_inputs(bounds, data_path, con, minimum_drainage_area):
     """
     stream_features = geopandas.read_postgis(
         sql,
-        con,
+        db,
         params={
             "xmin": bounds[0],
             "ymin": bounds[1],
@@ -202,7 +236,7 @@ def prep_inputs(bounds, data_path, con, minimum_drainage_area):
     """
     precip_features = geopandas.read_postgis(
         sql,
-        con,
+        db,
         params={
             "xmin": bounds[0],
             "ymin": bounds[1],
@@ -252,16 +286,6 @@ def prep_inputs(bounds, data_path, con, minimum_drainage_area):
         ]
     )
 
-
-def vca(
-    data_path,
-    slope_threshold,
-    max_width,
-    cost_threshold,
-    flood_factor,
-    size_threshold,
-    hole_removal_threshold,
-):
     # load input rasters
     dem = rasterio.open(os.path.join(data_path, "dem.tif"))
     DEM = dem.read(1)
@@ -470,28 +494,70 @@ def vca(
         dst.write(valleys, indexes=1)
 
 
-db_connection_url = "postgresql://postgres@localhost:5432/bcfishpass"
-db = create_engine(db_connection_url)
+class ConfigError(Exception):
+    """Configuration key error"""
 
-# temp files
-workdir = "data"
 
-# parameters
-bounds = [1107333, 399214, 1182103, 468390]
-slope_threshold = 9
-cost_threshold = 2500
-max_width = 2000
-flood_factor = 6
-size_threshold = 5000  # .5ha
-hole_removal_threshold = 2500  # .25ha
+def read_config(config_file):
+    """Read provided config file"""
+    LOG.info("Loading config from file: %s", config_file)
+    cfg = configparser.ConfigParser()
+    config = cfg.read(config_file)
+    valid_keys = [
+        "minimum_drainage_area",
+        "slope_threshold",
+        "cost_threshold",
+        "max_width",
+        "flood_factor",
+        "size_threshold",
+        "hole_removal_threshold",
+    ]
+    # check keys are valid
+    for key in config.keys():
+        if key not in valid_keys:
+            raise ConfigError("Config key {} is invalid".format(key))
+    # convert all keys to integer
+    config = {key: int(config[key]) for key in config}
+    return config
 
-prep_inputs(bounds, workdir, db, minimum_drainage_area=1000)
-vca(
-    workdir,
-    slope_threshold,
-    max_width,
-    cost_threshold,
-    flood_factor,
-    size_threshold,
-    hole_removal_threshold,
+
+@click.command()
+@click.argument("watershed_group_code", type=click.STRING)
+@click.option(
+    "--db_url",
+    "-db",
+    help="bcfishpass database url, defaults to $DATABASE_URL environment variable if set",
+    default=os.environ.get("DATABASE_URL"),
 )
+@click.option(
+    "--workdir",
+    "-d",
+    type=click.Path(exists=True),
+    default="data",
+    help="Path to write output rasters",
+)
+@click.option(
+    "--config_file",
+    "-cfg",
+    type=click.Path(exists=True),
+    help="Valley confinement parameter configuration file",
+)
+@verbose_opt
+@quiet_opt
+def cli(watershed_group_code, db_url, workdir, config_file, verbose, quiet):
+    verbosity = verbose - quiet
+    log_level = max(10, 20 - 10 * verbosity)  # default to INFO log level
+    logging.basicConfig(
+        stream=sys.stderr,
+        level=log_level,
+        format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
+    )
+    if config_file:
+        config = read_config(config_file)
+    else:
+        config = {}
+    valley_confinement(watershed_group_code, db_url, workdir, **config)
+
+
+if __name__ == "__main__":
+    cli()

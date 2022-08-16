@@ -12,7 +12,7 @@ The valley definition script is a adaptation of the USDA's [Valley Confinement A
 
 For a given watershed group, generate an 'unconfined valley' polygon layer and a valley-width ratio for each stream segment:
 
-    valley_confinement.py <watershed_group_code>
+    python valley_confinement.py <watershed_group_code>
 
 
 ## Method
@@ -43,7 +43,7 @@ Only streams meeting at least one of these conditions are processed:
 Only streams with no known non-anthropogenic barriers (ie falls, gradient barriers) downstream are processed.
 
 ### 7. Valley area
-Only contiguous areas above this size threshold are retained (defaults 0.5ha).
+Only contiguous areas above this size threshold are retained (default 0.5ha).
 
 ## Resources / References
 
