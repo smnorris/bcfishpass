@@ -43,6 +43,9 @@ from scipy.ndimage import distance_transform_edt
 from scipy.interpolate import griddata
 from skimage.filters.rank import majority
 import skimage.morphology as morphology
+from skimage.feature import peak_local_max
+from skimage.segmentation import watershed
+from scipy.ndimage import label as ndi_label
 from cligj import verbose_opt, quiet_opt
 
 import bcdata
@@ -79,6 +82,17 @@ def cost_surface(sources, cost):
     return out
 
 
+def label_map(a):
+    shape = a.shape
+    a = a.ravel()
+    indices = numpy.argsort(a)
+    bins = numpy.bincount(a)
+    indices = numpy.split(indices, numpy.cumsum(bins[bins > 0][:-1]))
+    return dict(
+        list(zip(numpy.unique(a), [numpy.unravel_index(ind, shape) for ind in indices]))
+    )
+
+
 def valley_confinement(
     watershed_group_code,
     db_url,
@@ -109,8 +123,8 @@ def valley_confinement(
         bbox["st_xmax"][0],
         bbox["st_ymax"][0],
     ]
-    LOG.debug("Processing extent " + ",".join([str(b) for b in bounds]))
-    LOG.info("Downloading and resampling DEM to 10m")
+    LOG.info("Processing extent " + ",".join([str(b) for b in bounds]))
+    LOG.info("Downloading DEM, resampling to 10m and writing to dem.tif")
     with bcdata.get_dem(
         bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True
     ) as dataset:
@@ -144,7 +158,7 @@ def valley_confinement(
         DEM = d.read(1)
 
     # load streams from fwa, extracting contributing area and parent order
-    LOG.info("Extracting streams and writing to raster")
+    LOG.info("Extracting streams and writing to streams.tif")
     sql = """SELECT
       s.linear_feature_id,
       round(ua.upstream_area_ha::numeric) as upstream_area_ha,
@@ -224,7 +238,7 @@ def valley_confinement(
         dst.write(A, indexes=1)
 
     # load precip per fundamental watershed
-    LOG.info("Extracting watersheds/precip and writing to raster")
+    LOG.info("Extracting watersheds/precip and writing to precip.tif")
     sql = """select
       a.watershed_feature_id,
       b.map,
@@ -275,7 +289,7 @@ def valley_confinement(
         dst.write(A, indexes=1)
 
     # generate slope raster
-    LOG.info("Generating slope raster")
+    LOG.info("Writing slope.tif")
     subprocess.run(
         [
             "gdaldem",
@@ -330,7 +344,7 @@ def valley_confinement(
     moving_mask[cost == -9999] = False
 
     # write intermediate mask for QA
-    LOG.info("Writing intermediate data to cost_threshold.tif")
+    LOG.info("Writing cost_threshold.tif")
     with rasterio.open(
         "data/cost_threshold.tif",
         "w",
@@ -478,7 +492,8 @@ def valley_confinement(
     # majority filter
     valleys = majority(valleys.astype("uint8"), morphology.rectangle(nrows=3, ncols=3))
 
-    # write output to file
+    # write unconfined valley output to file
+    LOG.info("Writing valleys.tif")
     with rasterio.open(
         os.path.join(data_path, "valleys.tif"),
         "w",
@@ -492,6 +507,68 @@ def valley_confinement(
         nodata=-9999,
     ) as dst:
         dst.write(valleys, indexes=1)
+
+    # calculate the width of the valley
+    mask = valleys == 1
+
+    # Calculate distance to the bank over all valleys
+    distances = distance_transform_edt(mask.astype("float32"), [dem.res[0], dem.res[1]])
+    LOG.info("Writing distance_transform.tif")
+    with rasterio.open(
+        os.path.join(data_path, "distance_transform.tif"),
+        "w",
+        driver="GTiff",
+        dtype=rasterio.int32,
+        count=1,
+        width=dem.width,
+        height=dem.height,
+        crs=dem.crs,
+        transform=dem.transform,
+        nodata=-9999,
+    ) as dst:
+        dst.write(distances, indexes=1)
+
+    # Calculate local maxima
+    LOG.info("Calculating local maxima")
+    local_maxi = peak_local_max(
+        distances, indices=False, footprint=numpy.ones((3, 3)), labels=mask
+    )
+
+    LOG.info("Labeling maxima")
+    breaks = ndi_label(local_maxi)[0]
+    distance_map = {
+        brk: dist for brk, dist in zip(breaks[local_maxi], distances[local_maxi])
+    }
+
+    LOG.info("Performing Watershed Segmentation")
+    labels = watershed(-distances, breaks, mask=mask)
+
+    LOG.info("Assigning distances to labels")
+    for label, inds in list(label_map(labels).items()):
+        if label == 0:
+            continue
+        distances[inds] = distance_map[label]
+
+    LOG.info("Doubling dimensions")
+    max_distance = numpy.sqrt(dem.res[0] ** 2 + dem.res[1] ** 2) * 2
+    distances[distances > max_distance] *= 2
+
+    output = valleys.astype("float32")
+    output[:] = distances.astype("float32")
+
+    with rasterio.open(
+        os.path.join(data_path, "valley_width.tif"),
+        "w",
+        driver="GTiff",
+        dtype=rasterio.int32,
+        count=1,
+        width=dem.width,
+        height=dem.height,
+        crs=dem.crs,
+        transform=dem.transform,
+        nodata=-9999,
+    ) as dst:
+        dst.write(output, indexes=1)
 
 
 class ConfigError(Exception):
