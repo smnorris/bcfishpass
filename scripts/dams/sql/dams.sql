@@ -3,14 +3,14 @@
 DROP TABLE IF EXISTS bcfishpass.dams;
 
 CREATE TABLE bcfishpass.dams
-(dam_id integer primary key,
+(--dam_id integer primary key,
  dam_name text,
  waterbody_name text,
  owner text,
  hydro_dam_ind text,
  barrier_ind text,
- source_dataset text,
- source_id integer,
+ source_dataset text, --CABD in every row
+ cabd_id varchar primary key,  --cabd_id
  linear_feature_id bigint,
  blue_line_key integer,
  downstream_route_measure double precision,
@@ -25,14 +25,14 @@ CREATE TABLE bcfishpass.dams
 
 INSERT INTO bcfishpass.dams
 (
-  dam_id,
+  --dam_id,
   dam_name,
   waterbody_name,
   owner,
   hydro_dam_ind,
   barrier_ind,
   source_dataset,
-  source_id,
+  cabd_id,
   linear_feature_id,
   blue_line_key,
   downstream_route_measure,
@@ -42,26 +42,26 @@ INSERT INTO bcfishpass.dams
   watershed_group_code,
   geom
 )
-
+--add join here for cabd to dam ids
 WITH src_pts AS
 (
 SELECT
-  bcdams_id as dam_id,
-  dam_name,
-  waterbody_name,
+  --bcdams_id as dam_id,
+  dam_name_en as dam_name,
+  waterbody_name_en as waterbody_name,
   owner,
-  hydro_dam_ind,
-  barrier_ind,
-  source_dataset,
-  source_id,
+  use_code as hydro_dam_ind,
+  passability_status_code as barrier_ind,
+  'CABD' as source_dataset,
+  cabd_id,
   geom
-FROM bcfishpass.cwf_bcdams
+FROM cabd.dams
 ),
 
 nearest AS
 (
   SELECT
-    pt.dam_id,
+    --pt.dam_id,
     pt.dam_name,
     pt.waterbody_name,
     pt.owner,
@@ -107,7 +107,7 @@ nearest AS
 )
 
 SELECT
-    dam_id,
+    --dam_id,
     dam_name,
     waterbody_name,
     owner,
@@ -145,4 +145,4 @@ CREATE INDEX ON bcfishpass.dams USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.dams USING GIST (geom);
 
 -- drop the load table
-DROP TABLE bcfishpass.cwf_bcdams;
+--DROP TABLE bcfishpass.cwf_bcdams;
