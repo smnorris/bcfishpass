@@ -1,4 +1,4 @@
--- reference CWF dams to stream network
+-- reference CWF dams to stream network where only id is CABD_id
 
 DROP TABLE IF EXISTS bcfishpass.dams;
 
