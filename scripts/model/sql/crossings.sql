@@ -13,16 +13,17 @@ drop table if exists bcfishpass.crossings;
 create table if not exists bcfishpass.crossings
 (
   -- Note how the aggregated crossing id combines the various ids to create a unique integer, after assigning PSCIS crossings their source crossing id
-  -- - to avoid conflict with PSCIS ids, moelled crossings have modelled_crossing_id plus 1000000000 (max modelled crossing id is currently 24742842)
+  -- - to avoid conflict with PSCIS ids, modelled crossings have modelled_crossing_id plus 1000000000 (max modelled crossing id is currently 24742842)
   -- - dams go into the 1100000000 bin
   -- - misc go into the 1200000000 bin
   -- postgres max integer is 2147483647 so this leaves room for 9 additional sources with this simple system
   -- (but of course it could be broken down further if neeeded)
 
-    aggregated_crossings_id integer primary key generated always as
-       (coalesce(coalesce(coalesce(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1100000000), user_barrier_anthropogenic_id + 1200000000)) stored,
+    aggregated_crossings_id text primary key,
+    --integer primary key generated always as
+    --  (coalesce(coalesce(coalesce(stream_crossing_id, modelled_crossing_id + 1000000000), dam_id + 1100000000), user_barrier_anthropogenic_id + 1200000000)) stored,
     stream_crossing_id integer unique,
-    dam_id integer unique,
+    dam_id uuid,
     user_barrier_anthropogenic_id bigint unique,
     modelled_crossing_id integer unique,
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
@@ -64,7 +65,10 @@ create table if not exists bcfishpass.crossings
 
     -- dam info
     dam_name text,
+    dam_height double precision,
     dam_owner text,
+    dam_use text,
+    dam_operating_status text,
 
     -- coordinates (of the point snapped to the stream)
     utm_zone  integer,
@@ -101,18 +105,18 @@ create table if not exists bcfishpass.crossings
 );
 
 -- document the columns included
-comment on column bcfishpass.crossings.aggregated_crossings_id IS 'unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, dam_id + 1100000000, user_barrier_anthropogenic_id + 1200000000';
+comment on column bcfishpass.crossings.aggregated_crossings_id IS 'unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, user_barrier_anthropogenic_id + 1200000000, cabd_id';
 comment on column bcfishpass.crossings.stream_crossing_id IS 'PSCIS stream crossing unique identifier';
 comment on column bcfishpass.crossings.dam_id IS 'BC Dams unique identifier';
 comment on column bcfishpass.crossings.user_barrier_anthropogenic_id IS 'User added misc anthropogenic barriers unique identifier';
 comment on column bcfishpass.crossings.modelled_crossing_id IS 'Modelled crossing unique identifier';
-comment on column bcfishpass.crossings.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,BCDAMS,MISC BARRIERS}';
+comment on column bcfishpass.crossings.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,CABD,MISC BARRIERS}';
 comment on column bcfishpass.crossings.crossing_feature_type IS 'The general type of feature crossing the stream, valid feature types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
 comment on column bcfishpass.crossings.pscis_status IS 'From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED,HABITAT CONFIRMATION,DESIGN,REMEDIATED}';
 comment on column bcfishpass.crossings.crossing_type_code IS 'Defines the type of crossing present at the location of the stream crossing. Acceptable types are: OBS = Open Bottom Structure CBS = Closed Bottom Structure OTHER = Crossing structure does not fit into the above categories. Eg: ford, wier';
 comment on column bcfishpass.crossings.crossing_subtype_code IS 'Further definition of the type of crossing, one of {BRIDGE,CRTBOX,DAM,FORD,OVAL,PIPEARCH,ROUND,WEIR,WOODBOX,NULL}';
 comment on column bcfishpass.crossings.modelled_crossing_type_source IS 'List of sources that indicate if a modelled crossing is open bottom, Acceptable values are: FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order >=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, "MANUAL FIX"=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}';
-comment on column bcfishpass.crossings.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential Barrier, BARRIER - Barrier, UNKOWN - Other';
+comment on column bcfishpass.crossings.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential or partial barrier, BARRIER - Barrier, UNKNOWN - Other';
 comment on column bcfishpass.crossings.pscis_road_name  IS 'PSCIS road name, taken from the PSCIS assessment data submission';
 comment on column bcfishpass.crossings.pscis_stream_name  IS 'PSCIS stream name, taken from the PSCIS assessment data submission';
 comment on column bcfishpass.crossings.pscis_assessment_comment  IS 'PSCIS assessment_comment, taken from the PSCIS assessment data submission';
@@ -130,8 +134,12 @@ comment on column bcfishpass.crossings.rail_track_name IS 'Railway name, taken f
 comment on column bcfishpass.crossings.rail_owner_name IS 'Railway owner name, taken from nearest railway (within 25m)';
 comment on column bcfishpass.crossings.rail_operator_english_name IS 'Railway operator name, taken from nearest railway (within 25m)';;
 comment on column bcfishpass.crossings.ogc_proponent IS 'OGC road tenure proponent (currently modelled crossings only, taken from OGC road that crosses the stream)';
-comment on column bcfishpass.crossings.dam_name IS 'Dam name, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers';
-comment on column bcfishpass.crossings.dam_owner IS 'Dam owner, from Canadian Wildlife Federation BCDAMS dataset, a compilation of several dam data layers';
+comment on column bcfishpass.crossings.dam_name IS 'See CABD dams column: dam_name_en';
+comment on column bcfishpass.crossings.dam_height IS 'See CABD dams column: dam_height';
+comment on column bcfishpass.crossings.dam_owner IS 'See CABD dams column: owner';
+comment on column bcfishpass.crossings.dam_use IS 'See CABD table dam_use_codes';
+comment on column bcfishpass.crossings.dam_operating_status IS 'See CABD dams column dam_operating_status';
+
 comment on column bcfishpass.crossings.utm_zone IS 'UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees.';
 comment on column bcfishpass.crossings.utm_easting IS 'UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698';
 comment on column bcfishpass.crossings.utm_northing IS 'UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826';
@@ -173,6 +181,7 @@ create index if not exists crossings_geom_idx on bcfishpass.crossings using gist
 -- --------------------------------
 insert into bcfishpass.crossings
 (
+    aggregated_crossings_id,
     stream_crossing_id,
     modelled_crossing_id,
     crossing_source,
@@ -215,6 +224,7 @@ insert into bcfishpass.crossings
 )
 
 select
+    e.stream_crossing_id::text,
     e.stream_crossing_id,
     e.modelled_crossing_id,
     'PSCIS' AS crossing_source,
@@ -409,6 +419,7 @@ road_and_rail AS
 
 insert into bcfishpass.crossings
 (
+    aggregated_crossings_id,
     stream_crossing_id,
     crossing_source,
     pscis_status,
@@ -450,7 +461,8 @@ insert into bcfishpass.crossings
     geom
 )
 
-select distinct ON (stream_crossing_id)
+select distinct ON (e.stream_crossing_id)
+    e.stream_crossing_id::text,
     e.stream_crossing_id,
     'PSCIS' AS crossing_source,
     e.pscis_status,
@@ -500,7 +512,7 @@ on e.stream_crossing_id = f.stream_crossing_id
 inner join whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id
 where e.modelled_crossing_id IS NULL
-order by stream_crossing_id, distance_to_road asc
+order by e.stream_crossing_id, distance_to_road asc
 on conflict do nothing;
 
 -- --------------------------------
@@ -508,13 +520,17 @@ on conflict do nothing;
 -----------------------------------
 insert into bcfishpass.crossings
 (
+    aggregated_crossings_id,
     dam_id,
     crossing_source,
     crossing_type_code,
     crossing_subtype_code,
     barrier_status,
     dam_name,
+    dam_height,
     dam_owner,
+    dam_use,
+    dam_operating_status,
     utm_zone,
     utm_easting,
     utm_northing,
@@ -531,17 +547,25 @@ insert into bcfishpass.crossings
     geom
 )
 select
+    d.dam_id as aggregated_crossings_id,
     d.dam_id,
-    'BCDAMS' as crossing_source,
+    'CABD' as crossing_source,
     'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
     'DAM' AS crossing_subtype_code,
+    -- CABD 'Partial Barrier' is coded as 'POTENTIAL'
     case
-      when upper(d.barrier_ind) = 'Y' THEN 'BARRIER'
-      when upper(d.barrier_ind) = 'N' THEN 'PASSABLE'
+      when cabd.passability_status_code = 1 THEN 'BARRIER'
+      when cabd.passability_status_code = 2 THEN 'POTENTIAL'
+      when cabd.passability_status_code = 3 THEN 'PASSABLE'
+      when cabd.passability_status_code = 4 THEN 'UNKNOWN'
     end AS barrier_status,
 
-    d.dam_name as dam_name,
-    d.owner as dam_owner,
+    -- cabd attributes
+    cabd.dam_name_en as dam_name,
+    cabd.height_m as dam_height,
+    cabd.owner as dam_owner,
+    cabd.dam_use,
+    cabd.operating_status as dam_operating_status,
 
     substring(to_char(utmzone(d.geom),'999999') from 6 for 2)::int as utm_zone,
     st_x(ST_transform(d.geom, utmzone(d.geom)))::int as utm_easting,
@@ -560,6 +584,7 @@ select
 from bcfishpass.dams d
 inner join whse_basemapping.fwa_stream_networks_sp s
 on d.linear_feature_id = s.linear_feature_id
+inner join cabd.dams cabd on d.dam_id = cabd.cabd_id
 order by dam_id
 on conflict do nothing;
 
@@ -572,6 +597,7 @@ on conflict do nothing;
 WITH misc_barriers AS
 (
   select
+    (b.user_barrier_anthropogenic_id + 1200000000)::text as aggregated_crossings_id,
     b.user_barrier_anthropogenic_id,
     b.blue_line_key,
     s.watershed_key,
@@ -594,6 +620,7 @@ WITH misc_barriers AS
 
 insert into bcfishpass.crossings
 (
+    aggregated_crossings_id,
     user_barrier_anthropogenic_id,
     crossing_source,
     crossing_type_code,
@@ -615,6 +642,7 @@ insert into bcfishpass.crossings
     geom
 )
 select
+    b.aggregated_crossings_id,
     b.user_barrier_anthropogenic_id,
     'MISC BARRIERS' as crossing_source,
     'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
@@ -644,6 +672,7 @@ on conflict do nothing;
 -- --------------------------------
 insert into bcfishpass.crossings
 (
+    aggregated_crossings_id,
     modelled_crossing_id,
     crossing_source,
     modelled_crossing_type_source,
@@ -679,6 +708,7 @@ insert into bcfishpass.crossings
 )
 
 select
+    (b.modelled_crossing_id + 1000000000)::text as aggregated_crossings_id,
     b.modelled_crossing_id,
     'MODELLED CROSSINGS' as crossing_source,
     case

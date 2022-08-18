@@ -21,6 +21,8 @@ ogr2ogr -f PostgreSQL \
   "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc" \
   OGRGeoJSON
 
+$PSQL_CMD -c "alter table cabd.dams alter column cabd_id type uuid using cabd_id::uuid"
+
 # create bcfishpass.dams - matching the dams to streams
 $PSQL_CMD -f sql/dams.sql
 

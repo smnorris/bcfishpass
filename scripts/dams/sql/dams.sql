@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS bcfishpass.dams;
 
 CREATE TABLE bcfishpass.dams
-(dam_id varchar primary key,
+(dam_id uuid primary key,
  linear_feature_id bigint,
  blue_line_key integer,
  downstream_route_measure double precision,
@@ -71,7 +71,7 @@ WITH nearest AS
 )
 
 SELECT
-    dam_id,
+    dam_id::uuid,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
