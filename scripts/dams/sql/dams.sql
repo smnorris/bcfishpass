@@ -1,16 +1,9 @@
--- reference CWF dams to stream network
+-- reference CABD dams to FWA stream network
 
 DROP TABLE IF EXISTS bcfishpass.dams;
 
 CREATE TABLE bcfishpass.dams
-(dam_id integer primary key,
- dam_name text,
- waterbody_name text,
- owner text,
- hydro_dam_ind text,
- barrier_ind text,
- source_dataset text,
- source_id integer,
+(dam_id varchar primary key,
  linear_feature_id bigint,
  blue_line_key integer,
  downstream_route_measure double precision,
@@ -26,13 +19,6 @@ CREATE TABLE bcfishpass.dams
 INSERT INTO bcfishpass.dams
 (
   dam_id,
-  dam_name,
-  waterbody_name,
-  owner,
-  hydro_dam_ind,
-  barrier_ind,
-  source_dataset,
-  source_id,
   linear_feature_id,
   blue_line_key,
   downstream_route_measure,
@@ -43,32 +29,10 @@ INSERT INTO bcfishpass.dams
   geom
 )
 
-WITH src_pts AS
-(
-SELECT
-  bcdams_id as dam_id,
-  dam_name,
-  waterbody_name,
-  owner,
-  hydro_dam_ind,
-  barrier_ind,
-  source_dataset,
-  source_id,
-  geom
-FROM bcfishpass.cwf_bcdams
-),
-
-nearest AS
+WITH nearest AS
 (
   SELECT
-    pt.dam_id,
-    pt.dam_name,
-    pt.waterbody_name,
-    pt.owner,
-    pt.hydro_dam_ind,
-    pt.barrier_ind,
-    pt.source_dataset,
-    pt.source_id,
+    pt.cabd_id as dam_id,
     str.linear_feature_id,
     str.wscode_ltree,
     str.localcode_ltree,
@@ -86,7 +50,7 @@ nearest AS
       * str.length_metre
   ) + str.downstream_route_measure AS downstream_route_measure,
   st_linemerge(str.geom) as geom_str
-  FROM src_pts pt
+  FROM cabd.dams pt
   CROSS JOIN LATERAL
   (SELECT
      linear_feature_id,
@@ -108,13 +72,6 @@ nearest AS
 
 SELECT
     dam_id,
-    dam_name,
-    waterbody_name,
-    owner,
-    hydro_dam_ind,
-    barrier_ind,
-    source_dataset,
-    source_id,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -143,6 +100,3 @@ CREATE INDEX ON bcfishpass.dams USING BTREE (wscode_ltree);
 CREATE INDEX ON bcfishpass.dams USING GIST (localcode_ltree);
 CREATE INDEX ON bcfishpass.dams USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.dams USING GIST (geom);
-
--- drop the load table
-DROP TABLE bcfishpass.cwf_bcdams;
