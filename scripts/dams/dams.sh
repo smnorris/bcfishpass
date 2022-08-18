@@ -21,13 +21,6 @@ ogr2ogr -f PostgreSQL \
   "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc" \
   OGRGeoJSON
 
-# load dam code tables
-$PSQL_CMD -c "drop table if exists cabd.dam_use_codes"
-$PSQL_CMD -c "create table cabd.dam_use_codes (code smallint, name character varying(32), description text)"
-curl "https://cabd-web.azurewebsites.net/cabd-api/features/types/dams?properties" |
-    jq -r '.attributes[] | select( ."id" | contains("use_code")) | .values[] | [.value, .name, .description] | @csv' | $PSQL_CMD -c "\copy cabd.dam_use_codes FROM STDIN delimiter ',' csv"
-
-
 # create bcfishpass.dams - matching the dams to streams
 $PSQL_CMD -f sql/dams.sql
 
