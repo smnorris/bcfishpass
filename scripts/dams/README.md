@@ -1,27 +1,22 @@
 # Dams
 
-BC dam locations and barrier status have been compiled by the Canadian Wildlife Federation from several sources.
-See https://github.com/smnorris/bcdams for more information and edit this data if barrier status fixes are required.
+BC dam locations and barrier status have been compiled from many sources by the Canadian Wildlife Federation into the [Canadian Aquatic Barrier Database (CABD)](https://cabd-docs.netlify.app/index.html). Dam features for bcfishpass are taken directly from the CABD.
+
 
 ## Usage
 
-Download the BC dam dataset compiled by CWF and match the points to the nearest FWA stream (within 50m):
+Download CABD dams and match the points to the nearest FWA stream (within 50m):
 
     ./dams.sh
 
 ## Output table
 
-                             Table "bcfishpass.dams"
+Note that the dam id is the only CABD attribute retained in this table. For more information about dams, join back to `cabd.dams` or refer directly to the CABD.
+
+                                 Table "bcfishpass.dams"
               Column          |         Type         | Collation | Nullable | Default
     --------------------------+----------------------+-----------+----------+---------
-     dam_id                   | integer              |           | not null |
-     dam_name                 | text                 |           |          |
-     waterbody_name           | text                 |           |          |
-     owner                    | text                 |           |          |
-     hydro_dam_ind            | text                 |           |          |
-     barrier_ind              | text                 |           |          |
-     source_dataset           | text                 |           |          |
-     source_id                | integer              |           |          |
+     dam_id                   | character varying    |           | not null |
      linear_feature_id        | bigint               |           |          |
      blue_line_key            | integer              |           |          |
      downstream_route_measure | double precision     |           |          |
