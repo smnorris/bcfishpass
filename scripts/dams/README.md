@@ -9,9 +9,15 @@ Download CABD dams and match the points to the nearest FWA stream (within 50m):
 
     ./dams.sh
 
-## Output table
+## Output tables
 
-Note that the dam id is the only CABD attribute retained in this table. For more information about dams, join back to `cabd.dams` or refer directly to the CABD.
+CABD tables are as documented:
+
+- [`cabd.dams`](https://cabd-docs.netlify.app/docs_tech/docs_tech_arch/docs_tech_arch_data_dict.html#dams.dams)
+
+- [`cabd.dam_use_codes`](https://cabd-docs.netlify.app/docs_tech/docs_tech_arch/docs_tech_arch_data_dict.html#dams.dam_use_codes)
+
+`bcfishpass.dams` holds only the FWA/linear referencing information associated with a dam, plus the geometry of the feature snapped to the nearest FWA stream (for more information about dams, join this table back to `cabd.dams` or refer directly to the CABD)
 
                                  Table "bcfishpass.dams"
               Column          |         Type         | Collation | Nullable | Default
