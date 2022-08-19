@@ -13,7 +13,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    falls_id as barriers_load_id,
+    falls_id::text as barriers_load_id,
     'FALLS' as barrier_type,
     falls_name as barrier_name,
     f.linear_feature_id,

@@ -41,20 +41,20 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   mad_m3s double precision,
 
   -- anthropogenic features downstream
-  barriers_anthropogenic_dnstr bigint[],
-  barriers_pscis_dnstr bigint[],
-  barriers_remediated_dnstr bigint[],
+  barriers_anthropogenic_dnstr text[],
+  barriers_pscis_dnstr text[],
+  barriers_remediated_dnstr text[],
 
   -- definite barriers downstream (per spp scenario)
-  barriers_ch_co_sk_dnstr bigint[],
-  barriers_ch_co_sk_b_dnstr bigint[],
-  barriers_st_dnstr bigint[],
-  barriers_pk_dnstr bigint[],
-  barriers_cm_dnstr bigint[],
-  barriers_bt_dnstr bigint[],
-  barriers_wct_dnstr bigint[],
-  barriers_gr_dnstr bigint[],
-  barriers_rb_dnstr bigint[],
+  barriers_ch_co_sk_dnstr text[],
+  barriers_ch_co_sk_b_dnstr text[],
+  barriers_st_dnstr text[],
+  barriers_pk_dnstr text[],
+  barriers_cm_dnstr text[],
+  barriers_bt_dnstr text[],
+  barriers_wct_dnstr text[],
+  barriers_gr_dnstr text[],
+  barriers_rb_dnstr text[],
 
   -- observations upstream
   obsrvtn_pnt_distinct_upstr integer[],

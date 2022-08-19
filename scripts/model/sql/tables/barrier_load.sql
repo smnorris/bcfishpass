@@ -5,7 +5,7 @@
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.barrier_load
 (
-    barrier_load_id bigint unique,
+    barrier_load_id text unique,
     barrier_type text,
     barrier_name text,
     linear_feature_id integer,

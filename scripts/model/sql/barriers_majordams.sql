@@ -13,7 +13,7 @@ INSERT INTO bcfishpass.barrier_load
     geom
 )
 SELECT
-    dam_id as barrier_load_id,
+    dam_id::text as barrier_load_id,
     'MAJOR_DAM' as barrier_type,
     d.dam_name as barrier_name,
     d.linear_feature_id,
@@ -24,11 +24,11 @@ SELECT
     d.localcode_ltree,
     d.watershed_group_code,
     ST_Force2D((ST_Dump(d.geom)).geom)
-FROM bcfishpass.dams d
+FROM bcfishpass.crossings d
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON d.linear_feature_id = s.linear_feature_id
 WHERE
-  d.barrier_ind = 'Y' AND
-  d.hydro_dam_ind = 'Y' AND
+  d.barrier_status in ('BARRIER', 'POTENTIAL') and
+  d.dam_use = 'Hydroelectricity' AND
   d.watershed_group_code = :'wsg'
 ON CONFLICT DO NOTHING;

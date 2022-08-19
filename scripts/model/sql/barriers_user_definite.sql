@@ -14,7 +14,7 @@ INSERT INTO bcfishpass.barrier_load
 )
 
 SELECT
-    (((a.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(a.downstream_route_measure::bigint) as barrier_load_id,
+    ((((a.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(a.downstream_route_measure::bigint))::text as barrier_load_id,
     a.barrier_type,
     a.barrier_name,
     s.linear_feature_id,

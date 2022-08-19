@@ -162,7 +162,7 @@ def add_downstream_ids(
     db.execute(f"DROP TABLE IF EXISTS {schema_a}.{temp_table}")
     db.execute(f"CREATE TABLE {schema_a}.{temp_table} (LIKE {schema_a}.{table_a})")
     db.execute(
-        f"ALTER TABLE {schema_a}.{temp_table} ADD COLUMN {downstream_ids_col} bigint[]"
+        f"ALTER TABLE {schema_a}.{temp_table} ADD COLUMN {downstream_ids_col} text[]"
     )
     groups = sorted(
         [
@@ -225,7 +225,7 @@ def add_upstream_ids(table_a, id_a, table_b, id_b, upstream_ids_col):
     db.execute(f"DROP TABLE IF EXISTS {schema_a}.{temp_table}")
     db.execute(f"CREATE TABLE {schema_a}.{temp_table} (LIKE {schema_a}.{table_a})")
     db.execute(
-        f"ALTER TABLE {schema_a}.{temp_table} ADD COLUMN {upstream_ids_col} bigint[]"
+        f"ALTER TABLE {schema_a}.{temp_table} ADD COLUMN {upstream_ids_col} text[]"
     )
     groups = sorted(
         [

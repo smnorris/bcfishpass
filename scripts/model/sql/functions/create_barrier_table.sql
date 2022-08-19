@@ -9,7 +9,7 @@ BEGIN
     EXECUTE format('
         CREATE TABLE IF NOT EXISTS bcfishpass.%I
         (
-            %I bigint primary key,
+            %I text primary key,
             barrier_type text,
             barrier_name text,
             linear_feature_id integer,

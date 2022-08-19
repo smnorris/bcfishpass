@@ -8,7 +8,7 @@ BEGIN
 
   -- ensure target table has column required
   EXECUTE format('ALTER TABLE bcfishpass.%I
-    ADD COLUMN IF NOT EXISTS %I bigint[];',
+    ADD COLUMN IF NOT EXISTS %I text[];',
     target_table,
     'barriers_' || barriertype || '_dnstr'
   );
