@@ -16,7 +16,7 @@ WITH summary AS
     WHERE 
       a.watershed_group_code = :'wsg' AND 
       b.barrier_status IN ('BARRIER','POTENTIAL') AND 
-      b.aggregated_crossings_id != 1100002536 AND 
+      b.aggregated_crossings_id != '11e03b9a-0a3f-4022-b534-7e3de9eece2e' AND
       a.all_spawningrearing_belowupstrbarriers_km != 0 AND 
       a.blue_line_key = a.watershed_key
     GROUP BY a.aggregated_crossings_id
