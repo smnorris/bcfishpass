@@ -18,7 +18,7 @@ ogr2ogr -f PostgreSQL \
   -t_srs EPSG:3005 \
   -lco GEOMETRY_NAME=geom \
   -nln cabd.dams \
-  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc" \
+  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
 
 $PSQL_CMD -c "alter table cabd.dams alter column cabd_id type uuid using cabd_id::uuid"

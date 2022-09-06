@@ -67,7 +67,7 @@ WITH nearest AS
     AND NOT str.wscode_ltree <@ '999'
     ORDER BY str.geom <-> pt.geom
     LIMIT 1) as str
-    WHERE ST_Distance(str.geom, pt.geom) <= 50
+    WHERE ST_Distance(str.geom, pt.geom) <= 65
 )
 
 SELECT
