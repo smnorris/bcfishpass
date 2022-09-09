@@ -1,4 +1,6 @@
--- create pscis events table, linking pscis points to streams
+
+-- Create bcfishpass PSCIS table, linking PSCIS points to streams
+
 DROP TABLE IF EXISTS bcfishpass.pscis;
 
 CREATE TABLE bcfishpass.pscis
@@ -10,7 +12,7 @@ CREATE TABLE bcfishpass.pscis
  current_crossing_subtype_code    character varying(10) ,
  current_barrier_result_code text              ,
  distance_to_stream       double precision     ,
- stream_match_score       integer              ,
+ suspect_match            character varying(17)              ,
  linear_feature_id        bigint               ,
  wscode_ltree             ltree                ,
  localcode_ltree          ltree                ,
@@ -18,13 +20,14 @@ CREATE TABLE bcfishpass.pscis
  downstream_route_measure double precision     ,
  watershed_group_code     character varying(4) ,
  geom                     geometry(Point, 3005),
--- add a unique constraint so that we don't have equivalent barriers messing up subsequent joins
-UNIQUE (blue_line_key, downstream_route_measure)
+UNIQUE (blue_line_key, downstream_route_measure) -- do not allow duplicates in the same location
 );
 
--- First, insert PSCIS points that have been manually matched to streams/modelled crossings
+-- -----------
+-- First, insert PSCIS points that have been manually matched to streams/modelled crossings in xref table
+-- ------------
 
--- modelled xings first
+-- get PSCIS crossings manually matched to modelled crossings, finding measure of PSCIS point on stream
 WITH referenced_modelled_xing AS
 (
 SELECT
@@ -41,7 +44,6 @@ SELECT
   (ST_LineLocatePoint(s.geom, ST_ClosestPoint(s.geom, p.geom)) * s.length_metre) + s.downstream_route_measure
   )))) as downstream_route_measure,
   m.watershed_group_code,
-  999 as stream_match_score,
   CASE
     WHEN hc.stream_crossing_id IS NOT NULL AND p.current_pscis_status NOT IN ('REMEDIATED', 'DESIGN')
     THEN 'HABITAT CONFIRMATION'
@@ -62,7 +64,7 @@ ON lut.stream_crossing_id = hc.stream_crossing_id
 WHERE lut.modelled_crossing_id IS NOT NULL  -- this is implicit with the inner join on modelled_crossing_id, make it explicit here
 ),
 
--- then the PSCIS points linked to streams
+-- Get PSCIS points linked to streams, finding measure of PSCIS point
 referenced_streams AS
 (
   SELECT
@@ -79,7 +81,6 @@ referenced_streams AS
     (ST_LineLocatePoint(s.geom, ST_ClosestPoint(s.geom, p.geom)) * s.length_metre) + s.downstream_route_measure
     )))) as downstream_route_measure,
     s.watershed_group_code,
-    999 as stream_match_score,
     CASE
       WHEN hc.stream_crossing_id IS NOT NULL AND p.current_pscis_status NOT IN ('REMEDIATED', 'DESIGN')
       THEN 'HABITAT CONFIRMATION'
@@ -98,6 +99,7 @@ referenced_streams AS
   WHERE lut.linear_feature_id IS NOT NULL  -- this is implicit with the inner join on linear_feature_id, make it explicit here
 ),
 
+-- combine the two sets above, generate geom from the PSCIS point measure
 referenced_combined AS
 (SELECT
   r.*,
@@ -122,7 +124,6 @@ INSERT INTO bcfishpass.pscis
  current_crossing_subtype_code,
  current_barrier_result_code,
  distance_to_stream,
- stream_match_score,
  linear_feature_id,
  wscode_ltree,
  localcode_ltree,
@@ -138,7 +139,6 @@ SELECT
  current_crossing_subtype_code,
  current_barrier_result_code,
  distance_to_stream,
- stream_match_score,
  linear_feature_id,
  wscode_ltree,
  localcode_ltree,
@@ -154,34 +154,80 @@ ORDER BY linear_feature_id, downstream_route_measure, distance_to_stream asc
 ON CONFLICT DO NOTHING;
 
 
--- Now insert data from the prelim tables
+
+-- Now insert PSCIS crossings matched to nearest stream(s).
+
+-- extract records from source matching table,
+--  - exclude bad matches entirely
+--  - weight records with a modelled crossing nearby as 10% closer
+--    (prioritize matching to the stream that has a known road)
+with weighted_matches as
+(
+  select
+    stream_crossing_id,
+    blue_line_key,
+    linear_feature_id,
+    downstream_route_measure,
+    watershed_group_code,
+    modelled_crossing_id,
+    distance_to_stream,
+    name_score,
+    stream_order,
+    downstream_channel_width,
+    width_order_score,
+    crossing_type_code,
+    modelled_crossing_type,
+    case 
+      when modelled_xing_dist_instream is not null
+      then distance_to_stream - (distance_to_stream * .1)
+      else distance_to_stream
+    end as weighted_distance
+  from bcfishpass.pscis_streams_150m
+ --filter out records that are obvious bad matches
+  where width_order_score >= -25 or name_score >= 0
+),
+
+distinct_matches as
+(
+  select distinct on (stream_crossing_id)
+    stream_crossing_id,
+    modelled_crossing_id,
+    blue_line_key,
+    linear_feature_id,
+    downstream_route_measure,
+    watershed_group_code,
+    distance_to_stream,
+    case when distance_to_stream > 50 then 'DISTANCE'
+         when width_order_score < 0 then 'WIDTH ORDER RATIO'
+    end as suspect_match
+  from weighted_matches
+  -- find best matches by ordering on name match, width/order ratio, and weighted distance
+  order by stream_crossing_id, name_score desc, weighted_distance
+),
+
 
 -- Note that many PSCIS duplicates exist, we have to weed these out if they
 -- are especially bad - within 5m of each other.
-
--- In case of duplication retain crossing id with most recent assessment
-
--- Note that these are duplicates for fixing.
+-- In case of duplication retain crossing id with most recent assessment (and note duplicates for fixing)
 -- Ideally the oldest crossing id should be retained here (and used for any mapping
 -- before fixes happen to keep things consistent) - however mixing the id
 -- with different status info would probably create too much confusion for this to be worth it
 
--- find PSCIS points not already loaded to event table and derive geoms (on the stream)
-WITH pts AS
+-- Find PSCIS points not already loaded to event table and derive geoms (on the stream)
+pts as
 (
   SELECT
     stream_crossing_id,
     watershed_group_code,
     -- TODO - postgisftw schema qualified function should not be required (fwapg issue #73)
     postgisftw.FWA_LocateAlong(a.blue_line_key, a.downstream_route_measure) as geom
-  FROM bcfishpass.pscis_events_prelim2 a
+  FROM distinct_matches a
   WHERE stream_crossing_id NOT IN
   -- DO NOT LOAD CROSSINGS IN THE LOOKUP, they are handled above, or not loaded at all
   (
     SELECT stream_crossing_id FROM bcfishpass.pscis_modelledcrossings_streams_xref
   )
-  -- DO NOT LOAD CROSSINGS WITH MATCH SCORE < -25 (THIS MAY STILL BE TOO GENEROUS)
- AND match_score >= -25
+  
 ),
 
 -- cluster the derived geoms so we can remove duplicates within the clustering distance (5m)
@@ -204,7 +250,7 @@ de_duped AS
     ass.assessment_date,
     c.watershed_group_code
   FROM clusters c
-  INNER JOIN bcfishpass.pscis_events_prelim2 p
+  INNER JOIN distinct_matches p
   ON c.stream_crossing_id = p.stream_crossing_id
   LEFT OUTER JOIN whse_fish.pscis_assessment_svw ass
   ON c.stream_crossing_id = ass.stream_crossing_id
@@ -222,7 +268,7 @@ INSERT INTO bcfishpass.pscis
  blue_line_key,
  downstream_route_measure,
  watershed_group_code,
- stream_match_score,
+ suspect_match,
  pscis_status,
  current_crossing_type_code,
  current_crossing_subtype_code,
@@ -234,12 +280,12 @@ SELECT
   p.modelled_crossing_id,
   p.distance_to_stream,
   p.linear_feature_id,
-  p.wscode_ltree,
-  p.localcode_ltree,
-  p.blue_line_key,
+  s.wscode_ltree,
+  s.localcode_ltree,
+  s.blue_line_key,
   p.downstream_route_measure,
   p.watershed_group_code,
-  p.match_score as stream_match_score,
+  p.suspect_match,
   CASE
     WHEN hc.stream_crossing_id IS NOT NULL AND pa.current_pscis_status NOT IN ('REMEDIATED', 'DESIGN')
     THEN 'HABITAT CONFIRMATION'
@@ -251,10 +297,12 @@ SELECT
   -- TODO - postgisftw schema qualified function should not be required (fwapg issue #73)
   ST_Force2D(postgisftw.FWA_LocateAlong(p.blue_line_key, p.downstream_route_measure)) as geom
 FROM de_duped d
-INNER JOIN bcfishpass.pscis_events_prelim2 p
+INNER JOIN distinct_matches p
 ON d.stream_crossing_id = p.stream_crossing_id
 INNER JOIN bcfishpass.pscis_points_all pa
 ON p.stream_crossing_id = pa.stream_crossing_id
+INNER JOIN whse_basemapping.fwa_stream_networks_sp s
+ON p.linear_feature_id = s.linear_feature_id
 LEFT OUTER JOIN whse_fish.pscis_habitat_confirmation_svw hc
 ON p.stream_crossing_id = hc.stream_crossing_id
 ORDER BY p.stream_crossing_id

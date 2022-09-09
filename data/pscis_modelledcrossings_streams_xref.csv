@@ -3535,3 +3535,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 196207,19700212,,TABR,SN,Hudson Bay Slough outlet control
 198043,,17029533,BULK,SN,Crossing is at power lines not railway
 8559,,,SANJ,SN,Trib to Renfrew Creek
+24742744,,SMAR,SN,Side channel to Doctor Creek makes automated matching via name incorrect
