@@ -59,29 +59,27 @@ Note that PSCIS crossings not on mapped streams cannot be included in habitat re
 
     Combine the four `WHSE_FISH.PSCIS` sources (assessments, confirmations, designs, remediations) into temp table holding all unique PSCIS crossings `bcfishpass.pscis_points_all`.
 
-2. `sql/02_pscis_events_prelim1.sql`
+2. `sql/02_pscis_streams_150m.sql`
 
-    Join unique crossings in `bcfishpass.pscis_points_all` to all FWA stream(s) within 200m, saving to temp table `bcfishpass.pscis_events_prelim1.sql`.
+    Join unique crossings in `bcfishpass.pscis_points_all` to all FWA stream(s) within 150m.
 
-3. `sql/03_pscis_events_prelim2.sql`
+    Attempt to ensure PSCIS crossings are matched to the correct stream (or at least that obvious bad matches are discarded) by these and other criteria:
 
-    Attempt to assign PSCIS crossings in `bcfishpass.pscis_events_prelim1` to the *correct* stream within 150m by scoring matched streams using a combination of:
+    - ensuring that PSCIS records with given stream name are assigned to FWA stream with matching name
+    - do NOT match PSCIS records with 'trib to' or similar in the stream name to FWA stream with matching name (minus 'trib')
+    - do not match PSCIS records with low/high`downstream_channel_width` values to FWA streams with a `stream_order` that obviously does not correspond to the given 
+    
 
-    - distance of PSCIS crossing to stream
-    - similarity of the PSCIS crossing's `stream_name` to the stream's `gnis_name`
-    - the relationship of the PSCIS crossing's `downstream_channel_width` to the stream's`stream_order` (if a very wide channel (measured) is matched to a low order stream, the match is likely incorrect)
-
-    If the PSCIS crossing is within 175m of a modelled crossing that is on the same stream (stream with the best score), the PSCIS crossing is also matched to that modelled crossing. Output is written to temp table `bcfishpass.pscis_events_prelim2`
-
-4. `sql/04_pscis.sql`
+3. `sql/04_pscis.sql`
 
     Create the output table `bcfishpass.pscis`:
 
     - first, insert PSCIS crossings that have been manually matched to streams/modelled crossings in `pscis_modelledcrossings_streams_xref.csv`
-    - next, insert PSCIS crossings from `pscis_events_prelim2`, filtering out duplicates and matches that score very poorly
+    - next, insert PSCIS crossings from `pscis_streams_150m`, filtering out duplicates, generally matching based on distance to stream
     - create a table holding PSCIS crossings that do not make it into the output `pscis` table: `pscis_not_matched_to_streams`
+    - include column `suspect_match`, flagging records that have a higher chance of being matched to the incorrect stream
 
-5. `sql/05_pscis_points_duplicates.sql`
+4. `sql/05_pscis_points_duplicates.sql`
 
     For QA of PSCIS data, create a table of duplicate records (crossing source coordinates <10m apart or instream distance <5m apart)
 
@@ -100,7 +98,7 @@ PSCIS crossings matched to streams:
      current_crossing_subtype_code | character varying(10) |           |          |
      current_barrier_result_code   | text                  |           |          |
      distance_to_stream            | double precision      |           |          |
-     stream_match_score            | integer               |           |          |
+     suspect_match                 | character varying(17) |           |          |
      linear_feature_id             | bigint                |           |          |
      wscode_ltree                  | ltree                 |           |          |
      localcode_ltree               | ltree                 |           |          |
@@ -119,7 +117,6 @@ PSCIS crossings matched to streams:
         "pscis_modelled_crossing_id_idx" btree (modelled_crossing_id)
         "pscis_wscode_ltree_idx" gist (wscode_ltree)
         "pscis_wscode_ltree_idx1" btree (wscode_ltree)
-
 
 All PSCIS crossings in a single table:
 
