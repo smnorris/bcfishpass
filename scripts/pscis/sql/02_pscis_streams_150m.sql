@@ -108,33 +108,36 @@ SELECT
   a.downstream_channel_width,
   
   -- compare FWA stream order and measured channel width
-  -- We only want to flag the obvious problems - these width/order relationships are not based on any comprehensive review
+  -- We only want to find the obvious problems - these width/order relationships are not based on any comprehensive review
+  -- also, only apply this to points that are not within 25m of a stream - bad ratios may also come from bad data, so if the location
+  -- is very tight to a stream, presume that the downstream_channel_width is incorrect (units may have been wrong),
+  -- or just simply out of normal expectations
   CASE
     -- speculate that order 1 should probably be <5m, most likely under 10
-    WHEN stream_order = 1 AND downstream_channel_width !=0 AND downstream_channel_width >= 5 AND downstream_channel_width < 10 THEN -25
-    WHEN stream_order = 1 AND downstream_channel_width !=0 AND downstream_channel_width >= 10 THEN -100
+    WHEN distance_to_stream > 25 and stream_order = 1 AND downstream_channel_width !=0 AND downstream_channel_width >= 5 AND downstream_channel_width < 10 THEN -25
+    WHEN distance_to_stream > 25 and stream_order = 1 AND downstream_channel_width !=0 AND downstream_channel_width >= 10 THEN -100
 
     -- order 2 probably under 7, likely under 15m
-    WHEN stream_order = 2 AND downstream_channel_width !=0 AND downstream_channel_width > 7 AND downstream_channel_width < 15 THEN -25
-    WHEN stream_order = 2 AND downstream_channel_width !=0 AND downstream_channel_width >= 15 THEN -100
+    WHEN distance_to_stream > 25 and stream_order = 2 AND downstream_channel_width !=0 AND downstream_channel_width > 7 AND downstream_channel_width < 15 THEN -25
+    WHEN distance_to_stream > 25 and stream_order = 2 AND downstream_channel_width !=0 AND downstream_channel_width >= 15 THEN -100
 
     -- order 3 probably less than 20, but hard to guess minimum, it could still be very dry
-    WHEN stream_order = 3 AND downstream_channel_width !=0 AND downstream_channel_width >= 20 THEN -25
+    WHEN distance_to_stream > 25 and stream_order = 3 AND downstream_channel_width !=0 AND downstream_channel_width >= 20 THEN -25
 
     -- order 4 should be more than 1m, probably more than 2
-    WHEN stream_order = 4 AND downstream_channel_width !=0 AND downstream_channel_width < 1 THEN -100
+    WHEN distance_to_stream > 25 and stream_order = 4 AND downstream_channel_width !=0 AND downstream_channel_width < 1 THEN -100
     WHEN stream_order = 4 AND downstream_channel_width !=0 AND downstream_channel_width >= 1 AND downstream_channel_width < 2 THEN -25
 
     -- order 5 def more than 2, probably more than 5
-    WHEN stream_order = 5 AND downstream_channel_width !=0 AND downstream_channel_width < 2 THEN -100
-    WHEN stream_order = 5 AND downstream_channel_width !=0 AND downstream_channel_width >= 2 AND downstream_channel_width < 5 THEN -25
+    WHEN distance_to_stream > 25 and stream_order = 5 AND downstream_channel_width !=0 AND downstream_channel_width < 2 THEN -100
+    WHEN distance_to_stream > 25 and stream_order = 5 AND downstream_channel_width !=0 AND downstream_channel_width >= 2 AND downstream_channel_width < 5 THEN -25
 
     -- everything else should be fairly big
-    WHEN stream_order >= 6 AND downstream_channel_width !=0 AND downstream_channel_width < 2 THEN -100
-    WHEN stream_order >= 6 AND downstream_channel_width !=0 AND downstream_channel_width < 10 THEN -25
+    WHEN distance_to_stream > 25 and stream_order >= 6 AND downstream_channel_width !=0 AND downstream_channel_width < 2 THEN -100
+    WHEN distance_to_stream > 25 and stream_order >= 6 AND downstream_channel_width !=0 AND downstream_channel_width < 10 THEN -25
 
     -- also, we know what streams are polygonal. If channel width is <4m on a polygonal river feature, something is definitely wrong
-    WHEN r.waterbody_key IS NOT NULL AND downstream_channel_width !=0 AND downstream_channel_width < 4 THEN -100
+    WHEN distance_to_stream > 25 and r.waterbody_key IS NOT NULL AND downstream_channel_width !=0 AND downstream_channel_width < 4 THEN -100
 
   ELSE 0
   END as width_order_score,
@@ -142,7 +145,8 @@ SELECT
   a.crossing_type_code,
   m.modelled_crossing_type,
   COALESCE(ST_Distance(p.geom, m.geom), 0) as modelled_xing_dist, -- set distance to zero if no modelled xing present
-  round(ABS(e.downstream_route_measure - m.downstream_route_measure)::numeric, 1) as modelled_xing_dist_instream
+  round(ABS(e.downstream_route_measure - m.downstream_route_measure)::numeric, 1) as modelled_xing_dist_instream,
+  null::boolean as multiple_match_ind
 
 FROM matched_distinct e
 INNER JOIN bcfishpass.pscis_points_all p 
@@ -158,11 +162,13 @@ LEFT OUTER JOIN whse_basemapping.fwa_rivers_poly r ON str.waterbody_key = r.wate
 CREATE INDEX ON bcfishpass.pscis_streams_150m (stream_crossing_id);
 CREATE INDEX ON bcfishpass.pscis_streams_150m (modelled_crossing_id);
 
+
 -- Above query matches modelled crossings to PSCIS crossings within 100m instream distance on the same stream.
 -- A single modelled crossing can thus be matched to more than one PSCIS crossing.
 -- Correct for this here by ensuring a given modelled crossing is matched only to the nearest PSCIS 
 -- crossing (within 100m instream)
--- Find records that are matched to the same modelled crossing
+-- Also - flag PSCIS records that get matched to a modelled crossing already associated with a (closer) PSCIS crossing,
+-- these are likely on unmapped streams
 with dups as 
 (
   SELECT modelled_crossing_id, count(*) as n
@@ -201,17 +207,25 @@ UPDATE bcfishpass.pscis_streams_150m e
 SET
   modelled_crossing_id = NULL,
   modelled_xing_dist_instream = NULL,
-  modelled_crossing_type = NULL
+  modelled_crossing_type = NULL,
+  multiple_match_ind = True
 WHERE stream_crossing_id IN (SELECT stream_crossing_id FROM to_update);
+
+-- only use multiple match indicator where point is fairly far away (50m) from matched stream
+UPDATE bcfishpass.pscis_streams_150m e
+SET
+  multiple_match_ind = null
+WHERE multiple_match_ind is true and distance_to_stream < 50;
+
 
 
 -- A single PSCIS crossing can also be matched to more than one modelled crossing.
 -- While this may often be spots where there should only be one crossing and one modelled crossing should be removed,
--- force PSCIS crossings to only match to a single modelled crossing on given stream.
+-- force PSCIS crossings to only match to a single modelled crossing **on given stream**.
 
 with nearest as
 (
-  select distinct on (stream_crossing_id)
+  select distinct on (stream_crossing_id, blue_line_key)
     id,
     stream_crossing_id,
     blue_line_key,
@@ -220,7 +234,7 @@ with nearest as
     distance_to_stream
   from bcfishpass.pscis_streams_150m
   where modelled_crossing_id is not null
-  order by stream_crossing_id, distance_to_stream
+  order by stream_crossing_id, blue_line_key, distance_to_stream
 )
 
 update bcfishpass.pscis_streams_150m a
@@ -230,5 +244,5 @@ set
  modelled_crossing_type = NULL
 from
 nearest n  
-where a.stream_crossing_id = n.stream_crossing_id
+where a.stream_crossing_id = n.stream_crossing_id and a.blue_line_key = n.blue_line_key
 and a.id != n.id;

@@ -184,7 +184,10 @@ with weighted_matches as
     end as weighted_distance
   from bcfishpass.pscis_streams_150m
  --filter out records that are obvious bad matches
-  where width_order_score >= -25 or name_score >= 0
+  where 
+    name_score != -100 and
+    width_order_score != -100 and 
+    multiple_match_ind is null
 ),
 
 distinct_matches as
