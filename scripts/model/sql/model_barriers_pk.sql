@@ -4,20 +4,6 @@ where watershed_group_code = :'wsg';
 with barriers as
 (
   select
-      barriers_majordams_id as barrier_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_majordams
-  where watershed_group_code = :'wsg'
-  union all
-  select
       barriers_gradient_15_id as barrier_id,
       barrier_type,
       barrier_name,

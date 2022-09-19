@@ -13,21 +13,6 @@ with all_barriers as
     localcode_ltree,
     watershed_group_code,
     geom
-  from bcfishpass.barriers_majordams
-  where watershed_group_code = :'wsg'
-
-  union all
-
-  select
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
   from bcfishpass.barriers_gradient_20
   where watershed_group_code = :'wsg'
 

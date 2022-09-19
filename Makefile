@@ -205,7 +205,6 @@ scripts/discharge/.discharge: .db
 	.user_modelled_crossing_fixes \
 	.user_pscis_barrier_status \
 	.pscis_load \
-	.barriersource_majordams
 	$(PSQL_CMD) -f $<
 	touch $@
 
@@ -256,8 +255,6 @@ scripts/discharge/.discharge: .db
 # -----
 
 # define the prereqs for each type of barrier table that is being generated
-.barriersource_majordams: .dams
-	touch $@
 .barriersource_falls: .falls
 	touch $@
 .barriersource_gradient_05: scripts/gradient_barriers/.gradient_barriers .user_barriers_definite_control

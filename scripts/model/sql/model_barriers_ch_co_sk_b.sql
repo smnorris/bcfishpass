@@ -13,23 +13,6 @@ with obs as
 barriers AS
 (
 
--- major dams do not get removed by observations
--- (they are confirmed barriers to anadramous passage and out of scope for removal)
-SELECT
-    b.barrier_type,
-    b.barrier_name,
-    b.linear_feature_id,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.wscode_ltree,
-    b.localcode_ltree,
-    b.watershed_group_code,
-    b.geom
-FROM bcfishpass.barriers_majordams b
-WHERE b.watershed_group_code = :'wsg'
-
-UNION ALL
-
 SELECT DISTINCT
     b.barrier_type,
     b.barrier_name,
