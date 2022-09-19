@@ -4,13 +4,13 @@ INSERT INTO bcfishpass.observations_upstr
 (
   segmented_stream_id,
   watershed_group_code,
-  obsrvtn_pnt_distinct_upstr,
+  obsrvtn_event_upstr,
   obsrvtn_species_codes_upstr
 )
 SELECT
     segmented_stream_id,
     watershed_group_code,
-    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_pnt_distinct_upstr,
+    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_event_upstr,
     array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as obsrvtn_species_codes_upstr
   FROM (
     SELECT DISTINCT
@@ -19,7 +19,7 @@ SELECT
       b.wscode_ltree,
       b.localcode_ltree,
       b.downstream_route_measure as meas_b,
-      b.fish_obsrvtn_pnt_distinct_id as upstr_id,
+      b.fish_obsrvtn_event_id as upstr_id,
       unnest(species_codes) as species_code
     FROM
       bcfishpass.segmented_streams a

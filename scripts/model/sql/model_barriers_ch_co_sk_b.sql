@@ -58,7 +58,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 
 UNION ALL
 
@@ -88,7 +88,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 
 UNION ALL
 
@@ -118,7 +118,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 
 UNION ALL
 
@@ -148,7 +148,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 
 UNION ALL
 
@@ -178,7 +178,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 
 UNION ALL
 
@@ -208,7 +208,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 
 UNION ALL
 
@@ -238,7 +238,7 @@ ON FWA_Upstream(
     )
 WHERE
   b.watershed_group_code = :'wsg' AND
-  o.fish_obsrvtn_pnt_distinct_id IS NULL
+  o.fish_obsrvtn_event_id IS NULL
 )
 
 INSERT INTO bcfishpass.barriers_ch_co_sk_b

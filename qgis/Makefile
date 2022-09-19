@@ -125,6 +125,10 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	   pmbc_parcel_fabric_poly_svw
 	touch $@
 
+# create a non-overlapping range tenure layer
+.make/WHSE_FOREST_TENURE.FTEN_RANGE_POLY_CARTO_VW: .make/WHSE_FOREST_TENURE.FTEN_RANGE_POLY_SVW
+	$(PSQL_CMD) -f sql/ften_range_poly_carto_vw.sql
+	touch $@
 clean:
 	rm -f $(GENERATED_FILES)
 	# drop all target tables

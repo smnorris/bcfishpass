@@ -3,7 +3,7 @@ WITH obsrvtn_upstr AS
   SELECT
     segmented_stream_id,
     watershed_group_code,
-    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_pnt_distinct_upstr,
+    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_event_upstr,
     array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as obsrvtn_species_codes_upstr
   FROM (
     SELECT DISTINCT
@@ -12,7 +12,7 @@ WITH obsrvtn_upstr AS
       b.wscode_ltree,
       b.localcode_ltree,
       b.downstream_route_measure as meas_b,
-      b.fish_obsrvtn_pnt_distinct_id as upstr_id,
+      b.fish_obsrvtn_event_id as upstr_id,
       unnest(species_codes) as species_code
     FROM
       bcfishpass.streams a
@@ -37,7 +37,7 @@ WITH obsrvtn_upstr AS
 
 UPDATE bcfishpass.streams s
 SET 
-  obsrvtn_pnt_distinct_upstr = ou.obsrvtn_pnt_distinct_upstr,
+  obsrvtn_event_upstr = ou.obsrvtn_event_upstr,
   obsrvtn_species_codes_upstr = ou.obsrvtn_species_codes_upstr
 FROM obsrvtn_upstr ou
 WHERE s.segmented_stream_id = ou.segmented_stream_id;

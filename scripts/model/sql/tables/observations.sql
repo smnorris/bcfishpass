@@ -5,7 +5,7 @@
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.observations_load
 (
-  fish_obsrvtn_pnt_distinct_id integer primary key,
+  fish_obsrvtn_event_id bigint primary key,
   linear_feature_id         bigint                           ,
   blue_line_key             integer                          ,
   wscode_ltree ltree                                         ,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS bcfishpass.observations_load
 -- --------------
 CREATE TABLE IF NOT EXISTS bcfishpass.observations
 (
-  fish_obsrvtn_pnt_distinct_id integer primary key,
+  fish_obsrvtn_event_id bigint primary key,
   linear_feature_id         bigint                           ,
   blue_line_key             integer                          ,
   wscode_ltree ltree                                         ,

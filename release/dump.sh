@@ -468,7 +468,7 @@ ogr2ogr \
     PG:$DATABASE_URL \
     -nln observations \
     -sql "select
-         fish_obsrvtn_pnt_distinct_id,
+         fish_obsrvtn_event_id,
          linear_feature_id,
          blue_line_key,
          wscode_ltree,

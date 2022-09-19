@@ -4,7 +4,7 @@ DELETE FROM bcfishpass.observations_load;
 -- insert records for watersheds of interest / spp of interest
 INSERT INTO bcfishpass.observations_load
 (
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_event_id,
   linear_feature_id,
   blue_line_key,
   wscode_ltree,
@@ -46,7 +46,7 @@ FROM (
 unnested_obs AS
 (
   SELECT
-    e.fish_obsrvtn_pnt_distinct_id,
+    e.fish_obsrvtn_event_id,
     e.linear_feature_id,
     e.blue_line_key,
     e.wscode_ltree,
@@ -73,7 +73,7 @@ unnested_obs AS
 by_wsg AS
 (
   SELECT
-    e.fish_obsrvtn_pnt_distinct_id,
+    e.fish_obsrvtn_event_id,
     e.linear_feature_id,
     e.blue_line_key,
     e.wscode_ltree,
@@ -92,7 +92,7 @@ by_wsg AS
     ARRAY['CH','CO','PK','SK','ST','WCT','BT','GR','RB']
     )
   GROUP BY
-    e.fish_obsrvtn_pnt_distinct_id,
+    e.fish_obsrvtn_event_id,
     e.linear_feature_id,
     e.blue_line_key,
     e.wscode_ltree,
@@ -103,7 +103,7 @@ by_wsg AS
 
 -- generate geoms
 SELECT
-  e.fish_obsrvtn_pnt_distinct_id,
+  e.fish_obsrvtn_event_id,
   e.linear_feature_id,
   e.blue_line_key,
   e.wscode_ltree,
