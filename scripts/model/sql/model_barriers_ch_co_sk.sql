@@ -102,19 +102,32 @@ with barriers as
   where watershed_group_code = :'wsg'
 ),
 
-obs_upstr as
+obs as 
+(
+select distinct
+  o.fish_observation_point_id,
+  e.blue_line_key,
+  e.downstream_route_measure,
+  e.wscode_ltree,
+  e.localcode_ltree,
+  e.species_code,
+  e.observation_date
+from (
+   select 
+    unnest(observation_ids) as fish_observation_point_id
+   from bcfishpass.observations
+ ) as o
+inner join bcfishobs.fiss_fish_obsrvtn_events_sp e on o.fish_observation_point_id = e.fish_observation_point_id
+where e.species_code in ('CH','CM','CO','PK','SK')
+),
+
+obs_upstr_n as
 (
   select
     b.barrier_id,
-    b.barrier_type,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.watershed_group_code,
-    unnest(o.species_codes) as spp,
-    unnest(o.observation_ids) as obs,
-    unnest(o.observation_dates) as obs_dt
+    count(*) as n_obs
   from barriers b
-  inner join bcfishpass.observations o
+  inner join obs o
   on fwa_upstream(
         b.blue_line_key,
         b.downstream_route_measure,
@@ -127,17 +140,8 @@ obs_upstr as
         false,
         1
       )
-  where o.species_codes && array['CH','CO','SK']
-),
-
-obs_upstr_n as
-(
-  select
-    barrier_id,
-    count(obs) as n_obs
-  from obs_upstr
-  group by barrier_id
 )
+
 
 insert into bcfishpass.barriers_ch_co_sk
 (
@@ -171,14 +175,14 @@ where watershed_group_code = any(
     array(
       select watershed_group_code
       from bcfishpass.wsg_species_presence
-      where ch is true or co is true or sk is true
+      where ch is true or cm is true or co is true or pk is true or sk is true 
     )
 )
 -- do not include gradient / falls / subsurface barriers with > 10 observations upstream
--- but always include major dams and other user added barriers
+-- but always include user added barriers
 and (
     o.n_obs is null or
     o.n_obs < 10 or
-    b.barrier_type in ('MAJOR DAM', 'EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
+    b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
 on conflict do nothing;

@@ -49,8 +49,6 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   barriers_ch_co_sk_dnstr text[],
   barriers_ch_co_sk_b_dnstr text[],
   barriers_st_dnstr text[],
-  barriers_pk_dnstr text[],
-  barriers_cm_dnstr text[],
   barriers_bt_dnstr text[],
   barriers_wct_dnstr text[],
   barriers_gr_dnstr text[],
@@ -68,26 +66,23 @@ CREATE TABLE IF NOT EXISTS bcfishpass.streams
   access_model_bt text,
   access_model_gr text,
   access_model_rb text,
-  access_model_cm text,
-  access_model_pk text,
 
   -- habitat models
   spawning_model_ch boolean,
+  spawning_model_cm boolean,
   spawning_model_co boolean,
+  spawning_model_pk boolean,
   spawning_model_sk boolean,
   spawning_model_st boolean,
   spawning_model_wct boolean,
   spawning_model_bt boolean,
-  spawning_model_cm boolean,
-  spawning_model_pk boolean,
+  
   rearing_model_ch boolean,
   rearing_model_co boolean,
   rearing_model_sk boolean,
   rearing_model_st boolean,
   rearing_model_wct boolean,
   rearing_model_bt boolean,
-  rearing_model_cm boolean,
-  rearing_model_pk boolean,
 
   geom geometry(LineStringZM,3005)
 );
