@@ -254,7 +254,7 @@ WHERE watershed_group_code = ANY(
     ARRAY(
       SELECT watershed_group_code
       FROM bcfishpass.wsg_species_presence
-      WHERE ch IS TRUE OR co IS TRUE OR sk IS TRUE
+      where ch is true or cm is true or co is true or pk is true or sk is true 
     )
 )
 ON CONFLICT DO NOTHING;

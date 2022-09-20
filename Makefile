@@ -263,8 +263,6 @@ scripts/discharge/.discharge: .db
 	touch $@
 .barriersource_gradient_10: scripts/gradient_barriers/.gradient_barriers .user_barriers_definite_control
 	touch $@
-.barriersource_gradient_12: scripts/gradient_barriers/.gradient_barriers .user_barriers_definite_control
-	touch $@
 .barriersource_gradient_15: scripts/gradient_barriers/.gradient_barriers .user_barriers_definite_control
 	touch $@
 .barriersource_gradient_20: scripts/gradient_barriers/.gradient_barriers .user_barriers_definite_control
