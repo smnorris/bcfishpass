@@ -3,15 +3,15 @@
 
 PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
-WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly ORDER BY watershed_group_code")
-WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+#WSG = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly ORDER BY watershed_group_code")
+#WSG_PARAM = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # watersheds for testing
-#WSG_TEST = ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
-#WSG=$(WSG_TEST)
-#WSG_PARAM=$(WSG_TEST)
+WSG_TEST = ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
+WSG=$(WSG_TEST)
+WSG_PARAM=$(WSG_TEST)
 
-GENERATED_FILES=.db \
+GENERATED_FILES= \
 	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
 	.streams .observations .observations_upstr .update_access
 
@@ -57,12 +57,8 @@ settings:
 	echo SPP_BARRIERS: $(SPP_BARRIERS)
 	echo BARRIERS_BROKEN: $(BARRIERS_BROKEN)
 
-# Remove make targets not in root folder
-clean_sources:
-	rm -Rf fwapg
-	rm -Rf bcfishobs
-	cd scripts/modelled_stream_crossings; make clean
 
+# remove all barrier tables/targets
 clean_barriers:
 	rm -Rf $(wildcard .barriers_*)
 	rm -Rf $(wildcard .barriersource_*)
@@ -70,6 +66,7 @@ clean_barriers:
 		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL_CMD) -v table=barriers_$$barriertype ; \
 	done
 
+# remove all access model tables/targets
 clean_access:
 	rm -Rf $(wildcard .broken_*)
 	rm -Rf $(wildcard .breakpts_*)
@@ -84,35 +81,23 @@ clean:
 	rm -Rf $(wildcard .barriers_*)
 
 
-
-
-.db:
-	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS bcfishpass"
-	touch $@
-
-# ***********************************************
-# **                                           **
-# **      LOAD/PROCESS REQUIRED DATASETS       **
-# **                                           **
-# ***********************************************
-
 # ------
-# CREATE SCHEMA, ADD FUNCTIONS, CREATE EMPTY TABLES AND LOAD MAPPING GRID
+# LOAD FUNCTIONS, CREATE EMPTY TABLES AND LOAD MAPPING GRID
 # ------
-.functions: $(wildcard scripts/model/sql/functions/*sql) .db
+.functions: $(wildcard scripts/model/sql/functions/*sql) 
 	for sql in $^ ; do \
 		$(PSQL_CMD) -f $$sql ; \
 	done
 	touch $@
 
-.tiles: .db
+.tiles: 
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	touch $@
 
 # ------
 # LOAD USER EDITABLE DATA FILES (all csv files in /data folder)
 # ------
-.%: data/%.csv scripts/model/sql/tables/user.sql .db
+.%: data/%.csv scripts/model/sql/tables/user.sql 
 	$(PSQL_CMD) -f scripts/model/sql/tables/user.sql
 	$(PSQL_CMD) -c "DELETE FROM bcfishpass.$(patsubst data/%.csv,%,$<)"
 	$(PSQL_CMD) -c "\copy bcfishpass$@ FROM '$<' delimiter ',' csv header"
@@ -121,14 +106,22 @@ clean:
 # ------
 # LOAD PARAMETERS
 # ------
-.param_watersheds: parameters/watersheds.csv .db scripts/model/sql/tables/param_watersheds.sql
+.param_watersheds: parameters/watersheds.csv  scripts/model/sql/tables/param_watersheds.sql
 	$(PSQL_CMD) -f scripts/model/sql/tables/param_watersheds.sql
 	$(PSQL_CMD) -c "\copy bcfishpass.param_watersheds FROM '$<' delimiter ',' csv header"
 	touch $@
 
-.param_habitat: parameters/habitat.csv .db scripts/model/sql/tables/param_habitat.sql
+.param_habitat: parameters/habitat.csv  scripts/model/sql/tables/param_habitat.sql
 	$(PSQL_CMD) -f scripts/model/sql/tables/param_habitat.sql
 	$(PSQL_CMD) -c "\copy bcfishpass.param_habitat FROM '$<' delimiter ',' csv header"
+	touch $@
+
+
+# ------
+# DAMS
+# ------
+.dams:  scripts/dams/dams.sh scripts/dams/sql/dams.sql
+	cd scripts/dams; ./dams.sh
 	touch $@
 
 # ------
@@ -137,27 +130,16 @@ clean:
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table
-.falls: .db .user_falls .user_barriers_definite_control scripts/falls/falls.sh scripts/falls/sql/falls.sql
+.falls:  .user_falls .user_barriers_definite_control scripts/falls/falls.sh scripts/falls/sql/falls.sql
 	cd scripts/falls; ./falls.sh
 	touch $@
 
-# ------
-# DAMS
-# ------
-# Dams are simple - no lookups required - but note that this table is a source for definite
-# barriers *and* anthropogenic barriers. Delete the .dams target file if an update is required.
-# (todo - consider consolidating CWF dams.geojson into the bcfishpass data folder so updates
-# are easily picked up)
-.dams: .db scripts/dams/dams.sh scripts/dams/sql/dams.sql
-	cd scripts/dams; ./dams.sh
-	touch $@
 
 # ------
 # GRADIENT BARRIERS
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
-# Todo - consider including only watershed groups listed in parameters
-scripts/gradient_barriers/.gradient_barriers: .db
+scripts/gradient_barriers/.gradient_barriers: 
 	cd scripts/gradient_barriers; make
 
 # ------
@@ -165,36 +147,16 @@ scripts/gradient_barriers/.gradient_barriers: .db
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
-scripts/modelled_stream_crossings/.modelled_stream_crossings: .db
+scripts/modelled_stream_crossings/.modelled_stream_crossings: 
 	cd scripts/modelled_stream_crossings; make
-	touch $@
 
 # ------
 # PSCIS
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
-.pscis_load: .db scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
+.pscis_load:  scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
 	cd scripts/pscis; ./pscis.sh
 	touch $@
-
-# -----
-# DOWNLOAD AND PROCESS MEAN ANNUAL PRECIPITATION
-# -----
-scripts/precipitation/.map: .db
-	cd scripts/precipitation; ./mean_annual_precip.sh
-	touch $@
-
-# -----
-# MODEL CHANNEL WIDTH
-# -----
-.channel_width: scripts/precipitation/.map
-	cd scripts/channel_width; make
-
-# -----
-# MODEL DISCHARGE
-# -----
-scripts/discharge/.discharge: .db
-	cd scripts/discharge; make
 
 # -----
 # CROSSINGS
@@ -209,10 +171,29 @@ scripts/discharge/.discharge: .db
 	touch $@
 
 # -----
+# MEAN ANNUAL PRECIPITATION
+# -----
+scripts/precipitation/.map:
+	cd scripts/precipitation; ./mean_annual_precip.sh
+	touch $@
+
+# -----
+# CHANNEL WIDTH
+# -----
+.scripts/channel_width/.make/channel_width: scripts/precipitation/.map
+	cd scripts/channel_width; make
+
+# -----
+# DISCHARGE
+# -----
+scripts/discharge/.discharge: 
+	cd scripts/discharge; make
+
+# -----
 # INITIAL PROVINCIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
 # -----
-.streams: .param_watersheds .db scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql scripts/channel_width/.make/channel_width scripts/discharge/.discharge
+.streams: .param_watersheds  scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql scripts/channel_width/.make/channel_width scripts/discharge/.discharge
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams CASCADE" # cascade the user_habitat_classification_svw
 	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
@@ -242,7 +223,7 @@ scripts/discharge/.discharge: .db
 # note that this done in two steps not for speed (loading observations is fast), but to
 # track which watershed groups have had changes (new data / data fixes via potential user lookup)
 # TODO - add user table dependency for excluding invalid observation records
-.observations: scripts/model/sql/load_observations.sql .db .param_watersheds .param_habitat .wsg_species_presence
+.observations: scripts/model/sql/load_observations.sql  .param_watersheds .param_habitat .wsg_species_presence
 	# first, load *all* observation data to _load table
 	$(PSQL_CMD) -f scripts/model/sql/load_observations.sql
 	# find watershed groups with changed observation data
@@ -426,6 +407,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # **      CREATE/UPDATE HABITAT MODEL          **
 # **                                           **
 # ***********************************************
+
 
 # -----
 # RUN HABITAT MODEL

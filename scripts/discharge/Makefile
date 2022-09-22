@@ -5,10 +5,11 @@ TARGETS = data/baseflow.nc \
 	data/baseflow_yearsum_mean.nc \
 	data/runoff_yearsum_mean.nc \
 	data/discharge.nc \
-	.discharge02_load \
-	.discharge03_wsd \
-	.discharge \
-	.foundry
+	.make/discharge01_raster \
+	.make/discharge02_load \
+	.make/discharge03_wsd \
+	.make/discharge \
+	.make/foundry
 
 TABLES = discharge01_raster \
 	discharge02_load \
@@ -53,13 +54,14 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	cdo -b F64 add $^ $@
 
 ## Load watershed discharge raster to postgres
-.discharge01_raster: data/discharge.nc
+.make/discharge01_raster: data/discharge.nc
+	mkdir -p .make
 	psql -c "CREATE EXTENSION postgis_raster;"
 	raster2pgsql data/discharge.nc bcfishpass.discharge01_raster -s 4326 | psql
 	touch $@
 
 ## overlay fundamental watersheds with discharge raster
-.discharge02_load: .discharge01_raster
+.make/discharge02_load: .make/discharge01_raster
 	psql -c "CREATE TABLE bcfishpass.discharge02_load \
 	( \
 		watershed_feature_id integer primary key, \
@@ -75,7 +77,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	touch $@
 
 # Transfer data from load table to discharge table
-.discharge03_wsd: .discharge02_load
+.make/discharge03_wsd: .make/discharge02_load
 	# Calculates the area weighted annual average flow for each wsd (mad_mm) and coverts to cubic m per s (m3s)
 	psql -c "CREATE TABLE bcfishpass.discharge03_wsd \
 	( \
@@ -89,7 +91,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	touch $@
 
 ## For habitat modelling, it is easier if discharge is per-stream
-.discharge: .discharge03_wsd
+.make/discharge: .make/discharge03_wsd
 	# Transfer per-watershed discharge data to per-stream
 	# create output bcfishpass.discharge table
 	psql -c "CREATE TABLE bcfishpass.discharge \
@@ -107,7 +109,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 
 # for users without access to foundry discharge data, create 
 # empty schema and discharge table
-.foundry:
+.make/foundry:
 	psql -c "CREATE SCHEMA IF NOT EXISTS foundry"
 	psql -c "CREATE TABLE IF NOT EXISTS foundry.fwa_streams_mad \
 	( linear_feature_id bigint primary key, \
