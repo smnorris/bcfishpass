@@ -204,7 +204,7 @@ scripts/discharge/.discharge: .db
 	.user_barriers_anthropogenic \
 	.user_modelled_crossing_fixes \
 	.user_pscis_barrier_status \
-	.pscis_load \
+	.pscis_load
 	$(PSQL_CMD) -f $<
 	touch $@
 
