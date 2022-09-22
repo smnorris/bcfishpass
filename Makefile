@@ -12,7 +12,7 @@ WSG=$(WSG_TEST)
 WSG_PARAM=$(WSG_TEST)
 
 GENERATED_FILES= \
-	.falls .dams .pscis_load .crossings .user_habitat_classification_endpoints \
+	.falls .dams .pscis .crossings .user_habitat_classification_endpoints \
 	.streams .observations .observations_upstr .update_access
 
 BARRIERS = $(patsubst scripts/model/sql/barriers_%.sql, %, $(wildcard scripts/model/sql/barriers_*.sql))
@@ -126,7 +126,8 @@ clean:
 # ------
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
-# source falls table
+# source falls table. (note that we don't use make in the falls directory because falls script
+# should be called when any of the various requirements change)
 .falls:  .user_falls .user_barriers_definite_control scripts/falls/falls.sh scripts/falls/sql/falls.sql
 	cd scripts/falls; ./falls.sh
 	touch $@
@@ -137,7 +138,6 @@ clean:
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 scripts/gradient_barriers/.gradient_barriers: 
 	cd scripts/gradient_barriers; make
-
 
 
 # ======
@@ -151,7 +151,7 @@ scripts/gradient_barriers/.gradient_barriers:
 	touch $@
 
 # ------
-# Road-stream crossings
+# Modelled road-stream crossings
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
@@ -159,10 +159,10 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	cd scripts/modelled_stream_crossings; make
 
 # ------
-# Assessed stream crossings (PSCIS)
+# PSCIS stream crossings
 # ------
-# PSCIS processing depends on modelled stream crosssings output being present
-.pscis_load:  scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
+.pscis:  scripts/modelled_stream_crossings/.make/modelled_stream_crossings \
+	.pscis_modelledcrossings_streams_xref
 	cd scripts/pscis; ./pscis.sh
 	touch $@
 
@@ -178,7 +178,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	.user_barriers_anthropogenic \
 	.user_modelled_crossing_fixes \
 	.user_pscis_barrier_status \
-	.pscis_load
+	.pscis
 	$(PSQL_CMD) -f $<
 	touch $@
 
@@ -198,14 +198,14 @@ scripts/precipitation/.map:
 # -----
 # DISCHARGE
 # -----
-scripts/discharge/.discharge: 
+scripts/discharge/.make/discharge: 
 	cd scripts/discharge; make
 
 # -----
 # INITIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
 # -----
-.streams: .param_watersheds  scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql scripts/channel_width/.make/channel_width scripts/discharge/.discharge
+.streams: .param_watersheds  scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql scripts/channel_width/.make/channel_width scripts/discharge/.make/discharge
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.streams CASCADE" # cascade the user_habitat_classification_svw
 	$(PSQL_CMD) -f scripts/model/sql/tables/streams.sql
 	parallel $(PSQL_CMD) -f scripts/model/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
