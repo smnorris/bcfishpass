@@ -117,15 +117,12 @@ clean:
 	touch $@
 
 
-# ------
-# DAMS
-# ------
-.dams:  scripts/dams/dams.sh scripts/dams/sql/dams.sql
-	cd scripts/dams; ./dams.sh
-	touch $@
 
+# ======
+# NATURAL BARRIERS
+# ======
 # ------
-# FALLS
+# Falls
 # ------
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
@@ -134,16 +131,27 @@ clean:
 	cd scripts/falls; ./falls.sh
 	touch $@
 
-
 # ------
-# GRADIENT BARRIERS
+# Gradient barriers
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 scripts/gradient_barriers/.gradient_barriers: 
 	cd scripts/gradient_barriers; make
 
+
+
+# ======
+# ANTHROPOGENIC BARRIERS
+# ======
 # ------
-# MODELLED STREAM CROSSINGS
+# Dams
+# ------
+.dams:  scripts/dams/dams.sh scripts/dams/sql/dams.sql
+	cd scripts/dams; ./dams.sh
+	touch $@
+
+# ------
+# Road-stream crossings
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
@@ -151,7 +159,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	cd scripts/modelled_stream_crossings; make
 
 # ------
-# PSCIS
+# Assessed stream crossings (PSCIS)
 # ------
 # PSCIS processing depends on modelled stream crosssings output being present
 .pscis_load:  scripts/modelled_stream_crossings/.modelled_stream_crossings .pscis_modelledcrossings_streams_xref
@@ -159,10 +167,14 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	touch $@
 
 # -----
-# CROSSINGS
+# CROSSINGS TABLE
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
-.crossings: scripts/model/sql/crossings.sql .tiles .functions \
+.crossings: scripts/model/sql/crossings.sql \
+	.tiles \
+	.functions \
+	scripts/modelled_stream_crossings/.make/modelled_stream_crossings \
+	.dams \
 	.user_barriers_anthropogenic \
 	.user_modelled_crossing_fixes \
 	.user_pscis_barrier_status \
@@ -190,7 +202,7 @@ scripts/discharge/.discharge:
 	cd scripts/discharge; make
 
 # -----
-# INITIAL PROVINCIAL STREAM DATA LOAD
+# INITIAL STREAM DATA LOAD
 # (channel width and discharge are required as they are loaded directly to this table)
 # -----
 .streams: .param_watersheds  scripts/model/sql/tables/streams.sql scripts/model/sql/load_streams.sql scripts/channel_width/.make/channel_width scripts/discharge/.discharge
