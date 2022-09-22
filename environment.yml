@@ -23,7 +23,7 @@ dependencies:
   - rasterstats
   - scikit-image
   - pip:
-      - bcdata>=0.6.3
+      - bcdata===0.7.0
 variables:
   PGHOST: localhost
   PGUSER: postgres
