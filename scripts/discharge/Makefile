@@ -105,6 +105,8 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	  psql -v ON_ERROR_STOP=1 -f sql/discharge.sql -v wsg=$$wsg ; \
 	done
 	touch $@
+	psql -c "drop table bcfishpass.discharge02_load"
+	psql -c "drop table bcfishpass.discharge03_wsd"
 	echo 'Discharge processing complete, see bcfishpass.discharge columns mad_mm, mad_m3s'
 
 # for users without access to foundry discharge data, create 

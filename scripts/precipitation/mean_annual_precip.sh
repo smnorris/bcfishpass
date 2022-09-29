@@ -159,6 +159,6 @@ do
 done
 
 # optionally, drop the temp tables and raster
-#$PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
-#$PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"
+$PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
+$PSQL_CMD -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"
 #rm mean_annual_precip.tif*

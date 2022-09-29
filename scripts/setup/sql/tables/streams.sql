@@ -5,7 +5,10 @@
 -- unique segmented stream id is created by combining blkey and measure
 -- (with measure rounded to nearest mm, because some source stream lines are really short)
 -- --------------
-CREATE TABLE IF NOT EXISTS bcfishpass.streams 
+
+DROP TABLE IF EXISTS bcfishpass.streams;
+
+CREATE TABLE bcfishpass.streams 
 (
   segmented_stream_id       text
      GENERATED ALWAYS AS (blue_line_key::text|| '.' || round((ST_M(ST_PointN(geom, 1))) * 1000)::text) STORED PRIMARY KEY,

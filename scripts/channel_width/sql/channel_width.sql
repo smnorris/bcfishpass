@@ -18,7 +18,6 @@ cwmap AS
   a.linear_feature_id,
   ROUND(avg(a.channel_width_mapped)::numeric, 2) as cw
 FROM bcfishpass.channel_width_mapped a
-INNER JOIN bcfishpass.param_watersheds pw ON a.watershed_group_code = pw.watershed_group_code
 WHERE a.watershed_group_code = :'wsg'
 GROUP BY a.linear_feature_id
 ),

@@ -49,7 +49,6 @@ LEFT OUTER JOIN bcfishpass.mean_annual_precip p ON s.wscode_ltree = p.wscode_ltr
 LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
 LEFT OUTER JOIN foundry.fwa_streams_mad mad_fndry ON s.linear_feature_id = mad_fndry.linear_feature_id
 LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-
 WHERE
   s.watershed_group_code = :'wsg'
   AND s.wscode_ltree <@ '999' IS FALSE
