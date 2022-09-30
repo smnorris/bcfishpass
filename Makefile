@@ -3,48 +3,17 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
-#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly ORDER BY watershed_group_code")
-#WSG_PARAM = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
+#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 # watersheds for testing
-WSG_TEST = BULK #ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
-WSG=$(WSG_TEST)
-WSG_PARAM=$(WSG_TEST)
+WSG=BULK
 
-# each type of barrier is stored in its own table, as defined by these files
-BARRIERS = $(patsubst scripts/model_access/sql/barriers_%.sql, %, $(wildcard scripts/model_access/sql/barriers_*.sql))
-# define the make targets that flag when the table has been built
-BARRIER_TABLES = $(patsubst scripts/model_access/sql/%.sql, .make/%, $(wildcard scripts/model_access/sql/barriers_*.sql))
-
-
-# features to process as anthropogenic barriers (obv pscis and remediated are not barriers but it is convenient to pretend they are for processing)
-BARRIERS_ANTHROPOGENIC = anthropogenic pscis remediated
-# all potential definite barriers
-BARRIERS_DEFINITE = $(filter-out $(ANTH_BARRIERS), $(BARRIERS))
-BARRIERS_DEFINITE_TARGETS = $(patsubst scripts/model_access/sql/%.sql, .make/%, $(BARRIERS_DEFINITE))
-
-# definite barriers collected into per-species access model tables
-SPPGROUPS = $(patsubst scripts/model/sql/model_barriers_%.sql, %, $(wildcard scripts/model/sql/model_barriers_*.sql))
-
-BROKEN_ANTHROPOGENIC = $(patsubst %,.make/broken_%,$(ANTH_BARRIERS))
-BROKEN_SPPGROUPS = $(patsubst %,.make/broken_%,$(SPPGROUPS))
-BROKEN = $(BROKEN_SPPGROUPS) $(BROKEN_ANTHROPOGENIC) .make/broken_observations
 
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
 
 WCRP_SCRIPTS = $(wildcard wcrp/reports/sql/*.sql)
 WCRP_OUTPUTS = $(patsubst wcrp/reports/sql/%.sql,wcrp/reports/reports/%.csv,$(WCRP_SCRIPTS))
-
-# which watershed groups to be refreshed are defined by reading target file of barrier creation recipies
-# wsg_to_refresh_def is all wsg that have been refreshed by individual definite barrier tables, plus observations,
-# this defines which watersheds to break with spp group definite barriers
-#WSG_TO_REFRESH_DEF = $(shell cat $(patsubst %,.barriers_%,$(DEF_BARRIERS)) .observations | sort | uniq)
-# if running a new spp scenario with no changes to individual source barrier tables, override above with this:
-WSG_TO_REFRESH_DEF = $(WSG_PARAM)
-# wsg_to_refresh is anywhere that a change has taken place (definite plus anthropogenic and observations),
-# this defines where to run the model updates
-WSG_TO_REFRESH = $(shell cat $(patsubst %,.barriers_%,$(BARRIERS)) .observations | sort | uniq)
 
 
 # Make all targets - just point to final target to make everything
@@ -53,14 +22,6 @@ all: .carto
 qa: $(QA_OUTPUTS)
 
 wcrp: $(WCRP_OUTPUTS)
-
-settings:
-	echo BARRIERS: $(BARRIERS)
-	echo ANTH_BARRIERS: $(ANTH_BARRIERS)
-	echo DEF_BARRIERS: $(DEF_BARRIERS)
-	echo SPP_BARRIERS: $(SPP_BARRIERS)
-	echo BARRIERS_BROKEN: $(BARRIERS_BROKEN)
-
 
 # remove all barrier tables/targets
 clean_barriers:
@@ -270,7 +231,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	
 	# run per-species models
 	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
-	for wsg in $(WSG_PARAM) ; do \
+	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_bt.sql -v wsg=$$wsg ; \
 		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_ch.sql -v wsg=$$wsg ; \
 		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_cm.sql -v wsg=$$wsg ; \
@@ -283,7 +244,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 
 	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
 	$(PSQL) -f scripts/model/sql/user_habitat_classification_endpoints.sql
-	for wsg in $(WSG_PARAM) ; do \
+	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
 	done
 	$(PSQL) -f scripts/model/sql/user_habitat_classification.sql
@@ -311,7 +272,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	# run report per watershed group on barriers_anthropogenic
 	$(PSQL) -f scripts/model/sql/point_report_columns.sql \
 		-v point_table=barriers_anthropogenic
-	for wsg in $(WSG_PARAM) ; do \
+	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f scripts/model/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
@@ -322,7 +283,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	## run report per watershed group on crossings
 	$(PSQL) -f scripts/model/sql/point_report_columns.sql \
 		-v point_table=crossings
-	for wsg in $(WSG_PARAM) ; do \
+	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f scripts/model/sql/point_report.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
@@ -337,7 +298,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	$(PSQL) -f scripts/model/sql/point_report_obs_belowupstrbarriers.sql
 
 	# add habitat per barrier column to crossings table
-	for wsg in $(WSG_PARAM) ; do \
+	for wsg in $(WSG) ; do \
 		psql -f scripts/model/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
 	done
 	touch $@
