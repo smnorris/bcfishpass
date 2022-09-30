@@ -9,22 +9,22 @@ WSG=BULK HORS
 # https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist
 
 # define the make targets that flag when the table has been built
-BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
+SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 # combine barriers into tables of per-species scenarios, these will be points at which we break the streams
-BREAKPTS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/breakpts_*.sql))
-# targets for breaking streams - above breakpts plus anthropogenic barriers
-BROKEN = $(patsubst .make/breakpts_%, .make/broken_%, $(BREAKPTS)) .make/broken_anthropogenic .make/broken_pscis .make/broken_remediated
+MODEL_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_barriers_*.sql))
+# targets for breaking streams - above model_barriers (ie natural barriers) plus anthropogenic barriers
+BROKEN = $(patsubst .make/model_barriers_%, .make/broken_%, $(MODEL_BARRIERS)) .make/broken_anthropogenic .make/broken_pscis .make/broken_remediated
 
-MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
+MODEL_ACCESS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
-all: $(BARRIERS) $(BREAKPTS) $(BROKEN) .make/broken_observations $(MODELS)
+all: $(SOURCE_BARRIERS) $(MODEL_BARRIERS) $(BROKEN) .make/broken_observations $(MODEL_ACCESS)
 
 # -----
 # LOAD BARRIER TYPE TABLES
 # -----
 # Create standardized barrier tables, one per type of barrier. 
 # Process every file that matches the pattern sql/barriers_%.sql
-$(BARRIERS): .make/barriers_%: sql/barriers_%.sql
+$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
 	mkdir -p .make
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
@@ -42,9 +42,9 @@ $(BARRIERS): .make/barriers_%: sql/barriers_%.sql
 # -----
 # Combine definite barriers into a single table per each species/species group being modelled
 # observations are a requirement because the query 
-$(BREAKPTS): .make/breakpts_%: sql/breakpts_%.sql \
-	$(BARRIERS)
-	$(eval BARRIERTYPE=$(subst .make/breakpts_,,$@))
+$(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
+	$(SOURCE_BARRIERS)
+	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$@))
 	# create table if it does not exist
 	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)
 	# clear the table
@@ -68,11 +68,11 @@ $(BREAKPTS): .make/breakpts_%: sql/breakpts_%.sql \
 	touch $@
 
 # tag these tables as additional sources for breaking streams (beyond the above definite barriers)
-.make/breakpts_anthropogenic:
+.make/model_barriers_anthropogenic:
 	touch $@
-.make/breakpts_pscis:
+.make/model_barriers_pscis:
 	touch $@
-.make/breakpts_remediated:
+.make/model_barriers_remediated:
 	touch $@
 
 # -----
@@ -98,8 +98,8 @@ $(BREAKPTS): .make/breakpts_%: sql/breakpts_%.sql \
 # -----
 # Break streams at various barrier types and observations, plus at anthropogenic barriers
 # Processing in parallel (provincially) eventually crashes the db, process one group at a time or with a modest job count
-$(BROKEN): .make/broken_%: .make/breakpts_% .make/streams
-	$(eval BARRIERTYPE=$(subst .make/breakpts_,,$<))
+$(BROKEN): .make/broken_%: .make/model_barriers_% .make/streams
+	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$<))
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
 		$(PSQL) -v wsg={1} -v point_table=barriers_$(BARRIERTYPE)" ::: $(WSG)
@@ -130,7 +130,7 @@ $(BROKEN): .make/broken_%: .make/breakpts_% .make/streams
 # PROCESS MODEL
 # -----
 # with all barriers and observations processed, apply each access model with corresponding query
-$(MODELS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/broken_observations
+$(MODEL_ACCESS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/broken_observations
 	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f $< -v wsg=$$wsg ; \
 	done
