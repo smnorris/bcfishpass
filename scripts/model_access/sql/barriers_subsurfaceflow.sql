@@ -1,7 +1,7 @@
 -- subsurface flow
-INSERT INTO bcfishpass.barrier_load
+INSERT INTO bcfishpass.barriers_subsurfaceflow
 (
-    barrier_load_id,
+    barriers_subsurfaceflow_id,
     barrier_type,
     barrier_name,
     linear_feature_id,

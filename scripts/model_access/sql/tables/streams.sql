@@ -58,7 +58,7 @@ CREATE TABLE bcfishpass.streams
   barriers_rb_dnstr text[],
 
   -- observations upstream
-  obsrvtn_pnt_distinct_upstr integer[],
+  obsrvtn_event_upstr bigint[],
   obsrvtn_species_codes_upstr text[],
 
   -- access models

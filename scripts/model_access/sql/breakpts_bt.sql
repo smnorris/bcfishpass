@@ -1,23 +1,5 @@
-delete from bcfishpass.barriers_wct
-where watershed_group_code = :'wsg';
-
 with all_barriers as
 (
-  select
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-  from bcfishpass.barriers_gradient_20
-  where watershed_group_code = :'wsg'
-
-  union all
-
   select
     barrier_type,
     barrier_name,
@@ -81,7 +63,7 @@ obs as
 (
   select *
   from bcfishpass.observations
-  where species_codes && array['WCT'] IS TRUE
+  where species_codes && array['BT'] is true
 ),
 
 barriers as
@@ -114,24 +96,24 @@ barriers as
 
   union all
 
-    -- include *all* user added features, even those below wct observations
+    -- include *all* user added features, even those below bt observations
   select
-      b.barrier_type,
-      b.barrier_name,
-      b.linear_feature_id,
-      b.blue_line_key,
-      b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
-      b.watershed_group_code,
-      b.geom
-  from bcfishpass.barriers_user_definite b
+      barrier_type,
+      barrier_name,
+      linear_feature_id,
+      blue_line_key,
+      downstream_route_measure,
+      wscode_ltree,
+      localcode_ltree,
+      watershed_group_code,
+      geom
+  from bcfishpass.barriers_user_definite
   where watershed_group_code = :'wsg'
 )
 
-insert into bcfishpass.barriers_wct
+insert into bcfishpass.barriers_bt
 (
-    barriers_wct_id,
+    barriers_bt_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -159,7 +141,7 @@ where watershed_group_code = any(
             array(
               select watershed_group_code
               from bcfishpass.wsg_species_presence
-              where wct is true
+              where bt is true
             )
           )
 on conflict do nothing;

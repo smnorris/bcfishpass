@@ -2,9 +2,9 @@
 -- (pscis, dams, modelled xings)
 -- no additonal logic required, simply records from crossings table that are barriers and potential barriers
 
-INSERT INTO bcfishpass.barrier_load
+INSERT INTO bcfishpass.barriers_anthropogenic
 (
-    barrier_load_id,
+    barriers_anthropogenic_id,
     barrier_type,
     barrier_name,
     linear_feature_id,

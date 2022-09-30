@@ -1,6 +1,6 @@
-INSERT INTO bcfishpass.barrier_load
+INSERT INTO bcfishpass.barriers_gradient_10
 (
-    barrier_load_id,
+    barriers_gradient_10_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
