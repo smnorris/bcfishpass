@@ -126,7 +126,10 @@ $(BROKEN): .make/broken_%: .make/breakpts_% .make/streams
 		-v wsg={1} ::: $(WSG)
 	touch $@
 
-# once all barriers and observations are processed, process all the per species models
+# -----
+# PROCESS MODEL
+# -----
+# with all barriers and observations processed, apply each access model with corresponding query
 $(MODELS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/broken_observations
 	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f $< -v wsg=$$wsg ; \
