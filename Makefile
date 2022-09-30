@@ -11,9 +11,10 @@ WSG_TEST = BULK #ELKR HORS BULK LNIC #VICT LFRA QUES CARR UFRA MORK PARS COWN
 WSG=$(WSG_TEST)
 WSG_PARAM=$(WSG_TEST)
 
-
+# each type of barrier is stored in its own table, as defined by these files
 BARRIERS = $(patsubst scripts/model_access/sql/barriers_%.sql, %, $(wildcard scripts/model_access/sql/barriers_*.sql))
-BARRIERS_TARGETS = $(patsubst scripts/model_access/sql/%.sql, .make/%, $(wildcard scripts/model_access/sql/barriers_*.sql))
+# define the make targets that flag when the table has been built
+BARRIER_TABLES = $(patsubst scripts/model_access/sql/%.sql, .make/%, $(wildcard scripts/model_access/sql/barriers_*.sql))
 
 
 # features to process as anthropogenic barriers (obv pscis and remediated are not barriers but it is convenient to pretend they are for processing)
@@ -144,6 +145,11 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	done
 	touch $@
 
+# -- load parameters
+.make/parameters:  $(wildcard parameters/*csv) 
+	./scripts/misc/load_csv.sh $<
+	touch $@
+
 # -- required by crossings script
 .make/dbm_mof_50k_grid:
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
@@ -209,147 +215,14 @@ scripts/precipitation/.map:
 scripts/discharge/.make/discharge: 
 	cd scripts/discharge; make
 
-
-
-# ***********************************************
-# **                                           **
-# **      CREATE/UPDATE ACCESS MODEL           **
-# **                                           **
-# ***********************************************
-
-
 # -----
-# LOAD STREAMS
-# Notes:
-#  - all above targets are processed provincially (or where data is available),
-#    streams and targets below are processed only for watersheds listed in the parameters table
-#  - channel width and discharge are required as they are loaded directly to streams table
+# ACCESS MODEL
 # -----
-.make/streams: scripts/model_access/sql/load_streams.sql \
-	parameters/param_watersheds.csv  \
+scripts/model_access/.make/model_access: .make/parameters  \
 	scripts/channel_width/.make/channel_width \
 	scripts/discharge/.make/discharge
-	./scripts/misc/load_csv.sh parameters/param_watersheds.csv
-	$(PSQL) -c "truncate bcfishpass.streams"
-	parallel $(PSQL) -f scripts/model_access/sql/load_streams.sql -v wsg={1} ::: $(WSG_PARAM)
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_lfeatid_idx ON bcfishpass.streams (linear_feature_id);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_blkey_idx ON bcfishpass.streams (blue_line_key);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_wsg_idx ON bcfishpass.streams (watershed_group_code);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_wbkey_idx ON bcfishpass.streams (waterbody_key);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_wsc_gidx ON bcfishpass.streams USING GIST (wscode_ltree);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_wsc_bidx ON bcfishpass.streams USING BTREE (wscode_ltree);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_lc_gidx ON bcfishpass.streams USING GIST (localcode_ltree);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_lc_bidx ON bcfishpass.streams USING BTREE (localcode_ltree);"
-	$(PSQL) -c "CREATE INDEX IF NOT EXISTS streams_geom_idx ON bcfishpass.streams USING GIST (geom);"
-	$(PSQL) -c "VACUUM ANALYZE bcfishpass.streams"
-	touch $@
+	cd scripts/model_access; make
 
-# -----
-# LOAD BARRIER TYPE TABLES
-# -----
-# Create standardized barrier tables, one per type of barrier. 
-# Process every file that matches the pattern scripts/model_access/barriers_%.sql
-$(BARRIERS_TARGETS): .make/barriers_%: \
-	scripts/model_access/sql/barriers_%.sql .make/barrier_sources 
-	# create the table if it does not exist
-	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | \
-		$(PSQL) -v barriertype=$(subst .make/barriers_,,$@)
-	# clear barrier table
-	$(PSQL) -c "truncate bcfishpass.$(subst .make/,,$@)"
-	# load data to barrier table in parallel
-	parallel $(PSQL) -f scripts/model_access/sql/$(subst .make/,,$@).sql -v wsg={1} ::: $(WSG)
-	touch $@
-
-# -----
-# LOAD PER-SPECIES/SCENARIO BARRIER TABLES
-# -----
-# Combine definite barriers into a single table per each species/species group being modelled, 
-$(BARRIERS_DEFINITE_TARGETS): .make/breakpts_%: scripts/model_access/sql/model_barriers_%.sql \
-	$(patsubst %,.make/barriers_%,$(DEF_BARRIERS)) \
-	.make/observations \
-	.make/streams
-	# drop barrier table if already present
-	echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL) -v table=$(subst .make/breakpts_,barriers_,$@)
-	# create/recreate barrier table
-	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(subst .make/breakpts_,,$@)
-	# load all features for given spp scenario to barrier table, for all groups listed in parameters
-	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG_PARAM)
-	# index downstream
-	cd scripts/model ; python bcfishpass.py add-downstream-ids \
-		bcfishpass.$(subst .make/breakpts,barriers,$@) $(subst .make/breakpts,barriers,$@)_id bcfishpass.$(subst .make/breakpts,barriers,$@) $(subst .make/breakpts,barriers,$@)_id $(subst .make/breakpts,barriers,$@)_dnstr
-	# remove non-minimal barriers
-	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | \
-		$(PSQL) -v id=$(subst .make/breakpts,barriers,$@)_dnstr -v table=$(subst .make/breakpts,barriers,$@)
-	# add upstream length summary to the table for QA of high impact barriers
-	$(PSQL) -f scripts/model_access/sql/add_length_upstream.sql \
-		-v src_table=$(subst .make/breakpts_,barriers_,$@) \
-		-v src_id=$(subst .make/breakpts_,barriers_,$@)_id
-	touch $@
-
-# tag anthropogenic barriers as barriers for breaking streams 
-$(patsubst %, .make/breakpts_%, $(ANTH_BARRIERS)): .make/breakpts_%: .make/barriers_%
-	cp $(subst .make/breakpts,.make/barriers,$@) $@
-
-# -----
-# BREAK STREAMS
-# -----
-# break at various barrier types and observations
-# NOTE - to ensure that make generates targets made with this wild card pattern, a 'static pattern rule' is required
-# https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist
-# NOTE2 - processing in parallel (provincially) eventually crashes the db, process one group at a time or with a modest job count
-
-# break streams at minimal definite barriers for each spp scenario
-$(BROKEN_SPPGROUPS): .make/broken_%: .make/breakpts_% .make/streams
-	parallel --jobs 4 --no-run-if-empty \
-		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL) -v wsg={1} -v point_table=$(subst .make/breakpts_,barriers_,$<)" ::: $(WSG_PARAM)
-	# concurrent updates lock the db, process each wsg individually
-	for wsg in $(WSG_PARAM) ; do \
-		set -e ; $(PSQL) -f scripts/model_access/sql/update_barriers_dnstr_wrapper.sql \
-		-v target_table=streams \
-		-v target_table_id=segmented_stream_id \
-		-v barriertype=$(subst .make/broken_,,$@) \
-		-v point_table=$(subst .make/broken_,barriers_,$@) \
-		-v include_equivalents=true \
-		-v wsg=$$wsg ;\
-	done
-	touch $@
-
-# break streams at anthropogenic barriers 
-$(BROKEN_ANTHROPOGENIC): .make/broken_%: .make/breakpts_% .make/streams
-	parallel --jobs 4 --no-run-if-empty \
-		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL) -v wsg={1} -v point_table=$(subst .make/breakpts_,barriers_,$<)" ::: $(WSG_PARAM)
-	# concurrent updates lock the db, process each wsg individually
-	for wsg in $(WSG_PARAM) ; do \
-		set -e ; $(PSQL) -f scripts/model_access/sql/update_barriers_dnstr_wrapper.sql \
-		-v target_table=streams \
-		-v target_table_id=segmented_stream_id \
-		-v barriertype=$(subst .make/broken_,,$@) \
-		-v point_table=$(subst .make/broken_,barriers_,$@) \
-		-v include_equivalents=true \
-		-v wsg=$$wsg ;\
-	done
-	touch $@
-
-# break streams and index at all observations (of target species)
-.make/broken_observations: .make/observations .make/streams
-	parallel --jobs 4 --no-run-if-empty \
-	  $(PSQL) -f scripts/model_access/sql/break_streams_wrapper.sql -v wsg={1} -v point_table=$(subst .make/,,$<) ::: $(WSG_PARAM)
-	parallel --jobs 4 --no-run-if-empty \
-	  $(PSQL) -f scripts/model_access/sql/update_observations_upstr.sql -v wsg={1} ::: $(WSG_PARAM)
-	touch $@
-
-# once all barriers and observations are processed, update the access model values
-.make/update_access: $(BROKEN)
-	for wsg in $(WSG_PARAM) ; do \
-		set -e ; $(PSQL) -f scripts/model_access/sql/model_access_bt.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model_access/sql/model_access_ch_co_sk.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model_access/sql/model_access_ch_co_sk_b.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model_access/sql/model_access_st.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model_access/sql/model_access_wct.sql -v wsg=$$wsg ; \
-	done
-	touch $@
 
 .index_crossings: .make/barriers_anthropogenic
 	# index crossings table based on upstream/downstream crossings

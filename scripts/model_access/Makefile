@@ -1,4 +1,4 @@
-.PHONY: all
+.PHONY: all clean
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
@@ -17,7 +17,11 @@ BROKEN = $(patsubst .make/model_barriers_%, .make/broken_%, $(MODEL_BARRIERS)) .
 
 MODEL_ACCESS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
-all: $(SOURCE_BARRIERS) $(MODEL_BARRIERS) $(BROKEN) .make/broken_observations $(MODEL_ACCESS)
+all: .make/model_access
+
+clean: 
+	rm -Rf .make
+	# remove tables?
 
 # -----
 # LOAD BARRIER TYPE TABLES
@@ -134,4 +138,8 @@ $(MODEL_ACCESS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/br
 	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f $< -v wsg=$$wsg ; \
 	done
+	touch $@
+
+# a single output target for root makefile
+.make/model_access: $(MODEL_ACCESS)
 	touch $@
