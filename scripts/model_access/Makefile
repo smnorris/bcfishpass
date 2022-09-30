@@ -49,7 +49,7 @@ $(BREAKPTS): .make/breakpts_%: sql/breakpts_%.sql \
 	# load all features for given spp scenario to barrier table, for all groups listed in parameters
 	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG)
 	# index downstream
-	python bcfishpass.py add-downstream-ids \
+	python upstr_dnstr_ids.py add-downstream-ids \
 		bcfishpass.barriers_$(BARRIERTYPE) barriers_$(BARRIERTYPE)_id bcfishpass.barriers_$(BARRIERTYPE) barriers_$(BARRIERTYPE)_id barriers_$(BARRIERTYPE)_dnstr
 	# remove non-minimal barriers
 	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | \
