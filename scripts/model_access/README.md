@@ -17,7 +17,7 @@ POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM` - no known natural barriers d
 4. segment streams at all barriers and at known/potential anthropogenic barriers (plus remediations for analysis/convenience)
 5. analyze upstream-downstream connectivity of barriers for given species and output access model values
 
-## Instructiosn
+## Instructions
 
 Presuming that all required tables are present:
 
