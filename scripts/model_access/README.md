@@ -2,10 +2,12 @@
 
 Classify stream accessibility for a given species (or species grouping). Access model values:
 
-`ACCESSIBLE` - no known natural barrier downstream, no modelled barrier downstream
-`ACCESSIBLE - REMEDIATED` - no known natural barrier downstream, no modelled barrier downstream, remediated PSCIS crossing downstream
-`POTENTIALLY ACCESSIBLE` - no known natural barriers downstream, potential (modelled crossing) barrier downstream
-`POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM` - no known natural barriers downstream, but a known PSCIS barrier exists downstream
+```
+ACCESSIBLE - no known natural barrier downstream, no modelled barrier downstream
+ACCESSIBLE - REMEDIATED - no known natural barrier downstream, no modelled barrier downstream, remediated PSCIS crossing downstream
+POTENTIALLY ACCESSIBLE - no known natural barriers downstream, potential (modelled crossing) barrier downstream
+POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM` - no known natural barriers downstream, but a known PSCIS barrier exists downstream
+```
 
 ## Method
 
