@@ -3,7 +3,7 @@ DELETE FROM bcfishpass.observations WHERE watershed_group_code = :'wsg';
 -- insert records for watersheds of interest / spp of interest
 INSERT INTO bcfishpass.observations
 (
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_event_id,
   linear_feature_id,
   blue_line_key,
   wscode_ltree,
@@ -16,7 +16,7 @@ INSERT INTO bcfishpass.observations
   geom
 )
 SELECT 
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_event_id,
   linear_feature_id,
   blue_line_key,
   wscode_ltree,

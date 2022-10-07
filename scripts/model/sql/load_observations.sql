@@ -4,7 +4,7 @@ DELETE FROM bcfishpass.observations_load;
 -- insert records for watersheds of interest / spp of interest
 INSERT INTO bcfishpass.observations_load
 (
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_event_id,
   linear_feature_id,
   blue_line_key,
   wscode_ltree,
@@ -29,7 +29,7 @@ FROM (
     p.watershed_group_code,
     CASE WHEN p.ch is true THEN 'CH' ELSE NULL END as ch,
     CASE WHEN p.co is true THEN 'CO' ELSE NULL END as co,
-    --CASE WHEN p.cm is true THEN 'CM' ELSE NULL END as cm,
+    CASE WHEN p.cm is true THEN 'CM' ELSE NULL END as cm,
     CASE WHEN p.pk is true THEN 'PK' ELSE NULL END as pk,
     CASE WHEN p.sk is true THEN 'SK' ELSE NULL END as sk,
     CASE WHEN p.st is true THEN 'ST' ELSE NULL END as st,
@@ -41,82 +41,52 @@ FROM (
   ) as f
 ),
 
--- de-aggregate all distinct observation points with spp of interest within groups of interest
--- (this includes observations of other species at the same location)
-unnested_obs AS
-(
+-- extract observations of species of interest, 
+-- within watershed groups where they are noted to occur
+-- (discarding observations outsided of those groups)
+obs as (
   SELECT
-    e.fish_obsrvtn_pnt_distinct_id,
+    e.fish_observation_point_id,
+    e.fish_obsrvtn_event_id,
     e.linear_feature_id,
     e.blue_line_key,
     e.wscode_ltree,
     e.localcode_ltree,
     e.downstream_route_measure,
     e.watershed_group_code,
-    unnest(e.species_codes) as species_code,
-    unnest(e.obs_ids) as observation_id
-  FROM bcfishobs.fiss_fish_obsrvtn_events e
+    e.species_code,
+    e.observation_date
+  FROM bcfishobs.fiss_fish_obsrvtn_events_vw e
+  -- only include watershed groups indicated in parameters
   INNER JOIN bcfishpass.param_watersheds g
   ON e.watershed_group_code = g.watershed_group_code
+  -- only include observations of given species in groups that have been checked to include the species
   INNER JOIN wsg_spp
   ON e.watershed_group_code = wsg_spp.watershed_group_code
-  AND e.species_codes && wsg_spp.species_codes
-  WHERE e.watershed_group_code = ANY(
-  ARRAY(
-    SELECT watershed_group_code
-    FROM bcfishpass.param_watersheds
-  )
-)
-),
-
--- then re-aggregate, retaining only observation records for the species of interest within group of interest
-by_wsg AS
-(
-  SELECT
-    e.fish_obsrvtn_pnt_distinct_id,
-    e.linear_feature_id,
-    e.blue_line_key,
-    e.wscode_ltree,
-    e.localcode_ltree,
-    e.downstream_route_measure,
-    e.watershed_group_code,
-    array_agg(e.species_code) as species_codes,
-    array_agg(e.observation_id) as observation_ids,
-    array_agg(sp.observation_date) as observation_dates
-  FROM unnested_obs e
-  INNER JOIN bcfishobs.fiss_fish_obsrvtn_events_sp sp
-  ON e.observation_id = sp.fish_observation_point_id
-  INNER JOIN bcfishpass.param_watersheds g
-  ON e.watershed_group_code = g.watershed_group_code
-  WHERE e.species_code = ANY (
-    ARRAY['CH','CO','PK','SK','ST','WCT','BT','GR','RB']
-    )
-  GROUP BY
-    e.fish_obsrvtn_pnt_distinct_id,
-    e.linear_feature_id,
-    e.blue_line_key,
-    e.wscode_ltree,
-    e.localcode_ltree,
-    e.downstream_route_measure,
-    e.watershed_group_code
+  AND array[e.species_code]::text[] && wsg_spp.species_codes
 )
 
--- generate geoms
+-- aggregate, get distinct geom point
 SELECT
-  e.fish_obsrvtn_pnt_distinct_id,
+  e.fish_obsrvtn_event_id,
   e.linear_feature_id,
   e.blue_line_key,
   e.wscode_ltree,
   e.localcode_ltree,
   e.downstream_route_measure,
   e.watershed_group_code,
-  e.species_codes,
-  e.observation_ids,
-  e.observation_dates,
-  (ST_Dump(
-      ST_LocateAlong(s.geom, e.downstream_route_measure)
-      )
-  ).geom::geometry(PointZM, 3005) AS geom
-FROM by_wsg e
-INNER JOIN whse_basemapping.fwa_stream_networks_sp s
-ON e.linear_feature_id = s.linear_feature_id;
+  array_agg(e.species_code) as species_codes,
+  array_agg(e.fish_observation_point_id) as observation_ids,
+  array_agg(e.observation_date) as observation_dates,
+  vw.geom
+FROM obs e
+INNER JOIN bcfishobs.fiss_fish_obsrvtn_events_vw vw
+ON e.fish_obsrvtn_event_id = vw.fish_obsrvtn_event_id
+GROUP BY e.fish_obsrvtn_event_id,
+  e.linear_feature_id,
+  e.blue_line_key,
+  e.wscode_ltree,
+  e.localcode_ltree,
+  e.downstream_route_measure,
+  e.watershed_group_code,
+  vw.geom;

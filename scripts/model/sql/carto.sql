@@ -113,7 +113,7 @@ create or replace view bcfishpass.observations_bt_vw as
 with obs as
 (
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   unnest(species_codes) as species_code,
   unnest(observation_ids) as observation_id,
   unnest(observation_dates) as observation_date,
@@ -122,20 +122,20 @@ from bcfishpass.observations
 )
 
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   array_to_string(array_agg(species_code), ' ') as species_codes,
   array_to_string(array_agg(observation_id),';') as observation_ids,
   array_to_string(array_agg(observation_date),';') as observation_date,
   geom
 from obs
 where species_code = 'BT'
-group by fish_obsrvtn_pnt_distinct_id, geom;
+group by fish_obsrvtn_event_id, geom;
 
 create or replace view bcfishpass.observations_ch_co_sk_vw as
 with obs as
 (
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   unnest(species_codes) as species_code,
   unnest(observation_ids) as observation_id,
   unnest(observation_dates) as observation_date,
@@ -143,21 +143,21 @@ select
 from bcfishpass.observations
 )
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   array_to_string(array_agg(species_code), ' ') as species_codes,
   array_to_string(array_agg(observation_id),';') as observation_ids,
   array_to_string(array_agg(observation_date),';') as observation_date,
   geom
 from obs
 where species_code in ('CH','CO','SK')
-group by fish_obsrvtn_pnt_distinct_id, geom;
+group by fish_obsrvtn_event_id, geom;
 
 
 create or replace view bcfishpass.observations_pk_vw as
 with obs as
 (
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   unnest(species_codes) as species_code,
   unnest(observation_ids) as observation_id,
   unnest(observation_dates) as observation_date,
@@ -165,20 +165,20 @@ select
 from bcfishpass.observations
 )
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   array_to_string(array_agg(species_code), ' ') as species_codes,
   array_to_string(array_agg(observation_id),';') as observation_ids,
   array_to_string(array_agg(observation_date),';') as observation_date,
   geom
 from obs
 where species_code = 'PK'
-group by fish_obsrvtn_pnt_distinct_id, geom;
+group by fish_obsrvtn_event_id, geom;
 
 create or replace view bcfishpass.observations_st_vw as
 with obs as
 (
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   unnest(species_codes) as species_code,
   unnest(observation_ids) as observation_id,
   unnest(observation_dates) as observation_date,
@@ -186,20 +186,20 @@ select
 from bcfishpass.observations
 )
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   array_to_string(array_agg(species_code), ' ') as species_codes,
   array_to_string(array_agg(observation_id),';') as observation_ids,
   array_to_string(array_agg(observation_date),';') as observation_date,
   geom
 from obs
 where species_code = 'ST'
-group by fish_obsrvtn_pnt_distinct_id, geom;
+group by fish_obsrvtn_event_id, geom;
 
 create or replace view bcfishpass.observations_wct_vw as
 with obs as
 (
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   unnest(species_codes) as species_code,
   unnest(observation_ids) as observation_id,
   unnest(observation_dates) as observation_date,
@@ -207,11 +207,11 @@ select
 from bcfishpass.observations
 )
 select
-  fish_obsrvtn_pnt_distinct_id,
+  fish_obsrvtn_eventid,
   array_to_string(array_agg(species_code), ' ') as species_codes,
   array_to_string(array_agg(observation_id),';') as observation_ids,
   array_to_string(array_agg(observation_date),';') as observation_date,
   geom
 from obs
 where species_code = 'WCT'
-group by fish_obsrvtn_pnt_distinct_id, geom;
+group by fish_obsrvtn_event_id, geom;
