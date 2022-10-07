@@ -7,12 +7,12 @@ CREATE TABLE bcfishpass.streams_carto_order3gt
   blue_line_key             integer                           ,
   gnis_name                 character varying(80)            ,
   stream_order              integer                           ,
-  access_model_bt           text,
-  access_model_ch_co_sk     text,
-  access_model_ch_co_sk_b   text,
-  access_model_pk           text,
-  access_model_st           text,
-  access_model_wct          text,
+  model_access_bt           text,
+  model_access_ch_co_sk     text,
+  model_access_ch_co_sk_b   text,
+  model_access_pk           text,
+  model_access_st           text,
+  model_access_wct          text,
   geom geometry(LineString,3005)
 );
 
@@ -20,23 +20,23 @@ INSERT INTO bcfishpass.streams_carto_order3gt
   (blue_line_key,
   gnis_name,
   stream_order,
-  access_model_bt,
-  access_model_ch_co_sk,
-  access_model_ch_co_sk_b,
-  access_model_pk,
-  access_model_st,
-  access_model_wct,
+  model_access_bt,
+  model_access_ch_co_sk,
+  model_access_ch_co_sk_b,
+  model_access_pk,
+  model_access_st,
+  model_access_wct,
   geom)
 SELECT
   blue_line_key,
   gnis_name,
   stream_order,
-  access_model_bt,
-  access_model_ch_co_sk,
-  access_model_ch_co_sk_b,
-  access_model_pk,
-  access_model_st,
-  access_model_wct,
+  model_access_bt,
+  model_access_ch_co_sk,
+  model_access_ch_co_sk_b,
+  model_access_pk,
+  model_access_st,
+  model_access_wct,
   (ST_Dump(ST_UNION(ST_Force2D(geom)))).geom as geom
 FROM bcfishpass.streams
 WHERE
@@ -45,12 +45,12 @@ WHERE
 GROUP BY blue_line_key,
   gnis_name,
   stream_order,
-  access_model_bt,
-  access_model_ch_co_sk,
-  access_model_ch_co_sk_b,
-  access_model_pk,
-  access_model_st,
-  access_model_wct;
+  model_access_bt,
+  model_access_ch_co_sk,
+  model_access_ch_co_sk_b,
+  model_access_pk,
+  model_access_st,
+  model_access_wct;
 
 CREATE INDEX ON bcfishpass.streams_carto_order3gt USING gist (geom);
 
@@ -63,12 +63,12 @@ CREATE TABLE bcfishpass.streams_carto_order6gt
   blue_line_key             integer                           ,
   gnis_name                 character varying(80)            ,
   stream_order              integer                           ,
-  access_model_bt           text,
-  access_model_ch_co_sk     text,
-  access_model_ch_co_sk_b   text,
-  access_model_pk           text,
-  access_model_st           text,
-  access_model_wct          text,
+  model_access_bt           text,
+  model_access_ch_co_sk     text,
+  model_access_ch_co_sk_b   text,
+  model_access_pk           text,
+  model_access_st           text,
+  model_access_wct          text,
   geom geometry(LineString,3005)
 );
 
@@ -76,35 +76,35 @@ INSERT INTO bcfishpass.streams_carto_order6gt
   (blue_line_key,
   gnis_name,
   stream_order,
-  access_model_bt,
-  access_model_ch_co_sk,
-  access_model_ch_co_sk_b,
-  access_model_pk,
-  access_model_st,
-  access_model_wct,
+  model_access_bt,
+  model_access_ch_co_sk,
+  model_access_ch_co_sk_b,
+  model_access_pk,
+  model_access_st,
+  model_access_wct,
   geom)
 SELECT
   blue_line_key,
   gnis_name,
   stream_order,
-  access_model_bt,
-  access_model_ch_co_sk,
-  access_model_ch_co_sk_b,
-  access_model_pk,
-  access_model_st,
-  access_model_wct,
+  model_access_bt,
+  model_access_ch_co_sk,
+  model_access_ch_co_sk_b,
+  model_access_pk,
+  model_access_st,
+  model_access_wct,
   st_simplify((ST_Dump(ST_UNION(ST_Force2D(geom)))).geom, 200) as geom
 FROM bcfishpass.streams
 WHERE stream_order >= 6
 GROUP BY blue_line_key,
   gnis_name,
   stream_order,
-  access_model_bt,
-  access_model_ch_co_sk,
-  access_model_ch_co_sk_b,
-  access_model_pk,
-  access_model_st,
-  access_model_wct;
+  model_access_bt,
+  model_access_ch_co_sk,
+  model_access_ch_co_sk_b,
+  model_access_pk,
+  model_access_st,
+  model_access_wct;
 
 CREATE INDEX ON bcfishpass.streams_carto_order6gt USING gist (geom);
 

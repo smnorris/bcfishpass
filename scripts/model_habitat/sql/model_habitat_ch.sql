@@ -6,14 +6,14 @@
 -- RESET OUTPUTS
 -- ----------------------------------------------
 UPDATE bcfishpass.streams s
-SET spawning_model_ch = NULL
-WHERE spawning_model_ch IS NOT NULL
+SET model_spawning_ch = NULL
+WHERE model_spawning_ch IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET rearing_model_ch = NULL
+SET model_rearing_ch = NULL
 WHERE watershed_group_code = :'wsg'
-AND rearing_model_ch IS NOT NULL;
+AND model_rearing_ch IS NOT NULL;
 
 
 -- ----------------------------------------------
@@ -34,20 +34,20 @@ model AS
     s.localcode_ltree,
     s.channel_width,
     s.gradient,
-    s.access_model_ch_co_sk,
+    s.model_access_ch_co_sk,
     CASE
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= ch.spawn_gradient_max AND
         (s.channel_width > ch.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         s.channel_width <= ch.spawn_channel_width_max AND
-        s.access_model_ch_co_sk IS NOT NULL  -- note: this also ensures only wsg where ch occur are included
+        s.model_access_ch_co_sk IS NOT NULL  -- note: this also ensures only wsg where ch occur are included
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= ch.spawn_gradient_max AND
         s.mad_m3s > ch.spawn_mad_min AND
         s.mad_m3s <= ch.spawn_mad_max AND
-        s.access_model_ch_co_sk IS NOT NULL
+        s.model_access_ch_co_sk IS NOT NULL
       THEN true
     END AS spawn_ch
   FROM bcfishpass.streams s
@@ -65,7 +65,7 @@ model AS
 
 UPDATE bcfishpass.streams s
 SET
-  spawning_model_ch = model.spawn_ch
+  model_spawning_ch = model.spawn_ch
 FROM model
 WHERE s.segmented_stream_id = model.segmented_stream_id;
 
@@ -89,8 +89,8 @@ WITH rearing AS
   ON h.species_code = 'CH'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.spawning_model_ch IS TRUE AND          -- on spawning habitat
-    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
+    s.model_spawning_ch IS TRUE AND          -- on spawning habitat
+    s.model_access_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -118,7 +118,7 @@ WITH rearing AS
 )
 
 UPDATE bcfishpass.streams s
-SET rearing_model_ch = TRUE
+SET model_rearing_ch = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing);
 
 
@@ -146,7 +146,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
+    s.model_access_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -198,7 +198,7 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
-  WHERE spawn.spawning_model_ch IS TRUE
+  WHERE spawn.model_spawning_ch IS TRUE
   AND spawn.watershed_group_code = :'wsg'
 ),
 
@@ -214,7 +214,7 @@ rearing_ids AS
 
 -- set rearing as true for these streams
 UPDATE bcfishpass.streams s
-SET rearing_model_ch = TRUE
+SET model_rearing_ch = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
 
 
@@ -240,7 +240,7 @@ WITH rearing AS
   ON h.species_code = 'CH'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.access_model_ch_co_sk IS NOT NULL AND  -- accessibility check
+    s.model_access_ch_co_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -303,7 +303,7 @@ downstream AS
     s.localcode_ltree,
     s.downstream_route_measure,
     s.gradient,
-    s.spawning_model_ch,
+    s.model_spawning_ch,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
@@ -327,7 +327,7 @@ nearest_spawn AS
   SELECT DISTINCT ON (cid)
   *
   FROM downstream_within_10k
-  WHERE spawning_model_ch IS TRUE
+  WHERE model_spawning_ch IS TRUE
   ORDER BY cid, wscode_ltree desc, downstream_route_measure desc
 ),
 
@@ -347,7 +347,7 @@ valid_rearing AS
   SELECT
     a.cid,
     a.row_number as row_spawn,
-    a.spawning_model_ch,
+    a.model_spawning_ch,
     b.row_number as row_barrier,
     b.gradient
   FROM nearest_spawn a
@@ -357,7 +357,7 @@ valid_rearing AS
 )
 
 UPDATE bcfishpass.streams
-SET rearing_model_ch = TRUE
+SET model_rearing_ch = TRUE
 WHERE segmented_stream_id IN
 (
   SELECT a.segmented_stream_id

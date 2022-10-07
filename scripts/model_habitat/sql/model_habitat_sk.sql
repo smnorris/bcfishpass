@@ -8,13 +8,13 @@
 
 -- reset
 UPDATE bcfishpass.streams s
-SET spawning_model_sk = NULL
-WHERE spawning_model_sk IS NOT NULL
+SET model_spawning_sk = NULL
+WHERE model_spawning_sk IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET rearing_model_sk = NULL
-WHERE rearing_model_sk IS NOT NULL
+SET model_rearing_sk = NULL
+WHERE model_rearing_sk IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 
@@ -36,7 +36,7 @@ WITH rearing AS
   ON s.waterbody_key = res.waterbody_key
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.access_model_ch_co_sk IS NOT NULL AND  -- this takes care of watershed selection as well
+    s.model_access_ch_co_sk IS NOT NULL AND  -- this takes care of watershed selection as well
      (
           lk.area_ha >= h.rear_lake_ha_min OR  -- lakes
           res.area_ha >= h.rear_lake_ha_min    -- reservoirs
@@ -44,7 +44,7 @@ WITH rearing AS
 )
 
 UPDATE bcfishpass.streams s
-SET rearing_model_sk = TRUE
+SET model_rearing_sk = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing);
 
 -- ---------------------
@@ -60,7 +60,7 @@ WITH rearing_minimums AS
     s.downstream_route_measure,
     s.blue_line_key
   FROM bcfishpass.streams s
-  WHERE rearing_model_sk = True
+  WHERE model_rearing_sk = True
   AND s.watershed_group_code = :'wsg'
   ORDER BY s.waterbody_key, s.wscode_ltree, s.localcode_ltree, s.downstream_route_measure
 ),
@@ -140,7 +140,7 @@ dnstr_spawning AS
 )
 
 UPDATE bcfishpass.streams
-SET spawning_model_sk = TRUE
+SET model_spawning_sk = TRUE
 WHERE segmented_stream_id IN (SELECT DISTINCT segmented_stream_id FROM dnstr_spawning WHERE spawn_sk IS TRUE);
 
 
@@ -204,7 +204,7 @@ spawn_upstream AS
     sp.wscode_ltree,
     sp.localcode_ltree
   )
-  WHERE r.rearing_model_sk IS TRUE
+  WHERE r.model_rearing_sk IS TRUE
   AND r.watershed_group_code = :'wsg'
 ),
 
@@ -260,7 +260,7 @@ ids AS
 
 -- finally, apply update based on above ids
 UPDATE bcfishpass.streams s
-SET spawning_model_sk = TRUE
+SET model_spawning_sk = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM ids);
 
 
@@ -301,9 +301,9 @@ WITH spawn AS
     (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
   )
   AND s.watershed_group_code = 'HORS'
-  AND s.access_model_ch_co_sk IS NOT NULL
+  AND s.model_access_ch_co_sk IS NOT NULL
 )
 
 UPDATE bcfishpass.streams s
-SET spawning_model_sk = TRUE
+SET model_spawning_sk = TRUE
 WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM spawn);

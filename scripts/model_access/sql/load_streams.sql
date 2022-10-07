@@ -4,6 +4,8 @@
 -- - in BC
 -- - not a side channel of unknown location
 -- - in the watershed groups of interest
+DELETE FROM bcfishpass.streams WHERE watershed_group_code = :'wsg';
+
 INSERT INTO bcfishpass.streams
  (linear_feature_id,
   edge_type,

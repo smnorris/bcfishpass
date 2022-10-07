@@ -27,7 +27,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass22_km                 double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass30_km                 double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS access_model_bt                                    text,
+  ADD COLUMN IF NOT EXISTS model_access_bt                                    text,
   ADD COLUMN IF NOT EXISTS bt_network_km                                      double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS bt_stream_km                                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS bt_lakereservoir_ha                                double precision DEFAULT 0,
@@ -51,7 +51,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS bt_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS bt_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS access_model_ch_co_sk                                    text,
+  ADD COLUMN IF NOT EXISTS model_access_ch_co_sk                                    text,
   ADD COLUMN IF NOT EXISTS ch_co_sk_network_km                                      double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_co_sk_stream_km                                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_co_sk_lakereservoir_ha                                double precision DEFAULT 0,
@@ -75,7 +75,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS ch_co_sk_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_co_sk_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS access_model_pk                                    text,
+  ADD COLUMN IF NOT EXISTS model_access_pk                                    text,
   ADD COLUMN IF NOT EXISTS pk_network_km                                      double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS pk_stream_km                                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS pk_lakereservoir_ha                                double precision DEFAULT 0,
@@ -99,7 +99,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS pk_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS access_model_st                                          text,
+  ADD COLUMN IF NOT EXISTS model_access_st                                          text,
   ADD COLUMN IF NOT EXISTS st_network_km                                            double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_stream_km                                             double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_lakereservoir_ha                                      double precision DEFAULT 0,
@@ -123,7 +123,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS st_belowupstrbarriers_slopeclass22_km                    double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_belowupstrbarriers_slopeclass30_km                    double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS access_model_wct                                         text,
+  ADD COLUMN IF NOT EXISTS model_access_wct                                         text,
   ADD COLUMN IF NOT EXISTS wct_network_km                                           double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_stream_km                                            double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_lakereservoir_ha                                     double precision DEFAULT 0,
@@ -217,7 +217,7 @@ COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass15_
 COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass22_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.total_belowupstrbarriers_slopeclass30_km IS 'Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
 
-COMMENT ON COLUMN bcfishpass.:point_table.access_model_bt IS 'Modelled accessibility to Bull Trout (25% max)';
+COMMENT ON COLUMN bcfishpass.:point_table.model_access_bt IS 'Modelled accessibility to Bull Trout (25% max)';
 COMMENT ON COLUMN bcfishpass.:point_table.bt_network_km IS 'Bull Trout model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.bt_stream_km IS 'Bull Trout model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN bcfishpass.:point_table.bt_lakereservoir_ha IS 'Bull Trout model, total area lakes and reservoirs potentially accessible upstream of point ';
@@ -241,7 +241,7 @@ COMMENT ON COLUMN bcfishpass.:point_table.bt_belowupstrbarriers_slopeclass15_km 
 COMMENT ON COLUMN bcfishpass.:point_table.bt_belowupstrbarriers_slopeclass22_km IS 'Bull Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.bt_belowupstrbarriers_slopeclass30_km IS 'Bull Trout model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
 
-COMMENT ON COLUMN bcfishpass.:point_table.access_model_ch_co_sk IS 'Modelled accessibility to Chinook/Coho/Sockeye Salmon (15% max)';
+COMMENT ON COLUMN bcfishpass.:point_table.model_access_ch_co_sk IS 'Modelled accessibility to Chinook/Coho/Sockeye Salmon (15% max)';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_network_km IS 'Chinook/Coho/Sockeye salmon model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_stream_km IS 'Chinook/Coho/Sockeye salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_lakereservoir_ha IS 'Chinook/Coho/Sockeye salmon model, total area lakes and reservoirs potentially accessible upstream of point ';
@@ -265,7 +265,7 @@ COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass22_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.ch_co_sk_belowupstrbarriers_slopeclass30_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
 
-COMMENT ON COLUMN bcfishpass.:point_table.access_model_pk IS 'Modelled accessibility to Pink Salmon (12% max)';
+COMMENT ON COLUMN bcfishpass.:point_table.model_access_pk IS 'Modelled accessibility to Pink Salmon (12% max)';
 COMMENT ON COLUMN bcfishpass.:point_table.pk_network_km IS 'Chinook/Coho/Sockeye salmon model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.pk_stream_km IS 'Chinook/Coho/Sockeye salmon model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN bcfishpass.:point_table.pk_lakereservoir_ha IS 'Chinook/Coho/Sockeye salmon model, total area lakes and reservoirs potentially accessible upstream of point ';
@@ -289,7 +289,7 @@ COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass15_km 
 COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass22_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.pk_belowupstrbarriers_slopeclass30_km IS 'Chinook/Coho/Sockeye salmon model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
 
-COMMENT ON COLUMN bcfishpass.:point_table.access_model_st IS 'Modelled accessibility to Steelhead (20% max)';
+COMMENT ON COLUMN bcfishpass.:point_table.model_access_st IS 'Modelled accessibility to Steelhead (20% max)';
 COMMENT ON COLUMN bcfishpass.:point_table.st_network_km IS 'Steelhead model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.st_stream_km IS 'Steelhead model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN bcfishpass.:point_table.st_lakereservoir_ha IS 'Steelhead model, total area lakes and reservoirs potentially accessible upstream of point ';
@@ -312,7 +312,7 @@ COMMENT ON COLUMN bcfishpass.:point_table.st_belowupstrbarriers_slopeclass08_km 
 COMMENT ON COLUMN bcfishpass.:point_table.st_belowupstrbarriers_slopeclass15_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%';
 COMMENT ON COLUMN bcfishpass.:point_table.st_belowupstrbarriers_slopeclass22_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%';
 COMMENT ON COLUMN bcfishpass.:point_table.st_belowupstrbarriers_slopeclass30_km IS 'Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%';
-COMMENT ON COLUMN bcfishpass.:point_table.access_model_wct IS 'Modelled accessibility to West Slope Cutthroat Trout (20% max or downstream of known WCT observation)';     ;
+COMMENT ON COLUMN bcfishpass.:point_table.model_access_wct IS 'Modelled accessibility to West Slope Cutthroat Trout (20% max or downstream of known WCT observation)';     ;
 COMMENT ON COLUMN bcfishpass.:point_table.wct_network_km IS 'Westslope Cuthroat Trout model, total length of stream network potentially accessible upstream of point';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_stream_km IS 'Westslope Cuthroat Trout model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)';
 COMMENT ON COLUMN bcfishpass.:point_table.wct_lakereservoir_ha IS 'Westslope Cuthroat Trout model, total area lakes and reservoirs potentially accessible upstream of point ';

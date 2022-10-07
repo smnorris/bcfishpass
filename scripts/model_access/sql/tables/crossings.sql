@@ -160,15 +160,15 @@ comment on column bcfishpass.crossings.observedspp_upstr IS 'Fish species observ
 comment on column bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
 
 -- index for speed
-create index if not exists crossings_dam_id_idx on bcfishpass.crossings (dam_id);
-create index if not exists crossings_stream_crossing_id_idx on bcfishpass.crossings (stream_crossing_id);
-create index if not exists crossings_modelled_crossing_id_idx on bcfishpass.crossings (modelled_crossing_id);
-create index if not exists crossings_linear_feature_id_idx on bcfishpass.crossings (linear_feature_id);
-create index if not exists crossings_blk_idx on bcfishpass.crossings (blue_line_key);
-create index if not exists crossings_wsk_idx on bcfishpass.crossings (watershed_key);
-create index if not exists crossings_wsgcode_idx on bcfishpass.crossings (watershed_group_code);
-create index if not exists crossings_wscode_gidx on bcfishpass.crossings using gist (wscode_ltree);
-create index if not exists crossings_wscode_bidx on bcfishpass.crossings using btree (wscode_ltree);
-create index if not exists crossings_localcode_gidx on bcfishpass.crossings using gist (localcode_ltree);
-create index if not exists crossings_localcode_bidx on bcfishpass.crossings using btree (localcode_ltree);
-create index if not exists crossings_geom_idx on bcfishpass.crossings using gist (geom);
+create index crossings_dam_id_idx on bcfishpass.crossings (dam_id);
+create index crossings_stream_crossing_id_idx on bcfishpass.crossings (stream_crossing_id);
+create index crossings_modelled_crossing_id_idx on bcfishpass.crossings (modelled_crossing_id);
+create index crossings_linear_feature_id_idx on bcfishpass.crossings (linear_feature_id);
+create index crossings_blk_idx on bcfishpass.crossings (blue_line_key);
+create index crossings_wsk_idx on bcfishpass.crossings (watershed_key);
+create index crossings_wsgcode_idx on bcfishpass.crossings (watershed_group_code);
+create index crossings_wscode_gidx on bcfishpass.crossings using gist (wscode_ltree);
+create index crossings_wscode_bidx on bcfishpass.crossings using btree (wscode_ltree);
+create index crossings_localcode_gidx on bcfishpass.crossings using gist (localcode_ltree);
+create index crossings_localcode_bidx on bcfishpass.crossings using btree (localcode_ltree);
+create index crossings_geom_idx on bcfishpass.crossings using gist (geom);

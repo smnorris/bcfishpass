@@ -113,8 +113,8 @@ ON s.blue_line_key = p.blue_line_key
 WHERE
   s.edge_type in (1000,1100,2000,2300) and
   (
-    s.access_model_ch_co_sk is not null or
-    s.access_model_st is not null
+    s.model_access_ch_co_sk is not null or
+    s.model_access_st is not null
   ) and
   p.stream_order_parent > 5 and
   s.gradient <= .01 and
@@ -141,28 +141,28 @@ ON s.blue_line_key = p.blue_line_key
 WHERE
   (
     (
-      access_model_st is not null or
-      access_model_ch_co_sk is not null or
-      access_model_pk is not null or
-      access_model_cm is not null
+      model_access_st is not null or
+      model_access_ch_co_sk is not null or
+      model_access_pk is not null or
+      model_access_cm is not null
     )
     and stream_order >= 7
   )
   or
   (
     (
-    spawning_model_ch is true or
-    spawning_model_co is true or
-    spawning_model_sk is true or
-    spawning_model_st is true or
-    spawning_model_pk is true or
-    spawning_model_cm is true or
-    rearing_model_ch is true or
-    rearing_model_co is true or
-    rearing_model_sk is true or
-    rearing_model_pk is true or
-    rearing_model_cm is true or
-    rearing_model_st is true
+    model_spawning_ch is true or
+    model_spawning_co is true or
+    model_spawning_sk is true or
+    model_spawning_st is true or
+    model_spawning_pk is true or
+    model_spawning_cm is true or
+    model_rearing_ch is true or
+    model_rearing_co is true or
+    model_rearing_sk is true or
+    model_rearing_pk is true or
+    model_rearing_cm is true or
+    model_rearing_st is true
     )
     and
     (
@@ -191,10 +191,10 @@ WHERE
   and gradient < .04
   and
   (
-    access_model_ch_co_sk is not null or
-    access_model_st is not null or 
-    access_model_pk is not null or
-    access_model_cm is not null
+    model_access_ch_co_sk is not null or
+    model_access_st is not null or 
+    model_access_pk is not null or
+    model_access_cm is not null
   );
 
 
@@ -217,7 +217,7 @@ with xings as
   from bcfishpass.crossings
   where
     crossing_feature_type = 'RAIL' and
-    (access_model_ch_co_sk is not null or access_model_st is not null or access_model_pk is not null or access_model_cm is not null) and
+    (model_access_ch_co_sk is not null or model_access_st is not null or model_access_pk is not null or model_access_cm is not null) and
     (
       barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
       or crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -247,22 +247,22 @@ on FWA_Downstream(
       1
     )
 where
-(s.access_model_st is not null OR s.access_model_ch_co_sk is not null)
+(s.model_access_st is not null OR s.model_access_ch_co_sk is not null)
 and
 (
   (
-    s.spawning_model_ch is true or
-    s.spawning_model_co is true or
-    s.spawning_model_sk is true or
-    s.spawning_model_st is true or
-    s.spawning_model_pk is true or
-    s.spawning_model_cm is true or
-    s.rearing_model_ch is true or
-    s.rearing_model_co is true or
-    s.rearing_model_sk is true or
-    s.rearing_model_cm is true or
-    s.rearing_model_pk is true or
-    s.rearing_model_st is true
+    s.model_spawning_ch is true or
+    s.model_spawning_co is true or
+    s.model_spawning_sk is true or
+    s.model_spawning_st is true or
+    s.model_spawning_pk is true or
+    s.model_spawning_cm is true or
+    s.model_rearing_ch is true or
+    s.model_rearing_co is true or
+    s.model_rearing_sk is true or
+    s.model_rearing_cm is true or
+    s.model_rearing_pk is true or
+    s.model_rearing_st is true
   )
   or s.stream_order >= 7
 )

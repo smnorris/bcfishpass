@@ -4,8 +4,8 @@
 
 -- first, set to null
 UPDATE bcfishpass.streams s
-SET access_model_ch_co_sk = NULL
-WHERE access_model_ch_co_sk IS NOT NULL
+SET model_access_ch_co_sk = NULL
+WHERE model_access_ch_co_sk IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 
@@ -24,7 +24,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'POTENTIALLY ACCESSIBLE'
@@ -36,7 +36,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
@@ -49,7 +49,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'ACCESSIBLE'
@@ -62,25 +62,25 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS access_model_ch_co_sk
+    END AS model_access_ch_co_sk
   FROM bcfishpass.streams s
   WHERE s.watershed_group_code = :'wsg'
 )
 
 UPDATE bcfishpass.streams s
 SET
-  access_model_ch_co_sk = m.access_model_ch_co_sk
+  model_access_ch_co_sk = m.model_access_ch_co_sk
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;
 
 -- note streams with observations upstream
 --UPDATE bcfishpass.streams
---SET access_model_ch_co_sk = access_model_ch_co_sk||' - OBSRVTN UPSTR'
+--SET model_access_ch_co_sk = model_access_ch_co_sk||' - OBSRVTN UPSTR'
 --WHERE
---  access_model_ch_co_sk is not null and
+--  model_access_ch_co_sk is not null and
 --  obsrvtn_species_codes_upstr && ARRAY['CH','CO','SK'] and
 --  watershed_group_code = :'wsg';

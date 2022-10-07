@@ -4,23 +4,23 @@
 
 -- first, set to null
 UPDATE bcfishpass.streams s
-SET access_model_ch_co_sk = NULL
-WHERE access_model_ch_co_sk IS NOT NULL
+SET model_access_ch_co_sk = NULL
+WHERE model_access_ch_co_sk IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET access_model_ch_co_sk_b = NULL
-WHERE access_model_ch_co_sk_b IS NOT NULL
+SET model_access_ch_co_sk_b = NULL
+WHERE model_access_ch_co_sk_b IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET access_model_st = NULL
-WHERE access_model_st IS NOT NULL
+SET model_access_st = NULL
+WHERE model_access_st IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 UPDATE bcfishpass.streams s
-SET access_model_wct = NULL
-WHERE access_model_wct IS NOT NULL
+SET model_access_wct = NULL
+WHERE model_access_wct IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 
@@ -81,7 +81,7 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS access_model_ch_co_sk,
+    END AS model_access_ch_co_sk,
 
     -- salmon accessibility, with barriers cancelled by observations upstream
     CASE
@@ -135,7 +135,7 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS access_model_ch_co_sk_b,
+    END AS model_access_ch_co_sk_b,
 
       -- steelhead accessibility
     CASE
@@ -189,7 +189,7 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS access_model_st,
+    END AS model_access_st,
 
     -- westslope cutthroat trout
     CASE
@@ -243,16 +243,16 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS access_model_wct
+    END AS model_access_wct
   FROM bcfishpass.streams s
   WHERE s.watershed_group_code = :'wsg'
 )
 
 UPDATE bcfishpass.streams s
 SET 
-  access_model_ch_co_sk = m.access_model_ch_co_sk,
-  access_model_ch_co_sk_b = m.access_model_ch_co_sk_b,
-  access_model_st = m.access_model_st,
-  access_model_wct = m.access_model_wct
+  model_access_ch_co_sk = m.model_access_ch_co_sk,
+  model_access_ch_co_sk_b = m.model_access_ch_co_sk_b,
+  model_access_st = m.model_access_st,
+  model_access_wct = m.model_access_wct
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;

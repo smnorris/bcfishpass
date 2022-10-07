@@ -4,9 +4,9 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 # watersheds for testing
-#WSG=BULK
+WSG=BULK HORS LNIC ELKR
 
 
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
@@ -171,7 +171,8 @@ scripts/discharge/.make/discharge:
 # -----
 scripts/model_access/.make/model_access: .make/parameters  \
 	scripts/channel_width/.make/channel_width \
-	scripts/discharge/.make/discharge
+	scripts/discharge/.make/discharge \
+	.make/access_setup
 	cd scripts/model_access; make
 
 # -----

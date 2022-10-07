@@ -4,8 +4,8 @@
 
 -- first, set to null
 UPDATE bcfishpass.streams s
-SET access_model_wct = NULL
-WHERE access_model_wct IS NOT NULL
+SET model_access_wct = NULL
+WHERE model_access_wct IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 
@@ -66,20 +66,20 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS access_model_wct
+    END AS model_access_wct
   FROM bcfishpass.streams s
   WHERE s.watershed_group_code = :'wsg'
 )
 
 UPDATE bcfishpass.streams s
 SET 
-  access_model_wct = m.access_model_wct
+  model_access_wct = m.model_access_wct
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;
 
 --UPDATE bcfishpass.streams
---SET access_model_wct = access_model_wct||' - OBSRVTN UPSTR'
+--SET model_access_wct = model_access_wct||' - OBSRVTN UPSTR'
 --WHERE
---  access_model_wct is not null and
+--  model_access_wct is not null and
 --  obsrvtn_species_codes_upstr && ARRAY['WCT'] and
 --  watershed_group_code = :'wsg';

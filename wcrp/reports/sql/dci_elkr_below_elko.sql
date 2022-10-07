@@ -12,15 +12,15 @@ WITH columbia_dams AS
 lengths_a AS
 (SELECT
     SUM(ST_Length(geom)) FILTER (
-        WHERE access_model_wct = 'ACCESSIBLE' OR 
+        WHERE model_access_wct = 'ACCESSIBLE' OR 
               barriers_anthropogenic_dnstr = (select barriers_anthropogenic_dnstr from columbia_dams)
         ) as length_accessible,
     SUM(ST_Length(geom)) FILTER (
-        WHERE access_model_wct IN ('POTENTIALLY ACCESSIBLE', 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM') AND
+        WHERE model_access_wct IN ('POTENTIALLY ACCESSIBLE', 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM') AND
               barriers_anthropogenic_dnstr != (select barriers_anthropogenic_dnstr from columbia_dams) and barriers_anthropogenic_dnstr is not null -- just in case dnstr barriers are not loaded
         ) as length_inaccessible
   FROM bcfishpass.streams
-  WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
+  WHERE (model_rearing_wct IS TRUE OR model_spawning_wct IS TRUE)
   AND wscode_ltree <@ '300.625474.584724'::ltree  -- on the elk system and not above elko dam
   AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree)
 ),
@@ -33,7 +33,7 @@ segments AS
     barriers_anthropogenic_dnstr,
     SUM(ST_Length(geom)) as length_segment
   FROM bcfishpass.streams
-  WHERE (rearing_model_wct IS TRUE OR spawning_model_wct IS TRUE)
+  WHERE (model_rearing_wct IS TRUE OR model_spawning_wct IS TRUE)
   AND wscode_ltree <@ '300.625474.584724'::ltree -- on the elk system and not above elko dam
   AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- below Elko Dam
   GROUP BY watershed_group_code, barriers_anthropogenic_dnstr

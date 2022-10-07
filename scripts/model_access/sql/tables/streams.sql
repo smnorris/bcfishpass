@@ -48,6 +48,10 @@ CREATE TABLE bcfishpass.streams
   barriers_pscis_dnstr text[],
   barriers_remediated_dnstr text[],
 
+  -- observations upstream
+  obsrvtn_event_upstr bigint[],
+  obsrvtn_species_codes_upstr text[],
+
   -- definite barriers downstream (per spp scenario)
   barriers_ch_co_sk_dnstr text[],
   barriers_ch_co_sk_b_dnstr text[],
@@ -56,36 +60,41 @@ CREATE TABLE bcfishpass.streams
   barriers_wct_dnstr text[],
   barriers_gr_dnstr text[],
   barriers_rb_dnstr text[],
-
-  -- observations upstream
-  obsrvtn_event_upstr bigint[],
-  obsrvtn_species_codes_upstr text[],
-
-  -- access models
-  access_model_ch_co_sk text,
-  access_model_ch_co_sk_b text,
-  access_model_st text,
-  access_model_wct text,
-  access_model_bt text,
-  access_model_gr text,
-  access_model_rb text,
-
-  -- habitat models
-  spawning_model_ch boolean,
-  spawning_model_cm boolean,
-  spawning_model_co boolean,
-  spawning_model_pk boolean,
-  spawning_model_sk boolean,
-  spawning_model_st boolean,
-  spawning_model_wct boolean,
-  spawning_model_bt boolean,
   
-  rearing_model_ch boolean,
-  rearing_model_co boolean,
-  rearing_model_sk boolean,
-  rearing_model_st boolean,
-  rearing_model_wct boolean,
-  rearing_model_bt boolean,
+  -- access models
+  model_access_bt text,
+  model_access_gr text,
+  model_access_ch_co_sk text,
+  model_access_ch_co_sk_b text,
+  model_access_rb text,
+  model_access_st text,
+  model_access_wct text,
+  
+  -- habitat models
+  model_spawning_bt boolean,
+  model_spawning_ch boolean,
+  model_spawning_cm boolean,
+  model_spawning_co boolean,
+  model_spawning_pk boolean,
+  model_spawning_sk boolean,
+  model_spawning_st boolean,
+  model_spawning_wct boolean,
+  model_rearing_bt boolean,
+  model_rearing_ch boolean,
+  model_rearing_co boolean,
+  model_rearing_sk boolean,
+  model_rearing_st boolean,
+  model_rearing_wct boolean,
 
   geom geometry(LineStringZM,3005)
 );
+
+CREATE INDEX streams_lfeatid_idx ON bcfishpass.streams (linear_feature_id);
+CREATE INDEX streams_blkey_idx ON bcfishpass.streams (blue_line_key);
+CREATE INDEX streams_wsg_idx ON bcfishpass.streams (watershed_group_code);
+CREATE INDEX streams_wbkey_idx ON bcfishpass.streams (waterbody_key);
+CREATE INDEX streams_wsc_gidx ON bcfishpass.streams USING GIST (wscode_ltree);
+CREATE INDEX streams_wsc_bidx ON bcfishpass.streams USING BTREE (wscode_ltree);
+CREATE INDEX streams_lc_gidx ON bcfishpass.streams USING GIST (localcode_ltree);
+CREATE INDEX streams_lc_bidx ON bcfishpass.streams USING BTREE (localcode_ltree);
+CREATE INDEX streams_geom_idx ON bcfishpass.streams USING GIST (geom);
