@@ -2,7 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG=BULK HORS
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 
 # targets are listed here to create 'static pattern rules' - so they do not get ignored as intermediate steps
@@ -21,7 +21,6 @@ all: .make/model_access
 
 clean: 
 	rm -Rf .make
-	# remove tables?
 
 # -----
 # LOAD BARRIER TYPE TABLES
@@ -38,6 +37,33 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
 	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"
 	# load data to barrier table in parallel
 	parallel $(PSQL) -f sql/barriers_$(BARRIERTYPE).sql -v wsg={1} ::: $(WSG)
+	touch $@
+
+
+# ------------
+# INDEX CROSSINGS
+# ------------
+# with table barriers_anthropogenic created above, we can now index the crossings table,
+# based anthropogenic barriers upstream/downstream (plus other crossings upstream/downstream)
+.make/index_crossings: .make/barriers_anthropogenic
+	python upstr_dnstr_ids.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id crossings_dnstr
+	python upstr_dnstr_ids.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
+	python upstr_dnstr_ids.py add-upstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_upstr
+	$(PSQL) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_dnstr_count integer"
+	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_dnstr_count = array_length(barriers_anthropogenic_dnstr, 1) WHERE barriers_anthropogenic_dnstr IS NOT NULL";
+	$(PSQL) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_upstr_count integer"
+	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_upstr_count = array_length(barriers_anthropogenic_upstr, 1) WHERE barriers_anthropogenic_upstr IS NOT NULL";
+	# document the new columns
+	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.crossings_dnstr IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
+	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
+	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr_count IS 'A count of the barrier crossings downstream of the given crossing';"
+	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
+	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';"
+
+	# also index the barriers_anthropogenic table
+	python upstr_dnstr_ids.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
+	$(PSQL) -c "VACUUM ANALYZE bcfishpass.crossings"
+	$(PSQL) -c "VACUUM ANALYZE bcfishpass.barriers_anthropogenic"
 	touch $@
 
 
@@ -141,5 +167,5 @@ $(MODEL_ACCESS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/br
 	touch $@
 
 # a single output target for root makefile
-.make/model_access: $(MODEL_ACCESS)
+.make/model_access: $(MODEL_ACCESS) .make/index_crossings
 	touch $@

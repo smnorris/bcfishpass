@@ -4,9 +4,9 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 
-#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 # watersheds for testing
-WSG=BULK
+#WSG=BULK
 
 
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
@@ -23,21 +23,9 @@ qa: $(QA_OUTPUTS)
 
 wcrp: $(WCRP_OUTPUTS)
 
-# remove all barrier tables/targets
-clean_barriers:
-	rm -Rf $(wildcard .make/barriers_*)
-	for barriertype in $(BARRIERS) ; do \
-		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL) -v table=barriers_$$barriertype ; \
-	done
-
 # remove all access model tables/targets
 clean_access:
-	rm -Rf $(wildcard .make/broken_*)
-	rm -Rf $(wildcard .make/breakpts_*)
 	rm -rf .make/update_access
-	for barriertype in $(SPPGROUPS) ; do \
-		echo "DROP TABLE IF EXISTS bcfishpass.:table" | $(PSQL) -v table=barriers_$$barriertype ; \
-	done
 
 # Remove model make targets
 clean:
@@ -96,7 +84,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	touch $@
 
 # ------
-# ACCESS MODEL SETUP - load functions, create empty tables
+# ACCESS MODEL DB SETUP - load functions, create empty tables
 # ------
 .make/access_setup: $(wildcard scripts/model_access/sql/functions/*sql) \
 	$(wildcard scripts/model_access/sql/tables/*sql) 
@@ -107,8 +95,10 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	touch $@
 
 # -- load parameters
-.make/parameters:  $(wildcard parameters/*csv) 
-	./scripts/misc/load_csv.sh $<
+.make/parameters: $(wildcard parameters/*csv) 
+	for csv in $? ; do \
+		./scripts/misc/load_csv.sh $$csv ; \
+	done
 	touch $@
 
 # -- required by crossings script
@@ -184,71 +174,19 @@ scripts/model_access/.make/model_access: .make/parameters  \
 	scripts/discharge/.make/discharge
 	cd scripts/model_access; make
 
-
-.index_crossings: .make/barriers_anthropogenic
-	# index crossings table based on upstream/downstream crossings
-	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id crossings_dnstr
-	cd scripts/model ; python bcfishpass.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
-	cd scripts/model ; python bcfishpass.py add-upstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_upstr
-	$(PSQL) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_dnstr_count integer"
-	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_dnstr_count = array_length(barriers_anthropogenic_dnstr, 1) WHERE barriers_anthropogenic_dnstr IS NOT NULL";
-	$(PSQL) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_upstr_count integer"
-	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_upstr_count = array_length(barriers_anthropogenic_upstr, 1) WHERE barriers_anthropogenic_upstr IS NOT NULL";
-	# document these new columns
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.crossings_dnstr IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr_count IS 'A count of the barrier crossings downstream of the given crossing';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';"
-
-	# also index barriers_anthropogenic
-	cd scripts/model; python bcfishpass.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
-	$(PSQL) -c "VACUUM ANALYZE bcfishpass.crossings"
-	$(PSQL) -c "VACUUM ANALYZE bcfishpass.barriers_anthropogenic"
-	touch $@
+# -----
+# HABITAT MODEL
+# -----
+scripts/model_habitat/.make/model_habitat: data/user_habitat_classification.csv \
+	scripts/model_access/.make/model_access
+	./scripts/misc/load_csv.sh $< # load manual habitat classification
+	cd scripts/model_habitat; make
 
 # run qa queries
 qa/%.csv: scripts/qa/sql/%.sql .update_access
 	mkdir -p qa
 	psql2csv $(DATABASE_URL) < $< > $@
 
-
-
-# ***********************************************
-# **                                           **
-# **      CREATE/UPDATE HABITAT MODEL          **
-# **                                           **
-# ***********************************************
-
-
-# -----
-# RUN HABITAT MODEL
-# -----
-.model_habitat: .update_access .user_habitat_classification .param_habitat
-	# first, ensure the spatial index gets used, 
-	# spatial clustering in rearing queries is basically non-functional without it
-	$(PSQL) -c "VACUUM ANALYZE bcfishpass.streams"
-	
-	# run per-species models
-	#cat .wsg_to_refresh | sort | uniq | parallel --jobs 4 --no-run-if-empty $(PSQL) -f scripts/model/sql/model_habitat_rearing_1.sql -v wsg={1}
-	for wsg in $(WSG) ; do \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_bt.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_ch.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_cm.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_co.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_pk.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_sk.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_st.sql -v wsg=$$wsg ; \
-		set -e ; $(PSQL) -f scripts/model/sql/model_habitat_wct.sql -v wsg=$$wsg ; \
-	done
-
-	# override the model where specified by manual_habitat_classification, requires first creating endpoints & breaking the streams
-	$(PSQL) -f scripts/model/sql/user_habitat_classification_endpoints.sql
-	for wsg in $(WSG) ; do \
-		set -e ; $(PSQL) -f scripts/model/sql/break_streams_wrapper.sql -v wsg=$$wsg -v point_table=user_habitat_classification_endpoints ; \
-	done
-	$(PSQL) -f scripts/model/sql/user_habitat_classification.sql
-	touch $@
 
 # -----
 # REPORT - ADD VARIOUS UPSTR/DNSTR SUMMARY COLUMNS, CREATE SUMMARY REPORTS
