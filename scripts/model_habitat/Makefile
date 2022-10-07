@@ -13,12 +13,12 @@ clean:
 
 # ensure indexes are warm and ready, habitat connectivity queries are far too slow without them.
 .make/streams: 
+	mkdir -p .make
 	$(PSQL) -c "VACUUM ANALYZE bcfishpass.streams"
 	touch $@
 
 # run per-species habitat queries
 $(SPP): .make/model_habitat_%: sql/model_habitat_%.sql .make/streams
-	mkdir -p .make
 	$(eval SPP=$(subst .make/model_habitat_,,$@))
 	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f sql/model_habitat_$(SPP).sql -v wsg=$$wsg ; \

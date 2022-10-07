@@ -90,14 +90,14 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	$(wildcard scripts/model_access/sql/tables/*sql) 
 	mkdir -p .make
 	for sql in $^ ; do \
-		$(PSQL) -f $$sql ; \
+		set -e ; $(PSQL) -f $$sql ; \
 	done
 	touch $@
 
 # -- load parameters
 .make/parameters: $(wildcard parameters/*csv) 
 	for csv in $? ; do \
-		./scripts/misc/load_csv.sh $$csv ; \
+		set -e ; ./scripts/misc/load_csv.sh $$csv ; \
 	done
 	touch $@
 
