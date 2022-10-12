@@ -182,7 +182,7 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 # -----
 # REPORT - ADD VARIOUS UPSTR/DNSTR SUMMARY COLUMNS, CREATE SUMMARY REPORTS
 # -----
-.point_reports: .model_habitat .index_crossings \
+.point_reports: scripts/model_habitat/.make/model_habitat \
 	scripts/model/sql/point_report.sql \
 	scripts/model/sql/point_report_obs_belowupstrbarriers.sql \
 	scripts/model/sql/all_spawningrearing_per_barrier.sql

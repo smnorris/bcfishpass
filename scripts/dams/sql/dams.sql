@@ -68,6 +68,14 @@ WITH nearest AS
     ORDER BY str.geom <-> pt.geom
     LIMIT 1) as str
     WHERE ST_Distance(str.geom, pt.geom) <= 65
+    -- CABD dams that do not exist or are in the wrong spot
+    AND pt.cabd_id NOT IN (
+      'e8e4bd88-c3c9-407c-a7a0-15c6c51704fd', -- seton
+      'f0c0f092-8502-4b98-9cf7-0c88e7d746f7', -- coldwater
+      '7645a9aa-0891-4232-9cd0-c8d99658c350', -- jordan
+      '803b0bc6-038d-4611-b478-04815e912e3e', -- sooke
+      'd8a604b7-0a71-4d6a-86fc-0c2ac9a45e47'  -- bulkley/aitken
+      )
 )
 
 SELECT
