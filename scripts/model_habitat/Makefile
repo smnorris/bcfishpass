@@ -1,8 +1,8 @@
 .PHONY: all clean
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-WSG=BULK HORS LNIC ELKR
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+#WSG=BULK HORS LNIC ELKR
 
 SPP = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_habitat_*.sql))
 

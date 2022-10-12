@@ -4,9 +4,9 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 
-#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 # watersheds for testing
-WSG=BULK HORS LNIC ELKR
+#WSG=BULK HORS LNIC ELKR
 
 
 QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
@@ -23,13 +23,12 @@ qa: $(QA_OUTPUTS)
 
 wcrp: $(WCRP_OUTPUTS)
 
-# remove all access model tables/targets
-clean_access:
-	rm -rf .make/update_access
 
 # Remove model make targets
 clean:
 	rm -Rf .make
+	cd scripts/model_access; rm -rf .make
+	cd scripts/model_habitat; rm -rf .make
 
 
 # ======
@@ -43,6 +42,7 @@ clean:
 # source falls table. (note that we don't use make in the falls directory because falls script
 # should be called when any of the various requirements change)
 .make/falls:  data/user_falls.csv data/user_barriers_definite_control.csv scripts/falls/falls.sh scripts/falls/sql/falls.sql
+	mkdir -p .make
 	./scripts/misc/load_csv.sh data/user_falls.csv
 	./scripts/misc/load_csv.sh data/user_barriers_definite_control.csv
 	cd scripts/falls; ./falls.sh
@@ -84,35 +84,26 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	touch $@
 
 # ------
-# ACCESS MODEL DB SETUP - load functions, create empty tables
+# SETUP - setup db for access model etc, create empty tables, load parameters
 # ------
-.make/access_setup: $(wildcard scripts/model_access/sql/functions/*sql) \
+.make/setup: $(wildcard scripts/model_access/sql/functions/*sql) \
 	$(wildcard scripts/model_access/sql/tables/*sql) 
 	mkdir -p .make
 	for sql in $^ ; do \
 		set -e ; $(PSQL) -f $$sql ; \
-	done
-	touch $@
-
-# -- load parameters
-.make/parameters: $(wildcard parameters/*csv) 
-	for csv in $? ; do \
+	done	
+	for csv in $(wildcard parameters/*csv) ; do \
 		set -e ; ./scripts/misc/load_csv.sh $$csv ; \
 	done
-	touch $@
-
-# -- required by crossings script
-.make/dbm_mof_50k_grid:
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
-	touch $@	
+	touch $@
 
 # -----
 # CROSSINGS TABLE
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
 .make/crossings: scripts/model_access/sql/load_crossings.sql \
-	.make/access_setup \
-	.make/dbm_mof_50k_grid \
+	.make/setup \
 	scripts/modelled_stream_crossings/.make/modelled_stream_crossings \
 	.make/dams \
 	data/user_barriers_anthropogenic.csv \
@@ -130,7 +121,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # OBSERVATIONS
 # ------
 # extract FISS observations for species of interest within study area from bcfishobs
-.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv
+.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
 	./scripts/misc/load_csv.sh data/wsg_species_presence.csv
 	$(PSQL) -f scripts/observations/sql/observations.sql
 	touch $@
@@ -142,8 +133,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 .make/barrier_sources: data/user_barriers_definite.csv \
 	.make/falls \
 	scripts/gradient_barriers/.make/gradient_barriers \
-	.make/crossings \
-	.make/streams
+	.make/crossings
 	./scripts/misc/load_csv.sh $<
 	touch $@
 
@@ -169,10 +159,10 @@ scripts/discharge/.make/discharge:
 # -----
 # ACCESS MODEL
 # -----
-scripts/model_access/.make/model_access: .make/parameters  \
+scripts/model_access/.make/model_access: .make/barrier_sources  \
+	.make/observations  \
 	scripts/channel_width/.make/channel_width \
-	scripts/discharge/.make/discharge \
-	.make/access_setup
+	scripts/discharge/.make/discharge
 	cd scripts/model_access; make
 
 # -----

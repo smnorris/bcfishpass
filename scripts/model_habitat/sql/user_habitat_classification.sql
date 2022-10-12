@@ -2,8 +2,8 @@
 -- and to track whether the manual classification agrees with the model output
 -- (to keep the streams table somewhat simple, model outputs get overwritten by
 -- manual classification in below updates)
-DROP MATERIALIZED VIEW IF EXISTS bcfishpass.user_habitat_classification_svw;
-CREATE MATERIALIZED VIEW bcfishpass.user_habitat_classification_svw AS
+DROP table IF EXISTS bcfishpass.user_habitat_classification_qa;
+CREATE table bcfishpass.user_habitat_classification_qa AS
 WITH manual_habitat_class AS
 (
     SELECT

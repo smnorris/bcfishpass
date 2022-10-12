@@ -72,10 +72,8 @@ select
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_rearing_st IS TRUE) / 1000))::numeric, 2), 0) AS st_rearing_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_spawning_wct IS TRUE) / 1000))::numeric, 2), 0) AS wct_spawning_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_rearing_wct IS TRUE) / 1000))::numeric, 2), 0) AS wct_rearing_km ,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_rearing_cm IS TRUE) / 1000))::numeric, 2), 0) AS cm_spawning_km ,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_rearing_cm IS TRUE) / 1000))::numeric, 2), 0) AS cm_rearing_km ,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_rearing_pk IS TRUE) / 1000))::numeric, 2), 0) AS pk_spawning_km ,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_rearing_pk IS TRUE) / 1000))::numeric, 2), 0) AS pk_rearing_km ,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_spawning_cm IS TRUE) / 1000))::numeric, 2), 0) AS cm_spawning_km ,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_spawning_pk IS TRUE) / 1000))::numeric, 2), 0) AS pk_spawning_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_spawning_ch IS TRUE OR
                                                         s.model_spawning_co IS TRUE OR
                                                         s.model_spawning_sk IS TRUE OR
@@ -88,9 +86,7 @@ select
                                                         s.model_rearing_co IS TRUE OR
                                                         s.model_rearing_sk IS TRUE OR
                                                         s.model_rearing_st IS TRUE OR
-                                                        s.model_rearing_wct IS TRUE OR
-                                                        s.model_rearing_cm IS TRUE OR
-                                                        s.model_rearing_pk IS TRUE
+                                                        s.model_rearing_wct IS TRUE
                                                   ) / 1000))::numeric, 2), 0) AS all_rearing_km ,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_spawning_ch IS TRUE OR
                                                         s.model_spawning_co IS TRUE OR
@@ -103,9 +99,7 @@ select
                                                         s.model_rearing_co IS TRUE OR
                                                         s.model_rearing_sk IS TRUE OR
                                                         s.model_rearing_st IS TRUE OR
-                                                        s.model_rearing_wct IS TRUE OR
-                                                        s.model_rearing_cm IS TRUE OR
-                                                        s.model_rearing_pk is TRUE
+                                                        s.model_rearing_wct IS TRUE 
                                                   ) / 1000))::numeric, 2), 0) AS all_spawningrearing_km
 from bcfishpass.streams s
 left outer join whse_basemapping.fwa_waterbodies wb on s.waterbody_key = wb.waterbody_key
