@@ -29,7 +29,7 @@ flattened AS
 sorted AS
 (
   SELECT
-    d.id,
+    d.objectid,
     d.forest_file_id,
     d.client_number,
     d.client_name,
@@ -37,14 +37,14 @@ sorted AS
   FROM flattened f
   LEFT OUTER JOIN whse_forest_tenure.ften_range_poly_svw d
   ON ST_Contains(d.geom, ST_PointOnSurface(f.geom))
-  ORDER BY d.id
+  ORDER BY d.objectid
 )
 
 SELECT
   row_number() over() as id,
-  array_agg(forest_file_id ORDER BY id) as forest_file_id,
-  array_agg(client_number ORDER BY id) as client_number,
-  array_agg(client_name ORDER BY id) as client_name,
+  array_agg(forest_file_id ORDER BY objectid) as forest_file_id,
+  array_agg(client_number ORDER BY objectid) as client_number,
+  array_agg(client_name ORDER BY objectid) as client_name,
   geom::geometry(polygon, 3005)
 FROM sorted
 GROUP BY geom;
