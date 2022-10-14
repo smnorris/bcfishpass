@@ -18,18 +18,18 @@ Also provided are tools for mapping features in the database:
 
 ## General Methodology
 
-`bcfishpass` is an update to the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions.
+`bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions.
 
 Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mapping base:
 
-1. Collect data defining known definite/fixed barriers to fish passage (waterfalls >5m, subsurface flow, hydro dams that are not feasible to remediate) and reference to the stream network
+1. Collect data defining known barriers to fish passage (waterfalls, subsurface flow) and reference to the stream network
 2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
 3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation (where applicable)
 4. Classify all streams downstream of resulting barriers as `POTENTIALLY ACCESSIBLE` (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
-5. Collect known (dams, PSCIS crossings) and modelled (road/railway stream crossings, ie culverts) anthropogenic barriers
+5. Collect anthropogenic barriers, both known (dams, PSCIS barriers) and potential (road/railway stream crossings, ie culverts) 
 6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier (and downstream of other anthropogenic barriers)
 
-To improve prioritization of barriers, `bcfishpass` also includes basic habitat potential modelling. Habitat potential for spawning and rearing is based on:
+To enable prioritization of barriers for assessment and remediation, `bcfishpass` also includes basic habitat potential modelling for select species of interest (Chinook, Coho, Sockeye, Steelhead, Westslope Cuthroat Trout). Habitat potential for spawning and rearing is based on:
 
 1. Stream gradient
 2. Stream discharge / stream channel width (modelled discharge where available, modelled channel width where discharge unavailable)
@@ -41,10 +41,12 @@ Streams meeting the criteria for a given species are classified as spawning or r
 ## General requirements
 
 - bash or similar
-- GDAL (>= 3.4)
-- a PostgreSQL / PostGIS database (tested with v14/v3.1)
-- Python >= 3.7
+- GDAL (>= 3.5)
+- a PostgreSQL / PostGIS database (tested with v14/v3.2)
+- Python >= 3.8
 - [bcdata](https://github.com/smnorris/bcdata)
+- [fwapg](https://github.com/smnorris/fwapg)
+- [bcfishobs](https://github.com/smnorris/bcfishobs)
 
 
 ## Installation / Setup
@@ -60,45 +62,26 @@ A `environment.yml` is provided to set up the processing environment. Edit the e
     conda env create -f environment.yml
     conda activate bcfishpass
 
-Note that `cdo` is not currently available on `conda-forge` for ARM based Macs. If you're using an ARM based mac, comment out `cdo` in `environment.yml` and install `cdo` separately (compiling from source).
+Note that `cdo` is not currently available on `conda-forge` for ARM based Macs. If you're using an ARM based MacOS machine, comment out `cdo` in `environment.yml` and install `cdo` separately (either [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install) or via [homebrew](https://formulae.brew.sh/formula/cdo)).
 
-If the database you are working with does not already exist, create it:
+If the database you are working with does not already exist, create it and create the required schema:
 
     psql -c "CREATE DATABASE bcfishpass" postgres
+    psql -c "CREATE SCHEMA bcfishpass" bcfishpass
 
+Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
 
-## Docker
+## Usage
 
-Rename `.env.docker` to `.env` and edit the ports to be exposed as required. The defaults are fine, the option is only provided to avoid conflicts in case of other Docker services running at these ports.
+Once you have `fwapg` and `bcfishobs` loaded to your database, `bcfishpass` processing is controlled by the `Makefile`.
 
-Download the repo, create containers, create database, load all data:
+To run the entire model:
 
-    git clone https://github.com/smnorris/bcfishpass.git
-    cd bcfishpass
+`make all`
 
-Edit the ports mappings as required in `.env` (to avoid conflicts with ports already in use), then build and start the services:
+Individual portions of the model can be run by entering the `scripts` directory and following instructions for individual components, or by calling them in the master Makefile individually. For example, to build/rebuild just the `bcfishpass.crossings` table (and all it depends on):
 
-    docker-compose build
-    docker-compose up -d
-    docker-compose run --rm client psql -c "CREATE DATABASE bcfishpass" postgres
-    docker-compose run --rm client make
-
-A `postgres-data` folder is created by the database container as a volume for all postgres data.
-
-If you have shut down Docker or the container, start it up again with this command:
-
-    docker-compose up -d
-
-Connect to the db and tilesev/featureserv clients from your host OS via the ports specified in `.env`:
-
-    psql -p 8000 -U postgres fwapg
-    http://localhost:7800/
-    http://localhost:9000/
-
-Delete the containers (and associated data):
-
-    docker-compose down
-
+`make .crossings`
 
 ## Credits
 
@@ -106,9 +89,13 @@ These tools are made possible by the work and funding of the following groups:
 
 - [BC Fish Passage Technical Working Group (FPTWG)](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage)
 - [Canadian Wildlife Federation (CWF)](https://cwf-fcf.org/en/explore/fish-passage/breaking-down-barriers.html)
-- [BC Salmon Restoration and Innovation Fund (BCSRIF)](https://www.dfo-mpo.gc.ca/fisheries-peches/initiatives/fish-fund-bc-fonds-peche-cb/index-eng.html)
-- [Canada Nature Fund for Aquatic Species at Risk (CNFASAR)](https://www.dfo-mpo.gc.ca/species-especes/sara-lep/cnfasar-fnceap/index-eng.html)
-- [BC Fish and Wildlife Compensation Program (FWCP)](https://fwcp.ca/)
-- [Society for Ecosystem Restoration in Northern British Columbia (SERNBC)](https://sernbc.ca/)
+- [Pacific Salmon Foundation (PSF)](https://psf.ca/)
 - [New Graph Environment](https://www.newgraphenvironment.com/)
 - [Hillcrest Geographics](https://www.hillcrestgeo.ca)
+
+With additional funding from:
+
+- [BC Fish and Wildlife Compensation Program (FWCP)](https://fwcp.ca/)
+- [Society for Ecosystem Restoration in Northern British Columbia (SERNBC)](https://sernbc.ca/)
+- [BC Salmon Restoration and Innovation Fund (BCSRIF)](https://www.dfo-mpo.gc.ca/fisheries-peches/initiatives/fish-fund-bc-fonds-peche-cb/index-eng.html)
+- [Canada Nature Fund for Aquatic Species at Risk (CNFASAR)](https://www.dfo-mpo.gc.ca/species-especes/sara-lep/cnfasar-fnceap/index-eng.html)

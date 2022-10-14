@@ -19,7 +19,7 @@ SELECT
  d.current_barrier_result_code,
  d.current_crossing_type_code,
  d.current_crossing_subtype_code,
- d.geom
+ (st_dump(d.geom)).geom
 FROM whse_fish.pscis_remediation_svw d;
 
 INSERT INTO bcfishpass.pscis_points_all
@@ -29,7 +29,7 @@ SELECT
  d.current_barrier_result_code,
  d.current_crossing_type_code,
  d.current_crossing_subtype_code,
- d.geom
+ (st_dump(d.geom)).geom
 FROM whse_fish.pscis_design_proposal_svw d
 LEFT OUTER JOIN bcfishpass.pscis_points_all a
 ON d.stream_crossing_id = a.stream_crossing_id
@@ -42,7 +42,7 @@ SELECT
   d.current_barrier_result_code,
   d.current_crossing_type_code,
   d.current_crossing_subtype_code,
-  d.geom
+  (st_dump(d.geom)).geom
 FROM whse_fish.pscis_habitat_confirmation_svw d
 LEFT OUTER JOIN bcfishpass.pscis_points_all a
 ON d.stream_crossing_id = a.stream_crossing_id
@@ -55,7 +55,7 @@ SELECT
  d.current_barrier_result_code,
  d.current_crossing_type_code,
  d.current_crossing_subtype_code,
- d.geom
+ (st_dump(d.geom)).geom
 FROM whse_fish.pscis_assessment_svw d
 LEFT OUTER JOIN bcfishpass.pscis_points_all a
 ON d.stream_crossing_id = a.stream_crossing_id

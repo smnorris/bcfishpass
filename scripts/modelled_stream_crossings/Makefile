@@ -11,8 +11,9 @@ all: .roads .load_archive .modelled_stream_crossings
 # *** NOTE ***
 # Structure of data in this archive DOES NOT MATCH structure in the BCGW !
 # To avoid this issue, load data to whse_basemapping.transport_line rather than DRA_DGTL_ROAD_ATLAS_MPAR_SP
-.roads:
+.make/roads:
 	mkdir -p data
+	mkdir -p .make
 	wget --trust-server-names -qNP data ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip
 	unzip -qun data/dgtl_road_atlas.gdb.zip -d data
 	ogr2ogr \
@@ -55,16 +56,17 @@ all: .roads .load_archive .modelled_stream_crossings
 		TRANSPORT_LINE_STRUCTURE_CODE
 
 	# Get additional road data direct from BCGW, requesting full datasets (bcfishpass crossing scripts filter out what is needed)
-	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW --promote_to_multi # note this table doesn't have a single primary key
-	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --fid og_road_segment_permit_id
-	bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --fid og_petrlm_dev_rd_pre06_pub_id
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --fid railway_track_id
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --fid RAILWAY_STRUCTURE_LINE_ID
-	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --fid HWY_STRUCTURE_CLASS_ID
+	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW
+	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --primary_key og_road_segment_permit_id
+	bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --primary_key og_petrlm_dev_rd_pre06_pub_id
+	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id
+	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
+	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
 	touch $@
 
 # download modelled crossings archive (to extract exising IDs, they need to remain consistent)
-.load_archive:
+.make/load_archive:
+	mkdir -p .make
 	wget --trust-server-names -qNP data https://www.hillcrestgeo.ca/outgoing/fishpassage/data/bcfishpass/inputs/modelled_stream_crossings_archive.gpkg.zip
 	unzip -qun data/modelled_stream_crossings_archive.gpkg.zip -d data
 	ogr2ogr \
@@ -78,7 +80,7 @@ all: .roads .load_archive .modelled_stream_crossings
 	touch $@
 
 # run the overlays/analysis
-.modelled_stream_crossings: .roads .load_archive
+.make/modelled_stream_crossings: .roads .load_archive
 	$(PSQL_CMD) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source

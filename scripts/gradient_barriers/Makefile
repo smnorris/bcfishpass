@@ -6,9 +6,10 @@ PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 # process all of BC
 GROUPS = $(shell $(PSQL_CMD) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
-all: .gradient_barriers
+all: .make/gradient_barriers
 
-.gradient_barriers: sql/gradient_barriers.sql
+.make/gradient_barriers: sql/gradient_barriers.sql
+	mkdir -p .make
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.gradient_barriers"
 	$(PSQL_CMD) -c "CREATE TABLE bcfishpass.gradient_barriers ( \
 	 blue_line_key             integer               , \
@@ -28,5 +29,5 @@ all: .gradient_barriers
 	touch $@
 
 clean:
-	rm -Rf .gradient_barriers
+	rm -Rf .make
 	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.gradient_barriers"

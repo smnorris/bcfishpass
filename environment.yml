@@ -10,7 +10,7 @@ dependencies:
   - parallel
   - cdo
   - libpq
-  - gdal>=3.4
+  - gdal>=3.5
   - python=3.9
   - pip
   - requests
@@ -23,7 +23,7 @@ dependencies:
   - rasterstats
   - scikit-image
   - pip:
-      - bcdata>=0.5.1
+      - bcdata===0.7.0
 variables:
   PGHOST: localhost
   PGUSER: postgres

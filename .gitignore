@@ -25,7 +25,7 @@ scripts/**/data
 postgres-data
 
 # qa folder
-qa
+qa/*csv
 
 # empty make targets
 .make/

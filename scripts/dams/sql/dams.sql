@@ -1,16 +1,9 @@
--- reference CWF dams to stream network
+-- reference CABD dams to FWA stream network
 
 DROP TABLE IF EXISTS bcfishpass.dams;
 
 CREATE TABLE bcfishpass.dams
-(dam_id integer primary key,
- dam_name text,
- waterbody_name text,
- owner text,
- hydro_dam_ind text,
- barrier_ind text,
- source_dataset text,
- source_id integer,
+(dam_id uuid primary key,
  linear_feature_id bigint,
  blue_line_key integer,
  downstream_route_measure double precision,
@@ -26,13 +19,6 @@ CREATE TABLE bcfishpass.dams
 INSERT INTO bcfishpass.dams
 (
   dam_id,
-  dam_name,
-  waterbody_name,
-  owner,
-  hydro_dam_ind,
-  barrier_ind,
-  source_dataset,
-  source_id,
   linear_feature_id,
   blue_line_key,
   downstream_route_measure,
@@ -43,32 +29,10 @@ INSERT INTO bcfishpass.dams
   geom
 )
 
-WITH src_pts AS
-(
-SELECT
-  bcdams_id as dam_id,
-  dam_name,
-  waterbody_name,
-  owner,
-  hydro_dam_ind,
-  barrier_ind,
-  source_dataset,
-  source_id,
-  geom
-FROM bcfishpass.cwf_bcdams
-),
-
-nearest AS
+WITH nearest AS
 (
   SELECT
-    pt.dam_id,
-    pt.dam_name,
-    pt.waterbody_name,
-    pt.owner,
-    pt.hydro_dam_ind,
-    pt.barrier_ind,
-    pt.source_dataset,
-    pt.source_id,
+    pt.cabd_id as dam_id,
     str.linear_feature_id,
     str.wscode_ltree,
     str.localcode_ltree,
@@ -86,7 +50,7 @@ nearest AS
       * str.length_metre
   ) + str.downstream_route_measure AS downstream_route_measure,
   st_linemerge(str.geom) as geom_str
-  FROM src_pts pt
+  FROM cabd.dams pt
   CROSS JOIN LATERAL
   (SELECT
      linear_feature_id,
@@ -103,18 +67,20 @@ nearest AS
     AND NOT str.wscode_ltree <@ '999'
     ORDER BY str.geom <-> pt.geom
     LIMIT 1) as str
-    WHERE ST_Distance(str.geom, pt.geom) <= 50
+    WHERE ST_Distance(str.geom, pt.geom) <= 65
+    -- exclude CABD dams that do not exist or are in the wrong spot
+    AND pt.cabd_id NOT IN (
+      'e8e4bd88-c3c9-407c-a7a0-15c6c51704fd', -- seton
+      'f0c0f092-8502-4b98-9cf7-0c88e7d746f7', -- coldwater
+      '7645a9aa-0891-4232-9cd0-c8d99658c350', -- jordan
+      '803b0bc6-038d-4611-b478-04815e912e3e', -- sooke
+      'd8a604b7-0a71-4d6a-86fc-0c2ac9a45e47', -- bulkley/aitken
+      '6a792d8f-b9c5-44a4-a260-0f06c3b20821'  -- salmon/merton
+      )
 )
 
 SELECT
-    dam_id,
-    dam_name,
-    waterbody_name,
-    owner,
-    hydro_dam_ind,
-    barrier_ind,
-    source_dataset,
-    source_id,
+    dam_id::uuid,
     linear_feature_id,
     blue_line_key,
     downstream_route_measure,
@@ -143,6 +109,3 @@ CREATE INDEX ON bcfishpass.dams USING BTREE (wscode_ltree);
 CREATE INDEX ON bcfishpass.dams USING GIST (localcode_ltree);
 CREATE INDEX ON bcfishpass.dams USING BTREE (localcode_ltree);
 CREATE INDEX ON bcfishpass.dams USING GIST (geom);
-
--- drop the load table
-DROP TABLE bcfishpass.cwf_bcdams;

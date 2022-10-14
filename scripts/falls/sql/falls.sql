@@ -95,7 +95,7 @@ SELECT
   max(agg.height) as height,
   agg.new_watershed_code,
   g.watershed_group_code,
-  agg.geom
+  (st_dump(agg.geom)).geom
 FROM agg
 INNER JOin whse_basemapping.fwa_watershed_groups_poly g
 ON ST_Intersects(agg.geom, g.geom)

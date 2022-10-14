@@ -47,7 +47,7 @@
     "crossings": {
       "type": "vector",
       "tiles": [
-        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.crossings/{z}/{x}/{y}.pbf?properties=aggregated_crossing_id,stream_crossing_id,modelled_crossing_id,crossing_source,crossing_feature_type,pscis_status,barrier_status,observedspp_upstr,observedspp_dnstr,barriers_anthropogenic_dnstr_count,barriers_anthropogenic_upstr_count,access_model_bt,access_model_ch_co_sk,access_model_st,access_model_wct,all_spawningrearing_km,all_spawningrearing_belowupstrbarriers_km,watershed_group_code"
+        "https://tiles.hillcrestgeo.ca/bcfishpass/bcfishpass.crossings/{z}/{x}/{y}.pbf?properties=aggregated_crossing_id,stream_crossing_id,modelled_crossing_id,crossing_source,crossing_feature_type,pscis_status,barrier_status,observedspp_upstr,observedspp_dnstr,barriers_anthropogenic_dnstr_count,barriers_anthropogenic_upstr_count,model_access_bt,model_access_ch_co_sk,model_access_st,model_access_wct,all_spawningrearing_km,all_spawningrearing_belowupstrbarriers_km,watershed_group_code"
       ],
       "minzoom": 8,
       "maxzoom": 19
@@ -78,7 +78,7 @@
       "type": "line",
       "source": "streams_large",
       "source-layer": "bcfishpass.carto_streams_large",
-      "filter": ["in", "access_model_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      "filter": ["in", "model_access_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
       ,
       "maxzoom": 10,
       "minzoom": 7,
@@ -86,7 +86,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_st"],
+            ["get", "model_access_st"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -106,7 +106,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "access_model_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "model_access_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["!=", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -114,7 +114,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_st"],
+            ["get", "model_access_st"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -142,7 +142,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "access_model_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "model_access_st", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["==", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -150,7 +150,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_st"],
+            ["get", "model_access_st"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -178,7 +178,7 @@
       "type": "line",
       "source": "streams_large",
       "source-layer": "bcfishpass.carto_streams_large",
-      "filter": ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      "filter": ["in", "model_access_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
       ,
       "maxzoom": 10,
       "minzoom": 7,
@@ -186,7 +186,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_ch_co_sk"],
+            ["get", "model_access_ch_co_sk"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -206,7 +206,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "model_access_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["!=", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -214,7 +214,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_ch_co_sk"],
+            ["get", "model_access_ch_co_sk"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -242,7 +242,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "access_model_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "model_access_ch_co_sk", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["==", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -250,7 +250,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_ch_co_sk"],
+            ["get", "model_access_ch_co_sk"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -278,7 +278,7 @@
       "type": "line",
       "source": "streams_large",
       "source-layer": "bcfishpass.carto_streams_large",
-      "filter": ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
+      "filter": ["in", "model_access_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"]
       ,
       "maxzoom": 10,
       "minzoom": 7,
@@ -286,7 +286,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_wct"],
+            ["get", "model_access_wct"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -306,7 +306,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "model_access_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["!=", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -314,7 +314,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_wct"],
+            ["get", "model_access_wct"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -342,7 +342,7 @@
       "source": "streams",
       "source-layer": "bcfishpass.streams",
       "filter": ["all",
-        ["in", "access_model_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
+        ["in", "model_access_wct", "ACCESSIBLE", "POTENTIALLY ACCESSIBLE", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM", "ACCESSIBLE - REMEDIATED"],
         ["==", "feature_code", "GA24850150"]
       ],
       "minzoom": 10,
@@ -350,7 +350,7 @@
       "paint": {
           "line-color": [
             "match",
-            ["get", "access_model_wct"],
+            ["get", "model_access_wct"],
             "ACCESSIBLE",
             "#129bdb",
             "POTENTIALLY ACCESSIBLE",
@@ -382,15 +382,15 @@
     "filter": ["any",
       ["all",
         ["==", "crossing_source", "MODELLED CROSSINGS"],
-        ["in", "access_model_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+        ["in", "model_access_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
       ],
       ["all",
         ["==", "crossing_source", "MODELLED CROSSINGS"],
-        ["in", "access_model_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+        ["in", "model_access_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
       ],
       ["all",
         ["==", "crossing_source", "MODELLED CROSSINGS"],
-        ["in", "access_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
+        ["in", "model_access_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"]
       ]
     ],
     "paint": {
@@ -467,9 +467,9 @@
     "minzoom": 12,
     "maxzoom": 19,
     "filter": ["any",
-        ["in", "access_model_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
-        ["in", "access_model_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
-        ["in", "access_model_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "model_access_ch_co_sk", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "model_access_st", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
+        ["in", "model_access_wct", "POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM","POTENTIALLY ACCESSIBLE","ACCESSIBLE"],
         ["in", "crossing_source", "PSCIS"]
     ],
     "layout": {
