@@ -175,15 +175,12 @@ def valley_confinement(
     where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
     and s.gradient < .3
     and
-    (access_model_ch_co_sk is not null or
-    access_model_st is not null or
-    access_model_wct is not null or
-    access_model_pk is not null or
-    access_model_cm is not null or
-    access_model_bt is not null or
-    access_model_gr is not null or
-    access_model_rb is not null or
-    spawning_model_ch is not null)
+    (model_access_ch_co_sk is not null or
+    model_access_st is not null or
+    model_access_wct is not null or
+    model_access_bt is not null or
+    model_access_gr is not null or
+    model_access_rb is not null)
     """
     stream_features = geopandas.read_postgis(
         sql,

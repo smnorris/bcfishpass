@@ -168,10 +168,10 @@ scripts/model_access/.make/model_access: .make/barrier_sources  \
 # -----
 # HABITAT MODEL
 # -----
-scripts/model_habitat/.make/model_habitat: data/user_habitat_classification.csv \
+scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_classification.csv \
 	scripts/model_access/.make/model_access
 	./scripts/misc/load_csv.sh $< # load manual habitat classification
-	cd scripts/model_habitat; make
+	cd scripts/model_habitat_linear; make
 
 # run qa queries
 qa/%.csv: scripts/qa/sql/%.sql .update_access
