@@ -576,7 +576,7 @@ def read_config(config_file):
     """Read provided config file"""
     LOG.info("Loading config from file: %s", config_file)
     cfg = configparser.ConfigParser()
-    config = cfg.read(config_file)
+    cfg.read(config_file)
     valid_keys = [
         "minimum_drainage_area",
         "slope_threshold",
@@ -587,11 +587,11 @@ def read_config(config_file):
         "hole_removal_threshold",
     ]
     # check keys are valid
-    for key in config.keys():
+    for key in cfg["CONFIG"].keys():
         if key not in valid_keys:
             raise ConfigError("Config key {} is invalid".format(key))
     # convert all keys to integer
-    config = {key: int(config[key]) for key in config}
+    config = {key: int(cfg["CONFIG"][key]) for key in cfg["CONFIG"].keys()}
     return config
 
 
