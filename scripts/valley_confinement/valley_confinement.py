@@ -96,6 +96,7 @@ def label_map(a):
 def valley_confinement(
     watershed_group_code,
     db_url,
+    out_file,
     data_path="data",
     minimum_drainage_area=1000,
     slope_threshold=9,
@@ -491,9 +492,9 @@ def valley_confinement(
     valleys = majority(valleys.astype("uint8"), morphology.rectangle(nrows=3, ncols=3))
 
     # write unconfined valley output to file
-    LOG.info("Writing valleys.tif")
+    LOG.info(f"Writing {out_file}")
     with rasterio.open(
-        os.path.join(data_path, "valleys.tif"),
+        out_file,
         "w",
         driver="GTiff",
         dtype=rasterio.int16,
@@ -605,11 +606,17 @@ def read_config(config_file):
     default=os.environ.get("DATABASE_URL"),
 )
 @click.option(
+    "--out_file",
+    "-o",
+    default="valleys.tif",
+    help="Path to write output valley confinement raster",
+)
+@click.option(
     "--workdir",
     "-d",
     type=click.Path(exists=True),
     default="data",
-    help="Path to write output rasters",
+    help="Path to write output temp rasters",
 )
 @click.option(
     "--config_file",
@@ -619,7 +626,7 @@ def read_config(config_file):
 )
 @verbose_opt
 @quiet_opt
-def cli(watershed_group_code, db_url, workdir, config_file, verbose, quiet):
+def cli(watershed_group_code, db_url, out_file, workdir, config_file, verbose, quiet):
     verbosity = verbose - quiet
     log_level = max(10, 20 - 10 * verbosity)  # default to INFO log level
     logging.basicConfig(
@@ -631,7 +638,7 @@ def cli(watershed_group_code, db_url, workdir, config_file, verbose, quiet):
         config = read_config(config_file)
     else:
         config = {}
-    valley_confinement(watershed_group_code, db_url, workdir, **config)
+    valley_confinement(watershed_group_code, db_url, out_file, workdir, **config)
 
 
 if __name__ == "__main__":
