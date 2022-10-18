@@ -244,6 +244,7 @@ def valley_confinement(
     inner join bcfishpass.mean_annual_precip b
     on a.wscode_ltree = b.wscode_ltree and a.localcode_ltree = b.localcode_ltree
     where a.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
+    and b.map is not null;
     """
     precip_features = geopandas.read_postgis(
         sql,
