@@ -1,4 +1,5 @@
--- de-aggregate observations
+-- report on salmon observations upstream of hydro dams that are coded as barriers
+
 with obs as
 (
 select distinct
@@ -14,10 +15,9 @@ from (
     unnest(observation_ids) as fish_observation_point_id
    from bcfishpass.observations
  ) as o
-inner join bcfishobs.fiss_fish_obsrvtn_events_sp e on o.fish_observation_point_id = e.fish_observation_point_id
+inner join bcfishobs.fiss_fish_obsrvtn_events_vw e on o.fish_observation_point_id = e.fish_observation_point_id
 where e.species_code in ('CH','CM','CO','PK','SK','ST')
 )
-
 
 select
 d.dam_id,
@@ -40,7 +40,6 @@ on fwa_upstream(
 d.blue_line_key, d.downstream_route_measure, d.wscode_ltree, d.localcode_ltree,
 o.blue_line_key, o.downstream_route_measure, o.wscode_ltree, o.localcode_ltree)
 inner join cabd.dams cabd on d.dam_id = cabd.cabd_id
---inner join bcfishobs.fiss_fish_obsrvtn_events_vw e on o.fish_obsrvtn_event_id = e.fish_obsrvtn_event_id
 where cabd.dam_use = 'Hydroelectricity'
-and dam_id != 'e8e4bd88-c3c9-407c-a7a0-15c6c51704fd' -- this dam is mistakenly snapped to the Fraser
+and cabd.passability_status_code = 1
 order by dam_name, species_code, observation_date;

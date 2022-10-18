@@ -9,8 +9,8 @@ WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param
 #WSG=BULK HORS LNIC ELKR
 
 
-QA_SCRIPTS = $(wildcard scripts/qa/sql/*.sql)
-QA_OUTPUTS = $(patsubst scripts/qa/sql/%.sql,qa/%.csv,$(QA_SCRIPTS))
+QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
+QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
 
 WCRP_SCRIPTS = $(wildcard wcrp/reports/sql/*.sql)
 WCRP_OUTPUTS = $(patsubst wcrp/reports/sql/%.sql,wcrp/reports/reports/%.csv,$(WCRP_SCRIPTS))
@@ -30,6 +30,21 @@ clean:
 	cd scripts/model_access; rm -rf .make
 	cd scripts/model_habitat; rm -rf .make
 
+
+# ------
+# SETUP - setup db for access model, create empty tables, load parameters
+# ------
+.make/setup: $(wildcard scripts/model_access/sql/functions/*sql) \
+	$(wildcard scripts/model_access/sql/tables/*sql) 
+	mkdir -p .make
+	for sql in $^ ; do \
+		set -e ; $(PSQL) -f $$sql ; \
+	done	
+	for csv in $(wildcard parameters/*csv) ; do \
+		set -e ; ./scripts/misc/load_csv.sh $$csv ; \
+	done
+	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
+	touch $@
 
 # ======
 # NATURAL BARRIERS
@@ -81,21 +96,6 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	data/pscis_modelledcrossings_streams_xref.csv
 	./scripts/misc/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd scripts/pscis; ./pscis.sh
-	touch $@
-
-# ------
-# SETUP - setup db for access model etc, create empty tables, load parameters
-# ------
-.make/setup: $(wildcard scripts/model_access/sql/functions/*sql) \
-	$(wildcard scripts/model_access/sql/tables/*sql) 
-	mkdir -p .make
-	for sql in $^ ; do \
-		set -e ; $(PSQL) -f $$sql ; \
-	done	
-	for csv in $(wildcard parameters/*csv) ; do \
-		set -e ; ./scripts/misc/load_csv.sh $$csv ; \
-	done
-	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	touch $@
 
 # -----
@@ -166,26 +166,35 @@ scripts/model_access/.make/model_access: .make/barrier_sources  \
 	cd scripts/model_access; make
 
 # -----
-# HABITAT MODEL
+# VALLEY CONFINEMENT
+# -----
+.make/valley_confinement: scripts/model_access/.make/model_access
+	cd scripts/valley_confinement && ./valley_confinement.sh
+	touch $@
+
+# -----
+# LINEAR HABITAT MODEL
 # -----
 scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_classification.csv \
-	scripts/model_access/.make/model_access
-	./scripts/misc/load_csv.sh $< # load manual habitat classification
+	scripts/model_access/.make/model_access 
+	# load manual habitat classification
+	$(PSQL) -f scripts/model_habitat_linear/sql/tables/user.sql
+	./scripts/misc/load_csv.sh $< 
 	cd scripts/model_habitat_linear; make
 
-# run qa queries
-qa/%.csv: scripts/qa/sql/%.sql .update_access
-	mkdir -p qa
-	psql2csv $(DATABASE_URL) < $< > $@
 
+# ======
+# REPORTING
+# ======
 
 # -----
-# REPORT - ADD VARIOUS UPSTR/DNSTR SUMMARY COLUMNS, CREATE SUMMARY REPORTS
+# CROSSING STATS
+# add various columns holding upstream/downstream metrics to crossings table and barriers_anthropogenic
 # -----
-.point_reports: scripts/model_habitat/.make/model_habitat \
-	scripts/model/sql/point_report.sql \
-	scripts/model/sql/point_report_obs_belowupstrbarriers.sql \
-	scripts/model/sql/all_spawningrearing_per_barrier.sql
+.make/crossing_stats: scripts/model_habitat_linear/.make/model_habitat_linear \
+	reports/crossings/sql/point_report.sql \
+	reports/crossings/sql/point_report_obs_belowupstrbarriers.sql \
+	reports/crossings/sql/all_spawningrearing_per_barrier.sql
 	# todo:
 	# below per wsg loops could be run in parallel if we write to temp
 	# (per wsg) tables rather than applying updates to provincial table (can't
@@ -199,10 +208,10 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	# approach sub 5min on 8 core machine
 
 	# run report per watershed group on barriers_anthropogenic
-	$(PSQL) -f scripts/model/sql/point_report_columns.sql \
+	$(PSQL) -f reports/crossings/sql/point_report_columns.sql \
 		-v point_table=barriers_anthropogenic
 	for wsg in $(WSG) ; do \
-		set -e ; $(PSQL) -f scripts/model/sql/point_report.sql \
+		set -e ; $(PSQL) -f reports/crossings/sql/point_report.sql \
 		-v point_table=barriers_anthropogenic \
 		-v point_id=barriers_anthropogenic_id \
 		-v barriers_table=barriers_anthropogenic \
@@ -210,10 +219,10 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 		-v wsg=$$wsg ; \
 	done
 	## run report per watershed group on crossings
-	$(PSQL) -f scripts/model/sql/point_report_columns.sql \
+	$(PSQL) -f reports/crossings/sql/point_report_columns.sql \
 		-v point_table=crossings
 	for wsg in $(WSG) ; do \
-		set -e ; $(PSQL) -f scripts/model/sql/point_report.sql \
+		set -e ; $(PSQL) -f reports/crossings/sql/point_report.sql \
 		-v point_table=crossings \
 		-v point_id=aggregated_crossings_id \
 		-v barriers_table=barriers_anthropogenic \
@@ -222,31 +231,31 @@ qa/%.csv: scripts/qa/sql/%.sql .update_access
 	done
 	
 	# For OBS in the crossings table, report on belowupstrbarriers columns.
-	# This requires a separate query # (because the dnstr_barriers_anthropogenic is used in above report, 
+	# This requires a separate query 
+	# (because the dnstr_barriers_anthropogenic is used in above report, 
 	# and that misses the OBS of interest)
-	$(PSQL) -f scripts/model/sql/point_report_obs_belowupstrbarriers.sql
+	$(PSQL) -f reports/crossings/sql/point_report_obs_belowupstrbarriers.sql
 
 	# add habitat per barrier column to crossings table
 	for wsg in $(WSG) ; do \
-		psql -f scripts/model/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
+		psql -f reports/crossings/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
 	done
 	touch $@
 
-# ***********************************************
-# **                                           **
-# **      REPORTING/MAPPING/MISC               **
-# **                                           **
-# ***********************************************
+# -----
+# ACCESS MODEL QA REPORT
+# -----
+reports/qa/%.csv: reports/qa/sql/%.sql scripts/model_access/.make/model_access
+	psql2csv $(DATABASE_URL) < $< > $@	
 
-# generalized streams for mapping
-.carto: .point_reports
-	$(PSQL) -f scripts/model/sql/carto.sql
-	touch $@
-
+# -----
 # wcrp reports - dump results of each query in reports/wcrp/sql/ to csv
+# -----
 wcrp/reports/reports/%.csv: wcrp/reports/sql/%.sql .point_reports
 	mkdir -p reports/wcrp/reports
 	psql2csv $(DATABASE_URL) < $< > $@
 	
-scripts/lateral/data/lateral.tif: .point_reports
-	cd scripts/lateral; rm .make/lateral_polys; make
+# generalized streams for mapping
+.carto: .point_reports
+	$(PSQL) -f scripts/model/sql/carto.sql
+	touch $@
