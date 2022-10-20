@@ -127,7 +127,7 @@ def valley_confinement(
     LOG.info("Processing extent " + ",".join([str(b) for b in bounds]))
     LOG.info("Downloading DEM, resampling to 10m and writing to dem.tif")
     with bcdata.get_dem(
-        bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True
+        bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True
     ) as dataset:
         upscale_factor = 2.5  # upscale 25m DEM to 10m
         height = int(dataset.height * upscale_factor)
@@ -345,7 +345,7 @@ def valley_confinement(
     # write intermediate mask for QA
     LOG.info("Writing cost_threshold.tif")
     with rasterio.open(
-        "data/cost_threshold.tif",
+        os.path.join(data_path, "cost_threshold.tif"),
         "w",
         driver="GTiff",
         dtype=rasterio.int16,
@@ -419,7 +419,7 @@ def valley_confinement(
 
     LOG.info("Writing flood_depth.tif")
     with rasterio.open(
-        "data/flood_depth.tif",
+        os.path.join(data_path, "flood_depth.tif"),
         "w",
         driver="GTiff",
         dtype=rasterio.int16,

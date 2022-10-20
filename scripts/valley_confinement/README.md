@@ -10,9 +10,14 @@ The valley definition script is a adaptation of the USDA's [Valley Confinement A
 
 ## Usage
 
-For a given watershed group, generate an 'unconfined valley' polygon layer and a valley-width ratio for each stream segment:
+To generate an 'unconfined valley' raster and a valley-width raster (for the unconfined valleys) for accessible streams within a given watershed:
 
     python valley_confinement.py <watershed_group_code>
+
+To process all watershed groups noted in `bcfishpass.param_watersheds` and merge into a single unconfined valleys raster called `valleys.tif`:
+    
+    ./valley_confinement.sh
+
 
 
 ## Method
@@ -55,7 +60,9 @@ Only contiguous areas above this size threshold are retained (default 0.5ha).
 - Terrainworks [updates](https://terrainworks.com/intrinsic-potential-ip-fish-habitat-modeling-read)
 
 
-From Miller 2003:
+## Other implementations / further work
+
+The "Valley Confinement Algorithm" identifies unconfined valleys, and the add on from blueGeo measures the width of these valleys - we do not currently have a method for measuring the widths of confined valleys. `Miller 2003` describes the valley-width calculation used in Terrainworks/Netmap:
 
 > Width of the valley floor is estimated as the length of a transect that intersects 
 > the valley walls at a specified height above the channel. Since the orientation 
@@ -83,4 +90,3 @@ From Miller 2003:
 > window that spans 10 pixels. Any values exceeding 2.5 times the median are 
 > considered in error and are replaced by a linear fit through the remaining 
 > points. The resulting widths are then averaged over the length of the reach.
-
