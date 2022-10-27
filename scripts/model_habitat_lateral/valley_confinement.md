@@ -1,4 +1,4 @@
-# Floodplains
+# Unconfined valleys
 
 Define unconfined valleys (ie, floodplains) as inputs to:
 
@@ -13,11 +13,6 @@ The valley definition script is a adaptation of the USDA's [Valley Confinement A
 To generate an 'unconfined valley' raster and a valley-width raster (for the unconfined valleys) for accessible streams within a given watershed:
 
     python valley_confinement.py <watershed_group_code>
-
-To process all watershed groups noted in `bcfishpass.param_watersheds` and merge into a single unconfined valleys raster called `valleys.tif`:
-    
-    ./valley_confinement.sh
-
 
 
 ## Method

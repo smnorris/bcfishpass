@@ -105,6 +105,8 @@ def valley_confinement(
     flood_factor=6,
     size_threshold=5000,
     hole_removal_threshold=2500,
+    calculate_width=False,
+    write_tempfiles=False
 ):
     """Define 'unconfined' valleys"""
     db = create_engine(db_url)
@@ -219,8 +221,7 @@ def valley_confinement(
     )
     # set areas of DEM nodata to nodata
     A[DEM == dem_meta["nodata"]] = 0
-
-    # write streams raster to file
+    
     with rasterio.open(
         os.path.join(data_path, "streams.tif"),
         "w",
@@ -271,8 +272,7 @@ def valley_confinement(
 
     # set areas of DEM nodata to nodata
     A[DEM == dem_meta["nodata"]] = -9999
-
-    # write to file
+    
     with rasterio.open(
         os.path.join(data_path, "precip.tif"),
         "w",
@@ -343,20 +343,21 @@ def valley_confinement(
     moving_mask[cost == -9999] = False
 
     # write intermediate mask for QA
-    LOG.info("Writing cost_threshold.tif")
-    with rasterio.open(
-        os.path.join(data_path, "cost_threshold.tif"),
-        "w",
-        driver="GTiff",
-        dtype=rasterio.int16,
-        count=1,
-        width=dem.width,
-        height=dem.height,
-        crs=dem.crs,
-        transform=dem.transform,
-        nodata=-9999,
-    ) as dst:
-        dst.write(moving_mask, indexes=1)
+    if write_tempfiles:
+        LOG.info("Writing cost_threshold.tif")
+        with rasterio.open(
+            os.path.join(data_path, "cost_threshold.tif"),
+            "w",
+            driver="GTiff",
+            dtype=rasterio.int16,
+            count=1,
+            width=dem.width,
+            height=dem.height,
+            crs=dem.crs,
+            transform=dem.transform,
+            nodata=-9999,
+        ) as dst:
+            dst.write(moving_mask, indexes=1)
 
     # ---------------------
     # flood processing
@@ -417,20 +418,21 @@ def valley_confinement(
     # add flood areas to mask
     moving_mask = moving_mask & (flood_depth > 0)
 
-    LOG.info("Writing flood_depth.tif")
-    with rasterio.open(
-        os.path.join(data_path, "flood_depth.tif"),
-        "w",
-        driver="GTiff",
-        dtype=rasterio.int16,
-        count=1,
-        width=dem.width,
-        height=dem.height,
-        crs=dem.crs,
-        transform=dem.transform,
-        nodata=-9999,
-    ) as dst:
-        dst.write(moving_mask, indexes=1)
+    if write_tempfiles:
+        LOG.info("Writing flood_depth.tif")
+        with rasterio.open(
+            os.path.join(data_path, "flood_depth.tif"),
+            "w",
+            driver="GTiff",
+            dtype=rasterio.int16,
+            count=1,
+            width=dem.width,
+            height=dem.height,
+            crs=dem.crs,
+            transform=dem.transform,
+            nodata=-9999,
+        ) as dst:
+            dst.write(moving_mask, indexes=1)
 
     # ---------------------
     # remove waterbodies
@@ -507,67 +509,69 @@ def valley_confinement(
     ) as dst:
         dst.write(valleys, indexes=1)
 
-    # calculate the width of the valley
-    mask = valleys == 1
+    if calculate_width:
+        # calculate the width of the valley
+        mask = valleys == 1
 
-    # Calculate distance to the bank over all valleys
-    distances = distance_transform_edt(mask.astype("float32"), [dem.res[0], dem.res[1]])
-    LOG.info("Writing distance_transform.tif")
-    with rasterio.open(
-        os.path.join(data_path, "distance_transform.tif"),
-        "w",
-        driver="GTiff",
-        dtype=rasterio.int32,
-        count=1,
-        width=dem.width,
-        height=dem.height,
-        crs=dem.crs,
-        transform=dem.transform,
-        nodata=-9999,
-    ) as dst:
-        dst.write(distances, indexes=1)
+        # Calculate distance to the bank over all valleys
+        distances = distance_transform_edt(mask.astype("float32"), [dem.res[0], dem.res[1]])
+        LOG.info("Writing distance_transform.tif")
+        if write_tempfiles:
+            with rasterio.open(
+                os.path.join(data_path, "distance_transform.tif"),
+                "w",
+                driver="GTiff",
+                dtype=rasterio.int32,
+                count=1,
+                width=dem.width,
+                height=dem.height,
+                crs=dem.crs,
+                transform=dem.transform,
+                nodata=-9999,
+            ) as dst:
+                dst.write(distances, indexes=1)
 
-    # Calculate local maxima
-    LOG.info("Calculating local maxima")
-    local_maxi = peak_local_max(
-        distances, indices=False, footprint=numpy.ones((3, 3)), labels=mask
-    )
+        # Calculate local maxima
+        LOG.info("Calculating local maxima")
+        local_maxi = peak_local_max(
+            distances, indices=False, footprint=numpy.ones((3, 3)), labels=mask
+        )
 
-    LOG.info("Labeling maxima")
-    breaks = ndi_label(local_maxi)[0]
-    distance_map = {
-        brk: dist for brk, dist in zip(breaks[local_maxi], distances[local_maxi])
-    }
+        LOG.info("Labeling maxima")
+        breaks = ndi_label(local_maxi)[0]
+        distance_map = {
+            brk: dist for brk, dist in zip(breaks[local_maxi], distances[local_maxi])
+        }
 
-    LOG.info("Performing Watershed Segmentation")
-    labels = watershed(-distances, breaks, mask=mask)
+        LOG.info("Performing Watershed Segmentation")
+        labels = watershed(-distances, breaks, mask=mask)
 
-    LOG.info("Assigning distances to labels")
-    for label, inds in list(label_map(labels).items()):
-        if label == 0:
-            continue
-        distances[inds] = distance_map[label]
+        LOG.info("Assigning distances to labels")
+        for label, inds in list(label_map(labels).items()):
+            if label == 0:
+                continue
+            distances[inds] = distance_map[label]
 
-    LOG.info("Doubling dimensions")
-    max_distance = numpy.sqrt(dem.res[0] ** 2 + dem.res[1] ** 2) * 2
-    distances[distances > max_distance] *= 2
+        LOG.info("Doubling dimensions")
+        max_distance = numpy.sqrt(dem.res[0] ** 2 + dem.res[1] ** 2) * 2
+        distances[distances > max_distance] *= 2
 
-    output = valleys.astype("float32")
-    output[:] = distances.astype("float32")
+        output = valleys.astype("float32")
+        output[:] = distances.astype("float32")
 
-    with rasterio.open(
-        os.path.join(data_path, "valley_width.tif"),
-        "w",
-        driver="GTiff",
-        dtype=rasterio.int32,
-        count=1,
-        width=dem.width,
-        height=dem.height,
-        crs=dem.crs,
-        transform=dem.transform,
-        nodata=-9999,
-    ) as dst:
-        dst.write(output, indexes=1)
+        with rasterio.open(
+            os.path.join(data_path, "valley_width.tif"),
+            "w",
+            driver="GTiff",
+            dtype=rasterio.int32,
+            count=1,
+            width=dem.width,
+            height=dem.height,
+            crs=dem.crs,
+            transform=dem.transform,
+            nodata=-9999,
+        ) as dst:
+            dst.write(output, indexes=1)
 
 
 class ConfigError(Exception):
@@ -587,6 +591,7 @@ def read_config(config_file):
         "flood_factor",
         "size_threshold",
         "hole_removal_threshold",
+        "calculate_width"
     ]
     # check keys are valid
     for key in cfg["CONFIG"].keys():
@@ -624,9 +629,17 @@ def read_config(config_file):
     type=click.Path(exists=True),
     help="Valley confinement parameter configuration file",
 )
+@click.option(
+    "--write_tempfiles",
+    "-w",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Write temp rasters to --data_path",
+)
 @verbose_opt
 @quiet_opt
-def cli(watershed_group_code, db_url, out_file, workdir, config_file, verbose, quiet):
+def cli(watershed_group_code, db_url, out_file, workdir, config_file, write_tempfiles, verbose, quiet):
     verbosity = verbose - quiet
     log_level = max(10, 20 - 10 * verbosity)  # default to INFO log level
     logging.basicConfig(

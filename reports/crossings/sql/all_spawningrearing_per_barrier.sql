@@ -8,7 +8,7 @@ WITH summary AS
 (
     SELECT 
       a.aggregated_crossings_id,
-      ROUND((SUM(b.all_spawningrearing_belowupstrbarriers_km) / (COALESCE(array_length(array_remove(a.barriers_anthropogenic_dnstr, 1100002536), 1), 0) + 1))::numeric, 2) as all_spawningrearing_per_barrier
+      ROUND((SUM(b.all_spawningrearing_belowupstrbarriers_km) / (COALESCE(array_length(array_remove(a.barriers_anthropogenic_dnstr, '1100002536'), 1), 0) + 1))::numeric, 2) as all_spawningrearing_per_barrier
     FROM bcfishpass.crossings a 
     INNER JOIN bcfishpass.crossings b
     ON FWA_Downstream(a.blue_line_key, a.downstream_route_measure, a.wscode_ltree, a.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree, true)

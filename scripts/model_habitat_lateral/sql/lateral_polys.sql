@@ -15,19 +15,6 @@ create table bcfishpass.lateral_poly (
 );
 
 -- ----------------------------------------
--- STUDY AREA - class 0
--- ----------------------------------------
-insert into bcfishpass.lateral_poly (
-  code,
-  geom
-)
-select
-  0 as code,
-  st_multi(geom) as geom
-from bcfishpass.lateral_studyarea;
-
-
--- ----------------------------------------
 -- FWA WATERBODIES - class 1
 -- ----------------------------------------
 insert into bcfishpass.lateral_poly (
@@ -38,8 +25,8 @@ select
   1 as code,
   st_multi(st_buffer(wb.geom, 30)) as geom
 from whse_basemapping.fwa_lakes_poly as wb
-inner join bcfishpass.lateral_studyarea as sa
-on st_intersects(wb.geom, sa.geom);
+inner join bcfishpass.param_watersheds p
+on wb.watershed_group_code = p.watershed_group_code;
 
 insert into bcfishpass.lateral_poly (
   code,
@@ -49,8 +36,8 @@ select
   1 as code,
   st_multi(st_buffer(wb.geom, 30)) as geom
 from whse_basemapping.fwa_rivers_poly as wb
-inner join bcfishpass.lateral_studyarea as sa
-on st_intersects(wb.geom, sa.geom);
+inner join bcfishpass.param_watersheds p
+on wb.watershed_group_code = p.watershed_group_code;
 
 insert into bcfishpass.lateral_poly (
   code,
@@ -60,8 +47,8 @@ select
   1 as code,
   st_multi(st_buffer(wb.geom, 30)) as geom
 from whse_basemapping.fwa_wetlands_poly as wb
-inner join bcfishpass.lateral_studyarea as sa
-on st_intersects(wb.geom, sa.geom);
+inner join bcfishpass.param_watersheds p
+on wb.watershed_group_code = p.watershed_group_code;
 
 insert into bcfishpass.lateral_poly (
   code,
@@ -71,8 +58,8 @@ select
   1 as code,
   st_multi(st_buffer(wb.geom, 30)) as geom
 from whse_basemapping.fwa_manmade_waterbodies_poly as wb
-inner join bcfishpass.lateral_studyarea as sa
-on st_intersects(wb.geom, sa.geom);
+inner join bcfishpass.param_watersheds p
+on wb.watershed_group_code = p.watershed_group_code;
 
 
 -- ----------------------------------------
@@ -88,8 +75,10 @@ select
     when ST_CoveredBy(wb.geom, sa.geom) then st_multi(wb.geom)
     else st_multi(st_intersection(wb.geom, sa.geom)) end as geom
 from whse_basemapping.cwb_floodplains_bc_area_svw as wb
-inner join bcfishpass.lateral_studyarea as sa
-on st_intersects(wb.geom, sa.geom);
+inner join whse_basemapping.fwa_watershed_groups_poly as sa
+on st_intersects(wb.geom, sa.geom)
+inner join bcfishpass.param_watersheds p
+on sa.watershed_group_code = p.watershed_group_code;
 
 
 -- ----------------------------------------
@@ -106,8 +95,8 @@ SELECT
   3 as code,
   st_multi((st_dump(st_union(st_buffer(s.geom, 60)))).geom) as geom
 FROM bcfishpass.streams s
-INNER JOIN bcfishpass.lateral_studyarea sa
-ON st_intersects(s.geom, sa.geom)
+inner join bcfishpass.param_watersheds wsg
+on s.watershed_group_code = wsg.watershed_group_code
 INNER JOIN whse_basemapping.fwa_stream_order_parent p
 ON s.blue_line_key = p.blue_line_key
 WHERE
@@ -134,17 +123,15 @@ SELECT
   4 as code,
   st_multi((st_dump(st_union(st_buffer(s.geom, 30)))).geom) as geom
 FROM bcfishpass.streams s
-INNER JOIN bcfishpass.lateral_studyarea sa
-ON st_intersects(s.geom, sa.geom)
+inner join bcfishpass.param_watersheds wsg
+on s.watershed_group_code = wsg.watershed_group_code
 INNER JOIN whse_basemapping.fwa_stream_order_parent p
 ON s.blue_line_key = p.blue_line_key
 WHERE
   (
     (
       model_access_st is not null or
-      model_access_ch_co_sk is not null or
-      model_access_pk is not null or
-      model_access_cm is not null
+      model_access_ch_co_sk is not null
     )
     and stream_order >= 7
   )
@@ -160,8 +147,6 @@ WHERE
     model_rearing_ch is true or
     model_rearing_co is true or
     model_rearing_sk is true or
-    model_rearing_pk is true or
-    model_rearing_cm is true or
     model_rearing_st is true
     )
     and
@@ -173,7 +158,7 @@ WHERE
 
 -- ----------------------------------------
 -- CLASS 5, 20M STREAM BUFFER (PLUS CHANNEL WIDTH)
--- ALL <4% 'ACCESSIBLE' SINGLE LINE STREAMS
+-- ALL 'POTENTIALLY ACCESSIBLE' SINGLE LINE STREAMS
 -- (not enough flow to be modelled as spawning/rearing habitat)
 -- ----------------------------------------
 insert into bcfishpass.lateral_poly (
@@ -182,19 +167,16 @@ insert into bcfishpass.lateral_poly (
 )
 SELECT
   5 as code,
-  st_multi((st_dump(st_union(st_buffer(s.geom, (s.channel_width + 20))))).geom) as geom
+  st_multi((st_dump(st_union(st_buffer(s.geom, (coalesce(s.channel_width, 0) + 20))))).geom) as geom
 FROM bcfishpass.streams s
-INNER JOIN bcfishpass.lateral_studyarea sa
-ON st_intersects(s.geom, sa.geom)
+inner join bcfishpass.param_watersheds p
+on s.watershed_group_code = p.watershed_group_code
 WHERE
   edge_type in (1000,1100,2000,2300)
-  and gradient < .04
   and
   (
     model_access_ch_co_sk is not null or
-    model_access_st is not null or 
-    model_access_pk is not null or
-    model_access_cm is not null
+    model_access_st is not null
   );
 
 
@@ -217,7 +199,7 @@ with xings as
   from bcfishpass.crossings
   where
     crossing_feature_type = 'RAIL' and
-    (model_access_ch_co_sk is not null or model_access_st is not null or model_access_pk is not null or model_access_cm is not null) and
+    (model_access_ch_co_sk is not null or model_access_st is not null) and
     (
       barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
       or crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -231,8 +213,8 @@ select
   -- use flat endcap to ensure that the cut is done properly
   st_multi((st_dump(st_union(st_buffer(s.geom, 30, 'endcap=flat join=round')))).geom) as geom
 from bcfishpass.streams s
-inner join bcfishpass.lateral_studyarea sa
-on st_intersects(s.geom, sa.geom)
+inner join bcfishpass.param_watersheds p
+on s.watershed_group_code = p.watershed_group_code
 left outer join xings b
 on FWA_Downstream(
       s.blue_line_key,
@@ -248,24 +230,22 @@ on FWA_Downstream(
     )
 where
 (s.model_access_st is not null OR s.model_access_ch_co_sk is not null)
-and
-(
-  (
-    s.model_spawning_ch is true or
-    s.model_spawning_co is true or
-    s.model_spawning_sk is true or
-    s.model_spawning_st is true or
-    s.model_spawning_pk is true or
-    s.model_spawning_cm is true or
-    s.model_rearing_ch is true or
-    s.model_rearing_co is true or
-    s.model_rearing_sk is true or
-    s.model_rearing_cm is true or
-    s.model_rearing_pk is true or
-    s.model_rearing_st is true
-  )
-  or s.stream_order >= 7
-)
+--and
+--(
+--  (
+--    s.model_spawning_ch is true or
+--    s.model_spawning_co is true or
+--    s.model_spawning_sk is true or
+--    s.model_spawning_st is true or
+--    s.model_spawning_pk is true or
+--    s.model_spawning_cm is true or
+--    s.model_rearing_ch is true or
+--    s.model_rearing_co is true or
+--    s.model_rearing_sk is true or
+--    s.model_rearing_st is true
+--  )
+--  or s.stream_order >= 7
+--)
 and b.aggregated_crossings_id is null
 
 -- Do not include streams above barriers in side channels
@@ -336,3 +316,5 @@ select
   st_multi(geom) as geom
 from whse_basemapping.btm_present_land_use_v1_svw
 where present_land_use_label = 'Urban';
+
+create index on bcfishpass.lateral_poly using gist (geom) ;

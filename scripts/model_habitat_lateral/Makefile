@@ -1,33 +1,40 @@
 .PHONY: all clean 
 
-PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
+PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
+#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = VICT SANJ COWN
+
+BOUNDS = $(shell $(PSQL) -AtX -F " " -c "select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom) \
+from ( \
+  select \
+    st_extent(geom) as geom \
+  from whse_basemapping.fwa_watershed_groups_poly wsg \
+  inner join bcfishpass.param_watersheds p \
+  on wsg.watershed_group_code = p.watershed_group_code \
+) as ext;")
+
 
 all: .make/lateral_disconnected_rail
 
-.make/sources:
+
+clean:
+	$(PSQL) -c "DROP TABLE IF EXISTS whse_basemapping.cwb_floodplains_bc_area_svw"
+	$(PSQL) -c "DROP TABLE IF EXISTS bcfishpass.lateral"
+	rm -rf data
+	rm -rf .make
+
+
+.make/sources: 
 	mkdir -p .make
-	bcdata bc2pg WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
-	bcdata bc2pg WHSE_BASEMAPPING.BCGS_20K_GRID
-	bcdata bc2pg WHSE_BASEMAPPING.BTM_PRESENT_LAND_USE_V1_SVW
-	touch $@
-
-.make/lateral_polys: .make/sources sql/studyarea.sql sql/lateral_polys.sql
-	$(PSQL_CMD) -f sql/studyarea.sql
-	$(PSQL_CMD) -f sql/lateral_polys.sql
-	touch $@
-
-data/dem.tif:
 	mkdir -p data
-	bcdata dem --bounds "728158 446751 1542259 1263164" --align -o $@
+	# published floodplain definitions
+	bcdata bc2pg WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
+	touch $@
 
-data/slope.tif: data/dem.tif
-	gdaldem slope data/dem.tif $@ -p -co COMPRESS=DEFLATE
 
-# land cover from ESA
-data/esa_bc.tif:
-	# Download BC tiles of ESA world landcover from S3 bucket
-	# warp data to BC Albers, writing to compressed geotiff
+# ESA world landcover - download from S3 bucket
+data/esa_bc.tif:	
 	aws s3 cp s3://esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N54W123_Map.tif \
 		$(TMP)/ESA_WorldCover_10m_2020_v100_N54W123_Map.tif --no-sign-request
 	aws s3 cp s3://esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N57W120_Map.tif \
@@ -82,38 +89,40 @@ data/esa_bc.tif:
 		$(TMP)/ESA_WorldCover_10m_2020_v100_N57W123_Map.tif --no-sign-request
 	aws s3 cp s3://esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N48W126_Map.tif \
 		$(TMP)/ESA_WorldCover_10m_2020_v100_N48W126_Map.tif --no-sign-request
+	# merge esa tifs and warp to BC Albers, writing to compressed geotiff
+	# note that extent is for all of BC
 	gdalbuildvrt $(TMP)/esa_merged.vrt $(TMP)/ESA_WorldCover_10m_2020_v100_*.tif
 	gdalwarp -co COMPRESS=DEFLATE \
 		-co PREDICTOR=2 \
 		-co NUM_THREADS=ALL_CPUS \
 		-t_srs EPSG:3005 \
 		-r nearest \
-		-te "728087.5, 446687.5, 1542387.5, 1263287.5" \
-		-tr 25 25 \
+		-te 273287.5, 367687.5, 1870687.5, 1735887.5 \
+		-tr 10 10 \
 		$(TMP)/esa_merged.vrt \
 		$@
 
-# run lateral analysis, writing output lateral.tif
-data/lateral.tif: data/slope.tif .make/lateral_polys data/esa_bc.tif lateral.py
-	python lateral.py data/slope.tif -o $@ --temp_path temp_tifs
-	# clean up lateral potential table
-	$(PSQL_CMD) -c "create table bcfishpass.lateral_potential2 as \
-		select raster_val, st_subdivide(geometry) as geom \
-		from bcfishpass.lateral_potential \
-		where raster_val = 1; \
-		drop table bcfishpass.lateral_potential; \
-		alter table bcfishpass.lateral_potential2 rename to lateral_potential;"
 
+# run lateral analysis for each watershed group and merge result
+data/habitat_lateral.tif: .make/sources data/esa_bc.tif valley_confinement.py habitat_lateral.py 
+	# make output folder and temp data folders
+	for wsg in $(WSG) ; do \
+		mkdir -p data/$$wsg ; \
+	done
+	mkdir -p data/habitat_lateral
+	# run VCA for each watershed group
+	parallel python valley_confinement.py {1} -o data/{1}/valleys.tif -d data/{1} ::: $(WSG)
+	# run lateral habitat model	
+	parallel python habitat_lateral.py {1} -o data/habitat_lateral/habitat_lateral_{1}.tif -d data/{1} ::: $(WSG)
+	# merge outputs
+	python merge.py data/habitat_lateral/habitat_lateral_*.tif -o data/habitat_lateral.tif --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
+	# cleanup temp files
+	#for wsg in $(WSG) ; do \
+	#	rm -r data/$$wsg ; \
+	#done
+	
 # above loads to postgres all lateral polys disconnected by rail
 # clean up and label here
 .make/lateral_disconnected_rail: data/lateral.tif
-	$(PSQL_CMD) -f sql/lateral_disconnected_rail.sql
+	$(PSQL) -f sql/lateral_disconnected_rail.sql
 	touch $@
-
-clean:
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS whse_basemapping.cwb_floodplains_bc_area_svw"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS whse_basemapping.bcgs_20k_grid"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.lateral_studyarea"
-	$(PSQL_CMD) -c "DROP TABLE IF EXISTS bcfishpass.lateral_polys"
-	rm -rf data
-	rm -rf .make
