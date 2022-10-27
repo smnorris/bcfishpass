@@ -5,8 +5,6 @@ PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and sto
 
 
 WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-# watersheds for testing
-#WSG=BULK HORS LNIC ELKR
 
 
 QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
@@ -27,8 +25,9 @@ wcrp: $(WCRP_OUTPUTS)
 # Remove model make targets
 clean:
 	rm -Rf .make
-	cd scripts/model_access; rm -rf .make
-	cd scripts/model_habitat; rm -rf .make
+	cd scripts/model_access; make clean
+	cd scripts/model_habitat_linear; make clean
+	cd scripts/model_habitat_lateral; make clean
 
 
 # ------
@@ -109,9 +108,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	data/user_barriers_anthropogenic.csv \
 	data/user_modelled_crossing_fixes.csv \
 	data/user_pscis_barrier_status.csv \
-	.make/pscis \
-	./scripts/misc/load_csv.sh data/user_barriers_anthropogenic.csv \
-	./scripts/misc/load_csv.sh data/user_modelled_crossing_fixes.csv \
+	.make/pscis
+	./scripts/misc/load_csv.sh data/user_barriers_anthropogenic.csv 
+	./scripts/misc/load_csv.sh data/user_modelled_crossing_fixes.csv
 	./scripts/misc/load_csv.sh data/user_pscis_barrier_status.csv
 	$(PSQL) -c "truncate bcfishpass.crossings"
 	$(PSQL) -f $<
