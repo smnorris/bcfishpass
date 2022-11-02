@@ -71,9 +71,10 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
 # LOAD PER-SPECIES BARRIER TABLES - THE POINTS AT WHICH STREAMS WILL BE SEGMENTED (BREAKPTS)
 # -----
 # Combine definite barriers into a single table per each species/species group being modelled
-# observations are a requirement because the query 
+# observations are a requirement 
 $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
-	$(SOURCE_BARRIERS)
+	$(SOURCE_BARRIERS) \
+	../../.make/observations
 	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$@))
 	# create table if it does not exist
 	echo "SELECT bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)

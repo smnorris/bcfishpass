@@ -23,8 +23,9 @@ dependencies:
   - rasterstats
   - scikit-image
   - awscli
+  - seaborn
   - pip:
-      - bcdata===0.7.0
+      - bcdata==0.7.4
 variables:
   PGHOST: localhost
   PGUSER: postgres
