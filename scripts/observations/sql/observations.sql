@@ -82,30 +82,29 @@ obs as (
   AND array[e.species_code]::text[] && wsg_spp.species_codes
 )
 
--- aggregate, get distinct geom point
 SELECT
-  e.fish_obsrvtn_event_id,
-  e.linear_feature_id,
-  e.blue_line_key,
-  e.wscode_ltree,
-  e.localcode_ltree,
-  e.downstream_route_measure,
-  e.watershed_group_code,
-  array_agg(e.species_code) as species_codes,
-  array_agg(e.fish_observation_point_id) as observation_ids,
-  array_agg(e.observation_date) as observation_dates,
-  vw.geom
-FROM obs e
-INNER JOIN bcfishobs.fiss_fish_obsrvtn_events_vw vw
-ON e.fish_obsrvtn_event_id = vw.fish_obsrvtn_event_id
-GROUP BY e.fish_obsrvtn_event_id,
-  e.linear_feature_id,
-  e.blue_line_key,
-  e.wscode_ltree,
-  e.localcode_ltree,
-  e.downstream_route_measure,
-  e.watershed_group_code,
-  vw.geom;
+  p.fish_obsrvtn_event_id,
+  p.linear_feature_id,
+  p.blue_line_key,
+  p.wscode_ltree,
+  p.localcode_ltree,
+  p.downstream_route_measure,
+  p.watershed_group_code,
+  array_agg(p.species_code) as species_codes,
+  array_agg(p.fish_observation_point_id) as observation_ids,
+  array_agg(p.observation_date) as observation_dates,
+  e.geom
+FROM obs p
+INNER JOIN bcfishobs.fiss_fish_obsrvtn_events e
+ON p.fish_obsrvtn_event_id = e.fish_obsrvtn_event_id
+GROUP BY p.fish_obsrvtn_event_id,
+  p.linear_feature_id,
+  p.blue_line_key,
+  p.wscode_ltree,
+  p.localcode_ltree,
+  p.downstream_route_measure,
+  p.watershed_group_code,
+  e.geom;
 
 -- index
 CREATE INDEX IF NOT EXISTS obsrvtn_linear_feature_id_idx ON bcfishpass.observations (linear_feature_id);

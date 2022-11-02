@@ -1,7 +1,7 @@
 """
 gdal_merge.py and rio merge use painters algorithm when merging rasters.
 To retain all pixels identified as unconfined valley (when overlaps do not agree),
-this script use rasterio.merge(method=max) 
+this script uses rasterio.merge(method=max)
 """
 
 

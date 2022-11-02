@@ -55,8 +55,10 @@ clean:
 # the csv allows for adding features and it is convenient to have barrier status in the
 # source falls table. (note that we don't use make in the falls directory because falls script
 # should be called when any of the various requirements change)
-.make/falls:  data/user_falls.csv data/user_barriers_definite_control.csv scripts/falls/falls.sh scripts/falls/sql/falls.sql
-	mkdir -p .make
+.make/falls:  .make/setup \
+	data/user_falls.csv \
+	data/user_barriers_definite_control.csv \
+	scripts/falls/falls.sh scripts/falls/sql/falls.sql
 	./scripts/misc/load_csv.sh data/user_falls.csv
 	./scripts/misc/load_csv.sh data/user_barriers_definite_control.csv
 	cd scripts/falls; ./falls.sh

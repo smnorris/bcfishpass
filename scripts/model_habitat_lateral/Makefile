@@ -2,8 +2,8 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
-#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-WSG = VICT SANJ COWN
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+#WSG = VICT SANJ COWN
 
 BOUNDS = $(shell $(PSQL) -AtX -F " " -c "select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom) \
 from ( \
@@ -123,6 +123,6 @@ data/habitat_lateral.tif: .make/sources data/esa_bc.tif valley_confinement.py ha
 	
 # above loads to postgres all lateral polys disconnected by rail
 # clean up and label here
-.make/lateral_disconnected_rail: data/lateral.tif
+.make/lateral_disconnected_rail: data/habitat_lateral.tif
 	$(PSQL) -f sql/lateral_disconnected_rail.sql
 	touch $@
