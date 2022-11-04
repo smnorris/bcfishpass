@@ -122,8 +122,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # OBSERVATIONS
 # ------
 # extract FISS observations for species of interest within study area from bcfishobs
-.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
+.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup data/user_observations_qa.csv
 	./scripts/misc/load_csv.sh data/wsg_species_presence.csv
+	./scripts/misc/load_csv.sh data/user_observations_qa.csv
 	$(PSQL) -f scripts/observations/sql/observations.sql
 	touch $@
 
@@ -167,13 +168,6 @@ scripts/model_access/.make/model_access: .make/barrier_sources  \
 	cd scripts/model_access; make
 
 # -----
-# VALLEY CONFINEMENT
-# -----
-.make/valley_confinement: scripts/model_access/.make/model_access
-	cd scripts/valley_confinement && ./valley_confinement.sh
-	touch $@
-
-# -----
 # LINEAR HABITAT MODEL
 # -----
 scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_classification.csv \
@@ -183,6 +177,12 @@ scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_class
 	./scripts/misc/load_csv.sh $< 
 	cd scripts/model_habitat_linear; make
 
+
+# -----
+# LATERAL HABITAT MODEL
+# -----
+scripts/model_habitat_lateral/data/habitat_lateral.tif: scripts/model_habitat_linear/.make/model_habitat_linear
+	cd scripts/model_habitat_lateral; make data/habitat_lateral.tif
 
 # ======
 # REPORTING

@@ -63,7 +63,8 @@ FROM (
 
 -- extract observations of species of interest, 
 -- within watershed groups where they are noted to occur
--- (discarding observations outside of those groups)
+-- - discarding observations outside of those groups
+-- - discarding observations noted to be of suspect quality in data/user_observations_qa.csv
 obs as (
   SELECT
     e.fish_observation_point_id,
@@ -80,6 +81,9 @@ obs as (
   INNER JOIN wsg_spp
   ON e.watershed_group_code = wsg_spp.watershed_group_code
   AND array[e.species_code]::text[] && wsg_spp.species_codes
+  LEFT OUTER JOIN bcfishpass.user_observations_qa qa
+  ON e.fish_observation_point_id = qa.fish_observation_point_id
+  WHERE qa.retain_ind is not false
 )
 
 SELECT
