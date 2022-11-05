@@ -104,7 +104,10 @@ data/esa_bc.tif:
 
 
 # run lateral analysis for each watershed group and merge result
-data/habitat_lateral.tif: .make/sources data/esa_bc.tif valley_confinement.py habitat_lateral.py 
+data/habitat_lateral.tif: .make/sources data/esa_bc.tif \
+	valley_confinement.py \
+	habitat_lateral.py \
+	../model_habitat_linear/.make/model_habitat_linear
 	# make output folder and temp data folders
 	for wsg in $(WSG) ; do \
 		mkdir -p data/$$wsg ; \

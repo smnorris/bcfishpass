@@ -45,22 +45,20 @@ CREATE TABLE bcfishpass.user_barriers_definite
 -- --------------
 -- USER_BARRIERS_DEFINITE_CONTROL
 --
--- Modify barrier status of features (fiss/fwa falls, gradient barriers, subsurface flow)
+-- Modify barrier status of natural features (fiss/fwa falls, gradient barriers, subsurface flow)
 -- --------------
 DROP TABLE IF EXISTS bcfishpass.user_barriers_definite_control;
 CREATE TABLE bcfishpass.user_barriers_definite_control
 (
-    barrier_type text,
-    barrier_name text,
-    barrier_ind boolean,
-    blue_line_key integer,
-    downstream_route_measure double precision,
-    watershed_group_code varchar(4),
-    reviewer_name text,
-    review_date date,
-    source text,
-    notes text,
-    primary key (blue_line_key, downstream_route_measure)
+  blue_line_key integer,
+  downstream_route_measure integer,
+  barrier_type text,
+  barrier_ind boolean,
+  watershed_group_code text,
+  reviewer_name text,
+  review_date date,
+  source text,
+  notes text
 );
 
 -- --------------

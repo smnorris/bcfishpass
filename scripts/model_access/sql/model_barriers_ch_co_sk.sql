@@ -124,7 +124,10 @@ obs_upstr as
         false,
         1
       )
+  left outer join bcfishpass.user_barriers_definite_control bc
+  on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
   where o.species_codes && array['CH','CM','CO','PK','SK']
+  and bc.barrier_ind is null
 ),
 
 obs_upstr_n as

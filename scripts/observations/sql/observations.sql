@@ -81,9 +81,6 @@ obs as (
   INNER JOIN wsg_spp
   ON e.watershed_group_code = wsg_spp.watershed_group_code
   AND array[e.species_code]::text[] && wsg_spp.species_codes
-  LEFT OUTER JOIN bcfishpass.user_observations_qa qa
-  ON e.fish_observation_point_id = qa.fish_observation_point_id
-  WHERE qa.retain_ind is not false
 )
 
 SELECT

@@ -122,9 +122,8 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # OBSERVATIONS
 # ------
 # extract FISS observations for species of interest within study area from bcfishobs
-.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup data/user_observations_qa.csv
+.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
 	./scripts/misc/load_csv.sh data/wsg_species_presence.csv
-	./scripts/misc/load_csv.sh data/user_observations_qa.csv
 	$(PSQL) -f scripts/observations/sql/observations.sql
 	touch $@
 
@@ -176,7 +175,6 @@ scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_class
 	$(PSQL) -f scripts/model_habitat_linear/sql/tables/user.sql
 	./scripts/misc/load_csv.sh $< 
 	cd scripts/model_habitat_linear; make
-
 
 # -----
 # LATERAL HABITAT MODEL
