@@ -2,8 +2,8 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-
+#WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = CAMB VICT
 
 # targets are listed here to create 'static pattern rules' - so they do not get ignored as intermediate steps
 # https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist

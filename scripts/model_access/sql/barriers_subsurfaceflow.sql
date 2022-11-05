@@ -39,5 +39,5 @@ WHERE
   s.local_watershed_code IS NOT NULL AND
   s.blue_line_key = s.watershed_key AND
   s.fwa_watershed_code NOT LIKE '999%%' AND
-  c.barrier_ind is not false
+  (c.barrier_ind IS NULL or c.barrier_ind is true)
 ON CONFLICT DO NOTHING;

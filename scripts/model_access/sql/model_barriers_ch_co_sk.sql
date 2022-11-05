@@ -124,6 +124,7 @@ obs_upstr as
         false,
         1
       )
+  -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
   left outer join bcfishpass.user_barriers_definite_control bc
   on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
   where o.species_codes && array['CH','CM','CO','PK','SK']
@@ -133,11 +134,11 @@ obs_upstr as
 obs_upstr_n as
 (
   select
-    barrier_id,
-    count(obs) as n_obs
-  from obs_upstr
-  where spp in ('CH','CM','CO','PK','SK')
-  group by barrier_id
+    o.barrier_id,
+    count(o.obs) as n_obs
+  from obs_upstr o
+  where o.spp in ('CH','CM','CO','PK','SK') 
+  group by o.barrier_id
 )
 
 insert into bcfishpass.barriers_ch_co_sk
