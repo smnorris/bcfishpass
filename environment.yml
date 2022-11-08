@@ -12,6 +12,7 @@ dependencies:
   - libpq
   - gdal>=3.5
   - python=3.9
+  - rasterio
   - pip
   - requests
   - owslib
