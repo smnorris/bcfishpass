@@ -20,6 +20,8 @@ INSERT INTO bcfishpass.streams
   stream_magnitude,
   feature_code,
   upstream_area_ha,
+  stream_order_parent,
+  stream_order_max,
   map_upstream,
   channel_width,
   mad_m3s,
@@ -38,6 +40,8 @@ SELECT
   s.stream_magnitude,
   s.feature_code,
   ua.upstream_area_ha,
+  s.stream_order_parent,
+  s.stream_order_max,
   p.map_upstream,
   cw.channel_width,
   COALESCE(mad_fndry.mad_m3s, mad.mad_m3s) as mad_m3s,  -- default to foundry data where available

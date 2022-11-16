@@ -177,16 +177,6 @@ scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_class
 	cd scripts/model_habitat_linear; make
 
 # -----
-# LATERAL HABITAT MODEL
-# -----
-scripts/model_habitat_lateral/data/habitat_lateral.tif: scripts/model_habitat_linear/.make/model_habitat_linear
-	cd scripts/model_habitat_lateral; make data/habitat_lateral.tif
-
-# ======
-# REPORTING
-# ======
-
-# -----
 # CROSSING STATS
 # add various columns holding upstream/downstream metrics to crossings table and barriers_anthropogenic
 # -----
@@ -240,6 +230,13 @@ scripts/model_habitat_lateral/data/habitat_lateral.tif: scripts/model_habitat_li
 		psql -f reports/crossings/sql/all_spawningrearing_per_barrier.sql -v wsg=$$wsg ; \
 	done
 	touch $@
+
+# -----
+# LATERAL HABITAT MODEL
+# -----
+scripts/model_habitat_lateral/data/habitat_lateral.tif: scripts/model_habitat_linear/.make/model_habitat_linear \
+	.make/crossing_stats
+	cd scripts/model_habitat_lateral; make data/habitat_lateral.tif
 
 # -----
 # ACCESS MODEL QA REPORT

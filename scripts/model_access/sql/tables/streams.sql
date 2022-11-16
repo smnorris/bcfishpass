@@ -37,6 +37,10 @@ CREATE TABLE bcfishpass.streams
 
   -- value added fwapg columns
   upstream_area_ha double precision,
+  stream_order_parent integer,
+
+  -- max stream order associated with blkey (for scale based filtering)
+  stream_order_max integer,
   
   -- precipitation, channel width, discharge models
   map_upstream integer,
