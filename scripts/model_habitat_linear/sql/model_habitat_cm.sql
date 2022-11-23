@@ -62,4 +62,5 @@ UPDATE bcfishpass.streams s
 SET
   model_spawning_cm = model.spawn_cm
 FROM model
-WHERE s.segmented_stream_id = model.segmented_stream_id;
+WHERE s.segmented_stream_id = model.segmented_stream_id
+AND model.spawn_cm is true;

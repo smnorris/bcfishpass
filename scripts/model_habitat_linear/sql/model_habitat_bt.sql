@@ -71,7 +71,8 @@ UPDATE bcfishpass.streams s
 SET
   model_spawning_bt = model.spawn_bt
 FROM model
-WHERE s.segmented_stream_id = model.segmented_stream_id;
+WHERE s.segmented_stream_id = model.segmented_stream_id
+AND model.spawn_bt is true;
 
 
 -- ----------------------------------------------
@@ -85,8 +86,6 @@ WITH rearing AS
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
-  INNER JOIN whse_basemapping.fwa_stream_order_parent p
-  ON s.blue_line_key = p.blue_line_key
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.param_habitat h
@@ -103,7 +102,7 @@ WITH rearing AS
         -- apply minimum channel width for rearing, except for first order
         -- streams with parent order >=5)
         (s.channel_width >= h.rear_channel_width_min OR
-         (p.stream_order_parent >=5 AND s.stream_order = 1)
+         (s.stream_order_parent >=5 AND s.stream_order = 1)
         )
       )
     OR
@@ -137,8 +136,6 @@ WITH rearing AS
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
-  INNER JOIN whse_basemapping.fwa_stream_order_parent p
-  ON s.blue_line_key = p.blue_line_key
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.param_habitat h
@@ -154,7 +151,7 @@ WITH rearing AS
         -- apply minimum channel width for rearing, except for first order
         -- streams with parent order >=5)
         (s.channel_width >= h.rear_channel_width_min OR
-         (p.stream_order_parent >=5 AND s.stream_order = 1)
+         (s.stream_order_parent >=5 AND s.stream_order = 1)
         )
       )
     OR
@@ -225,8 +222,6 @@ WITH rearing AS
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
-  INNER JOIN whse_basemapping.fwa_stream_order_parent p
-  ON s.blue_line_key = p.blue_line_key
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.param_habitat h
@@ -243,7 +238,7 @@ WITH rearing AS
         -- apply minimum channel width for rearing, except for first order
         -- streams with parent order >=5)
         (s.channel_width >= h.rear_channel_width_min OR
-         (p.stream_order_parent >=5 AND s.stream_order = 1)
+         (s.stream_order_parent >=5 AND s.stream_order = 1)
         )
       )
     OR
