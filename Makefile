@@ -26,7 +26,6 @@ wcrp: $(WCRP_OUTPUTS)
 clean:
 	rm -Rf .make
 	cd scripts/model_access; make clean
-	cd scripts/model_habitat_linear; make clean
 	cd scripts/model_habitat_lateral; make clean
 
 
@@ -169,18 +168,18 @@ scripts/model_access/.make/model_access: .make/barrier_sources  \
 # -----
 # LINEAR HABITAT MODEL
 # -----
-scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_classification.csv \
+.make/model_habitat_linear: data/user_habitat_classification.csv \
 	scripts/model_access/.make/model_access 
 	# load manual habitat classification
 	$(PSQL) -f scripts/model_habitat_linear/sql/tables/user.sql
 	./scripts/misc/load_csv.sh $< 
-	cd scripts/model_habitat_linear; make
+	cd scripts/model_habitat_linear; ./model_habitat_linear.sh
 
 # -----
 # CROSSING STATS
 # add various columns holding upstream/downstream metrics to crossings table and barriers_anthropogenic
 # -----
-.make/crossing_stats: scripts/model_habitat_linear/.make/model_habitat_linear \
+.make/crossing_stats: .make/model_habitat_linear \
 	reports/crossings/sql/point_report.sql \
 	reports/crossings/sql/point_report_obs_belowupstrbarriers.sql \
 	reports/crossings/sql/all_spawningrearing_per_barrier.sql
@@ -234,7 +233,7 @@ scripts/model_habitat_linear/.make/model_habitat_linear: data/user_habitat_class
 # -----
 # LATERAL HABITAT MODEL
 # -----
-scripts/model_habitat_lateral/data/habitat_lateral.tif: scripts/model_habitat_linear/.make/model_habitat_linear \
+scripts/model_habitat_lateral/data/habitat_lateral.tif: .make/model_habitat_linear \
 	.make/crossing_stats
 	cd scripts/model_habitat_lateral; make data/habitat_lateral.tif
 
