@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code in ('BULK','LNIC')")
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code")
 
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
