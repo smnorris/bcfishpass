@@ -2,7 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code = 'BULK'")
 
 
 # targets are listed here to create 'static pattern rules' - so they do not get ignored as intermediate steps
@@ -141,8 +141,8 @@ $(BROKEN): .make/broken_%: .make/model_barriers_% .make/streams
 .make/broken_observations: .make/streams
 	parallel --jobs 4 --no-run-if-empty \
 		$(PSQL) -f sql/break_streams_wrapper.sql \
-		-v wsg={1} \
-		-v point_table=$(subst .make/,,$<) ::: $(WSG)
+		-v point_table=observations \
+		-v wsg={1} ::: $(WSG)
 	parallel --jobs 4 --no-run-if-empty \
 		$(PSQL) -f sql/update_observations_upstr.sql \
 		-v wsg={1} ::: $(WSG)
