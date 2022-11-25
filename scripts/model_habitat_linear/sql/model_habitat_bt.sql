@@ -62,8 +62,7 @@ LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key
 WHERE
   -- spawning is in lakes and rivers only
-  wb.waterbody_type = 'R' OR
-  (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+  (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
 AND s.watershed_group_code = :'wsg'
 )
 

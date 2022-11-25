@@ -54,7 +54,7 @@ model AS
   ON cm.species_code = 'CM'
   LEFT OUTER JOIN rivers r
   ON s.waterbody_key = r.waterbody_key
-  WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)) -- apply to streams/rivers only
+  WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
   AND s.watershed_group_code = :'wsg'
 )
 
