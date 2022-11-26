@@ -1,1 +1,0 @@
-SELECT bcfishpass.break_streams(:'point_table', :'wsg');

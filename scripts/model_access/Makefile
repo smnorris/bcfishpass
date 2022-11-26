@@ -105,6 +105,10 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 	touch $@
 .make/model_barriers_remediated:
 	touch $@
+.make/model_barriers_dams:
+	touch $@
+.make/model_barriers_hydro_dams:
+	touch $@
 
 # -----
 # LOAD STREAMS
@@ -118,7 +122,7 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 # -----
 # BREAK STREAMS
 # -----
-# Break streams at various barrier types and observations, plus at anthropogenic barriers
+# Break streams at various barrier types 
 # Processing in parallel (provincially) eventually crashes the db, process one group at a time or with a modest job count
 $(BROKEN): .make/broken_%: .make/model_barriers_% .make/streams
 	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$<))
@@ -140,19 +144,25 @@ $(BROKEN): .make/broken_%: .make/model_barriers_% .make/streams
 # break streams and index at all observations (of target species)
 .make/broken_observations: .make/streams
 	parallel --jobs 4 --no-run-if-empty \
-		$(PSQL) -f sql/break_streams_wrapper.sql \
-		-v point_table=observations \
-		-v wsg={1} ::: $(WSG)
+		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+		$(PSQL) -v wsg={1} -v point_table=observations" ::: $(WSG)
 	parallel --jobs 4 --no-run-if-empty \
-		$(PSQL) -f sql/update_observations_upstr.sql \
-		-v wsg={1} ::: $(WSG)
+		$(PSQL) -f sql/update_observations_upstr.sql -v wsg={1} ::: $(WSG)
 	touch $@
+
+# also break streams at all crossings (to capture bridges/obs), but no need to index them
+.make/broken_crossings: .make/streams
+	parallel --jobs 4 --no-run-if-empty \
+		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+		$(PSQL) -v wsg={1} -v point_table=crossings" ::: $(WSG)
+	touch $@
+
 
 # -----
 # PROCESS MODEL
 # -----
 # with all barriers and observations processed, apply each access model with corresponding query
-$(MODEL_ACCESS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/broken_observations
+$(MODEL_ACCESS): .make/model_access_%: sql/model_access_%.sql $(BROKEN) .make/broken_observations .make/broken_crossings
 	for wsg in $(WSG) ; do \
 		set -e ; $(PSQL) -f $< -v wsg=$$wsg ; \
 	done
