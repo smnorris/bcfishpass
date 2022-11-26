@@ -68,7 +68,7 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
 
 
 # -----
-# LOAD PER-SPECIES BARRIER TABLES - THE POINTS AT WHICH STREAMS WILL BE SEGMENTED (BREAKPTS)
+# LOAD PER-SPECIES BARRIER TABLES - THE POINTS AT WHICH STREAMS WILL BE SEGMENTED 
 # -----
 # Combine definite barriers into a single table per each species/species group being modelled
 # observations are a requirement 
