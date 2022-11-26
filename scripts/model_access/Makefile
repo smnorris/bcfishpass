@@ -2,7 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code in ('BULK','VICT','SANJ','HORS','LNIC')")
 
 
 # targets are listed here to create 'static pattern rules' - so they do not get ignored as intermediate steps
@@ -13,7 +13,7 @@ SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 # combine barriers into tables of per-species scenarios, these will be points at which we break the streams
 MODEL_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_barriers_*.sql))
 # targets for breaking streams - above model_barriers (ie natural barriers) plus anthropogenic barriers
-BROKEN = $(patsubst .make/model_barriers_%, .make/broken_%, $(MODEL_BARRIERS)) .make/broken_anthropogenic .make/broken_pscis .make/broken_remediated
+BROKEN = $(patsubst .make/model_barriers_%, .make/broken_%, $(MODEL_BARRIERS)) .make/broken_anthropogenic .make/broken_pscis .make/broken_remediated .make/broken_dams .make/broken_dams_hydro
 
 MODEL_ACCESS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
@@ -107,7 +107,7 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 	touch $@
 .make/model_barriers_dams:
 	touch $@
-.make/model_barriers_hydro_dams:
+.make/model_barriers_dams_hydro:
 	touch $@
 
 # -----
