@@ -165,7 +165,7 @@ def valley_confinement(
     sql = """SELECT
       s.linear_feature_id,
       round(ua.upstream_area_ha::numeric) as upstream_area_ha,
-      p.stream_order_parent,
+      s.stream_order_parent,
       s.gradient,
       s.geom
     FROM bcfishpass.streams s
@@ -173,8 +173,6 @@ def valley_confinement(
     ON s.linear_feature_id = l.linear_feature_id
     INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
     ON l.watershed_feature_id = ua.watershed_feature_id
-    LEFT OUTER JOIN whse_basemapping.fwa_stream_order_parent p
-    ON s.blue_line_key = p.blue_line_key
     where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
     and s.gradient < .3
     and
