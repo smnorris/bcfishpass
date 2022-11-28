@@ -150,7 +150,7 @@ $(BROKEN): .make/broken_%: .make/model_barriers_% .make/streams
 		$(PSQL) -f sql/update_observations_upstr.sql -v wsg={1} ::: $(WSG)
 	touch $@
 
-# also break streams at all crossings (to capture bridges/obs), but no need to index them
+# also break streams at all crossings (to capture bridges/passable structures), but no need to index them
 .make/broken_crossings: .make/streams
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \

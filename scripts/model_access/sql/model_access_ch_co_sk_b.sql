@@ -24,7 +24,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'POTENTIALLY ACCESSIBLE'
@@ -36,7 +36,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
@@ -49,7 +49,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'ACCESSIBLE'
@@ -62,7 +62,7 @@ WITH model_access AS
             ARRAY(
               SELECT watershed_group_code
               FROM bcfishpass.wsg_species_presence
-              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE
+              WHERE co IS TRUE OR ch IS TRUE OR sk IS TRUE OR cm IS TRUE OR pk IS TRUE
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
