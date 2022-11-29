@@ -3,7 +3,7 @@
 --
 -- extract observations for species of interest from bcfishobs
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.observations;
+DROP TABLE IF EXISTS bcfishpass.observations cascade;
 
 CREATE TABLE bcfishpass.observations
 (
@@ -108,11 +108,35 @@ GROUP BY p.fish_obsrvtn_event_id,
   e.geom;
 
 -- index
-CREATE INDEX IF NOT EXISTS obsrvtn_linear_feature_id_idx ON bcfishpass.observations (linear_feature_id);
-CREATE INDEX IF NOT EXISTS obsrvtn_blue_line_key_idx ON bcfishpass.observations (blue_line_key);
-CREATE INDEX IF NOT EXISTS obsrvtn_watershed_group_code_idx ON bcfishpass.observations (watershed_group_code);
-CREATE INDEX IF NOT EXISTS obsrvtn_wsc_gidx ON bcfishpass.observations USING GIST (wscode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_wsc_bidx ON bcfishpass.observations USING BTREE (wscode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_lc_gidx ON bcfishpass.observations USING GIST (localcode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_lc_bidx ON bcfishpass.observations USING BTREE (localcode_ltree);
-CREATE INDEX IF NOT EXISTS obsrvtn_geom_idx ON bcfishpass.observations USING GIST (geom);
+create index if not exists obsrvtn_linear_feature_id_idx on bcfishpass.observations (linear_feature_id);
+create index if not exists obsrvtn_blue_line_key_idx on bcfishpass.observations (blue_line_key);
+create index if not exists obsrvtn_watershed_group_code_idx on bcfishpass.observations (watershed_group_code);
+create index if not exists obsrvtn_wsc_gidx on bcfishpass.observations using gist (wscode_ltree);
+create index if not exists obsrvtn_wsc_bidx on bcfishpass.observations using btree (wscode_ltree);
+create index if not exists obsrvtn_lc_gidx on bcfishpass.observations using gist (localcode_ltree);
+create index if not exists obsrvtn_lc_bidx on bcfishpass.observations using btree (localcode_ltree);
+create index if not exists obsrvtn_geom_idx on bcfishpass.observations using gist (geom);
+
+
+-- create view of distinct observations for simpler species based queries
+drop materialized view if exists bcfishpass.observations_vw cascade;
+create materialized view bcfishpass.observations_vw as
+select
+    unnest(observation_ids) as fish_observation_point_id,
+    unnest(species_codes) as species_code,
+    unnest(observation_dates) as observation_date,
+    fish_obsrvtn_event_id,
+    linear_feature_id,
+    blue_line_key,
+    wscode_ltree,
+    localcode_ltree,
+    downstream_route_measure,
+    watershed_group_code,
+    geom
+from bcfishpass.observations;
+
+create unique index on bcfishpass.observations_vw (fish_observation_point_id);
+create index on bcfishpass.observations_vw using gist (wscode_ltree);
+create index on bcfishpass.observations_vw using btree (wscode_ltree);
+create index on bcfishpass.observations_vw using gist (localcode_ltree);
+create index on bcfishpass.observations_vw using btree (localcode_ltree);
