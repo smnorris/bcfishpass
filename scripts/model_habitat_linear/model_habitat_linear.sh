@@ -23,8 +23,7 @@ $PSQL -f sql/user_habitat_classification_endpoints.sql
 # execute per group
 for WSG in $WSGS 
 do 
-	$PSQL -f ../model_access/sql/break_streams_wrapper.sql \
-		-v wsg=$WSG \
-	  -v point_table=user_habitat_classification_endpoints
+	echo "SELECT bcfishpass.break_streams(:'point_table', :'wsg');" | \
+	$PSQL -v wsg=$WSG -v point_table=user_habitat_classification_endpoints
 done
 $PSQL -f sql/user_habitat_classification.sql
