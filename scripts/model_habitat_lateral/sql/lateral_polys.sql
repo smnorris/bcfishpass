@@ -97,15 +97,13 @@ SELECT
 FROM bcfishpass.streams s
 inner join bcfishpass.param_watersheds wsg
 on s.watershed_group_code = wsg.watershed_group_code
-INNER JOIN whse_basemapping.fwa_stream_order_parent p
-ON s.blue_line_key = p.blue_line_key
 WHERE
   s.edge_type in (1000,1100,2000,2300) and
   (
     s.model_access_ch_co_sk is not null or
     s.model_access_st is not null
   ) and
-  p.stream_order_parent > 5 and
+  s.stream_order_parent > 5 and
   s.gradient <= .01 and
   s.blue_line_key != s.watershed_key and
   s.stream_order = 1;
@@ -125,8 +123,6 @@ SELECT
 FROM bcfishpass.streams s
 inner join bcfishpass.param_watersheds wsg
 on s.watershed_group_code = wsg.watershed_group_code
-INNER JOIN whse_basemapping.fwa_stream_order_parent p
-ON s.blue_line_key = p.blue_line_key
 WHERE
   (
     (
@@ -152,7 +148,7 @@ WHERE
     and
     (
       stream_order >= 3 or
-      p.stream_order_parent >= 5
+      stream_order_parent >= 5
     )
   );
 

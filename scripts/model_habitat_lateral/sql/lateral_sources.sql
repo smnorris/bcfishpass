@@ -72,8 +72,6 @@ select
   'sidechannels',
    st_multi((st_dump(st_union(st_buffer(s.geom, 60)))).geom) as geom
 from bcfishpass.streams s
-inner join whse_basemapping.fwa_stream_order_parent p
-on s.blue_line_key = p.blue_line_key
 where
   s.watershed_group_code = :wsg and
   s.edge_type in (1000,1100,2000,2300) and
@@ -81,7 +79,7 @@ where
     s.model_access_ch_co_sk is not null or
     s.model_access_st is not null
   ) and
-  p.stream_order_parent > 5 and
+  s.stream_order_parent > 5 and
   s.gradient <= .01 and
   s.blue_line_key != s.watershed_key and
   s.stream_order = 1;
@@ -96,8 +94,6 @@ select
   'spawning_rearing',
   st_multi((st_dump(st_union(st_buffer(s.geom, 30)))).geom) as geom
 from bcfishpass.streams s
-inner join whse_basemapping.fwa_stream_order_parent p
-on s.blue_line_key = p.blue_line_key
 where
 s.watershed_group_code = :wsg and
  (
@@ -125,7 +121,7 @@ s.watershed_group_code = :wsg and
     and
     (
       stream_order >= 3 or
-      p.stream_order_parent >= 5
+      stream_order_parent >= 5
     )
   )
 );

@@ -29,6 +29,7 @@ import logging
 import subprocess
 import sys
 import configparser
+from math import trunc
 
 import click
 import numpy
@@ -38,6 +39,7 @@ from sqlalchemy import create_engine
 import rasterio
 from rasterio import features
 from rasterio.enums import Resampling
+from rasterio.windows import from_bounds
 from skimage.graph import MCP_Geometric
 from scipy.ndimage import distance_transform_edt
 from scipy.interpolate import griddata
@@ -52,6 +54,15 @@ import bcdata
 
 
 LOG = logging.getLogger(__name__)
+
+
+def align(bounds):
+    """
+    Adjust input bounds to align with BC DEM
+    """
+    ll = [((trunc(b / 100) * 100) - 12.5) for b in bounds[:2]]
+    ur = [(((trunc(b / 100) + 1) * 100) + 87.5) for b in bounds[2:]]
+    return (ll[0], ll[1], ur[0], ur[1])
 
 
 def cost_surface(sources, cost):
@@ -106,7 +117,8 @@ def valley_confinement(
     size_threshold=5000,
     hole_removal_threshold=2500,
     calculate_width=False,
-    write_tempfiles=False
+    write_tempfiles=False,
+    dem_path=None
 ):
     """Define 'unconfined' valleys"""
     db = create_engine(db_url)
@@ -127,34 +139,62 @@ def valley_confinement(
         bbox["st_ymax"][0],
     ]
     LOG.info("Processing extent " + ",".join([str(b) for b in bounds]))
-    LOG.info("Downloading DEM, resampling to 10m and writing to dem.tif")
-    with bcdata.get_dem(
-        bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True
-    ) as dataset:
-        upscale_factor = 2.5  # upscale 25m DEM to 10m
-        height = int(dataset.height * upscale_factor)
-        width = int(dataset.width * upscale_factor)
-        dem_data = dataset.read(
-            out_shape=(dataset.count, height, width), resampling=Resampling.bilinear
-        )
-        # scale image transform
-        transform = dataset.transform * dataset.transform.scale(
-            (dataset.width / dem_data.shape[-1]), (dataset.height / dem_data.shape[-2])
-        )
-    # overwrite downloaded dem file with 10m file
-    with rasterio.open(
-        os.path.join(data_path, "dem.tif"),
-        "w",
-        driver="GTiff",
-        dtype=rasterio.int32,
-        count=1,
-        height=height,
-        width=width,
-        crs=dataset.crs,
-        transform=transform,
-        nodata=dataset.nodata,
-    ) as dst:
-        dst.write(dem_data)
+    # if dem is already in the data path, skip extracting it
+    if os.path.exists(os.path.join(data_path, "dem.tif")):
+        LOG.info("Using existing DEM")
+    else:
+        if dem_path:
+            LOG.info("Clipping DEM to extent")
+            bounds = align(bounds)
+            with rasterio.open(dem_path) as src:
+                bounds_window = src.window(*bounds)
+                out_window = bounds_window.round_lengths()
+                height = int(out_window.height)
+                width = int(out_window.width)
+                out_kwargs = src.profile
+                out_kwargs.update({
+                    'height': height,
+                    'width': width,
+                    'transform': src.window_transform(out_window)})
+                with rasterio.open(os.path.join(data_path, "dem.tif"), "w", **out_kwargs) as out:
+                    out.write(
+                        src.read(
+                            window=out_window,
+                            out_shape=(src.count, height, width),
+                            boundless=True,
+                            masked=True,
+                        )
+                    )
+
+        if not dem_path:
+            LOG.info("Downloading DEM")
+            dataset = bcdata.get_dem(
+                bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
+            upscale_factor = 2.5  # upscale 25m DEM to 10m
+            height = int(dataset.height * upscale_factor)
+            width = int(dataset.width * upscale_factor)
+            dem_data = dataset.read(
+                out_shape=(dataset.count, height, width), resampling=Resampling.bilinear
+            )
+            # scale image transform
+            transform = dataset.transform * dataset.transform.scale(
+                (dataset.width / dem_data.shape[-1]), (dataset.height / dem_data.shape[-2])
+            )
+            # overwrite downloaded dem file with 10m file
+            with rasterio.open(
+                os.path.join(data_path, "dem.tif"),
+                "w",
+                driver="GTiff",
+                dtype=rasterio.int32,
+                count=1,
+                height=height,
+                width=width,
+                crs=dataset.crs,
+                transform=transform,
+                nodata=dataset.nodata,
+            ) as dst:
+                dst.write(dem_data)
+    
     # reload to get updated metadata
     with rasterio.open(os.path.join(data_path, "dem.tif")) as d:
         dem_meta = d.meta
@@ -622,6 +662,11 @@ def read_config(config_file):
     help="Path to write output temp rasters",
 )
 @click.option(
+    "--dem",
+    type=click.Path(exists=True),
+    help="Path to existing 10m DEM",
+)
+@click.option(
     "--config_file",
     "-cfg",
     type=click.Path(exists=True),
@@ -637,7 +682,7 @@ def read_config(config_file):
 )
 @verbose_opt
 @quiet_opt
-def cli(watershed_group_code, db_url, out_file, workdir, config_file, write_tempfiles, verbose, quiet):
+def cli(watershed_group_code, db_url, out_file, workdir, dem, config_file, write_tempfiles, verbose, quiet):
     verbosity = verbose - quiet
     log_level = max(10, 20 - 10 * verbosity)  # default to INFO log level
     logging.basicConfig(
@@ -649,7 +694,7 @@ def cli(watershed_group_code, db_url, out_file, workdir, config_file, write_temp
         config = read_config(config_file)
     else:
         config = {}
-    valley_confinement(watershed_group_code, db_url, out_file, workdir, **config)
+    valley_confinement(watershed_group_code, db_url, out_file, workdir, dem_path=dem, **config)
 
 
 if __name__ == "__main__":

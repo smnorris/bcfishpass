@@ -113,7 +113,10 @@ data/habitat_lateral.tif: .make/sources data/esa_bc.tif \
 	done
 	mkdir -p data/habitat_lateral
 	# run VCA for each watershed group
-	parallel python valley_confinement.py {1} -o data/{1}/valleys.tif -d data/{1} ::: $(WSG)
+	##for wsg in $(WSG) ; do \
+	##	set -e ; python valley_confinement.py $$wsg -o data/$$wsg/valleys.tif -d data/$$wsg --dem "/Users/snorris/data/BC/raster/dem/bc_dem10m.tif" ; \
+	##done
+	parallel --jobs 8 python valley_confinement.py {1} -o data/{1}/valleys.tif -d data/{1} --dem "/Users/snorris/data/BC/raster/dem/bc_dem10m.tif" ::: $(WSG)
 	# run lateral habitat model	
 	parallel python habitat_lateral.py {1} -o data/habitat_lateral/habitat_lateral_{1}.tif -d data/{1} ::: $(WSG)
 	# merge outputs

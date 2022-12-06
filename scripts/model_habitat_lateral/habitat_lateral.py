@@ -63,7 +63,6 @@ LATERAL_SOURCES = {
     "sidechannels": """select
       st_multi((st_dump(st_union(st_buffer(s.geom, 60)))).geom) as geom
     from bcfishpass.streams s
-    on s.blue_line_key = p.blue_line_key
     where
       s.watershed_group_code = %(wsg)s and
       s.edge_type in (1000,1100,2000,2300) and
@@ -82,7 +81,6 @@ LATERAL_SOURCES = {
     "spawning_rearing": """select
       st_multi((st_dump(st_union(st_buffer(s.geom, 30)))).geom) as geom
     from bcfishpass.streams s
-    on s.blue_line_key = p.blue_line_key
     where
     s.watershed_group_code = %(wsg)s and
      (
