@@ -4,6 +4,10 @@ PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
 WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
+VALLEY_OUTPUTS = $(patsubst %, data/valleys/%.tif, $(WSG)) 
+LATERAL_OUTPUTS = $(patsubst %, data/habitat_lateral/%.tif, $(WSG)) 
+
+
 BOUNDS = $(shell $(PSQL) -AtX -F " " -c "select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom) \
 from ( \
   select \
@@ -26,7 +30,8 @@ clean:
 
 .make/sources: 
 	mkdir -p .make
-	mkdir -p data
+	mkdir -p data/valleys
+	mkdir -p data/habitat_lateral
 	# published floodplain definitions
 	bcdata bc2pg WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
 	touch $@
@@ -103,29 +108,23 @@ data/esa_bc.tif:
 
 
 # run lateral analysis for each watershed group and merge result
-data/habitat_lateral.tif: .make/sources data/esa_bc.tif \
-	valley_confinement.py \
-	habitat_lateral.py \
-	../../.make/model_habitat_linear
-	# make output folder and temp data folders
-	for wsg in $(WSG) ; do \
-		mkdir -p data/$$wsg ; \
-	done
-	mkdir -p data/habitat_lateral
-	# run VCA for each watershed group
-	##for wsg in $(WSG) ; do \
-	##	set -e ; python valley_confinement.py $$wsg -o data/$$wsg/valleys.tif -d data/$$wsg --dem "/Users/snorris/data/BC/raster/dem/bc_dem10m.tif" ; \
-	##done
-	parallel --jobs 8 python valley_confinement.py {1} -o data/{1}/valleys.tif -d data/{1} --dem "/Users/snorris/data/BC/raster/dem/bc_dem10m.tif" ::: $(WSG)
-	# run lateral habitat model	
-	parallel python habitat_lateral.py {1} -o data/habitat_lateral/habitat_lateral_{1}.tif -d data/{1} ::: $(WSG)
-	# merge outputs
-	python merge.py data/habitat_lateral/habitat_lateral_*.tif -o data/habitat_lateral.tif --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
-	# cleanup temp files
-	for wsg in $(WSG) ; do \
-		rm -r data/$$wsg ; \
-	done
+$(VALLEY_OUTPUTS): valley_confinement.py ../../.make/model_habitat_linear
+	$(eval WSG=$(patsubst data/valleys/%.tif,%,$@))
+	mkdir -p data/temp/$(WSG)
+	python valley_confinement.py $(WSG) -o $@ -d data/temp/$(WSG)
+
+$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif
+	$(eval WSG=$(patsubst data/habitat_lateral/%.tif,%,$@))
+	python habitat_lateral.py $(WSG) -o $@ -d data/temp/$(WSG)
+
+data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
+	python merge.py data/habitat_lateral/*.tif -o $@ --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
 	
+# cleanup temp files
+#for wsg in $(WSG) ; do \
+#	rm -r data/$$wsg ; \
+#done
+
 	
 # clean up and label 
 #.make/lateral_disconnected_rail: data/habitat_lateral.tif

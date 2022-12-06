@@ -19,9 +19,13 @@ A model of potential off-channel/lateral Pacific Salmon spawning/rearing habitat
 
     make
 
+Optionally, to speed up processing, run in parallel by specifying the number of jobs:
+
+    make -j 8
+
 ## Output
 
-    data/lateral.tif
+    data/habitat_lateral.tif
 
 #### Values
 

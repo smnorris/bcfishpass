@@ -664,6 +664,7 @@ def read_config(config_file):
 @click.option(
     "--dem",
     type=click.Path(exists=True),
+    default=os.environ.get("DEM10M"),
     help="Path to existing 10m DEM",
 )
 @click.option(

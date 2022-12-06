@@ -105,11 +105,6 @@ LATERAL_SOURCES = {
         model_rearing_sk is true or
         model_rearing_st is true
         )
-        and
-        (
-          stream_order >= 3 or
-          stream_order_parent >= 5
-        )
       )
     );""",
     # -----------------------
@@ -399,8 +394,11 @@ def lateral(watershed_group_code, out_file, data_path, write_tempfiles):
         rasters["lateral6"],
     )
 
-    LOG.info("Removing areas not connected to potentially accessible streams")
-    rasters["lateral8"] = filter_connected(rasters["lateral7"], rasters["accessible"])
+    #LOG.info("Removing areas not connected to potentially accessible streams")
+    #rasters["lateral8"] = filter_connected(rasters["lateral7"], rasters["accessible"])
+
+    LOG.info("Removing areas not connected to stream modelled as potentially spawning/rearing")
+    rasters["lateral8"] = filter_connected(rasters["lateral7"], rasters["spawning_rearing"])
 
     # fill small holes
     rasters["lateral_potential"] = morphology.remove_small_holes(
