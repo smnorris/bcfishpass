@@ -104,177 +104,141 @@ def label_map(a):
     )
 
 
-def valley_confinement(
-    watershed_group_code,
-    db_url,
-    out_file,
-    data_path="data",
-    minimum_drainage_area=1000,
-    slope_threshold=9,
-    max_width=2000,
-    cost_threshold=2500,
-    flood_factor=6,
-    size_threshold=5000,
-    hole_removal_threshold=2500,
-    calculate_width=False,
-    write_tempfiles=False,
-    dem_path=None
-):
-    """Define 'unconfined' valleys"""
-    db = create_engine(db_url)
-    sql = """select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom)
-    from whse_basemapping.fwa_watershed_groups_poly
-    where watershed_group_code = %(wsg)s"""
-    bbox = pandas.read_sql_query(
-        sql,
-        db,
-        params={
-            "wsg": watershed_group_code,
-        },
-    )
-    bounds = [
-        bbox["st_xmin"][0],
-        bbox["st_ymin"][0],
-        bbox["st_xmax"][0],
-        bbox["st_ymax"][0],
-    ]
-    LOG.info("Processing extent " + ",".join([str(b) for b in bounds]))
-    # if dem is already in the data path, skip extracting it
-    if os.path.exists(os.path.join(data_path, "dem.tif")):
-        LOG.info("Using existing DEM")
-    else:
-        if dem_path:
-            LOG.info("Clipping DEM to extent")
-            bounds = align(bounds)
-            with rasterio.open(dem_path) as src:
-                bounds_window = src.window(*bounds)
-                out_window = bounds_window.round_lengths()
-                height = int(out_window.height)
-                width = int(out_window.width)
-                out_kwargs = src.profile
-                out_kwargs.update({
-                    'height': height,
-                    'width': width,
-                    'transform': src.window_transform(out_window)})
-                with rasterio.open(os.path.join(data_path, "dem.tif"), "w", **out_kwargs) as out:
-                    out.write(
-                        src.read(
-                            window=out_window,
-                            out_shape=(src.count, height, width),
-                            boundless=True,
-                            masked=True,
-                        )
+def get_dem(bounds, data_path, dem_path):
+    if dem_path:
+        LOG.info("Clipping DEM to extent")
+        bounds = align(bounds)
+        with rasterio.open(dem_path) as src:
+            bounds_window = src.window(*bounds)
+            out_window = bounds_window.round_lengths()
+            height = int(out_window.height)
+            width = int(out_window.width)
+            out_kwargs = src.profile
+            out_kwargs.update({
+                'height': height,
+                'width': width,
+                'transform': src.window_transform(out_window)})
+            with rasterio.open(os.path.join(data_path, "dem.tif"), "w", **out_kwargs) as out:
+                out.write(
+                    src.read(
+                        window=out_window,
+                        out_shape=(src.count, height, width),
+                        boundless=True,
+                        masked=True,
                     )
+                )
 
-        if not dem_path:
-            LOG.info("Downloading DEM")
-            dataset = bcdata.get_dem(
-                bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
-            upscale_factor = 2.5  # upscale 25m DEM to 10m
-            height = int(dataset.height * upscale_factor)
-            width = int(dataset.width * upscale_factor)
-            dem_data = dataset.read(
-                out_shape=(dataset.count, height, width), resampling=Resampling.bilinear
-            )
-            # scale image transform
-            transform = dataset.transform * dataset.transform.scale(
-                (dataset.width / dem_data.shape[-1]), (dataset.height / dem_data.shape[-2])
-            )
-            # overwrite downloaded dem file with 10m file
-            with rasterio.open(
-                os.path.join(data_path, "dem.tif"),
-                "w",
-                driver="GTiff",
-                dtype=rasterio.int32,
-                count=1,
-                height=height,
-                width=width,
-                crs=dataset.crs,
-                transform=transform,
-                nodata=dataset.nodata,
-            ) as dst:
-                dst.write(dem_data)
-    
-    # reload to get updated metadata
-    with rasterio.open(os.path.join(data_path, "dem.tif")) as d:
-        dem_meta = d.meta
-        DEM = d.read(1)
+    if not dem_path:
+        LOG.info("Downloading DEM")
+        dataset = bcdata.get_dem(
+            bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
+        upscale_factor = 2.5  # upscale 25m DEM to 10m
+        height = int(dataset.height * upscale_factor)
+        width = int(dataset.width * upscale_factor)
+        dem_data = dataset.read(
+            out_shape=(dataset.count, height, width), resampling=Resampling.bilinear
+        )
+        # scale image transform
+        transform = dataset.transform * dataset.transform.scale(
+            (dataset.width / dem_data.shape[-1]), (dataset.height / dem_data.shape[-2])
+        )
+        # overwrite downloaded dem file with 10m file
+        with rasterio.open(
+            os.path.join(data_path, "dem.tif"),
+            "w",
+            driver="GTiff",
+            dtype=rasterio.int32,
+            count=1,
+            height=height,
+            width=width,
+            crs=dataset.crs,
+            transform=transform,
+            nodata=dataset.nodata,
+        ) as dst:
+            dst.write(dem_data)
 
+
+def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
     # load streams from fwa, extracting contributing area and parent order
-    LOG.info("Extracting streams and writing to streams.tif")
-    sql = """SELECT
-      s.linear_feature_id,
-      round(ua.upstream_area_ha::numeric) as upstream_area_ha,
-      s.stream_order_parent,
-      s.gradient,
-      s.geom
-    FROM bcfishpass.streams s
-    LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
-    ON s.linear_feature_id = l.linear_feature_id
-    INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
-    ON l.watershed_feature_id = ua.watershed_feature_id
-    where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
-    and s.gradient < .3
-    and
-    (model_access_ch_co_sk is not null or
-    model_access_st is not null or
-    model_access_wct is not null or
-    model_access_bt is not null or
-    model_access_gr is not null or
-    model_access_rb is not null)
-    """
-    stream_features = geopandas.read_postgis(
-        sql,
-        db,
-        params={
-            "xmin": bounds[0],
-            "ymin": bounds[1],
-            "xmax": bounds[2],
-            "ymax": bounds[3],
-        },
-    )
+    if os.path.exists(os.path.join(data_path, "streams.tif")):
+        LOG.info("Using existing streams.tif")
+    else:
+        LOG.info("Extracting streams and writing to streams.tif")
+        sql = """SELECT
+          s.linear_feature_id,
+          round(ua.upstream_area_ha::numeric) as upstream_area_ha,
+          s.stream_order_parent,
+          s.gradient,
+          s.geom
+        FROM bcfishpass.streams s
+        LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
+        ON s.linear_feature_id = l.linear_feature_id
+        INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
+        ON l.watershed_feature_id = ua.watershed_feature_id
+        where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
+        and s.gradient < .3
+        and
+        (model_access_ch_co_sk is not null or
+        model_access_st is not null or
+        model_access_wct is not null or
+        model_access_bt is not null or
+        model_access_gr is not null or
+        model_access_rb is not null)
+        """
+        stream_features = geopandas.read_postgis(
+            sql,
+            db,
+            params={
+                "xmin": bounds[0],
+                "ymin": bounds[1],
+                "xmax": bounds[2],
+                "ymax": bounds[3],
+            },
+        )
 
-    # retain streams:
-    # - with contributing area greater than minimum_drainage_area parameter
-    # - OR having a parent order > 4 or null (to retain small streams draining to ocean or major channels)
-    stream_features = stream_features[
-        (stream_features["upstream_area_ha"] >= minimum_drainage_area)
-        | (stream_features["stream_order_parent"] >= 4)
-        | (stream_features["stream_order_parent"].isna())
-    ]
+        # retain streams:
+        # - with contributing area greater than minimum_drainage_area parameter
+        # - OR having a parent order > 4 or null (to retain small streams draining to ocean or major channels)
+        stream_features = stream_features[
+            (stream_features["upstream_area_ha"] >= minimum_drainage_area)
+            | (stream_features["stream_order_parent"] >= 4)
+            | (stream_features["stream_order_parent"].isna())
+        ]
 
-    # rasterize the streams, with cumulative drainage as raster value
-    A = features.rasterize(
-        (
-            (geom, value)
-            for geom, value in zip(
-                stream_features.geometry, stream_features.upstream_area_ha
-            )
-        ),
-        out_shape=DEM.shape,
-        transform=dem_meta["transform"],
-        all_touched=False,
-        dtype=numpy.int32,
-        fill=0,
-    )
-    # set areas of DEM nodata to nodata
-    A[DEM == dem_meta["nodata"]] = 0
-    
-    with rasterio.open(
-        os.path.join(data_path, "streams.tif"),
-        "w",
-        driver="GTiff",
-        dtype=rasterio.int32,
-        count=1,
-        width=dem_meta["width"],
-        height=dem_meta["height"],
-        crs=dem_meta["crs"],
-        transform=dem_meta["transform"],
-        nodata=0,
-    ) as dst:
-        dst.write(A, indexes=1)
+        # rasterize the streams, with cumulative drainage as raster value
+        A = features.rasterize(
+            (
+                (geom, value)
+                for geom, value in zip(
+                    stream_features.geometry, stream_features.upstream_area_ha
+                )
+            ),
+            out_shape=DEM.shape,
+            transform=dem_meta["transform"],
+            all_touched=False,
+            dtype=numpy.int32,
+            fill=0,
+        )
+        # set areas of DEM nodata to nodata
+        A[DEM == dem_meta["nodata"]] = 0
+        
+        with rasterio.open(
+            os.path.join(data_path, "streams.tif"),
+            "w",
+            driver="GTiff",
+            dtype=rasterio.int32,
+            count=1,
+            width=dem_meta["width"],
+            height=dem_meta["height"],
+            crs=dem_meta["crs"],
+            transform=dem_meta["transform"],
+            nodata=0,
+        ) as dst:
+            dst.write(A, indexes=1)
 
-    # load precip per fundamental watershed
+
+def get_precip(db, bounds, DEM, dem_meta, data_path):
+    """get precip per fundamental watershed"""
     LOG.info("Extracting watersheds/precip and writing to precip.tif")
     sql = """select
       a.watershed_feature_id,
@@ -325,25 +289,74 @@ def valley_confinement(
     ) as dst:
         dst.write(A, indexes=1)
 
-    # generate slope raster
-    LOG.info("Writing slope.tif")
-    subprocess.run(
-        [
-            "gdaldem",
-            "slope",
-            "-p",
-            os.path.join(data_path, "dem.tif"),
-            os.path.join(data_path, "slope.tif"),
-        ]
-    )
 
+def valley_confinement(
+    watershed_group_code,
+    db_url,
+    out_file,
+    data_path="data",
+    minimum_drainage_area=1000,
+    slope_threshold=9,
+    max_width=2000,
+    cost_threshold=2500,
+    flood_factor=6,
+    size_threshold=5000,
+    hole_removal_threshold=2500,
+    calculate_width=False,
+    write_tempfiles=False,
+    dem_path=None
+):
+    """Define 'unconfined' valleys"""
+    db = create_engine(db_url)
+    sql = """select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom)
+    from whse_basemapping.fwa_watershed_groups_poly
+    where watershed_group_code = %(wsg)s"""
+    bbox = pandas.read_sql_query(
+        sql,
+        db,
+        params={
+            "wsg": watershed_group_code,
+        },
+    )
+    bounds = [
+        bbox["st_xmin"][0],
+        bbox["st_ymin"][0],
+        bbox["st_xmax"][0],
+        bbox["st_ymax"][0],
+    ]
+    LOG.info("Processing extent " + ",".join([str(b) for b in bounds]))
+
+    # ---------------------
     # load input rasters
+    # ---------------------
+    # dem
+    if not os.path.exists(os.path.join(data_path, "dem.tif")):
+        get_dem(bounds, data_path, dem_path)
     dem = rasterio.open(os.path.join(data_path, "dem.tif"))
+    dem_meta = dem.meta
     DEM = dem.read(1)
+    # precip
+    if not os.path.exists(os.path.join(data_path, "precip.tif")):
+        get_precip(db, bounds, DEM, dem_meta, data_path)
     precip = rasterio.open(os.path.join(data_path, "precip.tif"))
     P = precip.read(1).astype("float32")
+    # streams
+    if not os.path.exists(os.path.join(data_path, "streams.tif")):
+        get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path)
     streams = rasterio.open(os.path.join(data_path, "streams.tif"))
     ST = streams.read(1)
+    # slope
+    if not os.path.exists(os.path.join(data_path, "slope.tif")):
+        LOG.info("Writing slope.tif")
+        subprocess.run(
+            [
+                "gdaldem",
+                "slope",
+                "-p",
+                os.path.join(data_path, "dem.tif"),
+                os.path.join(data_path, "slope.tif"),
+            ]
+        )
     slope = rasterio.open(os.path.join(data_path, "slope.tif"))
     SL = slope.read(1)
 

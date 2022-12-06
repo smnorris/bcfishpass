@@ -17,11 +17,13 @@ A model of potential off-channel/lateral Pacific Salmon spawning/rearing habitat
 
 ## Usage
 
-    make
+If using a locally stored DEM file, set environment variable `DEM10M`:
 
-Optionally, to speed up processing, run in parallel by specifying the number of jobs:
+    export DEM10M=/path/to/my/dem.tif
 
-    make -j 8
+Run the scripts with `make`, optionally running processing in parallel by specifying the number of jobs:
+
+    make -j 7
 
 ## Output
 
