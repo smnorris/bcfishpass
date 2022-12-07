@@ -2,10 +2,10 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code != 'ELKR'")
 
-VALLEY_OUTPUTS = $(patsubst %, data/valleys/%.tif, $(WSG)) 
-LATERAL_OUTPUTS = $(patsubst %, data/habitat_lateral/%.tif, $(WSG)) 
+VALLEY_OUTPUTS = $(patsubst %, data/temp/%/valleys.tif, $(WSG)) 
+LATERAL_OUTPUTS = $(patsubst %, data/temp/%/habitat_lateral.tif, $(WSG)) 
 
 
 BOUNDS = $(shell $(PSQL) -AtX -F " " -c "select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom) \
@@ -109,16 +109,18 @@ data/esa_bc.tif:
 
 # run lateral analysis for each watershed group and merge result
 $(VALLEY_OUTPUTS): valley_confinement.py ../../.make/model_habitat_linear
-	$(eval WSG=$(patsubst data/valleys/%.tif,%,$@))
+	$(eval WSG=$(patsubst data/temp/%/valleys.tif,%,$@))
 	mkdir -p data/temp/$(WSG)
 	python valley_confinement.py $(WSG) -o $@ -d data/temp/$(WSG)
 
+
 $(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif
-	$(eval WSG=$(patsubst data/habitat_lateral/%.tif,%,$@))
+	$(eval WSG=$(patsubst data/temp/%/habitat_lateral.tif,%,$@))
 	python habitat_lateral.py $(WSG) -o $@ -d data/temp/$(WSG)
 
+
 data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
-	python merge.py data/habitat_lateral/*.tif -o $@ --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
+	python merge.py $(LATERAL_OUTPUTS) -o $@ --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
 	
 # cleanup temp files
 #for wsg in $(WSG) ; do \
