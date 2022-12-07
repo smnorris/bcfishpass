@@ -104,60 +104,62 @@ def label_map(a):
     )
 
 
-def get_dem(bounds, data_path, dem_path):
+def clip_dem(watershed_group_code, bounds, dem_path, data_path):
     """For given bounds, clip DEM from provided dem_path, or request BC DEM from DataBC
-    """
-    if dem_path:
-        LOG.debug("Clipping DEM to extent")
-        bounds = align(bounds)
-        with rasterio.open(dem_path) as src:
-            bounds_window = src.window(*bounds)
-            out_window = bounds_window.round_lengths()
-            height = int(out_window.height)
-            width = int(out_window.width)
-            out_kwargs = src.profile
-            out_kwargs.update({
-                'height': height,
-                'width': width,
-                'transform': src.window_transform(out_window)})
-            with rasterio.open(os.path.join(data_path, "dem.tif"), "w", **out_kwargs) as out:
-                out.write(
-                    src.read(
-                        window=out_window,
-                        out_shape=(src.count, height, width),
-                        boundless=True,
-                        masked=True,
-                    )
+    """    
+    LOG.info(f"{watershed_group_code} - clipping {dem_path}")
+    bounds = align(bounds)
+    with rasterio.open(dem_path) as src:
+        bounds_window = src.window(*bounds)
+        out_window = bounds_window.round_lengths()
+        height = int(out_window.height)
+        width = int(out_window.width)
+        out_kwargs = src.profile
+        out_kwargs.update({
+            'height': height,
+            'width': width,
+            'transform': src.window_transform(out_window)})
+        with rasterio.open(os.path.join(data_path, "dem.tif"), "w", **out_kwargs) as out:
+            out.write(
+                src.read(
+                    window=out_window,
+                    out_shape=(src.count, height, width),
+                    boundless=True,
+                    masked=True,
                 )
+            )
 
-    else:
-        LOG.debug("Downloading DEM")
-        dataset = bcdata.get_dem(
-            bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
-        upscale_factor = 2.5  # upscale 25m DEM to 10m
-        height = int(dataset.height * upscale_factor)
-        width = int(dataset.width * upscale_factor)
-        dem_data = dataset.read(
-            out_shape=(dataset.count, height, width), resampling=Resampling.bilinear
-        )
-        # scale image transform
-        transform = dataset.transform * dataset.transform.scale(
-            (dataset.width / dem_data.shape[-1]), (dataset.height / dem_data.shape[-2])
-        )
-        # overwrite downloaded dem file with 10m file
-        with rasterio.open(
-            os.path.join(data_path, "dem.tif"),
-            "w",
-            driver="GTiff",
-            dtype=rasterio.int32,
-            count=1,
-            height=height,
-            width=width,
-            crs=dataset.crs,
-            transform=transform,
-            nodata=dataset.nodata,
-        ) as dst:
-            dst.write(dem_data)
+
+def download_dem(watershed_group_code, bounds, data_path):
+    """Download DEM for given bounds and resample to 10m
+    """
+    LOG.info(f"{watershed_group_code} - downloading DEM")
+    dataset = bcdata.get_dem(
+        bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
+    upscale_factor = 2.5  # upscale 25m DEM to 10m
+    height = int(dataset.height * upscale_factor)
+    width = int(dataset.width * upscale_factor)
+    dem_data = dataset.read(
+        out_shape=(dataset.count, height, width), resampling=Resampling.bilinear
+    )
+    # scale image transform
+    transform = dataset.transform * dataset.transform.scale(
+        (dataset.width / dem_data.shape[-1]), (dataset.height / dem_data.shape[-2])
+    )
+    # overwrite downloaded dem file with 10m file
+    with rasterio.open(
+        os.path.join(data_path, "dem.tif"),
+        "w",
+        driver="GTiff",
+        dtype=rasterio.int32,
+        count=1,
+        height=height,
+        width=width,
+        crs=dataset.crs,
+        transform=transform,
+        nodata=dataset.nodata,
+    ) as dst:
+        dst.write(dem_data)
 
 
 def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
@@ -330,10 +332,9 @@ def valley_confinement(
     # dem
     if not os.path.exists(os.path.join(data_path, "dem.tif")):
         if dem_path:
-            LOG.info(f"{watershed_group_code} - extracting DEM from f{dem_path}")
+            clip_dem(watershed_group_code, bounds, dem_path, data_path)
         else:
-            LOG.info(f"{watershed_group_code} - downloading DEM")
-        get_dem(bounds, data_path, dem_path)
+            download_dem(watershed_group_code, bounds, data_path)
     dem = rasterio.open(os.path.join(data_path, "dem.tif"))
     dem_meta = dem.meta
     DEM = dem.read(1)

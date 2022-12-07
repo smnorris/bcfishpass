@@ -25,7 +25,7 @@ If using a locally stored DEM, it is possible to speed up the jobs by running in
 Do this by setting environment variable `DEM10M` and telling make to run concurrent jobs:
 
     export DEM10M=/path/to/my/dem.tif
-    make -j 8
+    make --debug-basic -j 8 data/habitat_lateral.tif &> habitat_lateral.log
 
 ## Output
 
