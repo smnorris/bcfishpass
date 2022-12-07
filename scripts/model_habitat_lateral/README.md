@@ -23,7 +23,7 @@ If using a locally stored DEM file, set environment variable `DEM10M`:
 
 Run the scripts with `make`, optionally running processing in parallel by specifying the number of jobs:
 
-    make -j 7
+    make -j 8
 
 ## Output
 
