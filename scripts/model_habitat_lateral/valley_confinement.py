@@ -108,7 +108,7 @@ def get_dem(bounds, data_path, dem_path):
     """For given bounds, clip DEM from provided dem_path, or request BC DEM from DataBC
     """
     if dem_path:
-        LOG.info("Clipping DEM to extent")
+        LOG.debug("Clipping DEM to extent")
         bounds = align(bounds)
         with rasterio.open(dem_path) as src:
             bounds_window = src.window(*bounds)
@@ -131,7 +131,7 @@ def get_dem(bounds, data_path, dem_path):
                 )
 
     else:
-        LOG.info("Downloading DEM")
+        LOG.debug("Downloading DEM")
         dataset = bcdata.get_dem(
             bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
         upscale_factor = 2.5  # upscale 25m DEM to 10m
@@ -329,7 +329,10 @@ def valley_confinement(
     
     # dem
     if not os.path.exists(os.path.join(data_path, "dem.tif")):
-        LOG.info(f"{watershed_group_code} - extracting DEM")
+        if dem_path:
+            LOG.info(f"{watershed_group_code} - extracting DEM from f{dem_path}")
+        else:
+            LOG.info(f"{watershed_group_code} - downloading DEM")
         get_dem(bounds, data_path, dem_path)
     dem = rasterio.open(os.path.join(data_path, "dem.tif"))
     dem_meta = dem.meta
@@ -357,6 +360,7 @@ def valley_confinement(
                 "gdaldem",
                 "slope",
                 "-p",
+                "-q",
                 os.path.join(data_path, "dem.tif"),
                 os.path.join(data_path, "slope.tif"),
             ]
@@ -554,7 +558,7 @@ def valley_confinement(
     valleys = majority(valleys.astype("uint8"), morphology.rectangle(nrows=3, ncols=3))
 
     # write unconfined valley output to file
-    LOG.info(f"Writing {out_file}")
+    LOG.info(f"{watershed_group_code} - writing {out_file}")
     with rasterio.open(
         out_file,
         "w",
