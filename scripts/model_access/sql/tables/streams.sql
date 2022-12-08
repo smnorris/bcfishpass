@@ -6,7 +6,7 @@
 -- (with measure rounded to nearest mm, because some source stream lines are really short)
 -- --------------
 
-DROP TABLE IF EXISTS bcfishpass.streams;
+DROP TABLE IF EXISTS bcfishpass.streams CASCADE;
 
 CREATE TABLE bcfishpass.streams 
 (
@@ -50,6 +50,8 @@ CREATE TABLE bcfishpass.streams
   -- anthropogenic features downstream
   barriers_anthropogenic_dnstr text[],
   barriers_pscis_dnstr text[],
+  barriers_dams_dnstr text[],
+  barriers_dams_hydro_dnstr text[],
   barriers_remediated_dnstr text[],
 
   -- observations upstream
