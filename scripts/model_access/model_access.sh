@@ -32,7 +32,11 @@ do
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
 		$PSQL -v wsg={1} -v point_table=barriers_$BARRIERTYPE" ::: $WSGS 
 done
-# break at manual habitat endpoints
+# create user habitat endpoints and break streams at these locations as well
+$PSQL -f sql/user_habitat_classification_endpoints.sql
+parallel --jobs 4 --no-run-if-empty \
+		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+		$PSQL -v wsg={1} -v point_table=barriers_$BARRIERTYPE" ::: $WSGS 
 
 # -----
 # INDEX 
@@ -55,8 +59,8 @@ do
 		$PSQL -v wsg={1}" ::: $WSGS
 done
 
-# also note observations upstream of individual stream segments
-# (this is convenience for field investigation and reportin, not an intput into the individual models)
-#parallel --jobs 4 --no-run-if-empty \ 
-#    $PSQL -f sql/update_observations_upstr.sql -v wsg={1} ::: $WSGS
-#touch $@
+# create table holding lists of observations upstream of individual stream segments
+# (this is convenience for field investigation and reporting, not an intput into the individual models)
+$PSQL -c "drop table if exists bcfishpass.observations_upstr"
+$PSQL -c "create table bcfishpass.observations_upstr (segmented_stream_id text primary key, obsrvtn_event_upstr bigint[], obsrvtn_species_codes_upstr text[])"
+parallel --jobs 4 --no-run-if-empty $PSQL -f sql/observations_upstr.sql -v wsg={1} ::: $WSGS
