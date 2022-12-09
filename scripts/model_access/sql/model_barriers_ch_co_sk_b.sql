@@ -99,12 +99,17 @@ with barriers as
   where watershed_group_code = :'wsg'
 ),
 
--- extract all ch/co/sk observations to cancel barriers downstream
 obs_upstr as
 (
   select
     b.barrier_id,
-    o.observation_ids as obs
+    b.barrier_type,
+    b.blue_line_key,
+    b.downstream_route_measure,
+    b.watershed_group_code,
+    unnest(o.species_codes) as spp,
+    unnest(o.observation_ids) as obs,
+    unnest(o.observation_dates) as obs_dt
   from barriers b
   inner join bcfishpass.observations o
   on fwa_upstream(
@@ -119,10 +124,25 @@ obs_upstr as
         false,
         1
       )
+  -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
+  left outer join bcfishpass.user_barriers_definite_control bc
+  on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
   where o.species_codes && array['CH','CM','CO','PK','SK']
+  and bc.barrier_ind is null
+),
+
+obs_upstr_n as
+(
+  select
+    o.barrier_id,
+    count(o.obs) as n_obs
+  from obs_upstr o
+  where o.spp in ('CH','CM','CO','PK','SK') 
+  and o.obs_dt > date('1990-01-01')         -- only observations since 1990 
+  group by o.barrier_id
 )
 
-INSERT INTO bcfishpass.barriers_ch_co_sk_b
+insert into bcfishpass.barriers_ch_co_sk_b
 (
     barriers_ch_co_sk_b_id,
     barrier_type,
@@ -136,7 +156,7 @@ INSERT INTO bcfishpass.barriers_ch_co_sk_b
     geom
 )
 
-select distinct
+select
   b.barrier_id as barrier_load_id,
   barrier_type,
   barrier_name,
@@ -148,7 +168,7 @@ select distinct
   watershed_group_code,
   geom
 from barriers b
-left outer join obs_upstr as o
+left outer join obs_upstr_n as o
 on b.barrier_id = o.barrier_id
 where watershed_group_code = any(
     array(
@@ -157,10 +177,11 @@ where watershed_group_code = any(
       where ch is true or cm is true or co is true or pk is true or sk is true 
     )
 )
--- do not include gradient / falls / subsurface barriers with > 10 observations upstream
+-- do not include gradient / falls / subsurface barriers with > 5 observations upstream
 -- but always include user added barriers
 and (
-    o.obs is null or
+    o.n_obs is null or
+    o.n_obs < 5 or
     b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
-ON CONFLICT DO NOTHING;
+on conflict do nothing;
