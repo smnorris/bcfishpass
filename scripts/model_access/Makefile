@@ -2,7 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code in ('VICT','COWN','SANJ')")
 
 
 # targets are listed here to create 'static pattern rules' - so they do not get ignored as intermediate steps
@@ -12,8 +12,8 @@ WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param
 SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 # combine barriers into tables of per-species scenarios, these will be points at which we break the streams
 MODEL_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_barriers_*.sql))
-# targets for breaking streams - above model_barriers (ie natural barriers) plus anthropogenic barriers
-BROKEN = $(patsubst .make/model_barriers_%, .make/broken_%, $(MODEL_BARRIERS)) .make/broken_anthropogenic .make/broken_pscis .make/broken_remediated .make/broken_dams .make/broken_dams_hydro
+# targets for breaking streams - above model_barriers (ie natural barriers) 
+BROKEN = $(patsubst .make/model_barriers_%, .make/broken_%, $(MODEL_BARRIERS)) 
 
 MODEL_ACCESS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
@@ -98,17 +98,6 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 		-v src_id=barriers_$(BARRIERTYPE)_id
 	touch $@
 
-# tag these tables as additional sources for breaking streams (beyond the above definite barriers)
-.make/model_barriers_anthropogenic:
-	touch $@
-.make/model_barriers_pscis:
-	touch $@
-.make/model_barriers_remediated:
-	touch $@
-.make/model_barriers_dams:
-	touch $@
-.make/model_barriers_dams_hydro:
-	touch $@
 
 # -----
 # LOAD STREAMS
@@ -122,39 +111,43 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 # -----
 # BREAK STREAMS
 # -----
-# Break streams at various barrier types 
-# Processing in parallel (provincially) eventually crashes the db, process one group at a time or with a modest job count
+# Break streams at natural barriers
 $(BROKEN): .make/broken_%: .make/model_barriers_% .make/streams
 	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$<))
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
 		$(PSQL) -v wsg={1} -v point_table=barriers_$(BARRIERTYPE)" ::: $(WSG)
-	# concurrent updates lock the db, process each wsg individually
-	for wsg in $(WSG) ; do \
-		set -e ; $(PSQL) -f sql/update_barriers_dnstr_wrapper.sql \
-		-v target_table=streams \
-		-v target_table_id=segmented_stream_id \
-		-v barriertype=$(BARRIERTYPE) \
-		-v point_table=barriers_$(BARRIERTYPE) \
-		-v include_equivalents=true \
-		-v wsg=$$wsg ;\
-	done
 	touch $@
 
-# break streams and index at all observations (of target species)
-.make/broken_observations: .make/streams
-	parallel --jobs 4 --no-run-if-empty \
-		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$(PSQL) -v wsg={1} -v point_table=observations" ::: $(WSG)
-	parallel --jobs 4 --no-run-if-empty \
-		$(PSQL) -f sql/update_observations_upstr.sql -v wsg={1} ::: $(WSG)
-	touch $@
-
-# also break streams at all crossings (to capture bridges/passable structures), but no need to index them
-.make/broken_crossings: .make/streams
+# break streams at all points in the crossings table and at all observations
+.make/remaining_breaks: $(BROKEN)
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
 		$(PSQL) -v wsg={1} -v point_table=crossings" ::: $(WSG)
+	parallel --jobs 4 --no-run-if-empty \
+		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+		$(PSQL) -v wsg={1} -v point_table=observations" ::: $(WSG)
+	# also break streams at manual habitat endpoints
+
+	touch $@
+
+# -----
+# INDEX STREAMS
+# -----
+# after all stream segmentation is completed, we record which features are upstream/
+# downstream of streams
+.make/index_dnstr: 
+	for BARRIERTYPE in anthropogenic, pscis, dams, dams_hydro, ch_co_sk, ch_co_sk_b, st, wct ; do \
+		$(PSQL) -c "drop table if exists bcfishpass.barriers_$$BARRIERTYPE_dnstr;" ; \ 
+		$(PSQL) -c "create table bcfishpass.barriers_$$BARRIERTYPE_dnstr (segmented_stream_id text primary key, barriers_$$BARRIERTYPE_dnstr text[])" ; \ 
+		parallel --jobs 4 --no-run-if-empty \
+			"echo \"SELECT bcfishpass.load_dnstr('bcfishpass.streams', 'segmented_stream_id', 'bcfishpass.barriers_$$BARRIERTYPE', '$$BARRIERTYPE_id', 'bcfishpass.$$BARRIERTYPE_dnstr', '$$BARRIERTYPE_dnstr', 'true', :'wsg');\" | \
+			$(PSQL) -v wsg={1}" ::: $(WSG) ; \ 
+	done
+# break streams at all observations (of target species)
+.make/broken_observations: .make/streams
+	parallel --jobs 4 --no-run-if-empty \
+		$(PSQL) -f sql/update_observations_upstr.sql -v wsg={1} ::: $(WSG)
 	touch $@
 
 
