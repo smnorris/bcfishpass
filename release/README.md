@@ -3,7 +3,7 @@
 Cut a data release, copying key tables from local dev db to:
 
 - local test db
-- remote prod db
+- remote prod db(s)
 - local file dump
 
 ## Setup
@@ -16,19 +16,17 @@ Requires these environment variables are set:
 
 ## Usage
 
-1. Ensure local test db exists, plus required extensions
+1. Generate summary stats for release candidate (length in km of habitat etc):
 
-        psql -c "create database bcfishpass_test"
-        psql bcfishpass_test -c "create extension postgis"
-        psql bcfishpass_test -c "create extension ltree"
-        psql bcfishpass_test -c "create extension intarray"
-        psql bcfishpass_test -c "create extension postgis_raster"
+        psql -f sql/totals.sql
+
 
 2. Copy full bcfishpass schema from dev to test
 
         ./dev2test.sh
 
-3. Copy tables for publication from test to production db
+
+3. When ready, publish from test to prod
 
         ./test2prod.sh
 

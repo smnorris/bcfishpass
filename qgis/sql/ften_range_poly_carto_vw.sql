@@ -1,3 +1,17 @@
+-- fix primary key in source table, it is not unique currently (as per catalogue metadata aug 2022)
+-- create a copy rather than altering because qgis does not seem to pick up the change when accessing the 
+-- table via fdw
+--drop table if exists whse_forest_tenure.ften_range_poly_svw_tmp ;
+--create table whse_forest_tenure.ften_range_poly_svw_tmp as 
+  --select row_number() over() as id, *
+  --from whse_forest_tenure.ften_range_poly_svw;
+--create index on whse_forest_tenure.ften_range_poly_svw_tmp (id);
+--create index on whse_forest_tenure.ften_range_poly_svw_tmp using gist (geom);
+--
+--drop table if exists whse_forest_tenure.ften_range_poly_svw cascade;
+--alter table whse_forest_tenure.ften_range_poly_svw_tmp rename to ften_range_poly_svw;
+
+-- create view
 drop materialized view if exists whse_forest_tenure.ften_range_poly_carto_vw ;
 
 create materialized view whse_forest_tenure.ften_range_poly_carto_vw as

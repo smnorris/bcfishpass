@@ -238,21 +238,12 @@ scripts/model_habitat_lateral/data/habitat_lateral.tif: .make/model_habitat_line
 	cd scripts/model_habitat_lateral; make data/habitat_lateral.tif
 
 # -----
-# ACCESS MODEL QA REPORT
+# ACCESS MODEL QA REPORTS
 # -----
 reports/qa/%.csv: reports/qa/sql/%.sql \
 	scripts/model_access/.make/model_access \
 	.make/model_habitat_linear
 	psql2csv $(DATABASE_URL) < $< > $@	
-
-# compare qa summary against current test/prod db 
-reports/qa/totals_test.csv: reports/qa/totals.csv
-	# run the totals query against test/prod db, load results to dev db
-	psql2csv $(DATABASE_URL)_test < reports/qa/sql/totals.sql > $@
-	# create table 
-
-
-
 
 # -----
 # wcrp reports - dump results of each query in reports/wcrp/sql/ to csv
