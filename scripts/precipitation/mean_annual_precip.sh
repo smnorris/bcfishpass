@@ -7,9 +7,7 @@ WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watershe
 mkdir -p data
 
 # direct download links do not seem to be available at this time
-# go to https://climatebc.ca/SpatialData and download MAP for 1991-2020 to /data
-#wget --trust-server-names -qNP ~/tmp http://raster.climatebc.ca/download/Normal_1981_2010MSY/Normal_1981_2010_annual.zip
-#unzip ~/tmp/Normal_1981_2010_annual.zip -d ~/tmp/climatebc
+# go to https://climatebc.ca/SpatialData and download MAP for 1991-2020 to data folder
 
 # resample the precip data to match DEM raster resolution (but no need to align)
 gdalwarp data/MAP.tif data/map_25m.tif -t_srs EPSG:3005 -of COG -co COMPRESS=DEFLATE -tr 25 25
@@ -52,7 +50,7 @@ done
 # it is probably something to do with sequences vs collections)
 $PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
 $PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd (watershed_feature_id integer PRIMARY KEY, watershed_group_code text, map numeric)"
-$PSQL -c "INSERT INTO bcfishpass.mean_annual_precip_wsd SELECT DISTINCT * FROM bcfishpass.mean_annual_precip_wsd_load"
+$PSQL -c "INSERT INTO bcfishpass.mean_annual_precip_wsd SELECT DISTINCT * FROM bcfishpass.mean_annual_precip_wsd_load_poly"
 
 
 # ----------
