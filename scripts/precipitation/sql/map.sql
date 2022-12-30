@@ -12,7 +12,7 @@ SELECT
   b.wscode_ltree,
   b.localcode_ltree,
   b.watershed_group_code,
-  round(sum(ST_Area(b.geom)))::bigint as area,
+  greatest(round(sum(ST_Area(b.geom))), 1)::bigint as area, -- prevent rounding by zero errors by replacing 0 area with 1
   avg(a.map)::integer as map
 FROM bcfishpass.mean_annual_precip_load_ply a
 INNER JOIN whse_basemapping.fwa_watersheds_poly b
@@ -61,7 +61,7 @@ SELECT
   wscode_ltree,
   localcode_ltree,
   watershed_group_code,
-  1 as area,
+  1 as area,  -- again, to prevent round by zero errors
   round(map::numeric)::integer as map
 FROM bcfishpass.mean_annual_precip_load_ln
 WHERE 
