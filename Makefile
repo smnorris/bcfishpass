@@ -140,8 +140,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # -----
 # MEAN ANNUAL PRECIPITATION
 # -----
-scripts/precipitation/.map:
+scripts/precipitation/.make/map:
 	cd scripts/precipitation; ./mean_annual_precip.sh
+	mkdir -p scripts/precipitation/.make
 	touch $@
 
 # -----

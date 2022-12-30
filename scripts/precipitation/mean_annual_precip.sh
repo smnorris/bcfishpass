@@ -2,84 +2,72 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly order by watershed_group_code")
 
 mkdir -p data
 
 # direct download links do not seem to be available at this time
 # go to https://climatebc.ca/SpatialData and download MAP for 1991-2020 to data folder
 
-# resample the precip data to match DEM raster resolution (but no need to align)
-gdalwarp data/MAP.tif data/map_25m.tif -t_srs EPSG:3005 -of COG -co COMPRESS=DEFLATE -tr 25 25
 
 # ----------
 # Derive MAP per fundamental watershed poly
 # ----------
-$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_poly"
-$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd_load_poly (watershed_feature_id integer, watershed_group_code text, map numeric)"
 
-# Loop through watershed groups
-# (rather than loading geojson of all fundamental watershed polys for BC into memory,
-# this takes longer but is much more memory safe)
-for WSG in $WSGS
-do
-  echo 'Processing '$WSG
-  $PSQL -X -t -v wsg="$WSG" <<< "SELECT
-    ST_AsGeoJSON(t.*)
+$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_ply"
+$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_load_ply (watershed_feature_id integer PRIMARY KEY, watershed_group_code text, map numeric)"
+
+# Extract geojsons of each watershed group from db, processing in parallel
+parallel --no-run-if-empty \
+  "echo 'Processing {1} '; \
+  $PSQL -X -t -v wsg={1} <<< \"SELECT
+    json_build_object(
+      'type', 'FeatureCollection',
+      'features', json_agg(ST_AsGeoJSON(t.*)::json)
+    )
   FROM
     (
       SELECT
         watershed_feature_id,
         watershed_group_code,
-        geom
+        st_transform(geom,4326) as geom
       FROM whse_basemapping.fwa_watersheds_poly
       WHERE watershed_group_code = :'wsg'
-    ) as t" | \
-    parallel \
-      --pipe \
-      "rio -q zonalstats \
-        -r data/map_25m.tif \
-        --prefix 'map_' \
-        2>/dev/null" | \
+    ) as t\" | \
+    rio zonalstats \
+        -r data/MAP.tif \
+        --all-touched \
+        --prefix 'map_' | \
     jq '.features[].properties | [.watershed_feature_id, .watershed_group_code, .map_mean]' | \
     jq -r --slurp '.[] | @csv' | \
-    $PSQL -c "\copy bcfishpass.mean_annual_precip_wsd_load_poly FROM STDIN delimiter ',' csv header"
-done
-
-# load unique watersheds from load table (rasterstats is generating some duplicates and I'm not sure how to fix,
-# it is probably something to do with sequences vs collections)
-$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
-$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd (watershed_feature_id integer PRIMARY KEY, watershed_group_code text, map numeric)"
-$PSQL -c "INSERT INTO bcfishpass.mean_annual_precip_wsd SELECT DISTINCT * FROM bcfishpass.mean_annual_precip_wsd_load_poly"
+    $PSQL -c \"\copy bcfishpass.mean_annual_precip_load_ply FROM STDIN delimiter ',' csv\"" ::: $WSGS
 
 
 # ----------
-# Derive MAP per fundamental watershed for centroids of watershed polys missed with above step (due to small size)
+# For watersheds with NULL MAP values output from above, try and get precip at a point in the poly
 # ----------
-$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_pt"
-$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_wsd_load_pt (watershed_feature_id integer, watershed_group_code text, map numeric)"
+$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_pt"
+$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_load_pt (watershed_feature_id integer, watershed_group_code text, map numeric)"
 
-# run pointquery. At 73,409 points, this is fine to run provincially and in a single process.
-$PSQL -t -c "SELECT ST_AsGeoJSON(t.*)
+$PSQL -t -c "SELECT
+    json_build_object(
+      'type', 'FeatureCollection',
+      'features', json_agg(ST_AsGeoJSON(t.*)::json)
+    )
     FROM (
       SELECT
         a.watershed_feature_id,
         b.watershed_group_code,
-        ST_PointOnSurface(b.geom) as geom
-      FROM bcfishpass.mean_annual_precip_wsd a
+        st_transform(ST_PointOnSurface(b.geom),4326) as geom
+      FROM bcfishpass.mean_annual_precip_load_ply a
       INNER JOIN whse_basemapping.fwa_watersheds_poly b
       ON a.watershed_feature_id = b.watershed_feature_id
       WHERE a.map IS NULL
     ) AS t" |
-  rio -q pointquery -r data/map_25m.tif 2>/dev/null | \
+  rio -q pointquery -r data/MAP.tif | \
   jq '.features[].properties | [.watershed_feature_id, .watershed_group_code, .value]' | \
   jq -r --slurp '.[] | @csv' | \
-  $PSQL -c "\copy bcfishpass.mean_annual_precip_wsd_load_pt FROM STDIN delimiter ',' csv header"
-
-$PSQL -c "UPDATE bcfishpass.mean_annual_precip_wsd a
-         SET map = l.map
-         FROM bcfishpass.mean_annual_precip_wsd_load_pt l
-         WHERE a.watershed_feature_id = l.watershed_feature_id"
+  $PSQL -c "\copy bcfishpass.mean_annual_precip_load_pt FROM STDIN delimiter ',' csv"
 
 
 # ----------
@@ -87,15 +75,19 @@ $PSQL -c "UPDATE bcfishpass.mean_annual_precip_wsd a
 # (these are mostly in rivers)
 # ----------
 #  Process these my getting MAP of at pointonsurface of the stream geometry (there are about 59k of these)
-$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load"
-$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_load (wscode_ltree ltree, localcode_ltree ltree, watershed_group_code text, map numeric)"
-$PSQL -t -c "SELECT ST_AsGeoJSON(t.*)
+$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_ln"
+$PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_load_ln (wscode_ltree ltree, localcode_ltree ltree, watershed_group_code text, map numeric)"
+$PSQL -t -c "SELECT
+    json_build_object(
+      'type', 'FeatureCollection',
+      'features', json_agg(ST_AsGeoJSON(t.*)::json)
+    )
     FROM (
     SELECT
       s.wscode_ltree,
       s.localcode_ltree,
       s.watershed_group_code,
-      ST_PointOnSurface(ST_Union(s.geom)) as geom
+      ST_Transform(ST_PointOnSurface(ST_Union(s.geom)), 4326) as geom
     FROM whse_basemapping.fwa_stream_networks_sp s
     LEFT OUTER JOIN whse_basemapping.fwa_watersheds_poly w
     ON s.wscode_ltree = w.wscode_ltree AND
@@ -106,10 +98,10 @@ $PSQL -t -c "SELECT ST_AsGeoJSON(t.*)
       s.fwa_watershed_code NOT LIKE '999%'
     GROUP BY s.wscode_ltree, s.localcode_ltree, s.watershed_group_code
     ) as t" |
-  rio -q pointquery -r data/map_25m.tif 2>/dev/null | \
+  rio -q pointquery -r data/MAP.tif | \
   jq '.features[].properties | [.wscode_ltree, .localcode_ltree, .watershed_group_code, .value]' | \
   jq -r --slurp '.[] | @csv' | \
-  $PSQL -c "\copy bcfishpass.mean_annual_precip_load FROM STDIN delimiter ',' csv header"
+  $PSQL -c "\copy bcfishpass.mean_annual_precip_load_ln FROM STDIN delimiter ',' csv"
 
 
 # ----------
@@ -130,9 +122,9 @@ $PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip
   UNIQUE (wscode_ltree, localcode_ltree)
 );"
 
-# Take data from the MAP load table, average the MAP over the stream segment
+# Take data from the MAP load tables, average the MAP over the stream segment
 # (watershed code / local code) and insert (along with area of fundamental watershed(s) associated with
-# this stream segment into the MAP table. Run the inserts per watershed group.
+# this stream segment) into the MAP table. Run the inserts per watershed group.
 for WSG in $WSGS
 do
   $PSQL -f sql/map.sql -v wsg="$WSG"
@@ -151,8 +143,8 @@ do
   $PSQL -X -v wsg="$WSG" < sql/map_upstream.sql
 done
 
-# optionally, drop the temp tables and raster
-#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd"
-#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_pt"
-#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_poly"
-#rm data/map_25m.tif*
+# optionally, drop the temp tables and source raster
+#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_ply"
+#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_pt"
+#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_ln"
+#rm data/MAP.tif*
