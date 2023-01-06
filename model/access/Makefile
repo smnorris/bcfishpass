@@ -41,28 +41,66 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
 # ------------
 # INDEX CROSSINGS
 # ------------
-# with table barriers_anthropogenic created above, we can now index the crossings table,
-# based anthropogenic barriers upstream/downstream (plus other crossings upstream/downstream)
 .make/index_crossings: .make/barriers_anthropogenic
-	python upstr_dnstr_ids.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.crossings aggregated_crossings_id crossings_dnstr
-	python upstr_dnstr_ids.py add-downstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
-	python upstr_dnstr_ids.py add-upstream-ids bcfishpass.crossings aggregated_crossings_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_upstr
-	$(PSQL) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_dnstr_count integer"
-	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_dnstr_count = array_length(barriers_anthropogenic_dnstr, 1) WHERE barriers_anthropogenic_dnstr IS NOT NULL";
-	$(PSQL) -c "ALTER TABLE bcfishpass.crossings ADD COLUMN IF NOT EXISTS barriers_anthropogenic_upstr_count integer"
-	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_upstr_count = array_length(barriers_anthropogenic_upstr, 1) WHERE barriers_anthropogenic_upstr IS NOT NULL";
-	# document the new columns
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.crossings_dnstr IS 'List of the aggregated_crossings_id values of crossings downstream of the given crossing, in order downstream';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr IS 'List of the aggregated_crossings_id values of barrier crossings downstream of the given crossing, in order downstream';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_dnstr_count IS 'A count of the barrier crossings downstream of the given crossing';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr IS 'List of the aggregated_crossings_id values of barrier crossings upstream of the given crossing';"
-	$(PSQL) -c "COMMENT ON COLUMN bcfishpass.crossings.barriers_anthropogenic_upstr_count IS 'A count of the barrier crossings upstream of the given crossing';"
+	# note all crossings downstream of a crossing
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_crossings"
+	$(PSQL) -c "create table bcfishpass.crossings_dnstr_crossings (aggregated_crossings_id text primary key, features_dnstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"SELECT bcfishpass.load_dnstr( \
+		    'bcfishpass.crossings',  \
+		    'aggregated_crossings_id', \
+		    'bcfishpass.crossings', \
+		    'aggregated_crossings_id', \
+		    'bcfishpass.crossings_dnstr_crossings', \
+		    'features_dnstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
 
-	# also index the barriers_anthropogenic table
-	python upstr_dnstr_ids.py add-downstream-ids bcfishpass.barriers_anthropogenic barriers_anthropogenic_id bcfishpass.barriers_anthropogenic barriers_anthropogenic_id barriers_anthropogenic_dnstr
-	$(PSQL) -c "VACUUM ANALYZE bcfishpass.crossings"
-	$(PSQL) -c "VACUUM ANALYZE bcfishpass.barriers_anthropogenic"
-	touch $@
+	# note all anthropogenic barriers downstream of a crossing
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_barriers_anthropogenic"
+	$(PSQL) -c "create table bcfishpass.crossings_dnstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_dnstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"SELECT bcfishpass.load_dnstr( \
+		    'bcfishpass.crossings',  \
+		    'aggregated_crossings_id', \
+		    'bcfishpass.barriers_anthropogenic', \
+		    'barriers_anthropogenic_id', \
+		    'bcfishpass.crossings_dnstr_barriers_anthropogenic', \
+		    'features_dnstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
+
+	# note all anthropogenic barriers downstream of an anthropogenic barrier
+	$(PSQL) -c "drop table if exists bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
+	$(PSQL) -c "create table bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic (barriers_anthropogenic_id text primary key, features_dnstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"SELECT bcfishpass.load_dnstr( \
+		    'bcfishpass.barriers_anthropogenic',  \
+		    'barriers_anthropogenic_id', \
+		    'bcfishpass.barriers_anthropogenic', \
+		    'barriers_anthropogenic_id', \
+		    'bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic', \
+		    'features_dnstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
+
+	# note all anthropogenic barriers upstream of a crossing
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_upstr_barriers_anthropogenic"
+	$(PSQL) -c "create table bcfishpass.crossings_upstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_upstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"SELECT bcfishpass.load_upstr( \
+		    'bcfishpass.crossings',  \
+		    'aggregated_crossings_id', \
+		    'bcfishpass.barriers_anthropogenic', \
+		    'barriers_anthropogenic_id', \
+		    'bcfishpass.crossings_upstr_barriers_anthropogenic', \
+		    'features_upstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 
 # -----
@@ -80,13 +118,20 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"	
 	# load all features for given spp scenario to barrier table, for all groups listed in parameters
 	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG)
-	# index downstream
-	python upstr_dnstr_ids.py add-downstream-ids \
-		bcfishpass.barriers_$(BARRIERTYPE) \
-		barriers_$(BARRIERTYPE)_id \
-		bcfishpass.barriers_$(BARRIERTYPE) \
-		barriers_$(BARRIERTYPE)_id \
-		barriers_$(BARRIERTYPE)_dnstr
+	# index barriers downstream
+	$(PSQL) -c "drop table if exists bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
+	$(PSQL) -c "create table bcfishpass.barriers_$(BARRIERTYPE)_dnstr (barriers_$(BARRIERTYPE)_id text primary key, features_dnstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"SELECT bcfishpass.load_dnstr( \
+		    'bcfishpass.barriers_$(BARRIERTYPE)',  \
+		    'barriers_$(BARRIERTYPE)_id', \
+		    'bcfishpass.barriers_$(BARRIERTYPE)',  \
+		    'barriers_$(BARRIERTYPE)_id', \
+		    'bcfishpass.barriers_$(BARRIERTYPE)_dnstr', \
+		    'features_dnstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
 	# remove non-minimal barriers
 	echo "DELETE FROM bcfishpass.:table WHERE :id IS NOT NULL" | \
 		$(PSQL) -v id=barriers_$(BARRIERTYPE)_dnstr -v table=barriers_$(BARRIERTYPE)
