@@ -110,21 +110,28 @@ obs_upstr as
         false,
         1
       )
-  where o.species_codes && array['ST']
+  -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
+  left outer join bcfishpass.user_barriers_definite_control bc
+  on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
+  where o.species_codes && array['CH','CM','CO','PK','SK','ST']
+  and bc.barrier_ind is null
 ),
 
 obs_upstr_n as
 (
   select
-    barrier_id,
-    count(obs) as n_obs
-  from obs_upstr
-  group by barrier_id
+    o.barrier_id,
+    count(o.obs) as n_obs
+  from obs_upstr o
+  where o.spp in ('CH','CM','CO','PK','SK','ST') 
+  and o.obs_dt > date('1990-01-01')         -- only observations since 1990 
+  group by o.barrier_id
 )
 
-insert into bcfishpass.barriers_st
+
+insert into bcfishpass.barriers_ch_cm_co_pk_sk
 (
-    barriers_st_id,
+    barriers_ch_cm_co_pk_sk_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -154,14 +161,14 @@ where watershed_group_code = any(
     array(
       select watershed_group_code
       from bcfishpass.wsg_species_presence
-      where st is true
+      where ch is true or cm is true or co is true or pk is true or sk is true or st is true
     )
 )
--- do not include gradient / falls / subsurface barriers with > 10 observations upstream
--- but always include major dams and other user added barriers
+-- do not include gradient / falls / subsurface barriers with > 5 observations upstream
+-- but always include user added barriers
 and (
     o.n_obs is null or
-    o.n_obs < 10 or
-    b.barrier_type in ('MAJOR DAM', 'EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
+    o.n_obs < 5 or
+    b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
 on conflict do nothing;
