@@ -17,10 +17,10 @@ $PSQL -c "truncate bcfishpass.streams"
 parallel $PSQL -f sql/load_streams.sql -v wsg={1} ::: $WSGS
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
+
 # -----
 # BREAK STREAMS
 # -----
-
 # break at observations
 parallel --jobs 4 --no-run-if-empty \
 	"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
