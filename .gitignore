@@ -6,16 +6,16 @@
 !.github
 !.env.docker
 
+# sublime
+*.sublime-project
+*.sublime-workspace
+
 # Sphinx documentation
 docs/_build/
 .buildinfo
 
-# these requirements get copied into local folder by make
-fwapg
-bcfishobs
-
 # ignore data download folders and their contents
-scripts/**/data
+model/**/data
 
 # ignore rasters and associated files
 *tif
@@ -37,5 +37,5 @@ qa/*csv
 export/outputs
 
 # ignore current parameters, just track param in subfolders
-parameters/habitat.csv
-parameters/watersheds.csv
+parameters/param_habitat.csv
+parameters/param_watersheds.csv
