@@ -36,7 +36,7 @@ WITH rearing AS
   ON s.waterbody_key = res.waterbody_key
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.model_access_ch_co_sk IS NOT NULL AND  -- this takes care of watershed selection as well
+    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- this takes care of watershed selection as well
      (
           lk.area_ha >= h.rear_lake_ha_min OR  -- lakes
           res.area_ha >= h.rear_lake_ha_min    -- reservoirs
@@ -301,7 +301,7 @@ WITH spawn AS
     (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
   )
   AND s.watershed_group_code = 'HORS'
-  AND s.model_access_ch_co_sk IS NOT NULL
+  AND s.model_access_ch_cm_co_pk_sk IS NOT NULL
 )
 
 UPDATE bcfishpass.streams s

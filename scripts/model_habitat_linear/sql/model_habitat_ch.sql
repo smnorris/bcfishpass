@@ -34,20 +34,20 @@ model AS
     s.localcode_ltree,
     s.channel_width,
     s.gradient,
-    s.model_access_ch_co_sk,
+    s.model_access_ch_cm_co_pk_sk,
     CASE
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= ch.spawn_gradient_max AND
         (s.channel_width > ch.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         s.channel_width <= ch.spawn_channel_width_max AND
-        s.model_access_ch_co_sk IS NOT NULL  -- note: this also ensures only wsg where ch occur are included
+        s.model_access_ch_cm_co_pk_sk IS NOT NULL  -- note: this also ensures only wsg where ch occur are included
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= ch.spawn_gradient_max AND
         s.mad_m3s > ch.spawn_mad_min AND
         s.mad_m3s <= ch.spawn_mad_max AND
-        s.model_access_ch_co_sk IS NOT NULL
+        s.model_access_ch_cm_co_pk_sk IS NOT NULL
       THEN true
     END AS spawn_ch
   FROM bcfishpass.streams s
@@ -89,7 +89,7 @@ WITH rearing AS
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_ch IS TRUE AND          -- on spawning habitat
-    s.model_access_ch_co_sk IS NOT NULL AND  -- accessibility check
+    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -143,7 +143,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.model_access_ch_co_sk IS NOT NULL AND  -- accessibility check
+    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -235,7 +235,7 @@ WITH rearing AS
   ON h.species_code = 'CH'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.model_access_ch_co_sk IS NOT NULL AND  -- accessibility check
+    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND

@@ -29,20 +29,20 @@ model AS
     s.localcode_ltree,
     s.channel_width,
     s.gradient,
-    s.model_access_ch_co_sk,
+    s.model_access_ch_cm_co_pk_sk,
     CASE
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= cm.spawn_gradient_max AND
         (s.channel_width > cm.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         s.channel_width <= cm.spawn_channel_width_max AND
-        s.model_access_ch_co_sk IS NOT NULL 
+        s.model_access_ch_cm_co_pk_sk IS NOT NULL
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= cm.spawn_gradient_max AND
         s.mad_m3s > cm.spawn_mad_min AND
         s.mad_m3s <= cm.spawn_mad_max AND
-        s.model_access_ch_co_sk IS NOT NULL 
+        s.model_access_ch_cm_co_pk_sk IS NOT NULL
       THEN true
     END AS spawn_cm
   FROM bcfishpass.streams s

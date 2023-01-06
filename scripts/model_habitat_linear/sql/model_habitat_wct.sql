@@ -33,8 +33,6 @@ model AS
   s.localcode_ltree,
   s.channel_width,
   s.gradient,
-  s.model_access_ch_co_sk,
-  s.model_access_st,
   CASE
     WHEN
       wsg.model = 'cw' AND
