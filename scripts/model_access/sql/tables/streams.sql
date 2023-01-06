@@ -59,8 +59,7 @@ CREATE TABLE bcfishpass.streams
   obsrvtn_species_codes_upstr text[],
 
   -- definite barriers downstream (per spp scenario)
-  barriers_ch_co_sk_dnstr text[],
-  barriers_ch_co_sk_b_dnstr text[],
+  barriers_ch_cm_co_pk_sk_dnstr text[],
   barriers_st_dnstr text[],
   barriers_bt_dnstr text[],
   barriers_wct_dnstr text[],
@@ -70,8 +69,7 @@ CREATE TABLE bcfishpass.streams
   -- access models
   model_access_bt text,
   model_access_gr text,
-  model_access_ch_co_sk text,
-  model_access_ch_co_sk_b text,
+  model_access_ch_cm_co_pk_sk text,
   model_access_rb text,
   model_access_st text,
   model_access_wct text,

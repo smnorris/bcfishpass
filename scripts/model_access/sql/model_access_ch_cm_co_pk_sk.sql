@@ -4,8 +4,8 @@
 
 -- first, set to null
 UPDATE bcfishpass.streams s
-SET model_access_ch_co_sk = NULL
-WHERE model_access_ch_co_sk IS NOT NULL
+SET model_access_ch_cm_co_pk_sk = NULL
+WHERE model_access_ch_cm_co_pk_sk IS NOT NULL
 AND watershed_group_code = :'wsg';
 
 
@@ -17,7 +17,7 @@ WITH model_access AS
     -- salmon accessibility
     CASE
       WHEN
-          barriers_ch_co_sk_dnstr IS NULL AND
+          barriers_ch_cm_co_pk_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
           barriers_pscis_dnstr IS NULL AND             -- but not a pscis barrier
           watershed_group_code = ANY(
@@ -29,7 +29,7 @@ WITH model_access AS
           )
       THEN 'POTENTIALLY ACCESSIBLE'
       WHEN
-          barriers_ch_co_sk_dnstr IS NULL AND
+          barriers_ch_cm_co_pk_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NOT NULL AND -- dam/barrier downstream
           barriers_pscis_dnstr IS NOT NULL AND        -- and is a pscis barrier
           watershed_group_code = ANY(
@@ -41,7 +41,7 @@ WITH model_access AS
           )
       THEN 'POTENTIALLY ACCESSIBLE - PSCIS BARRIER DOWNSTREAM'
       WHEN
-          barriers_ch_co_sk_dnstr IS NULL AND
+          barriers_ch_cm_co_pk_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NULL AND
           barriers_pscis_dnstr IS NULL AND
           barriers_remediated_dnstr IS NULL AND
@@ -54,7 +54,7 @@ WITH model_access AS
           )
       THEN 'ACCESSIBLE'
       WHEN
-          barriers_ch_co_sk_dnstr IS NULL AND
+          barriers_ch_cm_co_pk_sk_dnstr IS NULL AND
           barriers_anthropogenic_dnstr IS NULL AND
           barriers_pscis_dnstr IS NULL AND
           barriers_remediated_dnstr IS NOT NULL AND
@@ -66,21 +66,21 @@ WITH model_access AS
             )
           )
       THEN 'ACCESSIBLE - REMEDIATED'
-    END AS model_access_ch_co_sk
+    END AS model_access_ch_cm_co_pk_sk
   FROM bcfishpass.streams s
   WHERE s.watershed_group_code = :'wsg'
 )
 
 UPDATE bcfishpass.streams s
 SET
-  model_access_ch_co_sk = m.model_access_ch_co_sk
+  model_access_ch_cm_co_pk_sk = m.model_access_ch_cm_co_pk_sk
 FROM model_access m
 WHERE s.segmented_stream_id = m.segmented_stream_id;
 
 -- note streams with observations upstream
 --UPDATE bcfishpass.streams
---SET model_access_ch_co_sk = model_access_ch_co_sk||' - OBSRVTN UPSTR'
+--SET model_access_ch_cm_co_pk_sk = model_access_ch_cm_co_pk_sk||' - OBSRVTN UPSTR'
 --WHERE
---  model_access_ch_co_sk is not null and
+--  model_access_ch_cm_co_pk_sk is not null and
 --  obsrvtn_species_codes_upstr && ARRAY['CH','CO','SK'] and
 --  watershed_group_code = :'wsg';
