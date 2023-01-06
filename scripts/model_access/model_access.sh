@@ -39,11 +39,10 @@ do
 		$PSQL -v wsg={1} -v point_table=barriers_$BARRIERTYPE" ::: $WSGS 
 done
 
-# from habitat model, create user habitat endpoints and break streams at these locations as well
-$PSQL -f sql/user_habitat_classification_endpoints.sql
+# break streams at user habitat definition endpoints
 parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$PSQL -v wsg={1} -v point_table=barriers_$BARRIERTYPE" ::: $WSGS 
+		$PSQL -v wsg={1} -v point_table=user_habitat_classification_endpoints" ::: $WSGS 
 
 # -----
 # INDEX 

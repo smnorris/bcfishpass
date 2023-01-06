@@ -32,14 +32,14 @@ clean:
 # ------
 # SETUP - setup db for access model, create empty tables, load parameters
 # ------
-.make/setup: $(wildcard scripts/model_access/sql/functions/*sql) \
-	$(wildcard scripts/model_access/sql/tables/*sql) 
+.make/setup: $(wildcard db/sql/functions/*sql) \
+	$(wildcard db/sql/tables/*sql) 
 	mkdir -p .make
 	for sql in $^ ; do \
 		set -e ; $(PSQL) -f $$sql ; \
 	done	
 	for csv in $(wildcard parameters/*csv) ; do \
-		set -e ; ./scripts/misc/load_csv.sh $$csv ; \
+		set -e ; ./db/load_csv.sh $$csv ; \
 	done
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	touch $@
@@ -58,8 +58,8 @@ clean:
 	data/user_falls.csv \
 	data/user_barriers_definite_control.csv \
 	scripts/falls/falls.sh scripts/falls/sql/falls.sql
-	./scripts/misc/load_csv.sh data/user_falls.csv
-	./scripts/misc/load_csv.sh data/user_barriers_definite_control.csv
+	./db/load_csv.sh data/user_falls.csv
+	./db/load_csv.sh data/user_barriers_definite_control.csv
 	cd scripts/falls; ./falls.sh
 	touch $@
 
@@ -94,7 +94,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # ------
 .make/pscis: scripts/modelled_stream_crossings/.make/modelled_stream_crossings \
 	data/pscis_modelledcrossings_streams_xref.csv
-	./scripts/misc/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
+	./db/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd scripts/pscis; ./pscis.sh
 	touch $@
 
@@ -110,9 +110,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	data/user_modelled_crossing_fixes.csv \
 	data/user_pscis_barrier_status.csv \
 	.make/pscis
-	./scripts/misc/load_csv.sh data/user_barriers_anthropogenic.csv 
-	./scripts/misc/load_csv.sh data/user_modelled_crossing_fixes.csv
-	./scripts/misc/load_csv.sh data/user_pscis_barrier_status.csv
+	./db/load_csv.sh data/user_barriers_anthropogenic.csv 
+	./db/load_csv.sh data/user_modelled_crossing_fixes.csv
+	./db/load_csv.sh data/user_pscis_barrier_status.csv
 	$(PSQL) -c "truncate bcfishpass.crossings"
 	$(PSQL) -f $<
 	touch $@
@@ -122,7 +122,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # ------
 # extract FISS observations for species of interest within study area from bcfishobs
 .make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
-	./scripts/misc/load_csv.sh data/wsg_species_presence.csv
+	./db/load_csv.sh data/wsg_species_presence.csv
 	$(PSQL) -f scripts/observations/sql/observations.sql
 	touch $@
 
@@ -134,7 +134,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 	.make/falls \
 	scripts/gradient_barriers/.make/gradient_barriers \
 	.make/crossings
-	./scripts/misc/load_csv.sh $<
+	./db/load_csv.sh $<
 	touch $@
 
 # -----
@@ -157,6 +157,15 @@ scripts/precipitation/.make/map:
 scripts/discharge/.make/discharge: 
 	cd scripts/discharge; make
 
+# ------
+# CREATE ENDPOINTS FOR USER PROVIDED HABITAT
+# ------
+# user habitat endpoints need to be created before processing the access model 
+# (because all stream segmentation occurs in the access model)
+.make/user_habitat_endpoints: .make/setup
+	$(PSQL) -f scripts/model_habitat_linear/sql/user_habitat_classification_endpoints.sql
+	touch $@
+
 # -----
 # ACCESS MODEL
 # -----
@@ -164,10 +173,11 @@ scripts/discharge/.make/discharge:
 # we need to add the data before running the access model
 scripts/model_access/.make/model_access: .make/barrier_sources \
 	.make/observations \
+	.make/user_habitat_endpoints \
 	scripts/channel_width/.make/channel_width \
 	scripts/discharge/.make/discharge \
 	data/user_habitat_classification.csv 
-	./scripts/misc/load_csv.sh data/user_habitat_classification.csv 
+	./db/load_csv.sh data/user_habitat_classification.csv 
 	cd scripts/model_access; make
 
 # -----
