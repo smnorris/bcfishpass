@@ -178,7 +178,7 @@ def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
     where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
     and s.gradient < .3
     and
-    (model_access_ch_co_sk is not null or
+    (model_access_ch_cm_co_pk_sk is not null or
     model_access_st is not null or
     model_access_wct is not null or
     model_access_bt is not null or

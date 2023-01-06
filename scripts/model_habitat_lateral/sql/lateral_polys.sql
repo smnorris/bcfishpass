@@ -100,7 +100,7 @@ on s.watershed_group_code = wsg.watershed_group_code
 WHERE
   s.edge_type in (1000,1100,2000,2300) and
   (
-    s.model_access_ch_co_sk is not null or
+    s.model_access_ch_cm_co_pk_sk is not null or
     s.model_access_st is not null
   ) and
   s.stream_order_parent > 5 and
@@ -127,7 +127,7 @@ WHERE
   (
     (
       model_access_st is not null or
-      model_access_ch_co_sk is not null
+      model_access_ch_cm_co_pk_sk is not null
     )
     and stream_order >= 7
   )
@@ -171,7 +171,7 @@ WHERE
   edge_type in (1000,1100,2000,2300)
   and
   (
-    model_access_ch_co_sk is not null or
+    model_access_ch_cm_co_pk_sk is not null or
     model_access_st is not null
   );
 
@@ -195,7 +195,7 @@ with xings as
   from bcfishpass.crossings
   where
     crossing_feature_type = 'RAIL' and
-    (model_access_ch_co_sk is not null or model_access_st is not null) and
+    (model_access_ch_cm_co_pk_sk is not null or model_access_st is not null) and
     (
       barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
       or crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -225,7 +225,7 @@ on FWA_Downstream(
       1
     )
 where
-(s.model_access_st is not null OR s.model_access_ch_co_sk is not null)
+(s.model_access_st is not null OR s.model_access_ch_cm_co_pk_sk is not null)
 --and
 --(
 --  (

@@ -2,7 +2,7 @@ create table if not exists bcfishpass.totals (
   date_processed timestamp without time zone,
   watershed_group_code text not null,
   total_network_km numeric default 0,
-  ch_co_sk_network_km numeric default 0,
+  ch_cm_co_pk_sk_network_km numeric default 0,
   st_network_km numeric default 0,
   wct_network_km numeric default 0,
   ch_spawning_km  numeric default 0,

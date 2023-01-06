@@ -67,7 +67,7 @@ LATERAL_SOURCES = {
       s.watershed_group_code = %(wsg)s and
       s.edge_type in (1000,1100,2000,2300) and
       (
-        s.model_access_ch_co_sk is not null or
+        s.model_access_ch_cm_co_pk_sk is not null or
         s.model_access_st is not null
       ) and
       s.stream_order_parent > 5 and
@@ -87,7 +87,7 @@ LATERAL_SOURCES = {
       (
         (
           model_access_st is not null or
-          model_access_ch_co_sk is not null
+          model_access_ch_cm_co_pk_sk is not null
         )
         and stream_order >= 7
       )
@@ -124,7 +124,7 @@ where
   watershed_group_code = %(wsg)s and
   edge_type in (1000,1100,2000,2300) and
   (
-    model_access_ch_co_sk is not null or
+    model_access_ch_cm_co_pk_sk is not null or
     model_access_st is not null
   );""",
     # -----------------------
@@ -164,7 +164,7 @@ where
       AND c.watershed_group_code = s.watershed_group_code
     where
       c.crossing_feature_type = 'RAIL' and
-      (s.model_access_ch_co_sk is not null or s.model_access_st is not null) and
+      (s.model_access_ch_cm_co_pk_sk is not null or s.model_access_st is not null) and
       (
         c.barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
         or c.crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -192,7 +192,7 @@ where
         )
     where
     s.watershed_group_code = %(wsg)s and
-    (s.model_access_st is not null OR s.model_access_ch_co_sk is not null)
+    (s.model_access_st is not null OR s.model_access_ch_cm_co_pk_sk is not null)
     --and
     --(
     --  (
