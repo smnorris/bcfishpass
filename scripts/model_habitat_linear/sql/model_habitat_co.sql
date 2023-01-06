@@ -34,7 +34,6 @@ model AS
   s.channel_width,
   s.gradient,
   s.model_access_ch_cm_co_pk_sk,
-  s.model_access_st,
   CASE
     WHEN
       wsg.model = 'cw' AND
