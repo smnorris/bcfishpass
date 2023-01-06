@@ -25,8 +25,8 @@ wcrp: $(WCRP_OUTPUTS)
 # Remove model make targets
 clean:
 	rm -Rf .make
-	cd scripts/model_access; make clean
-	cd scripts/model_habitat_lateral; make clean
+	cd model/model_access; make clean
+	cd model/model_habitat_lateral; make clean
 
 
 # ------
@@ -57,18 +57,18 @@ clean:
 .make/falls:  .make/setup \
 	data/user_falls.csv \
 	data/user_barriers_definite_control.csv \
-	scripts/falls/falls.sh scripts/falls/sql/falls.sql
+	model/falls/falls.sh model/falls/sql/falls.sql
 	./db/load_csv.sh data/user_falls.csv
 	./db/load_csv.sh data/user_barriers_definite_control.csv
-	cd scripts/falls; ./falls.sh
+	cd model/falls; ./falls.sh
 	touch $@
 
 # ------
 # Gradient barriers
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
-scripts/gradient_barriers/.make/gradient_barriers: 
-	cd scripts/gradient_barriers; make
+model/gradient_barriers/.make/gradient_barriers: 
+	cd model/gradient_barriers; make
 
 
 # ======
@@ -77,8 +77,8 @@ scripts/gradient_barriers/.make/gradient_barriers:
 # ------
 # Dams
 # ------
-.make/dams:  scripts/dams/dams.sh scripts/dams/sql/dams.sql
-	cd scripts/dams; ./dams.sh
+.make/dams:  model/dams/dams.sh model/dams/sql/dams.sql
+	cd model/dams; ./dams.sh
 	touch $@
 
 # ------
@@ -86,25 +86,25 @@ scripts/gradient_barriers/.make/gradient_barriers:
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
-scripts/modelled_stream_crossings/.modelled_stream_crossings: 
-	cd scripts/modelled_stream_crossings; make
+model/modelled_stream_crossings/.modelled_stream_crossings: 
+	cd model/modelled_stream_crossings; make
 
 # ------
 # PSCIS stream crossings
 # ------
-.make/pscis: scripts/modelled_stream_crossings/.make/modelled_stream_crossings \
+.make/pscis: model/modelled_stream_crossings/.make/modelled_stream_crossings \
 	data/pscis_modelledcrossings_streams_xref.csv
 	./db/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
-	cd scripts/pscis; ./pscis.sh
+	cd model/pscis; ./pscis.sh
 	touch $@
 
 # -----
 # CROSSINGS TABLE
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
-.make/crossings: scripts/model_access/sql/load_crossings.sql \
+.make/crossings: model/model_access/sql/load_crossings.sql \
 	.make/setup \
-	scripts/modelled_stream_crossings/.make/modelled_stream_crossings \
+	model/modelled_stream_crossings/.make/modelled_stream_crossings \
 	.make/dams \
 	data/user_barriers_anthropogenic.csv \
 	data/user_modelled_crossing_fixes.csv \
@@ -121,9 +121,9 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # OBSERVATIONS
 # ------
 # extract FISS observations for species of interest within study area from bcfishobs
-.make/observations: scripts/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
+.make/observations: model/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
 	./db/load_csv.sh data/wsg_species_presence.csv
-	$(PSQL) -f scripts/observations/sql/observations.sql
+	$(PSQL) -f model/observations/sql/observations.sql
 	touch $@
 
 # ------
@@ -132,7 +132,7 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # (other barriers are included as requirements just to ensure all barrier source data is ready to go at this point)
 .make/barrier_sources: data/user_barriers_definite.csv \
 	.make/falls \
-	scripts/gradient_barriers/.make/gradient_barriers \
+	model/gradient_barriers/.make/gradient_barriers \
 	.make/crossings
 	./db/load_csv.sh $<
 	touch $@
@@ -140,22 +140,22 @@ scripts/modelled_stream_crossings/.modelled_stream_crossings:
 # -----
 # MEAN ANNUAL PRECIPITATION
 # -----
-scripts/precipitation/.make/map:
-	cd scripts/precipitation; ./mean_annual_precip.sh
-	mkdir -p scripts/precipitation/.make
+model/precipitation/.make/map:
+	cd model/precipitation; ./mean_annual_precip.sh
+	mkdir -p model/precipitation/.make
 	touch $@
 
 # -----
 # CHANNEL WIDTH
 # -----
-.scripts/channel_width/.make/channel_width: scripts/precipitation/.map
-	cd scripts/channel_width; make
+.model/channel_width/.make/channel_width: model/precipitation/.map
+	cd model/channel_width; make
 
 # -----
 # DISCHARGE
 # -----
-scripts/discharge/.make/discharge: 
-	cd scripts/discharge; make
+model/discharge/.make/discharge: 
+	cd model/discharge; make
 
 # ------
 # CREATE ENDPOINTS FOR USER PROVIDED HABITAT
@@ -163,7 +163,7 @@ scripts/discharge/.make/discharge:
 # user habitat endpoints need to be created before processing the access model 
 # (because all stream segmentation occurs in the access model)
 .make/user_habitat_endpoints: .make/setup
-	$(PSQL) -f scripts/model_habitat_linear/sql/user_habitat_classification_endpoints.sql
+	$(PSQL) -f model/model_habitat_linear/sql/user_habitat_classification_endpoints.sql
 	touch $@
 
 # -----
@@ -171,20 +171,20 @@ scripts/discharge/.make/discharge:
 # -----
 # streams must be broken at user habitat classifcation lines, so 
 # we need to add the data before running the access model
-scripts/model_access/.make/model_access: .make/barrier_sources \
+model/model_access/.make/model_access: .make/barrier_sources \
 	.make/observations \
 	.make/user_habitat_endpoints \
-	scripts/channel_width/.make/channel_width \
-	scripts/discharge/.make/discharge \
+	model/channel_width/.make/channel_width \
+	model/discharge/.make/discharge \
 	data/user_habitat_classification.csv 
 	./db/load_csv.sh data/user_habitat_classification.csv 
-	cd scripts/model_access; make
+	cd model/model_access; make
 
 # -----
 # LINEAR HABITAT MODEL
 # -----
-.make/model_habitat_linear: scripts/model_access/.make/model_access 
-	cd scripts/model_habitat_linear; ./model_habitat_linear.sh
+.make/model_habitat_linear: model/model_access/.make/model_access 
+	cd model/model_habitat_linear; ./model_habitat_linear.sh
 
 # -----
 # CROSSING STATS
@@ -244,15 +244,15 @@ scripts/model_access/.make/model_access: .make/barrier_sources \
 # -----
 # LATERAL HABITAT MODEL
 # -----
-scripts/model_habitat_lateral/data/habitat_lateral.tif: .make/model_habitat_linear \
+model/model_habitat_lateral/data/habitat_lateral.tif: .make/model_habitat_linear \
 	.make/crossing_stats
-	cd scripts/model_habitat_lateral; make data/habitat_lateral.tif
+	cd model/model_habitat_lateral; make data/habitat_lateral.tif
 
 # -----
 # ACCESS MODEL QA REPORTS
 # -----
 reports/qa/%.csv: reports/qa/sql/%.sql \
-	scripts/model_access/.make/model_access \
+	model/model_access/.make/model_access \
 	.make/model_habitat_linear
 	psql2csv $(DATABASE_URL) < $< > $@	
 
@@ -265,5 +265,5 @@ wcrp/reports/reports/%.csv: wcrp/reports/sql/%.sql .point_reports
 	
 # generalized streams for mapping
 .carto: .point_reports
-	$(PSQL) -f scripts/model/sql/carto.sql
+	$(PSQL) -f model/model/sql/carto.sql
 	touch $@
