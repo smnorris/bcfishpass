@@ -142,6 +142,7 @@ obs_upstr_n as
   group by o.barrier_id
 )
 
+
 insert into bcfishpass.barriers_ch_cm_co_pk_sk
 (
     barriers_ch_cm_co_pk_sk_id,

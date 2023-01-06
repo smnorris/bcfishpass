@@ -160,20 +160,20 @@ scripts/discharge/.make/discharge:
 # -----
 # ACCESS MODEL
 # -----
-scripts/model_access/.make/model_access: .make/barrier_sources  \
-	.make/observations  \
+# streams must be broken at user habitat classifcation lines, so 
+# we need to add the data before running the access model
+scripts/model_access/.make/model_access: .make/barrier_sources \
+	.make/observations \
 	scripts/channel_width/.make/channel_width \
-	scripts/discharge/.make/discharge
+	scripts/discharge/.make/discharge \
+	data/user_habitat_classification.csv 
+	./scripts/misc/load_csv.sh data/user_habitat_classification.csv 
 	cd scripts/model_access; make
 
 # -----
 # LINEAR HABITAT MODEL
 # -----
-.make/model_habitat_linear: data/user_habitat_classification.csv \
-	scripts/model_access/.make/model_access 
-	# load manual habitat classification
-	$(PSQL) -f scripts/model_habitat_linear/sql/tables/user.sql
-	./scripts/misc/load_csv.sh $< 
+.make/model_habitat_linear: scripts/model_access/.make/model_access 
 	cd scripts/model_habitat_linear; ./model_habitat_linear.sh
 
 # -----
