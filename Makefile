@@ -25,8 +25,8 @@ wcrp: $(WCRP_OUTPUTS)
 # Remove model make targets
 clean:
 	rm -Rf .make
-	cd model/model_access; make clean
-	cd model/model_habitat_lateral; make clean
+	cd model/access; make clean
+	cd model/habitat_lateral; make clean
 
 
 # ------
@@ -102,7 +102,7 @@ model/modelled_stream_crossings/.modelled_stream_crossings:
 # CROSSINGS TABLE
 # consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
 # -----
-.make/crossings: model/model_access/sql/load_crossings.sql \
+.make/crossings: model/access/sql/load_crossings.sql \
 	.make/setup \
 	model/modelled_stream_crossings/.make/modelled_stream_crossings \
 	.make/dams \
@@ -163,7 +163,7 @@ model/discharge/.make/discharge:
 # user habitat endpoints need to be created before processing the access model 
 # (because all stream segmentation occurs in the access model)
 .make/user_habitat_endpoints: .make/setup
-	$(PSQL) -f model/model_habitat_linear/sql/user_habitat_classification_endpoints.sql
+	$(PSQL) -f model/habitat_linear/sql/user_habitat_classification_endpoints.sql
 	touch $@
 
 # -----
@@ -171,26 +171,26 @@ model/discharge/.make/discharge:
 # -----
 # streams must be broken at user habitat classifcation lines, so 
 # we need to add the data before running the access model
-model/model_access/.make/model_access: .make/barrier_sources \
+model/access/.make/model_access: .make/barrier_sources \
 	.make/observations \
 	.make/user_habitat_endpoints \
 	model/channel_width/.make/channel_width \
 	model/discharge/.make/discharge \
 	data/user_habitat_classification.csv 
 	./db/load_csv.sh data/user_habitat_classification.csv 
-	cd model/model_access; make
+	cd model/access; make
 
 # -----
 # LINEAR HABITAT MODEL
 # -----
-.make/model_habitat_linear: model/model_access/.make/model_access 
-	cd model/model_habitat_linear; ./model_habitat_linear.sh
+.make/model_habitat_linear: model/access/.make/model_access 
+	cd model/habitat_linear; ./habitat_linear.sh
 
 # -----
 # CROSSING STATS
 # add various columns holding upstream/downstream metrics to crossings table and barriers_anthropogenic
 # -----
-.make/crossing_stats: .make/model_habitat_linear \
+.make/crossing_stats: .make/habitat_linear \
 	reports/crossings/sql/point_report.sql \
 	reports/crossings/sql/point_report_obs_belowupstrbarriers.sql \
 	reports/crossings/sql/all_spawningrearing_per_barrier.sql
@@ -244,16 +244,16 @@ model/model_access/.make/model_access: .make/barrier_sources \
 # -----
 # LATERAL HABITAT MODEL
 # -----
-model/model_habitat_lateral/data/habitat_lateral.tif: .make/model_habitat_linear \
+model/habitat_lateral/data/habitat_lateral.tif: .make/habitat_linear \
 	.make/crossing_stats
-	cd model/model_habitat_lateral; make data/habitat_lateral.tif
+	cd model/habitat_lateral; make data/habitat_lateral.tif
 
 # -----
 # ACCESS MODEL QA REPORTS
 # -----
 reports/qa/%.csv: reports/qa/sql/%.sql \
-	model/model_access/.make/model_access \
-	.make/model_habitat_linear
+	model/access/.make/model_access \
+	.make/habitat_linear
 	psql2csv $(DATABASE_URL) < $< > $@	
 
 # -----
