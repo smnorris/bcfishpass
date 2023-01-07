@@ -50,20 +50,26 @@ parallel --jobs 4 --no-run-if-empty \
 # create tables holding lists of features that are downstream of individual stream segments
 for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
 do
-	$PSQL -c "drop table if exists bcfishpass.streams_dnstr_barriers_"$BARRIERTYPE;
-	$PSQL -c "create table bcfishpass.streams_dnstr_barriers_"$BARRIERTYPE" (segmented_stream_id text primary key, barriers_"$BARRIERTYPE"_dnstr text[])"
+	$PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
+	$PSQL -c "create table bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr (segmented_stream_id text primary key, barriers_"$BARRIERTYPE"_dnstr text[])"
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.load_dnstr(
 		    'bcfishpass.streams', 
 		    'segmented_stream_id', 
 		    'bcfishpass.barriers_\"$BARRIERTYPE\"',
 		    'barriers_\"$BARRIERTYPE\"_id', 
-		    'bcfishpass.streams_dnstr_barriers_\"$BARRIERTYPE\"',
+		    'bcfishpass.streams_barriers_\"$BARRIERTYPE\"_dnstr',
 		    'barriers_\"$BARRIERTYPE\"_dnstr',
 		    'true',
 		    :'wsg');\" | \
 		$PSQL -v wsg={1}" ::: $WSGS
 done
+# bring index tables into fresh streams table 
+# (writing to new tables is much faster than processing updates)
+
+$PSQL -f sql/model_access_output.sql
+
+
 
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)

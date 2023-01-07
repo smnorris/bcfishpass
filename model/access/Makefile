@@ -134,8 +134,6 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 	
 	# remove non-minimal barriers
-	echo "delete from bcfishpass.:table where :id is not null" | \
-		$(PSQL) -v id=barriers_$(BARRIERTYPE)_dnstr -v table=barriers_$(BARRIERTYPE)
 	echo "delete from bcfishpass.:table1 a \
 		  using bcfishpass.:table2 b \
 		  where a.:id = b.:id;" | \
