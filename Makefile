@@ -162,7 +162,9 @@ model/discharge/.make/discharge:
 # ------
 # user habitat endpoints need to be created before processing the access model 
 # (because all stream segmentation occurs in the access model)
-.make/user_habitat_endpoints: .make/setup
+.make/user_habitat_endpoints: .make/setup \
+	data/user_habitat_classification.csv
+	./db/load_csv.sh data/user_habitat_classification.csv 
 	$(PSQL) -f model/habitat_linear/sql/user_habitat_classification_endpoints.sql
 	touch $@
 
@@ -175,9 +177,7 @@ model/access/.make/model_access: .make/barrier_sources \
 	.make/observations \
 	.make/user_habitat_endpoints \
 	model/channel_width/.make/channel_width \
-	model/discharge/.make/discharge \
-	data/user_habitat_classification.csv 
-	./db/load_csv.sh data/user_habitat_classification.csv 
+	model/discharge/.make/discharge 
 	cd model/access; make
 
 # -----
