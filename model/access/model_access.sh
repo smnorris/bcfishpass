@@ -83,6 +83,7 @@ parallel $PSQL -f sql/streams_model_access.sql -v wsg={1} ::: $WSGS
 # once loaded, switch new table over into bcfishpass.streams
 $PSQL -c "drop table bcfishpass.streams"
 $PSQL -c "alter table bcfishpass.streams_model_access rename to streams"
+$PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
 # finally, drop the no longer needed _upstr _dnstr tables
 for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS

@@ -32,26 +32,28 @@ model AS
   s.localcode_ltree,
   s.channel_width,
   s.gradient,
-  s.model_access_st,
+  s.barriers_st_dnstr,
   CASE
     WHEN
       wsg.model = 'cw' AND
       s.gradient <= st.spawn_gradient_max AND
       (s.channel_width > st.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= st.spawn_channel_width_max AND
-      s.model_access_st IS NOT NULL -- note: this also ensures only wsg where st occur are included
+      s.barriers_st_dnstr IS NULL
     THEN true
     WHEN
       wsg.model = 'mad' AND
       s.gradient <= st.spawn_gradient_max AND
       s.mad_m3s > st.spawn_mad_min AND
       s.mad_m3s <= st.spawn_mad_max AND
-      s.model_access_st IS NOT NULL
+      s.barriers_st_dnstr IS NULL
     THEN true
   END AS spawn_st
 FROM bcfishpass.streams s
 INNER JOIN bcfishpass.param_watersheds wsg
 ON s.watershed_group_code = wsg.watershed_group_code
+INNER JOIN bcfishpass.wsg_species_presence p
+ON s.watershed_group_code = p.watershed_group_code
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
 LEFT OUTER JOIN bcfishpass.param_habitat st
@@ -59,6 +61,7 @@ ON st.species_code = 'ST'
 LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key
 WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
+and p.st is true
 AND s.watershed_group_code = :'wsg'
 )
 
@@ -88,7 +91,7 @@ WITH rearing AS
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_st IS TRUE AND        -- on spawning habitat
-    s.model_access_st IS NOT NULL AND  -- accessibility check
+    s.barriers_st_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
@@ -141,7 +144,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'ST'
   WHERE
-    s.model_access_st IS NOT NULL AND  -- accessibility check
+    s.barriers_st_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
@@ -232,7 +235,7 @@ WITH rearing AS
   ON h.species_code = 'ST'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.model_access_st IS NOT NULL AND  -- accessibility check
+    s.barriers_st_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR

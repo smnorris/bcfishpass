@@ -28,6 +28,8 @@ WITH rearing AS
   SELECT
     s.segmented_stream_id
   FROM bcfishpass.streams s
+  INNER JOIN bcfishpass.wsg_species_presence p
+  ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'SK'
   LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk
@@ -35,8 +37,9 @@ WITH rearing AS
   LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
   ON s.waterbody_key = res.waterbody_key
   WHERE
+    p.sk is true AND
     s.watershed_group_code = :'wsg' AND
-    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- this takes care of watershed selection as well
+    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND
      (
           lk.area_ha >= h.rear_lake_ha_min OR  -- lakes
           res.area_ha >= h.rear_lake_ha_min    -- reservoirs
@@ -301,7 +304,7 @@ WITH spawn AS
     (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
   )
   AND s.watershed_group_code = 'HORS'
-  AND s.model_access_ch_cm_co_pk_sk IS NOT NULL
+  AND s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
 )
 
 UPDATE bcfishpass.streams s

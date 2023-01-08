@@ -29,20 +29,20 @@ model AS
     s.localcode_ltree,
     s.channel_width,
     s.gradient,
-    s.model_access_ch_cm_co_pk_sk,
+    s.barriers_ch_cm_co_pk_sk_dnstr,
     CASE
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= pk.spawn_gradient_max AND
         (s.channel_width > pk.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         s.channel_width <= pk.spawn_channel_width_max AND
-        s.model_access_ch_cm_co_pk_sk IS NOT NULL  -- note: this also ensures only wsg where pk occur are included
+        s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= pk.spawn_gradient_max AND
         s.mad_m3s > pk.spawn_mad_min AND
         s.mad_m3s <= pk.spawn_mad_max AND
-        s.model_access_ch_cm_co_pk_sk IS NOT NULL
+        s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
       THEN true
     END AS spawn_pk
   FROM bcfishpass.streams s
@@ -59,7 +59,7 @@ model AS
   WHERE (
     wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
     ) -- apply to streams/rivers only
-    and p.cm is true
+    and p.pk is true
     and s.watershed_group_code = :'wsg'
 )
 

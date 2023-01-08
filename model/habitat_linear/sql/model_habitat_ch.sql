@@ -34,25 +34,27 @@ model AS
     s.localcode_ltree,
     s.channel_width,
     s.gradient,
-    s.model_access_ch_cm_co_pk_sk,
+    s.barriers_ch_cm_co_pk_sk_dnstr,
     CASE
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= ch.spawn_gradient_max AND
         (s.channel_width > ch.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         s.channel_width <= ch.spawn_channel_width_max AND
-        s.model_access_ch_cm_co_pk_sk IS NOT NULL  -- note: this also ensures only wsg where ch occur are included
+        s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= ch.spawn_gradient_max AND
         s.mad_m3s > ch.spawn_mad_min AND
         s.mad_m3s <= ch.spawn_mad_max AND
-        s.model_access_ch_cm_co_pk_sk IS NOT NULL
+        s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
       THEN true
     END AS spawn_ch
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.param_watersheds wsg
   ON s.watershed_group_code = wsg.watershed_group_code
+  INNER JOIN bcfishpass.wsg_species_presence p
+  ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.param_habitat ch
@@ -60,6 +62,7 @@ model AS
   LEFT OUTER JOIN rivers r
   ON s.waterbody_key = r.waterbody_key
   WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
+  AND p.ch is true
   AND s.watershed_group_code = :'wsg'
 )
 
@@ -89,7 +92,7 @@ WITH rearing AS
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_ch IS TRUE AND          -- on spawning habitat
-    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- accessibility check
+    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -143,7 +146,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CH'
   WHERE
-    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- accessibility check
+    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND
@@ -235,7 +238,7 @@ WITH rearing AS
   ON h.species_code = 'CH'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.model_access_ch_cm_co_pk_sk IS NOT NULL AND  -- accessibility check
+    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL AND

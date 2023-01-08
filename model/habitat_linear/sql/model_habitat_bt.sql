@@ -39,14 +39,14 @@ model AS
       s.gradient <= bt.spawn_gradient_max AND
       (s.channel_width > bt.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= bt.spawn_channel_width_max AND
-      s.model_access_bt IS NOT NULL -- note: this also ensures only wsg where wct occur are included
+      s.barriers_bt_dnstr IS NULL
     THEN true
     WHEN
       wsg.model = 'mad' AND
       s.gradient <= bt.spawn_gradient_max AND
       s.mad_m3s > bt.spawn_mad_min AND
       s.mad_m3s <= bt.spawn_mad_max AND
-      s.model_access_bt IS NOT NULL
+      s.barriers_bt_dnstr IS NULL
     THEN true
   END AS spawn_bt
 FROM bcfishpass.streams s
@@ -56,11 +56,15 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
 ON s.waterbody_key = wb.waterbody_key
 LEFT OUTER JOIN bcfishpass.param_habitat bt
 ON bt.species_code = 'BT'
+INNER JOIN bcfishpass.wsg_species_presence p
+ON s.watershed_group_code = p.watershed_group_code
 LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key
 WHERE
   -- spawning is in lakes and rivers only
-  (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+  (wb.waterbody_type = 'R' OR 
+    (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+AND p.bt is true
 AND s.watershed_group_code = :'wsg'
 )
 
@@ -90,7 +94,7 @@ WITH rearing AS
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_bt IS TRUE AND               -- on spawning habitat
-    s.model_access_bt IS NOT NULL AND             -- accessibility check
+    s.barriers_bt_dnstr IS NULL AND             -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     (
       ( -- channel width based model
@@ -138,7 +142,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'BT'
   WHERE
-    s.model_access_bt IS NOT NULL AND             -- accessibility check
+    s.barriers_bt_dnstr IS NULL AND             -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
 
     (
@@ -225,7 +229,7 @@ WITH rearing AS
   ON h.species_code = 'BT'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.model_access_bt IS NOT NULL AND  -- accessibility check
+    s.barriers_bt_dnstr IS NULL AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
 
     (
