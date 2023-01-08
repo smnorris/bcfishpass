@@ -69,9 +69,9 @@ done
 
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)
-$PSQL -c "drop table if exists bcfishpass.observations_upstr"
-$PSQL -c "create table bcfishpass.observations_upstr (segmented_stream_id text primary key, obsrvtn_event_upstr bigint[], obsrvtn_species_codes_upstr text[])"
-parallel --jobs 4 --no-run-if-empty $PSQL -f sql/observations_upstr.sql -v wsg={1} ::: $WSGS
+$PSQL -c "drop table if exists bcfishpass.streams_observations_upstr"
+$PSQL -c "create table bcfishpass.streams_observations_upstr (segmented_stream_id text primary key, obsrvtn_event_upstr bigint[], obsrvtn_species_codes_upstr text[])"
+parallel --jobs 4 --no-run-if-empty $PSQL -f sql/streams_observations_upstr.sql -v wsg={1} ::: $WSGS
 # add these columns to streams table
 $PSQL -c "alter table bcfishpass.streams add column obsrvtn_event_upstr bigint[], add column obsrvtn_species_codes_upstr text[]"
 
