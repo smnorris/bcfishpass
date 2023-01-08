@@ -45,51 +45,8 @@ CREATE TABLE bcfishpass.streams
   -- precipitation, channel width, discharge models
   map_upstream integer,
   channel_width double precision,
-  mad_m3s double precision,
-
-  -- anthropogenic features downstream
-  barriers_anthropogenic_dnstr text[],
-  barriers_pscis_dnstr text[],
-  barriers_dams_dnstr text[],
-  barriers_dams_hydro_dnstr text[],
-  barriers_remediated_dnstr text[],
-
-  -- observations upstream
-  obsrvtn_event_upstr bigint[],
-  obsrvtn_species_codes_upstr text[],
-
-  -- definite barriers downstream (per spp scenario)
-  barriers_ch_cm_co_pk_sk_dnstr text[],
-  barriers_st_dnstr text[],
-  barriers_bt_dnstr text[],
-  barriers_wct_dnstr text[],
-  barriers_gr_dnstr text[],
-  barriers_rb_dnstr text[],
+  mad_m3s double precision,  
   
-  -- access models
-  model_access_bt text,
-  model_access_gr text,
-  model_access_ch_cm_co_pk_sk text,
-  model_access_rb text,
-  model_access_st text,
-  model_access_wct text,
-  
-  -- habitat models
-  model_spawning_bt boolean,
-  model_spawning_ch boolean,
-  model_spawning_cm boolean,
-  model_spawning_co boolean,
-  model_spawning_pk boolean,
-  model_spawning_sk boolean,
-  model_spawning_st boolean,
-  model_spawning_wct boolean,
-  model_rearing_bt boolean,
-  model_rearing_ch boolean,
-  model_rearing_co boolean,
-  model_rearing_sk boolean,
-  model_rearing_st boolean,
-  model_rearing_wct boolean,
-
   geom geometry(LineStringZM,3005)
 );
 

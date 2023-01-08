@@ -2,10 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-
-
 WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
-
 
 QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
@@ -21,34 +18,30 @@ qa: $(QA_OUTPUTS)
 
 wcrp: $(WCRP_OUTPUTS)
 
-
 # Remove model make targets
 clean:
 	rm -Rf .make
 	cd model/access; make clean
 	cd model/habitat_lateral; make clean
 
-
 # ------
-# SETUP - setup db for access model, create empty tables, load parameters
+# SETUP
 # ------
-.make/setup: $(wildcard db/sql/functions/*sql) \
-	$(wildcard db/sql/tables/*sql) 
+# load parameters, create user data tables
+.make/setup: 
 	mkdir -p .make
-	for sql in $^ ; do \
-		set -e ; $(PSQL) -f $$sql ; \
-	done	
+	# create tables for parameters and user maintained data
+	$(PSQL) -f parameters/sql/parameters.sql
+	$(PSQL) -f data/sql/user.sql
+	# load parameters
 	for csv in $(wildcard parameters/*csv) ; do \
-		set -e ; ./db/load_csv.sh $$csv ; \
+		set -e ; ./scripts/load_csv.sh $$csv ; \
 	done
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	touch $@
 
-# ======
-# NATURAL BARRIERS
-# ======
 # ------
-# Falls
+# FALLS
 # ------
 # This relatively small table can get regenerated any time source csvs have changed,
 # the csv allows for adding features and it is convenient to have barrier status in the
@@ -58,31 +51,27 @@ clean:
 	data/user_falls.csv \
 	data/user_barriers_definite_control.csv \
 	model/falls/falls.sh model/falls/sql/falls.sql
-	./db/load_csv.sh data/user_falls.csv
-	./db/load_csv.sh data/user_barriers_definite_control.csv
+	./scripts/load_csv.sh data/user_falls.csv
+	./scripts/load_csv.sh data/user_barriers_definite_control.csv
 	cd model/falls; ./falls.sh
 	touch $@
 
 # ------
-# Gradient barriers
+# GRADIENT BARRIERS
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 model/gradient_barriers/.make/gradient_barriers: 
 	cd model/gradient_barriers; make
 
-
-# ======
-# ANTHROPOGENIC BARRIERS
-# ======
 # ------
-# Dams
+# DAMS
 # ------
 .make/dams:  model/dams/dams.sh model/dams/sql/dams.sql
 	cd model/dams; ./dams.sh
 	touch $@
 
 # ------
-# Modelled road-stream crossings
+# MODELLED ROAD-STREAM CROSSINGS
 # ------
 # Create intersection points of road/railroads and streams, the post-process to ensure
 # unique crossings
@@ -90,65 +79,49 @@ model/modelled_stream_crossings/.modelled_stream_crossings:
 	cd model/modelled_stream_crossings; make
 
 # ------
-# PSCIS stream crossings
+# PSCIS STREAM CROSSINGS
 # ------
 .make/pscis: model/modelled_stream_crossings/.make/modelled_stream_crossings \
 	data/pscis_modelledcrossings_streams_xref.csv
-	./db/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
+	./scripts/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd model/pscis; ./pscis.sh
 	touch $@
 
 # -----
-# CROSSINGS TABLE
-# consolidate all dams/pscis/modelled crossings/misc anthropogenic barriers into one table
+# LOAD DATA TABLES
+# load various data/fix tables required for access model
 # -----
-.make/crossings: model/access/sql/load_crossings.sql \
-	.make/setup \
-	model/modelled_stream_crossings/.make/modelled_stream_crossings \
-	.make/dams \
+.make/data: .make/setup \
 	data/user_barriers_anthropogenic.csv \
 	data/user_modelled_crossing_fixes.csv \
 	data/user_pscis_barrier_status.csv \
-	.make/pscis
-	./db/load_csv.sh data/user_barriers_anthropogenic.csv 
-	./db/load_csv.sh data/user_modelled_crossing_fixes.csv
-	./db/load_csv.sh data/user_pscis_barrier_status.csv
-	$(PSQL) -c "truncate bcfishpass.crossings"
-	$(PSQL) -f $<
+	data/wsg_species_presence.csv \
+	data/user_habitat_classification.csv
+	./scripts/load_csv.sh data/user_barriers_anthropogenic.csv 
+	./scripts/load_csv.sh data/user_modelled_crossing_fixes.csv
+	./scripts/load_csv.sh data/user_pscis_barrier_status.csv
+	./scripts/load_csv.sh data/wsg_species_presence.csv
+	./scripts/load_csv.sh data/user_barriers_definite.csv
+	./scripts/load_csv.sh data/user_habitat_classification.csv 
+	# all stream breaking is done in access model, create required endpoints 
+	# before running it
+	$(PSQL) -f model/habitat_linear/sql/user_habitat_classification_endpoints.sql
 	touch $@
 
-# ------
-# OBSERVATIONS
-# ------
-# extract FISS observations for species of interest within study area from bcfishobs
-.make/observations: model/observations/sql/observations.sql data/wsg_species_presence.csv .make/setup
-	./db/load_csv.sh data/wsg_species_presence.csv
-	$(PSQL) -f model/observations/sql/observations.sql
-	touch $@
-
-# ------
-# USER PROVIDED DEFINITE BARRIERS
-# ------
-# (other barriers are included as requirements just to ensure all barrier source data is ready to go at this point)
-.make/barrier_sources: data/user_barriers_definite.csv \
-	.make/falls \
-	model/gradient_barriers/.make/gradient_barriers \
-	.make/crossings
-	./db/load_csv.sh $<
-	touch $@
-
+# precip/channel width/discharge are not strictly required for access model but they
+# are loaded to the initial streams table, it is easier to process them here first 
+# before running access model
 # -----
 # MEAN ANNUAL PRECIPITATION
 # -----
-model/precipitation/.make/map:
+.make/precipitation:
 	cd model/precipitation; ./mean_annual_precip.sh
-	mkdir -p model/precipitation/.make
 	touch $@
 
 # -----
 # CHANNEL WIDTH
 # -----
-.model/channel_width/.make/channel_width: model/precipitation/.map
+.model/channel_width/.make/channel_width: .make/precipitation
 	cd model/channel_width; make
 
 # -----
@@ -157,25 +130,15 @@ model/precipitation/.make/map:
 model/discharge/.make/discharge: 
 	cd model/discharge; make
 
-# ------
-# CREATE ENDPOINTS FOR USER PROVIDED HABITAT
-# ------
-# user habitat endpoints need to be created before processing the access model 
-# (because all stream segmentation occurs in the access model)
-.make/user_habitat_endpoints: .make/setup \
-	data/user_habitat_classification.csv
-	./db/load_csv.sh data/user_habitat_classification.csv 
-	$(PSQL) -f model/habitat_linear/sql/user_habitat_classification_endpoints.sql
-	touch $@
-
 # -----
 # ACCESS MODEL
 # -----
 # streams must be broken at user habitat classifcation lines, so 
 # we need to add the data before running the access model
-model/access/.make/model_access: .make/barrier_sources \
-	.make/observations \
-	.make/user_habitat_endpoints \
+model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_stream_crossings \
+	.make/dams \
+	.make/pscis \
+	.make/data \
 	model/channel_width/.make/channel_width \
 	model/discharge/.make/discharge 
 	cd model/access; make

@@ -21,12 +21,35 @@ clean:
 	rm -Rf .make
 
 # -----
+# LOAD REQUIRED DB FUNCTIONS
+# -----
+.make/functions:  $(wildcard sql/functions/*sql)
+	mkdir -p .make
+	for sql in $^ ; do \
+		set -e ; $(PSQL) -f $$sql ; \
+	done
+	touch $@
+
+# -----
+# CROSSINGS
+# -----
+# combine modelled crossings, pscis, dams into bcfishpass.crossings
+.make/crossings: sql/crossings.sql
+	$(PSQL) -f $^ ; touch $@
+
+# -----
+# OBSERVATIONS
+# -----
+# load observations of all spp of interest from bcfishobs to bcfishpass.observations
+.make/observations: sql/observations.sql
+	$(PSQL) -f $^ ; touch $@
+
+# -----
 # LOAD BARRIER TYPE TABLES
 # -----
 # Create standardized barrier tables, one per type of barrier. 
 # Process every file that matches the pattern sql/barriers_%.sql
-$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
-	mkdir -p .make
+$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/crossings .make/observations
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
@@ -110,7 +133,7 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql
 # Note that observations are a requirement 
 $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 	$(SOURCE_BARRIERS) \
-	../../.make/observations
+	.make/observations
 	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$@))
 	# create table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)

@@ -3,8 +3,7 @@
 -- - connected to network
 -- - in BC
 -- - not a side channel of unknown location
--- - in the watershed groups of interest
---DELETE FROM bcfishpass.streams WHERE watershed_group_code = :'wsg';
+-- - in the watershed group provided as parameter
 
 INSERT INTO bcfishpass.streams
  (linear_feature_id,

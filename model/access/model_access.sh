@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds LIMIT 5")
 
 # look for species models/scenarios to be processed in the sql folder,
 # all files with model_barriers prefix
@@ -13,10 +13,9 @@ MODELS=$(ls sql/model_barriers*.sql | sed -e "s/sql\/model_barriers_//" | sed -e
 # LOAD STREAMS
 # -----
 # clear streams table and load data from FWA
-$PSQL -c "truncate bcfishpass.streams"
-parallel $PSQL -f sql/load_streams.sql -v wsg={1} ::: $WSGS
+$PSQL -f sql/streams.sql
+parallel $PSQL -f sql/streams_load.sql -v wsg={1} ::: $WSGS
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
-
 
 # -----
 # BREAK STREAMS
@@ -63,16 +62,20 @@ do
 		    'true',
 		    :'wsg');\" | \
 		$PSQL -v wsg={1}" ::: $WSGS
+	# might as well add corresponding _dnstr column to streams table 
+	$PSQL -c "alter table bcfishpass.streams add column barriers_"$BARRIERTYPE"_dnstr text[];"
+
 done
-# bring index tables into fresh streams table 
-# (writing to new tables is much faster than processing updates)
-
-$PSQL -f sql/model_access_output.sql
-
-
 
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)
 $PSQL -c "drop table if exists bcfishpass.observations_upstr"
 $PSQL -c "create table bcfishpass.observations_upstr (segmented_stream_id text primary key, obsrvtn_event_upstr bigint[], obsrvtn_species_codes_upstr text[])"
 parallel --jobs 4 --no-run-if-empty $PSQL -f sql/observations_upstr.sql -v wsg={1} ::: $WSGS
+# add these columns to streams table
+$PSQL -c "alter table bcfishpass.streams add column obsrvtn_event_upstr bigint[], add column obsrvtn_species_codes_upstr text[]"
+
+# now bring all dnstr/upstr columns into streams table
+# (this method of writing to new tables then writing to a new streams table is much faster than using updates)
+#$PSQL -f sql/model_access_output.sql
+
