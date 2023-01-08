@@ -52,10 +52,15 @@ model AS
   ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.param_habitat pk
   ON pk.species_code = 'PK'
+  INNER JOIN bcfishpass.wsg_species_presence p
+  ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN rivers r
   ON s.waterbody_key = r.waterbody_key
-  WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
-  AND s.watershed_group_code = :'wsg'
+  WHERE (
+    wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+    ) -- apply to streams/rivers only
+    and p.cm is true
+    and s.watershed_group_code = :'wsg'
 )
 
 UPDATE bcfishpass.streams s
