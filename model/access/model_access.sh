@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds LIMIT 5")
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # look for species models/scenarios to be processed in the sql folder,
 # all files with model_barriers prefix
@@ -75,7 +75,18 @@ parallel --jobs 4 --no-run-if-empty $PSQL -f sql/streams_observations_upstr.sql 
 # add these columns to streams table
 $PSQL -c "alter table bcfishpass.streams add column obsrvtn_event_upstr bigint[], add column obsrvtn_species_codes_upstr text[]"
 
-# now bring all dnstr/upstr columns into streams table
-# (this method of writing to new tables then writing to a new streams table is much faster than using updates)
-#$PSQL -f sql/model_access_output.sql
+# now bring all access model data from _upstr _dnstr tables into streams table
+$PSQL -c "drop table if exists bcfishpass.streams_model_access;"
+$PSQL -c "create table bcfishpass.streams_model_access (like bcfishpass.streams including all);"
+parallel $PSQL -f sql/streams_model_access.sql -v wsg={1} ::: $WSGS
 
+# once loaded, switch new table over into bcfishpass.streams
+$PSQL -c "drop table bcfishpass.streams"
+$PSQL -c "alter table bcfishpass.streams_model_access rename to streams"
+
+# finally, drop the no longer needed _upstr _dnstr tables
+for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
+do
+	$PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
+done
+$PSQL -c "drop table bcfishpass.streams_observations_upstr"
