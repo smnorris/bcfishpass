@@ -67,6 +67,26 @@ do
 
 done
 
+# also record all crossings dnsr
+# this is most useful for finding remediations downstream but could also
+# be useful for open bottom structures?
+$PSQL -c "drop table if exists bcfishpass.streams_crossings_dnstr";
+$PSQL -c "create table bcfishpass.streams_crossings_dnstr (segmented_stream_id text primary key, crossings_dnstr text[])"
+parallel --jobs 4 --no-run-if-empty \
+    "echo \"SELECT bcfishpass.load_dnstr(
+    'bcfishpass.streams',
+    'segmented_stream_id',
+    'bcfishpass.crossings',
+    'aggregated_crossings_id',
+    'bcfishpass.streams_crossings_dnstr',
+    'crossings_dnstr',
+    'true',
+    :'wsg');\" | \
+    $PSQL -v wsg={1}" ::: $WSGS
+# add corresponding _dnstr column to streams table
+$PSQL -c "alter table bcfishpass.streams add column crossings_dnstr text[];"
+
+
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)
 $PSQL -c "drop table if exists bcfishpass.streams_observations_upstr"
