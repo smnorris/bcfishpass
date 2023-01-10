@@ -6,10 +6,10 @@ WITH at_point AS
   SELECT
     a.:point_id,
     coalesce(s.gradient, s2.gradient) as gradient,
-    s.model_access_bt,
-    s.model_access_ch_co_sk,
-    s.model_access_st,
-    s.model_access_wct
+    s.barriers_bt_dnstr,
+    s.barriers_ch_cm_co_pk_sk_dnstr,
+    s.barriers_st_dnstr,
+    s.barriers_wct_dnstr
   FROM bcfishpass.:point_table a
   left outer join bcfishpass.streams s
   ON a.linear_feature_id = s.linear_feature_id
@@ -29,10 +29,10 @@ WITH at_point AS
 UPDATE bcfishpass.:point_table p
 SET
   gradient = u.gradient,
-  model_access_bt = u.model_access_bt,
-  model_access_ch_co_sk = u.model_access_ch_co_sk,
-  model_access_st = u.model_access_st,
-  model_access_wct = u.model_access_wct
+  barriers_bt_dnstr = u.barriers_bt_dnstr,
+  barriers_ch_cm_co_pk_sk_dnstr = u.barriers_ch_cm_co_pk_sk_dnstr,
+  barriers_st_dnstr = u.barriers_st_dnstr,
+  barriers_wct_dnstr = u.barriers_wct_dnstr
 FROM at_point u
 WHERE p.:point_id = u.:point_id;
 
@@ -48,10 +48,10 @@ with upstr as materialized
     s.gradient,
     s.edge_type,
     s.waterbody_key,
-    s.model_access_bt,
-    s.model_access_ch_co_sk,
-    s.model_access_st,
-    s.model_access_wct,
+    s.barriers_bt_dnstr,
+    s.barriers_ch_cm_co_pk_sk_dnstr,
+    s.barriers_st_dnstr,
+    s.barriers_wct_dnstr,
     s.model_spawning_ch,
     s.model_spawning_co,
     s.model_spawning_sk,
@@ -104,64 +104,64 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.gradient >= .22 AND s.gradient < .30) / 1000))::numeric, 2), 0) as total_slopeclass30_km,
 
 -- bull trout model
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS bt_network_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS bt_stream_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL) / 1000)::numeric), 2), 0) AS bt_network_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS bt_stream_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_bt LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_bt_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS bt_slopeclass03_waterbodies_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_bt LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_bt_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS bt_slopeclass03_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as bt_slopeclass05_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as bt_slopeclass08_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as bt_slopeclass15_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as bt_slopeclass22_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_bt LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as bt_slopeclass30_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as bt_slopeclass05_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as bt_slopeclass08_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as bt_slopeclass15_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as bt_slopeclass22_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr IS NULL AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as bt_slopeclass30_km,
 
 -- ch/co/sk salmon model
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS ch_co_sk_network_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS ch_co_sk_stream_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL) / 1000)::numeric), 2), 0) AS ch_co_sk_network_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS ch_co_sk_stream_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_ch_co_sk LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_ch_cm_co_pk_sk_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS ch_co_sk_slopeclass03_waterbodies_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_ch_co_sk LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_ch_cm_co_pk_sk_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS ch_co_sk_slopeclass03_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass05_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass08_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass15_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass22_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_ch_co_sk LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass30_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass05_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass08_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass15_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass22_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as ch_co_sk_slopeclass30_km,
 
 -- steelhead
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS st_network_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS st_stream_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL) / 1000)::numeric), 2), 0) AS st_network_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS st_stream_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_st LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_st_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS st_slopeclass03_waterbodies_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_st LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_st_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS st_slopeclass03_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as st_slopeclass05_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as st_slopeclass08_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as st_slopeclass15_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as st_slopeclass22_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_st LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as st_slopeclass30_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as st_slopeclass05_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as st_slopeclass08_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as st_slopeclass15_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as st_slopeclass22_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_st_dnstr IS NULL AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as st_slopeclass30_km,
 
 -- wct
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%') / 1000)::numeric), 2), 0) AS wct_network_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%' AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS wct_stream_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL) / 1000)::numeric), 2), 0) AS wct_network_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS wct_stream_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_wct LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_wct_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type != 'R' OR (wb.waterbody_type IS NOT NULL AND s.edge_type NOT IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS wct_slopeclass03_waterbodies_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (
-    WHERE (s.model_access_wct LIKE '%ACCESSIBLE%') AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
+    WHERE (s.barriers_wct_dnstr IS NULL) AND (s.gradient >= 0 AND s.gradient < .03) AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
   )) / 1000)::numeric, 2), 0) AS wct_slopeclass03_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as wct_slopeclass05_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as wct_slopeclass08_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as wct_slopeclass15_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as wct_slopeclass22_km,
-  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_access_wct LIKE '%ACCESSIBLE%' AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as wct_slopeclass30_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL AND (s.gradient >= .03 AND s.gradient < .05)) / 1000))::numeric, 2), 0) as wct_slopeclass05_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL AND (s.gradient >= .05 AND s.gradient < .08)) / 1000))::numeric, 2), 0) as wct_slopeclass08_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as wct_slopeclass15_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as wct_slopeclass22_km,
+  COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_wct_dnstr IS NULL AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as wct_slopeclass30_km,
 
 -- habitat models
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.model_spawning_ch IS TRUE) / 1000))::numeric, 2), 0) AS ch_spawning_km ,
@@ -332,9 +332,9 @@ WITH upstr_wb AS MATERIALIZED  -- force this query to materialize so the wbkey f
 (SELECT DISTINCT
   a.:point_id,
   s.waterbody_key,
-  s.model_access_ch_co_sk,
-  s.model_access_st,
-  s.model_access_wct,
+  s.barriers_ch_cm_co_pk_sk_dnstr,
+  s.barriers_st_dnstr,
+  s.barriers_wct_dnstr,
   s.model_rearing_co,
   s.model_rearing_sk,
   ST_Area(lake.geom) as area_lake,
@@ -371,16 +371,16 @@ report AS
     SUM(COALESCE(uwb.area_lake, 0)) + SUM(COALESCE(uwb.area_manmade,0))) / 10000)::numeric, 2
   ) AS total_lakereservoir_ha,
   ROUND((SUM(COALESCE(uwb.area_wetland, 0)) / 10000)::numeric, 2) AS total_wetland_ha,
-  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.model_access_ch_co_sk LIKE '%ACCESSIBLE%') +
-          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.model_access_ch_co_sk LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS ch_co_sk_lakereservoir_ha,
-  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.model_access_ch_co_sk LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS ch_co_sk_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.barriers_ch_cm_co_pk_sk_dnstr IS NULL) +
+          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.barriers_ch_cm_co_pk_sk_dnstr IS NULL)) / 10000)::numeric, 2) AS ch_co_sk_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.barriers_ch_cm_co_pk_sk_dnstr IS NULL)) / 10000)::numeric, 2) AS ch_co_sk_wetland_ha,
 
-  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.model_access_st LIKE '%ACCESSIBLE%') +
-          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.model_access_st LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS st_lakereservoir_ha,
-  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.model_access_st LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS st_wetland_ha,
-  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.model_access_wct LIKE '%ACCESSIBLE%') +
-          SUM(COALESCE(uwb.area_manmade,0)) FILTER (WHERE uwb.model_access_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
-  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.model_access_wct LIKE '%ACCESSIBLE%')) / 10000)::numeric, 2) AS wct_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.barriers_st_dnstr IS NULL) +
+          SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.barriers_st_dnstr IS NULL)) / 10000)::numeric, 2) AS st_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.barriers_st_dnstr IS NULL)) / 10000)::numeric, 2) AS st_wetland_ha,
+  ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.barriers_wct_dnstr IS NULL) +
+          SUM(COALESCE(uwb.area_manmade,0)) FILTER (WHERE uwb.barriers_wct_dnstr IS NULL)) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
+  ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.barriers_wct_dnstr IS NULL)) / 10000)::numeric, 2) AS wct_wetland_ha,
   ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.model_rearing_co = True)) / 10000)::numeric, 2) AS co_rearing_ha,
   ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.model_rearing_sk = True) +
           SUM(COALESCE(uwb.area_manmade, 0)) FILTER (WHERE uwb.model_rearing_sk = True)) / 10000)::numeric, 2) AS sk_rearing_ha

@@ -64,7 +64,6 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 # ------------
 # INDEX CROSSINGS
 # ------------
-# not actually part of the access model but the crossings need to be indexed somewhere
 .make/index_crossings: .make/barriers_anthropogenic
 	# note all crossings downstream of a crossing
 	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_crossings"
@@ -96,6 +95,21 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 		    :'wsg');\" | \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
+	# note all anthropogenic barriers upstream of a crossing
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_upstr_barriers_anthropogenic"
+	$(PSQL) -c "create table bcfishpass.crossings_upstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_upstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"select bcfishpass.load_upstr( \
+		    'bcfishpass.crossings',  \
+		    'aggregated_crossings_id', \
+		    'bcfishpass.barriers_anthropogenic', \
+		    'barriers_anthropogenic_id', \
+		    'bcfishpass.crossings_upstr_barriers_anthropogenic', \
+		    'features_upstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
+
 	# note all anthropogenic barriers downstream of an anthropogenic barrier
 	$(PSQL) -c "drop table if exists bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
 	$(PSQL) -c "create table bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic (barriers_anthropogenic_id text primary key, features_dnstr text[])"
@@ -111,20 +125,8 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 		    :'wsg');\" | \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
-	# note all anthropogenic barriers upstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_upstr_barriers_anthropogenic"
-	$(PSQL) -c "create table bcfishpass.crossings_upstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_upstr text[])"
-	parallel --no-run-if-empty \
-		"echo \"select bcfishpass.load_upstr( \
-		    'bcfishpass.crossings',  \
-		    'aggregated_crossings_id', \
-		    'bcfishpass.barriers_anthropogenic', \
-		    'barriers_anthropogenic_id', \
-		    'bcfishpass.crossings_upstr_barriers_anthropogenic', \
-		    'features_upstr', \
-		    'false', \
-		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
+	# load data from _dnstr _upstr lookups back into the main tables, drop the lookups
+	$(PSQL) -f sql/index_crossings.sql
 
 # -----
 # LOAD PER-SPECIES BARRIER TABLES (the points at which streams will be segmented)

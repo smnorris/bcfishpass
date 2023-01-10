@@ -146,8 +146,9 @@ model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_
 # -----
 # LINEAR HABITAT MODEL
 # -----
-.make/model_habitat_linear: model/access/.make/model_access 
+.make/habitat_linear: model/access/.make/model_access 
 	cd model/habitat_linear; ./habitat_linear.sh
+	touch $@
 
 # -----
 # CROSSING STATS
@@ -180,6 +181,7 @@ model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_
 		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
 		-v wsg=$$wsg ; \
 	done
+	
 	## run report per watershed group on crossings
 	$(PSQL) -f reports/crossings/sql/point_report_columns.sql \
 		-v point_table=crossings
