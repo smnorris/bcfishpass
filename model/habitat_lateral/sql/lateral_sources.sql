@@ -76,8 +76,8 @@ where
   s.watershed_group_code = :wsg and
   s.edge_type in (1000,1100,2000,2300) and
   (
-    s.model_access_ch_cm_co_pk_sk is not null or
-    s.model_access_st is not null
+    s.barriers_ch_cm_co_pk_sk_dnstr is null or
+    s.barriers_st_dnstr is null
   ) and
   s.stream_order_parent > 5 and
   s.gradient <= .01 and
@@ -99,8 +99,8 @@ s.watershed_group_code = :wsg and
  (
   (
     (
-      model_access_st is not null or
-      model_access_ch_cm_co_pk_sk is not null
+      barriers_st_dnstr is null or
+      barriers_ch_cm_co_pk_sk_dnstr is null
     )
     and stream_order >= 7
   )
@@ -146,8 +146,8 @@ where
   watershed_group_code = :wsg and
   edge_type in (1000,1100,2000,2300) and
   (
-    model_access_ch_cm_co_pk_sk is not null or
-    model_access_st is not null
+    barriers_ch_cm_co_pk_sk_dnstr is null or
+    barriers_st_dnstr is null
   );
 
 -- ----------------------------------------
@@ -189,7 +189,7 @@ with xings as
   from bcfishpass.crossings
   where
     crossing_feature_type = 'RAIL' and
-    (model_access_ch_cm_co_pk_sk is not null or model_access_st is not null) and
+    (barriers_ch_cm_co_pk_sk_dnstr is null or barriers_st_dnstr is null) and
     (
       barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
       or crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -219,7 +219,7 @@ on FWA_Downstream(
     )
 where
 s.watershed_group_code = :wsg and
-(s.model_access_st is not null OR s.model_access_ch_cm_co_pk_sk is not null)
+(s.barriers_st_dnstr is not null OR s.barriers_ch_cm_co_pk_sk_dnstr is not null)
 --and
 --(
 --  (

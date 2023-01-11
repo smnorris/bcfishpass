@@ -40,13 +40,13 @@ model AS
       s.gradient <= co.spawn_gradient_max AND
       (s.channel_width > co.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
       s.channel_width <= co.spawn_channel_width_max AND
-      s.barriers_ch_cm_co_pk_sk_dnstr IS NULL 
+      s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] 
     THEN true
     WHEN wsg.model = 'mad' AND
       s.gradient <= co.spawn_gradient_max AND
       s.mad_m3s > co.spawn_mad_min AND
       s.mad_m3s <= co.spawn_mad_max AND
-      s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
+      s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
     THEN true
   END AS spawn_co
 FROM bcfishpass.streams s
@@ -91,7 +91,7 @@ WITH rearing AS
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_co IS TRUE AND             -- on spawning habitat
-    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND  -- accessibility check
+    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
@@ -145,7 +145,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.param_habitat h
   ON h.species_code = 'CO'
   WHERE
-    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND       -- accessibility check
+    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND       -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
@@ -238,7 +238,7 @@ WITH rearing AS
   ON h.species_code = 'CO'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND  -- accessibility check
+    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR

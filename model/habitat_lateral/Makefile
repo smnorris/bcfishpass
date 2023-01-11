@@ -108,7 +108,7 @@ data/esa_bc.tif:
 
 
 # run lateral analysis for each watershed group and merge result
-$(VALLEY_OUTPUTS): valley_confinement.py ../../.make/model_habitat_linear
+$(VALLEY_OUTPUTS): valley_confinement.py ../../.make/habitat_linear
 	$(eval WSG=$(patsubst data/temp/%/valleys.tif,%,$@))
 	mkdir -p data/temp/$(WSG)
 	python valley_confinement.py $(WSG) -o $@ -d data/temp/$(WSG)

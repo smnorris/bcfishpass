@@ -105,9 +105,17 @@ $PSQL -c "drop table bcfishpass.streams"
 $PSQL -c "alter table bcfishpass.streams_model_access rename to streams"
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
-# finally, drop the no longer needed _upstr _dnstr tables
+# drop the no longer needed _upstr _dnstr tables
 for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
 do
 	$PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
 done
 $PSQL -c "drop table bcfishpass.streams_observations_upstr"
+
+# to be able to report on access model, there needs to be a way to differentiate
+# between streams with no barrier downstream, and streams that are not modelled because
+# the species is not present in the watershed group
+# (simply querying on barrier_<spp>_dnstr is null does not work, values are null
+# for wsg where species is not present)
+# fix this by populating accessible streams with an empty array (array[]::text[])
+$PSQL -f sql/access.sql

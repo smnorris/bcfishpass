@@ -39,7 +39,7 @@ WITH rearing AS
   WHERE
     p.sk is true AND
     s.watershed_group_code = :'wsg' AND
-    s.barriers_ch_cm_co_pk_sk_dnstr IS NULL AND
+    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
      (
           lk.area_ha >= h.rear_lake_ha_min OR  -- lakes
           res.area_ha >= h.rear_lake_ha_min    -- reservoirs
@@ -304,7 +304,7 @@ WITH spawn AS
     (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
   )
   AND s.watershed_group_code = 'HORS'
-  AND s.barriers_ch_cm_co_pk_sk_dnstr IS NULL
+  AND s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
 )
 
 UPDATE bcfishpass.streams s

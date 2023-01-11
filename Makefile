@@ -158,18 +158,8 @@ model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_
 	reports/crossings/sql/point_report.sql \
 	reports/crossings/sql/point_report_obs_belowupstrbarriers.sql \
 	reports/crossings/sql/all_spawningrearing_per_barrier.sql
-	# todo:
-	# below per wsg loops could be run in parallel if we write to temp
-	# (per wsg) tables rather than applying updates to provincial table (can't
-	# apply this many updates in parallel to the same table without hitting
-	# locking/concurrency issues, even though each update is for distinct
-	# records)
-	# below takes ~45min to run as is. Running in parallel on 8 core machine
-	# may bring this to under 15min or less. Even if the parallelization benefit
-	# is not linear, running inserts rather than updates may also help
-	# significantly. If all can be run as inserts (unlikely), time could
-	# approach sub 5min on 8 core machine
-
+	# todo - optimize below to write to temp tables rather than applying updates
+	
 	# run report per watershed group on barriers_anthropogenic
 	$(PSQL) -f reports/crossings/sql/point_report_columns.sql \
 		-v point_table=barriers_anthropogenic
@@ -181,7 +171,7 @@ model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_
 		-v dnstr_barriers_id=barriers_anthropogenic_dnstr \
 		-v wsg=$$wsg ; \
 	done
-	
+
 	## run report per watershed group on crossings
 	$(PSQL) -f reports/crossings/sql/point_report_columns.sql \
 		-v point_table=crossings
