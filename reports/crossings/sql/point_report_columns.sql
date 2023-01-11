@@ -27,7 +27,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass22_km                 double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS total_belowupstrbarriers_slopeclass30_km                 double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS barriers_bt_dnstr                                    text,
+  ADD COLUMN IF NOT EXISTS barriers_bt_dnstr                                    text[],
   ADD COLUMN IF NOT EXISTS bt_network_km                                      double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS bt_stream_km                                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS bt_lakereservoir_ha                                double precision DEFAULT 0,
@@ -51,7 +51,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS bt_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS bt_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS barriers_ch_cm_co_pk_sk_dnstr                                    text,
+  ADD COLUMN IF NOT EXISTS barriers_ch_cm_co_pk_sk_dnstr                                    text[],
   ADD COLUMN IF NOT EXISTS ch_cm_co_pk_sk_network_km                                      double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_cm_co_pk_sk_stream_km                                       double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_cm_co_pk_sk_lakereservoir_ha                                double precision DEFAULT 0,
@@ -75,7 +75,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km              double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km              double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS barriers_st_dnstr                                          text,
+  ADD COLUMN IF NOT EXISTS barriers_st_dnstr                                          text[],
   ADD COLUMN IF NOT EXISTS st_network_km                                            double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_stream_km                                             double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_lakereservoir_ha                                      double precision DEFAULT 0,
@@ -99,7 +99,7 @@ ALTER TABLE bcfishpass.:point_table
   ADD COLUMN IF NOT EXISTS st_belowupstrbarriers_slopeclass22_km                    double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS st_belowupstrbarriers_slopeclass30_km                    double precision DEFAULT 0,
 
-  ADD COLUMN IF NOT EXISTS barriers_wct_dnstr                                         text,
+  ADD COLUMN IF NOT EXISTS barriers_wct_dnstr                                       text[],
   ADD COLUMN IF NOT EXISTS wct_network_km                                           double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_stream_km                                            double precision DEFAULT 0,
   ADD COLUMN IF NOT EXISTS wct_lakereservoir_ha                                     double precision DEFAULT 0,

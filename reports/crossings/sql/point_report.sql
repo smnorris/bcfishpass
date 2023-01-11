@@ -118,7 +118,7 @@ report AS
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr = array[]::text[] AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as bt_slopeclass22_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_bt_dnstr = array[]::text[] AND (s.gradient >= .22 AND s.gradient < .3)) / 1000))::numeric, 2), 0) as bt_slopeclass30_km,
 
--- ch/co/sk salmon model
+-- salmon model
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]) / 1000)::numeric), 2), 0) AS ch_cm_co_pk_sk_network_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))))) / 1000)::numeric, 2), 0) AS ch_cm_co_pk_sk_stream_km,
   COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (

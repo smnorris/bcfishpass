@@ -155,6 +155,7 @@ model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_
 # add various columns holding upstream/downstream metrics to crossings table and barriers_anthropogenic
 # -----
 .make/crossing_stats: .make/habitat_linear \
+	reports/crossings/sql/point_report_columns.sql \
 	reports/crossings/sql/point_report.sql \
 	reports/crossings/sql/point_report_obs_belowupstrbarriers.sql \
 	reports/crossings/sql/all_spawningrearing_per_barrier.sql
