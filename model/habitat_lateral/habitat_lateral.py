@@ -164,7 +164,7 @@ where
       AND c.watershed_group_code = s.watershed_group_code
     where
       c.crossing_feature_type = 'RAIL' and
-      (s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or s.barriers_st_dnstr = array[]::text[]
+      (s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or s.barriers_st_dnstr = array[]::text[]) and
       (
         c.barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
         or c.crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -192,7 +192,7 @@ where
         )
     where
     s.watershed_group_code = %(wsg)s and
-    (s.barriers_st_dnstr = array[]::text[]
+    (s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or s.barriers_st_dnstr = array[]::text[])
     --and
     --(
     --  (
