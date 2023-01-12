@@ -14,7 +14,7 @@ select * from
   count(DISTINCT g.barriers_gradient_30_id) as n_barriers_gradient_30_dnstr,
   --array_agg(DISTINCT h.barriers_falls_id) as barriers_falls_dnstr,
   count(DISTINCT h.barriers_falls_id) as n_barriers_falls_dnstr
-FROM bcfishobs.fiss_fish_obsrvtn_events_sp a
+FROM bcfishobs.fiss_fish_obsrvtn_events_vw a
 LEFT OUTER JOIN bcfishpass.barriers_gradient_20 e
 ON FWA_Downstream(
     a.blue_line_key,

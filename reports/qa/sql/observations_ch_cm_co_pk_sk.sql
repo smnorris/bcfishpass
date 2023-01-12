@@ -16,7 +16,7 @@ select * from
   count(DISTINCT g.barriers_gradient_30_id) as n_barriers_gradient_30_dnstr,
   --array_agg(DISTINCT h.barriers_falls_id) as barriers_falls_dnstr,
   count(DISTINCT h.barriers_falls_id) as n_barriers_falls_dnstr
-FROM bcfishobs.fiss_fish_obsrvtn_events_sp a
+FROM bcfishobs.fiss_fish_obsrvtn_events_vw a
 LEFT OUTER JOIN bcfishpass.barriers_gradient_15 d
 ON FWA_Downstream(
     a.blue_line_key,
@@ -82,7 +82,7 @@ ON FWA_Downstream(
     True,
     1
 )
-WHERE a.species_code in ('CO','CH','SK')
+WHERE a.species_code in ('CO','CM','CH','PK','SK')
 GROUP BY a.species_code,
   a.fish_observation_point_id,
   a.observation_date,

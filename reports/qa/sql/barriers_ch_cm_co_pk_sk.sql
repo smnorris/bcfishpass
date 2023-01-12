@@ -1,7 +1,7 @@
 with obs_upstr as
 (
   select
-    b.barriers_ch_co_sk_id as barrier_id,
+    b.barriers_ch_cm_co_pk_sk_id as barrier_id,
     b.barrier_type,
     b.blue_line_key,
     b.downstream_route_measure,
@@ -9,7 +9,7 @@ with obs_upstr as
     unnest(o.species_codes) as spp,
     unnest(o.observation_ids) as obs,
     unnest(o.observation_dates) as obs_dt
-  from bcfishpass.barriers_ch_co_sk b
+  from bcfishpass.barriers_ch_cm_co_pk_sk b
   inner join bcfishpass.observations o
   on fwa_upstream(
         b.blue_line_key,
@@ -24,7 +24,7 @@ with obs_upstr as
         1
       )
     and b.watershed_group_code = o.watershed_group_code
-  where o.species_codes && array['CH','CO','SK']
+  where o.species_codes && array['CH','CM','CO','PK','SK']
 )
 
 select
