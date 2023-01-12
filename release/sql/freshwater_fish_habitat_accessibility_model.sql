@@ -54,12 +54,12 @@ select
   s.wscode_ltree as wscode,
   s.localcode_ltree as localcode,
   s.feature_code,
-  array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr
-  array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr
-  array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr
-  array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr
-  array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr
-  array_to_string(s.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr
+  array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr,
+  array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  array_to_string(s.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
   s.remediated_dnstr,
   s.geom
 from bcfishpass.streams s
@@ -120,12 +120,12 @@ select
   s.wscode_ltree as wscode,
   s.localcode_ltree as localcode,
   s.feature_code,
-  array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr
-  array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr
-  array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr
-  array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr
-  array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr
-  array_to_string(s.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr
+  array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr,
+  array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  array_to_string(s.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
   s.remediated_dnstr,
   s.geom
 from bcfishpass.streams s
