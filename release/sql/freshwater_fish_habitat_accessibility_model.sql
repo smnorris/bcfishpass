@@ -201,6 +201,8 @@ select
  array_to_string(crossings_dnstr, ';') as crossings_dnstr,
  array_to_string(barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
  array_to_string(barriers_anthropogenic_upstr, ';') as barriers_anthropogenic_upstr,
+ barriers_anthropogenic_dnstr_count,
+ barriers_anthropogenic_upstr_count,
  gradient,
  total_network_km,
  total_stream_km,
