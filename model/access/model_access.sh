@@ -108,7 +108,7 @@ $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 # drop the no longer needed _upstr _dnstr tables
 for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
 do
-	$PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
+    $PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
 done
 $PSQL -c "drop table bcfishpass.streams_observations_upstr"
 
