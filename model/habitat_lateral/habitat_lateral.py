@@ -125,7 +125,7 @@ where
   edge_type in (1000,1100,2000,2300) and
   (
     barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or
-    barriers_st_dsnstr = array[]::text[]
+    barriers_st_dnstr = array[]::text[]
   );""",
     # -----------------------
     # rail
