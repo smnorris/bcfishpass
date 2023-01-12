@@ -133,8 +133,12 @@ left outer join observations o
 on s.segmented_stream_id = o.segmented_stream_id
 where barriers_st_dnstr = array[]::text[];
 
+
+-- no views required for barrier tables, they can be used directly (only change would be renaming wscode/localcode)
+
 -- dump observations for salmon and steelhead used in this analysis
-create materialized view freshwater_fish_habitat_accessibility_model_observations_vw as
+drop materialized view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
+create materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw as
 select * from bcfishpass.observations_vw 
 where species_code in ('CH','CM','CO','PK','SK','ST');
 
