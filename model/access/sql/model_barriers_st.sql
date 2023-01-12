@@ -175,7 +175,6 @@ on conflict do nothing;
 
 
 -- also insert hydro dams that are labelled as barriers, regardless of how many observations are upstream
--- (if there are many observations upstream, submit barrier status correction to CABD)
 insert into bcfishpass.barriers_st
 (
     barriers_st_id,
