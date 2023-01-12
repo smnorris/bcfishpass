@@ -51,3 +51,20 @@ watershed_group_code in (
 	on p.watershed_group_code = s.watershed_group_code
 	where s.wct is not null
 );
+
+
+-- for simple reprting/visualization, 
+-- tag streams immediately upstream of remediations
+alter table bcfishpass.streams add column if not exists remediated_dnstr boolean;
+update bcfishpass.streams set remediated_dnstr = null where remediated_dnstr is not null;
+
+update bcfishpass.streams
+set remediated_dnstr = true
+where crossings_dnstr[1] in (
+  select 
+    aggregated_crossings_id
+  from bcfishpass.crossings
+  where  
+    pscis_status = 'REMEDIATED' and
+    barrier_status = 'PASSABLE'
+);
