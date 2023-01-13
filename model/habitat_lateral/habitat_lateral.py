@@ -8,7 +8,6 @@ import rasterio
 from rasterio import features
 from rasterio.windows import from_bounds
 import skimage.morphology as morphology
-import sqlalchemy
 from sqlalchemy import create_engine
 
 LOG = logging.getLogger(__name__)
@@ -260,8 +259,7 @@ def load_rasters(db, watershed_group_code, data_path="data"):
     with rasterio.open(os.path.join(data_path, "valleys.tif")) as src:
         rasters["vca"] = src.read(1).astype(numpy.uint8)
 
-    # create boolean rasters from postgres vector data as defined in lateral_sources.sql
-    
+    # create boolean rasters from postgres vector data as defined in LATERAL_SOURCES
     for source in LATERAL_SOURCES:
         polys = geopandas.GeoDataFrame.from_postgis(
             LATERAL_SOURCES[source],
@@ -340,11 +338,6 @@ def lateral(watershed_group_code, out_file, data_path, write_tempfiles):
     """
     # connect to db
     db = create_engine(os.environ.get("DATABASE_URL"))
-
-    # create various lateral habitat sources in the database
-    with open("sql/lateral_sources.sql") as file:
-        query = sqlalchemy.text(file.read())
-        db.execute(query, wsg=watershed_group_code)
 
     # load the source data as rasters
     meta, rasters = load_rasters(db, watershed_group_code, data_path)
