@@ -18,7 +18,7 @@ dependencies:
   - owslib
   - geopandas>=0.10.2
   - psycopg2
-  - sqlalchemy
+  - sqlalchemy<2.0
   - geoalchemy2
   - jq
   - rasterstats
