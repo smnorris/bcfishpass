@@ -5,7 +5,9 @@ CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watersh
 --habitat_type: SPAWN, REAR or ALL
   RETURNS TABLE(
     watershed_group_cd varchar (4),
-	  connectivity_status NUMERIC
+	  connectivity_status NUMERIC,
+	  all_habitat NUMERIC,
+	  all_habitat_accessible NUMERIC
   )
   LANGUAGE 'plpgsql'
   IMMUTABLE PARALLEL SAFE 
@@ -179,7 +181,9 @@ IF (v_hab = 'REAR')
 
 SELECT
       a.watershed_group_code,
-      a.rearing_pct_accessible
+      a.rearing_pct_accessible,
+      a.all_habitat_km,
+      a.all_habitat_accessible_km
   FROM access a;
 
 ELSIF (v_hab = 'SPAWN')
@@ -341,7 +345,9 @@ ELSIF (v_hab = 'SPAWN')
 
 SELECT
       a.watershed_group_code,
-      a.spawning_pct_accessible
+      a.spawning_pct_accessible,
+      a.all_habitat_km,
+      a.all_habitat_accessible_km
   FROM access a;
 
 
@@ -503,7 +509,9 @@ ELSE
 
 SELECT
       a.watershed_group_code,
-      a.all_habitat_pct_accessible
+      a.all_habitat_pct_accessible,
+      a.all_habitat_km,
+      a.all_habitat_accessible_km
   FROM access a;
 
 END IF;
