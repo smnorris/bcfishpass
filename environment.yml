@@ -26,7 +26,7 @@ dependencies:
   - awscli
   - seaborn
   - pip:
-      - bcdata==0.7.4
+      - bcdata==0.7.6
 variables:
   PGHOST: localhost
   PGUSER: postgres
