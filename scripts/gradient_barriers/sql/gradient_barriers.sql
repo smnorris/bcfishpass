@@ -54,6 +54,8 @@ gradeclass AS
 
 -- Group the continuous same-slope class segments (islands) together (thank you Erwin B)
 -- https://dba.stackexchange.com/questions/166374/grouping-or-window/166397#166397
+-- NOTE - this could also be done as a recursive query, potentially much easier to read
+
 islands AS
 (
   SELECT

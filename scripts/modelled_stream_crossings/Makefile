@@ -11,8 +11,9 @@ all: .roads .load_archive .modelled_stream_crossings
 # *** NOTE ***
 # Structure of data in this archive DOES NOT MATCH structure in the BCGW !
 # To avoid this issue, load data to whse_basemapping.transport_line rather than DRA_DGTL_ROAD_ATLAS_MPAR_SP
-.roads:
+.make/roads:
 	mkdir -p data
+	mkdir -p .make
 	wget --trust-server-names -qNP data ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip
 	unzip -qun data/dgtl_road_atlas.gdb.zip -d data
 	ogr2ogr \
@@ -64,7 +65,8 @@ all: .roads .load_archive .modelled_stream_crossings
 	touch $@
 
 # download modelled crossings archive (to extract exising IDs, they need to remain consistent)
-.load_archive:
+.make/load_archive:
+	mkdir -p .make
 	wget --trust-server-names -qNP data https://www.hillcrestgeo.ca/outgoing/fishpassage/data/bcfishpass/inputs/modelled_stream_crossings_archive.gpkg.zip
 	unzip -qun data/modelled_stream_crossings_archive.gpkg.zip -d data
 	ogr2ogr \
@@ -78,7 +80,7 @@ all: .roads .load_archive .modelled_stream_crossings
 	touch $@
 
 # run the overlays/analysis
-.modelled_stream_crossings: .roads .load_archive
+.make/modelled_stream_crossings: .roads .load_archive
 	$(PSQL_CMD) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source

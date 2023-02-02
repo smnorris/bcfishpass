@@ -1,10 +1,10 @@
 # Mean annual precipitation 
 
-Mean annual precipitation (MAP) is taken from ClimateBC, using the [1981-2010 climate normal grid](http://raster.climatebc.ca/download/Normal_1981_2010MSY/Normal_1981_2010_annual.zip).  
+ClimateBC mean annual precipitation (MAP) referenced to FWA watersheds and streams
 
 ## Method
 
-1. Download ClimateBC .tif files
+1. Manually download ClimateBC .tif file from [Climate BC](https://climatebc.ca/SpatialData), choose `Historical normals`, `Annual`, `Normal_1991-2020` and download `MAP` to `data` folder
 2. Overlay ClimateBC raster with fundamental watersheds, deriving MAP for each fundamental watershed
 3. Calculate average (area-weighted) upstream MAP for each distinct watershed code / local code combination 
 

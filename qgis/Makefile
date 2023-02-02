@@ -6,7 +6,7 @@
 .PHONY: all clean
 
 # point psql to db and stop on errors
-PSQL_CMD=psql $(DATABASE_URL) -v ON_ERROR_STOP=1         
+PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1         
 
 # basic tables that can be downloaded provincially
 BASIC_TABLES = WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES \
@@ -36,7 +36,8 @@ GENERATED_FILES = $(BASIC_TARGETS) \
 	$(TILE_TARGETS) \
 	.make/TCTR \
 	.make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
-	.make/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW
+	.make/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW \
+	.make/WHSE_FOREST_TENURE.FTEN_RANGE_POLY_CARTO_VW
 
 # temp folder
 TMP=/tmp
@@ -45,19 +46,21 @@ all: $(GENERATED_FILES)
 
 $(BASIC_TARGETS):
 	mkdir -p .make
+	# drop table with cascade option to remove views
+	$(PSQL) -c "drop table if exists $(subst .make/,,$@) cascade"
 	bcdata bc2pg $(subst .make/,,$@)
 	touch $@
 
 .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES:
 	mkdir -p .make
 	bcdata bc2pg whse_basemapping.trim_contour_lines --schema_only
-	$(PSQL_CMD) "create index on whse_basemapping.trim_contour_lines (bcgs_tile);"
+	$(PSQL) -c "create index on whse_basemapping.trim_contour_lines (bcgs_tile);"
 	touch $@
 
 # Download contours per 250k tile
 $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	# to handle interrupted downloads, delete any existing features for given tile
-	$(PSQL_CMD) -c "delete from whse_basemapping.trim_contour_lines where bcgs_tile like '$(subst TCTR_,,$@)%'"
+	$(PSQL) -c "delete from whse_basemapping.trim_contour_lines where bcgs_tile like '$(subst TCTR_,,$@)%'"
 	bcdata bc2pg WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 		--append \
 		--query "BCGS_TILE LIKE '$(subst .make/TCTR_,,$@)%'"
@@ -70,7 +73,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 # download veg .gdb, load and index
 .make/WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY:
 	mkdir -p .make
-	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
+	$(PSQL) -c "CREATE SCHEMA IF NOT EXISTS whse_forest_vegetation"
 	wget --trust-server-names -qNP $(TMP) https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_2021.gdb.zip
 	ogr2ogr \
 		-progress \
@@ -87,7 +90,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 		-nln whse_forest_vegetation.veg_comp_lyr_r1_poly \
 		$(TMP)/VEG_COMP_LYR_R1_POLY_2021.gdb.zip \
 		VEG_COMP_LYR_R1_POLY
-	$(PSQL_CMD) -c "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
+	$(PSQL) -c "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (inventory_standard_cd); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (non_productive_descriptor_cd); \
 	   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (species_pct_1); \
@@ -108,7 +111,7 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 	wget --trust-server-names -qN \
 		-O $(TMP)/pmbc_parcel_fabric_poly_svw.gdb.zip \
 		https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
-	$(PSQL_CMD) -c "CREATE SCHEMA IF NOT EXISTS whse_cadastre"
+	$(PSQL) -c "CREATE SCHEMA IF NOT EXISTS whse_cadastre"
 	# load to pg
 	ogr2ogr \
 	   -progress \
@@ -127,8 +130,9 @@ $(TILE_TARGETS): .make/WHSE_BASEMAPPING.TRIM_CONTOUR_LINES
 
 # create a non-overlapping range tenure layer
 .make/WHSE_FOREST_TENURE.FTEN_RANGE_POLY_CARTO_VW: .make/WHSE_FOREST_TENURE.FTEN_RANGE_POLY_SVW
-	$(PSQL_CMD) -f sql/ften_range_poly_carto_vw.sql
+	$(PSQL) -f sql/ften_range_poly_carto_vw.sql
 	touch $@
+
 clean:
 	rm -f $(GENERATED_FILES)
 	# drop all target tables
@@ -136,5 +140,5 @@ clean:
 		WHSE_BASEMAPPING.TRIM_CONTOUR_LINES \
 		WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY \
 		WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW ; do \
-		$(PSQL_CMD) -c "DROP TABLE IF EXISTS "$$table ;\
+		$(PSQL) -c "DROP TABLE IF EXISTS "$$table ;\
 	done
