@@ -24,7 +24,7 @@ SELECT
     wscode_ltree,
     localcode_ltree,
     watershed_group_code as watershed_group_code,
-    geom as geom
+    st_force2d(geom) as geom
 FROM bcfishpass.crossings
 WHERE
   dam_id IS NOT NULL AND

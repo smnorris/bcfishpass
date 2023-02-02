@@ -98,7 +98,7 @@ create table bcfishpass.crossings
     observedspp_dnstr text[],
     observedspp_upstr text[],
   
-    geom geometry(Point, 3005),
+    geom geometry(PointZM, 3005),
 
     -- only one crossing per location please
     unique (blue_line_key, downstream_route_measure)
@@ -277,7 +277,7 @@ select
     s.gnis_name as gnis_stream_name,
     s.stream_order,
     s.stream_magnitude,
-    e.geom
+    (st_dump(st_locatealong(s.geom, e.downstream_route_measure))).geom as geom
 from bcfishpass.pscis e
 left outer join bcfishpass.user_pscis_barrier_status f
 on e.stream_crossing_id = f.stream_crossing_id
@@ -503,7 +503,7 @@ select distinct ON (e.stream_crossing_id)
     s.gnis_name as gnis_stream_name,
     s.stream_order,
     s.stream_magnitude,
-    e.geom
+    (st_dump(st_locatealong(s.geom, e.downstream_route_measure))).geom as geom
 from bcfishpass.pscis e
 left outer join road_and_rail r
 on r.stream_crossing_id = e.stream_crossing_id
@@ -582,7 +582,7 @@ select
     s.gnis_name as gnis_stream_name,
     s.stream_order,
     s.stream_magnitude,
-    st_force2d((st_dump(d.geom)).geom)
+    (st_dump(st_locatealong(s.geom, d.downstream_route_measure))).geom as geom
 from bcfishpass.dams d
 inner join whse_basemapping.fwa_stream_networks_sp s
 on d.linear_feature_id = s.linear_feature_id
@@ -663,8 +663,10 @@ select
     b.gnis_stream_name,
     b.stream_order,
     b.stream_magnitude,
-    st_force2d((st_dump(b.geom)).geom)
+    (st_dump(st_locatealong(s.geom, b.downstream_route_measure))).geom as geom
 from misc_barriers b
+inner join whse_basemapping.fwa_stream_networks_sp s
+on b.linear_feature_id = s.linear_feature_id
 order by user_barrier_anthropogenic_id
 on conflict do nothing;
 
@@ -754,7 +756,7 @@ select
     s.gnis_name as gnis_stream_name,
     s.stream_order,
     s.stream_magnitude,
-    st_force2d((st_dump(b.geom)).geom) as geom
+    (st_dump(st_locatealong(s.geom, b.downstream_route_measure))).geom as geom
 from bcfishpass.modelled_stream_crossings b
 inner join whse_basemapping.fwa_stream_networks_sp s
 ON b.linear_feature_id = s.linear_feature_id

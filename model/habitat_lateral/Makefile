@@ -127,6 +127,17 @@ data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
 #	rm -r data/$$wsg ; \
 #done
 
+# load to postgres
+.make/habitat_lateral: data/habitat_lateral.tif
+	rio shapes habitat_lateral.tif --bidx 1 --precision 6 --collection | \
+  ogr2ogr \
+  -f PostgreSQL \
+  PG:$(DATABASE_URL) \
+  -overwrite \
+  -lco GEOMETRY_NAME=geom \
+  -nln bcfishpass.habitat_lateral \
+  /vsistdin/
+
 	
 # clean up and label 
 #.make/lateral_disconnected_rail: data/habitat_lateral.tif

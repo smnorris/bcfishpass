@@ -126,7 +126,7 @@ left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au
 on c.aggregated_crossings_id = au.aggregated_crossings_id;
 
 -- do the switch
-drop table bcfishpass.crossings;
+drop table bcfishpass.crossings cascade;
 alter table bcfishpass.crossings_index_tmp rename to crossings;
 
 -- drop lookups
