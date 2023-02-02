@@ -2,7 +2,7 @@
 
 Model stream accessibility for a given species (or species grouping). 
 
-## Model methodoly
+## Model method
 
 1. Load various natural barrier records from source tables into standardized per-barrier-type tables: (`sql/barriers_*.sql`)
 2. Collect barriers from 1. into per-species/species group tables, holding all non-anthropogenic barriers for the given species (`sql/model_barriers_<spp>`)
