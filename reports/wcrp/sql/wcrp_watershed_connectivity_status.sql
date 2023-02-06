@@ -43,10 +43,10 @@ IF (v_hab = 'REAR')
 
     -- spawning accessible
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-      OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-      OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
-      OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      WHERE (model_spawning_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
+      OR (model_spawning_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
+      OR (model_spawning_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
+      OR (model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
     ) / 1000)::numeric, 2) as spawning_accessible_km,
 
   -- REARING length
@@ -80,23 +80,21 @@ IF (v_hab = 'REAR')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
-              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_rearing_co IS TRUE AND
-              edge_type = 1050 AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              edge_type = 1050 AND barriers_anthropogenic_dnstr IS NULL
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              model_spawning_sk IS TRUE AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL
           )
         ) / 1000
       )::numeric, 2
@@ -137,28 +135,26 @@ IF (v_hab = 'REAR')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
-              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-              OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-              OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
-              OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR 
+              (model_spawning_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR 
+              (model_spawning_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR 
+              (model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_rearing_co IS TRUE AND
-              edge_type = 1050 AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              edge_type = 1050 AND barriers_anthropogenic_dnstr IS NULL
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              model_spawning_sk IS TRUE AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL              
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
@@ -205,10 +201,11 @@ ELSIF (v_hab = 'SPAWN')
 
     -- spawning accessible
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-      OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-      OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
-      OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      WHERE 
+        (model_spawning_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR 
+        (model_spawning_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR 
+        (model_spawning_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR 
+        (model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
     ) / 1000)::numeric, 2) as spawning_accessible_km,
 
   -- REARING length
@@ -242,23 +239,23 @@ ELSIF (v_hab = 'SPAWN')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
-              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_spawning_sk IS TRUE AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL              
           )
         ) / 1000
       )::numeric, 2
@@ -299,14 +296,14 @@ ELSIF (v_hab = 'SPAWN')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
-              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-              OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-              OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
-              OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
@@ -314,13 +311,13 @@ ELSIF (v_hab = 'SPAWN')
             WHERE
               model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_spawning_sk IS TRUE AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
@@ -367,10 +364,11 @@ ELSE
 
     -- spawning accessible
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-      OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-      OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
-      OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      WHERE 
+       (model_spawning_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+       (model_spawning_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+       (model_spawning_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+       (model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
     ) / 1000)::numeric, 2) as spawning_accessible_km,
 
   -- REARING length
@@ -404,23 +402,23 @@ ELSE
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
-              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_spawning_sk IS TRUE AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           )
         ) / 1000
       )::numeric, 2
@@ -461,14 +459,14 @@ ELSE
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
-              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
-              (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-              OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
-              OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
-              OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_rearing_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_ch IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_co IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_st IS TRUE AND barriers_anthropogenic_dnstr IS NULL) OR
+              (model_spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL)
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
@@ -476,13 +474,13 @@ ELSE
             WHERE
               model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
               model_spawning_sk IS TRUE AND
-              model_access_ch_co_sk = 'ACCESSIBLE'
+              barriers_anthropogenic_dnstr IS NULL
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
