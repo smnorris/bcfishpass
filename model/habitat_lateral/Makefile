@@ -18,7 +18,7 @@ from ( \
 ) as ext;")
 
 
-all: .make/lateral_disconnected_rail
+all: .make/habitat_rail
 
 
 clean:
@@ -119,27 +119,29 @@ $(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif
 	python habitat_lateral.py $(WSG) -o $@ -d data/temp/$(WSG)
 
 
+# merge everything into a single tif
 data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
 	python merge.py $(LATERAL_OUTPUTS) -o $@ --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
 	
-# cleanup temp files
-#for wsg in $(WSG) ; do \
-#	rm -r data/$$wsg ; \
-#done
 
 # load to postgres
 .make/habitat_lateral: data/habitat_lateral.tif
-	rio shapes habitat_lateral.tif --bidx 1 --precision 6 --collection | \
+	$(PSQL) -c "drop table if exists bcfishpass.habitat_lateral"
+	rio shapes habitat_lateral.tif --bidx 1 --precision 6 --collection --projected | \
   ogr2ogr \
   -f PostgreSQL \
+  -s_srs EPSG:3005 \
+  -t_srs EPSG:3005 \
   PG:$(DATABASE_URL) \
   -overwrite \
   -lco GEOMETRY_NAME=geom \
   -nln bcfishpass.habitat_lateral \
   /vsistdin/
-
 	
-# clean up and label 
-#.make/lateral_disconnected_rail: data/habitat_lateral.tif
-#	$(PSQL) -f sql/lateral_disconnected_rail.sql
-#	touch $@
+	# clean up habitat potentially isolated by rail
+	$(PSQL) -f sql/habitat_lateral_disconnected_rail.sql
+	touch $@
+	# cleanup temp files
+	#for wsg in $(WSG) ; do \
+	#	rm -r data/$$wsg ; \
+	#done
