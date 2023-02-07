@@ -12,6 +12,7 @@ dependencies:
   - libpq
   - gdal>=3.5
   - python=3.9
+  - rasterio
   - pip
   - requests
   - owslib
@@ -22,8 +23,10 @@ dependencies:
   - jq
   - rasterstats
   - scikit-image
+  - awscli
+  - seaborn
   - pip:
-      - bcdata>=0.6.3
+      - bcdata==0.7.4
 variables:
   PGHOST: localhost
   PGUSER: postgres

@@ -5,7 +5,9 @@ CREATE OR REPLACE FUNCTION postgisftw.wcrp_watershed_connectivity_status(watersh
 --habitat_type: SPAWN, REAR or ALL
   RETURNS TABLE(
     watershed_group_cd varchar (4),
-	  connectivity_status NUMERIC
+	  connectivity_status NUMERIC,
+	  all_habitat NUMERIC,
+	  all_habitat_accessible NUMERIC
   )
   LANGUAGE 'plpgsql'
   IMMUTABLE PARALLEL SAFE 
@@ -35,18 +37,18 @@ IF (v_hab = 'REAR')
     -- ---------------
     -- all spawning habitat is simple, just add it up
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE spawning_model_ch IS TRUE
-      OR spawning_model_co IS TRUE
-      OR spawning_model_st IS TRUE
-      OR spawning_model_sk IS TRUE
+      WHERE model_spawning_ch IS TRUE
+      OR model_spawning_co IS TRUE
+      OR model_spawning_st IS TRUE
+      OR model_spawning_sk IS TRUE
     ) / 1000)::numeric, 2) as spawning_km,
 
     -- spawning accessible
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE (spawning_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-      OR (spawning_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-      OR (spawning_model_st IS TRUE AND access_model_st = 'ACCESSIBLE')
-      OR (spawning_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+      WHERE (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
+      OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
     ) / 1000)::numeric, 2) as spawning_accessible_km,
 
   -- REARING length
@@ -57,18 +59,18 @@ IF (v_hab = 'REAR')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-            rearing_model_ch IS TRUE OR
-            rearing_model_st IS TRUE OR
-            rearing_model_sk IS TRUE OR
-            rearing_model_co IS TRUE
+            model_rearing_ch IS TRUE OR
+            model_rearing_st IS TRUE OR
+            model_rearing_sk IS TRUE OR
+            model_rearing_co IS TRUE
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
-            WHERE rearing_model_co IS TRUE AND edge_type = 1050
+            WHERE model_rearing_co IS TRUE AND edge_type = 1050
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
-            WHERE spawning_model_sk IS TRUE
+            WHERE model_spawning_sk IS TRUE
           )
         ) / 1000
       )::numeric, 2
@@ -80,23 +82,23 @@ IF (v_hab = 'REAR')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_st IS TRUE AND access_model_st = 'ACCESSIBLE') OR
-              (rearing_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
+              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_access_ch_co_sk = 'ACCESSIBLE'
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND
+              model_access_ch_co_sk = 'ACCESSIBLE'
           )
         ) / 1000
       )::numeric, 2
@@ -108,26 +110,26 @@ IF (v_hab = 'REAR')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE) OR
-              (rearing_model_co IS TRUE) OR
-              (rearing_model_st IS TRUE) OR
-              (rearing_model_sk IS TRUE) OR
-              (spawning_model_ch IS TRUE)
-              OR (spawning_model_co IS TRUE)
-              OR (spawning_model_st IS TRUE)
-              OR (spawning_model_sk IS TRUE)
+              (model_rearing_ch IS TRUE) OR
+              (model_rearing_co IS TRUE) OR
+              (model_rearing_st IS TRUE) OR
+              (model_rearing_sk IS TRUE) OR
+              (model_spawning_ch IS TRUE)
+              OR (model_spawning_co IS TRUE)
+              OR (model_spawning_st IS TRUE)
+              OR (model_spawning_sk IS TRUE)
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE 
+              model_spawning_sk IS TRUE 
           )
     ) / 1000)::numeric, 2) AS all_habitat_km,
 
@@ -137,28 +139,28 @@ IF (v_hab = 'REAR')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_st IS TRUE AND access_model_st = 'ACCESSIBLE') OR
-              (rearing_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (spawning_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-              OR (spawning_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-              OR (spawning_model_st IS TRUE AND access_model_st = 'ACCESSIBLE')
-              OR (spawning_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
+              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
+              OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_access_ch_co_sk = 'ACCESSIBLE'
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND
+              model_access_ch_co_sk = 'ACCESSIBLE'
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
@@ -179,7 +181,9 @@ IF (v_hab = 'REAR')
 
 SELECT
       a.watershed_group_code,
-      a.rearing_pct_accessible
+      a.rearing_pct_accessible,
+      a.all_habitat_km,
+      a.all_habitat_accessible_km
   FROM access a;
 
 ELSIF (v_hab = 'SPAWN')
@@ -197,18 +201,18 @@ ELSIF (v_hab = 'SPAWN')
   -- ---------------
     -- all spawning habitat is simple, just add it up
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE spawning_model_ch IS TRUE
-      OR spawning_model_co IS TRUE
-      OR spawning_model_st IS TRUE
-      OR spawning_model_sk IS TRUE
+      WHERE model_spawning_ch IS TRUE
+      OR model_spawning_co IS TRUE
+      OR model_spawning_st IS TRUE
+      OR model_spawning_sk IS TRUE
     ) / 1000)::numeric, 2) as spawning_km,
 
     -- spawning accessible
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE (spawning_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-      OR (spawning_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-      OR (spawning_model_st IS TRUE AND access_model_st = 'ACCESSIBLE')
-      OR (spawning_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+      WHERE (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
+      OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
     ) / 1000)::numeric, 2) as spawning_accessible_km,
 
   -- REARING length
@@ -219,18 +223,18 @@ ELSIF (v_hab = 'SPAWN')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-            rearing_model_ch IS TRUE OR
-            rearing_model_st IS TRUE OR
-            rearing_model_sk IS TRUE OR
-            rearing_model_co IS TRUE
+            model_rearing_ch IS TRUE OR
+            model_rearing_st IS TRUE OR
+            model_rearing_sk IS TRUE OR
+            model_rearing_co IS TRUE
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
-            WHERE rearing_model_co IS TRUE AND edge_type = 1050
+            WHERE model_rearing_co IS TRUE AND edge_type = 1050
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
-            WHERE spawning_model_sk IS TRUE
+            WHERE model_spawning_sk IS TRUE
           )
         ) / 1000
       )::numeric, 2
@@ -242,23 +246,23 @@ ELSIF (v_hab = 'SPAWN')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_st IS TRUE AND access_model_st = 'ACCESSIBLE') OR
-              (rearing_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
+              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_access_ch_co_sk = 'ACCESSIBLE'
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND
+              model_access_ch_co_sk = 'ACCESSIBLE'
           )
         ) / 1000
       )::numeric, 2
@@ -270,26 +274,26 @@ ELSIF (v_hab = 'SPAWN')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE) OR
-              (rearing_model_co IS TRUE) OR
-              (rearing_model_st IS TRUE) OR
-              (rearing_model_sk IS TRUE) OR
-              (spawning_model_ch IS TRUE)
-              OR (spawning_model_co IS TRUE)
-              OR (spawning_model_st IS TRUE)
-              OR (spawning_model_sk IS TRUE)
+              (model_rearing_ch IS TRUE) OR
+              (model_rearing_co IS TRUE) OR
+              (model_rearing_st IS TRUE) OR
+              (model_rearing_sk IS TRUE) OR
+              (model_spawning_ch IS TRUE)
+              OR (model_spawning_co IS TRUE)
+              OR (model_spawning_st IS TRUE)
+              OR (model_spawning_sk IS TRUE)
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE 
+              model_spawning_sk IS TRUE 
           )
     ) / 1000)::numeric, 2) AS all_habitat_km,
 
@@ -299,28 +303,28 @@ ELSIF (v_hab = 'SPAWN')
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_st IS TRUE AND access_model_st = 'ACCESSIBLE') OR
-              (rearing_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (spawning_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-              OR (spawning_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-              OR (spawning_model_st IS TRUE AND access_model_st = 'ACCESSIBLE')
-              OR (spawning_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
+              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
+              OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_access_ch_co_sk = 'ACCESSIBLE'
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND
+              model_access_ch_co_sk = 'ACCESSIBLE'
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
@@ -341,7 +345,9 @@ ELSIF (v_hab = 'SPAWN')
 
 SELECT
       a.watershed_group_code,
-      a.spawning_pct_accessible
+      a.spawning_pct_accessible,
+      a.all_habitat_km,
+      a.all_habitat_accessible_km
   FROM access a;
 
 
@@ -359,18 +365,18 @@ ELSE
   -- ---------------
     -- all spawning habitat is simple, just add it up
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE spawning_model_ch IS TRUE
-      OR spawning_model_co IS TRUE
-      OR spawning_model_st IS TRUE
-      OR spawning_model_sk IS TRUE
+      WHERE model_spawning_ch IS TRUE
+      OR model_spawning_co IS TRUE
+      OR model_spawning_st IS TRUE
+      OR model_spawning_sk IS TRUE
     ) / 1000)::numeric, 2) as spawning_km,
 
     -- spawning accessible
     round((SUM(ST_Length(geom)) FILTER (
-      WHERE (spawning_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-      OR (spawning_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-      OR (spawning_model_st IS TRUE AND access_model_st = 'ACCESSIBLE')
-      OR (spawning_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+      WHERE (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+      OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
+      OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
     ) / 1000)::numeric, 2) as spawning_accessible_km,
 
   -- REARING length
@@ -381,18 +387,18 @@ ELSE
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-            rearing_model_ch IS TRUE OR
-            rearing_model_st IS TRUE OR
-            rearing_model_sk IS TRUE OR
-            rearing_model_co IS TRUE
+            model_rearing_ch IS TRUE OR
+            model_rearing_st IS TRUE OR
+            model_rearing_sk IS TRUE OR
+            model_rearing_co IS TRUE
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
-            WHERE rearing_model_co IS TRUE AND edge_type = 1050
+            WHERE model_rearing_co IS TRUE AND edge_type = 1050
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
-            WHERE spawning_model_sk IS TRUE
+            WHERE model_spawning_sk IS TRUE
           )
         ) / 1000
       )::numeric, 2
@@ -404,23 +410,23 @@ ELSE
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_st IS TRUE AND access_model_st = 'ACCESSIBLE') OR
-              (rearing_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
+              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
           ) +
           -- add .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_access_ch_co_sk = 'ACCESSIBLE'
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND
+              model_access_ch_co_sk = 'ACCESSIBLE'
           )
         ) / 1000
       )::numeric, 2
@@ -432,26 +438,26 @@ ELSE
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE) OR
-              (rearing_model_co IS TRUE) OR
-              (rearing_model_st IS TRUE) OR
-              (rearing_model_sk IS TRUE) OR
-              (spawning_model_ch IS TRUE)
-              OR (spawning_model_co IS TRUE)
-              OR (spawning_model_st IS TRUE)
-              OR (spawning_model_sk IS TRUE)
+              (model_rearing_ch IS TRUE) OR
+              (model_rearing_co IS TRUE) OR
+              (model_rearing_st IS TRUE) OR
+              (model_rearing_sk IS TRUE) OR
+              (model_spawning_ch IS TRUE)
+              OR (model_spawning_co IS TRUE)
+              OR (model_spawning_st IS TRUE)
+              OR (model_spawning_sk IS TRUE)
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE 
+              model_spawning_sk IS TRUE 
           )
     ) / 1000)::numeric, 2) AS all_habitat_km,
 
@@ -461,28 +467,28 @@ ELSE
         (
           SUM(ST_Length(geom)) FILTER (
             WHERE
-              (rearing_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (rearing_model_st IS TRUE AND access_model_st = 'ACCESSIBLE') OR
-              (rearing_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE') OR
-              (spawning_model_ch IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-              OR (spawning_model_co IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
-              OR (spawning_model_st IS TRUE AND access_model_st = 'ACCESSIBLE')
-              OR (spawning_model_sk IS TRUE AND access_model_ch_co_sk = 'ACCESSIBLE')
+              (model_rearing_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_rearing_st IS TRUE AND model_access_st = 'ACCESSIBLE') OR
+              (model_rearing_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE') OR
+              (model_spawning_ch IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              OR (model_spawning_co IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
+              OR (model_spawning_st IS TRUE AND model_access_st = 'ACCESSIBLE')
+              OR (model_spawning_sk IS TRUE AND model_access_ch_co_sk = 'ACCESSIBLE')
             )
             +
           -- CREATEadd .5 coho rearing in wetlands
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              rearing_model_co IS TRUE AND
+              model_rearing_co IS TRUE AND
               edge_type = 1050 AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_access_ch_co_sk = 'ACCESSIBLE'
           ) +
           -- add .5 sockeye rearing in lakes (all of it)
           SUM(ST_Length(geom) * .5) FILTER (
             WHERE
-              spawning_model_sk IS TRUE AND
-              access_model_ch_co_sk = 'ACCESSIBLE'
+              model_spawning_sk IS TRUE AND
+              model_access_ch_co_sk = 'ACCESSIBLE'
           )
     ) / 1000)::numeric, 2) AS all_habitat_accessible_km
 
@@ -503,7 +509,9 @@ ELSE
 
 SELECT
       a.watershed_group_code,
-      a.all_habitat_pct_accessible
+      a.all_habitat_pct_accessible,
+      a.all_habitat_km,
+      a.all_habitat_accessible_km
   FROM access a;
 
 END IF;

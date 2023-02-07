@@ -1,6 +1,6 @@
 # QGIS
 
-## FishPassage_30k.qlr
+## bcfishpass_30k.qlr
 
 This is a QGIS layer file defining and symbolizing all layers required for general fish passage mapping ([see samples](https://www.hillcrestgeo.ca/outgoing/fishpassage/projects/)).
 
