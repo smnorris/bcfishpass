@@ -608,7 +608,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50109,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50110,BARRIER,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50111,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
-50112,POTENTIAL,ELKR,CWF,2021-01-01, NJO - Very shallow - low quality habitat - based on assessment comments (and imagery review where required)
+50112,POTENTIAL,ELKR,CWF,2021-01-01," NJO - Very shallow - low quality habitat - based on assessment comments (and imagery review where required)"
 50113,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50114,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50115,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1285,3 +1285,14 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50174,PASSABLE,ELKR,NMW,2021-01-01,Manual review; deactivated
 57596,PASSABLE,HORS,NMW,2021-01-01,"Field assessment, no structure"
 57470,PASSABLE,HORS,NMW,2021-01-01,"Actually a PSCIS location issue, but temporary fix for Horsefly workshop updates"
+197763,PASSABLE,HORS,TMK,2022-11-28,ford
+197761,PASSABLE,HORS,TMK,2022-11-28,ford crossing
+123776,PASSABLE,BULK,TMK,2022-12-20,recent bridge replacement
+"197955 ",PASSABLE,BULK,TMK,2022-12-20,ford
+197914,PASSABLE,BULK,TMK,2022-12-20,ford crossing
+197964,PASSABLE,BULK,TMK,2022-12-20,based on assessment comments (and imagery review where required)
+197913,PASSABLE,BULK,TMK,2022-12-20,ford crossing
+1006800298,PASSABLE,HORS,TMK,2022-02-07,no crossing
+1006800581,PASSABLE,HORS,TMK,2022-02-07,passable in PSCIS
+1006801130,PASSABLE,HORS,TMK,2022-02-07,no crossing
+1006801356,PASSABLE,HORS,TMK,2022-02-07,no crossing

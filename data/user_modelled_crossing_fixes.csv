@@ -3312,7 +3312,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 15803066,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible road
 15802639,OBS,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,to check - possible bridge
 15800559,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible road
-15800513,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible road 
+15800513,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,"no visible road "
 15800452,OBS,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,
 15800811,FORD,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible structure
 15800973,FORD,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible structure
@@ -5516,7 +5516,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1802732,OBS,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,to check - possible bridge
 1800663,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 24743615,NONE,BABL,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
-1805648,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery, no visible road
+1805648,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery," no visible road"
 1806184,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 1805894,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 1805031,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no crossing - mapping error
@@ -5950,3 +5950,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 10305462,NONE,LFRA,SN,2022-04-22,imagery,rail yard - redundant crossing
 24741761,NONE,LFRA,SN,2022-04-22,imagery,rail yard - redundant crossing
 10302487,NONE,LFRA,SN,2022-04-22,imagery,rail yard - redundant crossing
+1802820,NONE,BULK,TMK,2022-12-20,imagery,no visible structure
+1801773,NONE,BULK,TMK,2022-12-20,imagery,no visible structure
+1801133,NONE,BULK,TMK,2022-12-20,PSCIS assessment,no visible crossing
+1802374,NONE,BULK,TMK,2022-12-20,PSCIS assessment,no visible crossing
