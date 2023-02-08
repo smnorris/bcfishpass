@@ -37,11 +37,11 @@ IF (v_feat = 'ALL')
         -- do not include flathead in ELKR
         AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
         AND (c.aggregated_crossings_id IS NOT NULL OR c.dam_id IS NOT NULL)
-        AND (c.model_access_ch_co_sk IS NOT NULL
+        AND (c.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
             OR
-            c.model_access_st IS NOT NULL
+            c.barriers_st_dnstr = array[]::text[]
             OR
-            c.model_access_wct IS NOT NULL
+            c.barriers_wct_dnstr = array[]::text[]
             )
         AND c.all_spawningrearing_km > 0
         GROUP BY c.watershed_group_code, c.crossing_feature_type, c.barrier_status
@@ -87,11 +87,11 @@ ELSE
         -- do not include flathead in ELKR
         AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
         AND (c.aggregated_crossings_id IS NOT NULL OR c.dam_id IS NOT NULL)
-        AND (c.model_access_ch_co_sk IS NOT NULL
+        AND (c.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
             OR
-            c.model_access_st IS NOT NULL
+            c.barriers_st_dnstr = array[]::text[]
             OR
-            c.model_access_wct IS NOT NULL
+            c.barriers_wct_dnstr = array[]::text[]
             )
         AND c.all_spawningrearing_km > 0
         GROUP BY c.watershed_group_code, c.crossing_feature_type, c.barrier_status
