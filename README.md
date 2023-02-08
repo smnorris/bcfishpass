@@ -44,9 +44,9 @@ Streams meeting the criteria for a given species are classified as spawning or r
 - GDAL (>= 3.5)
 - a PostgreSQL / PostGIS database (tested with v14/v3.2)
 - Python >= 3.8
-- [bcdata](https://github.com/smnorris/bcdata)
-- [fwapg](https://github.com/smnorris/fwapg)
-- [bcfishobs](https://github.com/smnorris/bcfishobs)
+- [bcdata](https://github.com/smnorris/bcdata) (v0.7.6)
+- [fwapg](https://github.com/smnorris/fwapg) (v0.3.1)
+- [bcfishobs](https://github.com/smnorris/bcfishobs) (v0.1.0)
 
 
 ## Installation / Setup
