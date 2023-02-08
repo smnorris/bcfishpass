@@ -43,7 +43,7 @@ IF (v_feat = 'ALL')
         ROUND(SUM(c.all_spawningrearing_belowupstrbarriers_km)::numeric, 2) as all_spawningrearing_blocked_km
       FROM bcfishpass.crossings c
       WHERE c.barrier_status IN ('POTENTIAL', 'BARRIER')
-      AND c.aggregated_crossings_id != 1100002536 -- don't count the Elko Dam in ELKR
+      AND c.aggregated_crossings_id != '1100002536' -- don't count the Elko Dam in ELKR
       --AND watershed_group_code = 'HORS'
       GROUP BY
         c.watershed_group_code,
@@ -98,7 +98,7 @@ ELSE
         ROUND(SUM(c.all_spawningrearing_belowupstrbarriers_km)::numeric, 2) as all_spawningrearing_blocked_km
       FROM bcfishpass.crossings c
       WHERE c.barrier_status IN ('POTENTIAL', 'BARRIER')
-      AND c.aggregated_crossings_id != 1100002536 -- don't count the Elko Dam in ELKR
+      AND c.aggregated_crossings_id != '1100002536' -- don't count the Elko Dam in ELKR
       --AND watershed_group_code = 'HORS'
       GROUP BY
         c.watershed_group_code,

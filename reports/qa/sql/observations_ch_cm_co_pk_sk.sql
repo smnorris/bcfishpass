@@ -6,6 +6,8 @@ select * from
   a.agency_name,
   a.source,
   a.source_ref,
+  --array_agg(DISTINCT d.barriers_gradient_15_id) as barriers_gradient_15_dnstr,
+  count(DISTINCT d.barriers_gradient_15_id) as n_barriers_gradient_15_dnstr,
   --array_agg(DISTINCT e.barriers_gradient_20_id) as barriers_gradient_20_dnstr,
   count(DISTINCT e.barriers_gradient_20_id) as n_barriers_gradient_20_dnstr,
   --array_agg(DISTINCT f.barriers_gradient_25_id) as barriers_gradient_25_dnstr,
@@ -15,6 +17,19 @@ select * from
   --array_agg(DISTINCT h.barriers_falls_id) as barriers_falls_dnstr,
   count(DISTINCT h.barriers_falls_id) as n_barriers_falls_dnstr
 FROM bcfishobs.fiss_fish_obsrvtn_events_vw a
+LEFT OUTER JOIN bcfishpass.barriers_gradient_15 d
+ON FWA_Downstream(
+    a.blue_line_key,
+    a.downstream_route_measure,
+    a.wscode_ltree,
+    a.localcode_ltree,
+    d.blue_line_key,
+    d.downstream_route_measure,
+    d.wscode_ltree,
+    d.localcode_ltree,
+    True,
+    1
+)
 LEFT OUTER JOIN bcfishpass.barriers_gradient_20 e
 ON FWA_Downstream(
     a.blue_line_key,
@@ -67,7 +82,7 @@ ON FWA_Downstream(
     True,
     1
 )
-WHERE a.species_code = 'ST'
+WHERE a.species_code in ('CO','CM','CH','PK','SK')
 GROUP BY a.species_code,
   a.fish_observation_point_id,
   a.observation_date,
@@ -76,6 +91,7 @@ GROUP BY a.species_code,
   a.source_ref
 ) as f
 WHERE 
+  n_barriers_gradient_15_dnstr >= 1 or
   n_barriers_gradient_20_dnstr >= 1 or
   n_barriers_gradient_25_dnstr >= 1 or
   n_barriers_gradient_30_dnstr >= 1 or
