@@ -62,7 +62,8 @@ A `environment.yml` is provided to set up the processing environment. Edit the e
     conda env create -f environment.yml
     conda activate bcfishpass
 
-Note that `cdo` is not currently available on `conda-forge` for ARM based Macs. If you're using an ARM based MacOS machine, comment out `cdo` in `environment.yml` and install `cdo` separately (either [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install) or via [homebrew](https://formulae.brew.sh/formula/cdo)).
+Note that `cdo` is required for processing NetCDF discharge files, but this tool is not included in the conda environment.
+Install `cdo` separately (either [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install) or via [homebrew](https://formulae.brew.sh/formula/cdo)).
 
 If the database you are working with does not already exist, create it and create the required schema:
 
