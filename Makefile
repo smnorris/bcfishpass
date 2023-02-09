@@ -8,7 +8,7 @@ QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
 
 
-all: $(QA_OUTPUTS)
+all: habitat_lateral/data/habitat_lateral.tif
 
 clean:
 	rm -Rf .make
@@ -27,6 +27,7 @@ clean:
 		set -e ; ./scripts/load_csv.sh $$csv ; \
 	done
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
+	$(PSQL) -f scripts/utmzone.sql
 	touch $@
 
 # ------
@@ -102,11 +103,19 @@ model/modelled_stream_crossings/.make/download:
 # -----
 # streams must be broken at user habitat classifcation lines, so 
 # we need to add the data before running the access model
-model/access/.make/model_access: .make/dams \
+model/access/.make/model_access: .make/falls \
+	.make/dams \
 	.make/pscis \
 	.make/data \
 	model/gradient_barriers/.make/gradient_barriers
 	cd model/access; make
+
+# -----
+# ACCESS MODEL QA REPORTS
+# -----
+reports/access/%.csv: reports/access/sql/%.sql \
+	model/access/.make/model_access 
+	psql2csv $(DATABASE_URL) < $< > $@	
 
 # -----
 # MEAN ANNUAL PRECIPITATION
@@ -198,12 +207,4 @@ model/discharge/.make/discharge:
 model/habitat_lateral/data/habitat_lateral.tif: .make/habitat_linear \
 	.make/crossing_stats
 	cd model/habitat_lateral; make data/habitat_lateral.tif
-
-# -----
-# ACCESS MODEL QA REPORTS
-# -----
-reports/qa/%.csv: reports/qa/sql/%.sql \
-	model/access/.make/model_access \
-	.make/habitat_linear
-	psql2csv $(DATABASE_URL) < $< > $@	
 

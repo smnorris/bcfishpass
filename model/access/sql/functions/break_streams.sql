@@ -64,9 +64,9 @@ BEGIN
       s.upstream_area_ha             ,
       s.stream_order_parent          ,
       s.stream_order_max             ,
-      s.map_upstream                 ,
-      s.channel_width                ,
-      s.mad_m3s                      ,
+      --s.map_upstream                 ,
+      --s.channel_width                ,
+      --s.mad_m3s                      ,
       (ST_Dump(ST_LocateBetween
         (s.geom, n.downstream_route_measure, n.upstream_route_measure
         ))).geom AS geom
@@ -130,9 +130,9 @@ BEGIN
       upstream_area_ha             ,
       stream_order_parent          ,
       stream_order_max             ,
-      map_upstream                 ,
-      channel_width                ,
-      mad_m3s                      ,
+      --map_upstream                 ,
+      --channel_width                ,
+      --mad_m3s                      ,
       geom
     )
     SELECT
@@ -151,9 +151,9 @@ BEGIN
       t.upstream_area_ha             ,
       t.stream_order_parent          ,
       t.stream_order_max             ,
-      t.map_upstream                 ,
-      t.channel_width                ,
-      t.mad_m3s                      ,
+      --t.map_upstream                 ,
+      --t.channel_width                ,
+      --t.mad_m3s                      ,
       t.geom
     FROM temp_streams t
     INNER JOIN whse_basemapping.fwa_stream_networks_sp s

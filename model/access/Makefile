@@ -129,6 +129,7 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 
 	# load data from _dnstr _upstr lookups back into the main tables, drop the lookups
 	$(PSQL) -f sql/index_crossings.sql
+	touch $@
 
 # -----
 # LOAD PER-SPECIES BARRIER TABLES (the points at which streams will be segmented)
@@ -138,7 +139,7 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	$(SOURCE_BARRIERS) \
 	.make/observations
-	$(eval BARRIERTYPE=$(subst .make/access_model_,,$@))
+	$(eval BARRIERTYPE=$(subst .make/model_access_,,$@))
 	# create table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)
 	# clear the table
@@ -169,9 +170,9 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	$(PSQL) -c "drop table bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
 	
 	# add upstream length summary to the table for QA of high impact barriers
-	$(PSQL) -f sql/add_length_upstream.sql \
-		-v src_table=barriers_$(BARRIERTYPE) \
-		-v src_id=barriers_$(BARRIERTYPE)_id
+	#$(PSQL) -f sql/add_length_upstream.sql \
+	#	-v src_table=barriers_$(BARRIERTYPE) \
+	#	-v src_id=barriers_$(BARRIERTYPE)_id
 	touch $@
 
 

@@ -43,9 +43,9 @@ CREATE TABLE bcfishpass.streams
   stream_order_max integer,
   
   -- precipitation, channel width, discharge models
-  map_upstream integer,
-  channel_width double precision,
-  mad_m3s double precision,  
+  --map_upstream integer,
+  --channel_width double precision,
+  --mad_m3s double precision,  
   
   geom geometry(LineStringZM,3005)
 );
