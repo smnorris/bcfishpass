@@ -6,14 +6,14 @@ WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_wate
 
 mkdir -p data
 
-# direct download links do not seem to be available at this time
-# go to https://climatebc.ca/SpatialData and download MAP for 1991-2020 to data folder
-
+# ----------
+# Download cached ClimateBC Normals 1991-2020 MAP raster from S3
+# ----------
+wget --trust-server-names -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/MAP.tif
 
 # ----------
 # Derive MAP per fundamental watershed poly
 # ----------
-
 $PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_ply"
 $PSQL -c "CREATE TABLE bcfishpass.mean_annual_precip_load_ply (watershed_feature_id integer PRIMARY KEY, watershed_group_code text, map numeric)"
 

@@ -3,6 +3,13 @@ Changes
 
 All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
+v0.1.dev1 (2023-)
+------------------
+- dev pre-release
+- precip/channel width/discharge models confirmed to build on fresh database
+- linear habitat model confirmed to build on fresh database
+- lateral habitat model confirmed to build on fresh database
+
 v0.1.dev0 (2023-02-09)
 ------------------
 - dev pre-release

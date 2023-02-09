@@ -4,9 +4,8 @@ ClimateBC mean annual precipitation (MAP) referenced to FWA watersheds and strea
 
 ## Method
 
-1. Manually download ClimateBC .tif file from [Climate BC](https://climatebc.ca/SpatialData), choose `Historical normals`, `Annual`, `Normal_1991-2020` and download `MAP` to `data` folder
-2. Overlay ClimateBC raster with fundamental watersheds, deriving MAP for each fundamental watershed
-3. Calculate average (area-weighted) upstream MAP for each distinct watershed code / local code combination 
+1. Overlay ClimateBC MAP raster with fundamental watersheds, deriving MAP for each fundamental watershed
+2. Calculate average (area-weighted) upstream MAP for each distinct watershed code / local code combination 
 
 The output table can be joined to streams or points on the FWA watershed network.
 
@@ -41,3 +40,11 @@ Indexes:
 ## References
 
 - Wang, T., Hamann, A., Spittlehouse, D.L., Murdock, T., 2012. *ClimateWNA - High-Resolution Spatial Climate Data for Western North America*. Journal of Applied Meteorology and Climatology, 51: 16-29.*
+
+
+## Source data lineage
+
+Climate BC web and api do not seem to provide urls to climate rasters. I have manually downloaded the  `Normal_1991_2020` `MAP.tif` from https://climatebc.ca/SpatialData and posted to S3 in support of automated `bcfishpass` builds:
+
+    aws s3 cp MAP.tif s3://bcfishpass/
+    aws s3api put-object-acl --bucket bcfishpass --key MAP.tif --acl public-read

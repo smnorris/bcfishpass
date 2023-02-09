@@ -173,7 +173,6 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	$(PSQL) -f sql/index_crossings.sql
 	touch $@
 
-
 # run the access model 
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
 .make/model_access: $(ACCESS_MODELS) .make/index_crossings
@@ -183,8 +182,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 # for quick id and QA of high impact natural barriers,
 # add total upstream length column to each model_access_<spp> table
 $(ADD_LENGTH_UPSTREAM): .make/add_length_upstream_%: sql/model_access_%.sql .make/model_access sql/add_length_upstream.sql
-	$(eval BARRIERTYPE=$(subst .make/add_length_upstream_,,$@))
+	$(eval SPP=$(subst .make/add_length_upstream_,,$@))
 	$(PSQL) -f sql/add_length_upstream.sql \
-		-v src_table=barriers_$(BARRIERTYPE) \
-		-v src_id=barriers_$(BARRIERTYPE)_id
+		-v src_table=barriers_$(SPP) \
+		-v src_id=barriers_$(SPP)_id
 	touch $@

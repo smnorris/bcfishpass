@@ -1,15 +1,15 @@
 # Channel width
 
-Modelled channel width can be used as an input to model spawning/rearing habitat (combined with stream gradient - and potentially with valley confinement).
+Modelled channel width can be used as an input to model spawning/rearing habitat.
 
-Most channel width predictors are available in the FWA, but we also need Mean Annual Precip, run scripts in ../precipitation first.
+Most channel width predictors used by this script are available in the FWA, but it also requires Mean Annual Precipitation (MAP) from ClimateBC be downloaded and integraged with the FWA - run scripts in ../precipitation first.
 
 
 ## Channel width
 
 Channel width is derived via three methods:
 
-- mapped: we can derive the width of FWA river polygons (measuring the width between banks at 10% intervals and averaging the result)
+- mapped: we can derive the width of FWA river polygons (measuring the width between banks at intervals and averaging the result)
 - measured: field measurements of channel width are available from FISS and PSCIS (averaging measurements where more than one is available for the same stream)
 - modelled: calculate the modelled channel width based on upstream area and mean annual precipitation
 
