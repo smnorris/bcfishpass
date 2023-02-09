@@ -2,9 +2,9 @@
 set -euxo pipefail
 
 # refresh the views
-psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/freshwater_fish_habitat_accessibility_model.sql
+#psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/freshwater_fish_habitat_accessibility_model.sql
 
-rm -r freshwater_fish_habitat_accessibility_MODEL.gpkg*
+rm -rf freshwater_fish_habitat_accessibility_MODEL.gpkg*
 
 echo 'dumping crossings'
 ogr2ogr \
@@ -19,6 +19,8 @@ ogr2ogr \
 echo 'dumping barriers_salmon'
 ogr2ogr \
     -f GPKG \
+    -append \
+    -update \
     freshwater_fish_habitat_accessibility_MODEL.gpkg \
     PG:$DATABASE_URL \
     -nln barriers_salmon \
@@ -42,6 +44,8 @@ ogr2ogr \
 echo 'dumping barriers_steelhead'
 ogr2ogr \
     -f GPKG \
+    -append \
+    -update \
     freshwater_fish_habitat_accessibility_MODEL.gpkg \
     PG:$DATABASE_URL \
     -nln barriers_steelhead \

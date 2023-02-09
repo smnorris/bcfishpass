@@ -7,6 +7,25 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 
 all: .roads .load_archive .modelled_stream_crossings
 
+
+
+# download modelled crossings from provincial fish access model distribution file
+.make/load_distribution:
+	mkdir -p .make
+	wget --trust-server-names -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
+	unzip -qun freshwater_fish_habitat_accessibility_MODEL.gpkg.zip -d data
+	ogr2ogr \
+		-f PostgreSQL \
+		"PG:$(DATABASE_URL)" \
+		-overwrite \
+		-progress \
+		-nln bcfishpass.modelled_stream_crossings_distrib \
+		data/freshwater_fish_habitat_accessibility_MODEL.gpkg \
+		crossings \
+		-where modelled_crossing_id is not null
+	rm data/freshwater_fish_habitat_accessibility_MODEL.gpkg
+	touch $@
+
 # Directly download the DRA archive, it is too big to reliably request via WFS
 # *** NOTE ***
 # Structure of data in this archive DOES NOT MATCH structure in the BCGW !
@@ -64,20 +83,6 @@ all: .roads .load_archive .modelled_stream_crossings
 	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
 	touch $@
 
-# download modelled crossings archive (to extract exising IDs, they need to remain consistent)
-.make/load_archive:
-	mkdir -p .make
-	wget --trust-server-names -qNP data https://www.hillcrestgeo.ca/outgoing/fishpassage/data/bcfishpass/inputs/modelled_stream_crossings_archive.gpkg.zip
-	unzip -qun data/modelled_stream_crossings_archive.gpkg.zip -d data
-	ogr2ogr \
-		-f PostgreSQL \
-		"PG:$(DATABASE_URL)" \
-		-overwrite \
-		-progress \
-		-nln bcfishpass.modelled_stream_crossings_archive \
-		data/modelled_stream_crossings_archive.gpkg \
-		modelled_stream_crossings_archive
-	touch $@
 
 # run the overlays/analysis
 .make/modelled_stream_crossings: .roads .load_archive
@@ -113,14 +118,3 @@ all: .roads .load_archive .modelled_stream_crossings
 	echo "modelled stream crossings created, run 'make modelled_stream_crossings_archive.gpkg.zip' to create a new archive"
 	touch $@
 
-# dump new data to a fresh archive
-modelled_stream_crossings_archive.gpkg.zip: .modelled_stream_crossings
-	ogr2ogr \
-		-f GPKG \
-		modelled_stream_crossings_archive.gpkg \
-		"PG:($DATABASE_URL)" \
-		-nln modelled_stream_crossings_archive \
-		-sql "SELECT modelled_crossing_id, geom FROM bcfishpass.modelled_stream_crossings"
-	zip -r $@ modelled_stream_crossings_archive.gpkg
-	rm modelled_stream_crossings_archive.gpkg
-	echo "publish modelled_stream_crossings_archive.gpkg.zip to https://www.hillcrestgeo.ca/outgoing/fishpassage/data/bcfishpass/inputs/"
