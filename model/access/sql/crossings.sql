@@ -292,7 +292,7 @@ on m.railway_track_id = rail.railway_track_id
 left outer join whse_basemapping.transport_line dra
 on m.transport_line_id = dra.transport_line_id
 left outer join whse_forest_tenure.ften_road_section_lines_svw ften
-on m.ften_road_section_lines_id = ften.id  -- note the id supplied by WFS is the link, may be unstable?
+on m.ften_road_section_lines_id = ften.objectid  -- note the id supplied by WFS is the link, may be unstable?
 left outer join whse_mineral_tenure.og_road_segment_permit_sp ogc1
 on m.og_road_segment_permit_id = ogc1.og_road_segment_permit_id
 left outer join whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp ogc2

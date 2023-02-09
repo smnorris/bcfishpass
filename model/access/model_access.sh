@@ -6,8 +6,8 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
 # look for species models/scenarios to be processed in the sql folder,
-# all files with model_barriers prefix
-MODELS=$(ls sql/model_barriers*.sql | sed -e "s/sql\/model_barriers_//" | sed -e "s/.sql//")
+# all files with model_access prefix
+MODELS=$(ls sql/model_access*.sql | sed -e "s/sql\/model_access_//" | sed -e "s/.sql//")
 
 # -----
 # LOAD STREAMS

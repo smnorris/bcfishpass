@@ -11,8 +11,8 @@ WSG = $(shell $(PSQL) -AtX -c "select watershed_group_code FROM bcfishpass.param
 # define the make targets that flag when the table has been built
 SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 
-# combine barriers into tables of per-species scenarios, these will be points at which we break the streams
-MODEL_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_barriers_*.sql))
+# access models - combine barriers into tables of per-species scenarios, these are points at which we break the streams
+ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
 
 all: .make/model_access
@@ -135,10 +135,10 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 # -----
 # Combine definite barriers into a single table per each species/species group being modelled
 # Note that observations are a requirement 
-$(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
+$(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	$(SOURCE_BARRIERS) \
 	.make/observations
-	$(eval BARRIERTYPE=$(subst .make/model_barriers_,,$@))
+	$(eval BARRIERTYPE=$(subst .make/access_model_,,$@))
 	# create table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)
 	# clear the table
@@ -177,6 +177,6 @@ $(MODEL_BARRIERS): .make/model_barriers_%: sql/model_barriers_%.sql \
 
 # run the access model 
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
-.make/model_access: $(MODEL_BARRIERS) .make/index_crossings
+.make/model_access: $(ACCESS_MODELS) .make/index_crossings
 	./model_access.sh
 	touch $@
