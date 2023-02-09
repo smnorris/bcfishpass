@@ -12,7 +12,7 @@ roads AS
 (
    -- FTEN
   SELECT
-    id AS ften_road_section_lines_id,  -- this id is supplied by the WFS, may want to choose something that be linked back to BCGW?
+    objectid AS ften_road_section_lines_id,  -- this id is supplied by the WFS, may want to choose something that be linked back to BCGW?
     geom
   FROM whse_forest_tenure.ften_road_section_lines_svw r
   WHERE life_cycle_status_code not in ('RETIRED', 'PENDING')  -- active tenures only

@@ -35,14 +35,16 @@ clean:
 # -----
 # combine modelled crossings, pscis, dams into bcfishpass.crossings
 .make/crossings: sql/crossings.sql
-	$(PSQL) -f $^ ; touch $@
+	$(PSQL) -f $^
+	touch $@
 
 # -----
 # OBSERVATIONS
 # -----
 # load observations of all spp of interest from bcfishobs to bcfishpass.observations
 .make/observations: sql/observations.sql
-	$(PSQL) -f $^ ; touch $@
+	$(PSQL) -f $^ 
+	touch $@
 
 # -----
 # LOAD BARRIER TYPE TABLES

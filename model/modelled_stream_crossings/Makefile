@@ -71,6 +71,8 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id
 	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
 	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
+	rm -rf data/dgtl_road_atlas.gdb
+	rm -rf data/modelled_stream_crossings.gpkg
 	touch $@
 
 
@@ -123,6 +125,6 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	zip -r modelled_stream_crossings.gpkg.zip modelled_stream_crossings.gpkg
 	rm modelled_stream_crossings.gpkg
 	aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/
-	aws s3api put-object-acl --bucket bcfishpass --key modelled_stream_crossings.gpkg.zip --acl public-read	
+	aws s3api put-object-acl --bucket bcfishpass --key modelled_stream_crossings.gpkg.zip --acl public-read
 	rm -f modelled_stream_crossings.gpkg*
 	touch $@

@@ -64,13 +64,13 @@ model/gradient_barriers/.make/gradient_barriers:
 # ------
 # Load modelled crossings from archive posted to s3
 # (this ensures consistent modelled crossing ids for all model users)
-model/modelled_stream_crossings/.make/load_from_archive: 
+model/modelled_stream_crossings/.make/download: 
 	cd model/modelled_stream_crossings; make .make/download
 
 # ------
 # PSCIS STREAM CROSSINGS
 # ------
-.make/pscis: model/modelled_stream_crossings/.make/load_from_archive  \
+.make/pscis: model/modelled_stream_crossings/.make/download  \
 	data/pscis_modelledcrossings_streams_xref.csv
 	./scripts/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd model/pscis; ./pscis.sh
