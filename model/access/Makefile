@@ -14,8 +14,10 @@ SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 # access models - combine barriers into tables of per-species scenarios, these are points at which we break the streams
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
+# final targets
+ADD_LENGTH_UPSTREAM = $(patsubst sql/model_access_%.sql, .make/add_length_upstream_%, $(wildcard sql/model_access_*.sql))
 
-all: .make/model_access
+all: $(ADD_LENGTH_UPSTREAM)
 
 clean: 
 	rm -Rf .make
@@ -51,7 +53,7 @@ clean:
 # -----
 # Create standardized barrier tables, one per type of barrier. 
 # Process every file that matches the pattern sql/barriers_%.sql
-$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/crossings .make/observations
+$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/crossings
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
@@ -62,10 +64,50 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 	parallel $(PSQL) -f sql/barriers_$(BARRIERTYPE).sql -v wsg={1} ::: $(WSG)
 	touch $@
 
+# -----
+# LOAD PER-SPECIES BARRIER TABLES 
+# -----
+# Combine all potential definite/natural barriers into a single table per each species/species 
+# group being modelled, then retain only the records with no other records downstream (ie, only
+# the lowest in the system)
+# Note that observations are a requirement because they can be used to cancel natural barriers
+$(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
+	$(SOURCE_BARRIERS) \
+	.make/observations
+	$(eval BARRIERTYPE=$(subst .make/model_access_,,$@))
+	# create table if it does not exist
+	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)
+	# clear the table
+	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"	
+	# load all features for given spp scenario to barrier table, for all groups listed in parameters
+	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG)
+	# index barriers downstream
+	$(PSQL) -c "drop table if exists bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
+	$(PSQL) -c "create table bcfishpass.barriers_$(BARRIERTYPE)_dnstr (barriers_$(BARRIERTYPE)_id text primary key, features_dnstr text[])"
+	parallel --no-run-if-empty \
+		"echo \"select bcfishpass.load_dnstr( \
+		    'bcfishpass.barriers_$(BARRIERTYPE)',  \
+		    'barriers_$(BARRIERTYPE)_id', \
+		    'bcfishpass.barriers_$(BARRIERTYPE)',  \
+		    'barriers_$(BARRIERTYPE)_id', \
+		    'bcfishpass.barriers_$(BARRIERTYPE)_dnstr', \
+		    'features_dnstr', \
+		    'false', \
+		    :'wsg');\" | \
+		$(PSQL) -v wsg={1}" ::: $(WSG)
+	# remove non-minimal barriers
+	echo "delete from bcfishpass.:table1 a \
+		  using bcfishpass.:table2 b \
+		  where a.:id = b.:id;" | \
+		$(PSQL) -v id=barriers_$(BARRIERTYPE)_id -v table1=barriers_$(BARRIERTYPE) -v table2=barriers_$(BARRIERTYPE)_dnstr
+	# drop the temp _dnstr table
+	$(PSQL) -c "drop table bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
+	touch $@
 
 # ------------
 # INDEX CROSSINGS
 # ------------
+# for crossings table, barriers_anthropogenic, note what barriers are upstream/downstream of each other
 .make/index_crossings: .make/barriers_anthropogenic
 	# note all crossings downstream of a crossing
 	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_crossings"
@@ -131,53 +173,18 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/c
 	$(PSQL) -f sql/index_crossings.sql
 	touch $@
 
-# -----
-# LOAD PER-SPECIES BARRIER TABLES (the points at which streams will be segmented)
-# -----
-# Combine definite barriers into a single table per each species/species group being modelled
-# Note that observations are a requirement 
-$(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
-	$(SOURCE_BARRIERS) \
-	.make/observations
-	$(eval BARRIERTYPE=$(subst .make/model_access_,,$@))
-	# create table if it does not exist
-	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)
-	# clear the table
-	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"	
-	# load all features for given spp scenario to barrier table, for all groups listed in parameters
-	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG)
-	# index barriers downstream
-	$(PSQL) -c "drop table if exists bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
-	$(PSQL) -c "create table bcfishpass.barriers_$(BARRIERTYPE)_dnstr (barriers_$(BARRIERTYPE)_id text primary key, features_dnstr text[])"
-	parallel --no-run-if-empty \
-		"echo \"select bcfishpass.load_dnstr( \
-		    'bcfishpass.barriers_$(BARRIERTYPE)',  \
-		    'barriers_$(BARRIERTYPE)_id', \
-		    'bcfishpass.barriers_$(BARRIERTYPE)',  \
-		    'barriers_$(BARRIERTYPE)_id', \
-		    'bcfishpass.barriers_$(BARRIERTYPE)_dnstr', \
-		    'features_dnstr', \
-		    'false', \
-		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
-	
-	# remove non-minimal barriers
-	echo "delete from bcfishpass.:table1 a \
-		  using bcfishpass.:table2 b \
-		  where a.:id = b.:id;" | \
-		$(PSQL) -v id=barriers_$(BARRIERTYPE)_id -v table1=barriers_$(BARRIERTYPE) -v table2=barriers_$(BARRIERTYPE)_dnstr
-	# drop the temp _dnstr table
-	$(PSQL) -c "drop table bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
-	
-	# add upstream length summary to the table for QA of high impact barriers
-	#$(PSQL) -f sql/add_length_upstream.sql \
-	#	-v src_table=barriers_$(BARRIERTYPE) \
-	#	-v src_id=barriers_$(BARRIERTYPE)_id
-	touch $@
-
 
 # run the access model 
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
 .make/model_access: $(ACCESS_MODELS) .make/index_crossings
 	./model_access.sh
+	touch $@
+
+# for quick id and QA of high impact natural barriers,
+# add total upstream length column to each model_access_<spp> table
+$(ADD_LENGTH_UPSTREAM): .make/add_length_upstream_%: sql/model_access_%.sql .make/model_access sql/add_length_upstream.sql
+	$(eval BARRIERTYPE=$(subst .make/add_length_upstream_,,$@))
+	$(PSQL) -f sql/add_length_upstream.sql \
+		-v src_table=barriers_$(BARRIERTYPE) \
+		-v src_id=barriers_$(BARRIERTYPE)_id
 	touch $@

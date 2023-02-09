@@ -3,3 +3,8 @@ Changes
 
 All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
+v0.1.dev0 (2023-02-09)
+------------------
+- dev pre-release
+- access model build is successful on clean database
+- habitat models builds are untested on clean database, likely non-functional
