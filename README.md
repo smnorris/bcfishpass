@@ -80,7 +80,8 @@ To run the entire model:
 
 `make all`
 
-To build individual components of the model separately, refer to the various README files in the folders within the `model` folder.
+It is possible to build individual components of the model separately (if their dependencies are met, see the `Makefile`).
+Refer to the various README files in the folders within the `model` folder for more info.
 
 ## Credits
 
