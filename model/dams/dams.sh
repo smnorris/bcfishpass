@@ -26,11 +26,11 @@ $PSQL_CMD -c "alter table cabd.dams alter column cabd_id type uuid using cabd_id
 # create bcfishpass.dams - matching the dams to streams
 $PSQL_CMD -f sql/dams.sql
 
-# report on unmatched features
+# report on dams that do not get matched to FWA streams
 psql2csv $DATABASE_URL "select
   a.cabd_id,
   a.dam_name_en
 from cabd.dams a
 left join bcfishpass.dams b
 on a.cabd_id = b.dam_id
-where b.dam_id is null;" > unmatched_dams.csv
+where b.dam_id is null;" > dams_not_matched_to_streams.csv
