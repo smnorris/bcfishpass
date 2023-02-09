@@ -24,7 +24,7 @@ ogr2ogr \
     freshwater_fish_habitat_accessibility_MODEL.gpkg \
     PG:$DATABASE_URL \
     -nln barriers_salmon \
-    -nlt Point \
+    -nlt PointZM \
     -sql "select 
 			 barriers_ch_cm_co_pk_sk_id,
 			 barrier_type,
@@ -49,7 +49,7 @@ ogr2ogr \
     freshwater_fish_habitat_accessibility_MODEL.gpkg \
     PG:$DATABASE_URL \
     -nln barriers_steelhead \
-    -nlt Point \
+    -nlt PointZM \
     -sql "select 
 			 barriers_st_id,
 			 barrier_type,

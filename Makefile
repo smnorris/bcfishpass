@@ -7,22 +7,11 @@ WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param
 QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
 
-WCRP_SCRIPTS = $(wildcard wcrp/reports/sql/*.sql)
-WCRP_OUTPUTS = $(patsubst wcrp/reports/sql/%.sql,wcrp/reports/reports/%.csv,$(WCRP_SCRIPTS))
 
+all: $(QA_OUTPUTS)
 
-# Make all targets - just point to final target to make everything
-all: .carto
-
-qa: $(QA_OUTPUTS)
-
-wcrp: $(WCRP_OUTPUTS)
-
-# Remove model make targets
 clean:
 	rm -Rf .make
-	cd model/access; make clean
-	cd model/habitat_lateral; make clean
 
 # ------
 # SETUP
@@ -73,15 +62,15 @@ model/gradient_barriers/.make/gradient_barriers:
 # ------
 # MODELLED ROAD-STREAM CROSSINGS
 # ------
-# Create intersection points of road/railroads and streams, the post-process to ensure
-# unique crossings
-model/modelled_stream_crossings/.modelled_stream_crossings: 
-	cd model/modelled_stream_crossings; make
+# Load modelled crossings from archive posted to s3
+# (this ensures consistent modelled crossing ids for all model users)
+model/modelled_stream_crossings/.make/load_from_archive: 
+	cd model/modelled_stream_crossings; make .make/download
 
 # ------
 # PSCIS STREAM CROSSINGS
 # ------
-.make/pscis: model/modelled_stream_crossings/.make/modelled_stream_crossings \
+.make/pscis: model/modelled_stream_crossings/.make/load_from_archive  \
 	data/pscis_modelledcrossings_streams_xref.csv
 	./scripts/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd model/pscis; ./pscis.sh
@@ -108,9 +97,17 @@ model/modelled_stream_crossings/.modelled_stream_crossings:
 	$(PSQL) -f model/habitat_linear/sql/user_habitat_classification_endpoints.sql
 	touch $@
 
-# precip/channel width/discharge are not strictly required for access model but they
-# are loaded to the initial streams table, it is easier to process them here first 
-# before running access model
+# -----
+# ACCESS MODEL
+# -----
+# streams must be broken at user habitat classifcation lines, so 
+# we need to add the data before running the access model
+model/access/.make/model_access: .make/dams \
+	.make/pscis \
+	.make/data \
+	model/gradient_barriers/.make/gradient_barriers
+	cd model/access; make
+
 # -----
 # MEAN ANNUAL PRECIPITATION
 # -----
@@ -131,22 +128,11 @@ model/discharge/.make/discharge:
 	cd model/discharge; make
 
 # -----
-# ACCESS MODEL
-# -----
-# streams must be broken at user habitat classifcation lines, so 
-# we need to add the data before running the access model
-model/access/.make/model_access: model/modelled_stream_crossings/.make/modelled_stream_crossings \
-	.make/dams \
-	.make/pscis \
-	.make/data \
-	model/channel_width/.make/channel_width \
-	model/discharge/.make/discharge 
-	cd model/access; make
-
-# -----
 # LINEAR HABITAT MODEL
 # -----
-.make/habitat_linear: model/access/.make/model_access 
+.make/habitat_linear: model/access/.make/model_access \
+	model/channel_width/.make/channel_width \
+	model/discharge/.make/discharge 
 	cd model/habitat_linear; ./habitat_linear.sh
 	touch $@
 
@@ -221,14 +207,3 @@ reports/qa/%.csv: reports/qa/sql/%.sql \
 	.make/habitat_linear
 	psql2csv $(DATABASE_URL) < $< > $@	
 
-# -----
-# wcrp reports - dump results of each query in reports/wcrp/sql/ to csv
-# -----
-wcrp/reports/reports/%.csv: wcrp/reports/sql/%.sql .point_reports
-	mkdir -p reports/wcrp/reports
-	psql2csv $(DATABASE_URL) < $< > $@
-	
-# generalized streams for mapping
-.carto: .point_reports
-	$(PSQL) -f model/model/sql/carto.sql
-	touch $@

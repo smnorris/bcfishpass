@@ -34,8 +34,8 @@ gradeclass AS
     blue_line_key,
     downstream_route_measure,
     downstream_route_measure + 100 as upstream_route_measure,
-    -- create breaks at 5pct intervals from 5-30pct
-    -- (fish access model does not have to use all of these,
+    -- create breaks at various intervals from 5-30pct
+    -- (fish access models do not have to use all of these,
     -- but we might as well create them all to have on hand)
     CASE
       WHEN gradient >= .05 AND gradient < .07 THEN 5
