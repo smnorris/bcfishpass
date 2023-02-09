@@ -80,9 +80,7 @@ To run the entire model:
 
 `make all`
 
-Individual portions of the model can be run by entering the `scripts` directory and following instructions for individual components, or by calling them in the master Makefile individually. For example, to build/rebuild just the `bcfishpass.crossings` table (and all it depends on):
-
-`make .crossings`
+To build individual components of the model separately, refer to the various README files in the folders within the `model` folder.
 
 ## Credits
 
