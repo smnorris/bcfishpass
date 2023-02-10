@@ -53,5 +53,3 @@ Pacific Climate Impacts Consortium, University of Victoria, (January 2020). VIC-
 
 For any custom/alternate discharge dataset, load discharge to table `bcfishpass.discharge` as defined above.
 
-For CWF WCRP watersheds, custom high resolution mean annual discharge data was provided under license by [Foundry Spatial](https://foundryspatial.com/). Load scripts are available [here](https://github.com/smnorris/cwf_wcrp_discharge).
-
