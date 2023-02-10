@@ -7,7 +7,7 @@ WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param
 VALLEY_OUTPUTS = $(patsubst %, data/temp/%/valleys.tif, $(WSG)) 
 LATERAL_OUTPUTS = $(patsubst %, data/temp/%/habitat_lateral.tif, $(WSG)) 
 
-
+# find bounds of BC
 BOUNDS = $(shell $(PSQL) -AtX -F " " -c "select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom) \
 from ( \
   select \
@@ -17,25 +17,20 @@ from ( \
   on wsg.watershed_group_code = p.watershed_group_code \
 ) as ext;")
 
-
-all: .make/habitat_rail
-
+all: .make/habitat_lateral
 
 clean:
 	$(PSQL) -c "DROP TABLE IF EXISTS whse_basemapping.cwb_floodplains_bc_area_svw"
-	$(PSQL) -c "DROP TABLE IF EXISTS bcfishpass.lateral"
+	$(PSQL) -c "DROP TABLE IF EXISTS bcfishpass.habitat_lateral"
+	$(PSQL) -c "DROP TABLE IF EXISTS bcfishpass.habitat_lateral_disconnected_rail"
 	rm -rf data
 	rm -rf .make
 
-
-.make/sources: 
+# published floodplain definitions
+.make/cwb_floodplains_bc_area_svw: 
 	mkdir -p .make
-	mkdir -p data/valleys
-	mkdir -p data/habitat_lateral
-	# published floodplain definitions
 	bcdata bc2pg WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
 	touch $@
-
 
 # ESA world landcover - download from S3 bucket
 data/esa_bc.tif:	
@@ -106,25 +101,22 @@ data/esa_bc.tif:
 		$(TMP)/esa_merged.vrt \
 		$@
 
-
-# run lateral analysis for each watershed group and merge result
+# run VCA for each watershed group
 $(VALLEY_OUTPUTS): valley_confinement.py ../../.make/habitat_linear
 	$(eval WSG=$(patsubst data/temp/%/valleys.tif,%,$@))
 	mkdir -p data/temp/$(WSG)
 	python valley_confinement.py $(WSG) -o $@ -d data/temp/$(WSG)
 
-
-$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif
+# run lateral analysis for each watershed group
+$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
 	$(eval WSG=$(patsubst data/temp/%/habitat_lateral.tif,%,$@))
 	python habitat_lateral.py $(WSG) -o $@ -d data/temp/$(WSG)
 
-
-# merge everything into a single tif
+# merge output habitat_lateral.tif for each watershed group into a single tif
 data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
 	python merge.py $(LATERAL_OUTPUTS) -o $@ --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
 	
-
-# load to postgres
+# load merged habitat_lateral.tif to postgres as polygons
 .make/habitat_lateral: data/habitat_lateral.tif
 	$(PSQL) -c "drop table if exists bcfishpass.habitat_lateral"
 	rio shapes habitat_lateral.tif --bidx 1 --precision 6 --collection --projected | \

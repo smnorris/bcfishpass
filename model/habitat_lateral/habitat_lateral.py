@@ -114,11 +114,12 @@ LATERAL_SOURCES = {
   st_multi(
     (st_dump(
       st_union(
-        st_buffer(s.geom, coalesce(s.channel_width, 0) + 20)
+        st_buffer(s.geom, coalesce(cw.channel_width, 0) + 20)
       )
     )).geom
   ) as geom
 from bcfishpass.streams s
+left outer join bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
 where
   watershed_group_code = %(wsg)s and
   edge_type in (1000,1100,2000,2300) and
