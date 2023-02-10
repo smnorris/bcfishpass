@@ -15,35 +15,34 @@ Also provided are tools for mapping features in the database:
 - comprehensive QGIS layer file
 
 
-
 ## General Methodology
 
 `bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions.
 
 Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mapping base:
 
-1. Collect data defining known barriers to fish passage (waterfalls, subsurface flow) and reference to the stream network
+1. Collect known 'natural' barriers to fish passage (waterfalls, subsurface flow, etc) and reference to the stream network
 2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
-3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), override/remove barriers downstream of a known observation (where applicable)
-4. Classify all streams downstream of resulting barriers as `POTENTIALLY ACCESSIBLE` (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of a given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
-5. Collect anthropogenic barriers, both known (dams, PSCIS barriers) and potential (road/railway stream crossings, ie culverts) 
-6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much `POTENTIALLY ACCESSIBLE` stream is upstream of each barrier (and downstream of other anthropogenic barriers)
+3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), remove natural barriers from 1 and 2 that are downstream of known observation(s)
+4. Using gradient barriers above the threshold of the target species swimming ability, combine all resulting natural barriers and retain only those with no barriers downstream. All stream downstream of these barriers is termed 'potentially accessible' to the target species (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
+5. Collect anthropogenic barriers, both known (dams, PSCIS barriers) and potential (mapped road/railway FWA stream intersections, ie culverts) 
+6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much potentially accessible stream is upstream of each barrier (and downstream of other anthropogenic barriers)
 
-To enable prioritization of barriers for assessment and remediation, `bcfishpass` also includes basic habitat potential modelling for select species of interest (Chinook, Coho, Sockeye, Steelhead, Westslope Cuthroat Trout). Habitat potential for spawning and rearing is based on:
+To improve prioritization of barriers for assessment and remediation, `bcfishpass` also includes basic 'intrinsic potential' habitat modelling for select species of interest (Bull Trout, Chinook, Chum, Coho, Pink, Sockeye, Steelhead, Westslope Cuthroat Trout). Intrinsic habitat potential (spawning and rearing) is based on:
 
 1. Stream gradient
-2. Stream discharge / stream channel width (modelled discharge where available, modelled channel width where discharge unavailable)
+2. Stream discharge or stream channel width (as per data availability and user preference)
 3. Various species-specific connectivitiy criteria (eg. sockeye spawn must be connected to rearing lakes)
 
-Streams meeting the criteria for a given species are classified as spawning or rearing habitat and the amount of spawning/rearing habitat upstream of barriers can be summarized for barrier prioritization.
+Streams meeting the criteria for a given species are classified as spawning or rearing habitat, and the amount of potential spawning/rearing habitat disconnected by barriers is summarized.
 
 
 ## General requirements
 
-- bash or similar
-- GDAL (>= 3.5)
-- a PostgreSQL / PostGIS database (tested with v14/v3.2)
-- Python >= 3.8
+- bash
+- GDAL (tested with v3.6.2)
+- a PostgreSQL / PostGIS database (tested with v14/v3.3.2)
+- Python (tested with v3.11.0)
 - [bcdata](https://github.com/smnorris/bcdata) (v0.7.6)
 - [fwapg](https://github.com/smnorris/fwapg) (v0.3.1)
 - [bcfishobs](https://github.com/smnorris/bcfishobs) (v0.1.0)

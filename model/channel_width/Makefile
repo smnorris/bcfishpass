@@ -9,7 +9,7 @@ PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 
 WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly ORDER BY watershed_group_code")
 
-GENERATED_FILES = .make/WHSE_FISH.FISS_STREAM_SAMPLE_SITES_SP \
+GENERATED_FILES = .make/bcdata \
 	.make/channel_width_measured \
 	.make/channel_width_mapped \
 	channel_width_analysis.csv \
@@ -26,18 +26,21 @@ GENERATED_TABLES =  whse_fish.fiss_stream_sample_sites_sp\
 all: $(GENERATED_FILES)
 
 # --------
-# download stream sample sites
+# download required BC data
 # --------
-.make/WHSE_FISH.FISS_STREAM_SAMPLE_SITES_SP:
+.make/bcdata:
 	mkdir -p .make
 	bcdata bc2pg WHSE_FISH.FISS_STREAM_SAMPLE_SITES_SP
 	$(PSQL) -c "CREATE INDEX ON whse_fish.fiss_stream_sample_sites_sp (new_watershed_code)"
+	bcdata bc2pg WHSE_TERRESTRIAL_ECOLOGY.ERC_ECOSECTIONS_SP
+	bcdata bc2pg WHSE_FOREST_VEGETATION.BEC_BIOGEOCLIMATIC_POLY
+	$(PSQL) -f sql/load_bec_eco.sql
 	touch $@
 
 # --------
 # MEASURED
 # --------
-.make/channel_width_measured: .make/WHSE_FISH.FISS_STREAM_SAMPLE_SITES_SP sql/channel_width_measured.sql sql/fiss_stream_sample_sites_events.sql
+.make/channel_width_measured: .make/bcdata sql/channel_width_measured.sql sql/fiss_stream_sample_sites_events.sql
 	# match stream sample sites to streams
 	$(PSQL) -f sql/fiss_stream_sample_sites_events.sql
 	# Now load the measured channel widths where we have them, averaging measurements on the same stream

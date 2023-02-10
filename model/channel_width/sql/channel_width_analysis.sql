@@ -50,7 +50,7 @@ SELECT
   e.downstream_route_measure,
   0 as cw_stddev,
   p.channel_width,
-  p.geom
+  (st_dump(p.geom)).geom as geom
 FROM bcfishpass.fiss_stream_sample_sites_events_sp e
 INNER JOIN whse_fish.fiss_stream_sample_sites_sp p
 ON e.stream_sample_site_id = p.stream_sample_site_id
@@ -65,7 +65,7 @@ SELECT
   e.downstream_route_measure,
   0 as cw_stddev,
   a.downstream_channel_width as channel_width,
-  e.geom
+  (st_dump(e.geom)).geom as geom
 FROM bcfishpass.pscis e
 LEFT OUTER JOIN whse_fish.pscis_assessment_svw a
 ON e.stream_crossing_id = a.stream_crossing_id
@@ -80,7 +80,7 @@ SELECT
   s.downstream_route_measure,
   c.cw_stddev,
   c.channel_width_mapped as channel_width,
-  st_pointonsurface(s.geom) as geom
+  (st_dump(st_pointonsurface(s.geom))).geom as geom
 FROM bcfishpass.channel_width_mapped c
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON c.linear_feature_id = s.linear_feature_id
@@ -156,9 +156,9 @@ INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
 ON w.watershed_feature_id = ua.watershed_feature_id
 INNER JOIN whse_basemapping.fwa_waterbodies_upstream_area uwb
 ON s.linear_feature_id = uwb.linear_feature_id
-LEFT OUTER JOIN whse_terrestrial_ecology.erc_ecosections_sp es
+LEFT OUTER JOIN whse_terrestrial_ecology.erc_ecosections_subdivided es
 ON ST_Intersects(m.geom, es.geom)
-LEFT OUTER JOIN whse_forest_vegetation.bec_biogeoclimatic_poly bec
+LEFT OUTER JOIN whse_forest_vegetation.bec_biogeoclimatic_poly_subdivided bec
 ON ST_Intersects(m.geom, bec.geom)
 LEFT OUTER JOIN bcfishpass.mean_annual_precip map
 ON s.wscode_ltree = map.wscode_ltree AND s.localcode_ltree = map.localcode_ltree
