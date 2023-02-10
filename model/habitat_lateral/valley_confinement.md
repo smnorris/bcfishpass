@@ -5,7 +5,7 @@ Define unconfined valleys (ie, floodplains) as inputs to:
 - lateral habitat modelling
 - fish habitat modelling intrinsic potential parameter 'valley-width ratio'
 
-The valley definition script is a adaptation of the USDA's [Valley Confinement Algorithm (VCA)](https://www.fs.fed.us/rm/boise/AWAE/projects/valley_confinement.shtml) using BC's Freshwater Atlas and DEM. The bulk of the code is taken directly from an [existing adaptation of the VCA by Devin Cairns](https://github.com/bluegeo/bluegeo).
+The valley definition script is a adaptation of the USDA's [Valley Confinement Algorithm (VCA)](https://www.fs.usda.gov/rmrs/projects/valley-confinement-algorithm-vca) using BC's Freshwater Atlas and DEM. The bulk of the code is taken directly from an [existing adaptation of the VCA by Devin Cairns](https://github.com/bluegeo/bluegeo).
 
 
 ## Usage
