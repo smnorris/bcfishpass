@@ -36,10 +36,10 @@ As raster:
     data/habitat_lateral.tif
 
 raster values:
-```
-1  potential lateral habitat, connected
-2  potential lateral habitat, disconnected by railway
-```
+
+    1  potential lateral habitat, connected
+    2  potential lateral habitat, disconnected by railway
+
 
 As polygons in postgresql database at `$DATABASE_URL`:
 
