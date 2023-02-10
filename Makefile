@@ -4,8 +4,8 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
 
-QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
-QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
+QA_ACCESS_SCRIPTS = $(wildcard reports/access/sql/*.sql)
+QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(QA_SCRIPTS))
 
 
 all: model/habitat_lateral/data/habitat_lateral.tif
@@ -122,21 +122,25 @@ model/access/.make/model_access: .make/falls \
 # -----
 # ACCESS MODEL QA REPORTS
 # -----
-reports/access/%.csv: reports/access/sql/%.sql \
+$(QA_ACCESS_OUTPUTS): reports/access/%.csv: reports/access/sql/%.sql \
 	model/access/.make/model_access 
 	psql2csv $(DATABASE_URL) < $< > $@	
+
+# simple target for building only access model and running QA
+.make/model_access: $(QA_ACCESS_OUTPUTS)
+	touch $@
 
 # -----
 # MEAN ANNUAL PRECIPITATION
 # -----
-.model/precipitation/.make/precip:
+model/precipitation/.make/precip:
 	cd model/precipitation ; mkdir -p .make ; ./mean_annual_precip.sh
 	touch $@
 
 # -----
 # CHANNEL WIDTH
 # -----
-.model/channel_width/.make/channel_width: .make/precipitation
+model/channel_width/.make/channel_width: .make/precipitation
 	cd model/channel_width; make
 
 # -----
@@ -148,7 +152,7 @@ model/discharge/.make/discharge:
 # -----
 # LINEAR HABITAT MODEL
 # -----
-.make/habitat_linear: model/access/.make/model_access \
+.make/habitat_linear: .make/model_access \
 	model/channel_width/.make/channel_width \
 	model/discharge/.make/discharge 
 	cd model/habitat_linear; ./habitat_linear.sh
