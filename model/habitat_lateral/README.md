@@ -6,7 +6,7 @@ A model of potential off-channel/lateral Pacific Salmon spawning/rearing habitat
 ## Method
 
 1. Collect and rasterize (10m) features defining areas of potential off-channel/lateral habitat:
-    - areas modelled as 'unconfined valleys' via [VCA](vallen_confinement.md)
+    - areas modelled as 'unconfined valleys' via [VCA](valley_confinement.md)
     - waterbodies from [BC Freshwater Atlas](https://github.com/smnorris/fwapg)
     - streams ([FWA streams](https://github.com/smnorris/fwapg), buffered by stream order / parent stream order / modelled accessibility / modelled spawning-rearing habitat / seasonality)
     - mapped [historical floodplains](https://catalogue.data.gov.bc.ca/dataset/mapped-floodplains-in-bc-historical)

@@ -17,7 +17,7 @@ To generate an 'unconfined valley' raster and a valley-width raster (for the unc
 
 ## Method
 
-Valleys defined by this script are derived primarily as described by [Nagel et al, 2014](https://www.fs.fed.us/rm/pubs/rmrs_gtr321.pdf), using the following inputs and parameters. To generate relatively precise width distances, all processing is done with 10m resolution rasters (the BC DEM is upsampled and linearly interpolated from the source 25m resolution).
+Valleys defined by this script are derived primarily as described by [Nagel et al, 2014](https://www.fs.usda.gov/rm/pubs/rmrs_gtr321.pdf), using the following inputs and parameters. To generate relatively precise width distances, all processing is done with 10m resolution rasters (the BC DEM is upsampled and linearly interpolated from the source 25m resolution).
 
 
 ### 1. Ground slope
