@@ -1,6 +1,6 @@
 # Lateral habitat connectivity model
 
-A model of potential off-channel/lateral Pacific Salmon spawning/rearing habitat, and areas of this lateral habitat potentially isolated by railways.
+A model of potential off-channel/lateral Pacific salmon and Steelhead spawning/rearing habitat, plus identification of lateral areas potentially disconnected by railways.
 
 
 ## Method
@@ -28,6 +28,8 @@ Do this by setting environment variable `DEM10M` and telling make to run concurr
     make --debug=basic -j 8 data/habitat_lateral.tif &> habitat_lateral.log
 
 ## Output
+
+Lateral habitat model for Pacific salmon and Steelhead:
 
     data/habitat_lateral.tif
 
