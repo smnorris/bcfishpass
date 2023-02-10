@@ -144,7 +144,7 @@ do
 done
 
 # optionally, drop the temp tables and source raster
-#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_ply"
-#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_pt"
-#$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_wsd_load_ln"
-#rm data/MAP.tif*
+$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_ply"
+$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_pt"
+$PSQL -c "DROP TABLE IF EXISTS bcfishpass.mean_annual_precip_load_ln"
+rm data/MAP.tif*

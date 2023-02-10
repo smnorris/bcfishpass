@@ -34,10 +34,6 @@ pg_dump bcfishpass_test -t bcfishpass.observations_pk_vw | psql -h localhost -p 
 pg_dump bcfishpass_test -t bcfishpass.observations_st_vw | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
 pg_dump bcfishpass_test -t bcfishpass.observations_wct_vw | psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD
 
-# clear proprietary Foundry discharge data before re-granting permissions
-psql -h localhost -p 63333 $PGDATABASE_PROD -U $PGUSER_PROD \
-    -c "update bcfishpass.streams set mad_m3s = 0 where watershed_group_code in ('BULK','HORS','ELKR');"
-
 # re-grant tileserver and featureserver permissions (because we recreate the schema above)
 psql -h localhost -U $PGUSER_PROD -p 63333 -c "GRANT USAGE ON SCHEMA bcfishpass TO tileserver" $PGDATABASE_PROD
 psql -h localhost -U $PGUSER_PROD -p 63333 -c "GRANT SELECT ON ALL TABLES IN SCHEMA bcfishpass TO tileserver" $PGDATABASE_PROD

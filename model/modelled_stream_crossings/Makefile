@@ -1,4 +1,4 @@
-PSQL_CMD = psql $(DATABASE_URL) -v ON_ERROR_STOP=1 # Ensure psql stops on error
+PSQL = psql $(DATABASE_URL) -v ON_ERROR_STOP=1 # Ensure psql stops on error
 GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	FROM whse_basemapping.fwa_watershed_groups_poly \
 	ORDER BY watershed_group_code")
@@ -18,8 +18,8 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 		data/modelled_stream_crossings.gpkg \
 		modelled_stream_crossings
 	rm data/modelled_stream_crossings.gpkg
-	$(PSQL_CMD) -f sql/01_create_output_table.sql
-	$(PSQL_CMD) -f sql/load_from_archive.sql
+	$(PSQL) -f sql/01_create_output_table.sql
+	$(PSQL) -f sql/load_from_archive.sql
 
 	# note that while modelled crossings are loaded from archive above, we still need roads/railways etc
 	# for further analysis
@@ -78,21 +78,21 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 
 # run the overlays/analysis
 .make/modelled_stream_crossings: .make/download
-	$(PSQL_CMD) -f sql/01_create_output_table.sql
+	$(PSQL) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source
-	parallel $(PSQL_CMD) -f sql/02_intersect_dra.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL_CMD) -f sql/03_intersect_ften.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL_CMD) -f sql/04_intersect_ogc.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL_CMD) -f sql/05_intersect_ogcpre06.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL_CMD) -f sql/06_intersect_railway.sql -v wsg={1} ::: $(GROUPS)
+	parallel $(PSQL) -f sql/02_intersect_dra.sql -v wsg={1} ::: $(GROUPS)
+	parallel $(PSQL) -f sql/03_intersect_ften.sql -v wsg={1} ::: $(GROUPS)
+	parallel $(PSQL) -f sql/04_intersect_ogc.sql -v wsg={1} ::: $(GROUPS)
+	parallel $(PSQL) -f sql/05_intersect_ogcpre06.sql -v wsg={1} ::: $(GROUPS)
+	parallel $(PSQL) -f sql/06_intersect_railway.sql -v wsg={1} ::: $(GROUPS)
 
 	# remove duplicate crossings introduced by using multiple sources
-	$(PSQL_CMD) -f sql/07_remove_duplicates.sql
-	$(PSQL_CMD) -f sql/08_identify_open_bottom_structures.sql
+	$(PSQL) -f sql/07_remove_duplicates.sql
+	$(PSQL) -f sql/08_identify_open_bottom_structures.sql
 
 	# assign modelled_crossing_id from previous version to ensure consistency
-	$(PSQL_CMD) -f sql/09_match_archived_crossings.sql
+	$(PSQL) -f sql/09_match_archived_crossings.sql
 	echo "modelled stream crossings created, run 'make modelled_stream_crossings_archive.gpkg.zip' to create a new archive"
 	touch $@
 
@@ -127,4 +127,5 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/
 	aws s3api put-object-acl --bucket bcfishpass --key modelled_stream_crossings.gpkg.zip --acl public-read
 	rm -f modelled_stream_crossings.gpkg*
+	$(PSQL) -c "drop table bcfishpass.modelled_stream_crossings_bk"
 	touch $@

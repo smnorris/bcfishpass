@@ -8,8 +8,7 @@ TARGETS = data/baseflow.nc \
 	.make/discharge01_raster \
 	.make/discharge02_load \
 	.make/discharge03_wsd \
-	.make/discharge \
-	.make/foundry
+	.make/discharge 
 
 TABLES = discharge01_raster \
 	discharge02_load \
@@ -104,17 +103,8 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 	for wsg in $(GROUPS) ; do \
 	  psql -v ON_ERROR_STOP=1 -f sql/discharge.sql -v wsg=$$wsg ; \
 	done
-	touch $@
+	psql -c "drop table bcfishpass.discharge01_raster"
 	psql -c "drop table bcfishpass.discharge02_load"
 	psql -c "drop table bcfishpass.discharge03_wsd"
 	echo 'Discharge processing complete, see bcfishpass.discharge columns mad_mm, mad_m3s'
-
-# for users without access to foundry discharge data, create 
-# empty schema and discharge table
-.make/foundry:
-	psql -c "CREATE SCHEMA IF NOT EXISTS foundry"
-	psql -c "CREATE TABLE IF NOT EXISTS foundry.fwa_streams_mad \
-	( linear_feature_id bigint primary key, \
-	    watershed_group_code character varying(4), \
-	    mad_m3s double precision );"
 	touch $@
