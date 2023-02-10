@@ -31,11 +31,20 @@ Do this by setting environment variable `DEM10M` and telling make to run concurr
 
 Lateral habitat model for Pacific salmon and Steelhead:
 
+As raster:
+
     data/habitat_lateral.tif
 
-#### Values
-
+raster values:
 ```
 1  potential lateral habitat, connected
 2  potential lateral habitat, disconnected by railway
 ```
+
+As polygons in postgresql database at `$DATABASE_URL`:
+
+    bcfishpass.habitat_lateral    
+
+Cleaned rail-disconnected polygons from `bcfishpass.habitat_lateral`:
+
+    bcfishpass.habitat_lateral_disconnected_rail
