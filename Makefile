@@ -10,8 +10,17 @@ QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
 
 all: model/habitat_lateral/data/habitat_lateral.tif
 
+# Note that clean does not remove *all* targets.
+# - the database itself is untouched, scripts recreate or re-load target tables when called
+# - these targets with no requirments are not cleaned, rebuild them explicitly if needed:
+#   + gradient barriers
+#   + modelled stream crossings
+#   + precipitation
+#   + channel width
+#   + discharge
 clean:
 	rm -Rf .make
+	cd model/access; make clean
 
 # ------
 # SETUP
@@ -120,8 +129,8 @@ reports/access/%.csv: reports/access/sql/%.sql \
 # -----
 # MEAN ANNUAL PRECIPITATION
 # -----
-.make/precipitation:
-	cd model/precipitation; ./mean_annual_precip.sh
+.model/precipitation/.make/precip:
+	cd model/precipitation ; mkdir -p .make ; ./mean_annual_precip.sh
 	touch $@
 
 # -----

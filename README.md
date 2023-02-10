@@ -75,12 +75,13 @@ Once the database is created, load requirements `fwapg` and `bcfishobs` as per i
 
 Once you have `fwapg` and `bcfishobs` loaded to your database, `bcfishpass` processing is controlled by the `Makefile`.
 
-To run the entire model:
+To run:
 
-`make all`
+    make
 
 It is possible to build individual components of the model separately (if their dependencies are met, see the `Makefile`).
 Refer to the various README files in the folders within the `model` folder for more info.
+
 
 ## Credits
 

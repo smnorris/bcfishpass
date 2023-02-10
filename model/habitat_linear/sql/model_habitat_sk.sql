@@ -117,7 +117,7 @@ dnstr_spawning AS
         s.gradient <= sk.spawn_gradient_max AND
         cw.channel_width > sk.spawn_channel_width_min AND
         (cw.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
-        s.channel_width <= sk.spawn_channel_width_max
+        cw.channel_width <= sk.spawn_channel_width_max
       THEN true
       WHEN
         wsg.model = 'mad' AND
