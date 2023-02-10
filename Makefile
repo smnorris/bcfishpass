@@ -8,7 +8,7 @@ QA_SCRIPTS = $(wildcard reports/qa/sql/*.sql)
 QA_OUTPUTS = $(patsubst reports/qa/sql/%.sql,reports/qa/%.csv,$(QA_SCRIPTS))
 
 
-all: habitat_lateral/data/habitat_lateral.tif
+all: model/habitat_lateral/data/habitat_lateral.tif
 
 clean:
 	rm -Rf .make

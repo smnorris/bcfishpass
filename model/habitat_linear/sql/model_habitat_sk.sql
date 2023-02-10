@@ -28,14 +28,10 @@ WITH rearing AS
   SELECT
     s.segmented_stream_id
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.wsg_species_presence p
-  ON s.watershed_group_code = p.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat h
-  ON h.species_code = 'SK'
-  LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk
-  ON s.waterbody_key = lk.waterbody_key
-  LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res
-  ON s.waterbody_key = res.waterbody_key
+  INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.param_habitat h ON h.species_code = 'SK'
+  LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk ON s.waterbody_key = lk.waterbody_key
+  LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res ON s.waterbody_key = res.waterbody_key
   WHERE
     p.sk is true AND
     s.watershed_group_code = :'wsg' AND
@@ -119,26 +115,24 @@ dnstr_spawning AS
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= sk.spawn_gradient_max AND
-        s.channel_width > sk.spawn_channel_width_min AND
-        (s.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
+        cw.channel_width > sk.spawn_channel_width_min AND
+        (cw.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
         s.channel_width <= sk.spawn_channel_width_max
       THEN true
       WHEN
         wsg.model = 'mad' AND
         s.gradient <= sk.spawn_gradient_max AND
-        s.mad_m3s > sk.spawn_mad_min AND
-        s.mad_m3s <= sk.spawn_mad_max
+        mad.mad_m3s > sk.spawn_mad_min AND
+        mad.mad_m3s <= sk.spawn_mad_max
       THEN true
   END AS spawn_sk
   FROM downstream_within_3k a
-  LEFT OUTER JOIN too_steep b
-  ON a.waterbody_key = b.waterbody_key
-  INNER JOIN bcfishpass.streams s
-  ON a.segmented_stream_id = s.segmented_stream_id
-  INNER JOIN bcfishpass.param_watersheds wsg
-  ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk
-  ON sk.species_code = 'SK'
+  LEFT OUTER JOIN too_steep b ON a.waterbody_key = b.waterbody_key
+  INNER JOIN bcfishpass.streams s ON a.segmented_stream_id = s.segmented_stream_id
+  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.param_habitat sk ON sk.species_code = 'SK'
+  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
+  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   WHERE b.waterbody_key IS NULL OR a.row_number < b.row_number
 )
 
@@ -161,27 +155,26 @@ WITH spawn AS
     s.localcode_ltree,
     s.geom
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.param_watersheds wsg
-  ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk
-  ON sk.species_code = 'SK'
-  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
-  ON s.waterbody_key = wb.waterbody_key
+  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
+  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.param_habitat sk ON sk.species_code = 'SK'
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   WHERE
   s.watershed_group_code = :'wsg' AND
 
   ((
     wsg.model = 'cw' AND
     s.gradient <= sk.spawn_gradient_max AND
-    s.channel_width > sk.spawn_channel_width_min AND
-    (s.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
-    s.channel_width <= sk.spawn_channel_width_max
+    cw.channel_width > sk.spawn_channel_width_min AND
+    (cw.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
+    cw.channel_width <= sk.spawn_channel_width_max
   ) OR
   (
     wsg.model = 'mad' AND
     s.gradient <= sk.spawn_gradient_max AND
-    s.mad_m3s > sk.spawn_mad_min AND
-    s.mad_m3s <= sk.spawn_mad_max
+    mad.mad_m3s > sk.spawn_mad_min AND
+    mad.mad_m3s <= sk.spawn_mad_max
   ))
 
   AND
@@ -286,18 +279,17 @@ WITH spawn AS
     s.localcode_ltree,
     s.geom
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.param_watersheds wsg
-  ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk
-  ON sk.species_code = 'SK'
-  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb
-  ON s.waterbody_key = wb.waterbody_key
+  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
+  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.param_habitat sk ON sk.species_code = 'SK'
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   WHERE
   (
     wsg.model = 'mad' AND
     s.gradient <= sk.spawn_gradient_max AND
-    s.mad_m3s > sk.spawn_mad_min AND
-    s.mad_m3s <= sk.spawn_mad_max
+    mad.mad_m3s > sk.spawn_mad_min AND
+    mad.mad_m3s <= sk.spawn_mad_max
   )
   AND
   (wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
