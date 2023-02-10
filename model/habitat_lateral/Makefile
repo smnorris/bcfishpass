@@ -139,7 +139,7 @@ data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
   /vsistdin/
 	
 	# clean up habitat potentially isolated by rail
-	$(PSQL) -f sql/habitat_lateral_disconnected_rail.sql
+	$(PSQL) -f sql/habitat_lateral.sql
 	touch $@
 	# cleanup temp files
 	#for wsg in $(WSG) ; do \
