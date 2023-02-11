@@ -1,16 +1,14 @@
 -- tidy lateral habitat (all) slightly (don't bother simplifying/buffering/clustering)
-drop table if exists bcfishpass.habitat_lateral_clean1;
-create table bcfishpass.habitat_lateral_clean1 as
+drop table if exists bcfishpass.habitat_lateral_clean;
+create table bcfishpass.habitat_lateral_clean as
   select
     row_number() over() as id, 
-    val as value,
+    value,
     geom
   from bcfishpass.habitat_lateral
-  where val != 0
+  where value != 0
   and st_area(geom) > 100;
-create index on bcfishpass.habitat_lateral_clean1 using gist (geom);
-drop table bcfishpass.habitat_lateral;
-alter table bcfishpass.habitat_lateral_clean1 rename to habitat_lateral;
+create index on bcfishpass.habitat_lateral_clean using gist (geom);
 
 -- tidy lateral habitat isolated by rail
 
@@ -29,10 +27,10 @@ select
       25),
     -15
   ))) as geom  
-from bcfishpass.habitat_lateral
-where val = 2
+from bcfishpass.habitat_lateral_clean
+where value = 2
 and st_area(geom) > 100;
-create index on bcfishpass.habitat_lateral_clean1 using gist (geom);
+create index on bcfishpass.habitat_lateral_rail1 using gist (geom);
 
 
 -- cluster features > 100m2 within 50m, then merge
@@ -82,9 +80,10 @@ left outer join bcfishpass.streams s
 on st_intersects(a.geom, s.geom)
 where st_area(a.geom) > 1000
 order by a.geom, wscode_ltree asc;
-create index on bcfishpass.habitat_lateral_cleaned using gist (geom);
+create index on bcfishpass.habitat_lateral_rail3 using gist (geom);
 
 
 drop table bcfishpass.habitat_lateral_rail1;
 drop table bcfishpass.habitat_lateral_rail2;
+drop table if exists habitat_lateral_disconnected_rail;
 alter table bcfishpass.habitat_lateral_rail3 rename to habitat_lateral_disconnected_rail;

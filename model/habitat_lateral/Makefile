@@ -114,12 +114,13 @@ $(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif .make/c
 
 # merge output habitat_lateral.tif for each watershed group into a single tif
 data/habitat_lateral.tif: $(LATERAL_OUTPUTS)
+	# something is not working here, it is only pulling the last output tif, not the entire collection
 	python merge.py $(LATERAL_OUTPUTS) -o $@ --method max --co COMPRESS=DEFLATE --co NUM_THREADS=ALL_CPUS
 	
 # load merged habitat_lateral.tif to postgres as polygons
 .make/habitat_lateral: data/habitat_lateral.tif
 	$(PSQL) -c "drop table if exists bcfishpass.habitat_lateral"
-	rio shapes habitat_lateral.tif --bidx 1 --precision 6 --collection --projected | \
+	rio shapes data/habitat_lateral.tif --bidx 1 --precision 6 --collection --projected | \
   ogr2ogr \
   -f PostgreSQL \
   -s_srs EPSG:3005 \
