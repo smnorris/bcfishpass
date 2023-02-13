@@ -119,11 +119,11 @@ dnstr_spawning AS
         (cw.channel_width > sk.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
         cw.channel_width <= sk.spawn_channel_width_max
       THEN true
-      WHEN
-        wsg.model = 'mad' AND
+      WHEN wsg.model = 'mad' AND
         s.gradient <= sk.spawn_gradient_max AND
-        mad.mad_m3s > sk.spawn_mad_min AND
-        mad.mad_m3s <= sk.spawn_mad_max
+          (mad.mad_m3s > sk.spawn_mad_min OR
+          s.stream_order >= 8) AND
+        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
       THEN true
   END AS spawn_sk
   FROM downstream_within_3k a

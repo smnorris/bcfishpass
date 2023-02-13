@@ -40,8 +40,8 @@ model AS
       THEN true
       WHEN wsg.model = 'mad' AND
         s.gradient <= cm.spawn_gradient_max AND
-        mad.mad_m3s > cm.spawn_mad_min AND
-        mad.mad_m3s <= cm.spawn_mad_max AND
+          (mad.mad_m3s > cm.spawn_mad_min OR
+          s.stream_order >= 8) AND
         s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
       THEN true
     END AS spawn_cm

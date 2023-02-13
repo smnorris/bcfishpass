@@ -42,12 +42,12 @@ model AS
       s.barriers_st_dnstr = array[]::text[]
     THEN true
     WHEN
-      wsg.model = 'mad' AND
-      s.gradient <= st.spawn_gradient_max AND
-      mad.mad_m3s > st.spawn_mad_min AND
-      mad.mad_m3s <= st.spawn_mad_max AND
-      s.barriers_st_dnstr = array[]::text[]
-    THEN true
+      WHEN wsg.model = 'mad' AND
+        s.gradient <= st.spawn_gradient_max AND
+          (mad.mad_m3s > st.spawn_mad_min OR
+          s.stream_order >= 8) AND
+        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+      THEN true
   END AS spawn_st
 FROM bcfishpass.streams s
 LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
