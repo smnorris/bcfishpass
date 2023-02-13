@@ -41,8 +41,8 @@ model AS
       cw.channel_width <= st.spawn_channel_width_max AND
       s.barriers_st_dnstr = array[]::text[]
     THEN true
-    WHEN
-      WHEN wsg.model = 'mad' AND
+    WHEN 
+        wsg.model = 'mad' AND
         s.gradient <= st.spawn_gradient_max AND
           (mad.mad_m3s > st.spawn_mad_min OR
           s.stream_order >= 8) AND
