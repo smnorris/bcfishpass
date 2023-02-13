@@ -3,10 +3,10 @@ drop table if exists bcfishpass.habitat_lateral_clean;
 create table bcfishpass.habitat_lateral_clean as
   select
     row_number() over() as id, 
-    value,
+    val as value,
     geom
   from bcfishpass.habitat_lateral
-  where value != 0
+  where val != 0
   and st_area(geom) > 100;
 create index on bcfishpass.habitat_lateral_clean using gist (geom);
 
