@@ -217,7 +217,7 @@ model/discharge/.make/discharge:
 # -----
 # LATERAL HABITAT MODEL
 # -----
-model/habitat_lateral/.make/habitat_lateral: .make/habitat_linear \
+model/habitat_lateral/data/habitat_lateral.tif: .make/habitat_linear \
 	.make/crossing_stats
 	cd model/habitat_lateral; make .make/habitat_lateral
 
