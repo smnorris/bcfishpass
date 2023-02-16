@@ -140,8 +140,48 @@ obs_upstr_n as
   where o.spp in ('CH','CM','CO','PK','SK') 
   and o.obs_dt > date('1990-01-01')         -- only observations since 1990 
   group by o.barrier_id
-)
+),
 
+-- exclude barriers belown known spawning/rearing habitat 
+habitat as (
+  select 
+    s.blue_line_key, 
+    s.downstream_route_measure, 
+    s.wscode_ltree,
+    s.localcode_ltree,
+    s.watershed_group_code,
+    h.species_code
+  from bcfishpass.user_habitat_classification h
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  ON s.blue_line_key = h.blue_line_key
+  and round(s.downstream_route_measure::numeric) >= round(h.downstream_route_measure::numeric)
+  and round(s.upstream_route_measure::numeric) <= round(h.upstream_route_measure::numeric)
+  where h.habitat_ind is true
+  and s.watershed_group_code = :'wsg'
+),
+
+hab_upstr as
+(
+  select
+    b.barrier_id,
+    array_agg(species_code) as species_codes
+  from barriers b
+  inner join habitat h
+  on fwa_upstream(
+        b.blue_line_key,
+        b.downstream_route_measure,
+        b.wscode_ltree,
+        b.localcode_ltree,
+        h.blue_line_key,
+        h.downstream_route_measure,
+        h.wscode_ltree,
+        h.localcode_ltree,
+        false,
+        1
+      )
+  where h.species_code in ('CH','CM','CO','PK','SK')
+  group by b.barrier_id
+)
 
 insert into bcfishpass.barriers_ch_cm_co_pk_sk
 (
@@ -159,18 +199,19 @@ insert into bcfishpass.barriers_ch_cm_co_pk_sk
 
 select
   b.barrier_id as barrier_load_id,
-  barrier_type,
-  barrier_name,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  geom
+  b.barrier_type,
+  b.barrier_name,
+  b.linear_feature_id,
+  b.blue_line_key,
+  b.downstream_route_measure,
+  b.wscode_ltree,
+  b.localcode_ltree,
+  b.watershed_group_code,
+  h.species_codes,
+  b.geom
 from barriers b
-left outer join obs_upstr_n as o
-on b.barrier_id = o.barrier_id
+left outer join obs_upstr_n as o on b.barrier_id = o.barrier_id
+left outer join hab_upstr h on b.barrier_id = h.barrier_id
 where watershed_group_code = any(
     array(
       select watershed_group_code
@@ -178,11 +219,15 @@ where watershed_group_code = any(
       where ch is true or cm is true or co is true or pk is true or sk is true 
     )
 )
--- do not include gradient / falls / subsurface barriers with > 5 observations upstream
+-- do not include gradient / falls / subsurface barriers with 
+--    - > 5 observations upstream 
+--    - confirmed habitat upstream
 -- but always include user added barriers
 and (
-    o.n_obs is null or
-    o.n_obs < 5 or
+      (
+        (o.n_obs is null or o.n_obs < 5) and 
+        h.species_codes is null
+      ) or
     b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
 on conflict do nothing;

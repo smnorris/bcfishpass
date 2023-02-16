@@ -118,7 +118,7 @@ do
     $PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
 done
 $PSQL -c "drop table bcfishpass.streams_observations_upstr"
-$PSQL -c "drop table bcfishpass.streams_observations_dnstr"
+$PSQL -c "drop table bcfishpass.streams_species_dnstr"
 
 # to be able to report on access model, there needs to be a way to differentiate
 # between streams with no barrier downstream, and streams that are not modelled because
