@@ -57,8 +57,7 @@ select
    wct.barriers_wct_dnstr,            
    ou.obsrvtn_event_upstr,           
    ou.obsrvtn_species_codes_upstr,
-   od.obsrvtn_event_dnstr,           
-   od.obsrvtn_species_codes_dnstr,
+   od.species_codes_dnstr,
    c.crossings_dnstr
 from bcfishpass.streams s
 left outer join bcfishpass.streams_barriers_anthropogenic_dnstr ba on s.segmented_stream_id = ba.segmented_stream_id
