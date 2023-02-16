@@ -85,5 +85,5 @@ create index on bcfishpass.habitat_lateral_rail3 using gist (geom);
 
 drop table bcfishpass.habitat_lateral_rail1;
 drop table bcfishpass.habitat_lateral_rail2;
-drop table if exists habitat_lateral_disconnected_rail;
+drop table if exists bcfishpass.habitat_lateral_disconnected_rail;
 alter table bcfishpass.habitat_lateral_rail3 rename to habitat_lateral_disconnected_rail;
