@@ -195,8 +195,8 @@ select
   watershed_group_code,
   geom
 from barriers b
-left outer join obs_upstr_n as o
-on b.barrier_id = o.barrier_id
+left outer join obs_upstr_n as o on b.barrier_id = o.barrier_id
+left outer join hab_upstr h on b.barrier_id = h.barrier_id
 where watershed_group_code = any(
     array(
       select watershed_group_code

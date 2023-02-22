@@ -26,8 +26,7 @@ insert into bcfishpass.streams_model_access (
   barriers_wct_dnstr,
   obsrvtn_event_upstr,
   obsrvtn_species_codes_upstr,
-  obsrvtn_event_dnstr,
-  obsrvtn_species_codes_dnstr,
+  species_codes_dnstr,
   crossings_dnstr
 )
 select 
@@ -68,7 +67,7 @@ left outer join bcfishpass.streams_barriers_bt_dnstr bt on s.segmented_stream_id
 left outer join bcfishpass.streams_barriers_ch_cm_co_pk_sk_dnstr salmon on s.segmented_stream_id = salmon.segmented_stream_id
 left outer join bcfishpass.streams_barriers_st_dnstr st on s.segmented_stream_id = st.segmented_stream_id
 left outer join bcfishpass.streams_barriers_wct_dnstr wct on s.segmented_stream_id = wct.segmented_stream_id
-left outer join bcfishpass.streams_observations_upstr ou on s.segmented_stream_id = o.segmented_stream_id
-left outer join bcfishpass.streams_observations_dnstr od on s.segmented_stream_id = od.segmented_stream_id
+left outer join bcfishpass.streams_observations_upstr ou on s.segmented_stream_id = ou.segmented_stream_id
+left outer join bcfishpass.streams_species_dnstr od on s.segmented_stream_id = od.segmented_stream_id
 left outer join bcfishpass.streams_crossings_dnstr c on s.segmented_stream_id = c.segmented_stream_id
 where watershed_group_code = :'wsg';

@@ -207,7 +207,6 @@ select
   b.wscode_ltree,
   b.localcode_ltree,
   b.watershed_group_code,
-  h.species_codes,
   b.geom
 from barriers b
 left outer join obs_upstr_n as o on b.barrier_id = o.barrier_id

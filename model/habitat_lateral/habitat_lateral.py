@@ -129,7 +129,7 @@ where
   );""",
     # -----------------------
     # rail
-    # rail lines buffered by 30m
+    # rail lines buffered by 25m
     # -----------------------
     "rail": """select
       st_multi(st_buffer(r.geom, 25)) as geom

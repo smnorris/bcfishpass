@@ -52,6 +52,19 @@ watershed_group_code in (
 	where s.wct is not null
 );
 
+-- similarly, update observations upstream / species downstream
+update bcfishpass.streams
+set obsrvtn_event_upstr = array[]::bigint[]
+where obsrvtn_event_upstr is null;
+
+update bcfishpass.streams
+set obsrvtn_species_codes_upstr = array[]::text[]
+where obsrvtn_species_codes_upstr is null;
+
+update bcfishpass.streams
+set species_codes_dnstr = array[]::text[]
+where species_codes_dnstr is null;
+
 
 -- for simple reprting/visualization, 
 -- tag streams immediately upstream of remediations
