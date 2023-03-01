@@ -22,6 +22,7 @@ insert into bcfishpass.streams_model_access (
   barriers_dams_hydro_dnstr,
   barriers_bt_dnstr,
   barriers_ch_cm_co_pk_sk_dnstr,
+  barriers_dv_ct_rb_dnstr,
   barriers_st_dnstr,
   barriers_wct_dnstr,
   obsrvtn_event_upstr,
@@ -52,6 +53,7 @@ select
    bdh.barriers_dams_hydro_dnstr,     
    bt.barriers_bt_dnstr,             
    salmon.barriers_ch_cm_co_pk_sk_dnstr, 
+   dv_ct_rb.barriers_dv_ct_rb_dnstr,
    st.barriers_st_dnstr,             
    wct.barriers_wct_dnstr,            
    ou.obsrvtn_event_upstr,           
@@ -65,6 +67,7 @@ left outer join bcfishpass.streams_barriers_dams_dnstr bd on s.segmented_stream_
 left outer join bcfishpass.streams_barriers_dams_hydro_dnstr bdh on s.segmented_stream_id = bdh.segmented_stream_id
 left outer join bcfishpass.streams_barriers_bt_dnstr bt on s.segmented_stream_id = bt.segmented_stream_id
 left outer join bcfishpass.streams_barriers_ch_cm_co_pk_sk_dnstr salmon on s.segmented_stream_id = salmon.segmented_stream_id
+left outer join bcfishpass.streams_barriers_dv_ct_rb_dnstr dv_ct_rb on s.segmented_stream_id = dv_ct_rb.segmented_stream_id
 left outer join bcfishpass.streams_barriers_st_dnstr st on s.segmented_stream_id = st.segmented_stream_id
 left outer join bcfishpass.streams_barriers_wct_dnstr wct on s.segmented_stream_id = wct.segmented_stream_id
 left outer join bcfishpass.streams_observations_upstr ou on s.segmented_stream_id = ou.segmented_stream_id
