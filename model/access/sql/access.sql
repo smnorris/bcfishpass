@@ -53,8 +53,8 @@ watershed_group_code in (
 );
 
 update bcfishpass.streams
-set barriers_dv_ct_rb_dnstr = array[]::text[]
-where barriers_dv_ct_rb_dnstr is null and
+set barriers_ct_dv_rb_dnstr = array[]::text[]
+where barriers_ct_dv_rb_dnstr is null and
 watershed_group_code in (
 	select p.watershed_group_code
 	from bcfishpass.param_watersheds p

@@ -162,9 +162,9 @@ barriers as
   where watershed_group_code = :'wsg'
 )
 
-insert into bcfishpass.barriers_dv_ct_rb
+insert into bcfishpass.barriers_ct_dv_rb
 (
-    barriers_dv_ct_rb_id,
+    barriers_ct_dv_rb_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
