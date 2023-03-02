@@ -123,26 +123,27 @@ obs_upstr_n as
     o.barrier_id,
     count(o.obs) as n_obs
   from obs_upstr o
-  where o.spp in ('CH','CM','CO','PK','SK','ST') 
-  and o.obs_dt > date('1990-01-01')         -- only observations since 1990 
+  where o.spp in ('CH','CM','CO','PK','SK','ST')
+  and o.obs_dt > date('1990-01-01')         -- only observations since 1990
   group by o.barrier_id
 ),
 
--- exclude barriers belown known spawning/rearing habitat 
+-- exclude barriers belown known spawning/rearing habitat
 habitat as (
-  select 
-    s.blue_line_key, 
-    s.downstream_route_measure, 
+  select
+    h.blue_line_key,
+    h.upstream_route_measure,
     s.wscode_ltree,
     s.localcode_ltree,
-    s.watershed_group_code,
+    h.watershed_group_code,
     h.species_code
   from bcfishpass.user_habitat_classification h
   inner join whse_basemapping.fwa_stream_networks_sp s
   ON s.blue_line_key = h.blue_line_key
-  and round(s.downstream_route_measure::numeric) >= round(h.downstream_route_measure::numeric)
-  and round(s.upstream_route_measure::numeric) <= round(h.upstream_route_measure::numeric)
+  and round(h.upstream_route_measure::numeric) >= round(s.downstream_route_measure::numeric)
+  and round(h.upstream_route_measure::numeric) <= round(s.upstream_route_measure::numeric)
   where h.habitat_ind is true
+  and h.species_code in ('CH','CM','CO','PK','SK','ST')
   and s.watershed_group_code = :'wsg'
 ),
 
@@ -159,13 +160,12 @@ hab_upstr as
         b.wscode_ltree,
         b.localcode_ltree,
         h.blue_line_key,
-        h.downstream_route_measure,
+        h.upstream_route_measure,
         h.wscode_ltree,
         h.localcode_ltree,
         false,
         1
       )
-  where h.species_code in ('CH','CM','CO','PK','SK')
   group by b.barrier_id
 )
 
@@ -208,7 +208,7 @@ where watershed_group_code = any(
 -- but always include user added barriers
 and (
       (
-        (o.n_obs is null or o.n_obs < 5) and 
+        (o.n_obs is null or o.n_obs < 5) and
         h.species_codes is null
       ) or
     b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')

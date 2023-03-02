@@ -65,7 +65,7 @@ with all_barriers as
   where watershed_group_code = :'wsg'
 ),
 
--- exclude barriers belown known observations and known spawning/rearing habitat 
+-- exclude barriers belown known observations and known spawning/rearing habitat
 obs as
 (
   select *
@@ -76,21 +76,22 @@ obs as
 
 -- known habitat to any species will be accessible to these species.
 habitat as (
-  select 
-    s.blue_line_key, 
-    s.downstream_route_measure, 
+  select
+    h.blue_line_key,
+    h.upstream_route_measure,
     s.wscode_ltree,
     s.localcode_ltree,
-    s.watershed_group_code,
+    h.watershed_group_code,
     h.species_code
   from bcfishpass.user_habitat_classification h
   inner join whse_basemapping.fwa_stream_networks_sp s
   ON s.blue_line_key = h.blue_line_key
-  and round(s.downstream_route_measure::numeric) >= round(h.downstream_route_measure::numeric)
-  and round(s.upstream_route_measure::numeric) <= round(h.upstream_route_measure::numeric)
+  and round(h.upstream_route_measure::numeric) >= round(s.downstream_route_measure::numeric)
+  and round(h.upstream_route_measure::numeric) <= round(s.upstream_route_measure::numeric)
   where h.habitat_ind is true
   and s.watershed_group_code = :'wsg'
 ),
+
 
 hab_upstr as
 (
@@ -105,7 +106,7 @@ hab_upstr as
         b.wscode_ltree,
         b.localcode_ltree,
         h.blue_line_key,
-        h.downstream_route_measure,
+        h.upstream_route_measure,
         h.wscode_ltree,
         h.localcode_ltree,
         false,
@@ -143,7 +144,7 @@ barriers as
   left outer join hab_upstr h on b.barrier_id = h.barrier_id
   where o.species_codes is null
   and h.species_codes is null
-  
+
   union all
 
     -- include *all* user added features, even those below bt observations
@@ -188,6 +189,6 @@ select
   geom
 from barriers b
 -- include only ccira watershed groups
-where watershed_group_code in 
-('ATNA','BELA','KHTZ','KITL','KLIN','KTSU','LDEN','LRDO','NASC','NECL','NIEL','OWIK','UEUT') 
+where watershed_group_code in
+('ATNA','BELA','KHTZ','KITL','KLIN','KTSU','LDEN','LRDO','NASC','NECL','NIEL','OWIK')
 on conflict do nothing;
