@@ -3,6 +3,13 @@ Changes
 
 All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
+v0.1.dev2 ()
+------------------
+- add PSE spawning data within CCIRA study area where it informs access model
+- add assessed spawning/rearing data from New Graph BULK field reviews
+- use confirmed habitat to inform access model (#227)
+- note downstream observations in access model output (#290)
+
 v0.1.dev1 (2023-02-10)
 ------------------
 - dev pre-release

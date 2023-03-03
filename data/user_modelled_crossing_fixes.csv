@@ -2524,7 +2524,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19300583,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
 19302329,NONE,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 19300495,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-19500183,NONE,SUST,KK,2022-01-01,Bing/Google/ESRI imagery,"no visible stream, or possible fording "
+19500183,NONE,SUST,KK,2022-01-01,Bing/Google/ESRI imagery,"no visible stream, or possible fording"
 19700869,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 19700760,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 19700975,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
@@ -3312,7 +3312,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 15803066,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible road
 15802639,OBS,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,to check - possible bridge
 15800559,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible road
-15800513,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,"no visible road "
+15800513,NONE,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible road
 15800452,OBS,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,
 15800811,FORD,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible structure
 15800973,FORD,NICL,KK,2022-01-28,Bing/Google/ESRI imagery,no visible structure
@@ -5516,7 +5516,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1802732,OBS,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,to check - possible bridge
 1800663,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 24743615,NONE,BABL,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
-1805648,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery," no visible road"
+1805648,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 1806184,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 1805894,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 1805031,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,no crossing - mapping error
