@@ -22,10 +22,12 @@ insert into bcfishpass.streams_model_access (
   barriers_dams_hydro_dnstr,
   barriers_bt_dnstr,
   barriers_ch_cm_co_pk_sk_dnstr,
+  barriers_ct_dv_rb_dnstr,
   barriers_st_dnstr,
   barriers_wct_dnstr,
   obsrvtn_event_upstr,
   obsrvtn_species_codes_upstr,
+  species_codes_dnstr,
   crossings_dnstr
 )
 select 
@@ -51,10 +53,12 @@ select
    bdh.barriers_dams_hydro_dnstr,     
    bt.barriers_bt_dnstr,             
    salmon.barriers_ch_cm_co_pk_sk_dnstr, 
+   ct_dv_rb.barriers_ct_dv_rb_dnstr,
    st.barriers_st_dnstr,             
    wct.barriers_wct_dnstr,            
-   o.obsrvtn_event_upstr,           
-   o.obsrvtn_species_codes_upstr,
+   ou.obsrvtn_event_upstr,           
+   ou.obsrvtn_species_codes_upstr,
+   od.species_codes_dnstr,
    c.crossings_dnstr
 from bcfishpass.streams s
 left outer join bcfishpass.streams_barriers_anthropogenic_dnstr ba on s.segmented_stream_id = ba.segmented_stream_id
@@ -63,8 +67,10 @@ left outer join bcfishpass.streams_barriers_dams_dnstr bd on s.segmented_stream_
 left outer join bcfishpass.streams_barriers_dams_hydro_dnstr bdh on s.segmented_stream_id = bdh.segmented_stream_id
 left outer join bcfishpass.streams_barriers_bt_dnstr bt on s.segmented_stream_id = bt.segmented_stream_id
 left outer join bcfishpass.streams_barriers_ch_cm_co_pk_sk_dnstr salmon on s.segmented_stream_id = salmon.segmented_stream_id
+left outer join bcfishpass.streams_barriers_ct_dv_rb_dnstr ct_dv_rb on s.segmented_stream_id = ct_dv_rb.segmented_stream_id
 left outer join bcfishpass.streams_barriers_st_dnstr st on s.segmented_stream_id = st.segmented_stream_id
 left outer join bcfishpass.streams_barriers_wct_dnstr wct on s.segmented_stream_id = wct.segmented_stream_id
-left outer join bcfishpass.streams_observations_upstr o on s.segmented_stream_id = o.segmented_stream_id
+left outer join bcfishpass.streams_observations_upstr ou on s.segmented_stream_id = ou.segmented_stream_id
+left outer join bcfishpass.streams_species_dnstr od on s.segmented_stream_id = od.segmented_stream_id
 left outer join bcfishpass.streams_crossings_dnstr c on s.segmented_stream_id = c.segmented_stream_id
 where watershed_group_code = :'wsg';

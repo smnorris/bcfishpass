@@ -95,6 +95,13 @@ parallel --jobs 4 --no-run-if-empty $PSQL -f sql/streams_observations_upstr.sql 
 # add these columns to streams table
 $PSQL -c "alter table bcfishpass.streams add column obsrvtn_event_upstr bigint[], add column obsrvtn_species_codes_upstr text[]"
 
+# same for observations downstream
+$PSQL -c "drop table if exists bcfishpass.streams_species_dnstr"
+$PSQL -c "create table bcfishpass.streams_species_dnstr (segmented_stream_id text primary key, species_codes_dnstr text[])"
+parallel --jobs 4 --no-run-if-empty $PSQL -f sql/streams_species_dnstr.sql -v wsg={1} ::: $WSGS
+# add these columns to streams table
+$PSQL -c "alter table bcfishpass.streams add column species_codes_dnstr text[]"
+
 # now bring all access model data from _upstr _dnstr tables into streams table
 $PSQL -c "drop table if exists bcfishpass.streams_model_access;"
 $PSQL -c "create table bcfishpass.streams_model_access (like bcfishpass.streams including all);"
@@ -111,6 +118,7 @@ do
     $PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
 done
 $PSQL -c "drop table bcfishpass.streams_observations_upstr"
+$PSQL -c "drop table bcfishpass.streams_species_dnstr"
 
 # to be able to report on access model, there needs to be a way to differentiate
 # between streams with no barrier downstream, and streams that are not modelled because

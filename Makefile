@@ -26,7 +26,7 @@ clean:
 # SETUP
 # ------
 # load parameters, create user data tables
-.make/setup: 
+.make/setup: data/sql/user.sql parameters/sql/parameters.sql scripts/utmzone.sql parameters/param_habitat.csv parameters/param_watersheds.csv
 	mkdir -p .make
 	# create tables for parameters and user maintained data
 	$(PSQL) -f parameters/sql/parameters.sql

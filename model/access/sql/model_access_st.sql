@@ -123,11 +123,51 @@ obs_upstr_n as
     o.barrier_id,
     count(o.obs) as n_obs
   from obs_upstr o
-  where o.spp in ('CH','CM','CO','PK','SK','ST') 
-  and o.obs_dt > date('1990-01-01')         -- only observations since 1990 
+  where o.spp in ('CH','CM','CO','PK','SK','ST')
+  and o.obs_dt > date('1990-01-01')         -- only observations since 1990
   group by o.barrier_id
-)
+),
 
+-- exclude barriers belown known spawning/rearing habitat
+habitat as (
+  select
+    h.blue_line_key,
+    h.upstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    h.watershed_group_code,
+    h.species_code
+  from bcfishpass.user_habitat_classification h
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  ON s.blue_line_key = h.blue_line_key
+  and round(h.upstream_route_measure::numeric) >= round(s.downstream_route_measure::numeric)
+  and round(h.upstream_route_measure::numeric) <= round(s.upstream_route_measure::numeric)
+  where h.habitat_ind is true
+  and h.species_code in ('CH','CM','CO','PK','SK','ST')
+  and s.watershed_group_code = :'wsg'
+),
+
+hab_upstr as
+(
+  select
+    b.barrier_id,
+    array_agg(species_code) as species_codes
+  from barriers b
+  inner join habitat h
+  on fwa_upstream(
+        b.blue_line_key,
+        b.downstream_route_measure,
+        b.wscode_ltree,
+        b.localcode_ltree,
+        h.blue_line_key,
+        h.upstream_route_measure,
+        h.wscode_ltree,
+        h.localcode_ltree,
+        false,
+        1
+      )
+  group by b.barrier_id
+)
 
 insert into bcfishpass.barriers_st
 (
@@ -155,8 +195,8 @@ select
   watershed_group_code,
   geom
 from barriers b
-left outer join obs_upstr_n as o
-on b.barrier_id = o.barrier_id
+left outer join obs_upstr_n as o on b.barrier_id = o.barrier_id
+left outer join hab_upstr h on b.barrier_id = h.barrier_id
 where watershed_group_code = any(
     array(
       select watershed_group_code
@@ -167,8 +207,10 @@ where watershed_group_code = any(
 -- do not include gradient / falls / subsurface barriers with > 5 observations upstream
 -- but always include user added barriers
 and (
-    o.n_obs is null or
-    o.n_obs < 5 or
+      (
+        (o.n_obs is null or o.n_obs < 5) and
+        h.species_codes is null
+      ) or
     b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
 on conflict do nothing;
