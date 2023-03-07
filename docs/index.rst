@@ -23,6 +23,6 @@ The generated ``bcfishpass`` database:
    :caption: Contents:
 
    01_background
-   02_usage
-   03_tables
-   04_functions
+   02_methodology
+   03_example_use_cases
+   04_table_definitions
