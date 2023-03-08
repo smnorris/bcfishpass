@@ -7,6 +7,7 @@ WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watershe
 
 # add output columns
 MODELS=$(ls sql/model_habitat*.sql | sed -e "s/sql\/model_habitat_//" | sed -e "s/.sql//")  
+
 for SP in $MODELS
 do
   psql -c "alter table bcfishpass.streams add column if not exists model_spawning_"$SP" boolean"
@@ -26,3 +27,9 @@ done
 	
 # apply manual/user habitat classifcation
 $PSQL -f sql/user_habitat_classification.sql
+
+# create mapping views displaying access/habitat per species / species group
+for VW in $(ls sql/map_*_vw.sql)  
+do
+  $PSQL -f $VW
+done
