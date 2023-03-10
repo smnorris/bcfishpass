@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euxo pipefail
 
-# always dump from test
-DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
 
 echo "dumping bcfishpass data from "$DATABASE_URL
 

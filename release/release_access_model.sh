@@ -1,12 +1,14 @@
 #!/bin/bash
 set -euxo pipefail
 
-# publish data to s3 
+# Generate FPTWG salmon/steelhead access model views, then publish it and supporting data
 # https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
 
+# ideally this would be run against the staging database, but it
 # refresh the views
 psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/freshwater_fish_habitat_accessibility_model.sql
 
+# clear any existing dumps
 rm -rf freshwater_fish_habitat_accessibility_MODEL.gpkg*
 
 echo 'dumping crossings'
@@ -199,11 +201,13 @@ ogr2ogr \
 
 echo 'dump to MODEL.gpkg complete'    
 
-# zip and remove uncompressed file
+# zip and publish to s3
 zip -r freshwater_fish_habitat_accessibility_MODEL.gpkg.zip freshwater_fish_habitat_accessibility_MODEL.gpkg
+aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass/
+aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_accessibility_MODEL.gpkg.zip --acl public-read
+
+# delete unzipped
 rm freshwater_fish_habitat_accessibility_MODEL.gpkg
 
-# send to s3
-aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass/
-# open it up
-aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_accessibility_MODEL.gpkg.zip --acl public-read
+# archive
+mv freshwater_fish_habitat_accessibility_MODEL.gpkg.zip $BCFISHPASS_ARCHIVE/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip.$(git describe --tags --abbrev=0).$(date +%F)

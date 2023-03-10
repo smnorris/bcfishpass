@@ -1,50 +1,49 @@
-# Release bcfishpass data
+# Data replication and release
 
-Cut a data release, copying key tables from local dev db to:
+- replicate key `bcfishpass` data from local dev db to local staging db
+- replicate key `bcfishpass` data from local staging db to remote db
+- cut data from chosen db to file based release
 
-- local test db
-- remote prod db(s)
-- local file dump
 
 ## Setup
 
-Requires these environment variables are set:
+Define db services in `.pg_service.conf` as required.
+Ensure all databases exist and include the required extensions.
 
-    $PGHOST_PROD
-    $PGDATABASE_PROD
-    $PGUSER_PROD
+For example, to set up a staging db that reduces data duplication by using a fdw pointing to bcgw datasets on the dev db:
 
-## Usage
-
-1. Generate summary stats for release candidate (length in km of habitat etc):
-
-        psql -f sql/totals.sql
+        psql service=bcfishpass -c "create database bcfishpass_staging"
+        psql service=staging -f sql/staging_setup.sql
 
 
-2. Copy full bcfishpass schema from dev to test
+## Scripts
 
-        ./dev2test.sh
+#### `replicate.sh`
+
+Dump schemas `bcfishpass`, `bcfishobs` from source database to target database:
+
+        ./replicate.sh <source_db_service_name> <target_db_service_name>
 
 
-3. When ready, publish from test to prod
+#### `release_access_model.sh`
 
-        ./test2prod.sh
+Dump `freshwaters_fish_habitat_accessibility_model` and associated data to file and upload to S3:
+        
+        ./release_access_model.sh <source_db_service_name>
 
-4. Dump to file:
 
-        ./dump.sh
+#### `dump.sh`
 
-To be automated:
+Dump key bcfishpass tables to file for distribution:
 
-5. Upload files to server.
+        ./dump.sh <source_db_service_name>
 
-6. Update basic mapping app on server.
 
-7. Tag a code release to match the data release.
+#### `archive.sh`
 
-8. Archive (dump to file) key input data sources associated with the release:
-    - roads
-    - railways
-    - other?
+Dump database to postgres custom format:
 
-9. Archive modelled crossings layer for use with future model runs (to preserve id values)
+        ./archive.sh <source_db_service_name>
+
+Script dumps archive to `$BCFISHPASS_ARCHIVES/bcfishpass_<yyyy-mm-dd>`.
+When appropriate, manually replace the date stamp in the file name with the bcfishpass release tag.
