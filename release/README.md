@@ -1,49 +1,36 @@
-# Data replication and release
+# Data replication, release, archive
 
-- replicate key `bcfishpass` data from local dev db to local staging db
-- replicate key `bcfishpass` data from local staging db to remote db
-- cut data from chosen db to file based release
-
+- replicate data between databases
+- cut data to file based releases
+- archive bcfishpass database to file
 
 ## Setup
 
-Define db services in `.pg_service.conf` as required.
-Ensure all databases exist and include the required extensions.
+- define db services in `.pg_service.conf` as required, and ensure all databases exist and include the required extensions
+- set the environment variable `$ARCHIVE` to the location where you wish to store data archives
 
-For example, to set up a staging db that reduces data duplication by using a fdw pointing to bcgw datasets on the dev db:
+## Replicate
 
-        psql service=bcfishpass -c "create database bcfishpass_staging"
-        psql service=staging -f sql/staging_setup.sql
-
-
-## Scripts
-
-#### `replicate.sh`
-
-Dump schemas `bcfishpass`, `bcfishobs` from source database to target database:
+Copy schemas `bcfishpass`, `bcfishobs` from source database to target database:
 
         ./replicate.sh <source_db_service_name> <target_db_service_name>
 
 
-#### `release_access_model.sh`
+## Release
+
 
 Dump `freshwaters_fish_habitat_accessibility_model` and associated data to file and upload to S3:
         
-        ./release_access_model.sh <source_db_service_name>
+        ./release_access_model.sh <db_service_name>
 
-
-#### `dump.sh`
 
 Dump key bcfishpass tables to file for distribution:
 
-        ./dump.sh <source_db_service_name>
+        ./dump.sh <db_service_name>
 
 
-#### `archive.sh`
+## Archive
 
-Dump database to postgres custom format:
+Dump entire database:
 
-        ./archive.sh <source_db_service_name>
-
-Script dumps archive to `$BCFISHPASS_ARCHIVES/bcfishpass_<yyyy-mm-dd>`.
-When appropriate, manually replace the date stamp in the file name with the bcfishpass release tag.
+        pg_dump -Fc service=<db_service_name> > $ARCHIVE/bcfishpass/db/bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump

@@ -210,4 +210,4 @@ aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_acces
 rm freshwater_fish_habitat_accessibility_MODEL.gpkg
 
 # archive
-mv freshwater_fish_habitat_accessibility_MODEL.gpkg.zip $BCFISHPASS_ARCHIVE/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip.$(git describe --tags --abbrev=0).$(date +%F)
+mv freshwater_fish_habitat_accessibility_MODEL.gpkg.zip $ARCHIVE/bcfishpass/access_model/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip.$(git describe --tags --abbrev=0).$(date +%F)
