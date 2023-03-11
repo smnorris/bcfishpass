@@ -4,10 +4,12 @@
 - cut data to file based releases
 - archive bcfishpass database to file
 
+
 ## Setup
 
 - define db services in `.pg_service.conf` as required, and ensure all databases exist and include the required extensions
 - set the environment variable `$ARCHIVE` to the location where you wish to store data archives
+
 
 ## Replicate
 

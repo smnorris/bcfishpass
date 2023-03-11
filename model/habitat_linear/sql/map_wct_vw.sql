@@ -93,4 +93,4 @@ from bcfishpass.streams a
 inner join status_codes b on a.segmented_stream_id = b.segmented_stream_id
 left outer join bcfishpass.discharge mad on a.linear_feature_id = mad.linear_feature_id
 left outer join bcfishpass.channel_width cw on a.linear_feature_id = cw.linear_feature_id
-where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
+where barriers_wct_dnstr = array[]::text[];
