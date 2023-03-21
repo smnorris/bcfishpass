@@ -32,7 +32,6 @@ SELECT
         False,
         1
       )
-      AND a.watershed_group_code = b.watershed_group_code
-      WHERE b.watershed_group_code = :'wsg'
+      WHERE a.watershed_group_code = :'wsg'
   ) as f
-  GROUP BY segmented_stream_id, watershed_group_code
+  GROUP BY segmented_stream_id
