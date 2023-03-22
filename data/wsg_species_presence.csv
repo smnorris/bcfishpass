@@ -13,7 +13,7 @@ BIGC,t,,,,,,,,t,,,,
 BLAR,t,,,t,,t,,,t,,,,
 BLUR,t,,,,,t,t,,,,,,Mackenzie basin
 BONP,t,t,,t,t,,,t,t,,t,,
-BOWR,t,,,t,,t,,,t,t,,,
+BOWR,t,t,,t,,t,,,t,t,,,
 BRID,,,,,t,,,,t,,,,Falls 20807
 BRKS,t,t,t,t,t,t,,t,t,t,t,,
 BULK,t,t,,t,t,t,,t,t,t,t,,
@@ -21,7 +21,7 @@ BULL,t,,,,t,t,t,,t,,,t,
 CAMB,,t,t,t,t,t,t,t,t,t,t,,
 CANO,t,,,,,t,,,t,,,,Columbia basin
 CARP,t,,,,,t,,,t,,,,Mackenzie basin
-CARR,t,,,t,,t,,,t,,,,
+CARR,t,t,,t,,t,,,t,,,,
 CHES,t,,,t,,t,,,t,t,,,
 CHIL,,,,t,,t,,,t,,,,
 CHIR,t,,,,,t,,,t,t,,,
