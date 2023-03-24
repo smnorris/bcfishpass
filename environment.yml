@@ -26,9 +26,3 @@ dependencies:
   - seaborn
   - pip:
       - bcdata==0.7.6
-variables:
-  PGHOST: localhost
-  PGUSER: postgres
-  PGPORT: 5432
-  PGDATABASE: bcfishpass
-  DATABASE_URL: postgresql://postgres@localhost:5432/bcfishpass
