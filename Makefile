@@ -28,6 +28,7 @@ clean:
 # load parameters, create user data tables
 .make/setup: data/sql/user.sql parameters/sql/parameters.sql scripts/utmzone.sql parameters/param_habitat.csv parameters/param_watersheds.csv
 	mkdir -p .make
+	$(PSQL) -c "create schema if not exists bcfishpass"
 	# create tables for parameters and user maintained data
 	$(PSQL) -f parameters/sql/parameters.sql
 	$(PSQL) -f data/sql/user.sql

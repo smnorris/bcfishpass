@@ -56,7 +56,7 @@ Streams meeting the criteria for a given species are classified as spawning or r
     cd bcfishpass
 
 Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
-A `environment.yml` is provided to set up the processing environment. Edit the environment variables in this file as required (to match your database connection parameters) and then create/activate the environment:
+An `environment.yml` file is provided to install the required tools:
 
     conda env create -f environment.yml
     conda activate bcfishpass
@@ -64,10 +64,13 @@ A `environment.yml` is provided to set up the processing environment. Edit the e
 Note that `cdo` is required for processing NetCDF discharge files, but this tool is not included in the conda environment.
 Install `cdo` separately (either [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install) or via [homebrew](https://formulae.brew.sh/formula/cdo)).
 
-If the database you are working with does not already exist, create it and create the required schema:
+If the database you are working with does not already exist, create it:
 
-    psql -c "CREATE DATABASE bcfishpass" postgres
-    psql -c "CREATE SCHEMA bcfishpass" bcfishpass
+    createdb bcfishpass
+
+All scripts presume that the `DATABASE_URL` environment variable points to your database. For example:
+
+    export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass
 
 Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
 
