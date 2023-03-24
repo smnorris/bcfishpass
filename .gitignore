@@ -33,9 +33,6 @@ qa/*csv
 # qgis
 *.qgs~
 
-# data dumps
-export/outputs
-
 # ignore current parameters, just track param in subfolders
 parameters/param_habitat.csv
 parameters/param_watersheds.csv
