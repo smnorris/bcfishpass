@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Methodology &mdash; bcfishpass v0.1.dev2 documentation</title>
+  <title>Access model methodology &mdash; bcfishpass v0.1.dev2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -45,7 +45,17 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_background.html">Background</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Methodology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Access model methodology</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#collect-known-natural-barriers">1. Collect known natural barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-gradient-barriers">2. Generate gradient barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filter-natural-barriers">3. Filter natural barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#identify-stream-downstream-of-all-natural-barriers">4. Identify stream downstream of all natural barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collect-known-anthropogenic-barriers">5. Collect known anthropogenic barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model-potential-anthropogenic-barriers">6. Model potential anthropogenic barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manually-qa-modelled-potential-barriers">7. Manually QA modelled potential barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#report">8. Report</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="03_example_use_cases.html">Sample use case scenarios</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_table_definitions.html">Output table definitions</a></li>
 </ul>
@@ -64,7 +74,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Methodology</li>
+      <li class="breadcrumb-item active">Access model methodology</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/02_methodology.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -74,8 +84,93 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="methodology">
-<h1>Methodology<a class="headerlink" href="#methodology" title="Permalink to this heading"></a></h1>
+  <section id="access-model-methodology">
+<h1>Access model methodology<a class="headerlink" href="#access-model-methodology" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species. The processing steps involved are:</p>
+<section id="collect-known-natural-barriers">
+<h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Permalink to this heading"></a></h2>
+<p>Collect known natural barriers are waterfalls &gt;= 5m, subsurface flow, and miscellaneous known barriers from expert input:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>barrier type</p></th>
+<th class="head"><p>source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/provincial-obstacles-to-fish-passage">FISS obstacles</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://www.hillcrestgeo.ca/outgoing/public/whse_fish">FISS obstacles, unpublished</a></p></td>
+</tr>
+<tr class="row-even"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions">FWA obstructions</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>waterfalls</p></td>
+<td><p><a class="reference internal" href="#/data/user_falls.csv"><span class="xref myst">expert/user identified falls</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>subsurface flow</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network">FWA streams</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>misc</p></td>
+<td><p><a class="reference internal" href="#/data/user_barriers_definite.csv"><span class="xref myst">expert/user identified barriers</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generate-gradient-barriers">
+<h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Permalink to this heading"></a></h2>
+<p>FWA streams are analyzed to identify point locations (“gradient barriers”) where the stream begins to exceed a chosen gradient threshold for at least 100 linear meters. The gradient threshold used depends on the swimming ability of the species of interest. Gradient barriers are added to the collection of natural barriers.</p>
+</section>
+<section id="filter-natural-barriers">
+<h2>3. Filter natural barriers<a class="headerlink" href="#filter-natural-barriers" title="Permalink to this heading"></a></h2>
+<p>Natural barriers downstream of <a class="reference external" href="https://github.com/smnorris/bcfishobs">Known Fish Observations</a> are removed from the model - we presume that if there are observations of a given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, filter natural barriers with &gt;= 5 observations upstream since 1990.</p>
+</section>
+<section id="identify-stream-downstream-of-all-natural-barriers">
+<h2>4. Identify stream downstream of all natural barriers<a class="headerlink" href="#identify-stream-downstream-of-all-natural-barriers" title="Permalink to this heading"></a></h2>
+<p>Watercourses downstream of all natural barriers to a given species can be considered “potentially accessible” to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present.</p>
+</section>
+<section id="collect-known-anthropogenic-barriers">
+<h2>5. Collect known anthropogenic barriers<a class="headerlink" href="#collect-known-anthropogenic-barriers" title="Permalink to this heading"></a></h2>
+<p>Dams, assessed PSCIS barriers and expert/user identified barriers are collected:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>barrier type</p></th>
+<th class="head"><p>source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dams</p></td>
+<td><p><a class="reference external" href="https://aquaticbarriers.ca">Canadian Aquatic Barrier Database</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>PSCIS assessed barriers</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/pscis-assessments">PSCIS Assessments</a></p></td>
+</tr>
+<tr class="row-even"><td><p>misc</p></td>
+<td><p><a class="reference internal" href="#/data/user_barriers_anthropogenic.csv"><span class="xref myst">expert/user identified barriers</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-potential-anthropogenic-barriers">
+<h2>6. Model potential anthropogenic barriers<a class="headerlink" href="#model-potential-anthropogenic-barriers" title="Permalink to this heading"></a></h2>
+<p>Potential anthropogenic barriers (closed bottom structures, ie culverts) are identified by mapping intersections of FWA streams and linear infrastructure (roads, rail lines, major trails). This set of potential barriers is filtered, removing locations of known bridge structures and locations where a open bottom/bridge structure is presumeed to exist (where the stream is defined by a river polygon (‘double line streams’) and where the stream is of 6th order or higher). See [modelled crossings] for a full list of data sources.</p>
+</section>
+<section id="manually-qa-modelled-potential-barriers">
+<h2>7. Manually QA modelled potential barriers<a class="headerlink" href="#manually-qa-modelled-potential-barriers" title="Permalink to this heading"></a></h2>
+<p>Manual QA/QC of the potential barriers dataset has been project based - some areas have been reviewed, many have not. To date, review has primarily been along rail corridors and at very high impact sites <em>before planning field visits, further review of potential barriers is always advised</em>.</p>
+<p>QA/QC is a review of commonly available satellite imagery (Google/Bing/ESRI). If imagery at the site clearly shows a bridge, or that the crossing did not exist (road or stream not present), the crossing is removed from the potential barriers dataset. Where the imagery is not definitive, the site is retained as a potential barrier.</p>
+</section>
+<section id="report">
+<h2>8. Report<a class="headerlink" href="#report" title="Permalink to this heading"></a></h2>
+<p>For a given area of interest, modelling reports on:</p>
+<ul class="simple">
+<li><p>total length of stream potentially accessible to species of interest</p></li>
+<li><p>length of potentially accessible stream with no known or potential anthropogenic barriers downstream</p></li>
+<li><p>amount of potentially accessible stream upstream of each known/potential barrier</p></li>
+<li><p>amount of potentially accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier</p></li>
+</ul>
+</section>
 </section>
 
 
