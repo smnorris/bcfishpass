@@ -4,7 +4,7 @@
 
 ### 1. Collect known natural barriers
 	
-Collect known natural barriers are waterfalls >= 5m, subsurface flow, and miscellaneous known barriers from expert input:
+Collect known natural barriers: waterfalls >= 5m, subsurface flow, and miscellaneous known barriers from expert input:
 
 | barrier type | source
 ---------------|-----------
@@ -41,13 +41,13 @@ Dams, assessed PSCIS barriers and expert/user identified barriers are collected:
 
 ### 6. Model potential anthropogenic barriers
 
-Potential anthropogenic barriers (closed bottom structures, ie culverts) are identified by mapping intersections of FWA streams and linear infrastructure (roads, rail lines, major trails). This set of potential barriers is filtered, removing locations of known bridge structures and locations where a open bottom/bridge structure is presumeed to exist (where the stream is defined by a river polygon (‘double line streams’) and where the stream is of 6th order or higher). See [modelled crossings] for a full list of data sources.
+Potential anthropogenic barriers (closed bottom structures, ie culverts) are identified by mapping intersections of FWA streams and linear infrastructure (roads, rail lines, major trails). This set of potential barriers is filtered, removing locations of known bridge structures and locations where a open bottom/bridge structure is presumed to exist (where the stream is defined by a river polygon (‘double line streams’) and where the stream is of 6th order or higher). See [modelled crossings] for a full list of data sources.
 
 ### 7. Manually QA modelled potential barriers
 
-Manual QA/QC of the potential barriers dataset has been project based - some areas have been reviewed, many have not. To date, review has primarily been along rail corridors and at very high impact sites *before planning field visits, further review of potential barriers is always advised*.
+Manual QA/QC of the potential barriers dataset has been project based - some areas have been reviewed, many have not. To date, review has primarily been along rail corridors and at very high impact sites. *Before planning field visits, further review of potential barriers is always advised*.
 
-QA/QC is a review of commonly available satellite imagery (Google/Bing/ESRI). If imagery at the site clearly shows a bridge, or that the crossing did not exist (road or stream not present), the crossing is removed from the potential barriers dataset. Where the imagery is not definitive, the site is retained as a potential barrier. 
+QA/QC is a review of commonly available satellite imagery (Google/Bing/ESRI) at the crossing site. If the imagery clearly shows a bridge or that the crossing does not exist (road or stream not present), the crossing is removed from the potential barriers dataset. Where the imagery is not definitive, the site is retained as a potential barrier. 
 
 
 ### 8. Report
