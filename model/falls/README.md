@@ -17,7 +17,7 @@ A fall is automatically identified as a barrier if one of these conditions is me
 
 - data source is a FISS obstacles / FISS obstacles unpublished *AND* height >= 5m
 - data source is FWA obstructions (this data source does not include a height)
-- data sourc is `falls_other.csv` and `barrier_ind = True`
+- data source is `falls_other.csv` and `barrier_ind = True`
 
 See below for manually modifying the barrier status of individual falls with `falls_barrier_ind.csv`
 

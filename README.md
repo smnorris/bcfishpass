@@ -15,7 +15,7 @@ Also provided are tools for mapping features in the database:
 - comprehensive QGIS layer file
 
 
-## General Methodology
+## Methodology
 
 `bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions.
 
@@ -26,7 +26,7 @@ Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mappin
 3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), remove natural barriers from 1 and 2 that are downstream of known observation(s)
 4. Using gradient barriers above the threshold of the target species swimming ability, combine all resulting natural barriers and retain only those with no barriers downstream. All stream downstream of these barriers is termed 'potentially accessible' to the target species (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
 5. Collect anthropogenic barriers, both known (dams, PSCIS barriers) and potential (mapped road/railway FWA stream intersections, ie culverts) 
-6. Prioritize anthropogenic barriers for assessment or remediation by reporting on how much potentially accessible stream is upstream of each barrier (and downstream of other anthropogenic barriers)
+6. Identify high priority anthropogenic barriers for assessment or remediation by reporting on how much potentially accessible stream is upstream of each barrier (and downstream of other anthropogenic barriers)
 
 To improve prioritization of barriers for assessment and remediation, `bcfishpass` also includes basic 'intrinsic potential' habitat modelling for select species of interest (Bull Trout, Chinook, Chum, Coho, Pink, Sockeye, Steelhead, Westslope Cuthroat Trout). Intrinsic habitat potential (spawning and rearing) is based on:
 
@@ -36,6 +36,7 @@ To improve prioritization of barriers for assessment and remediation, `bcfishpas
 
 Streams meeting the criteria for a given species are classified as spawning or rearing habitat, and the amount of potential spawning/rearing habitat disconnected by barriers is summarized.
 
+See docs for more info.
 
 ## General requirements
 
@@ -44,13 +45,13 @@ Streams meeting the criteria for a given species are classified as spawning or r
 - a PostgreSQL / PostGIS database (tested with v14/v3.3.2)
 - Python (tested with v3.11.0)
 - [bcdata](https://github.com/smnorris/bcdata) (v0.7.6)
-- [fwapg](https://github.com/smnorris/fwapg) (v0.3.1)
-- [bcfishobs](https://github.com/smnorris/bcfishobs) (v0.1.0)
+- [fwapg](https://github.com/smnorris/fwapg) (v0.4.0)
+- [bcfishobs](https://github.com/smnorris/bcfishobs) (v0.1.1)
 
 
-## Installation / Setup
+## Setup
 
-`bcfishpass` is a collection of shell/sql/Python scripts - no installation is required. To download and use the latest:
+`bcfishpass` is a collection of shell/sql/Python scripts. To download and use the latest:
 
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
@@ -74,15 +75,16 @@ All scripts presume that the `DATABASE_URL` environment variable points to your 
 
 Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
 
+
 ## Usage
 
 Once you have `fwapg` and `bcfishobs` loaded to your database, `bcfishpass` processing is controlled by the `Makefile`.
 
-To run:
+To run all models (access, linear habitat, lateral habitat):
 
     make
 
-It is possible to build individual components of the model separately (if their dependencies are met, see the `Makefile`).
+It is possible to build individual models and components separately (if their dependencies are met, see the `Makefile`).
 Refer to the various README files in the folders within the `model` folder for more info.
 
 

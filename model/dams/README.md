@@ -1,6 +1,6 @@
 # Dams
 
-BC dam locations and barrier status have been compiled from many sources by the Canadian Wildlife Federation into the [Canadian Aquatic Barrier Database (CABD)](https://cabd-docs.netlify.app/index.html). Dam features for bcfishpass are taken directly from the CABD.
+BC dam locations and barrier status have been compiled from many sources by the Canadian Wildlife Federation into the [Canadian Aquatic Barrier Database (CABD)](https://aquaticbarriers.ca). Dam features for bcfishpass are taken directly from the CABD.
 
 
 ## Usage
@@ -11,11 +11,7 @@ Download CABD dams and match the points to the nearest FWA stream (within 50m):
 
 ## Output tables
 
-CABD tables are as documented:
-
-- [`cabd.dams`](https://cabd-docs.netlify.app/docs_tech/docs_tech_arch/docs_tech_arch_data_dict.html#dams.dams)
-
-- [`cabd.dam_use_codes`](https://cabd-docs.netlify.app/docs_tech/docs_tech_arch/docs_tech_arch_data_dict.html#dams.dam_use_codes)
+CABD tables are as [documented](https://cabd-docs.netlify.app/docs_user/docs_user_data_catalogue.html)
 
 `bcfishpass.dams` holds only the FWA/linear referencing information associated with a dam, plus the geometry of the feature snapped to the nearest FWA stream (for more information about dams, join this table back to `cabd.dams` or refer directly to the CABD)
 
