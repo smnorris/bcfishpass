@@ -52,10 +52,10 @@ model AS
 FROM bcfishpass.streams s
 LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
 LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
 INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-LEFT OUTER JOIN bcfishpass.param_habitat wct ON wct.species_code = 'WCT'
+LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds wct ON wct.species_code = 'WCT'
 LEFT OUTER JOIN rivers r
 ON s.waterbody_key = r.waterbody_key
 WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
@@ -82,9 +82,9 @@ WITH rearing AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.param_habitat h ON h.species_code = 'WCT'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'WCT'
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_wct IS TRUE AND              -- on spawning habitat
@@ -137,9 +137,9 @@ WITH rearing AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.param_habitat h ON h.species_code = 'WCT'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'WCT'
   WHERE
     s.barriers_wct_dnstr = array[]::text[] AND  -- accessibility check
     s.gradient <= h.rear_gradient_max AND         -- gradient check
@@ -227,9 +227,9 @@ WITH rearing AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.param_habitat h ON h.species_code = 'WCT'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'WCT'
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.barriers_wct_dnstr = array[]::text[] AND  -- accessibility check

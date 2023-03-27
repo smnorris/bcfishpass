@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # look for species models/scenarios to be processed in the sql folder,
 # all files with model_access prefix

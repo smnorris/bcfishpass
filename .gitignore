@@ -34,5 +34,5 @@ qa/*csv
 *.qgs~
 
 # ignore current parameters, just track param in subfolders
-parameters/param_habitat.csv
-parameters/param_watersheds.csv
+model/habitat_linear/parameters/parameters_habitat_method.csv
+model/habitat_linear/parameters/parameters_habitat_thresholds.csv

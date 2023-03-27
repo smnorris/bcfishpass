@@ -2,7 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 QA_ACCESS_SCRIPTS = $(wildcard reports/access/sql/*.sql)
 QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(QA_SCRIPTS))
@@ -29,20 +29,11 @@ clean:
 	mkdir -p .make
 	$(PSQL) -c "create schema if not exists bcfishpass"
 
-# load parameters, create user data tables
+# create empty user data tables, load grid and utm function
 .make/setup: .make/schema \
 	data/sql/user.sql \
-	parameters/sql/parameters.sql \
-	scripts/utmzone.sql \
-	parameters/param_habitat.csv \
-	parameters/param_watersheds.csv
-	# create tables for parameters and user maintained data
-	$(PSQL) -f parameters/sql/parameters.sql
+	scripts/utmzone.sql
 	$(PSQL) -f data/sql/user.sql
-	# load parameters
-	for csv in $(wildcard parameters/*csv) ; do \
-		set -e ; ./scripts/load_csv.sh $$csv ; \
-	done
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	$(PSQL) -f scripts/utmzone.sql
 	touch $@
