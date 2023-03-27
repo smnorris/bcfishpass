@@ -63,7 +63,12 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 		-nln whse_basemapping.transport_line_structure_code \
 		data/dgtl_road_atlas.gdb \
 		TRANSPORT_LINE_STRUCTURE_CODE
+	rm -rf data/dgtl_road_atlas.gdb
+	rm -rf data/modelled_stream_crossings.gpkg
+	touch $@
 
+# separate target for wfs downloads as ften roads is large enough to be unreliable
+.make/download_wfs:
 	# Get additional road data direct from BCGW, requesting full datasets (bcfishpass crossing scripts filter out what is needed)
 	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW
 	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --primary_key og_road_segment_permit_id
@@ -71,13 +76,11 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id
 	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
 	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
-	rm -rf data/dgtl_road_atlas.gdb
-	rm -rf data/modelled_stream_crossings.gpkg
 	touch $@
 
 
 # run the overlays/analysis
-.make/modelled_stream_crossings: .make/download
+.make/modelled_stream_crossings: .make/download .make/download_wfs
 	$(PSQL) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source

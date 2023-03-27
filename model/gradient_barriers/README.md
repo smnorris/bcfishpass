@@ -9,7 +9,7 @@ derived from the BC Digital Elevation Model. Absolute elevation accuracy is subj
 have been processed/QA'ed to ensure *relative* elevation is clean - all streams flow downhill. With these clean Z values, 
 we can confidently calculate the gradient of a stream at any point.
 
-To identify locations where a stream slope's exceeds a given threshold, start at the mouth of a stream (`blue_line_key`)
+To identify locations where a stream's slope exceeds a given threshold, start at the mouth of a stream (`blue_line_key`)
 and iterate through each vertex of the stream flow line.  Calculate the slope of the portion of stream 100m
 (or some other specified distance) upstream of each vertex. Wherever the measured slope exceeds the value of
 the given threshold(s), record this location and slope as a potential 'gradient barrier'. 

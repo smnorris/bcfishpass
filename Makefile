@@ -113,12 +113,13 @@ model/modelled_stream_crossings/.make/download:
 # -----
 # streams must be broken at user habitat classifcation lines, so 
 # we need to add the data before running the access model
-model/access/.make/model_access: .make/falls \
+.make/model_access: .make/falls \
 	.make/dams \
 	.make/pscis \
 	.make/data \
 	model/gradient_barriers/.make/gradient_barriers
 	cd model/access; make
+	touch $@
 
 # -----
 # ACCESS MODEL QA REPORTS
@@ -127,9 +128,6 @@ $(QA_ACCESS_OUTPUTS): reports/access/%.csv: reports/access/sql/%.sql \
 	model/access/.make/model_access 
 	psql2csv $(DATABASE_URL) < $< > $@	
 
-# simple target for building only access model and running QA
-.make/model_access: $(QA_ACCESS_OUTPUTS)
-	touch $@
 
 # -----
 # MEAN ANNUAL PRECIPITATION
