@@ -3,40 +3,17 @@
 `bcfishpass` is a collection of scripts to create and maintain an aquatic connectivity / fish passage database for British Columbia to:
 
 - track known barriers to fish passage (eg dams, waterfalls)
-- work with BC Provincial Stream Crossing Information System (PSCIS) crossings and barriers
+- work with assessed BC Provincial Stream Crossing Information System (PSCIS) crossings
 - model potential barriers to fish passage (stream gradient, road/rail stream crossings)
-- model passability/accessibility of streams based on barriers and species swimming ability
+- model passability/accessibility of streams based on species swimming ability
 - model streams with potential for spawning and rearing activity (for select species)
-- prioritize assessment and remediation of barriers based on modelled accessibility and habitat potential
+- report on habitat/connectivity based indicators to support prioritization of assessment and remediation
 
 Also provided are tools for mapping features in the database:
 
 - [basic web viewer](https://www.hillcrestgeo.ca/projects/bcfishpass/)
 - comprehensive QGIS layer file
 
-
-## Methodology
-
-`bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions.
-
-Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) as the mapping base:
-
-1. Collect known 'natural' barriers to fish passage (waterfalls, subsurface flow, etc) and reference to the stream network
-2. Model stream gradient barriers (where a stream slope is steeper than a given percentage for >=100m)
-3. Using [Known Fish Observations referenced to streams](https://github.com/smnorris/bcfishobs), remove natural barriers from 1 and 2 that are downstream of known observation(s)
-4. Using gradient barriers above the threshold of the target species swimming ability, combine all resulting natural barriers and retain only those with no barriers downstream. All stream downstream of these barriers is termed 'potentially accessible' to the target species (ie, ignoring other barriers such as insufficent flow, temperature, etc a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barrers are present)
-5. Collect anthropogenic barriers, both known (dams, PSCIS barriers) and potential (mapped road/railway FWA stream intersections, ie culverts) 
-6. Identify high priority anthropogenic barriers for assessment or remediation by reporting on how much potentially accessible stream is upstream of each barrier (and downstream of other anthropogenic barriers)
-
-To improve prioritization of barriers for assessment and remediation, `bcfishpass` also includes basic 'intrinsic potential' habitat modelling for select species of interest (Bull Trout, Chinook, Chum, Coho, Pink, Sockeye, Steelhead, Westslope Cuthroat Trout). Intrinsic habitat potential (spawning and rearing) is based on:
-
-1. Stream gradient
-2. Stream discharge or stream channel width (as per data availability and user preference)
-3. Various species-specific connectivitiy criteria (eg. sockeye spawn must be connected to rearing lakes)
-
-Streams meeting the criteria for a given species are classified as spawning or rearing habitat, and the amount of potential spawning/rearing habitat disconnected by barriers is summarized.
-
-See docs for more info.
 
 ## General requirements
 
@@ -62,8 +39,12 @@ An `environment.yml` file is provided to install the required tools:
     conda env create -f environment.yml
     conda activate bcfishpass
 
-Note that `cdo` is required for processing NetCDF discharge files, but this tool is not included in the conda environment.
-Install `cdo` separately (either [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install) or via [homebrew](https://formulae.brew.sh/formula/cdo)).
+Note that `cdo` is required for processing NetCDF discharge files, but this tool is not currently included in the conda environment.
+If processing discharge based habitat models, install `cdo` separately:
+
+- `conda install cdo` (if your system supports this, this may not work on ARM based Macs) 
+- `brew install cdo` 
+- install from [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install)
 
 If the database you are working with does not already exist, create it:
 
@@ -84,7 +65,7 @@ To run all models (access, linear habitat, lateral habitat):
 
     make
 
-It is possible to build individual models and components separately (if their dependencies are met, see the `Makefile`).
+Note that it is possible (and often preferred) to build components of the modelling separately. 
 Refer to the various README files in the folders within the `model` folder for more info.
 
 
@@ -104,3 +85,4 @@ With additional funding from:
 - [Society for Ecosystem Restoration in Northern British Columbia (SERNBC)](https://sernbc.ca/)
 - [BC Salmon Restoration and Innovation Fund (BCSRIF)](https://www.dfo-mpo.gc.ca/fisheries-peches/initiatives/fish-fund-bc-fonds-peche-cb/index-eng.html)
 - [Canada Nature Fund for Aquatic Species at Risk (CNFASAR)](https://www.dfo-mpo.gc.ca/species-especes/sara-lep/cnfasar-fnceap/index-eng.html)
+- BC Ministry of Transportation and Infrastructure
