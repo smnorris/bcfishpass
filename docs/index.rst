@@ -23,6 +23,9 @@ The generated ``bcfishpass`` database:
    :caption: Contents:
 
    01_background
-   02_methodology
-   03_example_use_cases
-   04_table_definitions
+   02_access_methodology
+   03_habitat_linear_methodology
+   04_habitat_lateral_methodology
+   05_example_use_cases
+   06_table_definitions
+   07_credits

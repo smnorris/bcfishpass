@@ -15,6 +15,8 @@ Also provided are tools for mapping features in the database:
 - comprehensive QGIS layer file
 
 
+See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
+
 ## General requirements
 
 - bash
