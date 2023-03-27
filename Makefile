@@ -25,10 +25,17 @@ clean:
 # ------
 # SETUP
 # ------
-# load parameters, create user data tables
-.make/setup: data/sql/user.sql parameters/sql/parameters.sql scripts/utmzone.sql parameters/param_habitat.csv parameters/param_watersheds.csv
+.make/schema:
 	mkdir -p .make
 	$(PSQL) -c "create schema if not exists bcfishpass"
+
+# load parameters, create user data tables
+.make/setup: .make/schema \
+	data/sql/user.sql \
+	parameters/sql/parameters.sql \
+	scripts/utmzone.sql \
+	parameters/param_habitat.csv \
+	parameters/param_watersheds.csv
 	# create tables for parameters and user maintained data
 	$(PSQL) -f parameters/sql/parameters.sql
 	$(PSQL) -f data/sql/user.sql
@@ -60,13 +67,13 @@ clean:
 # GRADIENT BARRIERS
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
-model/gradient_barriers/.make/gradient_barriers: 
+model/gradient_barriers/.make/gradient_barriers: .make/schema
 	cd model/gradient_barriers; make
 
 # ------
 # DAMS
 # ------
-.make/dams:  model/dams/dams.sh model/dams/sql/dams.sql
+.make/dams:  model/dams/dams.sh model/dams/sql/dams.sql .make/schema
 	cd model/dams; ./dams.sh
 	touch $@
 
@@ -75,14 +82,15 @@ model/gradient_barriers/.make/gradient_barriers:
 # ------
 # Load modelled crossings from archive posted to s3
 # (this ensures consistent modelled crossing ids for all model users)
-model/modelled_stream_crossings/.make/download: 
+model/modelled_stream_crossings/.make/download: .make/schema
 	cd model/modelled_stream_crossings; make .make/download
 
 # ------
 # PSCIS STREAM CROSSINGS
 # ------
 .make/pscis: model/modelled_stream_crossings/.make/download  \
-	data/pscis_modelledcrossings_streams_xref.csv
+	data/pscis_modelledcrossings_streams_xref.csv \
+ 	.make/schema
 	./scripts/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd model/pscis; ./pscis.sh
 	touch $@

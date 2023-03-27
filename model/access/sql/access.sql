@@ -12,55 +12,45 @@ update bcfishpass.streams
 set barriers_bt_dnstr = array[]::text[]
 where barriers_bt_dnstr is null and
 watershed_group_code in (
-	select p.watershed_group_code
-	from bcfishpass.param_watersheds p
-	inner join bcfishpass.wsg_species_presence s
-	on p.watershed_group_code = s.watershed_group_code
-	where s.bt is not null
+	select watershed_group_code
+	from bcfishpass.wsg_species_presence
+	where bt is not null
 );
 
 update bcfishpass.streams
 set barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
 where barriers_ch_cm_co_pk_sk_dnstr is null and
 watershed_group_code in (
-	select p.watershed_group_code
-	from bcfishpass.param_watersheds p
-	inner join bcfishpass.wsg_species_presence s
-	on p.watershed_group_code = s.watershed_group_code
-	where s.ch is not null or s.cm is not null or s.co is not null or s.pk is not null or s.sk is not null
+	select watershed_group_code
+	from bcfishpass.wsg_species_presence
+	where ch is not null or cm is not null or co is not null or pk is not null or sk is not null
 );
 
 update bcfishpass.streams
 set barriers_st_dnstr = array[]::text[]
 where barriers_st_dnstr is null and
 watershed_group_code in (
-	select p.watershed_group_code
-	from bcfishpass.param_watersheds p
-	inner join bcfishpass.wsg_species_presence s
-	on p.watershed_group_code = s.watershed_group_code
-	where s.st is not null
+	select watershed_group_code
+	from bcfishpass.wsg_species_presence
+	where st is not null
 );
 
 update bcfishpass.streams
 set barriers_wct_dnstr = array[]::text[]
 where barriers_wct_dnstr is null and
 watershed_group_code in (
-	select p.watershed_group_code
-	from bcfishpass.param_watersheds p
-	inner join bcfishpass.wsg_species_presence s
-	on p.watershed_group_code = s.watershed_group_code
-	where s.wct is not null
+	select watershed_group_code
+	from bcfishpass.wsg_species_presence
+	where wct is not null
 );
 
 update bcfishpass.streams
 set barriers_ct_dv_rb_dnstr = array[]::text[]
 where barriers_ct_dv_rb_dnstr is null and
 watershed_group_code in (
-	select p.watershed_group_code
-	from bcfishpass.param_watersheds p
-	inner join bcfishpass.wsg_species_presence s
-	on p.watershed_group_code = s.watershed_group_code
-	where s.dv is not null or s.ct is not null or s.rb is not null
+	select watershed_group_code
+	from bcfishpass.wsg_species_presence
+	where dv is not null or ct is not null or rb is not null
 );
 
 
