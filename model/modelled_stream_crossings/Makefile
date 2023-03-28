@@ -4,7 +4,7 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	ORDER BY watershed_group_code")
 
 # download latest from s3
-.make/download:
+.make/download_archive:
 	mkdir -p .make
 	mkdir -p data
 	wget --trust-server-names -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip
@@ -20,9 +20,20 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	rm data/modelled_stream_crossings.gpkg
 	$(PSQL) -f sql/01_create_output_table.sql
 	$(PSQL) -f sql/load_from_archive.sql
+	rm -rf data/modelled_stream_crossings.gpkg
+	touch $@
 
-	# note that while modelled crossings are loaded from archive above, we still need roads/railways etc
-	# for further analysis
+# note that while modelled crossings are loaded from archive above, we still need roads/railways etc
+# for further analysis
+.make/download_bcdata:
+	# Get non-dra road data direct from BCGW, requesting full datasets (bcfishpass crossing scripts filter out what is needed)
+	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW
+	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --primary_key og_road_segment_permit_id
+	bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --primary_key og_petrlm_dev_rd_pre06_pub_id
+	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id
+	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
+	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
+	# get dra from ftp
 	wget --trust-server-names -qNP data ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip
 	unzip -qun data/dgtl_road_atlas.gdb.zip -d data
 	ogr2ogr \
@@ -64,23 +75,10 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 		data/dgtl_road_atlas.gdb \
 		TRANSPORT_LINE_STRUCTURE_CODE
 	rm -rf data/dgtl_road_atlas.gdb
-	rm -rf data/modelled_stream_crossings.gpkg
 	touch $@
-
-# separate target for wfs downloads as ften roads is large enough to be unreliable
-.make/download_wfs:
-	# Get additional road data direct from BCGW, requesting full datasets (bcfishpass crossing scripts filter out what is needed)
-	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW
-	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --primary_key og_road_segment_permit_id
-	bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --primary_key og_petrlm_dev_rd_pre06_pub_id
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
-	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
-	touch $@
-
 
 # run the overlays/analysis
-.make/modelled_stream_crossings: .make/download .make/download_wfs
+.make/modelled_stream_crossings: .make/download_archive .make/download_bcdata
 	$(PSQL) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source
@@ -96,11 +94,11 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 
 	# assign modelled_crossing_id from previous version to ensure consistency
 	$(PSQL) -f sql/09_match_archived_crossings.sql
-	echo "modelled stream crossings created, run 'make modelled_stream_crossings_archive.gpkg.zip' to create a new archive"
+	echo "modelled stream crossings created, run 'make .make/publish' to publish"
 	touch $@
 
-# dump to file and post latest to s3
-.make/publish: .make/modelled_stream_crossings
+# dump to file
+modelled_stream_crossings.gpkg.zip: .make/modelled_stream_crossings
 	rm -f modelled_stream_crossings.gpkg*
 	ogr2ogr \
 		-f GPKG \
@@ -127,6 +125,9 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 			from bcfishpass.modelled_stream_crossings"
 	zip -r modelled_stream_crossings.gpkg.zip modelled_stream_crossings.gpkg
 	rm modelled_stream_crossings.gpkg
+
+# post archive to s3 and clean up
+.make/publish: modelled_stream_crossings.gpkg.zip
 	aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/
 	aws s3api put-object-acl --bucket bcfishpass --key modelled_stream_crossings.gpkg.zip --acl public-read
 	rm -f modelled_stream_crossings.gpkg*

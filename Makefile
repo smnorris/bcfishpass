@@ -28,6 +28,7 @@ clean:
 .make/schema:
 	mkdir -p .make
 	$(PSQL) -c "create schema if not exists bcfishpass"
+	touch $@
 
 # create empty user data tables, load grid and utm function
 .make/setup: .make/schema \
@@ -73,15 +74,15 @@ model/gradient_barriers/.make/gradient_barriers: .make/schema
 # ------
 # Load modelled crossings from archive posted to s3
 # (this ensures consistent modelled crossing ids for all model users)
-model/modelled_stream_crossings/.make/download: .make/schema
-	cd model/modelled_stream_crossings; make .make/download
+.make/modelled_stream_crossings: .make/schema
+	cd model/modelled_stream_crossings; make .make/download_wfs
+	touch $@
 
 # ------
 # PSCIS STREAM CROSSINGS
 # ------
-.make/pscis: model/modelled_stream_crossings/.make/download  \
-	data/pscis_modelledcrossings_streams_xref.csv \
- 	.make/schema
+.make/pscis: data/pscis_modelledcrossings_streams_xref.csv \
+ 	.make/modelled_stream_crossings
 	./scripts/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd model/pscis; ./pscis.sh
 	touch $@
