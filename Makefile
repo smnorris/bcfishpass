@@ -72,10 +72,10 @@ model/gradient_barriers/.make/gradient_barriers: .make/schema
 # ------
 # MODELLED ROAD-STREAM CROSSINGS
 # ------
-# Load modelled crossings from archive posted to s3
-# (this ensures consistent modelled crossing ids for all model users)
+# Load modelled crossings from archive posted to s3 (this ensures consistent modelled crossing ids for all users)
 .make/modelled_stream_crossings: .make/schema
-	cd model/modelled_stream_crossings; make .make/download_wfs
+	cd model/modelled_stream_crossings; make .make/download_archive
+	cd model/modelled_stream_crossings; make .make/download_bcdata # also download roads/railways for reference
 	touch $@
 
 # ------

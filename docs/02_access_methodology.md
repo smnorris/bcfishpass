@@ -22,7 +22,7 @@ FWA streams are analyzed to identify point locations (“gradient barriers”) w
 
 ### 3. Filter natural barriers 
 
-Natural barriers downstream of [Known Fish Observations](https://github.com/smnorris/bcfishobs) are removed from the model - we presume that if there are observations of a given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, filter natural barriers with >= 5 observations upstream since 1990.
+For anadromous species, natural barriers downstream of [Known Fish Observations](https://github.com/smnorris/bcfishobs) are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead filter natural barriers with >= 5 observations upstream since 1990. 
 
 ### 4. Identify stream downstream of all natural barriers
 
