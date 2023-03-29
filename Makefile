@@ -128,6 +128,9 @@ $(QA_ACCESS_OUTPUTS): reports/access/%.csv: reports/access/sql/%.sql \
 	model/access/.make/model_access 
 	psql2csv $(DATABASE_URL) < $< > $@	
 
+# just a target to build all access reports
+.make/model_access_reports: $(QA_ACCESS_OUTPUTS)
+	touch $@
 
 # -----
 # MEAN ANNUAL PRECIPITATION

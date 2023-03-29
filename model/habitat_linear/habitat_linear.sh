@@ -3,12 +3,13 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # load parameters
 $PSQL -f sql/parameters.sql
-../../scripts/load_csv.sh paramters/parameters_habitat_thresholds.csv
-../../scripts/load_csv.sh paramters/parameters_habitat_method.csv
+../../scripts/load_csv.sh parameters/parameters_habitat_thresholds.csv
+../../scripts/load_csv.sh parameters/parameters_habitat_method.csv
+
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # add output columns
 MODELS=$(ls sql/model_habitat*.sql | sed -e "s/sql\/model_habitat_//" | sed -e "s/.sql//")  
