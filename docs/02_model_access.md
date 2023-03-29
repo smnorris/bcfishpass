@@ -20,7 +20,7 @@ Collect known natural barriers: waterfalls 5m in height or more, subsurface flow
 
 FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure *relative* elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.
 
-To identify locations where a stream's slope exceeds a given threshold, start at the mouth of a stream (identified by the `blue_line_key`) and iterate through each vertex of the stream flow line.  At each vertex, calculate the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), record this location and slope as a potential 'gradient barrier'. 
+To identify locations where a stream's slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the `blue_line_key`) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential 'gradient barrier'.
 
 `bcfishpass` scripts create potential gradient barriers at a number of default gradients, the threshold used for any 
 given model is species dependent.
