@@ -29,7 +29,7 @@ WITH rearing AS
     s.segmented_stream_id
   FROM bcfishpass.streams s
   INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat h ON h.species_code = 'SK'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'SK'
   LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk ON s.waterbody_key = lk.waterbody_key
   LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res ON s.waterbody_key = res.waterbody_key
   WHERE
@@ -129,8 +129,8 @@ dnstr_spawning AS
   FROM downstream_within_3k a
   LEFT OUTER JOIN too_steep b ON a.waterbody_key = b.waterbody_key
   INNER JOIN bcfishpass.streams s ON a.segmented_stream_id = s.segmented_stream_id
-  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk ON sk.species_code = 'SK'
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds sk ON sk.species_code = 'SK'
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   WHERE b.waterbody_key IS NULL OR a.row_number < b.row_number
@@ -157,8 +157,8 @@ WITH spawn AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk ON sk.species_code = 'SK'
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds sk ON sk.species_code = 'SK'
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   WHERE
   s.watershed_group_code = :'wsg' AND
@@ -226,7 +226,7 @@ clusters_near_rearing as
   from clusters c
   left outer join whse_basemapping.fwa_lakes_poly lk
   on st_dwithin(c.geom, lk.geom, 2)
-  LEFT OUTER JOIN bcfishpass.param_habitat h
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h
   ON h.species_code = 'SK'
   where lk.area_ha >= h.rear_lake_ha_min  -- lakes
   group by c.cid
@@ -237,7 +237,7 @@ clusters_near_rearing as
   from clusters c
   left outer join whse_basemapping.fwa_manmade_waterbodies_poly res
   on st_dwithin(c.geom, res.geom, 2)
-  LEFT OUTER JOIN bcfishpass.param_habitat h
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h
   ON h.species_code = 'SK'
   where res.area_ha >= h.rear_lake_ha_min    -- reservoirs
   group by c.cid
@@ -281,8 +281,8 @@ WITH spawn AS
   FROM bcfishpass.streams s
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-  INNER JOIN bcfishpass.param_watersheds wsg ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.param_habitat sk ON sk.species_code = 'SK'
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds sk ON sk.species_code = 'SK'
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   WHERE
   (

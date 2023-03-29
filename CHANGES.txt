@@ -5,6 +5,7 @@ All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
 v0.1.dev2 ()
 ------------------
+- move linear habitat parameter files into linear habitat model folder, control access processing with text file
 - add confirmed habitat data (PSE) within CCIRA study (area where it informs access model)
 - add confirmed habitat locations from New Graph BULK field reviews
 - use confirmed habitat to inform access model (#227)

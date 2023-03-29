@@ -2,16 +2,14 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "select watershed_group_code FROM bcfishpass.param_watersheds")
 
-
-# targets are listed here to create 'static pattern rules' - so they do not get ignored as intermediate steps
-# https://stackoverflow.com/questions/23964228/make-ignoring-prerequisite-that-doesnt-exist
+# process only watershed groups noted in wsg.txt
+WSG = $(shell cat wsg.txt)
 
 # define the make targets that flag when the table has been built
 SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 
-# access models - combine barriers into tables of per-species scenarios, these are points at which we break the streams
+# access models - combine barriers into tables of per-species scenarios
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
 # final targets

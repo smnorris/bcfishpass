@@ -2,7 +2,7 @@
 .SECONDARY:  # do not delete intermediate targets
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 QA_ACCESS_SCRIPTS = $(wildcard reports/access/sql/*.sql)
 QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(QA_SCRIPTS))
@@ -25,17 +25,16 @@ clean:
 # ------
 # SETUP
 # ------
-# load parameters, create user data tables
-.make/setup: data/sql/user.sql parameters/sql/parameters.sql scripts/utmzone.sql parameters/param_habitat.csv parameters/param_watersheds.csv
+.make/schema:
 	mkdir -p .make
 	$(PSQL) -c "create schema if not exists bcfishpass"
-	# create tables for parameters and user maintained data
-	$(PSQL) -f parameters/sql/parameters.sql
+	touch $@
+
+# create empty user data tables, load grid and utm function
+.make/setup: .make/schema \
+	data/sql/user.sql \
+	scripts/utmzone.sql
 	$(PSQL) -f data/sql/user.sql
-	# load parameters
-	for csv in $(wildcard parameters/*csv) ; do \
-		set -e ; ./scripts/load_csv.sh $$csv ; \
-	done
 	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
 	$(PSQL) -f scripts/utmzone.sql
 	touch $@
@@ -60,29 +59,30 @@ clean:
 # GRADIENT BARRIERS
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
-model/gradient_barriers/.make/gradient_barriers: 
+model/gradient_barriers/.make/gradient_barriers: .make/schema
 	cd model/gradient_barriers; make
 
 # ------
 # DAMS
 # ------
-.make/dams:  model/dams/dams.sh model/dams/sql/dams.sql
+.make/dams:  model/dams/dams.sh model/dams/sql/dams.sql .make/schema
 	cd model/dams; ./dams.sh
 	touch $@
 
 # ------
 # MODELLED ROAD-STREAM CROSSINGS
 # ------
-# Load modelled crossings from archive posted to s3
-# (this ensures consistent modelled crossing ids for all model users)
-model/modelled_stream_crossings/.make/download: 
-	cd model/modelled_stream_crossings; make .make/download
+# Load modelled crossings from archive posted to s3 (this ensures consistent modelled crossing ids for all users)
+.make/modelled_stream_crossings: .make/schema
+	cd model/modelled_stream_crossings; make .make/download_archive
+	cd model/modelled_stream_crossings; make .make/download_bcdata # also download roads/railways for reference
+	touch $@
 
 # ------
 # PSCIS STREAM CROSSINGS
 # ------
-.make/pscis: model/modelled_stream_crossings/.make/download  \
-	data/pscis_modelledcrossings_streams_xref.csv
+.make/pscis: data/pscis_modelledcrossings_streams_xref.csv \
+ 	.make/modelled_stream_crossings
 	./scripts/load_csv.sh data/pscis_modelledcrossings_streams_xref.csv
 	cd model/pscis; ./pscis.sh
 	touch $@

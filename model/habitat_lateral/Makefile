@@ -2,7 +2,7 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.param_watersheds where watershed_group_code != 'ELKR'")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method where watershed_group_code != 'ELKR'")
 
 VALLEY_OUTPUTS = $(patsubst %, data/temp/%/valleys.tif, $(WSG)) 
 LATERAL_OUTPUTS = $(patsubst %, data/temp/%/habitat_lateral.tif, $(WSG)) 
@@ -13,7 +13,7 @@ from ( \
   select \
     st_extent(geom) as geom \
   from whse_basemapping.fwa_watershed_groups_poly wsg \
-  inner join bcfishpass.param_watersheds p \
+  inner join bcfishpass.parameters_habitat_method p \
   on wsg.watershed_group_code = p.watershed_group_code \
 ) as ext;")
 

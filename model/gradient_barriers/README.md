@@ -2,21 +2,7 @@
 
 Generate points at which FWA streams exceed given slope threshold(s) for more than a specified distance.
 
-## Method
-
-FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value
-derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations 
-have been processed/QA'ed to ensure *relative* elevation is clean - all streams flow downhill. With these clean Z values, 
-we can confidently calculate the gradient of a stream at any point.
-
-To identify locations where a stream's slope exceeds a given threshold, start at the mouth of a stream (`blue_line_key`)
-and iterate through each vertex of the stream flow line.  Calculate the slope of the portion of stream 100m
-(or some other specified distance) upstream of each vertex. Wherever the measured slope exceeds the value of
-the given threshold(s), record this location and slope as a potential 'gradient barrier'. 
-
-To prevent identification of potential gradient barriers within waterbodies (where a slope rises directly above the waterbody), 
-only these `edge_type` codes are included: `(1000,1050,1100,1150,1250,1350,1410,2000,2300)` - network connectors and similar 
-are excluded.
+## Usage
 
 To create and load the gradient barrier table:
 
@@ -42,4 +28,4 @@ threshold modelled as a barrier for a given species is controlled by the access 
 
 ## Override data errors / note gradient barriers that do not exist
 
-If any gradient barriers need to be removed because they are not present/not barriers, add them to `data/gradient_barriers_passable.csv`.
+If any gradient barriers need to be removed because they are not present/not barriers, add them to `bcfishpass/data/gradient_barriers_passable.csv`.
