@@ -10,4 +10,4 @@ With over 500,000 mapped locations of road/rail stream crossings representing po
 - known anthropogenic barriers (dams, PSCIS assessed barriers, other)
 - potential anthropogenic barriers (mapped road/railway stream crossings)
 
-With this information, users can eliminate many potential barriers from further consideration (for example,  sites upstream of natural barriers or hydro dams) and further prioritize watersheds or individual sites for assessment or remediation by ranking by various indicators (for example, length of upstream spawning/rearing habitat and number of potential anthropogenic barriers downstream).
+With this information, users can eliminate many potential barriers from further consideration (for example, sites upstream of natural barriers or hydro dams) and further prioritize watersheds or individual sites for assessment or remediation by ranking by various indicators (for example, length of upstream spawning/rearing habitat and number of potential anthropogenic barriers downstream).
