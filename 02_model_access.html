@@ -60,8 +60,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#report">8. Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#known-limitations">9. Known limitations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fwa-stream-network">FWA Stream Network</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#known-observations-and-barriers">Known Observations and Barriers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fwa-stream-network">FWA stream network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#known-barriers-and-observations">Known barriers and observations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#potential-barriers">Potential barriers</a></li>
 </ul>
 </li>
 </ul>
@@ -264,16 +265,35 @@ given model is species dependent.</p>
 <p>The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.</p>
 <p>There are many limitations associated with the component layers that were used to create the model. These errors and omissions are carried into the model and potentially even compounded when combined with other inputs.</p>
 <section id="fwa-stream-network">
-<h3>FWA Stream Network<a class="headerlink" href="#fwa-stream-network" title="Permalink to this heading"></a></h3>
+<h3>FWA stream network<a class="headerlink" href="#fwa-stream-network" title="Permalink to this heading"></a></h3>
 <p>The FWA stream network is based on TRIM I stream linework. Streams tend to be under-represented in wet, coastal areas and over-represented in dry interior areas.</p>
 <p>TRIM features were delineated through air photo interpretation and have varying degrees of accuracy – particularly when it comes to smaller streams.   TRIM commonly under-represents the number of streams in the wetter, coastal areas of the province and field surveyors may regularly find small streams which were not visible on the original air photos due to canopy, terrain, shadows, etc.  As a result, these streams do not exist in the FWA and as a result, the model.  In wet areas, field crews will tend to find additional streams and road-stream crossings.</p>
 <p>Conversely, in the drier, interior portions of the province, TRIM may over-represent the number or magnitude of streams.  These may be ephemeral or intermittent streams which only have water in them at the wettest times of the year.  Field crews often report finding only a ‘dry draw’ at locations where a stream has been shown on the mapping.</p>
 </section>
-<section id="known-observations-and-barriers">
-<h3>Known Observations and Barriers<a class="headerlink" href="#known-observations-and-barriers" title="Permalink to this heading"></a></h3>
-<p>The fish observation and barrier inventories have similar limitations.  Fish observation data is based on the results of field sampling and fish collection permits.  The distribution and scale of this work has typically been driven by development requirements in the resource industries.  As such, the model is based on unevenly distributed data points.  Areas that have seen more development and resource extraction tend to have a higher density of sampling and observation points while other, less developed areas tend to have sparse or non-existent fish observation and barrier data.</p>
+<section id="known-barriers-and-observations">
+<h3>Known barriers and observations<a class="headerlink" href="#known-barriers-and-observations" title="Permalink to this heading"></a></h3>
+<p>The barrier and fish observation inventories have similar limitations.  Fish observation data is based on the results of field sampling and fish collection permits.  The distribution and scale of this work has typically been driven by development requirements in the resource industries.  As such, the model is based on unevenly distributed data points.  Areas that have seen more development and resource extraction tend to have a higher density of sampling and observation points while other, less developed areas tend to have sparse or non-existent fish observation and barrier data.</p>
 <p>Even areas with a high density of fish observation data may be problematic.  The observation dataset dates back to the early 20th Century and not all observation points are still valid.  Some historical records are found in areas that are no longer accessible to fish because natural (landslides) and/or man–made (dams, weirs, etc.) blockages have occurred since the time of observation.  Observation points may also have other errors such as incorrect co-ordinates or mis-identification of fish species.  Similarly, the obstructions layer is neither exhaustive nor guaranteed to be accurate.  These component data limitations may compound one another.</p>
 <p>Adequate field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  Likewise, peer review of the methodology has also been limited.</p>
+</section>
+<section id="potential-barriers">
+<h3>Potential barriers<a class="headerlink" href="#potential-barriers" title="Permalink to this heading"></a></h3>
+<p>The model will generally over-estimate the extent of potential barriers (closed bottom structures / culverts). Two errors in particular lead to this over-estimation:</p>
+<ol class="arabic simple">
+<li><p>An open bottom structures / bridge exists at a crossings modelled as a closed bottom structure / culvert</p></li>
+</ol>
+<p>No inventory of built stream crossing structures on resource roads is available. In the absence of further information, the model presumes bridges are present only on ‘double line’ streams and 6th order streams and greater, as noted in section 6c. While bridges are commonplace on 5th order and lower streams in many areas, we do not want to miss potential barriers with very high impact by mis-classifiying them as passable open bottom structures.</p>
+<ol class="arabic simple" start="2">
+<li><p>No structure exists at the mapped road/stream crossing.</p></li>
+</ol>
+<p>This can be due to a number of different data issues:</p>
+<ul class="simple">
+<li><p>DRA mapping can be over-generous in its definition of ‘road’</p></li>
+<li><p>a road has been deactivated or never had a crossing structure</p></li>
+<li><p>FTEN road data is tenure data, not actual ‘as built’ data - an FTEN road may not have been built</p></li>
+<li><p>there is insufficent flow in the stream channel for a structure to have been necessary in road construction</p></li>
+<li><p>the stream is incorrectly mapped or the stream channel has moved from where it was mapped</p></li>
+</ul>
 </section>
 </section>
 </section>
