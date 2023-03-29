@@ -112,7 +112,9 @@ For a given area of interest, modelling reports on:
 
 The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.
 
-There are many limitations associated with the component layers that were used to create the model. These errors and omissions are carried into the model and potentially even compounded when combined with other inputs.  
+Field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  To date, peer review of the methodology has been limited.
+
+There are also many limitations associated with the source inventories used to create the model. Source errors and omissions from model inputs are present in model outputs, and source errors may be compounded when combined with other inputs.
 
 ### FWA stream network
 
@@ -127,8 +129,6 @@ Conversely, in the drier, interior portions of the province, TRIM may over-repre
 The barrier and fish observation inventories have similar limitations.  Fish observation data is based on the results of field sampling and fish collection permits.  The distribution and scale of this work has typically been driven by development requirements in the resource industries.  As such, the model is based on unevenly distributed data points.  Areas that have seen more development and resource extraction tend to have a higher density of sampling and observation points while other, less developed areas tend to have sparse or non-existent fish observation and barrier data.
 
 Even areas with a high density of fish observation data may be problematic.  The observation dataset dates back to the early 20th Century and not all observation points are still valid.  Some historical records are found in areas that are no longer accessible to fish because natural (landslides) and/or man–made (dams, weirs, etc.) blockages have occurred since the time of observation.  Observation points may also have other errors such as incorrect co-ordinates or mis-identification of fish species.  Similarly, the obstructions layer is neither exhaustive nor guaranteed to be accurate.  These component data limitations may compound one another.
-
-Adequate field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  Likewise, peer review of the methodology has also been limited. 
 
 ### Potential barriers
 
