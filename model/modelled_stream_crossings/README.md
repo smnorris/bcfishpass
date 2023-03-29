@@ -61,12 +61,20 @@ Once duplicates have been removed, output crossings are identified/modelled as o
 
 ## Run scripts
 
-Download data and run scripts to generate the crossings.
+To download existing modelled crossings plus roads/railways:
 
-    ./modelled_stream_crossings.sh
+    make .make/download_archive
+    make .make/download_bcdata
+    
 
-Note that the script re-generates **all** modelled crossings.
-To ensure that ID values for the crossings are consistent with previous model outputs, an archived version of the modelled crossings is downloaded and the `modelled_crossing_id` values are transferred from the archive to the new output crossings (where crossings are within 10m distance).
+To generate a fresh set of crossings using the latest roads data, and load correct ids to the output from the archive:
+
+    make .make/modelled_stream_crossings
+
+To publish the latest:
+
+    make .make/publish
+
 
 ## Output
 

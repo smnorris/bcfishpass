@@ -1,4 +1,4 @@
-## Credits
+# Credits
 
 These tools are made possible by the work and funding of the following groups:
 
