@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access model &mdash; bcfishpass v0.1.dev2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="03_model_habitat_linear.html" />
+    <link rel="prev" title="Background" href="01_background.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            bcfishpass
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_background.html">Background</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Access model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#collect-known-natural-barriers">1. Collect known natural barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-gradient-barriers">2. Generate gradient barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filter-natural-barriers">3. Filter natural barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#identify-stream-downstream-of-all-natural-barriers">4. Identify stream downstream of all natural barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collect-known-anthropogenic-barriers">5. Collect known anthropogenic barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model-potential-anthropogenic-barriers">6. Model potential anthropogenic barriers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-download-linear-infrastructure">a. Download linear infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-overlay-and-de-duplicate">b. Overlay and de-duplicate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-identify-bridges-open-bottom-structures">c. Identify bridges / Open Bottom Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#d-manually-qa-potential-barriers">d. Manually QA potential barriers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#report">8. Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-limitations">9. Known limitations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fwa-stream-network">FWA Stream Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#known-observations-and-barriers">Known Observations and Barriers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_example_use_cases.html">Sample use case scenarios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_table_definitions.html">Output table definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_credits.html">Credits</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bcfishpass</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Access model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/02_model_access.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="access-model">
+<h1>Access model<a class="headerlink" href="#access-model" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species. The processing steps involved are:</p>
+<section id="collect-known-natural-barriers">
+<h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Permalink to this heading"></a></h2>
+<p>Collect known natural barriers: waterfalls 5m in height or more, subsurface flow, and miscellaneous known barriers from expert input:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>barrier type</p></th>
+<th class="head"><p>source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/provincial-obstacles-to-fish-passage">FISS obstacles</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://www.hillcrestgeo.ca/outgoing/public/whse_fish">FISS obstacles, unpublished</a></p></td>
+</tr>
+<tr class="row-even"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions">FWA obstructions</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>waterfalls</p></td>
+<td><p><a class="reference external" href="https://github.com/smnorris/bcfishpass/blob/main/data/user_falls.csv">expert/user identified falls</a></p></td>
+</tr>
+<tr class="row-even"><td><p>subsurface flow</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network">FWA streams</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>expert/user identified barriers</p></td>
+<td><p><a class="reference external" href="https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv">bcfishpass</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generate-gradient-barriers">
+<h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Permalink to this heading"></a></h2>
+<p>FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure <em>relative</em> elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.</p>
+<p>To identify locations where a stream’s slope exceeds a given threshold, start at the mouth of a stream (identified by the <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code>) and iterate through each vertex of the stream flow line.  At each vertex, calculate the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), record this location and slope as a potential ‘gradient barrier’.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> scripts create potential gradient barriers at a number of default gradients, the threshold used for any
+given model is species dependent.</p>
+</section>
+<section id="filter-natural-barriers">
+<h2>3. Filter natural barriers<a class="headerlink" href="#filter-natural-barriers" title="Permalink to this heading"></a></h2>
+<p>For anadromous species, natural barriers downstream of <a class="reference external" href="https://github.com/smnorris/bcfishobs">Known Fish Observations</a> are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead assume all natural barrier features with 5 or more observations upstream since 1990 are not currently barriers to fish passage.</p>
+<p>For resident species, models generally remove any natural barrier below an observation.</p>
+</section>
+<section id="identify-stream-downstream-of-all-natural-barriers">
+<h2>4. Identify stream downstream of all natural barriers<a class="headerlink" href="#identify-stream-downstream-of-all-natural-barriers" title="Permalink to this heading"></a></h2>
+<p>Watercourses downstream of all natural barriers to a given species can be considered “potentially accessible” to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present (presuming all else is equal and adequate flow is present in the stream).</p>
+</section>
+<section id="collect-known-anthropogenic-barriers">
+<h2>5. Collect known anthropogenic barriers<a class="headerlink" href="#collect-known-anthropogenic-barriers" title="Permalink to this heading"></a></h2>
+<p>Dams, assessed PSCIS barriers and expert/user identified barriers are collected from these sources and loaded to the database:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>barrier type</p></th>
+<th class="head"><p>source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dams</p></td>
+<td><p><a class="reference external" href="https://aquaticbarriers.ca">Canadian Aquatic Barrier Database</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>PSCIS assessed barriers</p></td>
+<td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/pscis-assessments">PSCIS Assessments</a></p></td>
+</tr>
+<tr class="row-even"><td><p>expert/user identified barriers</p></td>
+<td><p><a class="reference external" href="https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_anthropogenic.csv">bcfishpass</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-potential-anthropogenic-barriers">
+<h2>6. Model potential anthropogenic barriers<a class="headerlink" href="#model-potential-anthropogenic-barriers" title="Permalink to this heading"></a></h2>
+<p>Potential anthropogenic barriers (closed bottom structures, ie culverts) are identified by mapping intersections of FWA streams and linear infrastructure (roads, rail lines, major trails). This set of potential barriers is filtered, removing locations of known bridge structures and locations where a open bottom/bridge structure is presumed to exist.</p>
+<section id="a-download-linear-infrastructure">
+<h3>a. Download linear infrastructure<a class="headerlink" href="#a-download-linear-infrastructure" title="Permalink to this heading"></a></h3>
+<p>Road and railway features are downloaded from DataBC. Features used to generate stream crossings are defined by the queries below. The queries attempt to extract road and railway features only where the built feature type is likely to include a stream crossing structure.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Source</p></th>
+<th class="head"><p>Query</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/digital-road-atlas-dra-master-partially-attributed-roads">Digital Road Atlas (DRA)</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">transport_line_type_code</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">('F','FP','FR','T','TR','TS','RP','RWA')</span> <span class="pre">AND</span> <span class="pre">transport_line_surface_code</span> <span class="pre">!=</span> <span class="pre">'D'</span> <span class="pre">AND</span> <span class="pre">transport_line_structure_code</span> <span class="pre">!=</span> <span class="pre">'T'</span> </code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/forest-tenure-road-section-lines">Forest Tenure Roads</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">life_cycle_status_code</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">('RETIRED',</span> <span class="pre">'PENDING')</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/oil-and-gas-commission-road-segment-permits">OGC Road Segment Permits</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">=</span> <span class="pre">'Approved'</span> <span class="pre">AND</span> <span class="pre">road_type_desc</span> <span class="pre">!=</span> <span class="pre">'Snow</span> <span class="pre">Ice</span> <span class="pre">Road'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/ogc-petroleum-development-roads-pre-2006-public-version">OGC Development Roads pre-2006</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">petrlm_development_road_type</span> <span class="pre">!=</span> <span class="pre">'WINT'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/railway-track-line">NRN Railway Tracks</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">structure_type</span> <span class="pre">!=</span> <span class="pre">'Tunnel'</span></code> (via spatial join to <code class="docutils literal notranslate"><span class="pre">gba_railway_structure_lines_sp</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="b-overlay-and-de-duplicate">
+<h3>b. Overlay and de-duplicate<a class="headerlink" href="#b-overlay-and-de-duplicate" title="Permalink to this heading"></a></h3>
+<p>Intersection points of the stream and road features are created. Because intersections can occur at road intersections / stream confluences where only one structure is likely to exist, crossings (on the same stream) are de-duplicated using several data source specific tolerances:</p>
+<ul class="simple">
+<li><p>merge DRA crossings on freeways/highways with a 30m tolerance</p></li>
+<li><p>merge DRA crossings on arterial/collector road with a 20m tolerance</p></li>
+<li><p>merge other types of DRA crossings within a 12.5m tolerance</p></li>
+<li><p>merge FTEN crossings within a 12.5m tolerance</p></li>
+<li><p>merge OGC crossings within a 12.5m tolerance</p></li>
+<li><p>merge railway crossings within a 20m tolerance</p></li>
+</ul>
+<p>DRA crossings are also merged across streams at a tolerance of 10m.</p>
+<p>After same-source data crossings are merged, all crossings are de-duplicated using a 10m tolerance across all (road) data sources (railway crossings are not merged with the road sources). The location of a given output crossing corresponds to the location from the highest priority dataset, in this order of decreasing priority: DRA, FTEN, OGC permits, OGC permits pre2006. Despite the removal of duplicates, the unique identifier for each source road within 10m of a crossing is retained, allowing all crossings to be linked back to all source road datasets that apply.</p>
+</section>
+<section id="c-identify-bridges-open-bottom-structures">
+<h3>c. Identify bridges / Open Bottom Structures<a class="headerlink" href="#c-identify-bridges-open-bottom-structures" title="Permalink to this heading"></a></h3>
+<p>Modelled crossings are created at all intersections, but bridges/open bottom strutures are presumed to be passable. Open bottom structures are identified via these data sources and properties:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Source</p></th>
+<th class="head"><p>Query</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network">Stream order</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stream_order</span> <span class="pre">&gt;=</span> <span class="pre">6</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network">Rivers/double line streams</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">edge_type</span> <span class="pre">IN</span> <span class="pre">(1200,</span> <span class="pre">1250,</span> <span class="pre">1300,</span> <span class="pre">1350,</span> <span class="pre">1400,</span> <span class="pre">1450,</span> <span class="pre">1475)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/ministry-of-transportation-mot-road-structures">MOT structures</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bmis_structure_type</span> <span class="pre">=</span> <span class="pre">'BRIDGE'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/pscis-assessments">PSCIS structures</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">current_crossing_type_code</span> <span class="pre">=</span> <span class="pre">'OBS'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/digital-road-atlas-dra-master-partially-attributed-roads">DRA structures</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">transport_line_structure_code</span> <span class="pre">IN</span> <span class="pre">('B','C','E','F','O','R','V')</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/railway-structure-line">Railway structures</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">structure_type</span> <span class="pre">LIKE</span> <span class="pre">'BRIDGE%'</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="d-manually-qa-potential-barriers">
+<h3>d. Manually QA potential barriers<a class="headerlink" href="#d-manually-qa-potential-barriers" title="Permalink to this heading"></a></h3>
+<p>While the scripts attempt to identify crossings with open bottom strutures based on above rules, many more exist on the landscape. Manual review of commonly available satellite imagery (Google/Bing/ESRI) at crossing sites can often reveal if a bridge is present (and thus presumed to be passable). Where review has been done, the crossing is removed from the potential barriers dataset only if the imagery clearly shows a bridge or that the crossing does not exist (road or stream not present). Where the imagery is not definitive, the site is retained as a potential barrier.</p>
+<p>Note that manual QA/QC of the potential barriers dataset has been project based - some areas have been reviewed, many have not. To date, review has primarily been along rail corridors and at very high impact sites. <em>Before planning field visits, further review of potential barriers is always advised</em>.</p>
+</section>
+</section>
+<section id="report">
+<h2>8. Report<a class="headerlink" href="#report" title="Permalink to this heading"></a></h2>
+<p>For a given area of interest, modelling reports on:</p>
+<ul class="simple">
+<li><p>total length of stream potentially accessible to species of interest</p></li>
+<li><p>length of potentially accessible stream with no known or potential anthropogenic barriers downstream</p></li>
+<li><p>amount of potentially accessible stream upstream of each known/potential barrier</p></li>
+<li><p>amount of potentially accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier</p></li>
+</ul>
+</section>
+<section id="known-limitations">
+<h2>9. Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this heading"></a></h2>
+<p>The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.</p>
+<p>There are many limitations associated with the component layers that were used to create the model. These errors and omissions are carried into the model and potentially even compounded when combined with other inputs.</p>
+<section id="fwa-stream-network">
+<h3>FWA Stream Network<a class="headerlink" href="#fwa-stream-network" title="Permalink to this heading"></a></h3>
+<p>The FWA stream network is based on TRIM I stream linework. Streams tend to be under-represented in wet, coastal areas and over-represented in dry interior areas.</p>
+<p>TRIM features were delineated through airphoto interpretation and have varying degrees of accuracy – particularly when it comes to smaller streams.   TRIM commonly under-represents the number of streams in the wetter, coastal areas of the province and field surveyors may regularly find small streams which were not visible on the original airphotos due to canopy, terrain, shadows, etc.  As a result, these streams do not exist in the FWA and as a result, the model.  In wet areas, field crews will tend to find additional streams and road-stream crossings.</p>
+<p>Conversely, in the drier, interior portions of the province, TRIM may over-represent the number or magnitude of streams.  These may be ephemeral or intermittent streams which only have water in them at the wettest times of the year.  Field crews often report finding only a ‘dry draw’ at locations where a stream has been shown on the mapping.</p>
+</section>
+<section id="known-observations-and-barriers">
+<h3>Known Observations and Barriers<a class="headerlink" href="#known-observations-and-barriers" title="Permalink to this heading"></a></h3>
+<p>The fish observation and barrier inventories have similar limitations.  Fish observation data is based on the results of field sampling and fish collection permits.  The distribution and scale of this work has typically been driven by development requirements in the resource industries.  As such, the model is based on unevenly distributed data points.  Areas that have seen more development and resource extraction tend to have a higher density of sampling and observation points while other, less developed areas tend to have sparse or non-existent fish observation and barrier data.</p>
+<p>Even areas with a high density of fish observation data may be problematic.  The observation dataset dates back to the early 20th Century and not all observation points are still valid.  Some historical records are found in areas that are no longer accessible to fish because natural (landslides) and/or man–made (dams, wiers, etc.) blockages have occurred since the time of observation.  Observation points may also have other errors such as incorrect co-ordinates or mis-identification of fish species.  Similarly, the obstructions layer is neither exhaustive nor guaranteed to be accurate.  These component data limitations may compound one another.</p>
+<p>Adequate field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  Likewise, peer review of the methodology has also been limited.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01_background.html" class="btn btn-neutral float-left" title="Background" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="03_model_habitat_linear.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Simon Norris.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
