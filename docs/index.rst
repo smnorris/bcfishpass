@@ -6,7 +6,7 @@
 bcfishpass
 =================================
 
-``bcfishpass`` is a collection of scripts to create and maintain an aquatic connectivity / fish passage database for British Coloumbia.
+``bcfishpass`` is a collection of scripts to create and maintain an aquatic connectivity / fish passage database for British Columbia.
 
 The generated ``bcfishpass`` database:
 
