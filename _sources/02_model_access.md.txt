@@ -78,9 +78,9 @@ DRA crossings are also merged across streams at a tolerance of 10m.
 
 After same-source data crossings are merged, all crossings are de-duplicated using a 10m tolerance across all (road) data sources (railway crossings are not merged with the road sources). The location of a given output crossing corresponds to the location from the highest priority dataset, in this order of decreasing priority: DRA, FTEN, OGC permits, OGC permits pre2006. Despite the removal of duplicates, the unique identifier for each source road within 10m of a crossing is retained, allowing all crossings to be linked back to all source road datasets that apply.
 
-### c. Identify bridges / Open Bottom Structures
+### c. Identify open bottom structures
 
-Modelled crossings are created at all intersections, but bridges/open bottom structures are presumed to be passable. Open bottom structures are identified via these data sources and properties:
+Modelled crossings are created at all intersections, but open bottom structures (bridges) are presumed to be passable. Open bottom structures are identified via these data sources and properties:
 
 | Source         | Query        | 
 | ------------- | ------------- |

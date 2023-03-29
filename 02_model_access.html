@@ -54,7 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#model-potential-anthropogenic-barriers">6. Model potential anthropogenic barriers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#a-download-linear-infrastructure">a. Download linear infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#b-overlay-and-de-duplicate">b. Overlay and de-duplicate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#c-identify-bridges-open-bottom-structures">c. Identify bridges / Open Bottom Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-identify-open-bottom-structures">c. Identify open bottom structures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#d-manually-qa-potential-barriers">d. Manually QA potential barriers</a></li>
 </ul>
 </li>
@@ -213,9 +213,9 @@ given model is species dependent.</p>
 <p>DRA crossings are also merged across streams at a tolerance of 10m.</p>
 <p>After same-source data crossings are merged, all crossings are de-duplicated using a 10m tolerance across all (road) data sources (railway crossings are not merged with the road sources). The location of a given output crossing corresponds to the location from the highest priority dataset, in this order of decreasing priority: DRA, FTEN, OGC permits, OGC permits pre2006. Despite the removal of duplicates, the unique identifier for each source road within 10m of a crossing is retained, allowing all crossings to be linked back to all source road datasets that apply.</p>
 </section>
-<section id="c-identify-bridges-open-bottom-structures">
-<h3>c. Identify bridges / Open Bottom Structures<a class="headerlink" href="#c-identify-bridges-open-bottom-structures" title="Permalink to this heading"></a></h3>
-<p>Modelled crossings are created at all intersections, but bridges/open bottom structures are presumed to be passable. Open bottom structures are identified via these data sources and properties:</p>
+<section id="c-identify-open-bottom-structures">
+<h3>c. Identify open bottom structures<a class="headerlink" href="#c-identify-open-bottom-structures" title="Permalink to this heading"></a></h3>
+<p>Modelled crossings are created at all intersections, but open bottom structures (bridges) are presumed to be passable. Open bottom structures are identified via these data sources and properties:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Source</p></th>
