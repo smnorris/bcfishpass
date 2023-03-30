@@ -99,7 +99,7 @@ While the scripts attempt to identify crossings with open bottom structures base
 Note that manual QA/QC of the potential barriers dataset has been project based - some areas have been reviewed, many have not. To date, review has primarily been along rail corridors and at very high impact sites. *Before planning field visits, further review of potential barriers is always advised*. 
 
 
-## 8. Report
+## 7. Report
 
 For a given area of interest, modelling reports on:
 
@@ -108,7 +108,8 @@ For a given area of interest, modelling reports on:
 - amount of potentially accessible stream upstream of each known/potential barrier
 - amount of potentially accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier
 
-## 9. Known limitations
+
+## 8. Known limitations
 
 The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.
 
@@ -147,6 +148,7 @@ This can be due to a number of different data issues:
 - FTEN road data is tenure data, not 'as built' data - many FTEN roads have never been built
 - a structure may not have been necessary in road construction (insufficent flow in the stream channel)
 - the stream is incorrectly mapped or the stream channel has moved from where it was mapped
+
 
 ## 9. Enhancements / improvements
 
