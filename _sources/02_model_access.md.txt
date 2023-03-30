@@ -134,11 +134,11 @@ Even areas with a high density of fish observation data may be problematic.  The
 
 The model will generally over-estimate the extent of potential barriers (closed bottom structures / culverts). Two errors in particular lead to this over-estimation:
 
-1. An open bottom structures / bridge exists at a crossings modelled as a closed bottom structure / culvert
+1. Open bottom structures / bridges exists at a crossings modelled as a closed bottom structures / culverts
 
 No inventory of built stream crossing structures on resource roads is available. In the absence of further information, the model presumes bridges are present only on 'double line' streams and 6th order streams and greater, as noted in section 6c. While bridges are commonplace on 5th order and lower streams in many areas, we do not want to miss potential barriers with very high impact by mis-classifiying them as passable open bottom structures.
 
-2. No structure exists at the mapped road/stream crossing. 
+2. No structure exists at mapped road/stream crossings
 
 This can be due to a number of different data issues:
 
