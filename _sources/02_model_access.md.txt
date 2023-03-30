@@ -143,8 +143,16 @@ No inventory of built stream crossing structures on resource roads is available.
 This can be due to a number of different data issues:
 
 - DRA mapping can be over-generous in its definition of 'road'
-- a road has been deactivated or never had a crossing structure
-- FTEN road data is tenure data, not actual 'as built' data - an FTEN road may not have been built
-- there is insufficent flow in the stream channel for a structure to have been necessary in road construction
+- the road has been deactivated (information regarding deactivation status is sparse)
+- FTEN road data is tenure data, not 'as built' data - many FTEN roads have never been built
+- a structure may not have been necessary in road construction (insufficent flow in the stream channel)
 - the stream is incorrectly mapped or the stream channel has moved from where it was mapped
 
+## 9. Enhancements / improvements
+
+As expert and local knowledge of natural barriers is added to `bcfishpass` and as more potential barriers are assessed, the quality of modelling outputs will improve.
+
+Submissions of data fixes to improve the fish passage model are welcome, particularly:
+- locations of natural barriers to fish passage that are not present in the inventories
+- identification of modelled natural barriers that are not barriers to fish passage
+- identification of modelled potential barriers that do not exist or are known to be passable
