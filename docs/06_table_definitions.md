@@ -65,7 +65,7 @@ Includes barrier status, key attributes from source datasets, and upstream lengt
 | `blue_line_key` | `integer` | From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys). |
 | `watershed_key` | `integer` | From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem. |
 | `downstream_route_measure` | `double precision` | The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature. |
-| `wscode` | `ltree` | A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and "-" replaced with "." |
+| `wscode` | `text` | A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and "-" replaced with "." |
 | `localcode` | `text` | A truncated version of the BC FWA local_watershed_code (trailing zeros removed and "-" replaced with "." |
 | `watershed_group_code` | `text` | The watershed group code associated with the feature. |
 | `gnis_stream_name` | `text` | The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream |
