@@ -165,6 +165,6 @@ Submissions of data fixes to improve the fish passage model are welcome, particu
 Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are available for [download as geopackage](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip).
 Information regarding this data package:
 - [general metadata (DataBC - link TBD)](link_to_be_determined)
-- [data dictionary][06_table_definitions.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead]
+- [data dictionary](06_data_dictionary.md#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 
 

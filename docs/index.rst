@@ -27,5 +27,5 @@ The generated ``bcfishpass`` database:
    03_model_habitat_linear
    04_model_habitat_lateral
    05_example_use_cases
-   06_table_definitions
+   06_data_dictionary
    07_credits
