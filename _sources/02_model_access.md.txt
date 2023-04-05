@@ -158,3 +158,13 @@ Submissions of data fixes to improve the fish passage model are welcome, particu
 - locations of natural barriers to fish passage that are not present in the inventories
 - identification of modelled natural barriers that are not barriers to fish passage
 - identification of modelled potential barriers that do not exist or are known to be passable
+
+
+## 10. Publication / distribution
+
+Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are available for [download as geopackage](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip).
+Information regarding this data package:
+- [general metadata (DataBC - link TBD)](link_to_be_determined)
+- [data dictionary][06_table_definitions.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead]
+
+
