@@ -2,13 +2,13 @@
 
 ## Freshwater Fish Habitat Accessibility MODEL – Pacific Salmon and Steelhead
 
-A weekly bcfishpass data extract of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is available for download as [`freshwater_fish_habitat_accessibility_MODEL.gpkg.zip`](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
+A weekly bcfishpass data extract of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is [available for download](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip).
 
-The models are generated as described in [access model](02_model_access.md), with the following parameters:
+The models included in this distribution are generated as described in [access model](02_model_access.md), with the following parameters:
 
-- for both salmon and steelhead, potential natural barriers with 5 or more upstream observations of any of the target species (`CH, CM, CO, PK, SK, ST`) since 1990 are presumed to be passable
 - for salmon, [potential gradient barriers](02_model_access.md#generate-gradient-barriers) are considered passable up to 15%
 - for steelhead, [potential gradient barriers](02_model_access.md#generate-gradient-barriers) are considered passable up to 20%
+- for both salmon and steelhead, potential natural barriers with 5 or more upstream observations of any of the target species (`CH, CM, CO, PK, SK, ST`) since January 01, 1990 are presumed to be passable
 
 ### crossings
 
