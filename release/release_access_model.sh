@@ -46,11 +46,7 @@ ogr2ogr \
     ON b.blue_line_key = s.blue_line_key
     AND s.downstream_route_measure <= b.downstream_route_measure
     AND s.upstream_route_measure + .01 > b.downstream_route_measure
-    LEFT OUTER JOIN bcfishpass.user_barriers_definite_control p
-    ON b.blue_line_key = p.blue_line_key
-    AND abs(b.downstream_route_measure - p.downstream_route_measure) < 1
-    where gradient_class in (5, 10, 15, 20, 25, 30)
-    and (p.barrier_ind IS NULL or p.barrier_ind is true)" # do not include records forced to be passable in control table"
+    where gradient_class in (5, 10, 15, 20, 25, 30)"
 
 
 echo 'dumping subsurface flow barriers'
@@ -74,11 +70,7 @@ ogr2ogr \
      s.localcode_ltree as localcode,
      s.watershed_group_code,
      s.geom
-     from bcfishpass.barriers_subsurfaceflow s
-     LEFT OUTER JOIN bcfishpass.user_barriers_definite_control p
-     ON b.blue_line_key = p.blue_line_key
-     AND abs(b.downstream_route_measure - p.downstream_route_measure) < 1
-     WHERE (p.barrier_ind IS NULL or p.barrier_ind is true)"  # do not include records forced to be passable in control table"
+     from bcfishpass.barriers_subsurfaceflow s"
 
 
 echo 'dumping falls that are barriers'
