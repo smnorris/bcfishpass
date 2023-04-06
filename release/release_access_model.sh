@@ -32,8 +32,10 @@ ogr2ogr \
     -nlt PointZM \
     -sql "select 
      ((((b.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(b.downstream_route_measure::bigint))::text as gradient_barrier_id,
+    b.gradient_class,
     s.linear_feature_id,
     b.blue_line_key,
+    s.watershed_key,
     b.downstream_route_measure,
     s.wscode_ltree as wscode,
     s.localcode_ltree as localcode,
@@ -48,8 +50,7 @@ ogr2ogr \
     ON b.blue_line_key = p.blue_line_key
     AND abs(b.downstream_route_measure - p.downstream_route_measure) < 1
     where gradient_class in (5, 10, 15, 20, 25, 30)
-    and (p.barrier_ind IS NULL or p.barrier_ind is true) -- do not include records forced to be passable in control table
-    limit 10"
+    and (p.barrier_ind IS NULL or p.barrier_ind is true)" # do not include records forced to be passable in control table"
 
 
 echo 'dumping subsurface flow barriers'
@@ -62,18 +63,22 @@ ogr2ogr \
     -nln barriers_subsurfaceflow \
     -nlt PointZM \
     -sql "select 
-     barriers_subsurfaceflow_id,
-     barrier_type,
-     barrier_name,
-     linear_feature_id,
-     blue_line_key,
-     watershed_key,
-     downstream_route_measure,
-     wscode_ltree as wscode,
-     localcode_ltree as localcode,
-     watershed_group_code,
-     geom
-     from bcfishpass.barriers_subsurfaceflow"
+     s.barriers_subsurfaceflow_id,
+     s.barrier_type,
+     s.barrier_name,
+     s.linear_feature_id,
+     s.blue_line_key,
+     s.watershed_key,
+     s.downstream_route_measure,
+     s.wscode_ltree as wscode,
+     s.localcode_ltree as localcode,
+     s.watershed_group_code,
+     s.geom
+     from bcfishpass.barriers_subsurfaceflow s
+     LEFT OUTER JOIN bcfishpass.user_barriers_definite_control p
+     ON b.blue_line_key = p.blue_line_key
+     AND abs(b.downstream_route_measure - p.downstream_route_measure) < 1
+     WHERE (p.barrier_ind IS NULL or p.barrier_ind is true)"  # do not include records forced to be passable in control table"
 
 
 echo 'dumping falls that are barriers'
@@ -183,12 +188,6 @@ ogr2ogr \
     -sql "select  
      fish_observation_point_id,
      fish_obsrvtn_event_id,
-     linear_feature_id,
-     blue_line_key,
-     wscode_ltree as wscode,
-     localcode_ltree as localcode,
-     downstream_route_measure,
-     watershed_group_code,
      species_code,
      observation_date,
      activity_code,
@@ -196,6 +195,12 @@ ogr2ogr \
      life_stage_code,
      life_stage,
      acat_report_url,
+     linear_feature_id,
+     blue_line_key,
+     downstream_route_measure,
+     wscode_ltree as wscode,
+     localcode_ltree as localcode,
+     watershed_group_code,
      geom
      from bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw"   
 
