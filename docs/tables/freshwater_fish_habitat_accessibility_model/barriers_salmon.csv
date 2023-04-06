@@ -9,4 +9,5 @@ column,description
 ``wscode``,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.'
 ``localcode``,A truncated version of the BC FWA local_watershed_code (trailing zeros removed and '-' replaced with '.'
 ``watershed_group_code``,The watershed group code associated with the feature
+``total_network_km``,Length (km) of stream upstream of the barrier (useful for identification of erroneous high-impact barriers)
 ``geom``,The point geometry associated with the feature
