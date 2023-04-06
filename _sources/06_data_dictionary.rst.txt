@@ -26,7 +26,7 @@ Aggregated stream crossing locations.  Features are aggregated from:
 - modelled road/rail/trail stream crossings
 - misc anthropogenic barriers from expert/local input
 
-aIncludes barrier status, key attributes from source datasets, and various length upstream summaries.
+Includes barrier status, key attributes from source datasets, and various length upstream summaries.
 
 .. csv-table::
    :file: tables/freshwater_fish_habitat_accessibility_model/crossings.csv
