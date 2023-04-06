@@ -59,8 +59,8 @@ barriers_subsurfaceflow
 ============================
 
 Point locations of subsurface flow derived from the FWA stream network (``where
-edge_type in (1410, 1425)``). Features determined to be passable by expert/local
-input are not included.
+edge_type in (1410, 1425)``). Note that *all* locations of subsurface flow are included,
+not just those used in the included modelling.
 
 .. csv-table::
    :file: tables/freshwater_fish_habitat_accessibility_model/barriers_subsurface_flow.csv
@@ -90,7 +90,8 @@ gradient_barriers
 Locations of potential :ref:`gradient barriers <gradient_barriers>`.
 Locations where a stream's slope exceeds 5, 10, 15, 20, 25, and 30% for at least
 100m upstream of the point location are included.
-Features determined to be passable by expert/local input are not included.
+Note that *all* gradient barriers for the noted gradients are included, not just
+those used in the included modelling.
 
 .. csv-table::
    :file: tables/freshwater_fish_habitat_accessibility_model/gradient_barriers.csv

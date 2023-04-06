@@ -257,8 +257,8 @@ and user supplied misc barriers.</p>
 <section id="barriers-subsurfaceflow">
 <h3>barriers_subsurfaceflow<a class="headerlink" href="#barriers-subsurfaceflow" title="Permalink to this heading"></a></h3>
 <p>Point locations of subsurface flow derived from the FWA stream network (<code class="docutils literal notranslate"><span class="pre">where</span>
-<span class="pre">edge_type</span> <span class="pre">in</span> <span class="pre">(1410,</span> <span class="pre">1425)</span></code>). Features determined to be passable by expert/local
-input are not included.</p>
+<span class="pre">edge_type</span> <span class="pre">in</span> <span class="pre">(1410,</span> <span class="pre">1425)</span></code>). Note that <em>all</em> locations of subsurface flow are included,
+not just those used in the included modelling.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>column</p></th>
@@ -702,7 +702,8 @@ input are not included.</p>
 <p>Locations of potential <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barriers</span></a>.
 Locations where a stream’s slope exceeds 5, 10, 15, 20, 25, and 30% for at least
 100m upstream of the point location are included.
-Features determined to be passable by expert/local input are not included.</p>
+Note that <em>all</em> gradient barriers for the noted gradients are included, not just
+those used in the included modelling.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>column</p></th>
