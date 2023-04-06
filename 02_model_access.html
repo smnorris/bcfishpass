@@ -7,6 +7,7 @@
   <title>Access model &mdash; bcfishpass v0.1.dev2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -70,7 +71,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="05_example_use_cases.html">Sample use case scenarios</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_data_dictionary.html">Data dictionary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_data_dictionary.html">Data Dictionary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_credits.html">Credits</a></li>
 </ul>
 
@@ -99,7 +100,7 @@
            <div itemprop="articleBody">
              
   <section id="access-model">
-<h1>Access model<a class="headerlink" href="#access-model" title="Permalink to this heading"></a></h1>
+<span id="access"></span><h1>Access model<a class="headerlink" href="#access-model" title="Permalink to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species. The processing steps involved are:</p>
 <section id="collect-known-natural-barriers">
 <h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Permalink to this heading"></a></h2>
@@ -133,7 +134,7 @@
 </table>
 </section>
 <section id="generate-gradient-barriers">
-<h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Permalink to this heading"></a></h2>
+<span id="gradient-barriers"></span><h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Permalink to this heading"></a></h2>
 <p>FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure <em>relative</em> elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.</p>
 <p>To identify locations where a stream’s slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code>) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential ‘gradient barrier’.</p>
 <p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> scripts create potential gradient barriers at a number of default gradients, the threshold used for any
@@ -314,7 +315,7 @@ given model is species dependent.</p>
 For information regarding this data package:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#link_to_be_determined"><span class="xref myst">DataBC metadata(link TBD)</span></a></p></li>
-<li><p><a class="reference internal" href="06_data_dictionary.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead"><span class="std std-ref">data dictionary</span></a></p></li>
+<li><p><a class="reference internal" href="#06_data_dictionary.md#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead"><span class="xref myst">data dictionary</span></a></p></li>
 </ul>
 </section>
 </section>

@@ -1,3 +1,4 @@
+(access)=
 # Access model
 
 `bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species. The processing steps involved are:
@@ -16,6 +17,7 @@ Collect known natural barriers: waterfalls 5m in height or more, subsurface flow
 | expert/user identified barriers         | [bcfishpass](https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv)
 
 
+(gradient_barriers)=
 ## 2. Generate gradient barriers
 
 FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure *relative* elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.
