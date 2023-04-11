@@ -1,3 +1,4 @@
+(access)=
 # Access model
 
 `bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species. The processing steps involved are:
@@ -16,6 +17,7 @@ Collect known natural barriers: waterfalls 5m in height or more, subsurface flow
 | expert/user identified barriers         | [bcfishpass](https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv)
 
 
+(gradient_barriers)=
 ## 2. Generate gradient barriers
 
 FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure *relative* elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.
@@ -158,3 +160,13 @@ Submissions of data fixes to improve the fish passage model are welcome, particu
 - locations of natural barriers to fish passage that are not present in the inventories
 - identification of modelled natural barriers that are not barriers to fish passage
 - identification of modelled potential barriers that do not exist or are known to be passable
+
+
+## 10. Publication / distribution
+
+Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are [available for download as geopackage](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip).
+For information regarding this data package:
+- [DataBC metadata(link TBD)](link_to_be_determined)
+- [data dictionary](06_data_dictionary.rst#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
+
+

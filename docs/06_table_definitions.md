@@ -1,1 +1,0 @@
-# Output table definitions

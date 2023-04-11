@@ -1,0 +1,23 @@
+column,description
+``segmented_stream_id``,Unique bcfishpass streams table identifier
+``linear_feature_id``,"From BC FWA,the unique identifier for a stream segment (flow network arc)"
+``edge_type``,"A 4 digit numeric code used by the Freshwater Atlas to identify the various types of water network linear features. eg. 1050."
+``blue_line_key``,"From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)"
+``downstream_route_measure``,"The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature"
+``upstream_route_measure``,"The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the upstream end of the feature"
+``watershed_group_code``,The watershed group code associated with the feature
+``gnis_name``,"The BCGNIS (BC Geographical Names Information System) name associated with the GNIS feature id (an English name was used where available, otherwise another language was selected)"
+``stream_order``,"The calculated modified Strahler order"
+``stream_magnitude``,"The calculated magnitude"
+``gradient``,"Slope of the feature (percent)"
+``wscode``,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.'
+``localcode``,A truncated version of the BC FWA local_watershed_code (trailing zeros removed and '-' replaced with '.'
+``feature_code``,"A value based on the Canadian Council of Surveys and Mapping's (CCSM) system for classification of geographic features."
+``obsrvtn_ids_upstr``,IDs of known observations of target fish species upstream
+``obsrvtn_species_codes_upstr``,Species codes of known fish observations upstream
+``barriers_anthropogenic_dnstr``,IDs of anthropogenic barriers downstream
+``barriers_pscis_dnstr``,IDs of assessed PSCIS barriers downstream
+``barriers_dams_dnstr``,IDs of CABD dams downstream noted as barriers
+``barriers_dams_hydro_dnstr``,IDs of CABD hydroelectricity dams downstream noted as barriers
+``remediated_dnstr``,IDs of remediated PSCIS crossings downstream
+``geom``,The point geometry associated with the feature
