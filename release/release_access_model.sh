@@ -199,9 +199,13 @@ ogr2ogr \
 echo 'dump to MODEL.gpkg complete'    
 
 # compress and publish to s3
-gzip freshwater_fish_habitat_accessibility_MODEL.gpkg
-aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.gz s3://bcfishpass/
-aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_accessibility_MODEL.gpkg.gz --acl public-read
+# note that 7zip is not included in the bcfishpass conda environment.yml file, use some other package manager to install
+7z a freshwater_fish_habitat_accessibility_MODEL.gpkg.zip freshwater_fish_habitat_accessibility_MODEL.gpkg
+aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass/
+aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_accessibility_MODEL.gpkg.zip --acl public-read
+
+# delete unzipped
+rm freshwater_fish_habitat_accessibility_MODEL.gpkg
 
 # archive
-mv freshwater_fish_habitat_accessibility_MODEL.gpkg.gz $ARCHIVE/bcfishpass/access_model/freshwater_fish_habitat_accessibility_MODEL.gpkg.gz.$(git describe --tags --abbrev=0).$(date +%F)
+mv freshwater_fish_habitat_accessibility_MODEL.gpkg.zip $ARCHIVE/bcfishpass/access_model/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip.$(git describe --tags --abbrev=0).$(date +%F)
