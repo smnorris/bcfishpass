@@ -5,7 +5,9 @@ Data Dictionary
 ------------------
 Freshwater Fish Habitat Accessibility MODEL - Pacific Salmon and Steelhead
 ------------------
-A weekly bcfishpass data extract of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is `available for download <https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip>`_.
+A weekly bcfishpass data extract of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is available for download as a zipped geopackage:
+
+`https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip <https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip>`_.
 
 The models included in this distribution are generated as described in the :ref:`access model section <access>`, with the following parameters:
 
