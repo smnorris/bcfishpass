@@ -198,13 +198,10 @@ ogr2ogr \
 
 echo 'dump to MODEL.gpkg complete'    
 
-# zip and publish to s3
-zip -r freshwater_fish_habitat_accessibility_MODEL.gpkg.zip freshwater_fish_habitat_accessibility_MODEL.gpkg
-aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass/
-aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_accessibility_MODEL.gpkg.zip --acl public-read
-
-# delete unzipped
-rm freshwater_fish_habitat_accessibility_MODEL.gpkg
+# compress and publish to s3
+gzip freshwater_fish_habitat_accessibility_MODEL.gpkg
+aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.gz s3://bcfishpass/
+aws s3api put-object-acl --bucket bcfishpass --key freshwater_fish_habitat_accessibility_MODEL.gpkg.gz --acl public-read
 
 # archive
-mv freshwater_fish_habitat_accessibility_MODEL.gpkg.zip $ARCHIVE/bcfishpass/access_model/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip.$(git describe --tags --abbrev=0).$(date +%F)
+mv freshwater_fish_habitat_accessibility_MODEL.gpkg.gz $ARCHIVE/bcfishpass/access_model/freshwater_fish_habitat_accessibility_MODEL.gpkg.gz.$(git describe --tags --abbrev=0).$(date +%F)
