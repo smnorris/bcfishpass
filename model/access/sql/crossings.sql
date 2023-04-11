@@ -8,7 +8,7 @@
 -- 4. Other ?
 -- --------------
 
-drop table if exists bcfishpass.crossings;
+drop table if exists bcfishpass.crossings cascade;
 
 create table bcfishpass.crossings
 (
