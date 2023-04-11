@@ -2440,3 +2440,44 @@
 360736229,0,187,KTSU,CO,spawning,t,SN,2023-03-01,pse_spawning_lines_Coho(PSF),
 360491333,0,902,NASC,CO,spawning,t,SN,2023-03-01,pse_spawning_lines_Coho(PSF),
 360724462,20,30,NASC,SK,spawning,t,SN,2023-03-01,pse_spawning_points_ser_cc(PSF),
+356304330,17053,17335,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356304330,17335,19495.466579237185,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),"POSSIBLE "
+356333065,1292,1772,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356333065,1772,2661,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),"POSSIBLE "
+356353369,972,1231,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),"POSSIBLE "
+356291581,1189,3982.0044443108973,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356363937,150255,185765.27821266555,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356357084,1623.39477335261,1839,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356357084,1839,3463.922656121535,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356355679,3195.74698553673,4096.361147237876,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+355993122,0,317.48590207404277,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356305837,0,967,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356305837,967,1597.3420138254728,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356218888,3520,4411.707434065352,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356360857,7412.66217943406,12562.82803305861,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356360857,7412.66217943406,12562.82803305861,QUES,CO,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356174136,13806,14965,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356346644,16490,17394,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356346644,17394,18050,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356358264,32977.2120922636,33913.78766254501,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356358264,33977,34904.17510022268,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356360071,12042.2045440161,12564,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356360071,12042.2045440161,12564,QUES,CO,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356355331,0,32641,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
+356359534,8905,10547,BOWR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356359534,10977,18040,BOWR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356359534,24648,24916,BOWR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356360999,0,6019,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356360999,10501,14084,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356359534,44335,46714,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+380887784,0,48,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356362298,201364,202986,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356343035,738,1463,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356363010,68925,71635,CARR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356363010,27252,40721,CARR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),
+356362950,16539,34815,BOWR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),POSSIBLE. Falls barrier
+356351262,1166,9452,CARR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),POSSIBLE. Gradient_15 barrier
+356331254,1106,4730,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),POSSIBLE. Gradient_15 barrier
+356155088,0,580,BOWR,SK,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),POSSIBLE. Gradient_15 barrier
+356331254,1106,4730,BOWR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),POSSIBLE. Gradient_15 barrier
+356155088,0,580,BOWR,CH,spawning,t,SS,4/7/2023,spawning_lines_fraser(PSF),POSSIBLE. Gradient_15 barrier
