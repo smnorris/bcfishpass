@@ -105,8 +105,7 @@ def label_map(a):
 
 
 def clip_dem(watershed_group_code, bounds, dem_path, data_path):
-    """For given bounds, clip DEM from provided dem_path, or request BC DEM from DataBC
-    """    
+    """For given bounds, clip DEM from provided dem_path, or request BC DEM from DataBC"""
     LOG.info(f"{watershed_group_code} - clipping {dem_path}")
     bounds = align(bounds)
     with rasterio.open(dem_path) as src:
@@ -115,11 +114,16 @@ def clip_dem(watershed_group_code, bounds, dem_path, data_path):
         height = int(out_window.height)
         width = int(out_window.width)
         out_kwargs = src.profile
-        out_kwargs.update({
-            'height': height,
-            'width': width,
-            'transform': src.window_transform(out_window)})
-        with rasterio.open(os.path.join(data_path, "dem.tif"), "w", **out_kwargs) as out:
+        out_kwargs.update(
+            {
+                "height": height,
+                "width": width,
+                "transform": src.window_transform(out_window),
+            }
+        )
+        with rasterio.open(
+            os.path.join(data_path, "dem.tif"), "w", **out_kwargs
+        ) as out:
             out.write(
                 src.read(
                     window=out_window,
@@ -131,11 +135,11 @@ def clip_dem(watershed_group_code, bounds, dem_path, data_path):
 
 
 def download_dem(watershed_group_code, bounds, data_path):
-    """Download DEM for given bounds and resample to 10m
-    """
+    """Download DEM for given bounds and resample to 10m"""
     LOG.info(f"{watershed_group_code} - downloading DEM")
     dataset = bcdata.get_dem(
-        bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True)
+        bounds, os.path.join(data_path, "dem.tif"), as_rasterio=True, align=True
+    )
     upscale_factor = 2.5  # upscale 25m DEM to 10m
     height = int(dataset.height * upscale_factor)
     width = int(dataset.width * upscale_factor)
@@ -220,7 +224,7 @@ def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
     )
     # set areas of DEM nodata to nodata
     A[DEM == dem_meta["nodata"]] = 0
-    
+
     with rasterio.open(
         os.path.join(data_path, "streams.tif"),
         "w",
@@ -272,7 +276,7 @@ def get_precip(db, bounds, DEM, dem_meta, data_path):
 
     # set areas of DEM nodata to nodata
     A[DEM == dem_meta["nodata"]] = -9999
-    
+
     with rasterio.open(
         os.path.join(data_path, "precip.tif"),
         "w",
@@ -289,9 +293,9 @@ def get_precip(db, bounds, DEM, dem_meta, data_path):
 
 
 def valley_confinement(
-    watershed_group_code,
     db_url,
     out_file,
+    watershed_group_code=None,
     data_path="data",
     minimum_drainage_area=1000,
     slope_threshold=9,
@@ -302,56 +306,64 @@ def valley_confinement(
     hole_removal_threshold=2500,
     calculate_width=False,
     write_tempfiles=False,
-    dem_path=None
+    dem_path=None,
 ):
     """Define 'unconfined' valleys"""
     db = create_engine(db_url)
-    sql = """select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom)
-    from whse_basemapping.fwa_watershed_groups_poly
-    where watershed_group_code = %(wsg)s"""
-    bbox = pandas.read_sql_query(
-        sql,
-        db,
-        params={
-            "wsg": watershed_group_code,
-        },
-    )
-    bounds = [
-        bbox["st_xmin"][0],
-        bbox["st_ymin"][0],
-        bbox["st_xmax"][0],
-        bbox["st_ymax"][0],
-    ]
-    LOG.info(f"{watershed_group_code} - Processing extent " + ",".join([str(b) for b in bounds]))
+    if watershed_group_code:
+        sql = """select st_xmin(geom), st_ymin(geom), st_xmax(geom), st_ymax(geom)
+        from whse_basemapping.fwa_watershed_groups_poly
+        where watershed_group_code = %(wsg)s"""
+        bbox = pandas.read_sql_query(
+            sql,
+            db,
+            params={
+                "wsg": watershed_group_code,
+            },
+        )
+        bounds = [
+            bbox["st_xmin"][0],
+            bbox["st_ymin"][0],
+            bbox["st_xmax"][0],
+            bbox["st_ymax"][0],
+        ]
+        LOG.info(
+            f"{watershed_group_code} - Processing extent "
+            + ",".join([str(b) for b in bounds])
+        )
 
     # ---------------------
     # load input rasters
     # ---------------------
-    
+
     # dem
-    if not os.path.exists(os.path.join(data_path, "dem.tif")):
-        if dem_path:
-            clip_dem(watershed_group_code, bounds, dem_path, data_path)
-        else:
+    if not os.path.exists(os.path.join(data_path, "dem.tif")) and watershed_group_code:
+        if watershed_group_code and not dem_path:
             download_dem(watershed_group_code, bounds, data_path)
-    dem = rasterio.open(os.path.join(data_path, "dem.tif"))
+            dem_path = os.path.join(data_path, "dem.tif")
+        if watershed_group_code and dem_path:
+            clip_dem(watershed_group_code, bounds, dem_path, data_path)
+            dem_path = os.path.join(data_path, "dem.tif")
+
+    dem = rasterio.open(dem_path)
     dem_meta = dem.meta
     DEM = dem.read(1)
-    
+    bounds = dem.bounds
+
     # precip
     if not os.path.exists(os.path.join(data_path, "precip.tif")):
         LOG.info(f"{watershed_group_code} - rasterizing precip per watershed")
         get_precip(db, bounds, DEM, dem_meta, data_path)
     precip = rasterio.open(os.path.join(data_path, "precip.tif"))
     P = precip.read(1).astype("float32")
-    
+
     # streams
     if not os.path.exists(os.path.join(data_path, "streams.tif")):
         LOG.info(f"{watershed_group_code} - rasterizing streams")
         get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path)
     streams = rasterio.open(os.path.join(data_path, "streams.tif"))
     ST = streams.read(1)
-    
+
     # slope
     if not os.path.exists(os.path.join(data_path, "slope.tif")):
         LOG.info(f"{watershed_group_code} - deriving slope")
@@ -361,7 +373,7 @@ def valley_confinement(
                 "slope",
                 "-p",
                 "-q",
-                os.path.join(data_path, "dem.tif"),
+                dem_path,
                 os.path.join(data_path, "slope.tif"),
             ]
         )
@@ -369,7 +381,9 @@ def valley_confinement(
     SL = slope.read(1)
 
     # initialize mask
-    LOG.info(f"{watershed_group_code} - initializing and calculating distance to streams")
+    LOG.info(
+        f"{watershed_group_code} - initializing and calculating distance to streams"
+    )
     moving_mask = numpy.zeros(shape=precip.shape, dtype="bool")
 
     # ---------------------
@@ -578,8 +592,10 @@ def valley_confinement(
         mask = valleys == 1
         LOG.info(f"{watershed_group_code} - calculating distance_transform")
         # Calculate distance to the bank over all valleys
-        distances = distance_transform_edt(mask.astype("float32"), [dem.res[0], dem.res[1]])
-        
+        distances = distance_transform_edt(
+            mask.astype("float32"), [dem.res[0], dem.res[1]]
+        )
+
         if write_tempfiles:
             with rasterio.open(
                 os.path.join(data_path, "distance_transform.tif"),
@@ -655,7 +671,7 @@ def read_config(config_file):
         "flood_factor",
         "size_threshold",
         "hole_removal_threshold",
-        "calculate_width"
+        "calculate_width",
     ]
     # check keys are valid
     for key in cfg["CONFIG"].keys():
@@ -667,7 +683,12 @@ def read_config(config_file):
 
 
 @click.command()
-@click.argument("watershed_group_code", type=click.STRING)
+@click.option(
+    "--watershed_group_code",
+    "-wsg",
+    type=click.STRING,
+    help="Watershed group code for processing extent",
+)
 @click.option(
     "--db_url",
     "-db",
@@ -701,7 +722,7 @@ def read_config(config_file):
 )
 @click.option(
     "--write_tempfiles",
-    "-w",
+    "-wt",
     is_flag=True,
     show_default=True,
     default=False,
@@ -709,7 +730,17 @@ def read_config(config_file):
 )
 @verbose_opt
 @quiet_opt
-def cli(watershed_group_code, db_url, out_file, workdir, dem, config_file, write_tempfiles, verbose, quiet):
+def cli(
+    watershed_group_code,
+    db_url,
+    out_file,
+    workdir,
+    dem,
+    config_file,
+    write_tempfiles,
+    verbose,
+    quiet,
+):
     verbosity = verbose - quiet
     log_level = max(10, 20 - 10 * verbosity)  # default to INFO log level
     logging.basicConfig(
@@ -721,7 +752,19 @@ def cli(watershed_group_code, db_url, out_file, workdir, dem, config_file, write
         config = read_config(config_file)
     else:
         config = {}
-    valley_confinement(watershed_group_code, db_url, out_file, workdir, dem_path=dem, **config)
+    if not watershed_group_code and not dem:
+        raise ValueError(
+            "Provide a DEM or watershed_group_code to define processing extent"
+        )
+
+    valley_confinement(
+        db_url,
+        out_file,
+        watershed_group_code=None,
+        data_path=workdir,
+        dem_path=dem,
+        **config,
+    )
 
 
 if __name__ == "__main__":
