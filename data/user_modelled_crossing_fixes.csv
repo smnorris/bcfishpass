@@ -5954,3 +5954,81 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1801773,NONE,BULK,TMK,2022-12-20,imagery,no visible structure
 1801133,NONE,BULK,TMK,2022-12-20,PSCIS assessment,no visible crossing
 1802374,NONE,BULK,TMK,2022-12-20,PSCIS assessment,no visible crossing
+6800298,NONE,HORS,TMK,2022-02-07,imagery,no visible crossing
+6800581,NONE,HORS,TMK,2022-02-07,passable in PSCIS,no visible crossing
+6801130,NONE,HORS,TMK,2022-02-07,imagery,no visible crossing
+6801356,NONE,HORS,TMK,2022-02-07,imagery,no visible crossing
+24718987,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
+24718984,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
+24745449,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
+17100761,NONE,QUES,TMK,2023-03-24,imagery,no visible Crossing
+17100399,NONE,QUES,TMK,2023-03-24,imagery,was labeled CBS in model but appears only to be logs between imagery sources
+17102022,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
+17101217,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
+17100302,OBS,QUES,TMK,2023-03-27,imagery,to check- possible bridge
+17100612,NONE,QUES,TMK,2023-03-27,"imagery ",no visible crossing
+17103076,OBS,QUES,TMK,2023-03-27,imagery,possible bridge
+17100700,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17101466,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17102525,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100844,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17102835,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17101895,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17101903,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100446,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17102359,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100603,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100365,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100529,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100366,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17100449,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17102237,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+17101908,NONE,QUES,TMK,2023-03-27,imagery,no visible crossing
+1500044,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1500455,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
+1500719,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No road visible
+1500723,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No road visible
+1501025,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1501077,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,Invalid overlap in network
+1501078,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,Invalid overlap in network
+1501079,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,Invalid overlap in network
+1501400,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1501510,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1501513,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1501669,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1501677,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
+1501731,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+1502254,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1502255,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1502256,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1502713,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1502726,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+1502913,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+1503091,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1503093,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1503177,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1503254,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible road
+1503316,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,"Structure error, single crossing"
+24702868,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24702869,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth/Google Street View,Bridge Visible
+24702884,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24702886,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24702887,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24702997,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
+24702998,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
+24703004,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703013,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703023,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703024,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703025,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703030,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703033,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703039,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703042,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703044,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24703045,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
+24738214,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
+24738255,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
+11303928,NONE,LNIC,TMK,2023-03-31,Field assessment,no crossing
+11304111,NONE,LNIC,TMK,2023-03-31,Field assessment/imagery,no crossing
+11301807,NONE,LNIC,TMK,2023-03-31,FIELD ASSESSMENT,no crossing

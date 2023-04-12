@@ -113,3 +113,27 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 356364031,1346,FALLS,f,MCGR,SN,2022-11-08,imagery,rapids
 356364031,1597,FALLS,f,MCGR,SN,2022-11-08,imagery,rapids
 360883982,55338,FALLS,f,LDEN,SN,2023-03-01,PSE,three PSE chinook spawning points upstream of this location
+356345496,1101,FALLS,t,LNIC,TMK,2023-04-03,field assessment,presents natural barrier to crossing upstream
+356345496,606,FALLS,t,LNIC,TMK,2023-04-03,field assessment,presents natural barrier to crossing upstream
+356362950,16539,FALLS,f,BOWR,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356362950,16763,FALLS,f,BOWR,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356362950,17081,FALLS,f,BOWR,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356362950,17392,FALLS,f,BOWR,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356351262,1166,GRADIENT,f,CARR,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE very unlikely that habitat is everywhere due to historical mioning operations in the area
+356304330,17335,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356333065,1772,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356291581,1189,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356150504,0,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356218888,3520,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356218888,3736,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356218888,3791,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356218888,3903,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356218888,4334,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356174136,14374,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356174136,14559,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356346644,17394,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356346644,17553,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356346644,17683,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356358264,33933,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356358264,34319,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
+356360071,12179,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
