@@ -1,8 +1,8 @@
 -- create per species views
 
-drop materialized view if exists bcfishpass.map_co_vw;
+drop materialized view if exists bcfishpass.streams_co_vw;
 
-create materialized view bcfishpass.map_co_vw as
+create materialized view bcfishpass.streams_co_vw as
 with status_codes as (
 select 
   segmented_stream_id,
@@ -55,8 +55,8 @@ select
   a.downstream_route_measure,
   a.length_metre,
   a.waterbody_key,
-  a.wscode_ltree as wscode,
-  a.localcode_ltree as localcode,
+  a.wscode_ltree::text as wscode,
+  a.localcode_ltree::text as localcode,
   a.gnis_name,
   a.stream_order,
   a.stream_magnitude,
@@ -65,28 +65,20 @@ select
   a.upstream_route_measure,
   a.upstream_area_ha,
   cw.channel_width,
-  mad.mad_m3s,
+  --mad.mad_m3s,
   a.stream_order_parent,
   a.stream_order_max,
-  a.barriers_anthropogenic_dnstr,
-  a.barriers_pscis_dnstr,
-  a.barriers_dams_dnstr,
-  a.barriers_dams_hydro_dnstr,
-  a.barriers_ch_cm_co_pk_sk_dnstr,
-  a.crossings_dnstr,
-  a.obsrvtn_event_upstr,
-  a.obsrvtn_species_codes_upstr,
-  a.remediated_dnstr,
-  a.model_spawning_ch,
-  a.model_rearing_ch,
-  a.model_spawning_cm,
-  a.model_rearing_cm,
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
+  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  array_to_string(a.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
+  array_to_string(a.crossings_dnstr, ';') as crossings_dnstr,
+  array_to_string(a.obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
+  array_to_string(a.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  array_to_string(a.remediated_dnstr, ';') as remediated_dnstr,
   a.model_spawning_co,
   a.model_rearing_co,
-  a.model_spawning_pk,
-  a.model_rearing_pk,
-  a.model_spawning_sk,
-  a.model_rearing_sk,
   array_to_string(array[b.habitat_status, b.anthropogenic_barrier_status, b.intermittent_status], ';') as map_symbol_code,
   a.geom
 from bcfishpass.streams a

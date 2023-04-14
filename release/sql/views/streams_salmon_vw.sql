@@ -1,25 +1,41 @@
--- create per species views
+-- create pacific salmon view
 
-drop materialized view if exists bcfishpass.map_st_vw;
+drop materialized view if exists bcfishpass.streams_salmon_vw;
 
-create materialized view bcfishpass.map_st_vw as
+create materialized view bcfishpass.streams_salmon_vw as
 with status_codes as (
 select 
   segmented_stream_id,
   case 
     -- migratory
     when 
-      barriers_st_dnstr = array[]::text[] and
-      model_spawning_st is null and
-      model_rearing_st is null
+      barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
+      model_spawning_ch is null and
+      model_spawning_cm is null and
+      model_spawning_co is null and
+      model_spawning_pk is null and
+      model_spawning_sk is null and
+      model_rearing_ch is null and
+      model_rearing_co is null and
+      model_rearing_sk is null  
     then 'ACCESS' 
     -- potential spawning
-    when model_spawning_st is not null
+    when model_spawning_ch is not null or
+      model_spawning_cm is not null or
+      model_spawning_co is not null or
+      model_spawning_pk is not null or
+      model_spawning_sk is not null
     then 'SPAWN'
     -- potential rearing (and not spawning)
     when
-      model_spawning_st is null and
-      model_rearing_st is not null
+      model_spawning_ch is null and
+      model_spawning_cm is null and
+      model_spawning_co is null and
+      model_spawning_pk is null and
+      model_spawning_sk is null and
+      (model_rearing_ch is not null or
+      model_rearing_co is not null or
+      model_rearing_sk is not null)
     then 'REAR'
   end as habitat_status,
   case 
@@ -55,8 +71,8 @@ select
   a.downstream_route_measure,
   a.length_metre,
   a.waterbody_key,
-  a.wscode_ltree as wscode,
-  a.localcode_ltree as localcode,
+  a.wscode_ltree::text as wscode,
+  a.localcode_ltree::text as localcode,
   a.gnis_name,
   a.stream_order,
   a.stream_magnitude,
@@ -65,18 +81,18 @@ select
   a.upstream_route_measure,
   a.upstream_area_ha,
   cw.channel_width,
-  mad.mad_m3s,
+  --mad.mad_m3s,
   a.stream_order_parent,
   a.stream_order_max,
-  a.barriers_anthropogenic_dnstr,
-  a.barriers_pscis_dnstr,
-  a.barriers_dams_dnstr,
-  a.barriers_dams_hydro_dnstr,
-  a.barriers_ch_cm_co_pk_sk_dnstr,
-  a.crossings_dnstr,
-  a.obsrvtn_event_upstr,
-  a.obsrvtn_species_codes_upstr,
-  a.remediated_dnstr,
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
+  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  array_to_string(a.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
+  array_to_string(a.crossings_dnstr, ';') as crossings_dnstr,
+  array_to_string(a.obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
+  array_to_string(a.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  array_to_string(a.remediated_dnstr, ';') as remediated_dnstr,
   a.model_spawning_ch,
   a.model_rearing_ch,
   a.model_spawning_cm,
@@ -93,4 +109,4 @@ from bcfishpass.streams a
 inner join status_codes b on a.segmented_stream_id = b.segmented_stream_id
 left outer join bcfishpass.discharge mad on a.linear_feature_id = mad.linear_feature_id
 left outer join bcfishpass.channel_width cw on a.linear_feature_id = cw.linear_feature_id
-where barriers_st_dnstr = array[]::text[];
+where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];

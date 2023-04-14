@@ -32,9 +32,3 @@ done
 
 # apply manual/user habitat classifcation
 $PSQL -f sql/user_habitat_classification.sql
-
-# create mapping views displaying access/habitat per species / species group
-for VW in $(ls sql/map_*_vw.sql)  
-do
-  $PSQL -f $VW
-done

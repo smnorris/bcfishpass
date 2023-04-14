@@ -1,25 +1,25 @@
 -- create per species views
 
-drop materialized view if exists bcfishpass.map_bt_vw;
+drop materialized view if exists bcfishpass.streams_sk_vw;
 
-create materialized view bcfishpass.map_bt_vw as
+create materialized view bcfishpass.streams_sk_vw as
 with status_codes as (
 select 
   segmented_stream_id,
   case 
     -- migratory
     when 
-      barriers_wct_dnstr = array[]::text[] and
-      model_spawning_bt is null and
-      model_rearing_bt is null
+      barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
+      model_spawning_sk is null and
+      model_rearing_sk is null
     then 'ACCESS' 
     -- potential spawning
-    when model_spawning_bt is not null
+    when model_spawning_sk is not null
     then 'SPAWN'
     -- potential rearing (and not spawning)
     when
-      model_spawning_bt is null and
-      model_rearing_bt is not null
+      model_spawning_sk is null and
+      model_rearing_sk is not null
     then 'REAR'
   end as habitat_status,
   case 
@@ -65,26 +65,18 @@ select
   a.upstream_route_measure,
   a.upstream_area_ha,
   cw.channel_width,
-  mad.mad_m3s,
+  --mad.mad_m3s,
   a.stream_order_parent,
   a.stream_order_max,
-  a.barriers_anthropogenic_dnstr,
-  a.barriers_pscis_dnstr,
-  a.barriers_dams_dnstr,
-  a.barriers_dams_hydro_dnstr,
-  a.barriers_ch_cm_co_pk_sk_dnstr,
-  a.crossings_dnstr,
-  a.obsrvtn_event_upstr,
-  a.obsrvtn_species_codes_upstr,
-  a.remediated_dnstr,
-  a.model_spawning_ch,
-  a.model_rearing_ch,
-  a.model_spawning_cm,
-  a.model_rearing_cm,
-  a.model_spawning_co,
-  a.model_rearing_co,
-  a.model_spawning_pk,
-  a.model_rearing_pk,
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
+  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  array_to_string(a.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
+  array_to_string(a.crossings_dnstr, ';') as crossings_dnstr,
+  array_to_string(a.obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
+  array_to_string(a.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  array_to_string(a.remediated_dnstr, ';') as remediated_dnstr,
   a.model_spawning_sk,
   a.model_rearing_sk,
   array_to_string(array[b.habitat_status, b.anthropogenic_barrier_status, b.intermittent_status], ';') as map_symbol_code,
@@ -93,4 +85,4 @@ from bcfishpass.streams a
 inner join status_codes b on a.segmented_stream_id = b.segmented_stream_id
 left outer join bcfishpass.discharge mad on a.linear_feature_id = mad.linear_feature_id
 left outer join bcfishpass.channel_width cw on a.linear_feature_id = cw.linear_feature_id
-where barriers_bt_dnstr = array[]::text[];
+where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
