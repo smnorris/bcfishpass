@@ -1,8 +1,8 @@
 -- create per species views
 
-drop view if exists bcfishpass.map_wct_vw;
+drop materialized view if exists bcfishpass.map_wct_vw;
 
-create view bcfishpass.map_wct_vw as
+create materialized view bcfishpass.map_wct_vw as
 with status_codes as (
 select 
   segmented_stream_id,

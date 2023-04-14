@@ -1,8 +1,8 @@
 -- create pacific salmon view
 
-drop view if exists bcfishpass.map_salmon_vw;
+drop materialized view if exists bcfishpass.map_salmon_vw;
 
-create view bcfishpass.map_salmon_vw as
+create materialized view bcfishpass.map_salmon_vw as
 with status_codes as (
 select 
   segmented_stream_id,

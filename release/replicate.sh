@@ -25,3 +25,6 @@ pg_dump service=$1 -t whse_basemapping.transport_line_structure_code | psql serv
 pg_dump service=$1 -t whse_basemapping.transport_line_surface_code | psql service=$2
 pg_dump service=$1 -t whse_basemapping.transport_line_type_code | psql service=$2
 pg_dump service=$1 -t whse_forest_tenure.ften_road_section_lines_svw | psql service=$2
+
+#
+echo "schemas have been re-created, remember to re-apply grants as required"
