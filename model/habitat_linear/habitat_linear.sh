@@ -12,7 +12,6 @@ $PSQL -f sql/parameters.sql
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # add output columns
-
 MODELS=$(ls sql/model_habitat*.sql | sed -e "s/sql\/model_habitat_//" | sed -e "s/.sql//")
 for SP in $MODELS
 do
