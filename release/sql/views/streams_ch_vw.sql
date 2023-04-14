@@ -76,7 +76,7 @@ select
   array_to_string(a.crossings_dnstr, ';') as crossings_dnstr,
   array_to_string(a.obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
   array_to_string(a.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
-  array_to_string(a.remediated_dnstr, ';') as remediated_dnstr,
+  a.remediated_dnstr,
   a.model_spawning_ch,
   a.model_rearing_ch,
   array_to_string(array[b.habitat_status, b.anthropogenic_barrier_status, b.intermittent_status], ';') as map_symbol_code,
