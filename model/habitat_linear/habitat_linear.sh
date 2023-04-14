@@ -8,14 +8,18 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 $PSQL -f sql/parameters.sql
 ../../scripts/load_csv.sh parameters/parameters_habitat_thresholds.csv
 ../../scripts/load_csv.sh parameters/parameters_habitat_method.csv
+
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+
 # add output columns
+
 MODELS=$(ls sql/model_habitat*.sql | sed -e "s/sql\/model_habitat_//" | sed -e "s/.sql//")
 for SP in $MODELS
 do
   psql -c "alter table bcfishpass.streams add column if not exists model_spawning_"$SP" boolean"
   psql -c "alter table bcfishpass.streams add column if not exists model_rearing_"$SP" boolean"
 done
+
 # run all habitat queries per watershed group
 # this could be sped up by running inserts rather than updates,
 # (faster, plus allowing parallel processing), but this does not take too long
