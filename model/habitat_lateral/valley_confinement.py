@@ -763,6 +763,7 @@ def cli(
         watershed_group_code=None,
         data_path=workdir,
         dem_path=dem,
+        write_tempfiles=write_tempfiles,
         **config,
     )
 
