@@ -59,11 +59,13 @@ with all_barriers as
   where watershed_group_code = :'wsg'
 ),
 
+-- BT observations, plus salmon/steelhead as any features passable by salmon/steehead
+-- should also be passable by BT
 obs as
 (
   select *
   from bcfishpass.observations
-  where species_codes && array['BT'] is true
+  where species_codes && array['BT','CH','CM','CO','PK','SK','ST'] is true
 ),
 
 barriers as
@@ -96,7 +98,7 @@ barriers as
 
   union all
 
-    -- include *all* user added features, even those below bt observations
+    -- include *all* user added features, even those below observations
   select
       barrier_type,
       barrier_name,
