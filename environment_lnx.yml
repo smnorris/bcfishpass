@@ -1,0 +1,29 @@
+name: bcfishpass
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - make
+  - wget
+  - zip
+  - unzip
+  - parallel
+  - cdo
+  - libpq
+  - jq
+  - python=3.10
+  - pip
+  - requests
+  - owslib
+  - awscli
+  - psycopg2
+  - sqlalchemy<2.0
+  - gdal
+  - rasterio
+  - geopandas
+  - geoalchemy2
+  - rasterstats
+  - scikit-image
+  - seaborn
+  - pip:
+      - bcdata==0.7.6

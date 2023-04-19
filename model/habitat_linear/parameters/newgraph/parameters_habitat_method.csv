@@ -13,6 +13,7 @@ BOWR,mad
 BRKS,cw
 BULK,cw
 CAMB,cw
+CARP,cw
 CARR,mad
 CHES,mad
 CHIL,mad
@@ -23,6 +24,7 @@ CLWR,mad
 COMX,cw
 COTR,mad
 COWN,cw
+CRKD,cw
 DEAD,mad
 DOGC,mad
 DRIR,mad
@@ -52,6 +54,7 @@ KITR,cw
 KLIN,cw
 KLUM,cw
 KNIG,cw
+KOTL,cw
 KSHR,cw
 KTSU,cw
 KUMR,cw
@@ -59,12 +62,14 @@ LBIR,cw
 LCHL,mad
 LCHR,mad
 LDEN,cw
+LEUT,cw
 LFRA,mad
 LILL,mad
 LISR,cw
 LKEL,cw
 LNAR,cw
 LNIC,mad
+LNRS,cw
 LNTH,mad
 LRDO,cw
 LSAL,mad
@@ -131,6 +136,8 @@ TSIT,cw
 TWAC,mad
 UBIR,cw
 UCHR,mad
+UDEN,cw
+UEUT,cw
 UFRA,mad
 UJER,cw
 UNAR,cw
