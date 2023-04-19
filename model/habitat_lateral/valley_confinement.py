@@ -168,25 +168,50 @@ def download_dem(watershed_group_code, bounds, data_path):
 
 def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
     """write accessible streams within bounds to raster"""
-    sql = """SELECT
-      s.linear_feature_id,
-      round(ua.upstream_area_ha::numeric) as upstream_area_ha,
-      s.stream_order_parent,
-      s.gradient,
-      s.geom
-    FROM bcfishpass.streams s
-    LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
-    ON s.linear_feature_id = l.linear_feature_id
-    INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
-    ON l.watershed_feature_id = ua.watershed_feature_id
-    where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
-    and s.gradient < .3
-    and
-    (barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or
-    barriers_st_dnstr = array[]::text[] or
-    barriers_wct_dnstr = array[]::text[] or
-    barriers_bt_dnstr = array[]::text[]
+    sql = """
+        with streams as (
+        SELECT
+          s.linear_feature_id,
+          s.wscode_ltree,
+          round(ua.upstream_area_ha::numeric) as upstream_area_ha,
+          s.stream_order_parent,
+          s.gradient,
+          s.geom
+        FROM bcfishpass.streams s
+        LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
+        ON s.linear_feature_id = l.linear_feature_id
+        INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
+        ON l.watershed_feature_id = ua.watershed_feature_id
+        where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
+        and s.gradient < .3
+        and (
+          barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or
+          barriers_st_dnstr = array[]::text[] or
+          barriers_wct_dnstr = array[]::text[] or
+          barriers_bt_dnstr = array[]::text[]
+        )
+    ),
+    sidechannels as (
+        select distinct
+          s.linear_feature_id,
+          s.wscode_ltree,
+          0 as upstream_area_ha,
+          s.stream_order_parent,
+          s.gradient,
+          s.geom
+        from whse_basemapping.fwa_stream_networks_sp s
+        inner join streams s2
+        on s.wscode_ltree = s2.wscode_ltree
+        where
+          s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
+          and s.gradient < .05
+          and s.blue_line_key != s.watershed_key
+          and s.linear_feature_id not in (select linear_feature_id from streams)
     )
+
+    select * from streams
+    union all
+    select * from sidechannels
     """
     stream_features = geopandas.read_postgis(
         sql,
