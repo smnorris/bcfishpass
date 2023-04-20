@@ -363,10 +363,13 @@ def valley_confinement(
 
     # dem
     if not os.path.exists(os.path.join(data_path, "dem.tif")) and watershed_group_code:
+        LOG.info("no existing dem")
         if watershed_group_code and not dem_path:
+            LOG.info("downloading dem")
             download_dem(watershed_group_code, bounds, data_path)
             dem_path = os.path.join(data_path, "dem.tif")
         if watershed_group_code and dem_path:
+            LOG.info("clipping dem")
             clip_dem(watershed_group_code, bounds, dem_path, data_path)
             dem_path = os.path.join(data_path, "dem.tif")
 
@@ -785,7 +788,7 @@ def cli(
     valley_confinement(
         db_url,
         out_file,
-        watershed_group_code=None,
+        watershed_group_code=watershed_group_code,
         data_path=workdir,
         dem_path=dem,
         write_tempfiles=write_tempfiles,
