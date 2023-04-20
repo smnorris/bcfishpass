@@ -12,8 +12,9 @@ SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 # access models - combine barriers into tables of per-species scenarios
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
-# final targets
+# add length upstream columns to each per-species set of barriers
 ADD_LENGTH_UPSTREAM = $(patsubst sql/model_access_%.sql, .make/add_length_upstream_%, $(wildcard sql/model_access_*.sql))
+
 
 all: $(ADD_LENGTH_UPSTREAM)
 
@@ -21,21 +22,66 @@ clean:
 	rm -Rf .make
 
 # -----
-# LOAD REQUIRED DB FUNCTIONS
+# USER DATA TABLES
 # -----
-.make/functions:  $(wildcard sql/functions/*sql)
+# load various data/fix tables required for access model
+.make/data: $(wildcard ../../data/*.csv)
 	mkdir -p .make
-	for sql in $^ ; do \
-		set -e ; $(PSQL) -f $$sql ; \
-	done
+	cd ../../data ; ./load.sh
+
+	# all stream breaking is done in access model, create required endpoints
+	# before running it
+	$(PSQL) -f sql/user_habitat_classification_endpoints.sql
+	touch $@
+
+# ------
+# FALLS
+# ------
+.make/falls:  .make/data \
+	falls/falls.sh \
+	falls/sql/falls.sql
+	cd falls; ./falls.sh
+	touch $@
+
+# ------
+# GRADIENT BARRIERS
+# ------
+# Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
+gradient_barriers/.make/gradient_barriers:
+	cd gradient_barriers; make
+
+# ------
+# DAMS
+# ------
+.make/dams:  dams/dams.sh dams/sql/dams.sql
+	cd dams; ./dams.sh
+	touch $@
+
+# ------
+# MODELLED ROAD-STREAM CROSSINGS
+# ------
+# Load modelled crossings from archive posted to s3 (this ensures consistent modelled crossing ids for all users)
+.make/modelled_stream_crossings:
+	cd modelled_stream_crossings; make .make/download_archive
+	cd modelled_stream_crossings; make .make/download_bcdata # also download roads/railways for reference
+	touch $@
+
+# ------
+# PSCIS STREAM CROSSINGS
+# ------
+.make/pscis: .make/data \
+ 	.make/modelled_stream_crossings
+	cd pscis; ./pscis.sh
 	touch $@
 
 # -----
 # CROSSINGS
 # -----
 # combine modelled crossings, pscis, dams into bcfishpass.crossings
-.make/crossings: sql/crossings.sql
-	$(PSQL) -f $^
+.make/crossings: .make/dams \
+	.make/pscis \
+	sql/crossings.sql
+	$(PSQL) -f sql/crossings.sql
 	touch $@
 
 # -----
@@ -51,7 +97,11 @@ clean:
 # -----
 # Create standardized barrier tables, one per type of barrier. 
 # Process every file that matches the pattern sql/barriers_%.sql
-$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql .make/functions .make/crossings
+$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql \
+	.make/crossings \
+	.make/falls \
+	gradient_barriers/.make/gradient_barriers \
+	.make/data
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
@@ -185,3 +235,15 @@ $(ADD_LENGTH_UPSTREAM): .make/add_length_upstream_%: sql/model_access_%.sql .mak
 		-v src_table=barriers_$(SPP) \
 		-v src_id=barriers_$(SPP)_id
 	touch $@
+
+# -----
+# QA REPORTS
+# -----
+$(QA_ACCESS_OUTPUTS): reports/access/%.csv: reports/access/sql/%.sql \
+	model/access/.make/model_access
+	psql2csv $(DATABASE_URL) < $< > $@
+
+# just a target to build all access reports
+.make/model_access_reports: $(QA_ACCESS_OUTPUTS)
+	touch $@
+

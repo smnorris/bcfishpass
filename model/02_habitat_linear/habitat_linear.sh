@@ -6,8 +6,11 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # load parameters
 $PSQL -f sql/parameters.sql
-../../scripts/load_csv.sh parameters/parameters_habitat_thresholds.csv
-../../scripts/load_csv.sh parameters/parameters_habitat_method.csv
+psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "DELETE FROM bcfishpass.parameters_habitat_thresholds";
+psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "\copy bcfishpass.parameters_habitat_thresholds FROM parameters/parameters_habitat_thresholds delimiter ',' csv header";
+psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "DELETE FROM bcfishpass.parameters_habitat_method";
+psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method delimiter ',' csv header";
+
 
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 

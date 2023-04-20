@@ -32,4 +32,4 @@ To run all scripts:
 
 ## Outputs
 
-See [docs](https://smnorris.github.io/bcfishpass/02_methodology.html).
+See [docs](https://smnorris.github.io/bcfishpass/02_model_access.html).
