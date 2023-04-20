@@ -65,21 +65,8 @@ With `fwapg` and `bcfishobs` loaded to your database, set up the `bcfishpass` sc
 
 ## Usage
 
-Run in this order:
+To build all models:
 
-### Access model
-
-    cd model/01_access
-    make
-
-### linear habitat model
-
-    cd model/02_habitat_linear
-    make
-
-### lateral habitat model
-
-    cd model/03_habitat_lateral
     make
 
 Note that it is possible (and often preferred) to build components of the modelling separately. 

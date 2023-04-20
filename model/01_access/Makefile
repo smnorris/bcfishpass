@@ -21,18 +21,6 @@ all: $(ADD_LENGTH_UPSTREAM)
 clean: 
 	rm -Rf .make
 
-# -----
-# USER DATA TABLES
-# -----
-# load various data/fix tables required for access model
-.make/data: $(wildcard ../../data/*.csv)
-	mkdir -p .make
-	cd ../../data ; ./load.sh
-
-	# all stream breaking is done in access model, create required endpoints
-	# before running it
-	$(PSQL) -f sql/user_habitat_classification_endpoints.sql
-	touch $@
 
 # ------
 # FALLS

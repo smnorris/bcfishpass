@@ -39,6 +39,7 @@ do
 done
 
 # break streams at user habitat definition endpoints
+$PSQL -f sql/user_habitat_classification_endpoints.sql
 parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
 		$PSQL -v wsg={1} -v point_table=user_habitat_classification_endpoints" ::: $WSGS 
