@@ -8,7 +8,7 @@ TARGETS = data/baseflow.nc \
 	.make/discharge01_raster \
 	.make/discharge02_load \
 	.make/discharge03_wsd \
-	.make/discharge 
+	.make/discharge
 
 TABLES = discharge01_raster \
 	discharge02_load \
@@ -55,13 +55,13 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 ## Load watershed discharge raster to postgres
 .make/discharge01_raster: data/discharge.nc
 	mkdir -p .make
-	psql -c "CREATE EXTENSION postgis_raster;"
+	psql -c "CREATE EXTENSION IF NOT EXISTS postgis_raster;"
 	raster2pgsql data/discharge.nc bcfishpass.discharge01_raster -s 4326 | psql
 	touch $@
 
 ## overlay fundamental watersheds with discharge raster
 .make/discharge02_load: .make/discharge01_raster
-	psql -c "CREATE TABLE bcfishpass.discharge02_load \
+	psql -c "CREATE TABLE IF NOT EXISTS bcfishpass.discharge02_load \
 	( \
 		watershed_feature_id integer primary key, \
 		watershed_group_code text, \
@@ -78,7 +78,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 # Transfer data from load table to discharge table
 .make/discharge03_wsd: .make/discharge02_load
 	# Calculates the area weighted annual average flow for each wsd (mad_mm) and coverts to cubic m per s (m3s)
-	psql -c "CREATE TABLE bcfishpass.discharge03_wsd \
+	psql -c "CREATE TABLE IF NOT EXISTS bcfishpass.discharge03_wsd \
 	( \
 	  watershed_feature_id integer, \
 	  watershed_group_code text, \
@@ -93,7 +93,7 @@ data/discharge.nc: data/runoff_yearsum_mean.nc data/baseflow_yearsum_mean.nc
 .make/discharge: .make/discharge03_wsd
 	# Transfer per-watershed discharge data to per-stream
 	# create output bcfishpass.discharge table
-	psql -c "CREATE TABLE bcfishpass.discharge \
+	psql -c "CREATE TABLE IF NOT EXISTS bcfishpass.discharge \
 	( \
 	    linear_feature_id integer PRIMARY KEY, \
 	    watershed_group_code text, \
