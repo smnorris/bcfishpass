@@ -1,23 +1,23 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 
-all: model/habitat_lateral/data/habitat_lateral.tif
+all: model/03_habitat_lateral/data/habitat_lateral.tif
 
-.make/setup:
+.make/db:
 	mkdir -p .make
 	cd db; ./setup.sh
 	touch $@
 
-.make/load_data: .make/setup $(wildcard data/*.csv)
+.make/data: .make/db $(wildcard data/*.csv)
 	cd data; ./load.sh
 	touch $@
 
-.make/model_access: .make/load_data
+.make/model_access: .make/data
 	cd model/01_access; make
 	touch $@
 
 .make/habitat_linear: .make/model_access
-	cd model/02_habitat_linear; ./habitat_linear.sh
+	cd model/02_habitat_linear; make
 	touch $@
 
 # -----

@@ -25,9 +25,9 @@ clean:
 # ------
 # FALLS
 # ------
-.make/falls:  .make/data \
-	falls/falls.sh \
+.make/falls: falls/falls.sh \
 	falls/sql/falls.sql
+	mkdir -p .make
 	cd falls; ./falls.sh
 	touch $@
 
@@ -42,6 +42,7 @@ gradient_barriers/.make/gradient_barriers:
 # DAMS
 # ------
 .make/dams:  dams/dams.sh dams/sql/dams.sql
+	mkdir -p .make
 	cd dams; ./dams.sh
 	touch $@
 
@@ -50,6 +51,7 @@ gradient_barriers/.make/gradient_barriers:
 # ------
 # Load modelled crossings from archive posted to s3 (this ensures consistent modelled crossing ids for all users)
 .make/modelled_stream_crossings:
+	mkdir -p .make
 	cd modelled_stream_crossings; make .make/download_archive
 	cd modelled_stream_crossings; make .make/download_bcdata # also download roads/railways for reference
 	touch $@
@@ -57,8 +59,8 @@ gradient_barriers/.make/gradient_barriers:
 # ------
 # PSCIS STREAM CROSSINGS
 # ------
-.make/pscis: .make/data \
- 	.make/modelled_stream_crossings
+.make/pscis: .make/modelled_stream_crossings
+	mkdir -p .make
 	cd pscis; ./pscis.sh
 	touch $@
 
@@ -88,8 +90,7 @@ gradient_barriers/.make/gradient_barriers:
 $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql \
 	.make/crossings \
 	.make/falls \
-	gradient_barriers/.make/gradient_barriers \
-	.make/data
+	gradient_barriers/.make/gradient_barriers
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
