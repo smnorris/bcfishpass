@@ -1,6 +1,6 @@
 # db setup
 
-Load general functions and tables to the bcfishpass database
+Create functions and user editable tables in the bcfishpass database.
 
 
 ## Usage

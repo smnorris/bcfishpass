@@ -3,12 +3,12 @@ PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and sto
 
 all: model/03_habitat_lateral/data/habitat_lateral.tif
 
-.make/db:
+.make/db: db/setup.sh db/sql/tables.sql db/sql/functions/*sql
 	mkdir -p .make
 	cd db; ./setup.sh
 	touch $@
 
-.make/data: .make/db $(wildcard data/*.csv)
+.make/data: .make/db data/*.csv
 	cd data; ./load.sh
 	touch $@
 
