@@ -4,14 +4,6 @@ set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-# load parameters
-$PSQL -f sql/parameters.sql
-$PSQL -c "DELETE FROM bcfishpass.parameters_habitat_thresholds";
-$PSQL -c "\copy bcfishpass.parameters_habitat_thresholds FROM parameters/parameters_habitat_thresholds.csv delimiter ',' csv header";
-$PSQL -c "DELETE FROM bcfishpass.parameters_habitat_method";
-$PSQL -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header";
-
-
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # add output columns
