@@ -38,7 +38,6 @@ select
       barriers_dams_hydro_dnstr is null then 'DAM'
     when barriers_anthropogenic_dnstr is not null and   -- hydro dam barrier dnstr
       barriers_dams_hydro_dnstr is not null then 'HYDRO'
-    when remediated_dnstr is true then 'REMEDIATED'
   end as anthropogenic_barrier_status,
   case 
     when feature_code = 'GA24850150' then 'INTERMITTENT' 
