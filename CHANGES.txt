@@ -3,9 +3,16 @@ Changes
 
 All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
-v0.1.dev2 ()
+v0.1.dev2 (2023-04-24)
 ------------------
-- move linear habitat parameter files into linear habitat model folder, control access processing with text file
+- better display of remediated streams (#326)
+- reorganization of model folders/components, with required components as subfolders
+- store parameters files in /data and include only default parameters (open data)
+- control watersheds to process only via parameters file
+- fix BT model to use anadromous spp observations to cancel barriers (#321)
+- ensure data displays in QGIS when accessed via FDW (#318)
+- minor fixes to valley confinement script
+- data fixes related to CARR species
 - add confirmed habitat data (PSE) within CCIRA study (area where it informs access model)
 - add confirmed habitat locations from New Graph BULK field reviews
 - use confirmed habitat to inform access model (#227)
