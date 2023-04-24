@@ -16,6 +16,11 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 	cd data; ./load.sh
 	touch $@
 
+# for testing, process only key watersheds
+.make/test: .make/data
+	$(PSQL) -c "delete from bcfishpass.parameters_habitat_method \
+	where watershed_group_code not in ('BULK','ELKR','LNIC','BOWR','QUES','CARR','BABL','BONP','LNTH','MORR','PARS');"
+
 .make/model_access: .make/data
 	cd model/01_access; make
 	touch $@
