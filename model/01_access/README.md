@@ -9,7 +9,7 @@ See [docs](https://smnorris.github.io/bcfishpass/02_methodology.html) for method
 
 #### Study area
 
-Watershed groups to be processed are listed in `wsg.txt`. Edit this file as required.
+Watershed groups to be processed are listed in ../data/parameters_habitat_method.csv - edit this file to change the study area.
 
 #### Modify existing models
 
