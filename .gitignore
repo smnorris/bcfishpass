@@ -24,15 +24,11 @@ model/**/data
 # docker postgres data folder
 postgres-data
 
-# qa folder
-qa/*csv
+# access model qa files
+model/01_access/qa/*csv
 
 # empty make targets
 .make/
 
 # qgis
 *.qgs~
-
-# ignore current parameters, just track param in subfolders
-model/habitat_linear/parameters/parameters_habitat_method.csv
-model/habitat_linear/parameters/parameters_habitat_thresholds.csv

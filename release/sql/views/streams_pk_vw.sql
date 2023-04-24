@@ -17,6 +17,7 @@ select
     then 'SPAWN'
   end as habitat_status,
   case 
+    when remediated_dnstr is true then 'REMEDIATED'     -- this must be first condition as others below can also be true
     when barriers_anthropogenic_dnstr is null then 'NONE'    -- no barriers dnstr
     when barriers_anthropogenic_dnstr is not null and   -- modelled barrier dnstr
       barriers_pscis_dnstr is null and

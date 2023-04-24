@@ -58,16 +58,16 @@ All scripts presume that the `DATABASE_URL` environment variable points to your 
 
 Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
 
+With `fwapg` and `bcfishobs` loaded to your database, set up the `bcfishpass` schema/tables/functions:
+
+    cd db; ./setup.sh
+
 
 ## Usage
 
-Once you have `fwapg` and `bcfishobs` loaded to your database, `bcfishpass` processing is controlled by the `Makefile`.
-
-To run all models (access, linear habitat, lateral habitat):
+To build all models:
 
     make
 
 Note that it is possible (and often preferred) to build components of the modelling separately. 
-Refer to the various README files in the folders within the `model` folder for more info.
-
-
+Refer to the various README files in the subfolders within the `model` folder for more info.
