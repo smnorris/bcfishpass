@@ -1,0 +1,10 @@
+watershed_group_code,streamnetwork_km,pa_total_km,pa_nobarrier_km,pa_potentialbarrier_km,pa_knownbarrier_km
+BOWR,6268.54,0,0,0,0
+BULK,14642.10,6016.98,2871.85,1217.72,1927.41
+CARR,6206.48,0,0,0,0
+ELKR,12486.92,0,0,0,0
+LNIC,7299.99,1897.17,566.04,697.33,633.80
+LNTH,9261.85,0,0,0,0
+MORR,9033.10,3273.53,2297.50,670.56,305.47
+PARS,13867.47,0,0,0,0
+QUES,12482.83,0,0,0,0
