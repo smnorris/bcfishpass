@@ -225,23 +225,17 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	./model_access.sh
 	touch $@
 
+.make/qa: .make/model_access:
+	cd qa; ./qa.sh
+	touch $@
+
 # for quick id and QA of high impact natural barriers,
 # add total upstream length column to each model_access_<spp> table
-$(ADD_LENGTH_UPSTREAM): .make/add_length_upstream_%: sql/model_access_%.sql .make/model_access sql/add_length_upstream.sql
+$(ADD_LENGTH_UPSTREAM): .make/add_length_upstream_%: sql/model_access_%.sql .make/model_access sql/add_length_upstream.sql .make/qa
 	$(eval SPP=$(subst .make/add_length_upstream_,,$@))
 	$(PSQL) -f sql/add_length_upstream.sql \
 		-v src_table=barriers_$(SPP) \
 		-v src_id=barriers_$(SPP)_id
 	touch $@
 
-# -----
-# QA REPORTS
-# -----
-$(QA_ACCESS_OUTPUTS): reports/access/%.csv: reports/access/sql/%.sql \
-	model/access/.make/model_access
-	psql2csv $(DATABASE_URL) < $< > $@
-
-# just a target to build all access reports
-.make/model_access_reports: $(QA_ACCESS_OUTPUTS)
-	touch $@
 

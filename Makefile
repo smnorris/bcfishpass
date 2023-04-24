@@ -1,6 +1,10 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+
+QA_ACCESS_SCRIPTS = $(wildcard reports/access/sql/*.sql)
+QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(QA_SCRIPTS))
+
 all: model/03_habitat_lateral/data/habitat_lateral.tif
 
 .make/db: db/setup.sh db/sql/tables.sql db/sql/functions/*sql
