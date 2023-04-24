@@ -3,8 +3,8 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
-# process only watershed groups noted in wsg.txt
-WSG = $(shell cat wsg.txt)
+# process only watershed groups listed in parameters
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # define the make targets that flag when the table has been built
 SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
