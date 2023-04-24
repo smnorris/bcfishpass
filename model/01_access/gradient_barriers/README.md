@@ -28,4 +28,4 @@ threshold modelled as a barrier for a given species is controlled by the access 
 
 ## Override data errors / note gradient barriers that do not exist
 
-If any gradient barriers need to be removed because they are not present/not barriers, add them to `bcfishpass/data/gradient_barriers_passable.csv`.
+If any gradient barriers need to be removed because they are not present/not barriers, add them to `bcfishpass/data/user_barriers_definite_control.csv`.

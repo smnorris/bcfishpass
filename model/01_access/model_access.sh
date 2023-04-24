@@ -54,16 +54,16 @@ do
 	$PSQL -c "create table bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr (segmented_stream_id text primary key, barriers_"$BARRIERTYPE"_dnstr text[])"
 	parallel --jobs 4 --no-run-if-empty \
 		"echo \"SELECT bcfishpass.load_dnstr(
-		    'bcfishpass.streams', 
-		    'segmented_stream_id', 
+		    'bcfishpass.streams',
+		    'segmented_stream_id',
 		    'bcfishpass.barriers_\"$BARRIERTYPE\"',
-		    'barriers_\"$BARRIERTYPE\"_id', 
+		    'barriers_\"$BARRIERTYPE\"_id',
 		    'bcfishpass.streams_barriers_\"$BARRIERTYPE\"_dnstr',
 		    'barriers_\"$BARRIERTYPE\"_dnstr',
 		    'true',
 		    :'wsg');\" | \
 		$PSQL -v wsg={1}" ::: $WSGS
-	# might as well add corresponding _dnstr column to streams table 
+	# might as well add corresponding _dnstr column to streams table
 	$PSQL -c "alter table bcfishpass.streams add column barriers_"$BARRIERTYPE"_dnstr text[];"
 
 done
@@ -145,3 +145,9 @@ $PSQL -c "drop table bcfishpass.streams_species_dnstr"
 # for wsg where species is not present)
 # fix this by populating accessible streams with an empty array (array[]::text[])
 $PSQL -f sql/access.sql
+
+# add length upstream column to each model barrier table for easy identification of high impact barriers
+for spp in $MODELS
+do
+    $PSQL -f sql/add_length_upstream.sql -v src_table="barriers_"$spp -v src_id="barriers_"$spp"_id" ;
+done

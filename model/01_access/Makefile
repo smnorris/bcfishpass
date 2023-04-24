@@ -13,7 +13,7 @@ SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
 
-all: .make/qa
+all: .make/model_access
 
 clean: 
 	rm -Rf .make
@@ -216,17 +216,9 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	$(PSQL) -f sql/index_crossings.sql
 	touch $@
 
-
 # run the access model
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
 .make/model_access: $(ACCESS_MODELS) .make/index_crossings
 	./model_access.sh
-	touch $@
-
-.make/qa: .make/model_access
 	cd qa; ./qa.sh
-	# add length upstream column to each model barrier table for easy identification of high impact barriers
-	for SPP in $(patsubst sql/%.sql, model_access_%, $(wildcard sql/model_access_*.sql)) ; do \
-		$(PSQL) -f sql/add_length_upstream.sql -v src_table=barriers_$(SPP) -v src_id=barriers_$(SPP)_id ;
-	done
 	touch $@
