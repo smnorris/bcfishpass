@@ -23,6 +23,7 @@ select
     then 'REAR'
   end as habitat_status,
   case 
+    when remediated_dnstr is true then 'REMEDIATED'     -- this must be first condition as others below can also be true
     when barriers_anthropogenic_dnstr is null then 'NONE'    -- no barriers dnstr
     when barriers_anthropogenic_dnstr is not null and   -- modelled barrier dnstr
       barriers_pscis_dnstr is null and
@@ -37,6 +38,7 @@ select
       barriers_dams_hydro_dnstr is null then 'DAM'
     when barriers_anthropogenic_dnstr is not null and   -- hydro dam barrier dnstr
       barriers_dams_hydro_dnstr is not null then 'HYDRO'
+    when remediated_dnstr is true then 'REMEDIATED'
   end as anthropogenic_barrier_status,
   case 
     when feature_code = 'GA24850150' then 'INTERMITTENT' 
