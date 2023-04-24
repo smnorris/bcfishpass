@@ -75,7 +75,7 @@ update bcfishpass.streams set remediated_dnstr = null where remediated_dnstr is 
 
 update bcfishpass.streams
 set remediated_dnstr = true
-where crossings_dnstr[1] in (
+where remediations_barriers_dnstr[1] in (
   select 
     aggregated_crossings_id
   from bcfishpass.crossings
@@ -83,3 +83,5 @@ where crossings_dnstr[1] in (
     pscis_status = 'REMEDIATED' and
     barrier_status = 'PASSABLE'
 );
+-- remove temp remediations column
+alter table bcfishpass.streams drop column remediations_barriers_dnstr;

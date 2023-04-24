@@ -53,6 +53,7 @@ select
       barriers_dams_hydro_dnstr is null then 'DAM'
     when barriers_anthropogenic_dnstr is not null and   -- hydro dam barrier dnstr
       barriers_dams_hydro_dnstr is not null then 'HYDRO'
+    when barriers_remediations_dnstr is not null then 'REMEDIATED' -- remediated stream (for mapping only, there may be hydro barriers downstream or other)
   end as anthropogenic_barrier_status,
   case 
     when feature_code = 'GA24850150' then 'INTERMITTENT' 

@@ -69,8 +69,6 @@ do
 done
 
 # also record all crossings dnsr
-# this is most useful for finding remediations downstream but could also
-# be useful for open bottom structures?
 $PSQL -c "drop table if exists bcfishpass.streams_crossings_dnstr";
 $PSQL -c "create table bcfishpass.streams_crossings_dnstr (segmented_stream_id text primary key, crossings_dnstr text[])"
 parallel --jobs 4 --no-run-if-empty \
@@ -87,6 +85,25 @@ parallel --jobs 4 --no-run-if-empty \
 # add corresponding _dnstr column to streams table
 $PSQL -c "alter table bcfishpass.streams add column crossings_dnstr text[];"
 
+# create remediations/barriers table
+$PSQL -f sql/remediations_barriers.sql
+# record all remediations/barriers downstream
+$PSQL -c "drop table if exists bcfishpass.streams_barriers_remediations_dnstr";
+$PSQL -c "create table bcfishpass.streams_barriers_remediations_dnstr
+(segmented_stream_id text primary key, remediations_barriers_dnstr text[]);"
+parallel --jobs 4 --no-run-if-empty \
+    "echo \"SELECT bcfishpass.load_dnstr(
+    'bcfishpass.streams',
+    'segmented_stream_id',
+    'bcfishpass.barriers_remediations',
+    'barriers_remediations_id',
+    'bcfishpass.streams_barriers_remediations_dnstr',
+    'remediations_barriers_dnstr',
+    'true',
+    :'wsg');\" | \
+    $PSQL -v wsg={1}" ::: $WSGS
+# add corresponding _dnstr column to streams table
+$PSQL -c "alter table bcfishpass.streams add column remediations_barriers_dnstr text[];"
 
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)
@@ -114,7 +131,7 @@ $PSQL -c "alter table bcfishpass.streams_model_access rename to streams"
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
 # drop the no longer needed _upstr _dnstr tables
-for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
+for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS remediations
 do
     $PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
 done
