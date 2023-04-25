@@ -13,7 +13,7 @@ Ensure the environment variable `$DATABASE_URL` points to the database of intere
 
 Provincial access models for Salmon and Steelhead and additional supporting datasets are published to [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip), see [the data dictionary](https://smnorris.github.io/bcfishpass/06_data_dictionary.html) for a full list of tables and columns included.
 
-To publish a new release::
+To publish a new release:
         
         ./freshwater_fish_habitat_accessibility_model.sh
 
@@ -25,7 +25,6 @@ To ensure `modelled_crossing_id` values are consistent for users choosing to run
 To publish a new release:
 
         ./modelled_stream_crossings.sh
-
 
 
 ## Archive
