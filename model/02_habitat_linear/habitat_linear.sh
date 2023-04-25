@@ -27,3 +27,9 @@ done
 
 # apply manual/user habitat classifcation
 $PSQL -f sql/user_habitat_classification.sql
+
+# create per-species views
+for VW in $(ls sql/views/streams_*_vw.sql)
+do
+  $PSQL -f $VW
+done

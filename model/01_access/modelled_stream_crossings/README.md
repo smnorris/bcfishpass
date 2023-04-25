@@ -24,10 +24,6 @@ To generate a fresh set of crossings using the latest roads data, and load corre
 
     make .make/modelled_stream_crossings
 
-To publish the latest:
-
-    make .make/publish
-
 
 ## Fixes
 

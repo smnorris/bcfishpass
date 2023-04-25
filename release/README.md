@@ -1,38 +1,35 @@
-# Data replication, release, archive
+# Release
 
-- replicate data between databases
 - cut data to file based releases
 - archive bcfishpass database to file
 
 
 ## Setup
 
-- define db services in `.pg_service.conf` as required, and ensure all databases exist and include the required extensions
-- set the environment variable `$ARCHIVE` to the location where you wish to store data archives
+- ensure the environment variable `$DATABASE_URL` points to your database of interest
+- set the environment variable `$ARCHIVE` to the location where you wish to store archive files
 
 
-## Replicate
+## Modelled road/rail/trail stream crossings
 
-Copy schemas `bcfishpass`, `bcfishobs` from source database to target database:
+To ensure `modelled_crossing_id` values are consistent for all users, the source modelled crossings table is published to https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip
 
-        ./replicate.sh <source_db_service_name> <target_db_service_name>
+To publish a new release:
+
+        ./modelled_stream_crossings.sh
 
 
-## Release
+## Fish habitat accessibility model
 
+Provincial access models for Salmon and Steelhead are available as https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
 
-Dump `freshwaters_fish_habitat_accessibility_model` and associated data to file and upload to S3:
+To publish a new release::
         
-        ./release_access_model.sh <db_service_name>
-
-
-Dump key bcfishpass tables to file for distribution:
-
-        ./dump.sh <db_service_name>
+        ./freshwater_fish_habitat_accessibility_model.sh
 
 
 ## Archive
 
-Dump entire database:
+Archive the entire database to file, apending the date and commit tag date to the file name:
 
-        pg_dump -Fc service=<db_service_name> > $ARCHIVE/bcfishpass/db/bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump
+        pg_dump -Fc $DATABASE_URL > $ARCHIVE/bcfishpass/db/bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump
