@@ -257,7 +257,8 @@ de_duped AS
   ON c.stream_crossing_id = p.stream_crossing_id
   LEFT OUTER JOIN whse_fish.pscis_assessment_svw ass
   ON c.stream_crossing_id = ass.stream_crossing_id
-  ORDER BY cid, p.distance_to_stream asc, assessment_date desc
+  -- note order by modelled_crossing_id to handle cases where duplicates are in the same spot and on the same day (only one pscis crossing can be associated with a modelled crossing)
+  ORDER BY cid, p.distance_to_stream asc, assessment_date desc, p.modelled_crossing_id
 )
 
 INSERT INTO bcfishpass.pscis
