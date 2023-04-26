@@ -3536,3 +3536,12 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198043,,17029533,BULK,SN,Crossing is at power lines not railway
 8559,,,SANJ,SN,Trib to Renfrew Creek
 24742744,,,SMAR,SN,Side channel to Doctor Creek makes automated matching via name incorrect
+198109,1801071,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
+198110,,17089148,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
+198111,1802798,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
+198112,1805507,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
+198113,1802069,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
+198114,,17089148,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
+198115,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
+198116,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
+198117,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
