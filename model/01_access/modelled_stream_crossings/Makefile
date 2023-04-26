@@ -94,5 +94,5 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 
 	# assign modelled_crossing_id from previous version to ensure consistency
 	$(PSQL) -f sql/09_match_archived_crossings.sql
-	echo "modelled stream crossings created, run 'make .make/publish' to publish"
+	echo "new modelled stream crossings created, see bcfishpass/release for loading to s3"
 	touch $@
