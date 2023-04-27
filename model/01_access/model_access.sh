@@ -102,8 +102,8 @@ parallel --jobs 4 --no-run-if-empty \
     'true',
     :'wsg');\" | \
     $PSQL -v wsg={1}" ::: $WSGS
-# add corresponding _dnstr column to streams table
-$PSQL -c "alter table bcfishpass.streams add column remediations_barriers_dnstr text[];"
+# add a boolean remediation downstream column to streams table
+$PSQL -c "alter table bcfishpass.streams add column remediated_dnstr boolean;;"
 
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)
@@ -144,7 +144,7 @@ $PSQL -c "drop table bcfishpass.streams_species_dnstr"
 # (simply querying on barrier_<spp>_dnstr is null does not work, values are null
 # for wsg where species is not present)
 # fix this by populating accessible streams with an empty array (array[]::text[])
-$PSQL -f sql/access.sql
+#$PSQL -f sql/access.sql
 
 # add length upstream column to each model barrier table for easy identification of high impact barriers
 for spp in $MODELS

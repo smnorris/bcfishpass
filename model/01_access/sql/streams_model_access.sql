@@ -29,7 +29,7 @@ insert into bcfishpass.streams_model_access (
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   crossings_dnstr,
-  remediations_barriers_dnstr
+  remediated_dnstr
 )
 select 
    s.linear_feature_id,
@@ -52,16 +52,36 @@ select
    bp.barriers_pscis_dnstr,          
    bd.barriers_dams_dnstr,           
    bdh.barriers_dams_hydro_dnstr,     
-   bt.barriers_bt_dnstr,             
-   salmon.barriers_ch_cm_co_pk_sk_dnstr, 
-   ct_dv_rb.barriers_ct_dv_rb_dnstr,
-   st.barriers_st_dnstr,             
-   wct.barriers_wct_dnstr,            
-   ou.obsrvtn_event_upstr,           
-   ou.obsrvtn_species_codes_upstr,
-   od.species_codes_dnstr,
+   -- querying for barriers dnstr has to be on empty arrays rather than null - nulls are
+   -- present in watershed groups where species does not occur
+   case
+     when bt.barriers_bt_dnstr = array[]::text[] then bt.barriers_bt_dnstr
+     when bt.barriers_bt_dnstr is null and wsg_bt.watershed_group_code is not null then array[]::text[]
+   end as barriers_bt_dnstr,
+   case
+     when salmon.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] then salmon.barriers_ch_cm_co_pk_sk_dnstr
+     when salmon.barriers_ch_cm_co_pk_sk_dnstr is null and wsg_salmon.watershed_group_code is not null then array[]::text[]
+   end as barriers_ch_cm_co_pk_sk_dnstr,
+   case
+     when ct_dv_rb.barriers_ct_dv_rb_dnstr = array[]::text[] then ct_dv_rb.barriers_ct_dv_rb_dnstr
+     when ct_dv_rb.barriers_ct_dv_rb_dnstr is null and wsg_ct_dv_rb.watershed_group_code is not null then array[]::text[]
+   end as barriers_ct_dv_rb_dnstr,
+   case
+     when st.barriers_st_dnstr = array[]::text[] then st.barriers_st_dnstr
+     when st.barriers_st_dnstr is null and wsg_st.watershed_group_code is not null then array[]::text[]
+   end as barriers_st_dnstr,
+   case
+     when wct.barriers_wct_dnstr = array[]::text[] then wct.barriers_wct_dnstr
+     when wct.barriers_wct_dnstr is null and wsg_wct.watershed_group_code is not null then array[]::text[]
+   end as barriers_wct_dnstr,
+   coalesce(ou.obsrvtn_event_upstr, array[]::bigint[]) as obsrvtn_event_upstr,
+   coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) as obsrvtn_species_codes_upstr,
+   coalesce(od.species_codes_dnstr, array[]::text[]) as species_codes_dnstr,
    c.crossings_dnstr,
-   r.remediations_barriers_dnstr
+   case
+     when x.aggregated_crossings_id is not null then true
+     else false
+   end as remediated_dnstr
 from bcfishpass.streams s
 left outer join bcfishpass.streams_barriers_anthropogenic_dnstr ba on s.segmented_stream_id = ba.segmented_stream_id
 left outer join bcfishpass.streams_barriers_pscis_dnstr bp on s.segmented_stream_id = bp.segmented_stream_id
@@ -76,4 +96,10 @@ left outer join bcfishpass.streams_observations_upstr ou on s.segmented_stream_i
 left outer join bcfishpass.streams_species_dnstr od on s.segmented_stream_id = od.segmented_stream_id
 left outer join bcfishpass.streams_crossings_dnstr c on s.segmented_stream_id = c.segmented_stream_id
 left outer join bcfishpass.streams_barriers_remediations_dnstr r on s.segmented_stream_id = r.segmented_stream_id
-where watershed_group_code = :'wsg';
+left outer join bcfishpass.wsg_species_presence wsg_bt on s.watershed_group_code = wsg_bt.watershed_group_code and wsg_bt.bt is true
+left outer join bcfishpass.wsg_species_presence wsg_salmon on s.watershed_group_code = wsg_salmon.watershed_group_code and (wsg_salmon.ch is true or wsg_salmon.cm is true or wsg_salmon.co is true or wsg_salmon.pk is true or wsg_salmon.sk is true)
+left outer join bcfishpass.wsg_species_presence wsg_ct_dv_rb on s.watershed_group_code = wsg_ct_dv_rb.watershed_group_code and (wsg_ct_dv_rb.ct is true or wsg_ct_dv_rb.dv is true or wsg_ct_dv_rb.rb is true)
+left outer join bcfishpass.wsg_species_presence wsg_st on s.watershed_group_code = wsg_st.watershed_group_code and wsg_st.st is true
+left outer join bcfishpass.wsg_species_presence wsg_wct on s.watershed_group_code = wsg_wct.watershed_group_code and wsg_wct.wct is true
+left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.aggregated_crossings_id and x.pscis_status = 'REMEDIATED' and x.pscis_status = 'PASSABLE'
+where s.watershed_group_code = :'wsg';
