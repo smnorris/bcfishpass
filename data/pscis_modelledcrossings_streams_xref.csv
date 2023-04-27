@@ -3545,3 +3545,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198115,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
 198116,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
 198117,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
+195944,1800255,,BULK,MW,Actual crossing is on highway. Was originally matched to road that does not exist.
+197657,1800067,,BULK,MW,Crossing is on Perow Creek on highway. Coordinates for incorrect modelled crossing was used in pscis submission.
+125000,,165118662,PARS,AI,Matched to closest modelled crossing. Crossing is on direct tributary to Parsnip River vs tributary to tributary. For some reason there is no modelled crossing at road/stream junction
+8530,24600913,,ZYMO,MW,Matched to closest modelled crossing. Closest modelled crossing does not actually exist as associated tributary enters Sandstone Creek upstream of road.
+198016,14000566,,MORR,MW,On direct tributary to Thautil River mainstem vs. trib to trib. Coordinates for incorrect modelled crossing was used in pscis submission.
