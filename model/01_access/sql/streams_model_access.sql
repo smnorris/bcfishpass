@@ -54,25 +54,29 @@ select
    bdh.barriers_dams_hydro_dnstr,     
    -- querying for barriers dnstr has to be on empty arrays rather than null - nulls are
    -- present in watershed groups where species does not occur
-   case
+      case
      when bt.barriers_bt_dnstr = array[]::text[] then bt.barriers_bt_dnstr
      when bt.barriers_bt_dnstr is null and wsg_bt.watershed_group_code is not null then array[]::text[]
    end as barriers_bt_dnstr,
    case
-     when salmon.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] then salmon.barriers_ch_cm_co_pk_sk_dnstr
+     when salmon.barriers_ch_cm_co_pk_sk_dnstr is not null then salmon.barriers_ch_cm_co_pk_sk_dnstr
      when salmon.barriers_ch_cm_co_pk_sk_dnstr is null and wsg_salmon.watershed_group_code is not null then array[]::text[]
+     when salmon.barriers_ch_cm_co_pk_sk_dnstr is null and wsg_salmon.watershed_group_code is null then null
    end as barriers_ch_cm_co_pk_sk_dnstr,
    case
-     when ct_dv_rb.barriers_ct_dv_rb_dnstr = array[]::text[] then ct_dv_rb.barriers_ct_dv_rb_dnstr
+     when ct_dv_rb.barriers_ct_dv_rb_dnstr is not null then ct_dv_rb.barriers_ct_dv_rb_dnstr
      when ct_dv_rb.barriers_ct_dv_rb_dnstr is null and wsg_ct_dv_rb.watershed_group_code is not null then array[]::text[]
+     when ct_dv_rb.barriers_ct_dv_rb_dnstr is null and wsg_ct_dv_rb.watershed_group_code is null then null
    end as barriers_ct_dv_rb_dnstr,
    case
-     when st.barriers_st_dnstr = array[]::text[] then st.barriers_st_dnstr
+     when st.barriers_st_dnstr is not null then st.barriers_st_dnstr
      when st.barriers_st_dnstr is null and wsg_st.watershed_group_code is not null then array[]::text[]
+     when st.barriers_st_dnstr is null and wsg_st.watershed_group_code is null then null
    end as barriers_st_dnstr,
    case
-     when wct.barriers_wct_dnstr = array[]::text[] then wct.barriers_wct_dnstr
+     when wct.barriers_wct_dnstr is not null then wct.barriers_wct_dnstr
      when wct.barriers_wct_dnstr is null and wsg_wct.watershed_group_code is not null then array[]::text[]
+     when wct.barriers_wct_dnstr is null and wsg_wct.watershed_group_code is null then null
    end as barriers_wct_dnstr,
    coalesce(ou.obsrvtn_event_upstr, array[]::bigint[]) as obsrvtn_event_upstr,
    coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) as obsrvtn_species_codes_upstr,
