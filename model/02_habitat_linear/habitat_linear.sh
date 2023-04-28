@@ -12,7 +12,7 @@ for SP in $MODELS
 do
   $PSQL -c "drop table if exists bcfishpass.model_habitat_"$SP
   $PSQL -c "create table bcfishpass.model_habitat_"$SP" (segmented_stream_id text primary key, spawning boolean, rearing boolean)"
-  parallel $PSQL -f sql/test_model_habitat_$SP.sql -v wsg={1} ::: $WSGS
+  parallel $PSQL -f sql/habitat_$SP.sql -v wsg={1} ::: $WSGS
 done
 
 # translate user habitat classifcation measures into stream ids
@@ -23,3 +23,5 @@ $PSQL -f sql/user_habitat_classification.sql
 #do
 #  $PSQL -f $VW
 #done
+
+
