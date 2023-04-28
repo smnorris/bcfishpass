@@ -3,19 +3,6 @@
 -- ==============================================
 
 -- ----------------------------------------------
--- RESET OUTPUTS
--- ----------------------------------------------
-UPDATE bcfishpass.streams s
-SET model_spawning_st = NULL
-WHERE model_spawning_st IS NOT NULL
-AND watershed_group_code = :'wsg';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_st = NULL
-WHERE watershed_group_code = :'wsg'
-AND model_rearing_st IS NOT NULL;
-
--- ----------------------------------------------
 -- SPAWNING
 -- ----------------------------------------------
 WITH rivers AS  -- get unique river waterbodies, there are some duplicates
@@ -36,17 +23,17 @@ model AS
   CASE
     WHEN
       wsg.model = 'cw' AND
-      s.gradient <= st.spawn_gradient_max AND
-      (cw.channel_width > st.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
-      cw.channel_width <= st.spawn_channel_width_max AND
+      s.gradient <= t.spawn_gradient_max AND
+      (cw.channel_width > t.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
+      cw.channel_width <= t.spawn_channel_width_max AND
       s.barriers_st_dnstr = array[]::text[]
     THEN true
     WHEN 
         wsg.model = 'mad' AND
-        s.gradient <= st.spawn_gradient_max AND
-          (mad.mad_m3s > st.spawn_mad_min OR
+        s.gradient <= t.spawn_gradient_max AND
+          (mad.mad_m3s > t.spawn_mad_min OR
           s.stream_order >= 8) AND
-        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+        s.barriers_st_dnstr = array[]::text[]
       THEN true
   END AS spawn_st
 FROM bcfishpass.streams s
@@ -55,7 +42,7 @@ LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_f
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
 INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds st ON st.species_code = 'ST'
+LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
 LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
 WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
 and p.st is true
@@ -83,12 +70,12 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'ST'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.model_spawning_st IS TRUE AND        -- on spawning habitat
     s.barriers_st_dnstr = array[]::text[] AND  -- accessibility check
-    s.gradient <= h.rear_gradient_max AND         -- gradient check
+    s.gradient <= t.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
         s.edge_type IN (1000,1100,2000,2300)
@@ -98,18 +85,18 @@ WITH rearing AS
     (
       ( -- channel width based model
         wsg.model = 'cw' AND
-        cw.channel_width <= h.rear_channel_width_max AND
+        cw.channel_width <= t.rear_channel_width_max AND
         -- apply minimum channel width for rearing, except for first order
         -- streams with parent order >=5)
-        (cw.channel_width >= h.rear_channel_width_min OR
+        (cw.channel_width >= t.rear_channel_width_min OR
          (s.stream_order_parent >=5 AND s.stream_order = 1)
         )
       )
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        mad.mad_m3s > t.rear_mad_min AND
+        mad.mad_m3s <= t.rear_mad_max
       )
     )
 )
@@ -137,10 +124,10 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'ST'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
   WHERE
     s.barriers_st_dnstr = array[]::text[] AND  -- accessibility check
-    s.gradient <= h.rear_gradient_max AND         -- gradient check
+    s.gradient <= t.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
         s.edge_type IN (1000,1100,2000,2300)
@@ -150,18 +137,18 @@ WITH rearing AS
     (
       ( -- channel width based model
         wsg.model = 'cw' AND
-        cw.channel_width <= h.rear_channel_width_max AND
+        cw.channel_width <= t.rear_channel_width_max AND
         -- apply minimum channel width for rearing, except for first order
         -- streams with parent order >=5)
-        (cw.channel_width >= h.rear_channel_width_min OR
+        (cw.channel_width >= t.rear_channel_width_min OR
          (s.stream_order_parent >=5 AND s.stream_order = 1)
         )
       )
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        mad.mad_m3s > t.rear_mad_min AND
+        mad.mad_m3s <= t.rear_mad_max
       )
     )
     AND s.watershed_group_code = :'wsg'
@@ -226,11 +213,11 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds h ON h.species_code = 'ST'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
   WHERE
     s.watershed_group_code = :'wsg' AND
     s.barriers_st_dnstr = array[]::text[] AND  -- accessibility check
-    s.gradient <= h.rear_gradient_max AND         -- gradient check
+    s.gradient <= t.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
       ( wb.waterbody_type IS NULL OR
         s.edge_type IN (1000,1100,2000,2300)
@@ -240,18 +227,18 @@ WITH rearing AS
     (
       ( -- channel width based model
         wsg.model = 'cw' AND
-        cw.channel_width <= h.rear_channel_width_max AND
+        cw.channel_width <= t.rear_channel_width_max AND
         -- apply minimum channel width for rearing, except for first order
         -- streams with parent order >=5)
-        (cw.channel_width >= h.rear_channel_width_min OR
+        (cw.channel_width >= t.rear_channel_width_min OR
          (s.stream_order_parent >=5 AND s.stream_order = 1)
         )
       )
     OR
       ( -- discharge based model
         wsg.model = 'mad' AND
-        mad.mad_m3s > h.rear_mad_min AND
-        mad.mad_m3s <= h.rear_mad_max
+        mad.mad_m3s > t.rear_mad_min AND
+        mad.mad_m3s <= t.rear_mad_max
       )
     )
 ),

@@ -10,8 +10,8 @@ MODELS=$(ls sql/test_model_habitat*.sql | sed -e "s/sql\/test_model_habitat_//" 
 # run all habitat queries per watershed group
 for SP in $MODELS
 do
-  $PSQL -c "drop table if exists bcfishpass.model_habitat_"$SP
-  $PSQL -c "create table bcfishpass.model_habitat_"$SP" (segmented_stream_id text primary key, spawning boolean, rearing boolean)"
+  $PSQL -c "drop table if exists bcfishpass.habitat_"$SP
+  $PSQL -c "create table bcfishpass.habitat_"$SP" (segmented_stream_id text primary key, spawning boolean, rearing boolean)"
   parallel $PSQL -f sql/habitat_$SP.sql -v wsg={1} ::: $WSGS
 done
 
