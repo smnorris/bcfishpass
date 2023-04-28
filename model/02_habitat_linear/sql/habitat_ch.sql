@@ -11,8 +11,7 @@ WITH rivers AS  -- get unique river waterbodies, there are some duplicates
   FROM whse_basemapping.fwa_rivers_poly
 ),
 
-model AS
-(
+model AS (
   SELECT
     s.segmented_stream_id,
     s.blue_line_key,
@@ -20,7 +19,6 @@ model AS
     s.localcode_ltree,
     cw.channel_width,
     s.gradient,
-    s.barriers_ch_cm_co_pk_sk_dnstr,
     CASE
       WHEN
         wsg.model = 'cw' AND
@@ -45,9 +43,13 @@ model AS
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds ch ON ch.species_code = 'CH'
   LEFT OUTER JOIN rivers r
   ON s.waterbody_key = r.waterbody_key
-  WHERE (wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))) -- apply to streams/rivers only
-  AND p.ch is true
-  AND s.watershed_group_code = :'wsg'
+  WHERE
+    p.ch is true AND
+    s.watershed_group_code = :'wsg' AND
+    -- lakes and rivers only
+    (
+      wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+    )
 )
 
 insert into bcfishpass.model_habitat_ch

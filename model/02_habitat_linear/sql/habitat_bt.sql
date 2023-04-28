@@ -3,20 +3,6 @@
 -- ==============================================
 
 -- ----------------------------------------------
--- RESET OUTPUTS
--- ----------------------------------------------
-UPDATE bcfishpass.streams s
-SET model_spawning_bt = NULL
-WHERE model_spawning_bt IS NOT NULL
-AND watershed_group_code = :'wsg';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_bt = NULL
-WHERE watershed_group_code = :'wsg'
-AND model_rearing_bt IS NOT NULL;
-
-
--- ----------------------------------------------
 -- SPAWNING
 -- ----------------------------------------------
 WITH rivers AS  -- get unique river waterbodies, there are some duplicates
@@ -25,60 +11,64 @@ WITH rivers AS  -- get unique river waterbodies, there are some duplicates
   FROM whse_basemapping.fwa_rivers_poly
 ),
 
-model AS
-(SELECT
-  s.segmented_stream_id,
-  s.blue_line_key,
-  s.wscode_ltree,
-  s.localcode_ltree,
-  cw.channel_width,
-  s.gradient,
-  CASE
-    WHEN
-      wsg.model = 'cw' AND
-      s.gradient <= bt.spawn_gradient_max AND
-      (cw.channel_width > bt.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
-      cw.channel_width <= bt.spawn_channel_width_max AND
-      s.barriers_bt_dnstr = array[]::text[]
-    THEN true
-    WHEN
-      wsg.model = 'mad' AND
-      s.gradient <= bt.spawn_gradient_max AND
-      mad.mad_m3s > bt.spawn_mad_min AND
-      mad.mad_m3s <= bt.spawn_mad_max AND
-      s.barriers_bt_dnstr = array[]::text[]
-    THEN true
-  END AS spawn_bt
-FROM bcfishpass.streams s
-LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
-LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds bt ON bt.species_code = 'BT'
-INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
-LEFT OUTER JOIN rivers r
-ON s.waterbody_key = r.waterbody_key
-WHERE
-  -- spawning is in lakes and rivers only
-  (wb.waterbody_type = 'R' OR 
-    (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))
-AND p.bt is true
-AND s.watershed_group_code = :'wsg'
+model AS (
+  SELECT
+    s.segmented_stream_id,
+    s.blue_line_key,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    cw.channel_width,
+    s.gradient,
+    CASE
+      WHEN
+        wsg.model = 'cw' AND
+        s.gradient <= bt.spawn_gradient_max AND
+        (cw.channel_width > bt.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
+        cw.channel_width <= bt.spawn_channel_width_max AND
+        s.barriers_bt_dnstr = array[]::text[]
+      THEN true
+      WHEN
+        wsg.model = 'mad' AND
+        s.gradient <= bt.spawn_gradient_max AND
+        mad.mad_m3s > bt.spawn_mad_min AND
+        mad.mad_m3s <= bt.spawn_mad_max AND
+        s.barriers_bt_dnstr = array[]::text[]
+      THEN true
+    END AS spawning
+  FROM bcfishpass.streams s
+  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
+  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
+  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds bt ON bt.species_code = 'BT'
+  INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
+  LEFT OUTER JOIN rivers r
+  ON s.waterbody_key = r.waterbody_key
+  WHERE
+    p.bt is true AND
+    s.watershed_group_code = :'wsg' AND
+    -- lakes and rivers only
+    (
+      wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
+    )
 )
 
-UPDATE bcfishpass.streams s
-SET
-  model_spawning_bt = model.spawn_bt
+insert into bcfishpass.model_habitat_bt
+(segmented_stream_id, spawning)
+select
+  segmented_stream_id,
+  spawning
 FROM model
-WHERE s.segmented_stream_id = model.segmented_stream_id
-AND model.spawn_bt is true;
+where spawning is true;
 
 
 -- ----------------------------------------------
 -- REARING ON SPAWNING STREAMS (NO CONNECTIVITY ANALYSIS)
 -- ----------------------------------------------
-WITH rearing AS
-(
+INSERT INTO bcfishpass.model_habitat_bt (
+  segmented_stream_id,
+  rearing
+)
   SELECT
     s.segmented_stream_id,
     s.geom
@@ -111,10 +101,8 @@ WITH rearing AS
       )
     )
 )
-
-UPDATE bcfishpass.streams s
-SET model_rearing_bt = TRUE
-WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing);
+on conflict (segmented_stream_id)
+do update set rearing = EXCLUDED.rearing;
 
 
 
@@ -187,23 +175,21 @@ rearing_clusters_dnstr_of_spawn AS
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
   WHERE spawn.model_spawning_bt IS TRUE
   AND spawn.watershed_group_code = :'wsg'
-),
-
--- find the stream ids that we want to update
-rearing_ids AS
-(
-  SELECT
-    a.segmented_stream_id
-  FROM rearing a
-  INNER JOIN rearing_clusters_dnstr_of_spawn b
-  ON a.cluster_id = b.cluster_id
 )
 
--- set rearing as true for these streams
-UPDATE bcfishpass.streams s
-SET model_rearing_bt = TRUE
-WHERE segmented_stream_id IN (SELECT segmented_stream_id FROM rearing_ids);
-
+-- upsert the rearing downstream of spawning clusters
+INSERT INTO bcfishpass.model_habitat_bt (
+  segmented_stream_id,
+  rearing
+)
+SELECT
+   a.segmented_stream_id,
+   true as rearing
+FROM rearing a
+INNER JOIN rearing_clusters_dnstr_of_spawn b
+ON a.cluster_id = b.cluster_id
+on conflict (segmented_stream_id)
+do update set rearing = EXCLUDED.rearing;
 
 
 -- ----------------------------------------------
@@ -335,12 +321,16 @@ valid_rearing AS
   WHERE b.row_number IS NULL OR b.row_number > a.row_number
 )
 
-UPDATE bcfishpass.streams
-SET model_rearing_bt = TRUE
-WHERE segmented_stream_id IN
-(
-  SELECT a.segmented_stream_id
-  FROM rearing_clusters a
-  INNER JOIN valid_rearing b
-  ON a.cid = b.cid
-);
+-- upsert the rearing
+INSERT INTO bcfishpass.model_habitat_bt (
+  segmented_stream_id,
+  rearing
+)
+SELECT
+   a.segmented_stream_id,
+   true as rearing
+FROM rearing_clusters a
+INNER JOIN valid_rearing b
+ON a.cid = b.cid
+on conflict (segmented_stream_id)
+do update set rearing = EXCLUDED.rearing;
