@@ -3548,3 +3548,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 125000,,165118662,PARS,AI,Matched to closest modelled crossing. Crossing is on direct tributary to Parsnip River vs tributary to tributary. For some reason there is no modelled crossing at road/stream junction
 8530,24600913,,ZYMO,MW,Matched to closest modelled crossing. Closest modelled crossing does not actually exist as associated tributary enters Sandstone Creek upstream of road.
 198016,14000566,,MORR,MW,On direct tributary to Thautil River mainstem vs. trib to trib. Coordinates for incorrect modelled crossing was used in pscis submission.
+198380,,,BULK,SN,PSCIS data entry error. Crossing should be deleted
