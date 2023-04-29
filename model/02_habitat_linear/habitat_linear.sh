@@ -15,6 +15,10 @@ do
   parallel $PSQL -f sql/habitat_$SP.sql -v wsg={1} ::: $WSGS
 done
 
+# horsefly sockeye have their own model due to trans-watershed group spawning/rearing effects
+# (this is highly likely to be present elsewhere but has not been investigated)
+psql -f sql/horsefly_sk.sql
+
 # translate user habitat classifcation measures into stream ids
 $PSQL -f sql/user_habitat_classification.sql
 

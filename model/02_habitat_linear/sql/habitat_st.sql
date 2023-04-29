@@ -82,7 +82,6 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.wate
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
 WHERE
   s.watershed_group_code = :'wsg' AND
-  s.model_spawning_st IS TRUE AND        -- on spawning habitat
   s.barriers_st_dnstr = array[]::text[] AND  -- accessibility check
   s.gradient <= t.rear_gradient_max AND         -- gradient check
   ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
@@ -181,7 +180,7 @@ rearing_clusters_dnstr_of_spawn AS
   FROM cluster_minimums s
   INNER JOIN bcfishpass.streams st
   -- make sure there is spawning habitat either upstream
-  ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, st.downstream_route_measure, st.wscode_ltree, st.localcode_ltree)
+  ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, st.blue_line_key, st.downstream_route_measure, st.wscode_ltree, st.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, st.wscode_ltree, st.localcode_ltree))
   INNER JOIN bcfishpass.habitat_st h on st.segmented_stream_id = h.segmented_stream_id

@@ -178,15 +178,15 @@ rearing_clusters_dnstr_of_spawn AS
 (
   SELECT DISTINCT s.cluster_id
   FROM cluster_minimums s
-  INNER JOIN bcfishpass.streams spawn
+  INNER JOIN bcfishpass.streams st
   -- make sure there is spawning habitat either upstream
-  ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, spawn.blue_line_key, spawn.downstream_route_measure, spawn.wscode_ltree, spawn.localcode_ltree)
+  ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, st.blue_line_key, st.downstream_route_measure, st.wscode_ltree, st.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
-  OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, spawn.wscode_ltree, spawn.localcode_ltree))
+  OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, st.wscode_ltree, st.localcode_ltree))
   INNER JOIN bcfishpass.habitat_wct h on st.segmented_stream_id = h.segmented_stream_id
   WHERE h.spawning IS TRUE
-  AND spawn.watershed_group_code = :'wsg'
-),
+  AND st.watershed_group_code = :'wsg'
+)
 
 -- upsert the rearing downstream of spawning clusters
 INSERT INTO bcfishpass.habitat_wct (
