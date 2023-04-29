@@ -5,7 +5,7 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
-MODELS=$(ls sql/test_model_habitat*.sql | sed -e "s/sql\/test_model_habitat_//" | sed -e "s/.sql//")
+MODELS=$(ls sql/habitat*.sql | sed -e "s/sql\/habitat_//" | sed -e "s/.sql//")
 
 # run all habitat queries per watershed group
 for SP in $MODELS

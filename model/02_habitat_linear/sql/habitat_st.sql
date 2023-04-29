@@ -190,7 +190,7 @@ rearing_clusters_dnstr_of_spawn AS
 )
 
 -- upsert the rearing downstream of spawning clusters
-INSERT INTO bcfishpass.habitat_ch (
+INSERT INTO bcfishpass.habitat_st (
   segmented_stream_id,
   rearing
 )

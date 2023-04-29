@@ -42,7 +42,7 @@ model AS
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON co.species_code = 'CO'
+  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'CO'
   INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
   WHERE
@@ -66,7 +66,7 @@ where spawning is true;
 -- ----------------------------------------------
 -- REARING ON SPAWNING STREAMS (NO CONNECTIVITY ANALYSIS)
 -- ----------------------------------------------
-INSERT INTO bcfishpass.habitat_ch (
+INSERT INTO bcfishpass.habitat_co(
   segmented_stream_id,
   rearing
 )
@@ -188,7 +188,7 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, st.blue_line_key, st.downstream_route_measure, st.wscode_ltree, st.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, st.wscode_ltree, st.localcode_ltree))
-  INNER JOIN bcfishpass.habitat_ch h on st.segmented_stream_id = h.segmented_stream_id
+  INNER JOIN bcfishpass.habitat_co h on st.segmented_stream_id = h.segmented_stream_id
   WHERE h.spawning IS TRUE
   AND st.watershed_group_code = :'wsg'
 )

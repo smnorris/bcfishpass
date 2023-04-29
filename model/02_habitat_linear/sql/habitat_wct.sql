@@ -289,7 +289,7 @@ downstream AS
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
-  LEFT OUTER JOIN bcfishpass.habitat_ch h ON s.segmented_stream_id = h.segmented_stream_id
+  LEFT OUTER JOIN bcfishpass.habitat_wct h ON s.segmented_stream_id = h.segmented_stream_id
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
   AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),

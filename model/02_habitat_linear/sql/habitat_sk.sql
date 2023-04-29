@@ -192,7 +192,7 @@ spawn_upstream AS
   )
   inner join bcfishpass.habitat_sk h on r.segmented_stream_id = h.segmented_stream_id
   where
-    s.watershed_group_code = :'wsg' and
+    r.watershed_group_code = :'wsg' and
     h.rearing is true
 ),
 
@@ -233,7 +233,7 @@ clusters_near_rearing as
   ON h.species_code = 'SK'
   where res.area_ha >= t.rear_lake_ha_min    -- reservoirs
   group by c.cid
-),
+)
 
 -- finally, insert the streams that compose the clusters connected to lakes
 insert into bcfishpass.habitat_sk
