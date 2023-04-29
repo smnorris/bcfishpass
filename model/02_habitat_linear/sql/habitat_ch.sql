@@ -75,7 +75,7 @@ SELECT
   true as rearing
 FROM bcfishpass.streams s
 -- ensure stream is modelled as spawning and accessible
-INNER JOIN bcfishpass.habitat_ch hab on s.segmented_stream_id = hab.segmented_stream_id
+INNER JOIN bcfishpass.habitat_ch h on s.segmented_stream_id = h.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
 LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
