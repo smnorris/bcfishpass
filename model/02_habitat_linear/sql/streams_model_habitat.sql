@@ -163,7 +163,16 @@ select
       h.model_spawning_bt is null and
       h.model_rearing_bt is not null
     then 'REAR'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_bt,
+  end,
+  case
+    when s.barriers_bt_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_bt_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_bt,
 
   array_to_string(array[
   case
@@ -178,7 +187,16 @@ select
       h.model_spawning_ch is null and
       h.model_rearing_ch is not null
     then 'REAR'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_ch,
+  end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_ch,
 
   array_to_string(array[
   case
@@ -188,7 +206,16 @@ select
     then 'ACCESS'
     when h.model_spawning_cm is not null
     then 'SPAWN'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_cm,
+  end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_cm,
 
   array_to_string(array[
   case
@@ -203,7 +230,16 @@ select
       h.model_spawning_co is null and
       h.model_rearing_co is not null
     then 'REAR'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_co,
+  end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_co,
 
   array_to_string(array[
   case
@@ -213,7 +249,16 @@ select
     then 'ACCESS'
     when h.model_spawning_pk is not null
     then 'SPAWN'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_pk,
+  end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_pk,
 
   array_to_string(array[
   case
@@ -228,7 +273,16 @@ select
       h.model_spawning_sk is null and
       h.model_rearing_sk is not null
     then 'REAR'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_sk,
+  end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_sk,
 
   array_to_string(array[
   case
@@ -243,7 +297,16 @@ select
       h.model_spawning_st is null and
       h.model_rearing_st is not null
     then 'REAR'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_st,
+  end,
+  case
+    when s.barriers_st_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_st_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_st,
 
   array_to_string(array[
   case
@@ -258,7 +321,16 @@ select
       h.model_spawning_wct is null and
       h.model_rearing_wct is not null
     then 'REAR'
-  end, h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_wct,
+  end,
+  case
+    when s.barriers_wct_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_wct_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_wct,
   array_to_string(array[
   -- combined salmon mapping code
   case
