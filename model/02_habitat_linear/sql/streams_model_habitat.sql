@@ -363,7 +363,16 @@ select
       model_rearing_co is not null or
       model_rearing_sk is not null)
     then 'REAR'
-  end ,  h.mapping_code_barrier, h.mapping_code_intermittent], ';') as mapping_code_salmon,
+  end,
+   case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_barrier
+  else null end,
+  case
+    when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+    then h.mapping_code_intermittent
+  else null end
+  ], ';') as mapping_code_salmon,
   geom
 from bcfishpass.streams s
 inner join habitat h on s.segmented_stream_id = h.segmented_stream_id
