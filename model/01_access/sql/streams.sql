@@ -41,6 +41,11 @@ CREATE TABLE bcfishpass.streams
 
   -- max stream order associated with blkey (for scale based filtering)
   stream_order_max integer,
+
+  -- precip/cw/discharge
+  map_upstream integer,
+  channel_width double precision,
+  mad_m3s double precision,
   
   geom geometry(LineStringZM,3005)
 );

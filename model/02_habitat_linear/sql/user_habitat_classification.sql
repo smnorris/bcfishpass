@@ -1,57 +1,57 @@
--- Create a table for visualizing where manual updates have been applied
--- and to track whether the manual classification agrees with the model output
--- (to keep the streams table somewhat simple, model outputs get overwritten by
--- manual classification in below updates)
-DROP table IF EXISTS bcfishpass.user_habitat_classification_qa;
-CREATE table bcfishpass.user_habitat_classification_qa AS
+-- translate provided measures into segmented_stream_ids for easy lookup
+DROP table IF EXISTS bcfishpass.habitat_user;
+CREATE table bcfishpass.habitat_user AS
 WITH manual_habitat_class AS
 (
-    SELECT
+    SELECT distinct
       blue_line_key,
       downstream_route_measure,
       upstream_route_measure,
       CASE
-        WHEN h.species_code = 'CH' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_ch,
+        WHEN h.species_code = 'BT' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+      END AS spawning_bt,
       CASE
-        WHEN h.species_code = 'CH' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_ch,
+        WHEN h.species_code = 'CH' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+      END AS spawning_ch,
       CASE
         WHEN h.species_code = 'CM' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_cm,
-      CASE
-        WHEN h.species_code = 'CM' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_cm,
+      END AS spawning_cm,
       CASE
         WHEN h.species_code = 'CO' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_co,
-      CASE
-        WHEN h.species_code = 'CO' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_co,
+      END AS spawning_co,
       CASE
         WHEN h.species_code = 'PK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_pk,
-      CASE
-        WHEN h.species_code = 'PK' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_pk,
+      END AS spawning_pk,
       CASE
         WHEN h.species_code = 'SK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_sk,
-      CASE
-        WHEN h.species_code = 'SK' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_sk,
+      END AS spawning_sk,
       CASE
         WHEN h.species_code = 'ST' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_st,
-      CASE
-        WHEN h.species_code = 'ST' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_st,
+      END AS spawning_st,
       CASE
         WHEN h.species_code = 'WCT' AND h.habitat_type = 'spawning' THEN h.habitat_ind
-      END AS model_spawning_wct,
+      END AS spawning_wct,
+      CASE
+        WHEN h.species_code = 'BT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_bt,
+      CASE
+        WHEN h.species_code = 'CH' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_ch,
+      CASE
+        WHEN h.species_code = 'CM' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_cm,
+      CASE
+        WHEN h.species_code = 'CO' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_co,
+      CASE
+        WHEN h.species_code = 'SK' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_sk,
+      CASE
+        WHEN h.species_code = 'ST' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+      END AS rearing_st,
       CASE
         WHEN h.species_code = 'WCT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
-      END AS model_rearing_wct,
+      END AS rearing_wct,
       h.reviewer_name,
       h.source,
       h.notes
@@ -60,157 +60,25 @@ WITH manual_habitat_class AS
 
 SELECT
   s.segmented_stream_id,
-  s.linear_feature_id,
-  s.blue_line_key,
-  s.downstream_route_measure,
-  s.upstream_route_measure,
-  s.watershed_group_code,
-  s.wscode_ltree,
-  s.localcode_ltree,
-  s.model_spawning_ch,
-  s.model_rearing_ch,
-  s.model_spawning_co,
-  s.model_rearing_co,
-  s.model_spawning_sk,
-  s.model_rearing_sk,
-  s.model_spawning_st,
-  s.model_rearing_st,
-  s.model_spawning_wct,
-  s.model_rearing_wct,
-  s.model_spawning_cm, 
-  s.model_spawning_pk,
-  h.model_spawning_ch AS model_spawning_ch_manual,
-  h.model_rearing_ch AS model_rearing_ch_manual,
-  h.model_spawning_co AS model_spawning_co_manual,
-  h.model_rearing_co AS model_rearing_co_manual,
-  h.model_spawning_sk AS model_spawning_sk_manual,
-  h.model_rearing_sk AS model_rearing_sk_manual,
-  h.model_spawning_st AS model_spawning_st_manual,
-  h.model_rearing_st AS model_rearing_st_manual,
-  h.model_spawning_wct AS model_spawning_wct_manual,
-  h.model_rearing_wct AS model_rearing_wct_manual,
-  h.model_spawning_cm AS model_spawning_cm_manual,
-  h.model_spawning_pk AS model_spawning_pk_manual,
-  h.reviewer_name,
-  h.source,
-  h.notes,
-  s.geom
+  -- use bool_or to collapse separate spawning/rearing records for one stream segment into a single row
+  bool_or(h.spawning_bt) as spawning_bt,
+  bool_or(h.spawning_ch) as spawning_ch,
+  bool_or(h.spawning_cm) as spawning_cm,
+  bool_or(h.spawning_co) as spawning_co,
+  bool_or(h.spawning_pk) as spawning_pk,
+  bool_or(h.spawning_sk) as spawning_sk,
+  bool_or(h.spawning_st) as spawning_st,
+  bool_or(h.spawning_wct) as spawning_wct,
+  bool_or(h.rearing_bt) as rearing_bt,
+  bool_or(h.rearing_ch) as rearing_ch,
+  bool_or(h.rearing_co) as rearing_co,
+  bool_or(h.rearing_sk) as rearing_sk,
+  bool_or(h.rearing_st) as rearing_st,
+  bool_or(h.rearing_wct) as rearing_wct
 FROM bcfishpass.streams s
 INNER JOIN manual_habitat_class h
 ON s.blue_line_key = h.blue_line_key
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
 AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-ORDER BY s.blue_line_key, s.downstream_route_measure, h.blue_line_key;
-
-
-
--- Apply the manual habitat classifications to the streams table.
--- Because we are conditionally updating many columns, updates are most easily applied
--- per species/habitat type
-UPDATE bcfishpass.streams s
-SET model_spawning_ch = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'CH'
-AND h.habitat_type = 'spawning';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_ch = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'CH'
-AND h.habitat_type = 'rearing';
-
-UPDATE bcfishpass.streams s
-SET model_spawning_co = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'CO'
-AND h.habitat_type = 'spawning';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_co = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'CO'
-AND h.habitat_type = 'rearing';
-
-UPDATE bcfishpass.streams s
-SET model_spawning_sk = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'SK'
-AND h.habitat_type = 'spawning';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_sk = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'SK'
-AND h.habitat_type = 'rearing';
-
-UPDATE bcfishpass.streams s
-SET model_spawning_st = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'ST'
-AND h.habitat_type = 'spawning';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_st = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'ST'
-AND h.habitat_type = 'rearing';
-
-UPDATE bcfishpass.streams s
-SET model_spawning_wct = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'WCT'
-AND h.habitat_type = 'spawning';
-
-UPDATE bcfishpass.streams s
-SET model_rearing_wct = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'WCT'
-AND h.habitat_type = 'rearing';
-
-UPDATE bcfishpass.streams s
-SET model_spawning_cm = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'CM'
-AND h.habitat_type = 'spawning';
-
-UPDATE bcfishpass.streams s
-SET model_spawning_pk = h.habitat_ind
-FROM bcfishpass.user_habitat_classification h
-WHERE s.blue_line_key = h.blue_line_key
-AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
-AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
-AND h.species_code = 'PK'
-AND h.habitat_type = 'spawning';
+GROUP BY segmented_stream_id
+ORDER BY segmented_stream_id;
