@@ -1,3 +1,6 @@
 user_barrier_anthropogenic_id,blue_line_key,downstream_route_measure,barrier_type,barrier_name,watershed_group_code,reviewer_name,review_date,source,notes
 1,356334818,3697,WEIR,,LNIC,FINS CONSULTING,2021-01-01,field assessment,0.8m high and 5m wide concrete weir with a concrete foot is impassable to fish. Located 25m u/s of culvert
 2,356358551,456,BRIDGE,,HORS,TMK,2023-02-07,local knowledge,bridge collapse into stream
+3,356348405,211,CULVERT,,QUES,AL,2023-05-15,local knowledge,Long culvert based on information provided by Bo and Jake at LDN workshop.
+4,356348405,3235,CULVERT,,QUES,AL,2023-05-15,local knowledge,"Culvert based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
+5,356136908,163,CULVERT,,BOWR,AL,2023-05-15,local knowledge,"Ditch line crossing based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
