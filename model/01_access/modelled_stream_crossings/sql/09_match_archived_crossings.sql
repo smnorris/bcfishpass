@@ -139,7 +139,7 @@ WHERE modelled_crossing_id NOT IN (SELECT temp_id FROM bcfishpass.modelled_strea
 
 ALTER TABLE bcfishpass.modelled_stream_crossings_temp DROP COLUMN temp_id;
 
-ALTER TABLE bcfishpass.modelled_stream_crossings RENAME TO modelled_stream_crossings_bk;  -- drop this table if all goes well
+DROP TABLE bcfishpass.modelled_stream_crossings;
 ALTER TABLE bcfishpass.modelled_stream_crossings_temp RENAME TO modelled_stream_crossings;
 
 -- recreate indexes
