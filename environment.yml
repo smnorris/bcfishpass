@@ -25,4 +25,4 @@ dependencies:
   - scikit-image
   - seaborn
   - pip:
-      - bcdata==0.7.6
+      - bcdata
