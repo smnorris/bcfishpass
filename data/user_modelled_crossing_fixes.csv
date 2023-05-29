@@ -6036,3 +6036,5 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17102298,NONE,QUES,AL,2023-04-25,local knowledge,no crossing
 2301101,OBS,CARR,AL,2023-04-25,local knowledge,bridge visible
 2301093,OBS,CARR,AL,2023-04-25,local knowledge,bridge visible
+1502065,NONE,BOWR,AL,2023-05-23,imagery,no crossing
+1502098,FORD,BOWR,AL,2023-05-23,local knowledge,ford crossing

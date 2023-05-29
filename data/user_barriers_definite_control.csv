@@ -139,3 +139,4 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 356360071,12179,GRADIENT,f,QUES,TMK,2023-04-11,spawning_lines_fraser(PSF),POSSIBLE subject to reversal following wcrp workshop
 354151782,10,FALLS,f,COWN,SN,2023-04-17,local knowledge,any minor falls that may or may not be present is not a barrier
 356348405,74,SUBSURFACEFLOW,f,QUES,AL,2023-04-25,local knowledge,based on information provided by Bo and Jake at LDN workshop.
+356348405,144,SUBSURFACEFLOW,f,QUES,AL,2023-05-15,local knowledge,based on information provided by Bo and Jake at LDN workshop.
