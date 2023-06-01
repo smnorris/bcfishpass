@@ -15,6 +15,9 @@ insert into bcfishpass.streams_model_access (
   upstream_area_ha,
   stream_order_parent,
   stream_order_max,
+  map_upstream,
+  channel_width,
+  mad_m3s,
   geom,
   barriers_anthropogenic_dnstr,
   barriers_pscis_dnstr,
@@ -31,7 +34,7 @@ insert into bcfishpass.streams_model_access (
   crossings_dnstr,
   remediated_dnstr
 )
-select 
+select
    s.linear_feature_id,
    s.edge_type,
    s.blue_line_key,
@@ -47,6 +50,9 @@ select
    s.upstream_area_ha,
    s.stream_order_parent,
    s.stream_order_max,
+   s.map_upstream,
+   s.channel_width,
+   s.mad_m3s,
    s.geom,
    ba.barriers_anthropogenic_dnstr,  
    bp.barriers_pscis_dnstr,          
