@@ -1,6 +1,7 @@
 # Gradient barriers
 
 Generate points at which FWA streams exceed given slope threshold(s) for more than a specified distance.
+Methods are outlined [in the docs](https://smnorris.github.io/bcfishpass/02_model_access.html#generate-gradient-barriers).
 
 ## Usage
 
