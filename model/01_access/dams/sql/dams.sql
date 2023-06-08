@@ -1,5 +1,7 @@
 -- reference CABD dams to FWA stream network
 
+alter table cabd.dams alter column cabd_id type uuid using cabd_id::uuid;
+
 DROP TABLE IF EXISTS bcfishpass.dams;
 
 CREATE TABLE bcfishpass.dams
