@@ -143,3 +143,7 @@ for spp in $MODELS
 do
     $PSQL -f sql/add_length_upstream.sql -v src_table="barriers_"$spp -v src_id="barriers_"$spp"_id" ;
 done
+
+# generate crossings report
+psql -f sql/crossings_report.sql
+parallel $PSQL -f sql/crossings_report_load.sql -v wsg={1} ::: $WSGS
