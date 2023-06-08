@@ -33,4 +33,5 @@ psql2csv $DATABASE_URL "select
 from cabd.dams a
 left join bcfishpass.dams b
 on a.cabd_id = b.dam_id
-where b.dam_id is null;" > dams_not_matched_to_streams.csv
+where b.dam_id is null
+order by a.cabd_id;" > dams_not_matched_to_streams.csv
