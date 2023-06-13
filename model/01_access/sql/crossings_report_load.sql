@@ -13,14 +13,18 @@ WITH at_point AS
     s.barriers_wct_dnstr
   FROM bcfishpass.crossings a
   left outer join bcfishpass.streams s
-  ON a.linear_feature_id = s.linear_feature_id
-  AND a.downstream_route_measure > s.downstream_route_measure - .001
-  AND a.downstream_route_measure + .001 < s.upstream_route_measure
+  ON a.blue_line_key = s.blue_line_key
+  --AND a.downstream_route_measure > s.downstream_route_measure - .001
+  --AND a.downstream_route_measure + .001 < s.upstream_route_measure
+  AND round(s.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
+  AND round(s.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s.watershed_group_code
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
-  ON a.linear_feature_id = s2.linear_feature_id
-  AND a.downstream_route_measure > s2.downstream_route_measure - .001
-  AND a.downstream_route_measure + .001 < s2.upstream_route_measure
+  ON a.blue_line_key = s2.blue_line_key
+  --AND a.downstream_route_measure > s2.downstream_route_measure - .001
+  --AND a.downstream_route_measure + .001 < s2.upstream_route_measure
+  AND round(s2.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
+  AND round(s2.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s2.watershed_group_code
   WHERE a.watershed_group_code = :'wsg'
   ORDER BY aggregated_crossings_id
@@ -377,6 +381,7 @@ left outer join upstr_length_sum a on p.aggregated_crossings_id = a.aggregated_c
 left outer join upstr_area_sum b on a.aggregated_crossings_id = b.aggregated_crossings_id;
 
 
+-- set belowupstrbarriers columns, defaulting to full amount
 UPDATE bcfishpass.crossings_upstream_access p
 SET
   total_belowupstrbarriers_network_km = total_network_km,
@@ -450,6 +455,7 @@ SET
 WHERE watershed_group_code = :'wsg';
 
 
+-- reset belowupstrbarriers columns for barriers with other barriers upstream
 with barriers as
 (
   select a.*, c.barriers_anthropogenic_dnstr
@@ -532,6 +538,171 @@ above_upstream_barriers as
   INNER JOIN barriers b
   ON a.aggregated_crossings_id = b.barriers_anthropogenic_dnstr[1]
   WHERE a.watershed_group_code = :'wsg'
+  group by a.aggregated_crossings_id
+)
+
+update bcfishpass.crossings_upstream_access a
+SET
+  total_belowupstrbarriers_network_km = round((a.total_network_km - b.total_network_km)::numeric, 2),
+  total_belowupstrbarriers_stream_km = round((a.total_stream_km - b.total_stream_km)::numeric, 2),
+  total_belowupstrbarriers_lakereservoir_ha = round((a.total_lakereservoir_ha - b.total_lakereservoir_ha)::numeric, 2),
+  total_belowupstrbarriers_wetland_ha = round((a.total_wetland_ha - b.total_wetland_ha)::numeric, 2),
+  total_belowupstrbarriers_slopeclass03_waterbodies_km = round((a.total_slopeclass03_waterbodies_km - b.total_slopeclass03_waterbodies_km)::numeric, 2),
+  total_belowupstrbarriers_slopeclass03_km = round((a.total_slopeclass03_km - b.total_slopeclass03_km)::numeric, 2),
+  total_belowupstrbarriers_slopeclass05_km = round((a.total_slopeclass05_km - b.total_slopeclass05_km)::numeric, 2),
+  total_belowupstrbarriers_slopeclass08_km = round((a.total_slopeclass08_km - b.total_slopeclass08_km)::numeric, 2),
+  total_belowupstrbarriers_slopeclass15_km = round((a.total_slopeclass15_km - b.total_slopeclass15_km)::numeric, 2),
+  total_belowupstrbarriers_slopeclass22_km = round((a.total_slopeclass22_km - b.total_slopeclass22_km)::numeric, 2),
+  total_belowupstrbarriers_slopeclass30_km = round((a.total_slopeclass30_km - b.total_slopeclass30_km)::numeric, 2),
+  bt_belowupstrbarriers_network_km = round((a.bt_network_km - b.bt_network_km)::numeric, 2),
+  bt_belowupstrbarriers_stream_km = round((a.bt_stream_km - b.bt_stream_km)::numeric, 2),
+  bt_belowupstrbarriers_lakereservoir_ha = round((a.bt_lakereservoir_ha - b.bt_lakereservoir_ha)::numeric, 2),
+  bt_belowupstrbarriers_wetland_ha = round((a.bt_wetland_ha - b.bt_wetland_ha)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass03_waterbodies_km = round((a.bt_slopeclass03_waterbodies_km - b.bt_slopeclass03_waterbodies_km)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass03_km = round((a.bt_slopeclass03_km - b.bt_slopeclass03_km)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass05_km = round((a.bt_slopeclass05_km - b.bt_slopeclass05_km)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass08_km = round((a.bt_slopeclass08_km - b.bt_slopeclass08_km)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass15_km = round((a.bt_slopeclass15_km - b.bt_slopeclass15_km)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass22_km = round((a.bt_slopeclass22_km - b.bt_slopeclass22_km)::numeric, 2),
+  bt_belowupstrbarriers_slopeclass30_km = round((a.bt_slopeclass30_km - b.bt_slopeclass30_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_network_km = round((a.ch_cm_co_pk_sk_network_km - b.ch_cm_co_pk_sk_network_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_stream_km = round((a.ch_cm_co_pk_sk_stream_km - b.ch_cm_co_pk_sk_stream_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha = round((a.ch_cm_co_pk_sk_lakereservoir_ha - b.ch_cm_co_pk_sk_lakereservoir_ha)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha = round((a.ch_cm_co_pk_sk_wetland_ha - b.ch_cm_co_pk_sk_wetland_ha)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km = round((a.ch_cm_co_pk_sk_slopeclass03_waterbodies_km - b.ch_cm_co_pk_sk_slopeclass03_waterbodies_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km = round((a.ch_cm_co_pk_sk_slopeclass03_km - b.ch_cm_co_pk_sk_slopeclass03_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km = round((a.ch_cm_co_pk_sk_slopeclass05_km - b.ch_cm_co_pk_sk_slopeclass05_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km = round((a.ch_cm_co_pk_sk_slopeclass08_km - b.ch_cm_co_pk_sk_slopeclass08_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km = round((a.ch_cm_co_pk_sk_slopeclass15_km - b.ch_cm_co_pk_sk_slopeclass15_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km = round((a.ch_cm_co_pk_sk_slopeclass22_km - b.ch_cm_co_pk_sk_slopeclass22_km)::numeric, 2),
+  ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km = round((a.ch_cm_co_pk_sk_slopeclass30_km - b.ch_cm_co_pk_sk_slopeclass30_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_network_km = round((a.ct_dv_rb_network_km - b.bt_network_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_stream_km = round((a.ct_dv_rb_stream_km - b.ct_dv_rb_stream_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_lakereservoir_ha = round((a.ct_dv_rb_lakereservoir_ha - b.ct_dv_rb_lakereservoir_ha)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_wetland_ha = round((a.ct_dv_rb_wetland_ha - b.ct_dv_rb_wetland_ha)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass03_waterbodies_km = round((a.ct_dv_rb_slopeclass03_waterbodies_km - b.ct_dv_rb_slopeclass03_waterbodies_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass03_km = round((a.ct_dv_rb_slopeclass03_km - b.ct_dv_rb_slopeclass03_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass05_km = round((a.ct_dv_rb_slopeclass05_km - b.ct_dv_rb_slopeclass05_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass08_km = round((a.ct_dv_rb_slopeclass08_km - b.ct_dv_rb_slopeclass08_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass15_km = round((a.ct_dv_rb_slopeclass15_km - b.ct_dv_rb_slopeclass15_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass22_km = round((a.ct_dv_rb_slopeclass22_km - b.ct_dv_rb_slopeclass22_km)::numeric, 2),
+  ct_dv_rb_belowupstrbarriers_slopeclass30_km = round((a.ct_dv_rb_slopeclass30_km - b.ct_dv_rb_slopeclass30_km)::numeric, 2),
+  st_belowupstrbarriers_network_km = round((a.st_network_km - b.st_network_km)::numeric, 2),
+  st_belowupstrbarriers_stream_km = round((a.st_stream_km - b.st_stream_km)::numeric, 2),
+  st_belowupstrbarriers_lakereservoir_ha = round((a.st_lakereservoir_ha - b.st_lakereservoir_ha)::numeric, 2),
+  st_belowupstrbarriers_wetland_ha = round((a.st_wetland_ha - b.st_wetland_ha)::numeric, 2),
+  st_belowupstrbarriers_slopeclass03_km = round((a.st_slopeclass03_km - b.st_slopeclass03_km)::numeric, 2),
+  st_belowupstrbarriers_slopeclass05_km = round((a.st_slopeclass05_km - b.st_slopeclass05_km)::numeric, 2),
+  st_belowupstrbarriers_slopeclass08_km = round((a.st_slopeclass08_km - b.st_slopeclass08_km)::numeric, 2),
+  st_belowupstrbarriers_slopeclass15_km = round((a.st_slopeclass15_km - b.st_slopeclass15_km)::numeric, 2),
+  st_belowupstrbarriers_slopeclass22_km = round((a.st_slopeclass22_km - b.st_slopeclass22_km)::numeric, 2),
+  st_belowupstrbarriers_slopeclass30_km = round((a.st_slopeclass30_km - b.st_slopeclass30_km)::numeric, 2),
+  wct_belowupstrbarriers_network_km = round((a.wct_network_km - b.wct_network_km)::numeric, 2),
+  wct_belowupstrbarriers_stream_km = round((a.wct_stream_km - b.wct_stream_km)::numeric, 2),
+  wct_belowupstrbarriers_lakereservoir_ha = round((a.wct_lakereservoir_ha - b.wct_lakereservoir_ha)::numeric, 2),
+  wct_belowupstrbarriers_wetland_ha = round((a.wct_wetland_ha - b.wct_wetland_ha)::numeric, 2),
+  wct_belowupstrbarriers_slopeclass03_km = round((a.wct_slopeclass03_km - b.wct_slopeclass03_km)::numeric, 2),
+  wct_belowupstrbarriers_slopeclass05_km = round((a.wct_slopeclass05_km - b.wct_slopeclass05_km)::numeric, 2),
+  wct_belowupstrbarriers_slopeclass08_km = round((a.wct_slopeclass08_km - b.wct_slopeclass08_km)::numeric, 2),
+  wct_belowupstrbarriers_slopeclass15_km = round((a.wct_slopeclass15_km - b.wct_slopeclass15_km)::numeric, 2),
+  wct_belowupstrbarriers_slopeclass22_km = round((a.wct_slopeclass22_km - b.wct_slopeclass22_km)::numeric, 2),
+  wct_belowupstrbarriers_slopeclass30_km = round((a.wct_slopeclass30_km - b.wct_slopeclass30_km)::numeric, 2)
+from above_upstream_barriers b
+where a.aggregated_crossings_id = b.aggregated_crossings_id;
+
+
+-- and calculating belowupstrbarriers for passable features with barriers upstream
+with barriers as
+(
+  select
+    a.*,
+    c.crossings_dnstr,
+    c.barriers_anthropogenic_dnstr
+  from bcfishpass.crossings_upstream_access a
+  inner join bcfishpass.barriers_anthropogenic b
+  on a.aggregated_crossings_id = b.barriers_anthropogenic_id
+  inner join bcfishpass.crossings c
+  on b.barriers_anthropogenic_id = c.aggregated_crossings_id
+),
+
+above_upstream_barriers as
+(
+  SELECT
+    a.aggregated_crossings_id,
+    SUM(b.total_network_km) as total_network_km,
+    SUM(b.total_stream_km) as total_stream_km,
+    SUM(b.total_lakereservoir_ha) as total_lakereservoir_ha,
+    SUM(b.total_wetland_ha) as total_wetland_ha,
+    SUM(b.total_slopeclass03_waterbodies_km) as total_slopeclass03_waterbodies_km,
+    SUM(b.total_slopeclass03_km) as total_slopeclass03_km,
+    SUM(b.total_slopeclass05_km) as total_slopeclass05_km,
+    SUM(b.total_slopeclass08_km) as total_slopeclass08_km,
+    SUM(b.total_slopeclass15_km) as total_slopeclass15_km,
+    SUM(b.total_slopeclass22_km) as total_slopeclass22_km,
+    SUM(b.total_slopeclass30_km) as total_slopeclass30_km,
+    SUM(b.bt_network_km) as bt_network_km,
+    SUM(b.bt_stream_km) as bt_stream_km,
+    SUM(b.bt_lakereservoir_ha) as bt_lakereservoir_ha,
+    SUM(b.bt_wetland_ha) as bt_wetland_ha,
+    SUM(b.bt_slopeclass03_waterbodies_km) as bt_slopeclass03_waterbodies_km,
+    SUM(b.bt_slopeclass03_km) as bt_slopeclass03_km,
+    SUM(b.bt_slopeclass05_km) as bt_slopeclass05_km,
+    SUM(b.bt_slopeclass08_km) as bt_slopeclass08_km,
+    SUM(b.bt_slopeclass15_km) as bt_slopeclass15_km,
+    SUM(b.bt_slopeclass22_km) as bt_slopeclass22_km,
+    SUM(b.bt_slopeclass30_km) as bt_slopeclass30_km,
+    SUM(b.ch_cm_co_pk_sk_network_km) as ch_cm_co_pk_sk_network_km,
+    SUM(b.ch_cm_co_pk_sk_stream_km) as ch_cm_co_pk_sk_stream_km,
+    SUM(b.ch_cm_co_pk_sk_lakereservoir_ha) as ch_cm_co_pk_sk_lakereservoir_ha,
+    SUM(b.ch_cm_co_pk_sk_wetland_ha) as ch_cm_co_pk_sk_wetland_ha,
+    SUM(b.ch_cm_co_pk_sk_slopeclass03_waterbodies_km) as ch_cm_co_pk_sk_slopeclass03_waterbodies_km,
+    SUM(b.ch_cm_co_pk_sk_slopeclass03_km) as ch_cm_co_pk_sk_slopeclass03_km,
+    SUM(b.ch_cm_co_pk_sk_slopeclass05_km) as ch_cm_co_pk_sk_slopeclass05_km,
+    SUM(b.ch_cm_co_pk_sk_slopeclass08_km) as ch_cm_co_pk_sk_slopeclass08_km,
+    SUM(b.ch_cm_co_pk_sk_slopeclass15_km) as ch_cm_co_pk_sk_slopeclass15_km,
+    SUM(b.ch_cm_co_pk_sk_slopeclass22_km) as ch_cm_co_pk_sk_slopeclass22_km,
+    SUM(b.ch_cm_co_pk_sk_slopeclass30_km) as ch_cm_co_pk_sk_slopeclass30_km,
+    SUM(b.ct_dv_rb_network_km) as ct_dv_rb_network_km,
+    SUM(b.ct_dv_rb_stream_km) as ct_dv_rb_stream_km,
+    SUM(b.ct_dv_rb_lakereservoir_ha) as ct_dv_rb_lakereservoir_ha,
+    SUM(b.ct_dv_rb_wetland_ha) as ct_dv_rb_wetland_ha,
+    SUM(b.ct_dv_rb_slopeclass03_waterbodies_km) as ct_dv_rb_slopeclass03_waterbodies_km,
+    SUM(b.ct_dv_rb_slopeclass03_km) as ct_dv_rb_slopeclass03_km,
+    SUM(b.ct_dv_rb_slopeclass05_km) as ct_dv_rb_slopeclass05_km,
+    SUM(b.ct_dv_rb_slopeclass08_km) as ct_dv_rb_slopeclass08_km,
+    SUM(b.ct_dv_rb_slopeclass15_km) as ct_dv_rb_slopeclass15_km,
+    SUM(b.ct_dv_rb_slopeclass22_km) as ct_dv_rb_slopeclass22_km,
+    SUM(b.ct_dv_rb_slopeclass30_km) as ct_dv_rb_slopeclass30_km,
+    SUM(b.st_network_km) as st_network_km,
+    SUM(b.st_stream_km) as st_stream_km,
+    SUM(b.st_lakereservoir_ha) as st_lakereservoir_ha,
+    SUM(b.st_wetland_ha) as st_wetland_ha,
+    SUM(b.st_slopeclass03_km) as st_slopeclass03_km,
+    SUM(b.st_slopeclass05_km) as st_slopeclass05_km,
+    SUM(b.st_slopeclass08_km) as st_slopeclass08_km,
+    SUM(b.st_slopeclass15_km) as st_slopeclass15_km,
+    SUM(b.st_slopeclass22_km) as st_slopeclass22_km,
+    SUM(b.st_slopeclass30_km) as st_slopeclass30_km,
+    SUM(b.wct_network_km) as wct_network_km,
+    SUM(b.wct_stream_km) as wct_stream_km,
+    SUM(b.wct_lakereservoir_ha) as wct_lakereservoir_ha,
+    SUM(b.wct_wetland_ha) as wct_wetland_ha,
+    SUM(b.wct_slopeclass03_km) as wct_slopeclass03_km,
+    SUM(b.wct_slopeclass05_km) as wct_slopeclass05_km,
+    SUM(b.wct_slopeclass08_km) as wct_slopeclass08_km,
+    SUM(b.wct_slopeclass15_km) as wct_slopeclass15_km,
+    SUM(b.wct_slopeclass22_km) as wct_slopeclass22_km,
+    SUM(b.wct_slopeclass30_km) as wct_slopeclass30_km
+  from bcfishpass.crossings_upstream_access a
+  inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id  -- join to crossings to get barrier status and barriers downstream of given crossing
+  left outer join barriers b on
+     array[a.aggregated_crossings_id] && b.crossings_dnstr                      -- barriers upstream of given crossing
+    and (c.barriers_anthropogenic_dnstr[1] = b.barriers_anthropogenic_dnstr[1]  -- barriers upstream have same downstream barrier id (or no barriers downstream)
+        or b.barriers_anthropogenic_dnstr is null
+        or b.barriers_anthropogenic_dnstr = array[]::text[]
+    )
+  where a.watershed_group_code = :'wsg'
+  and c.barrier_status in ('PASSABLE','UNKNOWN')                                -- passable features / fords only
   group by a.aggregated_crossings_id
 )
 
