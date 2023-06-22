@@ -19,7 +19,7 @@ dependencies:
   - sqlalchemy<2.0
   - gdal
   - rasterio
-  - geopandas
+  - geopandas>=0.13.2
   - geoalchemy2
   - rasterstats
   - scikit-image
