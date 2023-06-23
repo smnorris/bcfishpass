@@ -276,3 +276,4 @@ select
  from bcfishpass.crossings c
  left outer join bcfishpass.crossings_upstream_access r
  on c.aggregated_crossings_id = r.aggregated_crossings_id;
+create index on bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw using gist (geom);
