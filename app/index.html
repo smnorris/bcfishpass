@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <title>BC Fish Passage mapping</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
-<link href="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.css" rel="stylesheet" />
 <style>
     body { margin: 0; padding: 0; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
@@ -23,7 +23,6 @@
         overflow: auto;
         border-radius: 3px;
       }
-
 #legend {
   padding: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -68,23 +67,12 @@ background: #efefef;
 padding: 10px;
 font-family: 'Open Sans', sans-serif;
 }
-
 </style>
 
 <div id="map"></div>
 <div id="menu">
-<input id="all" type="radio" name="rtoggle" value="all">
-<label for="">All features/species</label>
-<input id="ch_co_sk" type="radio" name="rtoggle" value="ch_co_sk" checked="checked">
-<label for="ch_co_sk">Chinook/Coho/Sockeye</label>
-<input id="pk" type="radio" name="rtoggle" value="pk">
-<label for="pk">Pink</label>
-<input id="st" type="radio" name="rtoggle" value="st">
-<label for="st">Steelhead</label>
-<input id="wct" type="radio" name="rtoggle" value="wct">
-<label for="wct">Westslope Cutthroat Trout</label>
-<input id="bt" type="radio" name="rtoggle" value="bt">
-<label for="bt">Bull Trout</label>
+<input id="salmon" type="radio" name="rtoggle" value="salmon" checked="checked">
+<label for="salmon">Pacific Salmon (Chinook/Chum/Coho/Pink/Sockeye)</label>
 </div>
 
 <div class='map-overlay' id='legend'></div>
@@ -101,61 +89,18 @@ function featureHtml(f) {
   return "<p>" + h + "</p>";
 };
 
-var map = new mapboxgl.Map({
-container: 'map',
-style: 'style_ch_co_sk.json',
+var map = new maplibregl.Map({
+    container: 'map',
+    style: 'style_salmon.json',
     center: [-120.728285,52.195932], // starting position
     zoom: 6 // starting zoom
 });
 
-map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new maplibregl.NavigationControl());
 
-map.on('load', function () {
-
-    // GL-JS cannot cluster mvt sources. Get crossings as geojson
-    // and set the 'cluster' option to true. GL-JS will
-    // adds the point_count property to source data.
-    map.addSource('crossing-pts', {
-    type: 'geojson',
-    data: 'https://features.hillcrestgeo.ca/bcfishpass/collections/bcfishpass.crossings/items.json?properties=aggregated_crossings_id&barrier_status=BARRIER',
-    cluster: true,
-    clusterMaxZoom: 6, // Max zoom to cluster points on
-    clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
-    });
-
-    map.addLayer({
-    id: 'clusters',
-    type: 'circle',
-    source: 'crossing-pts',
-    filter: ['has', 'point_count'],
-    paint: {
-    'circle-color': "#ff9c83",
-     "circle-stroke-width": 2,
-    'circle-radius': [
-    'step',
-    ['get', 'point_count'],
-    20,
-    100,
-    30,
-    750,
-    40
-    ]
-    }
-    });
-
-    map.addLayer({
-    id: 'cluster-count',
-    type: 'symbol',
-    source: 'crossing-pts',
-    filter: ['has', 'point_count'],
-    layout: {
-    'text-field': '{point_count_abbreviated}',
-    'text-font': ['Klokantech Noto Sans Bold']  // https://github.com/openmaptiles/fonts/issues/7
-    }
-    });
     // CROSSINGS
     map.on('click', 'crossings-modelled', function (e) {
-    new mapboxgl.Popup()
+    new maplibregl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(featureHtml(e.features[0]))
     .addTo(map);
@@ -168,7 +113,7 @@ map.on('load', function () {
     });
 
     map.on('click', 'crossings-pscis', function (e) {
-    new mapboxgl.Popup()
+    new maplibregl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(featureHtml(e.features[0]))
     .addTo(map);
@@ -180,21 +125,8 @@ map.on('load', function () {
     map.getCanvas().style.cursor = '';
     });
 
-    map.on('click', 'pscis-not-matched-to-streams', function (e) {
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(featureHtml(e.features[0]))
-    .addTo(map);
-    });
-    map.on('mouseenter', 'pscis-not-matched-to-streams', function () {
-    map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'pscis-not-matched-to-streams', function () {
-    map.getCanvas().style.cursor = '';
-    });
-
     map.on('click', 'crossings-dams', function (e) {
-    new mapboxgl.Popup()
+    new maplibregl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(featureHtml(e.features[0]))
     .addTo(map);
@@ -207,7 +139,7 @@ map.on('load', function () {
     });
 
     map.on('click', 'observations', function (e) {
-    new mapboxgl.Popup()
+    new maplibregl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(featureHtml(e.features[0]))
     .addTo(map);
@@ -219,31 +151,32 @@ map.on('load', function () {
     map.getCanvas().style.cursor = '';
     });
 
-    map.on('click', 'barriers-ch-co-sk-falls', function (e) {
-    new mapboxgl.Popup()
+    map.on('click', 'barriers-ch-cm-co-pk-sk-falls', function (e) {
+    new maplibregl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(featureHtml(e.features[0]))
     .addTo(map);
     });
-    map.on('mouseenter', 'barriers-ch-co-sk-falls', function () {
+    map.on('mouseenter', 'barriers-ch-cm-co-pk-sk-falls', function () {
     map.getCanvas().style.cursor = 'pointer';
     });
-    map.on('mouseleave', 'barriers-ch-co-sk-falls', function () {
+    map.on('mouseleave', 'barriers-ch-cm-co-pk-sk-falls', function () {
     map.getCanvas().style.cursor = '';
     });
 
-    map.on('click', 'barriers-ch-co-sk-other', function (e) {
-    new mapboxgl.Popup()
+    map.on('click', 'barriers-ch-cm-co-pk-sk-other', function (e) {
+    new maplibregl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(featureHtml(e.features[0]))
     .addTo(map);
     });
-    map.on('mouseenter', 'barriers-ch-co-sk-other', function () {
+    map.on('mouseenter', 'barriers-ch-cm-co-pk-sk-other', function () {
     map.getCanvas().style.cursor = 'pointer';
     });
-    map.on('mouseleave', 'barriers-ch-co-sk-other', function () {
+    map.on('mouseleave', 'barriers-ch-cm-co-pk-sk-other', function () {
     map.getCanvas().style.cursor = '';
     });
+
 
     var item = document.createElement('div');
     var groupheader = document.createElement('span');
@@ -254,7 +187,6 @@ map.on('load', function () {
 
     var layers = ['Barrier', 'Potential', 'Passable', 'Unknown'];
     var colors = ["#ff3d37", "#fce82c", "#b2df8a","#aaaaaa"];
-
     for (i = 0; i < layers.length; i++) {
       var layer = layers[i];
       var color = colors[i];
@@ -304,11 +236,11 @@ map.on('load', function () {
     var item = document.createElement('div');
     var groupheader = document.createElement('span');
     groupheader.className = 'legend-header'
-    groupheader.innerHTML = 'PotentiallyAccessibleStreams'
+    groupheader.innerHTML = 'Streams(PotentiallyAccessible)'
     item.appendChild(groupheader)
     legend.appendChild(item)
 
-    var layers = ['No known barrier', 'Modelled potential barrier', 'Known PSCIS barrier', 'Remediated'];
+    var layers = ['No barrier downstream', 'Modelled culvert', 'Dam/Assessed PSCIS barrier', 'Remediated'];
     var colors = ["#129bdb", "#ff9f85", "#ff6b6b", "#33a02c"];
     for (i = 0; i < layers.length; i++) {
       var layer = layers[i];
@@ -324,20 +256,9 @@ map.on('load', function () {
       item.appendChild(value);
       legend.appendChild(item);
     }
-});
-
-const layerList = document.getElementById('menu');
-const inputs = layerList.getElementsByTagName('input');
-
-for (const input of inputs) {
-input.onclick = (layer) => {
-const layerId = layer.target.id;
-map.setStyle('style_' + layerId + '.json');
-};
-}
-
 
 </script>
+
 
 </body>
 </html>
