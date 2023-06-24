@@ -45,7 +45,7 @@
       "maxzoom": 20
     }
   },
-  "sprite": "https://www.hillcrestgeo.ca/projects/bcfishpass_test/maki_default",
+  "sprite": "https://www.hillcrestgeo.ca/projects/bcfishpass/maki_default",
   "glyphs": "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
   "layers": [
     {
@@ -157,7 +157,7 @@
       ["in", "SK", ["get", "species_codes"]]
     ],
     "layout": {
-                "icon-image": "aquarium-11",
+                "icon-image": "fish",
                 "icon-size": 1.0
             },
     "paint": {
@@ -173,7 +173,7 @@
     "maxzoom": 19,
     "minzoom": 10,
     "layout": {
-                "icon-image": "triangle-15",
+                "icon-image": "triangle",
                 "icon-size": 1.0
             },
     "paint": {
@@ -193,7 +193,7 @@
     "maxzoom": 19,
     "minzoom": 10,
     "layout": {
-                "icon-image": "triangle-stroked-11",
+                "icon-image": "triangle-stroked",
                 "icon-size": 0.75
             },
     "paint": {
@@ -249,7 +249,7 @@
     "source-layer": "bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw",
     "minzoom": 9,
     "layout": {
-                "icon-image": "square-11",
+                "icon-image": "square",
                 "icon-size": 1.0
             },
     "paint": {
