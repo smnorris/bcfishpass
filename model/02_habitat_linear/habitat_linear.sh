@@ -62,9 +62,12 @@ do
   $PSQL -c 'drop table if exists bcfishpass.habitat_'$sp
 done
 
-
-## create output views
+# create output views
 for vw in sql/views/streams_*_vw.sql
 do
   $PSQL -f $vw
 done
+
+# generate report of habitat length upstream of all crossings
+$PSQL -f sql/crossings_upstream_habitat.sql
+parallel $PSQL -f sql/crossings_upstream_habitat_load.sql -v wsg={1} ::: $WSGS
