@@ -145,5 +145,5 @@ do
 done
 
 # generate crossings report
-$PSQL -f sql/crossings_report.sql
-parallel $PSQL -f sql/crossings_report_load.sql -v wsg={1} ::: $WSGS
+$PSQL -f sql/crossings_upstream_access.sql
+parallel $PSQL -f sql/crossings_upstream_access_load.sql -v wsg={1} ::: $WSGS
