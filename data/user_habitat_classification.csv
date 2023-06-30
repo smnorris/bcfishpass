@@ -2441,10 +2441,10 @@
 360491333,0,902,NASC,CO,spawning,t,SN,2023-03-01,pse_spawning_lines_Coho(PSF),
 360724462,20,30,NASC,SK,spawning,t,SN,2023-03-01,pse_spawning_points_ser_cc(PSF),
 356304330,17053,17335,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
-356304330,17335,19495.46658,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),"POSSIBLE "
+356304330,17335,19495.46658,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
 356333065,1292,1772,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
-356333065,1772,2661,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),"POSSIBLE "
-356353369,972,1231,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),"POSSIBLE "
+356333065,1772,2661,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
+356353369,972,1231,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
 356291581,1189,3982.004444,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),POSSIBLE
 356363937,150255,185765.2782,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
 356357084,1623.394773,1839,QUES,SK,spawning,t,TMK,2023-04-05,spawning_lines_fraser(PSF),
