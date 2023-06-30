@@ -2,7 +2,7 @@
 drop table if exists bcfishpass.crossings_upstream_habitat cascade;
 
 create table bcfishpass.crossings_upstream_habitat (
-  aggregated_crossings_id               text,
+  aggregated_crossings_id               text primary key,
   watershed_group_code                  character varying (4),
   bt_spawning_km                        double precision DEFAULT 0,
   bt_rearing_km                         double precision DEFAULT 0,
