@@ -5,6 +5,7 @@ WITH at_point AS
 (
   SELECT
     a.aggregated_crossings_id,
+    a.watershed_group_code,
     coalesce(s.gradient, s2.gradient) as gradient,
     s.barriers_bt_dnstr,
     s.barriers_ch_cm_co_pk_sk_dnstr,
@@ -14,17 +15,17 @@ WITH at_point AS
   FROM bcfishpass.crossings a
   left outer join bcfishpass.streams s
   ON a.blue_line_key = s.blue_line_key
-  --AND a.downstream_route_measure > s.downstream_route_measure - .001
-  --AND a.downstream_route_measure + .001 < s.upstream_route_measure
-  AND round(s.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
-  AND round(s.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
+  AND a.downstream_route_measure > s.downstream_route_measure - .001
+  AND a.downstream_route_measure + .001 < s.upstream_route_measure
+  --AND round(s.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
+  --AND round(s.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s.watershed_group_code
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
   ON a.blue_line_key = s2.blue_line_key
-  --AND a.downstream_route_measure > s2.downstream_route_measure - .001
-  --AND a.downstream_route_measure + .001 < s2.upstream_route_measure
-  AND round(s2.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
-  AND round(s2.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
+  AND a.downstream_route_measure > s2.downstream_route_measure - .001
+  AND a.downstream_route_measure + .001 < s2.upstream_route_measure
+  --AND round(s2.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
+  --AND round(s2.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s2.watershed_group_code
   WHERE a.watershed_group_code = :'wsg'
   ORDER BY aggregated_crossings_id
@@ -102,7 +103,6 @@ upstr_length_sum as
 (
   SELECT
     s.aggregated_crossings_id,
-    s.watershed_group_code,
   -- totals
     COALESCE(ROUND((SUM(ST_Length(s.geom)::numeric) / 1000), 2), 0) AS total_network_km,
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE wb.waterbody_type = 'R' OR (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300)))) / 1000)::numeric, 2), 0) AS total_stream_km,
@@ -194,7 +194,7 @@ upstr_length_sum as
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_wct is true AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as wct_slopeclass30_km
   FROM upstr_length s
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  GROUP BY s.aggregated_crossings_id, s.watershed_group_code
+  GROUP BY s.aggregated_crossings_id
 ),
 
 upstr_area_sum as
@@ -302,8 +302,8 @@ insert into bcfishpass.crossings_upstream_access
 )
 
 select
-  a.aggregated_crossings_id,
-  a.watershed_group_code,
+  p.aggregated_crossings_id,
+  p.watershed_group_code,
   p.gradient,
   a.total_network_km,
   a.total_stream_km,
