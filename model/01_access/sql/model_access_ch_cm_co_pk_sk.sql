@@ -230,33 +230,3 @@ and (
     b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
 on conflict do nothing;
-
--- also insert hydro dams that are labelled as barriers, regardless of how many observations are upstream
--- (if there are many observations upstream, submit barrier status correction to CABD)
-insert into bcfishpass.barriers_ch_cm_co_pk_sk
-(
-    barriers_ch_cm_co_pk_sk_id,
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
-select
-  barriers_dams_hydro_id as barrier_id,
-  barrier_type,
-  barrier_name,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  geom
-from bcfishpass.barriers_dams_hydro
-where watershed_group_code = :'wsg'
-on conflict do nothing;

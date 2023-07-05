@@ -214,33 +214,3 @@ and (
     b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
 )
 on conflict do nothing;
-
-
--- also insert hydro dams that are labelled as barriers, regardless of how many observations are upstream
-insert into bcfishpass.barriers_st
-(
-    barriers_st_id,
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-)
-select
-  barriers_dams_hydro_id as barrier_id,
-  barrier_type,
-  barrier_name,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  geom
-from bcfishpass.barriers_dams_hydro
-where watershed_group_code = :'wsg'
-on conflict do nothing;
