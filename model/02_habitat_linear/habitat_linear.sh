@@ -71,4 +71,3 @@ done
 # generate report of habitat length upstream of all crossings
 $PSQL -f sql/crossings_upstream_habitat.sql
 parallel $PSQL -f sql/crossings_upstream_habitat_load.sql -v wsg={1} ::: $WSGS
-parallel --jobs 1 $PSQL -f sql/crossings_upstream_habitat_update.sql -v wsg={1} ::: $WSGS
