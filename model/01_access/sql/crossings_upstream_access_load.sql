@@ -618,7 +618,10 @@ with barriers as
 (
   select
     a.*,
-    c.crossings_dnstr,
+    c.blue_line_key,
+    c.downstream_route_measure,
+    c.wscode_ltree,
+    c.localcode_ltree,
     c.barriers_anthropogenic_dnstr
   from bcfishpass.crossings_upstream_access a
   inner join bcfishpass.barriers_anthropogenic b
@@ -698,11 +701,11 @@ above_upstream_barriers as
   from bcfishpass.crossings_upstream_access a
   inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id  -- join to crossings to get barrier status and barriers downstream of given crossing
   left outer join barriers b on
-     array[a.aggregated_crossings_id] && b.crossings_dnstr                      -- barriers upstream of given crossing
-    and (c.barriers_anthropogenic_dnstr[1] = b.barriers_anthropogenic_dnstr[1]  -- barriers upstream have same downstream barrier id (or no barriers downstream)
+     fwa_upstream(c.blue_line_key, c.downstream_route_measure, c.wscode_ltree, c.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree)
+    -- barriers upstream have same downstream barrier id (or no barriers downstream)
+    and (c.barriers_anthropogenic_dnstr[1] = b.barriers_anthropogenic_dnstr[1]
         or b.barriers_anthropogenic_dnstr is null
-        or b.barriers_anthropogenic_dnstr = array[]::text[]
-    )
+        )
   where a.watershed_group_code = :'wsg'
   and c.barrier_status in ('PASSABLE','UNKNOWN')                                -- passable features / fords only
   group by a.aggregated_crossings_id
