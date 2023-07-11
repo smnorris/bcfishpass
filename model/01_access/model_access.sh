@@ -148,4 +148,4 @@ done
 # generate crossings report
 $PSQL -f sql/crossings_upstream_access.sql
 $PARALLEL $PSQL -f sql/crossings_upstream_access_load.sql -v wsg={1} ::: $WSGS
-$PARALLEL $PSQL -f sql/crossings_upstream_access_update.sql -v wsg={1} ::: $WSGS
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_access_update.sql -v wsg={1} ::: $WSGS
