@@ -1,6 +1,73 @@
 -- ---------------------------------
 -- report on upstream linear stats
 -- ---------------------------------
+
+-- create temp tables to avoid memory issues on systems with limited resources
+create temporary table temp_upstr_length as
+select
+  a.aggregated_crossings_id,
+  a.watershed_group_code,
+  s.linear_feature_id,
+  s.gradient,
+  s.edge_type,
+  s.waterbody_key,
+  case when s.barriers_bt_dnstr = array[]::text[] then true else false end as access_bt,
+  case when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] then true else false end as access_ch_cm_co_pk_sk,
+  case when s.barriers_ct_dv_rb_dnstr = array[]::text[] then true else false end as access_ct_dv_rb,
+  case when s.barriers_st_dnstr = array[]::text[] then true else false end as access_st,
+  case when s.barriers_wct_dnstr = array[]::text[] then true else false end as access_wct,
+  s.geom
+from bcfishpass.crossings a
+LEFT OUTER JOIN bcfishpass.streams s
+ON FWA_Upstream(
+    a.blue_line_key,
+    a.downstream_route_measure,
+    a.wscode_ltree,
+    a.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    True,
+    1
+   )
+where a.blue_line_key = a.watershed_key  -- do not compute for points on side channels
+and a.watershed_group_code = :'wsg'
+ORDER BY a.aggregated_crossings_id;
+
+create temporary table temp_upstr_area as
+SELECT DISTINCT
+  a.aggregated_crossings_id,
+  s.waterbody_key,
+  case when s.barriers_bt_dnstr = array[]::text[] then true else false end as access_bt,
+  case when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] then true else false end as access_ch_cm_co_pk_sk,
+  case when s.barriers_ct_dv_rb_dnstr = array[]::text[] then true else false end as access_ct_dv_rb,
+  case when s.barriers_st_dnstr = array[]::text[] then true else false end as access_st,
+  case when s.barriers_wct_dnstr = array[]::text[] then true else false end as access_wct,
+  ST_Area(lake.geom) as area_lake,
+  ST_Area(manmade.geom) as area_manmade,
+  ST_Area(wetland.geom) as area_wetland
+FROM bcfishpass.crossings a
+LEFT OUTER JOIN bcfishpass.streams s
+ON FWA_Upstream(
+    a.blue_line_key,
+    a.downstream_route_measure,
+    a.wscode_ltree,
+    a.localcode_ltree,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    True,
+    1
+   )
+LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lake ON s.waterbody_key = lake.waterbody_key
+LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly manmade ON s.waterbody_key = manmade.waterbody_key
+LEFT OUTER JOIN whse_basemapping.fwa_wetlands_poly wetland ON s.waterbody_key = wetland.waterbody_key
+WHERE a.watershed_group_code = :'wsg'
+ORDER BY a.aggregated_crossings_id;
+
+
 WITH at_point AS
 (
   SELECT
@@ -31,74 +98,6 @@ WITH at_point AS
   AND a.watershed_group_code = s2.watershed_group_code
   WHERE a.watershed_group_code = :'wsg'
   ORDER BY aggregated_crossings_id
-),
-
-upstr_length as materialized
-(
-  select
-    a.aggregated_crossings_id,
-    a.watershed_group_code,
-    s.linear_feature_id,
-    s.gradient,
-    s.edge_type,
-    s.waterbody_key,
-    case when s.barriers_bt_dnstr = array[]::text[] then true else false end as access_bt,
-    case when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] then true else false end as access_ch_cm_co_pk_sk,
-    case when s.barriers_ct_dv_rb_dnstr = array[]::text[] then true else false end as access_ct_dv_rb,
-    case when s.barriers_st_dnstr = array[]::text[] then true else false end as access_st,
-    case when s.barriers_wct_dnstr = array[]::text[] then true else false end as access_wct,
-    s.geom
-  from bcfishpass.crossings a
-  LEFT OUTER JOIN bcfishpass.streams s
-  ON FWA_Upstream(
-      a.blue_line_key,
-      a.downstream_route_measure,
-      a.wscode_ltree,
-      a.localcode_ltree,
-      s.blue_line_key,
-      s.downstream_route_measure,
-      s.wscode_ltree,
-      s.localcode_ltree,
-      True,
-      1
-     )
-  where a.blue_line_key = a.watershed_key  -- do not compute for points on side channels
-  and a.watershed_group_code = :'wsg'
-  ORDER BY a.aggregated_crossings_id
-),
-
-upstr_area as materialized
-(
-  SELECT DISTINCT
-    a.aggregated_crossings_id,
-    s.waterbody_key,
-    case when s.barriers_bt_dnstr = array[]::text[] then true else false end as access_bt,
-    case when s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] then true else false end as access_ch_cm_co_pk_sk,
-    case when s.barriers_ct_dv_rb_dnstr = array[]::text[] then true else false end as access_ct_dv_rb,
-    case when s.barriers_st_dnstr = array[]::text[] then true else false end as access_st,
-    case when s.barriers_wct_dnstr = array[]::text[] then true else false end as access_wct,
-    ST_Area(lake.geom) as area_lake,
-    ST_Area(manmade.geom) as area_manmade,
-    ST_Area(wetland.geom) as area_wetland
-  FROM bcfishpass.crossings a
-  LEFT OUTER JOIN bcfishpass.streams s
-  ON FWA_Upstream(
-      a.blue_line_key,
-      a.downstream_route_measure,
-      a.wscode_ltree,
-      a.localcode_ltree,
-      s.blue_line_key,
-      s.downstream_route_measure,
-      s.wscode_ltree,
-      s.localcode_ltree,
-      True,
-      1
-     )
-  LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lake ON s.waterbody_key = lake.waterbody_key
-  LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly manmade ON s.waterbody_key = manmade.waterbody_key
-  LEFT OUTER JOIN whse_basemapping.fwa_wetlands_poly wetland ON s.waterbody_key = wetland.waterbody_key
-  WHERE a.watershed_group_code = :'wsg'
-  ORDER BY a.aggregated_crossings_id
 ),
 
 upstr_length_sum as
@@ -194,7 +193,7 @@ upstr_length_sum as
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_wct is true AND (s.gradient >= .08 AND s.gradient < .15)) / 1000))::numeric, 2), 0) as wct_slopeclass15_km,
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_wct is true AND (s.gradient >= .15 AND s.gradient < .22)) / 1000))::numeric, 2), 0) as wct_slopeclass22_km,
     COALESCE(ROUND(((SUM(ST_Length(s.geom)) FILTER (WHERE s.access_wct is true AND (s.gradient >= .22 AND s.gradient < .30)) / 1000))::numeric, 2), 0) as wct_slopeclass30_km
-  FROM upstr_length s
+  FROM temp_upstr_length s
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   GROUP BY s.aggregated_crossings_id
 ),
@@ -220,7 +219,7 @@ upstr_area_sum as
     ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_st is true)) / 10000)::numeric, 2) AS st_wetland_ha,
     ROUND(((SUM(COALESCE(uwb.area_lake, 0)) FILTER (WHERE uwb.access_wct is true) + SUM(COALESCE(uwb.area_manmade,0)) FILTER (WHERE uwb.access_wct is true)) / 10000)::numeric, 2) AS wct_lakereservoir_ha,
     ROUND(((SUM(COALESCE(uwb.area_wetland, 0)) FILTER (WHERE uwb.access_wct is true)) / 10000)::numeric, 2) AS wct_wetland_ha
-  FROM upstr_area uwb
+  FROM temp_upstr_area uwb
   WHERE waterbody_key IS NOT NULL
   GROUP BY aggregated_crossings_id
 )
