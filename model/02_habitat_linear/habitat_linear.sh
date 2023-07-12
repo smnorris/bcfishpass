@@ -51,7 +51,7 @@ $PSQL -c "alter table bcfishpass.streams_model_habitat
  add column if not exists mapping_code_salmon    text"
 parallel $PSQL -f sql/streams_model_habitat.sql -v wsg={1} ::: $WSGS
 # switch back to streams table
-$PSQL -c "drop table bcfishpass.streams"
+$PSQL -c "drop table bcfishpass.streams cascade"
 $PSQL -c "alter table bcfishpass.streams_model_habitat rename to streams"
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
@@ -70,5 +70,5 @@ done
 
 # generate report of habitat length upstream of all crossings
 $PSQL -f sql/crossings_upstream_habitat.sql
-parallel $PSQL -f sql/crossings_upstream_habitat_load.sql -v wsg={1} ::: $WSGS
-parallel $PSQL -f sql/crossings_upstream_habitat_update.sql -v wsg={1} ::: $WSGS
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_habitat_load.sql -v wsg={1} ::: $WSGS
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_habitat_update.sql -v wsg={1} ::: $WSGS
