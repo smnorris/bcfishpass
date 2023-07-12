@@ -336,32 +336,35 @@ select
   case
     when
       barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      model_spawning_ch is null and
-      model_spawning_cm is null and
-      model_spawning_co is null and
-      model_spawning_pk is null and
-      model_spawning_sk is null and
-      model_rearing_ch is null and
-      model_rearing_co is null and
-      model_rearing_sk is null
+      h.model_spawning_ch is null and
+      h.model_spawning_cm is null and
+      h.model_spawning_co is null and
+      h.model_spawning_pk is null and
+      h.model_spawning_sk is null and
+      h.model_rearing_ch is null and
+      h.model_rearing_co is null and
+      h.model_rearing_sk is null
     then 'ACCESS'
     -- potential spawning
-    when model_spawning_ch is not null or
-      model_spawning_cm is not null or
-      model_spawning_co is not null or
-      model_spawning_pk is not null or
-      model_spawning_sk is not null
+    when
+      h.model_spawning_ch is not null or
+      h.model_spawning_cm is not null or
+      h.model_spawning_co is not null or
+      h.model_spawning_pk is not null or
+      h.model_spawning_sk is not null
     then 'SPAWN'
     -- potential rearing (and not spawning)
     when
-      model_spawning_ch is null and
-      model_spawning_cm is null and
-      model_spawning_co is null and
-      model_spawning_pk is null and
-      model_spawning_sk is null and
-      (model_rearing_ch is not null or
-      model_rearing_co is not null or
-      model_rearing_sk is not null)
+      h.model_spawning_ch is null and
+      h.model_spawning_cm is null and
+      h.model_spawning_co is null and
+      h.model_spawning_pk is null and
+      h.model_spawning_sk is null and
+      (
+        h.model_rearing_ch is not null or
+        h.model_rearing_co is not null or
+        h.model_rearing_sk is not null
+      )
     then 'REAR'
   end,
    case
