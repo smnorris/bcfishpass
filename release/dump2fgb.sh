@@ -18,6 +18,28 @@ mkdir -p fgb
 $PSQL -c "create schema if not exists temp"
 
 # -----------------------------------------
+# bcfishpass.streams
+# -----------------------------------------
+ogr2ogr \
+    -f FlatGeobuf \
+    fgb/streams.fgb \
+    PG:$DATABASE_URL \
+    -nln streams \
+    -sql "select * from bcfishpass.streams_vw"
+
+
+# -----------------------------------------
+# bcfishpass.crossings
+# -----------------------------------------
+ogr2ogr \
+    -f FlatGeobuf \
+    fgb/crossings.fgb \
+    PG:$DATABASE_URL \
+    -nln crossings \
+    -sql "select * from bcfishpass.crossings_vw"
+
+
+# -----------------------------------------
 # bcfishobs.fiss_fish_obsrvtn_events_vw
 # Observations linked to streams
 # (no overlay with watersheds required)
