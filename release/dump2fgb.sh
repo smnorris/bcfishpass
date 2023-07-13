@@ -466,3 +466,9 @@ ogr2ogr \
     -sql "select * from temp.transport_line"
 
 $PSQL -c "drop table temp.transport_line"
+
+# sync to s3
+cd fgb; aws s3 sync . s3://bcfishpass/ --acl public-read
+
+# cleanup
+cd ../ ; rm -rf fgb
