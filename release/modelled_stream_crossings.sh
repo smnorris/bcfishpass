@@ -30,7 +30,10 @@ ogr2ogr \
 zip -r modelled_stream_crossings.gpkg.zip modelled_stream_crossings.gpkg
 rm modelled_stream_crossings.gpkg
 
+
 aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/
+# in case the file is corrupted, also create a backup copy
+aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/modelled_stream_crossings.gpkg.zip.$(date +%F)
 aws s3api put-object-acl --bucket bcfishpass --key modelled_stream_crossings.gpkg.zip --acl public-read
 rm -f modelled_stream_crossings.gpkg*
 
