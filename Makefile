@@ -20,7 +20,7 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 #where watershed_group_code not in ('BULK','ELKR','LNIC','BOWR','QUES','CARR','LNTH','MORR','PARS');"
 test: .make/data
 	$(PSQL) -c "delete from bcfishpass.parameters_habitat_method \
-	where watershed_group_code not in ('ALBN','BULK','ELKR','LNIC','BOWR','QUES','CARR','LNTH','MORR','PARS','VICT');"
+	where watershed_group_code not in ('ALBN','BULK','ELKR','LNIC','BOWR','QUES','CARR','LNTH','MORR','PARS','VICT','USHU');"
 
 .make/model_access: .make/data
 	cd model/01_access; make

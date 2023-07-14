@@ -88,7 +88,7 @@ WITH at_point AS
   --AND round(s.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
   --AND round(s.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s.watershed_group_code
-  INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
+  left outer join whse_basemapping.fwa_stream_networks_sp s2
   ON a.linear_feature_id = s2.linear_feature_id
   AND a.downstream_route_measure > s2.downstream_route_measure - .001
   AND a.downstream_route_measure + .001 < s2.upstream_route_measure
