@@ -17,8 +17,8 @@ PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # will be made every time this is run on a different day
 if $PSQL_CMD -c "SELECT to_regclass('whse_fish.fiss_obstacles_pnt_sp')" | grep -q 'whse_fish.fiss_obstacles_pnt_sp'; then
   DOWNLOAD_DATE=$($PSQL_CMD -tc \
-    "SELECT replace(DATE(date_downloaded)::text, '-', '') \
-    FROM public.bcdata \
+    "SELECT replace(DATE(latest_download)::text, '-', '') \
+    FROM bcdata.log \
     WHERE table_name = 'whse_fish.fiss_obstacles_pnt_sp'" \
     | sed -e 's/^[[:space:]]*//')
   # just drop existing archive for given date if it aleady exists and re-archive
