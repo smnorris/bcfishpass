@@ -52,13 +52,19 @@ select
  c.gnis_stream_name,
  c.stream_order,
  c.stream_magnitude,
+ s.upstream_area_ha,
+ s.stream_order_parent,
+ s.stream_order_max,
+ s.map_upstream,
+ s.channel_width,
+ s.mad_m3s,
  array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
  array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
  array_to_string(c.crossings_dnstr, ';') as crossings_dnstr,
  array_to_string(c.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
  array_to_string(c.barriers_anthropogenic_upstr, ';') as barriers_anthropogenic_upstr,
- coalesce(array_length(barriers_anthropogenic_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
- coalesce(array_length(barriers_anthropogenic_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
+ coalesce(array_length(c.barriers_anthropogenic_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
+ coalesce(array_length(c.barriers_anthropogenic_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
  a.gradient,
  a.total_network_km,
  a.total_stream_km,
@@ -162,7 +168,6 @@ select
  h.wct_rearing_belowupstrbarriers_km,
  c.geom
  from bcfishpass.crossings c
- left outer join bcfishpass.crossings_upstream_access a
- on c.aggregated_crossings_id = a.aggregated_crossings_id
- left outer join bcfishpass.crossings_upstream_habitat h
- on c.aggregated_crossings_id = h.aggregated_crossings_id;
+ left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
+ left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
+ left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id;
