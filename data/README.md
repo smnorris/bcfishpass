@@ -10,23 +10,28 @@ Correct/force linkage of PSCIS crossings to FWA streams and/or modelled crossing
 
 ## user_barriers_anthropogenic.csv
 
-Add built stream crossing features that are not dams or culverts here (eg weirs, flood control structures, other)
+Anthropogenic barriers not present in inventories or modelling (eg weirs, flood control structures, 
+crossings on unmapped roads/railways, other). Do not add dams/weirs, these should be submitted to CABD.
 
 
 ## user_barriers_definite.csv
 
-Add known locations of barriers to fish passage not present in other sources. Includes interpretation of PSCIS
-assessment comments where stream is not accessible (unmapped falls downstream or similar)
+Locations of additional known natural barriers to fish passage not present in other sources, plus 
+other misc barriers used to exclude upstream from consideration (eg, stream does not exist due to mining impacts)
+Includes interpretation of PSCIS assessment comments where stream is not accessible to fish (unmapped falls downstream or similar).
 
 
 ## user_barriers_definite_control.csv
 
-Control the barrier status of input data. Eg, set a known FISS falls of unknown height to be a barrier.
+Currently, controls the barrier status of natural barriers (gradient, falls, subsurface flow). 
+NOTE -  this table will only be used to identify modelled barriers known to be passable 
+(gradient, subsurface flow) once bcfishpass incorporates CABD falls
 
 
 ## user_falls.csv
 
 Falls not present in FWA/FISS. Both barriers and non-barriers may be included.
+NOTE - to be removed after bcfishpass incorporates CABD falls, submit CABD falls fixes to CABD.
 
 
 ## user_habitat_classification.csv
@@ -37,7 +42,8 @@ Manually specify known segments of rearing/spawning habitat for target species.
 ## user_modelled_crossing_fixes.csv
 
 Update the barrier status of modelled culverts
-(based primarily on imagery review, finding locations where bridges are present or no road is present)
+(based primarily on imagery review, finding locations where bridges are present / no stream is present / 
+no road is present)
 
 
 ## user_pscis_barrier_status.csv
