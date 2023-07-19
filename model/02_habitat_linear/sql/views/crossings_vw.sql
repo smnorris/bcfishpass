@@ -2,8 +2,8 @@
 -- convert array types to text for easier dumps
 
 drop view if exists bcfishpass.crossings_vw;
-create or replace view bcfishpass.crossings_vw as
-select
+create materialized view bcfishpass.crossings_vw as
+select distinct on (c.aggregated_crossings_id)  -- joining to streams based on measure can be error prone due to precision. Just join based on id and keep the first result
  c.aggregated_crossings_id,
  c.stream_crossing_id,
  c.dam_id,
@@ -88,6 +88,32 @@ select
  a.total_belowupstrbarriers_slopeclass15_km,
  a.total_belowupstrbarriers_slopeclass22_km,
  a.total_belowupstrbarriers_slopeclass30_km,
+
+ -- access models
+ array_to_string(a.barriers_bt_dnstr, ';') as barriers_bt_dnstr,
+ a.bt_network_km,
+ a.bt_stream_km,
+ a.bt_lakereservoir_ha,
+ a.bt_wetland_ha,
+ a.bt_slopeclass03_waterbodies_km,
+ a.bt_slopeclass03_km,
+ a.bt_slopeclass05_km,
+ a.bt_slopeclass08_km,
+ a.bt_slopeclass15_km,
+ a.bt_slopeclass22_km,
+ a.bt_slopeclass30_km,
+ a.bt_belowupstrbarriers_network_km,
+ a.bt_belowupstrbarriers_stream_km,
+ a.bt_belowupstrbarriers_lakereservoir_ha,
+ a.bt_belowupstrbarriers_wetland_ha,
+ a.bt_belowupstrbarriers_slopeclass03_waterbodies_km,
+ a.bt_belowupstrbarriers_slopeclass03_km,
+ a.bt_belowupstrbarriers_slopeclass05_km,
+ a.bt_belowupstrbarriers_slopeclass08_km,
+ a.bt_belowupstrbarriers_slopeclass15_km,
+ a.bt_belowupstrbarriers_slopeclass22_km,
+ a.bt_belowupstrbarriers_slopeclass30_km,
+
  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
  a.ch_cm_co_pk_sk_network_km,
  a.ch_cm_co_pk_sk_stream_km,
@@ -111,6 +137,7 @@ select
  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km,
  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km,
  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km,
+
  array_to_string(a.barriers_st_dnstr, ';') as barriers_st_dnstr,
  a.st_network_km,
  a.st_stream_km,
@@ -134,6 +161,32 @@ select
  a.st_belowupstrbarriers_slopeclass15_km,
  a.st_belowupstrbarriers_slopeclass22_km,
  a.st_belowupstrbarriers_slopeclass30_km,
+
+ array_to_string(a.barriers_wct_dnstr, ';') as barriers_wct_dnstr,
+ a.wct_network_km,
+ a.wct_stream_km,
+ a.wct_lakereservoir_ha,
+ a.wct_wetland_ha,
+ a.wct_slopeclass03_waterbodies_km,
+ a.wct_slopeclass03_km,
+ a.wct_slopeclass05_km,
+ a.wct_slopeclass08_km,
+ a.wct_slopeclass15_km,
+ a.wct_slopeclass22_km,
+ a.wct_slopeclass30_km,
+ a.wct_belowupstrbarriers_network_km,
+ a.wct_belowupstrbarriers_stream_km,
+ a.wct_belowupstrbarriers_lakereservoir_ha,
+ a.wct_belowupstrbarriers_wetland_ha,
+ a.wct_belowupstrbarriers_slopeclass03_waterbodies_km,
+ a.wct_belowupstrbarriers_slopeclass03_km,
+ a.wct_belowupstrbarriers_slopeclass05_km,
+ a.wct_belowupstrbarriers_slopeclass08_km,
+ a.wct_belowupstrbarriers_slopeclass15_km,
+ a.wct_belowupstrbarriers_slopeclass22_km,
+ a.wct_belowupstrbarriers_slopeclass30_km,
+
+ -- habitat models
  h.bt_spawning_km,
  h.bt_rearing_km,
  h.bt_spawning_belowupstrbarriers_km,
@@ -170,4 +223,7 @@ select
  from bcfishpass.crossings c
  left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
  left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
- left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id;
+ left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
+order by aggregated_crossings_id, s.downstream_route_measure;
+
+create index on bcfishpass.crossings_vw using gist (geom);
