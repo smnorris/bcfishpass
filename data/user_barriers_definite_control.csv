@@ -15,7 +15,6 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 354155148,34041,FALLS,f,FRCN,SN,2021-01-01,,Fish ladder in place around Hells gate falls
 354155148,29835,FALLS,f,COWN,SN,2021-01-01,,non-barrier (fish ladder)
 354155148,34202,FALLS,f,COWN,SN,2021-01-01,,non-barrier (height 20m is incorrect)
-360800595,4872,FALLS,f,COWN,SN,2021-01-01,,non-barrier (fish ladder)
 360873822,242072,FALLS,f,BABL,BR,2021-12-31,,Two falls with same ID number. Reference doc places falls at 9U 690318 6068411. Referenc e document for Sockeye point upstream makes no mention of where Sockeye are found in stream. This point should be removed.
 360875378,3616,FALLS,f,BULK,NMW;SN,2021-01-01,,FISS falls appears to be an error - no 8m falls visible on Bulkley River at this location
 360873822,194306,FALLS,f,BULK,NJO,2021-01-01,,Falls seeems to be an error - no white water or falls at this location
@@ -51,7 +50,6 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 360504144,148,FALLS,f,MORR,BR,2021-12-31,,"Reference report notes that lower 20 m of stream only is fish-bearing. Coho point should be in side channel of mainstem Nanika at 9U 601391, 598269 (note coordinate is not a typo - consultant only reports northing to 6 digits for some reason"
 360882037,22015,FALLS,f,MORR,BR,2021-12-31,,"Falls reference does not show a falls in this location. There is mention of an impassable falls 5 km upstream of Starr Creek confluence, but not downstream. The only other falls mentioned is a 2 m falls located 100 m downstream from stream TH52. TH52 location is not provided, but TH 53 and TH51 are both several kms upstream of Starr Creek confluence. Other references seem to confirm anadromous fish presence upstream of this point, and aerial photos of the mouth of Denys Creek do not show any falls on the Thautil mainstem."
 360740192,31,FALLS,f,MSKE,BR,2021-12-31,,Chinook point is correct. 8 m falls should be approx 400 m upstream from mouth on 400-614500
-356363034,13,FALLS,f,NARC,BR,2021-12-31,,Same falls number on map twice. Reference document note that The distribution of Chinook is limited to below the 5 meter falls located approximately 200 m upstream from the confluence with Narcosoli Creek. Second reference document seems to be a transferred FISS point and likely inaccurate. Downstream falls point is likely incorrect. Upstream falls point should have no Chinook upstream.
 356336020,1201,FALLS,f,USHU,BR,2021-12-31,,reference document notes falls 100 m from road restricting fish passage UTM 11 378200 5599300 as location of 10 m falls. Coho point should also be located here remove upstream point.
 360842858,0,FALLS,f,ZYMO,BR,2021-12-31,,Several fish studies indicate that this falls is not a barrier. Note of a 2 m falls that is passable have been mentioned but none that are 15 m high. Change falls height
 356353731,1598,FALLS,f,TAKL,BR,2021-12-31,,No falls in reference document. Falls do not exist. Known anadromous river. Falls can be removed.
@@ -140,3 +138,97 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 354151782,10,FALLS,f,COWN,SN,2023-04-17,local knowledge,any minor falls that may or may not be present is not a barrier
 356348405,74,SUBSURFACEFLOW,f,QUES,AL,2023-04-25,local knowledge,based on information provided by Bo and Jake at LDN workshop.
 356348405,144,SUBSURFACEFLOW,f,QUES,AL,2023-05-15,local knowledge,based on information provided by Bo and Jake at LDN workshop.
+354144429,4301,FALLS,f,TAHS,CWF - BR,2022-04-01,,falls removed 1981 though apparently still a partial barrier to PK and CM
+354151971,55,FALLS,f,VICT,CWF - BR,2022-04-01,,Fish transported above falls for >50 years
+354152763,499,FALLS,t,SALM,CWF - BR,2022-04-01,,Menzies Creek noted as salmon-bearing for first 1-Mile only.
+354152847,3068,FALLS,f,BRKS,CWF - BR,2022-04-01,,Catalogue of Salmon Streams notes spawners to 3 miles
+356050266,0,SUBSURFACEFLOW,t,LFRA,CWF - BR,2022-04-01,,Nothing in reference report to indicate exact location(s) of fish
+356155185,57,SUBSURFACEFLOW,f,CHWK,CWF - BR,2022-04-01,,"observations verified 2004, suspiciously large number of fry captured."
+356205565,0,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,appears legitimate
+356205674,566,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,appears to be legitimate
+356205974,0,SUBSURFACEFLOW,t,LFRA,CWF - BR,2022-04-01,,Nothing in reference report to indicate exact location(s) of fish
+356211448,11,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,appears legitimate. Inside a pump station though so habitat is not ideal
+356213010,0,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,appears to be legitimate
+356226195,0,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,appears legitimate
+356233653,40,SUBSURFACEFLOW,f,CHWK,CWF - BR,2022-04-01,,appears legitimate
+356238399,14,SUBSURFACEFLOW,f,CHWK,CWF - BR,2022-04-01,,observations appear legitimate. Noted as Boundary Road ditch
+356247428,421,FALLS,t,HARR,CWF - BR,2022-04-01,,"upstream CO point comes from RAB survey, which is generally unreliable. Other reports confirm impassable falls 450 m upstream from mouth,""RAB survey database point. More recent surveys confirm an impassable falls at 450 m"""
+356255306,10,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,Passage to these channels was restored in 2008 through BC Hydro's Bridge Coastal program
+356272726,15,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,"Legitimate capture but likely became entrained in dike system,""Channel access restored in 2012 (Wilson Farm)"""
+356272780,1355,FALLS,t,TAKL,CWF - BR,2021-12-31,,Photo of 6 m vertical bedrock falls confirms existence. Fish points can't be verified - per comm and old FISS map. Likely inaccurate.
+356285908,2343,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,cutthroat trout captured several hundred meters farther upstream in 2015 indicating sufficient flow
+356286446,0,SUBSURFACEFLOW,t,LFRA,CWF - BR,2022-04-01,,could not locate record but DFO catalogue of salmon streams shows all coho activity in mainstem and south of Highway 1
+356292469,8505,SUBSURFACEFLOW,f,CHWK,CWF - BR,2022-04-01,,"Reference document notes Chum, Pink, Chinook and Sockeye in Camp Slough. Changes to flows since then likely anthropogenic. Should probably include but no recent records to pull from"
+356293457,626,FALLS,t,SETN,CWF - BR,2021-12-31,,Point in database twice. Steelhead point from hatchery release
+356293457,707,FALLS,t,SETN,CWF - BR,2021-12-31,,Point in database twice. Steelhead point from hatchery release
+356307336,576,SUBSURFACEFLOW,f,THOM,CWF - BR,2022-04-01,,"side channel of mainstem river, connects on both sides,""arm of river cut off by rail but appears to be still connected on both ends. FWA missing line connecting upstream end to mainstem"""
+356313421,1080,SUBSURFACEFLOW,t,LFRA,CWF - BR,2022-04-01,,Can't verify but no records of fish on FHIIP/FISS maps
+356323164,723,FALLS,t,BOWR,CWF - BR,2021-12-31,,"Reference document notes a 10 m falls in 1st 2 km of stream, no fish captured above this point. No Chinook captured at all in Russian Creek."
+356325660,66,SUBSURFACEFLOW,f,USHU,CWF - BR,2022-04-01,,Fish points appear legitimate. Likely seasonally important
+356328804,5354,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,Appears legitimate.
+356333292,2115,FALLS,t,ADMS,CWF - BR,2021-12-31,,Reference document mentions Momich River/Cayenne Ck only generally. No point observations. Fish observations appear to be an error.
+356343437,6493,SUBSURFACEFLOW,t,FRCN,CWF - BR,2022-04-01,,can't find parent document but seems unlikely
+356347583,14677,FALLS,t,STUL,CWF - BR,2021-12-31,,"This was excluded in BC-wide assessment but appears to have not been corrected yet. No mention of coho in reference document,""Reference for CO point on Ocock Lake makes no mention of Coho. Fish point is an error."""
+356347721,3114,FALLS,t,MAHD,CWF - BR,2021-12-31,,No salmon points showing upstream from here. Ok as is
+356347721,4121,FALLS,t,MAHD,CWF - BR,2021-12-31,,No salmon points showing upstream from here. Ok as is
+356350046,13,SUBSURFACEFLOW,f,LFRA,CWF - BR,2022-04-01,,Likely holds enough water at certain times of year for coho use
+356350734,6648,FALLS,t,LFRA,CWF - BR,2021-12-31,,"Reference document is to DFO survey. Only reports authored by reference author from 1976, notes a 100 m falls blocking salmon passage. Likely user error entry into FISS.BCLKS-1242,""Reference file only notes CT. Another lake survey says all spawning occurs below lake, lake empties via 200' falls (report ID 35707)."""
+356351200,524,FALLS,t,TWAC,CWF - BR,2021-12-31,,No salmon points showing upstream from here. Ok as is
+356352191,8129,FALLS,t,LFRA,CWF - BR,2022-04-01,,"Reference docs in hard copy only but known falls restrict access to upper watershed, 3 m and 6 m impassable falls referenced in historic document. Fish points are likely outplants but reference document hard copy only. Would need to request from library to know for sure."
+356352467,3869,FALLS,t,LILL,CWF - BR,2021-12-31,,"Database error - reference document only notes Coho presence downstream of this point, near the airport"
+356354346,8876,FALLS,t,HARR,CWF - BR,2021-12-31,,DFO notes a canyon with no fish above 6 km but appears to be passable at some flows (1985). ARL 2002 notes an impassable falls at 1.5 km. Reference document of coho upstream in hard copy only (Surrey CFD-003).
+356356440,24718,SUBSURFACEFLOW,t,LFRA,CWF - BR,2022-04-01,,release database. Likely released to lake
+356357296,67524,FALLS,t,HORS,CWF - BR,2022-04-01,,Falls appear to be mapped slightly incorrectly. Falls are displayed upstream of these points in HabitatWizard
+356359317,430,FALLS,t,BBAR,CWF - BR,2021-12-31,,Fish are RAB database survey point. Likely inaccurate. No reference documents available to cross-check.
+356360680,2500,FALLS,t,LFRA,CWF - BR,2021-12-31,,inconclusive: No online references found. CFD-009 Surrey Or Creek watershed restoration - Level 1 assessment
+356360680,6173,FALLS,t,LFRA,CWF - BR,2021-12-31,,inconclusive: No online references found. CFD-009 Surrey Or Creek watershed restoration - Level 1 assessment
+356360680,6330,FALLS,t,LFRA,CWF - BR,2021-12-31,,inconclusive: No online references found. CFD-009 Surrey Or Creek watershed restoration - Level 1 assessment
+356360786,2224,FALLS,t,LILL,CWF - BR,2022-04-01,,"Nothing in reference report for this creek, Reference to Ministry files with handwritten note that anadromous present below falls and resident species above. No note of where falls are located. May be an associated map missing from files (92J/8?). Likely placed in error at wrong location on stream."
+356360855,324,FALLS,t,LFRA,CWF - BR,2021-12-31,,Kenyon Lake stocked in 1983. Falls are a legitimate barrier.
+356361456,14298,FALLS,t,SHUL,CWF - BR,2022-04-01,,only mention of fish distributions is migration barrier (falls). Falls location conflicting between 2 ref docs: 11.6 km or 14.6 km dep on reference
+356361456,14410,FALLS,t,SHUL,CWF - BR,2021-12-31,,Fish point reference document says anadromous passage restricted by falls at 14.6 km. Either fish point or falls are in the wrong location on map - seems to be fish points
+356361637,74030,FALLS,t,BRID,CWF - BR,2021-12-31,,Reference document is a field form that lumps steelhead and rainbow. Should be RB here.
+356361749,45743,FALLS,t,DEAD,CWF - BR,2021-12-31,,Most literature seem to indicate Reach 11 as upstream-most distribution for Steelhead (falls is at break of 10/11). Seems that fish points in Yard Ck are likely actually Yard Ck in SHUL watershed. Points in Snohoosh Lake don't seem to have a reference document. Other Steelhead points seem unreliable. I would keep this as a barrier
+356362728,1958,FALLS,t,MURT,CWF - BR,2021-12-31,,No salmon points showing upstream from here. Ok as is
+356362743,154194,FALLS,f,ADMS,CWF - BR,2022-04-01,,Multiple reference docs corroborate Coho spawning upstream of Tum Tum Lake. Falls noted as passable to Coho.
+356363034,13,FALLS,f,NARC,CWF - BR,2021-12-31,,]
+356363034,153,FALLS,t,NARC,CWF - BR,2021-12-31,,Same falls number on map twice. Reference document note that The distribution of Chinook is limited to below the 5 meter falls located approximately 200 m upstream from the confluence with Narcosoli Creek. Second reference document seems to be a transferred FISS point and likely inaccurate. Downstream falls point is likely incorrect. Upstream falls point should have no Chinook upstream.
+356363170,641,FALLS,f,HARR,CWF - BR,2022-04-01,,Could not find any indication of a falls here but a few reports note Coho presence
+356363534,43468,SUBSURFACEFLOW,f,NARC,CWF - BR,2022-04-01,,CH points appear legitimate. Known spawning location documented just downstream.
+356363534,43469,SUBSURFACEFLOW,f,NARC,CWF - BR,2022-04-01,,CH points appear legitimate. Known spawning location documented just downstream
+356363629,31170,FALLS,f,MORK,CWF - BR,2022-04-01,,"appears to be legitimate points, falls likely not a full barrier"
+356363629,33719,FALLS,t,MORK,CWF - BR,2021-12-31,,Noted in DFO report as being passable
+356363629,33959,FALLS,t,MORK,CWF - BR,2021-12-31,,Noted in DFO report as being passable
+356363629,34131,FALLS,t,MORK,CWF - BR,2021-12-31,,"Appears to be passable, based on further research"
+356363629,34780,FALLS,t,MORK,CWF - BR,2021-12-31,,This should be the upstream limit of anadromous migration on the river. Reference doc for Chinook point upstream notes an impassable falls at this location. Likely entered in error.
+356363814,51055,FALLS,t,COTR,CWF - BR,2021-12-31,,No salmon points showing upstream from here. Ok as is
+356364028,33599,FALLS,f,HARR,CWF - BR,2022-04-01,,Reference doc (catalogue of salmon streams) places falls at 6 km upstream of Chehalis Lk. Falls is incorrectly mapped at around 4 km upstream.
+356364051,46581,FALLS,t,HERR,CWF - BR,2021-12-31,,Reference document for Chinook points notes that Farmstead Creek and Muller Creek do not support salmon due to 60 ft falls on Herrick Ck at Mile 27.5. These fish points should not be here.
+356364214,10493,FALLS,t,LILL,CWF - BR,2022-04-01,,Nairn Falls blocks all anadromous fish passage
+356364259,513,FALLS,t,COTR,CWF - BR,2021-12-31,,"Based on Triton 1:20000 FFHI 1999, falls located 200 m upstream from mouth, Chinook use stream only downstream from this point. Chinook point is therefore in the wrong place on map."
+356364336,0,SUBSURFACEFLOW,f,CHWK,CWF - BR,2022-04-01,,"salmonids verified by multiple, recent sampling occasions"
+360562507,0,FALLS,t,LNAR,CWF - BR,2022-04-01,,"Can't locate point in HabitatWizard but HabitatWizard shows rock obstacle upstream of tributary, not at it."
+360644309,0,FALLS,t,LNAR,CWF - BR,2022-04-01,,No reference to these coordinates in reference doc
+360659433,0,SUBSURFACEFLOW,f,WORC,CWF - BR,2022-04-01,,spawning observed in this location
+360777422,1271,FALLS,t,BABL,CWF - BR,2021-12-31,,Reference documents for Coho points state there are no fish caught and stream is not suitable for fish. Appears fish points are errors.
+360800595,4872,FALLS,f,BABL,CWF - BR,2021-12-31,,"Two falls with same ID number. Reference doc places falls at 9U 690318, 6068411. Referenc e document for Sockeye point upstream makes no mention of where Sockeye are found in stream. This point should be removed."
+360801600,3857,FALLS,f,GRAI,CWF - BR,2022-04-01,,"243204 and 243207 appear to be upstream limit of fish passage for CO, PK. No indication of falls at mapped falls location. 243897 is probably inaccurate"
+360822087,4978,FALLS,t,BABR,CWF - BR,2021-12-31,,15 m falls confirmed. Coho point is likely in error (RAB survey point)
+360839123,6510,FALLS,t,LNAR,CWF - BR,2022-04-01,,RAB survey database but close enough to falls to assume it's an error in mapping
+360842858,916,FALLS,t,ZYMO,CWF - BR,2021-12-31,,"Appears to be a barrier. Some evidence of historic fish passage at some flows (1970s) but sampling in 90s indicates fish are no longer able to get up there, if they ever could before."
+360851168,3088,FALLS,t,LSKE,CWF - BR,2021-12-31,,No fish points upstream. Ok as-is.
+360867934,3823,FALLS,t,GRAI,CWF - BR,2022-04-01,,falls is upstream-most limit for salmon. Likely just mapped slightly wrong
+360872149,1697,FALLS,t,KLUM,CWF - BR,2021-12-31,,"Two falls with same ID number. Can't verify coho point upstream - RAB survey point. However, at least the lowermost falls exists and is impassable based on photos seen here: https://www.alltrails.com/explore/trail/canada/british-columbia/wesach-falls?mobileMap=false&ref=sidebar-static-map"
+360872149,1864,FALLS,t,KLUM,CWF - BR,2021-12-31,,"Two falls with same ID number. Can't verify coho point upstream - RAB survey point. However, at least the lowermost falls exists and is impassable based on photos seen here: https://www.alltrails.com/explore/trail/canada/british-columbia/wesach-falls?mobileMap=false&ref=sidebar-static-map"
+360872149,2691,FALLS,t,KLUM,CWF - BR,2021-12-31,,"Can't verify coho point upstream - RAB survey point. However, at least the lowermost falls exists and is impassable based on photos seen here: https://www.alltrails.com/explore/trail/canada/british-columbia/wesach-falls?mobileMap=false&ref=sidebar-static-map"
+360875756,780,FALLS,f,KITR,CWF - BR,2022-04-01,,"falls is mapped incorrectly. Should be at 9 534887, 5968732"
+360876838,3763,FALLS,t,BABR,CWF - BR,2022-04-01,,"Triton 1998 confirms that this falls is the upstream-most distribution of salmon. Fish point is from RAB survey so can't be verified, RAB survey database point. Could not be verified but impassable falls at 3.2 km confirmed"
+360877068,2765,FALLS,t,KLUM,CWF - BR,2021-12-31,,Can't verify coho point upstream - reference document is missing from Ministry library. Fish point likely an error.
+360877068,2924,FALLS,t,KLUM,CWF - BR,2021-12-31,,Can't verify coho point upstream - reference document is missing from Ministry library. Fish point likely an error.
+360879147,1313,FALLS,t,BULK,CWF - BR,2021-12-31,,No fish points upstream. Ok as-is.
+360879488,36869,FALLS,t,KLUM,CWF - BR,2021-12-31,,"Two falls with same number in this location. Inconclusive but RAB survey database for points just upstream of barrier likely wrong - probably placed here based on Catalogue of Salmon Streams, which places upstream-most fish point closer to the falls point. Not sure where ST point was determined from though.  Upstream-most fish points (SK, ST, CO) based on Kalum WRP report, which misquotes Catalogue of Salmon Streams diagram."
+360879488,36973,FALLS,t,KLUM,CWF - BR,2021-12-31,,"Two falls with same number in this location. Inconclusive but RAB survey database for points just upstream of barrier likely wrong - probably placed here based on Catalogue of Salmon Streams, which places upstream-most fish point closer to the falls point. Not sure where ST point was determined from though.  Upstream-most fish points (SK, ST, CO) based on Kalum WRP report, which misquotes Catalogue of Salmon Streams diagram."
+360883950,4060,FALLS,t,LNAR,CWF - BR,2022-04-01,,Above verified impassable falls. Likely an error.
+360886207,4127,FALLS,t,BABL,CWF - BR,2021-12-31,,Reference document notes falls is a definite barrier at 2.3 km. Sockeye fry observed in Reach 3 upstream are from an airlift program.
+360886269,4234,FALLS,t,BABL,CWF - BR,2021-12-31,,Reference document for Sockeye point makes only reference to Rainbow for this lake. Point is an error.
+360886269,6218,FALLS,t,BABL,CWF - BR,2021-12-31,,Reference document for Sockeye point makes only reference to Rainbow for this lake. Point is an error.

@@ -116,7 +116,8 @@ CREATE TABLE bcfishpass.user_barriers_definite_control
   reviewer_name text,
   review_date date,
   source text,
-  notes text
+  notes text,
+  primary key (blue_line_key, downstream_route_measure)
 );
 
 
