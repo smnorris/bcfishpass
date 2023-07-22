@@ -86,7 +86,8 @@ $PARALLEL \
 $PSQL -c "alter table bcfishpass.streams add column crossings_dnstr text[];"
 
 # add dam_dnstr flag
-$PSQL -c "alter table bcfishpass.streams add column dam_dnstr boolean;;"
+$PSQL -c "alter table bcfishpass.streams add column dam_dnstr_ind boolean;;"
+$PSQL -c "alter table bcfishpass.streams add column dam_hydro_dnstr_ind boolean;;"
 
 # create remediations/barriers table
 $PSQL -f sql/remediations_barriers.sql
@@ -106,7 +107,7 @@ $PARALLEL \
     :'wsg');\" | \
     $PSQL -v wsg={1}" ::: $WSGS
 # add a boolean remediation downstream column to streams table
-$PSQL -c "alter table bcfishpass.streams add column remediated_dnstr boolean;;"
+$PSQL -c "alter table bcfishpass.streams add column remediated_dnstr_ind boolean;;"
 
 # create table holding lists of observations upstream of individual stream segments
 # (this is convenience for field investigation and reporting, not an intput into the individual models)

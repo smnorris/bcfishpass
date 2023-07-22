@@ -32,8 +32,9 @@ insert into bcfishpass.streams_model_access (
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   crossings_dnstr,
-  remediated_dnstr,
-  dam_dnstr
+  remediated_dnstr_ind,
+  dam_dnstr_ind,
+  dam_hydro_dnstr_ind
 )
 select
    s.linear_feature_id,
@@ -92,11 +93,15 @@ select
    case
      when x.aggregated_crossings_id is not null then true
      else false
-   end as remediated_dnstr,
+   end as remediated_dnstr_ind,
    case
-     when array[ba.barriers_anthropogenic_dnstr[1]] && bd.barriers_dams_dnstr then true
+     when array[ba.barriers_anthropogenic_dnstr[1]] && bd.barriers_dams_dnstr then true   -- is the next downstream anth barrier a dam?
      else false
-   end as dam_dnstr
+   end as dam_dnstr_ind,
+   case
+     when array[ba.barriers_anthropogenic_dnstr[1]] && bdh.barriers_dams_hydro_dnstr then true -- is the next downstream anth barrier a hydro dam?
+     else false
+   end as dam_hydro_dnstr_ind
 from bcfishpass.streams s
 left outer join bcfishpass.streams_barriers_anthropogenic_dnstr ba on s.segmented_stream_id = ba.segmented_stream_id
 left outer join bcfishpass.streams_barriers_pscis_dnstr bp on s.segmented_stream_id = bp.segmented_stream_id

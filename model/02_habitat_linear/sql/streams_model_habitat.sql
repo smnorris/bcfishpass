@@ -3,17 +3,17 @@ with habitat as (
   select
     s.segmented_stream_id,
     case
-      when s.remediated_dnstr is true then 'REMEDIATED'          -- remediated crossing is downstream (with no additional barriers in between)
-      when s.dam_dnstr is true then 'DAM'                        -- a dam is downstream (with no additional barriers in between)
+      when s.remediated_dnstr_ind is true then 'REMEDIATED'          -- remediated crossing is downstream (with no additional barriers in between)
+      when s.dam_dnstr_ind is true then 'DAM'                        -- a dam is the next barrier downstream
       when
-        s.barriers_anthropogenic_dnstr is not null and           -- a pscis barrier is somewhere (anywhere) downstream
+        s.barriers_anthropogenic_dnstr is not null and           -- a pscis barrier is downstream
         s.barriers_pscis_dnstr is not null and
-        s.dam_dnstr is false
+        s.dam_dnstr_ind is false
       then 'ASSESSED'
       when
         s.barriers_anthropogenic_dnstr is not null and           -- a modelled barrier is downstream
         s.barriers_pscis_dnstr is null and
-        s.dam_dnstr is false
+        s.dam_dnstr_ind is false
       then 'MODELLED'
       when s.barriers_anthropogenic_dnstr is null then 'NONE'    -- no barriers exist downstream
 
@@ -81,8 +81,9 @@ insert into bcfishpass.streams_model_habitat (
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   crossings_dnstr,
-  dam_dnstr,
-  remediated_dnstr,
+  dam_dnstr_ind,
+  dam_hydro_dnstr_ind,
+  remediated_dnstr_ind,
   model_spawning_bt,
   model_spawning_ch,
   model_spawning_cm,
@@ -140,8 +141,9 @@ select
   s.obsrvtn_species_codes_upstr,
   s.species_codes_dnstr,
   s.crossings_dnstr,
-  s.dam_dnstr,
-  s.remediated_dnstr,
+  s.dam_dnstr_ind,
+  s.dam_hydro_dnstr_ind,
+  s.remediated_dnstr_ind,
   h.model_spawning_bt,
   h.model_spawning_ch,
   h.model_spawning_cm,
