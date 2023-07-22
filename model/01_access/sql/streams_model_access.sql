@@ -21,6 +21,8 @@ insert into bcfishpass.streams_model_access (
   geom,
   barriers_anthropogenic_dnstr,
   barriers_pscis_dnstr,
+  barriers_dams_dnstr,
+  barriers_dams_hydro_dnstr,
   barriers_bt_dnstr,
   barriers_ch_cm_co_pk_sk_dnstr,
   barriers_ct_dv_rb_dnstr,
@@ -30,9 +32,8 @@ insert into bcfishpass.streams_model_access (
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   crossings_dnstr,
-  dam_dnstr,
-  dam_hydro_dnstr,
-  remediated_dnstr
+  remediated_dnstr,
+  dam_dnstr
 )
 select
    s.linear_feature_id,
@@ -56,6 +57,8 @@ select
    s.geom,
    ba.barriers_anthropogenic_dnstr,  
    bp.barriers_pscis_dnstr,          
+   bd.barriers_dams_dnstr,
+   bdh.barriers_dams_hydro_dnstr,
    -- querying for barriers dnstr has to be on empty arrays rather than null - nulls are
    -- present in watershed groups where species does not occur
       case
@@ -87,17 +90,13 @@ select
    coalesce(od.species_codes_dnstr, array[]::text[]) as species_codes_dnstr,
    c.crossings_dnstr,
    case
-     when xd.aggregated_crossings_id is not null then true
+     when x.aggregated_crossings_id is not null then true
      else false
-   end as dam_dnstr,
+   end as remediated_dnstr,
    case
-     when xdh.aggregated_crossings_id is not null then true
+     when array[ba.barriers_anthropogenic_dnstr[1]] && bd.barriers_dams_dnstr then true
      else false
-   end as dam_hydro_dnstr,
-   case
-     when xr.aggregated_crossings_id is not null then true
-     else false
-   end as remediated_dnstr
+   end as dam_dnstr
 from bcfishpass.streams s
 left outer join bcfishpass.streams_barriers_anthropogenic_dnstr ba on s.segmented_stream_id = ba.segmented_stream_id
 left outer join bcfishpass.streams_barriers_pscis_dnstr bp on s.segmented_stream_id = bp.segmented_stream_id
@@ -117,8 +116,5 @@ left outer join bcfishpass.wsg_species_presence wsg_salmon on s.watershed_group_
 left outer join bcfishpass.wsg_species_presence wsg_ct_dv_rb on s.watershed_group_code = wsg_ct_dv_rb.watershed_group_code and (wsg_ct_dv_rb.ct is true or wsg_ct_dv_rb.dv is true or wsg_ct_dv_rb.rb is true)
 left outer join bcfishpass.wsg_species_presence wsg_st on s.watershed_group_code = wsg_st.watershed_group_code and wsg_st.st is true
 left outer join bcfishpass.wsg_species_presence wsg_wct on s.watershed_group_code = wsg_wct.watershed_group_code and wsg_wct.wct is true
-left outer join bcfishpass.crossings xd on bd.barriers_dams_dnstr[1] = xd.aggregated_crossings_id
-left outer join bcfishpass.crossings xdh on bdh.barriers_dams_hydro_dnstr[1] = xdh.aggregated_crossings_id
-left outer join bcfishpass.crossings xr on r.remediations_barriers_dnstr[1] = xr.aggregated_crossings_id and xr.pscis_status = 'REMEDIATED' and xr.pscis_status = 'PASSABLE'
-
+left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.aggregated_crossings_id and x.pscis_status = 'REMEDIATED' and x.pscis_status = 'PASSABLE'
 where s.watershed_group_code = :'wsg';

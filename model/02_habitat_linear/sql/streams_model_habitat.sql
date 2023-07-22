@@ -70,6 +70,8 @@ insert into bcfishpass.streams_model_habitat (
   mad_m3s,
   barriers_anthropogenic_dnstr,
   barriers_pscis_dnstr,
+  barriers_dams_dnstr,
+  barriers_dams_hydro_dnstr,
   barriers_bt_dnstr,
   barriers_ch_cm_co_pk_sk_dnstr,
   barriers_ct_dv_rb_dnstr,
@@ -80,7 +82,6 @@ insert into bcfishpass.streams_model_habitat (
   species_codes_dnstr,
   crossings_dnstr,
   dam_dnstr,
-  dam_hydro_dnstr,
   remediated_dnstr,
   model_spawning_bt,
   model_spawning_ch,
@@ -107,7 +108,7 @@ insert into bcfishpass.streams_model_habitat (
   mapping_code_salmon,
   geom
 )
-select 
+select
   s.linear_feature_id,
   s.edge_type,
   s.blue_line_key,
@@ -128,6 +129,8 @@ select
   s.mad_m3s,
   s.barriers_anthropogenic_dnstr,
   s.barriers_pscis_dnstr,
+  s.barriers_dams_dnstr,
+  s.barriers_dams_hydro_dnstr,
   s.barriers_bt_dnstr,
   s.barriers_ch_cm_co_pk_sk_dnstr,
   s.barriers_ct_dv_rb_dnstr,
@@ -138,7 +141,6 @@ select
   s.species_codes_dnstr,
   s.crossings_dnstr,
   s.dam_dnstr,
-  s.dam_hydro_dnstr,
   s.remediated_dnstr,
   h.model_spawning_bt,
   h.model_spawning_ch,
