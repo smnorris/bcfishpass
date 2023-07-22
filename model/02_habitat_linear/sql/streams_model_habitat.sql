@@ -3,21 +3,20 @@ with habitat as (
   select
     s.segmented_stream_id,
     case
-    when s.remediated_dnstr is true then 'REMEDIATED'     -- this must be first condition as others below can also be true
-    when s.barriers_anthropogenic_dnstr is null then 'NONE'    -- no barriers dnstr
-    when s.barriers_anthropogenic_dnstr is not null and   -- modelled barrier dnstr
-      s.barriers_pscis_dnstr is null and
-      s.barriers_dams_dnstr is null and
-      s.barriers_dams_hydro_dnstr is null then 'MODELLED'
-    when s.barriers_anthropogenic_dnstr is not null and   -- pscis barrier dnstr
-      s.barriers_pscis_dnstr is not null and
-      s.barriers_dams_dnstr is null and
-      s.barriers_dams_hydro_dnstr is null then 'ASSESSED'
-    when s.barriers_anthropogenic_dnstr is not null and   -- dam barrier dnstr
-      s.barriers_dams_dnstr is not null and
-      s.barriers_dams_hydro_dnstr is null then 'DAM'
-    when s.barriers_anthropogenic_dnstr is not null and   -- hydro dam barrier dnstr
-      s.barriers_dams_hydro_dnstr is not null then 'HYDRO'
+      when s.remediated_dnstr is true then 'REMEDIATED'          -- remediated crossing is downstream (with no additional barriers in between)
+      when s.dam_dnstr is true then 'DAM'                        -- a dam is downstream (with no additional barriers in between)
+      when
+        s.barriers_anthropogenic_dnstr is not null and           -- a pscis barrier is somewhere (anywhere) downstream
+        s.barriers_pscis_dnstr is not null and
+        s.dam_dnstr is false
+      then 'ASSESSED'
+      when
+        s.barriers_anthropogenic_dnstr is not null and           -- a modelled barrier is downstream
+        s.barriers_pscis_dnstr is null and
+        s.dam_dnstr is false
+      then 'MODELLED'
+      when s.barriers_anthropogenic_dnstr is null then 'NONE'    -- no barriers exist downstream
+
     end as mapping_code_barrier,
     case
       when s.feature_code = 'GA24850150' then 'INTERMITTENT'
@@ -71,8 +70,6 @@ insert into bcfishpass.streams_model_habitat (
   mad_m3s,
   barriers_anthropogenic_dnstr,
   barriers_pscis_dnstr,
-  barriers_dams_dnstr,
-  barriers_dams_hydro_dnstr,
   barriers_bt_dnstr,
   barriers_ch_cm_co_pk_sk_dnstr,
   barriers_ct_dv_rb_dnstr,
@@ -82,6 +79,8 @@ insert into bcfishpass.streams_model_habitat (
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   crossings_dnstr,
+  dam_dnstr,
+  dam_hydro_dnstr,
   remediated_dnstr,
   model_spawning_bt,
   model_spawning_ch,
@@ -129,8 +128,6 @@ select
   s.mad_m3s,
   s.barriers_anthropogenic_dnstr,
   s.barriers_pscis_dnstr,
-  s.barriers_dams_dnstr,
-  s.barriers_dams_hydro_dnstr,
   s.barriers_bt_dnstr,
   s.barriers_ch_cm_co_pk_sk_dnstr,
   s.barriers_ct_dv_rb_dnstr,
@@ -140,6 +137,8 @@ select
   s.obsrvtn_species_codes_upstr,
   s.species_codes_dnstr,
   s.crossings_dnstr,
+  s.dam_dnstr,
+  s.dam_hydro_dnstr,
   s.remediated_dnstr,
   h.model_spawning_bt,
   h.model_spawning_ch,

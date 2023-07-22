@@ -27,11 +27,11 @@ select
   array_to_string(barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
   array_to_string(barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
   array_to_string(barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
-  array_to_string(barriers_dams_dnstr, ';') as barriers_dams_dnstr,
-  array_to_string(barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
   array_to_string(crossings_dnstr, ';') as crossings_dnstr,
   array_to_string(obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
   array_to_string(obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  dam_dnstr,
+  dam_hydro_dnstr,
   remediated_dnstr,
   -- potential spawning
   case

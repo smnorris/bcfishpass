@@ -49,7 +49,7 @@ $PARALLEL \
 # INDEX 
 # -----
 # create tables holding lists of features that are downstream of individual stream segments
-for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
+for BARRIERTYPE in anthropogenic pscis $MODELS
 do
 	$PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
 	$PSQL -c "create table bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr (segmented_stream_id text primary key, barriers_"$BARRIERTYPE"_dnstr text[])"
@@ -66,7 +66,6 @@ do
 		$PSQL -v wsg={1}" ::: $WSGS
 	# might as well add corresponding _dnstr column to streams table
 	$PSQL -c "alter table bcfishpass.streams add column barriers_"$BARRIERTYPE"_dnstr text[];"
-
 done
 
 # also record all crossings dnsr
@@ -85,6 +84,40 @@ $PARALLEL \
     $PSQL -v wsg={1}" ::: $WSGS
 # add corresponding _dnstr column to streams table
 $PSQL -c "alter table bcfishpass.streams add column crossings_dnstr text[];"
+
+# record all dams downstream
+$PSQL -c "drop table if exists bcfishpass.streams_dams_dnstr";
+$PSQL -c "create table bcfishpass.streams_dams_dnstr (segmented_stream_id text primary key, dams_dnstr text[])"
+$PARALLEL \
+    "echo \"SELECT bcfishpass.load_dnstr(
+    'bcfishpass.streams',
+    'segmented_stream_id',
+    'bcfishpass.barriers_dams',
+    'barriers_dams_id',
+    'bcfishpass.streams_dams_dnstr',
+    'dams_dnstr',
+    'true',
+    :'wsg');\" | \
+    $PSQL -v wsg={1}" ::: $WSGS
+# add corresponding _dnstr column to streams table
+$PSQL -c "alter table bcfishpass.streams add column dam_dnstr boolean;"
+
+# record all hydro dams downstream
+$PSQL -c "drop table if exists bcfishpass.streams_dams_hydro_dnstr";
+$PSQL -c "create table bcfishpass.streams_dams_hydro_dnstr (segmented_stream_id text primary key, dams_hydro_dnstr text[])"
+$PARALLEL \
+    "echo \"SELECT bcfishpass.load_dnstr(
+    'bcfishpass.streams',
+    'segmented_stream_id',
+    'bcfishpass.barriers_dams_hydro',
+    'barriers_dams_hydro_id',
+    'bcfishpass.streams_dams_hydro_dnstr',
+    'dams_hydro_dnstr',
+    'true',
+    :'wsg');\" | \
+    $PSQL -v wsg={1}" ::: $WSGS
+# add corresponding _dnstr column to streams table
+$PSQL -c "alter table bcfishpass.streams add column dam_hydro_dnstr boolean;"
 
 # create remediations/barriers table
 $PSQL -f sql/remediations_barriers.sql
