@@ -62,9 +62,10 @@ select
    bdh.barriers_dams_hydro_dnstr,
    -- querying for barriers dnstr has to be on empty arrays rather than null - nulls are
    -- present in watershed groups where species does not occur
-      case
-     when bt.barriers_bt_dnstr = array[]::text[] then bt.barriers_bt_dnstr
+   case
+     when bt.barriers_bt_dnstr is not null then bt.barriers_bt_dnstr
      when bt.barriers_bt_dnstr is null and wsg_bt.watershed_group_code is not null then array[]::text[]
+     when bt.barriers_bt_dnstr is null and wsg_bt.watershed_group_code is null then null
    end as barriers_bt_dnstr,
    case
      when salmon.barriers_ch_cm_co_pk_sk_dnstr is not null then salmon.barriers_ch_cm_co_pk_sk_dnstr
