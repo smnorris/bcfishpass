@@ -1,47 +1,22 @@
-with obs_upstr as
-(
-  select
-    b.barriers_ch_cm_co_pk_sk_id as barrier_id,
-    b.barrier_type,
-    b.blue_line_key,
-    b.downstream_route_measure,
-    b.watershed_group_code,
-    unnest(o.species_codes) as spp,
-    unnest(o.observation_ids) as obs,
-    unnest(o.observation_dates) as obs_dt
-  from bcfishpass.barriers_ch_cm_co_pk_sk b
-  inner join bcfishpass.observations o
-  on fwa_upstream(
-        b.blue_line_key,
-        b.downstream_route_measure,
-        b.wscode_ltree,
-        b.localcode_ltree,
-        o.blue_line_key,
-        o.downstream_route_measure,
-        o.wscode_ltree,
-        o.localcode_ltree,
-        false,
-        1
-      )
-    and b.watershed_group_code = o.watershed_group_code
-  where o.species_codes && array['CH','CM','CO','PK','SK']
-)
-
 select
-  barrier_id,
-  barrier_type,
-  blue_line_key,
-  downstream_route_measure,
-  watershed_group_code,
-  count(obs) as n_observations,
-  array_agg(obs) as observation_ids,
-  array_agg(spp) as species_codes,
-  array_agg(obs_dt) as observation_dates
-from obs_upstr
-group by
-  barrier_id,
-  barrier_type,
-  blue_line_key,
-  downstream_route_measure,
-  watershed_group_code
-order by count(obs) desc;
+  b.barriers_ch_cm_co_pk_sk_id,
+  b.barrier_type,
+  b.blue_line_key,
+  b.downstream_route_measure,
+  b.watershed_group_code,
+  count(*) as n_observations,
+  array_agg(o.fish_observation_point_id) as fish_observation_point_id,
+  array_agg(o.species_code) as species_codes,
+  array_agg(o.observation_date) as observation_dates
+from bcfishpass.barriers_ch_cm_co_pk_sk b
+inner join bcfishpass.observations_vw o on
+ fwa_upstream(
+   b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
+   o.blue_line_key, o.downstream_route_measure, o.wscode_ltree, o.localcode_ltree)
+where o.species_code in ('CH','CM','CO','PK','SK')
+group by b.barriers_ch_cm_co_pk_sk_id,
+  b.barrier_type,
+  b.blue_line_key,
+  b.downstream_route_measure,
+  b.watershed_group_code
+order by barriers_ch_cm_co_pk_sk_id;

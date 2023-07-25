@@ -3,9 +3,9 @@ select * from
   a.species_code,
   a.fish_observation_point_id,
   a.observation_date,
-  a.agency_name,
-  a.source,
-  a.source_ref,
+  o.agency_name,
+  o.source,
+  o.source_ref,
   --array_agg(DISTINCT e.barriers_gradient_20_id) as barriers_gradient_20_dnstr,
   count(DISTINCT e.barriers_gradient_20_id) as n_barriers_gradient_20_dnstr,
   --array_agg(DISTINCT f.barriers_gradient_25_id) as barriers_gradient_25_dnstr,
@@ -14,7 +14,7 @@ select * from
   count(DISTINCT g.barriers_gradient_30_id) as n_barriers_gradient_30_dnstr,
   --array_agg(DISTINCT h.barriers_falls_id) as barriers_falls_dnstr,
   count(DISTINCT h.barriers_falls_id) as n_barriers_falls_dnstr
-FROM bcfishobs.fiss_fish_obsrvtn_events_vw a
+FROM bcfishpass.observations_vw a
 LEFT OUTER JOIN bcfishpass.barriers_gradient_20 e
 ON FWA_Downstream(
     a.blue_line_key,
@@ -67,13 +67,15 @@ ON FWA_Downstream(
     True,
     1
 )
+inner join whse_fish.fiss_fish_obsrvtn_pnt_sp o
+on a.fish_observation_point_id = o.fish_observation_point_id
 WHERE a.species_code = 'ST'
 GROUP BY a.species_code,
   a.fish_observation_point_id,
   a.observation_date,
-  a.agency_name,
-  a.source,
-  a.source_ref
+  o.agency_name,
+  o.source,
+  o.source_ref
 ) as f
 WHERE 
   n_barriers_gradient_20_dnstr >= 1 or

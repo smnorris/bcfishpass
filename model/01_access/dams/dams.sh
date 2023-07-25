@@ -29,6 +29,6 @@ psql --csv -c "select
   a.dam_name_en
 from cabd.dams a
 left join bcfishpass.dams b
-on a.cabd_id = b.dam_id
+on a.cabd_id::text = b.dam_id
 where b.dam_id is null
 order by a.cabd_id;" > dams_not_matched_to_streams.csv

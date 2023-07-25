@@ -2,6 +2,8 @@
 
 BC dam locations and barrier status have been compiled from many sources by the Canadian Wildlife Federation into the [Canadian Aquatic Barrier Database (CABD)](https://aquaticbarriers.ca). Dam features for bcfishpass are taken directly from the CABD.
 
+Also included are temporary placeholders for downstream USA dams that are barriers to fish passage (cannot currently be matched to FWA streams)
+
 
 ## Usage
 

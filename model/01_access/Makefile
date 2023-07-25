@@ -3,8 +3,8 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
-# process only watershed groups listed in parameters
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+# process all watershed groups
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
 # define the make targets that flag when the table has been built
 SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
@@ -13,7 +13,7 @@ SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
 
-all: .make/model_access
+all: .make/qa
 
 clean: 
 	rm -Rf .make
@@ -122,7 +122,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)
 	# clear the table
 	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"	
-	# load all features for given spp scenario to barrier table, for all groups listed in parameters
+	# load all features for given spp scenario to barrier table, for all groups
 	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG)
 	# index barriers downstream
 	$(PSQL) -c "drop table if exists bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
@@ -220,5 +220,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
 .make/model_access: $(ACCESS_MODELS) .make/index_crossings
 	./model_access.sh
+	touch $@
+
+.make/qa: .make/model_access
 	cd qa; ./qa.sh
 	touch $@
