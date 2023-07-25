@@ -20,12 +20,12 @@ See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
 ## General requirements
 
 - bash
-- GDAL (tested with v3.6.2)
-- a PostgreSQL / PostGIS database (tested with v14/v3.3.2)
+- GDAL (tested with v3.6)
+- a PostgreSQL / PostGIS database (tested with v14/v3.3)
 - Python (tested with v3.11.0)
-- [bcdata](https://github.com/smnorris/bcdata) (v0.7.6)
-- [fwapg](https://github.com/smnorris/fwapg) (v0.4.0)
-- [bcfishobs](https://github.com/smnorris/bcfishobs) (v0.1.1)
+- [bcdata](https://github.com/smnorris/bcdata)
+- [fwapg](https://github.com/smnorris/fwapg)
+- [bcfishobs](https://github.com/smnorris/bcfishobs)
 
 
 ## Setup
