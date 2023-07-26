@@ -3550,3 +3550,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198016,14000566,,MORR,MW,On direct tributary to Thautil River mainstem vs. trib to trib. Coordinates for incorrect modelled crossing was used in pscis submission.
 198380,,,BULK,SN,PSCIS data entry error. Crossing should be deleted
 125345,16602819,,PARS,MW,"Matched to closest modelled crossing. Crossing is on tributary to Parsnip River, downstream of railroad PSCIS crossing 57687."
+4612,,,ALBN,SN,unmapped trib
+4614,,,ALBN,SN,unmapped trib
+198347,,,TSIT,SN,unmapped trib
+102748,,,HOLB,SN,unmapped trib
