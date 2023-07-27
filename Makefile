@@ -158,15 +158,8 @@ model/discharge/.make/discharge:
 	cd model/habitat_linear; ./habitat_linear.sh
 	touch $@
 
-# -----
-# CROSSING STATS
-# add various columns holding upstream/downstream metrics to crossings table and barriers_anthropogenic
-# -----
-.make/crossing_stats: .make/habitat_linear \
-	reports/crossings/sql/point_report_columns.sql \
-	reports/crossings/sql/point_report.sql \
-	reports/crossings/sql/point_report_obs_belowupstrbarriers.sql \
-	reports/crossings/sql/all_spawningrearing_per_barrier.sql
+
+.make/crossing_stats:
 	# todo - optimize below to write to temp tables rather than applying updates
 	
 	# run report per watershed group on barriers_anthropogenic
@@ -213,11 +206,3 @@ model/discharge/.make/discharge:
 	$(PSQL) -c "UPDATE bcfishpass.crossings SET barriers_anthropogenic_upstr_count = array_length(barriers_anthropogenic_upstr, 1) WHERE barriers_anthropogenic_upstr IS NOT NULL";
 	
 	touch $@
-
-# -----
-# LATERAL HABITAT MODEL
-# -----
-model/habitat_lateral/data/habitat_lateral.tif: .make/habitat_linear \
-	.make/crossing_stats
-	cd model/habitat_lateral; make .make/habitat_lateral
-
