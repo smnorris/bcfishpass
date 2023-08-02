@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; bcfishpass v0.1.dev2 documentation</title>
+  <title>Linear habitat model &mdash; bcfishpass v0.1.dev2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -44,9 +44,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_background.html">Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_model_access.html">Access model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linear habitat model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_example_use_cases.html">Sample use case scenarios</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_data_dictionary.html">Data Dictionary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_credits.html">Credits</a></li>
@@ -66,7 +67,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Linear habitat model</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/03_model_habitat_linear.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,7 +77,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
+  <section id="linear-habitat-model">
+<span id="linear-habitat"></span><h1>Linear habitat model<a class="headerlink" href="#linear-habitat-model" title="Permalink to this heading"></a></h1>
+<p>Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation, the amount of usable spawning or rearing habitat is of greater interest than the amount of corridor habitat. In addition to modelling barriers to fish passage, <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> models the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).</p>
+<p>Linear habitat IP modelling is currently based on:</p>
+<ul class="simple">
+<li><p>channel width or discharge (depending on modelling requirments and/or data availability)</p></li>
+<li><p>stream gradient</p></li>
+<li><p>connectivity (rearing streams must be connected to spawning streams)</p></li>
+<li><p>other species specific criteria</p></li>
+</ul>
+</section>
+
 
            </div>
           </div>
