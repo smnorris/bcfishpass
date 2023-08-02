@@ -58,14 +58,10 @@ All scripts presume that the `DATABASE_URL` environment variable points to your 
 
 Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
 
-With `fwapg` and `bcfishobs` loaded to your database, set up the `bcfishpass` schema/tables/functions:
-
-    cd db; ./setup.sh
-
 
 ## Usage
 
-To build all models:
+With `fwapg` and `bcfishobs` loaded to your database, build `bcfishpass`:
 
     make
 
