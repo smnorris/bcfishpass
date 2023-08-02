@@ -3554,3 +3554,5 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 4614,,,ALBN,SN,unmapped trib
 198347,,,TSIT,SN,unmapped trib
 102748,,,HOLB,SN,unmapped trib
+57701,,,PARS,MW,"Drop this crossing, duplicate of PSCIS crossing 124963."
+124963,16603169,,PARS,MW,Match crossing manually to force this crossing to be retained rather than duplicate.
