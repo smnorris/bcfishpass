@@ -11,6 +11,15 @@ PARALLEL="parallel --halt now,fail=1 --jobs 4 --no-run-if-empty"
 MODELS=$(ls sql/model_access*.sql | sed -e "s/sql\/model_access_//" | sed -e "s/.sql//")
 
 # -----
+# download pre-computed precip/discharge/channel width and load to db
+# -----
+mkdir -p data
+wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/channel_width.csv
+wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/mean_annual_precip.csv
+wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/discharge.csv
+$PSQL -f sql/load_map_mad_cw.sql
+
+# -----
 # LOAD STREAMS
 # -----
 # clear streams table and load data from FWA
