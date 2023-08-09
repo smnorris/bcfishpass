@@ -78,6 +78,7 @@ SELECT
 FROM bcfishpass.streams s
 INNER JOIN manual_habitat_class h
 ON s.blue_line_key = h.blue_line_key
+-- note that this join works because streams are already segmented at the endpoints
 AND ROUND(s.downstream_route_measure::numeric) >= ROUND(h.downstream_route_measure::numeric)
 AND ROUND(s.upstream_route_measure::numeric) <= ROUND(h.upstream_route_measure::numeric)
 GROUP BY segmented_stream_id
