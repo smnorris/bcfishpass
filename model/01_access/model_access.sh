@@ -25,7 +25,7 @@ cd ../02_habitat_linear
 mkdir -p precipitation/.make
 mkdir -p channel_width/.make
 mkdir -p discharge/.make
-make -t precipitation/.make/precipitation
+make -t precipitation/.make/precip
 make -t channel_width/.make/channel_width
 make -t discharge/.make/discharge
 # -------------------------------------------------------------------------------------
