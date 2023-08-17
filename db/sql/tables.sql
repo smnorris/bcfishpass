@@ -163,7 +163,7 @@ CREATE TABLE bcfishpass.user_habitat_classification
   review_date date,
   source text,
   notes text,
-  PRIMARY KEY (blue_line_key, downstream_route_measure, species_code, habitat_type)
+  PRIMARY KEY (blue_line_key, downstream_route_measure, upstream_route_measure, species_code, habitat_type)
 );
 
 
