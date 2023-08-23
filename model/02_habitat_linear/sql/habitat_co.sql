@@ -46,7 +46,7 @@ model AS
   INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
   WHERE
-    p.ch is true AND
+    p.co is true AND
     s.watershed_group_code = :'wsg' AND
     -- streams and rivers only
     (
