@@ -18,6 +18,7 @@ column,description
 ``barriers_anthropogenic_dnstr``,IDs of anthropogenic barriers downstream
 ``barriers_pscis_dnstr``,IDs of assessed PSCIS barriers downstream
 ``barriers_dams_dnstr``,IDs of CABD dams downstream noted as barriers
-``barriers_dams_hydro_dnstr``,IDs of CABD hydroelectricity dams downstream noted as barriers
-``remediated_dnstr``,IDs of remediated PSCIS crossings downstream
+``dam_dnstr_ind``,Indicates if a dam is the first barrier downstream of the stream
+``dam_hydro_dnstr_ind``,Indicates if a hydro dam is the first barrier downstream of the stream
+``remediated_dnstr_ind``,Indicates if a remediation is present downstream of the stream and before any additional barriers
 ``geom``,The point geometry associated with the feature

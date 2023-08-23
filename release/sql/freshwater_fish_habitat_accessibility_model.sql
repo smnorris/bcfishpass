@@ -59,8 +59,9 @@ select
   array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
   array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
   array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
-  array_to_string(s.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
-  s.remediated_dnstr,
+  s.dam_dnstr_ind,
+  s.dam_hydro_dnstr_ind,
+  s.remediated_dnstr_ind,
   s.geom
 from bcfishpass.streams s
 left outer join observations o
@@ -125,8 +126,9 @@ select
   array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
   array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
   array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
-  array_to_string(s.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
-  s.remediated_dnstr,
+  s.dam_dnstr_ind,
+  s.dam_hydro_dnstr_ind,
+  s.remediated_dnstr_ind,
   s.geom
 from bcfishpass.streams s
 left outer join observations o
