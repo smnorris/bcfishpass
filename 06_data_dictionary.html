@@ -12,11 +12,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7bed0d46"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -92,9 +92,9 @@
            <div itemprop="articleBody">
              
   <section id="data-dictionary">
-<h1>Data Dictionary<a class="headerlink" href="#data-dictionary" title="Permalink to this heading"></a></h1>
+<h1>Data Dictionary<a class="headerlink" href="#data-dictionary" title="Link to this heading"></a></h1>
 <section id="freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead">
-<h2>Freshwater Fish Habitat Accessibility MODEL - Pacific Salmon and Steelhead<a class="headerlink" href="#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead" title="Permalink to this heading"></a></h2>
+<h2>Freshwater Fish Habitat Accessibility MODEL - Pacific Salmon and Steelhead<a class="headerlink" href="#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead" title="Link to this heading"></a></h2>
 <p>A weekly bcfishpass data extract of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is available for download as a zipped geopackage:</p>
 <p><a class="reference external" href="https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip">https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip</a>.</p>
 <p>The models included in this distribution are generated as described in the <a class="reference internal" href="02_model_access.html#access"><span class="std std-ref">access model section</span></a>, with the following parameters:</p>
@@ -105,7 +105,7 @@
 </ul>
 <p>Tables/layers included in the distribution are:</p>
 <section id="barriers-falls">
-<h3>barriers_falls<a class="headerlink" href="#barriers-falls" title="Permalink to this heading"></a></h3>
+<h3>barriers_falls<a class="headerlink" href="#barriers-falls" title="Link to this heading"></a></h3>
 <p>Point locations of waterfalls that are likely to be barriers to fish passage.
 Features determined to be passable by expert/local input are not included.</p>
 <table class="docutils align-default">
@@ -152,7 +152,7 @@ Features determined to be passable by expert/local input are not included.</p>
 </table>
 </section>
 <section id="barriers-salmon">
-<h3>barriers_salmon<a class="headerlink" href="#barriers-salmon" title="Permalink to this heading"></a></h3>
+<h3>barriers_salmon<a class="headerlink" href="#barriers-salmon" title="Link to this heading"></a></h3>
 <p>Locations of natural barriers to salmon (Chinook, Chum, Coho, Pink, Sockeye) migration
 with no other natural barriers downstream, and less than 5 observations of salmon
 or steelhead upstream since January 01, 1990.</p>
@@ -205,7 +205,7 @@ misc user supplied barriers.</p>
 </table>
 </section>
 <section id="barriers-steelhead">
-<h3>barriers_steelhead<a class="headerlink" href="#barriers-steelhead" title="Permalink to this heading"></a></h3>
+<h3>barriers_steelhead<a class="headerlink" href="#barriers-steelhead" title="Link to this heading"></a></h3>
 <p>Locations of natural barriers to steelhead migration with no other natural barriers
 downstream, and less than 5 observations of salmon or steelhead upstream since January
 01, 1990. Includes waterfalls, subsurface flow, gradient barriers of 20% and greater,
@@ -257,7 +257,7 @@ and user supplied misc barriers.</p>
 </table>
 </section>
 <section id="barriers-subsurfaceflow">
-<h3>barriers_subsurfaceflow<a class="headerlink" href="#barriers-subsurfaceflow" title="Permalink to this heading"></a></h3>
+<h3>barriers_subsurfaceflow<a class="headerlink" href="#barriers-subsurfaceflow" title="Link to this heading"></a></h3>
 <p>Point locations of subsurface flow derived from the FWA stream network (<code class="docutils literal notranslate"><span class="pre">where</span>
 <span class="pre">edge_type</span> <span class="pre">in</span> <span class="pre">(1410,</span> <span class="pre">1425)</span></code>). Note that <em>all</em> locations of subsurface flow are included,
 not just those used in the included modelling.</p>
@@ -305,7 +305,7 @@ not just those used in the included modelling.</p>
 </table>
 </section>
 <section id="crossings">
-<h3>crossings<a class="headerlink" href="#crossings" title="Permalink to this heading"></a></h3>
+<h3>crossings<a class="headerlink" href="#crossings" title="Link to this heading"></a></h3>
 <p>Aggregated stream crossing locations.  Features are aggregated from:</p>
 <ul class="simple">
 <li><p>PSCIS stream crossings (where possible to match to an FWA stream)</p></li>
@@ -700,7 +700,7 @@ not just those used in the included modelling.</p>
 </table>
 </section>
 <section id="gradient-barriers">
-<h3>gradient_barriers<a class="headerlink" href="#gradient-barriers" title="Permalink to this heading"></a></h3>
+<h3>gradient_barriers<a class="headerlink" href="#gradient-barriers" title="Link to this heading"></a></h3>
 <p>Locations of potential <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barriers</span></a>.
 Locations where a stream’s slope exceeds 5, 10, 15, 20, 25, and 30% for at least
 100m upstream of the point location are included.
@@ -747,7 +747,7 @@ those used in the included modelling.</p>
 </table>
 </section>
 <section id="model-access-salmon">
-<h3>model_access_salmon<a class="headerlink" href="#model-access-salmon" title="Permalink to this heading"></a></h3>
+<h3>model_access_salmon<a class="headerlink" href="#model-access-salmon" title="Link to this heading"></a></h3>
 <p>All FWA stream downstream of points included in <cite>barriers_salmon</cite>.  In the absence
 of anthropogenic barriers, all pacific salmon could potentially access all the streams
 included (presuming all else is equal and adequate flow is present in the stream).</p>
@@ -815,20 +815,23 @@ included (presuming all else is equal and adequate flow is present in the stream
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_dnstr</span></code></p></td>
 <td><p>IDs of CABD dams downstream noted as barriers</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_hydro_dnstr</span></code></p></td>
-<td><p>IDs of CABD hydroelectricity dams downstream noted as barriers</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dam_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a dam is the first barrier downstream of the stream</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">remediated_dnstr</span></code></p></td>
-<td><p>IDs of remediated PSCIS crossings downstream</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dam_hydro_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a hydro dam is the first barrier downstream of the stream</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">remediated_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a remediation is present downstream of the stream and before any additional barriers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
 <td><p>The point geometry associated with the feature</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="model-access-steelhead">
-<h3>model_access_steelhead<a class="headerlink" href="#model-access-steelhead" title="Permalink to this heading"></a></h3>
+<h3>model_access_steelhead<a class="headerlink" href="#model-access-steelhead" title="Link to this heading"></a></h3>
 <p>All FWA stream downstream of points included in <cite>barriers_steelhead</cite>.  In the absence
 of anthropogenic barriers, steelhead could potentially access all the streams included
 (presuming all else is equal and adequate flow is present in the stream).</p>
@@ -896,20 +899,23 @@ of anthropogenic barriers, steelhead could potentially access all the streams in
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_dnstr</span></code></p></td>
 <td><p>IDs of CABD dams downstream noted as barriers</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_hydro_dnstr</span></code></p></td>
-<td><p>IDs of CABD hydroelectricity dams downstream noted as barriers</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dam_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a dam is the first barrier downstream of the stream</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">remediated_dnstr</span></code></p></td>
-<td><p>IDs of remediated PSCIS crossings downstream</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dam_hydro_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a hydro dam is the first barrier downstream of the stream</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">remediated_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a remediation is present downstream of the stream and before any additional barriers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
 <td><p>The point geometry associated with the feature</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="observations">
-<h3>observations<a class="headerlink" href="#observations" title="Permalink to this heading"></a></h3>
+<h3>observations<a class="headerlink" href="#observations" title="Link to this heading"></a></h3>
 <p>Locations (on the FWA stream network) of known salmon and steelhead observations
 used to generate the modelling. Derived from <a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/known-bc-fish-observations-and-bc-fish-distributions">Known BC Fish Observations</a>
 by <a class="reference external" href="https://github.com/smnorris/bcfishobs">bcfishobs</a>.</p>

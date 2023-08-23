@@ -12,11 +12,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7bed0d46"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -101,10 +101,10 @@
            <div itemprop="articleBody">
              
   <section id="access-model">
-<span id="access"></span><h1>Access model<a class="headerlink" href="#access-model" title="Permalink to this heading"></a></h1>
+<span id="access"></span><h1>Access model<a class="headerlink" href="#access-model" title="Link to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species. The processing steps involved are:</p>
 <section id="collect-known-natural-barriers">
-<h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Permalink to this heading"></a></h2>
+<h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Link to this heading"></a></h2>
 <p>Collect known natural barriers: waterfalls 5m in height or more, subsurface flow, and miscellaneous known barriers from expert input:</p>
 <table class="docutils align-default">
 <thead>
@@ -135,23 +135,23 @@
 </table>
 </section>
 <section id="generate-gradient-barriers">
-<span id="gradient-barriers"></span><h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Permalink to this heading"></a></h2>
+<span id="gradient-barriers"></span><h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Link to this heading"></a></h2>
 <p>FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure <em>relative</em> elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.</p>
 <p>To identify locations where a stream’s slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code>) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential ‘gradient barrier’.</p>
 <p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> scripts create potential gradient barriers at a number of default gradients, the threshold used for any
 given model is species dependent.</p>
 </section>
 <section id="filter-natural-barriers">
-<h2>3. Filter natural barriers<a class="headerlink" href="#filter-natural-barriers" title="Permalink to this heading"></a></h2>
+<h2>3. Filter natural barriers<a class="headerlink" href="#filter-natural-barriers" title="Link to this heading"></a></h2>
 <p>For anadromous species, natural barriers downstream of <a class="reference external" href="https://github.com/smnorris/bcfishobs">Known Fish Observations</a> are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead assume all natural barrier features with 5 or more observations upstream since 1990 are not currently barriers to fish passage.</p>
 <p>For resident species, models generally remove any natural barrier below an observation.</p>
 </section>
 <section id="identify-stream-downstream-of-all-natural-barriers">
-<h2>4. Identify stream downstream of all natural barriers<a class="headerlink" href="#identify-stream-downstream-of-all-natural-barriers" title="Permalink to this heading"></a></h2>
+<h2>4. Identify stream downstream of all natural barriers<a class="headerlink" href="#identify-stream-downstream-of-all-natural-barriers" title="Link to this heading"></a></h2>
 <p>Watercourses downstream of all natural barriers to a given species can be considered “potentially accessible” to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present (presuming all else is equal and adequate flow is present in the stream).</p>
 </section>
 <section id="collect-known-anthropogenic-barriers">
-<h2>5. Collect known anthropogenic barriers<a class="headerlink" href="#collect-known-anthropogenic-barriers" title="Permalink to this heading"></a></h2>
+<h2>5. Collect known anthropogenic barriers<a class="headerlink" href="#collect-known-anthropogenic-barriers" title="Link to this heading"></a></h2>
 <p>Dams, assessed PSCIS barriers and expert/user identified barriers are collected from these sources and loaded to the database:</p>
 <table class="docutils align-default">
 <thead>
@@ -173,10 +173,10 @@ given model is species dependent.</p>
 </table>
 </section>
 <section id="model-potential-anthropogenic-barriers">
-<h2>6. Model potential anthropogenic barriers<a class="headerlink" href="#model-potential-anthropogenic-barriers" title="Permalink to this heading"></a></h2>
+<h2>6. Model potential anthropogenic barriers<a class="headerlink" href="#model-potential-anthropogenic-barriers" title="Link to this heading"></a></h2>
 <p>Potential anthropogenic barriers (closed bottom structures, ie culverts) are identified by mapping intersections of FWA streams and linear infrastructure (roads, rail lines, major trails). This set of potential barriers is filtered, removing locations of known bridge structures and locations where a open bottom/bridge structure is presumed to exist.</p>
 <section id="a-download-linear-infrastructure">
-<h3>a. Download linear infrastructure<a class="headerlink" href="#a-download-linear-infrastructure" title="Permalink to this heading"></a></h3>
+<h3>a. Download linear infrastructure<a class="headerlink" href="#a-download-linear-infrastructure" title="Link to this heading"></a></h3>
 <p>Road and railway features are downloaded from DataBC. Features used to generate stream crossings are defined by the queries below. The queries attempt to extract road and railway features only where the built feature type is likely to include a stream crossing structure.</p>
 <table class="docutils align-default">
 <thead>
@@ -204,7 +204,7 @@ given model is species dependent.</p>
 </table>
 </section>
 <section id="b-overlay-and-de-duplicate">
-<h3>b. Overlay and de-duplicate<a class="headerlink" href="#b-overlay-and-de-duplicate" title="Permalink to this heading"></a></h3>
+<h3>b. Overlay and de-duplicate<a class="headerlink" href="#b-overlay-and-de-duplicate" title="Link to this heading"></a></h3>
 <p>Intersection points of the stream and road features are created. Because intersections can occur at road intersections / stream confluences where only one structure is likely to exist, crossings (on the same stream) are de-duplicated using several data source specific tolerances:</p>
 <ul class="simple">
 <li><p>merge DRA crossings on freeways/highways with a 30m tolerance</p></li>
@@ -218,7 +218,7 @@ given model is species dependent.</p>
 <p>After same-source data crossings are merged, all crossings are de-duplicated using a 10m tolerance across all (road) data sources (railway crossings are not merged with the road sources). The location of a given output crossing corresponds to the location from the highest priority dataset, in this order of decreasing priority: DRA, FTEN, OGC permits, OGC permits pre2006. Despite the removal of duplicates, the unique identifier for each source road within 10m of a crossing is retained, allowing all crossings to be linked back to all source road datasets that apply.</p>
 </section>
 <section id="c-identify-open-bottom-structures">
-<h3>c. Identify open bottom structures<a class="headerlink" href="#c-identify-open-bottom-structures" title="Permalink to this heading"></a></h3>
+<h3>c. Identify open bottom structures<a class="headerlink" href="#c-identify-open-bottom-structures" title="Link to this heading"></a></h3>
 <p>Modelled crossings are created at all intersections, but open bottom structures (bridges) are presumed to be passable. Open bottom structures are identified via these data sources and properties:</p>
 <table class="docutils align-default">
 <thead>
@@ -249,13 +249,13 @@ given model is species dependent.</p>
 </table>
 </section>
 <section id="d-manually-qa-potential-barriers">
-<h3>d. Manually QA potential barriers<a class="headerlink" href="#d-manually-qa-potential-barriers" title="Permalink to this heading"></a></h3>
+<h3>d. Manually QA potential barriers<a class="headerlink" href="#d-manually-qa-potential-barriers" title="Link to this heading"></a></h3>
 <p>While the scripts attempt to identify crossings with open bottom structures based on above rules, many more exist on the landscape. Manual review of commonly available satellite imagery (Google/Bing/ESRI) at crossing sites can often reveal if a bridge is present (and thus presumed to be passable). Where review has been done, the crossing is removed from the potential barriers dataset only if the imagery clearly shows a bridge or that the crossing does not exist (road or stream not present). Where the imagery is not definitive, the site is retained as a potential barrier.</p>
 <p>Note that manual QA/QC of the potential barriers dataset has been project based - some areas have been reviewed, many have not. To date, review has primarily been along rail corridors and at very high impact sites. <em>Before planning field visits, further review of potential barriers is always advised</em>.</p>
 </section>
 </section>
 <section id="report">
-<h2>7. Report<a class="headerlink" href="#report" title="Permalink to this heading"></a></h2>
+<h2>7. Report<a class="headerlink" href="#report" title="Link to this heading"></a></h2>
 <p>For a given area of interest, modelling reports on:</p>
 <ul class="simple">
 <li><p>total length of stream potentially accessible to species of interest</p></li>
@@ -265,23 +265,23 @@ given model is species dependent.</p>
 </ul>
 </section>
 <section id="known-limitations">
-<h2>8. Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this heading"></a></h2>
+<h2>8. Known limitations<a class="headerlink" href="#known-limitations" title="Link to this heading"></a></h2>
 <p>The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.</p>
 <p>Field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  To date, peer review of the methodology has been limited.</p>
 <p>There are also many limitations associated with the source inventories used to create the model. Source errors and omissions from model inputs are present in model outputs, and source errors may be compounded when combined with other inputs.</p>
 <section id="fwa-stream-network">
-<h3>FWA stream network<a class="headerlink" href="#fwa-stream-network" title="Permalink to this heading"></a></h3>
+<h3>FWA stream network<a class="headerlink" href="#fwa-stream-network" title="Link to this heading"></a></h3>
 <p>The FWA stream network is based on TRIM I stream linework. Streams tend to be under-represented in wet, coastal areas and over-represented in dry interior areas.</p>
 <p>TRIM features were delineated through air photo interpretation and have varying degrees of accuracy – particularly when it comes to smaller streams.   TRIM commonly under-represents the number of streams in the wetter, coastal areas of the province and field surveyors may regularly find small streams which were not visible on the original air photos due to canopy, terrain, shadows, etc.  As a result, these streams do not exist in the FWA and as a result, the model.  In wet areas, field crews will tend to find additional streams and road-stream crossings.</p>
 <p>Conversely, in the drier, interior portions of the province, TRIM may over-represent the number or magnitude of streams.  These may be ephemeral or intermittent streams which only have water in them at the wettest times of the year.  Field crews often report finding only a ‘dry draw’ at locations where a stream has been shown on the mapping.</p>
 </section>
 <section id="known-barriers-and-observations">
-<h3>Known barriers and observations<a class="headerlink" href="#known-barriers-and-observations" title="Permalink to this heading"></a></h3>
+<h3>Known barriers and observations<a class="headerlink" href="#known-barriers-and-observations" title="Link to this heading"></a></h3>
 <p>The barrier and fish observation inventories have similar limitations.  Fish observation data is based on the results of field sampling and fish collection permits.  The distribution and scale of this work has typically been driven by development requirements in the resource industries.  As such, the model is based on unevenly distributed data points.  Areas that have seen more development and resource extraction tend to have a higher density of sampling and observation points while other, less developed areas tend to have sparse or non-existent fish observation and barrier data.</p>
 <p>Even areas with a high density of fish observation data may be problematic.  The observation dataset dates back to the early 20th Century and not all observation points are still valid.  Some historical records are found in areas that are no longer accessible to fish because natural (landslides) and/or man–made (dams, weirs, etc.) blockages have occurred since the time of observation.  Observation points may also have other errors such as incorrect co-ordinates or mis-identification of fish species.  Similarly, the obstructions layer is neither exhaustive nor guaranteed to be accurate.  These component data limitations may compound one another.</p>
 </section>
 <section id="potential-barriers">
-<h3>Potential barriers<a class="headerlink" href="#potential-barriers" title="Permalink to this heading"></a></h3>
+<h3>Potential barriers<a class="headerlink" href="#potential-barriers" title="Link to this heading"></a></h3>
 <p>The model will generally over-estimate the extent of potential barriers (closed bottom structures / culverts). Two errors in particular lead to this over-estimation:</p>
 <ol class="arabic simple">
 <li><p>Open bottom structures / bridges exists at a crossings modelled as a closed bottom structures / culverts</p></li>
@@ -301,7 +301,7 @@ given model is species dependent.</p>
 </section>
 </section>
 <section id="enhancements-improvements">
-<h2>9. Enhancements / improvements<a class="headerlink" href="#enhancements-improvements" title="Permalink to this heading"></a></h2>
+<h2>9. Enhancements / improvements<a class="headerlink" href="#enhancements-improvements" title="Link to this heading"></a></h2>
 <p>As expert and local knowledge of natural barriers is added to <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> and as more potential barriers are assessed, the quality of modelling outputs will improve.</p>
 <p>Submissions of data fixes to improve the fish passage model are welcome, particularly:</p>
 <ul class="simple">
@@ -311,7 +311,7 @@ given model is species dependent.</p>
 </ul>
 </section>
 <section id="publication-distribution">
-<h2>10. Publication / distribution<a class="headerlink" href="#publication-distribution" title="Permalink to this heading"></a></h2>
+<h2>10. Publication / distribution<a class="headerlink" href="#publication-distribution" title="Link to this heading"></a></h2>
 <p>Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are <a class="reference external" href="https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip">available for download as geopackage</a>.
 For information regarding this data package:</p>
 <ul class="simple">
