@@ -10,7 +10,7 @@ BBAR,t,t,,t,t,t,,,t,t,,,
 BEAV,t,,,,,t,t,,,,,,Mackenzie basin
 BELA,,t,t,t,t,t,,t,t,t,t,,
 BIGC,t,,,,,,,,t,,,,
-BLAR,t,,,t,,t,,,t,,,,
+BLAR,t,t,,,,t,,,t,,,,
 BLUR,t,,,,,t,t,,,,,,Mackenzie basin
 BONP,t,t,,t,t,,,t,t,,t,,
 BOWR,t,t,,t,,t,,,t,t,,,
@@ -22,8 +22,8 @@ CAMB,,t,t,t,t,t,t,t,t,t,t,,
 CANO,t,,,,,t,,,t,,,,Columbia basin
 CARP,t,,,,,t,,,t,,,,Mackenzie basin
 CARR,t,t,,t,,t,,,t,t,,,
-CHES,t,,,t,,t,,,t,t,,,
-CHIL,,,,t,,t,,,t,,,,
+CHES,t,t,,,,t,,,t,t,,,
+CHIL,,t,,,,t,,,t,,,,
 CHIR,t,,,,,t,,,t,t,,,
 CHUK,,,,,,t,,,,,,,No target species observations
 CHWK,t,t,t,t,t,t,,t,t,t,t,,
@@ -45,41 +45,41 @@ DRIR,t,,,,,t,,,t,t,,,
 DUNC,t,,,,t,,,,t,,,t,
 DUNE,t,,,,,,t,,t,,,,Mackenzie basin
 ELKR,t,,,,t,t,t,,t,,,t,
-EUCH,,,,t,,t,,,t,,,,
-EUCL,t,,,t,,t,,,t,,,,
+EUCH,,t,,,,t,,,t,,,,
+EUCL,t,t,,,,t,,,t,,,,
 FINA,t,,,,,t,t,,t,,,,Mackenzie basin
 FINL,t,,,,,t,t,,t,,,,Mackenzie basin
 FIRE,t,,,,,t,t,,t,,,,Mackenzie basin
 FONT,t,,,,,,t,,,,,,Mackenzie basin
 FOXR,t,,,,,t,t,,t,,,,Mackenzie basin
-FRAN,t,,,t,t,t,,,t,t,,,
+FRAN,t,t,,,t,t,,,t,t,,,
 FRCN,t,t,t,t,t,t,,t,t,t,t,,
 FROG,t,,,,,t,t,,,,,,Mackenzie basin
 GATA,t,,,,,,t,,,,,,Mackenzie basin
-GLAR,,,,t,,,t,,,,,,
+GLAR,,t,,,,,t,,,,,,
 GOLD,,t,t,t,t,t,,,t,t,t,,
 GRAI,,t,t,t,t,t,,t,t,t,t,,
 GRNL,,,,,,,,,t,,,,No target species observations
 GUIC,t,t,,t,t,t,,,t,,t,,
 HARR,t,t,t,t,t,t,,t,t,t,t,,
 HAYR,,,,,,,,,,,,,Mackenzie basin
-HERR,t,,,t,,t,,,t,,,,
-HOLB,,t,t,,t,t,,t,t,,t,,
+HERR,t,t,,,,t,,,t,,,,
+HOLB,,,t,t,t,t,,t,t,,t,,
 HOMA,t,t,t,t,t,t,,,t,,,,
 HORS,t,t,,t,,t,,,t,,,,
 INGR,t,,,,,t,t,,t,,,,Mackenzie basin
 INKR,t,t,,t,t,t,t,,t,t,t,,
 ISKR,t,,,,,t,,,t,,,,No target species observations
-JENR,,,,t,t,,t,,,,,,
+JENR,,t,,,t,,t,,,,,,
 JERV,t,t,t,t,t,t,,t,t,,t,,
 KAHN,,,,,,,t,,,,,,Mackenzie basin
 KAKC,,,,,,,,,t,,,,Not accessible to target species
 KCHL,,,,,,,,,,,,,Mackenzie basin
-KEEC,,t,,,,,,,,,,,
+KEEC,,,,t,,,,,,,,,
 KETL,,,,,t,,,,t,,,t,
 KHOR,t,,,,t,t,,,t,,,t,
 KHTZ,,t,t,t,t,t,,t,t,t,t,,
-KINR,t,t,,,,t,,,t,t,,,
+KINR,t,,,t,,t,,,t,t,,,
 KISK,t,,,,,,t,,t,,,,Mackenzie basin
 KISP,t,t,t,t,t,t,,t,t,t,t,,
 KITL,,t,t,t,t,t,,t,t,t,t,,
@@ -92,13 +92,13 @@ KOTL,t,,,,t,t,,,t,,,t,
 KOTR,t,,,,t,t,,,t,,,t,
 KSHR,,t,t,t,t,t,,t,t,,t,,
 KTSU,,t,,t,t,,,t,,t,t,,updated based on PSE spawning data
-KUMR,,t,t,,t,t,,t,t,t,,,
+KUMR,,,t,t,t,t,,t,t,t,,,
 KUSR,,,,,,t,t,,,,,,No target species observations
 LARL,t,,,,t,t,t,,t,,,t,
 LBIR,t,t,,t,,t,,,t,,t,,
 LBTN,t,,,,,,t,,t,,,,Mackenzie basin
 LCHL,t,t,,t,,t,,,t,,,,
-LCHR,t,,,t,,t,,,t,,t,,
+LCHR,t,t,,,,t,,,t,,t,,
 LDEN,t,t,,t,t,t,,,t,t,t,,
 LEUT,,,,,,,,,t,,,,Kenny Dam
 LFRA,t,t,t,t,t,t,,t,t,t,t,,
@@ -119,25 +119,25 @@ LPCE,t,,,,,,t,,t,,,,Mackenzie basin
 LPET,,,,,,,t,,,,,,Mackenzie basin
 LPRO,t,,,,,t,t,,t,,,,Mackenzie basin
 LRAN,t,,,,,t,t,,,,,,Mackenzie basin
-LRDO,,t,t,,t,t,,t,t,t,t,,
-LSAL,,,,t,,t,,,t,,,,
+LRDO,,,t,t,t,t,,t,t,t,t,,
+LSAL,,t,,,,t,,,t,,,,
 LSIK,,,,,,,t,,,,,,Mackenzie basin
 LSKE,t,t,t,t,t,t,,t,t,t,t,,
 LSTR,,t,,t,t,t,,,t,t,,,
-LTRE,t,,,t,t,,,,t,t,,,
-MAHD,t,,,t,,t,,,t,,,,
-MBNK,,t,,,t,t,,,,,,,
-MCGR,t,,,t,,t,,,t,,,,
+LTRE,t,t,,,t,,,,t,t,,,
+MAHD,t,t,,,,t,,,t,,,,
+MBNK,,,,t,t,t,,,,,,,
+MCGR,t,t,,,,t,,,t,,,,
 MDEA,t,,,,,t,t,,t,,,,Mackenzie basin
-MESC,,,,t,,,,,t,,,,
+MESC,,t,,,,,,,t,,,,
 MESI,t,,,,,t,t,,t,,,,Mackenzie basin
-MFRA,,,,t,,,,,t,,,,
+MFRA,,t,,,,,,,t,,,,
 MFRT,,,,,,,t,,,,,,Mackenzie basin
 MIDR,t,,,,,t,,,t,t,,,
 MILL,,,,,,,t,,,,,,Mackenzie basin
 MMUS,t,,,,,t,t,,t,,,,Mackenzie basin
-MORI,,t,t,,t,t,,t,t,t,t,,
-MORK,t,,,t,,t,,,t,,,,
+MORI,,,t,t,t,t,,t,t,t,t,,
+MORK,t,t,,,,t,,,t,,,,
 MORR,t,t,,t,t,t,,t,t,t,t,,
 MPRO,t,,,,,t,t,,t,,,,Mackenzie basin
 MSKE,t,t,,t,t,t,t,,t,t,t,,
@@ -145,17 +145,17 @@ MSTR,t,,,,,t,t,,t,,t,,
 MURR,t,,,,t,t,t,,t,,,,Mackenzie basin
 MURT,,,,,,,,,t,,,,
 MUSK,,,,,,t,,,t,,,,
-NAHR,,,,t,,t,t,,t,,,,
+NAHR,,t,,,,t,t,,t,,,,
 NAKR,,t,,t,,t,t,,t,t,,,
-NARC,t,,,t,,t,,t,t,,,,
-NASC,,t,t,,t,t,,t,t,t,t,,
+NARC,t,t,,,,t,,t,t,,,,
+NASC,,,t,t,t,t,,t,t,t,t,,
 NASR,t,t,,t,t,t,,,t,t,t,,
 NATR,t,,,,,t,t,,t,,,,Mackenzie basin
-NAZR,,,,t,,,,,t,,,,
-NBNK,,t,,,t,t,,,,t,,,
-NECL,,t,t,,t,t,,t,t,t,t,,
+NAZR,,t,,,,,,,t,,,,
+NBNK,,,,t,t,t,,,,t,,,
+NECL,,,t,t,t,t,,t,t,t,t,,
 NECR,t,t,,t,,t,,,t,t,,,
-NEVI,,t,t,,t,t,,t,t,t,t,,
+NEVI,,,t,t,t,t,,t,t,t,t,,
 NICL,,t,,t,,,,,t,,,,
 NIEL,,t,t,t,t,t,,t,t,t,t,,
 NIMP,,t,t,t,t,t,,t,t,t,t,,
@@ -168,14 +168,14 @@ PARS,t,,,,,t,t,,t,,,,Mackenzie basin
 PCEA,t,,,,,t,t,,t,,,,Mackenzie basin
 PINE,t,,,,,t,t,,t,,,,Mackenzie basin
 PITR,,,,,,t,,,t,,,,No target species observations
-PORI,,t,t,,t,t,,t,t,,t,,
+PORI,,,t,t,t,t,,t,t,,t,,
 QUES,t,t,,t,,t,,t,t,t,,,
 REVL,t,,,,t,t,,,t,,,t,
 SAHD,,,,,,,t,,,,,,Mackenzie basin
 SAHT,,,,,,,,,,,,,Mackenzie basin
-SAJR,,t,,,,,,t,t,t,,,
+SAJR,,,,t,,,,t,t,t,,,
 SALM,,t,t,t,t,t,,t,t,,t,,
-SALR,,,,t,,t,,,t,,,,
+SALR,,t,,,,t,,,t,,,,
 SANJ,,t,t,t,t,t,,t,t,t,t,,
 SETN,t,t,t,t,t,t,,t,t,t,t,,
 SEYM,,t,t,t,t,t,,t,t,,t,,
@@ -191,18 +191,18 @@ SPAT,t,,,,,t,t,,t,,,,No target species observations
 SQAM,t,t,t,t,t,t,,t,t,t,t,,
 STHM,t,t,,t,t,t,,t,t,t,,,
 STIR,,t,,t,t,t,t,,t,t,,,
-STUL,,,,t,t,t,,,t,t,,,
-STUR,t,,,t,,t,,,t,t,,,
+STUL,,t,,,t,t,,,t,t,,,
+STUR,t,t,,,,t,,,t,t,,,
 SUST,t,t,t,t,,t,,,t,t,t,,
-SWIR,t,,,t,,t,t,,,,,,
-TABR,t,,,t,,t,,,t,,,,
+SWIR,t,t,,,,t,t,,,,,,
+TABR,t,t,,,,t,,,t,,,,
 TAHR,t,,,,t,t,,,t,t,t,,
 TAHS,,t,t,t,t,t,,t,t,t,t,,
 TAKL,t,,,,,t,,,t,t,,,
 TASR,t,,,,,t,,,t,t,,,
-TATR,,,,t,,t,t,,t,t,,,
+TATR,,t,,,,t,t,,t,t,,,
 TAYR,t,,,,,t,,,t,,t,,
-TESR,,,,t,,,t,,t,,,,
+TESR,,t,,,,,t,,t,,,,
 THOM,t,t,,t,t,t,,t,t,t,t,,
 TOAD,t,,,,,t,t,,,,,,Mackenzie basin
 TOBA,,t,t,t,t,t,,t,t,t,t,,
@@ -213,32 +213,32 @@ TSIT,,t,t,t,t,t,,t,t,,t,,
 TURN,t,,,,,t,t,,t,,,,Mackenzie basin
 TUTR,,,,,,,t,,,,,,
 TUYR,t,,,,,,t,,,,,,Blockage near mouth of Tuya River
-TWAC,t,,,t,,t,,,t,,,,
+TWAC,t,t,,,,t,,,t,,,,
 UARL,t,,,,t,t,,,t,,,t,
 UBIR,t,t,,t,,t,,,t,,,,
 UBTN,t,,,,,,t,,t,,,,Mackenzie basin
-UCHR,t,,,t,,,,,t,,t,,
+UCHR,t,t,,,,,,,t,,t,,
 UDEN,t,,,,,t,,,t,,,,No target species observations
 UEUT,t,,,,t,t,,,t,,,,
-UFRA,t,,,t,,t,,,t,,,,
+UFRA,t,t,,,,t,,,t,,,,
 UFRT,,,,,,,t,,,,,,Mackenzie basin
 UHAF,t,,,,,,t,,t,,,,Mackenzie basin
 UISR,,,,,,t,,,t,,,,Forrest Kerr Generating Station
-UJER,,,,t,,,t,,,,,,
+UJER,,t,,,,,t,,,,,,
 UKEC,t,,,,,t,t,,t,,,,Mackenzie basin
 ULRD,t,,,,,t,t,,t,,,,Mackenzie basin
 UMUS,t,,,,,t,t,,t,,,,Mackenzie basin
-UNAR,t,,,t,t,t,,,t,,t,,
+UNAR,t,t,,,t,t,,,t,,t,,
 UNRS,t,,,,,t,,,t,,,,
 UNTH,t,t,,t,t,t,,,t,,,,
-UNUR,t,t,,,t,t,,,t,,,,
+UNUR,t,,,t,t,t,,,t,,,,
 UOMI,t,,,,,t,t,,t,,,,Mackenzie basin
 UPCE,t,,,,t,t,t,,t,,,,Mackenzie basin
 UPET,,,,,,,t,,t,,,,Mackenzie basin
 UPRO,t,,,,,,t,,t,,,,Mackenzie basin
 USHU,t,t,,t,t,t,,t,t,t,,t,
 USIK,t,,,,,,t,,t,,,,Mackenzie basin
-USKE,,,,t,,t,,,t,t,t,,
+USKE,,t,,t,,t,,,t,t,t,,
 USTK,,,,,t,t,t,,t,,t,,
 UTRE,t,,,,,t,,,t,t,,,
 VICT,,t,t,t,t,t,,,t,,t,,
