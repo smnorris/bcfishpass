@@ -12,17 +12,18 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 	cd db; ./setup.sh
 	touch $@
 
+.make/parameters: .make/db parameters/*.csv
+	$(PSQL) -c "DELETE FROM bcfishpass.parameters_habitat_method";
+	$(PSQL) -c "DELETE FROM bcfishpass.parameters_habitat_thresholds";
+	$(PSQL) -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header";
+	$(PSQL) -c "\copy bcfishpass.parameters_habitat_thresholds FROM parameters/parameters_habitat_thresholds.csv delimiter ',' csv header";
+	touch $@
+
 .make/data: .make/db data/*.csv
 	cd data; ./load.sh
 	touch $@
 
-# for testing, process only key watersheds
-#where watershed_group_code not in ('BULK','ELKR','LNIC','BOWR','QUES','CARR','LNTH','MORR','PARS');"
-test: .make/data
-	$(PSQL) -c "delete from bcfishpass.parameters_habitat_method \
-	where watershed_group_code not in ('ELKR','KOTL','BULK','PARS','VICT','LARL','KETL')"
-
-.make/model_access: .make/data
+.make/model_access: .make/data .make/parameters
 	cd model/01_access; make
 	touch $@
 

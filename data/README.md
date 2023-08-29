@@ -1,6 +1,6 @@
 # Data files
 
-User editable inputs. 
+User editable data inputs - mostly fix tables. 
 
 
 ## pscis_modelledcrossings_streams_xref.csv

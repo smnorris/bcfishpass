@@ -32,3 +32,7 @@ model/01_access/qa/*csv
 
 # qgis
 *.qgs~
+
+# only include example parameters,
+# not whatever is being used for a given project/test
+parameters/parameters_habitat*.csv
