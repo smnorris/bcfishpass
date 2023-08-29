@@ -27,9 +27,7 @@ CREATE TABLE bcfishpass.parameters_habitat_thresholds (
   rear_channel_width_max numeric,
   rear_mad_min numeric,
   rear_mad_max numeric,
-  rear_lake_ha_min integer,
-  rear_wetland_multiplier numeric,
-  rear_lake_multiplier numeric
+  rear_lake_ha_min integer
 );
 
 
