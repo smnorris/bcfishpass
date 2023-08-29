@@ -10,26 +10,6 @@ PARALLEL="parallel --halt now,fail=1 --jobs 4 --no-run-if-empty"
 # all files with model_access prefix
 MODELS=$(ls sql/model_access*.sql | sed -e "s/sql\/model_access_//" | sed -e "s/.sql//")
 
-# -------------------------------------------------------------------------------------
-# download pre-computed precip/discharge/channel width and load to db
-# this can be removed with fix of #344
-# -------------------------------------------------------------------------------------
-mkdir -p data
-wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/channel_width.csv
-wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/mean_annual_precip.csv
-wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/discharge.csv
-$PSQL -f sql/load_map_mad_cw.sql
-# because we are downloading these files rather than building from scratch,
-# create the make targets so habitat script does not try and build
-mkdir -p ../02_habitat_linear/precipitation/.make
-touch ../02_habitat_linear/precipitation/.make/precip
-mkdir -p ../02_habitat_linear/channel_width/.make
-touch ../02_habitat_linear/channel_width/.make/channel_width
-mkdir -p ../02_habitat_linear/discharge/.make
-touch ../02_habitat_linear/discharge/.make/discharge
-# -------------------------------------------------------------------------------------
-
-
 # -----
 # LOAD STREAMS
 # -----

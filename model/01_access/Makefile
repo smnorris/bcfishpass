@@ -216,9 +216,29 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	$(PSQL) -f sql/index_crossings.sql
 	touch $@
 
+# -------------------------------------------------------------------------------------
+# download pre-computed precip/discharge/channel width and load to db
+# this can be removed with fix of #344
+# -------------------------------------------------------------------------------------
+.make/data:
+	mkdir -p data
+	wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/channel_width.csv
+	wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/mean_annual_precip.csv
+	wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/discharge.csv
+	$(PSQL) -f sql/load_map_mad_cw.sql
+	# because we are downloading these files rather than building from scratch,
+	# create the make targets so habitat script does not try and build
+	mkdir -p ../02_habitat_linear/precipitation/.make
+	touch ../02_habitat_linear/precipitation/.make/precip
+	mkdir -p ../02_habitat_linear/channel_width/.make
+	touch ../02_habitat_linear/channel_width/.make/channel_width
+	mkdir -p ../02_habitat_linear/discharge/.make
+	touch ../02_habitat_linear/discharge/.make/discharge
+# -------------------------------------------------------------------------------------
+
 # run the access model
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
-.make/model_access: $(ACCESS_MODELS) .make/index_crossings
+.make/model_access: $(ACCESS_MODELS) .make/index_crossings .make/data
 	./model_access.sh
 	touch $@
 
