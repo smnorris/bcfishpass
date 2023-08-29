@@ -232,3 +232,14 @@ CREATE TABLE bcfishpass.wsg_species_presence
   notes text
 );
 
+
+-- --------------------
+-- KNOWN SOCKEYE LAKES
+--
+-- include waterbody_poly_id in this table if a given lake is/was known to support sockeye
+-- source DFO conservation units via PSF
+-- --------------------
+drop table if exists bcfishpass.dfo_known_sockeye_lakes cascade;
+create table bcfishpass.dfo_known_sockeye_lakes (
+  waterbody_poly_id integer primary key
+);
