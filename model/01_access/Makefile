@@ -218,7 +218,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 
 # -------------------------------------------------------------------------------------
 # download pre-computed precip/discharge/channel width and load to db
-# this can be removed with fix of #344
+# (required for inclusion in bcfishpass.streams)
+# this can be removed with fix of #344, or at least moving this download into fwapg
 # -------------------------------------------------------------------------------------
 .make/data:
 	mkdir -p data
