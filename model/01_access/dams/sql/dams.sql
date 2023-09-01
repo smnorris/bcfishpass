@@ -73,7 +73,7 @@ WITH nearest AS
     -- exclude CABD features that may not have been fixed in source
     AND pt.cabd_id NOT IN (
       'e8e4bd88-c3c9-407c-a7a0-15c6c51704fd', -- seton (location issues)
-      '6a792d8f-b9c5-44a4-a260-0f06c3b20821'  -- salmon/merton (location issues)
+      '6a792d8f-b9c5-44a4-a260-0f06c3b20821',  -- salmon/merton (location issues)
       '222c3ccd-00de-4b7c-b0ff-ec282c060adb'  -- Docee River counting fence is not a barrier
     )
 )
