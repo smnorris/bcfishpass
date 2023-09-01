@@ -46,7 +46,9 @@ BEGIN
         s.barriers_st_dnstr,
         s.barriers_wct_dnstr,
         s.crossings_dnstr,
-        s.remediated_dnstr,
+        s.dam_dnstr_ind,
+        s.dam_hydro_dnstr_ind,
+        s.remediated_dnstr_ind,
         s.obsrvtn_event_upstr,
         s.obsrvtn_species_codes_upstr,
         s.species_codes_dnstr,
@@ -73,23 +75,6 @@ BEGIN
         s.mapping_code_st,
         s.mapping_code_wct,
         s.mapping_code_salmon,
-        case
-          when s.remediated_dnstr is true then 'REMEDIATED'          -- this must be first condition as others below can also be true
-          when s.barriers_anthropogenic_dnstr is null then 'NONE'    -- no barriers dnstr
-          when s.barriers_anthropogenic_dnstr is not null and        -- modelled barrier dnstr
-            s.barriers_pscis_dnstr is null and
-            s.barriers_dams_dnstr is null and
-            s.barriers_dams_hydro_dnstr is null then 'MODELLED'
-          when s.barriers_anthropogenic_dnstr is not null and        -- pscis barrier dnstr
-            s.barriers_pscis_dnstr is not null and
-            s.barriers_dams_dnstr is null and
-            s.barriers_dams_hydro_dnstr is null then 'ASSESSED'
-          when s.barriers_anthropogenic_dnstr is not null and        -- dam barrier dnstr
-            s.barriers_dams_dnstr is not null and
-            s.barriers_dams_hydro_dnstr is null then 'DAM'
-          when s.barriers_anthropogenic_dnstr is not null and        -- hydro dam barrier dnstr
-            s.barriers_dams_hydro_dnstr is not null then 'HYDRO'
-        end as mapping_code_barrier,
         ST_AsMVTGeom(ST_Transform(ST_Force2D(s.geom), 3857), bounds.geom)
       FROM bcfishpass.streams s, bounds
       WHERE ST_Intersects(s.geom, ST_Transform((select geom from bounds), 3005))

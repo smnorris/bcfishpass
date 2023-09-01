@@ -71,19 +71,43 @@
       "paint": {
            "line-color": [
             "match",
-            ["get", "mapping_code_barrier"],
-            "NONE",
+            ["get", "mapping_code_salmon"],
+
+            "SPAWN;NONE",
             "#129bdb",
-            "MODELLED",
+            "ACCESS;NONE",
+            "#129bdb",
+            "REAR;NONE",
+            "#129bdb",
+
+            "SPAWN;MODELLED",
             "#ff9f85",
-            "ASSESSED",
+            "ACCESS;MODELLED",
+            "#ff9f85",
+            "REAR;MODELLED",
+            "#ff9f85",
+
+            "SPAWN;ASSESSED",
             "#ff6b6b",
-            "DAM",
+            "ACCESS;ASSESSED",
             "#ff6b6b",
-            "HYDRO",
+            "REAR;ASSESSED",
             "#ff6b6b",
-            "REMEDIATED",
+
+            "SPAWN;DAM",
+            "#ff6b6b",
+            "ACCESS;DAM",
+            "#ff6b6b",
+            "REAR;DAM",
+            "#ff6b6b",
+
+            "SPAWN;REMEDIATED",
             "#33a02c",
+            "ACCESS;REMEDIATED",
+            "#33a02c",
+            "REAR;REMEDIATED",
+            "#33a02c",
+
             "#ff9f85"
             ],
            "line-width": [
@@ -111,21 +135,45 @@
       ],
       "layout": {"line-join": "round", "line-cap": "round"},
       "paint": {
-           "line-color": [
+            "line-color": [
             "match",
-            ["get", "mapping_code_barrier"],
-            "NONE",
+            ["get", "mapping_code_salmon"],
+
+            "SPAWN;NONE",
             "#129bdb",
-            "MODELLED",
+            "ACCESS;NONE",
+            "#129bdb",
+            "REAR;NONE",
+            "#129bdb",
+
+            "SPAWN;MODELLED",
             "#ff9f85",
-            "ASSESSED",
+            "ACCESS;MODELLED",
+            "#ff9f85",
+            "REAR;MODELLED",
+            "#ff9f85",
+
+            "SPAWN;ASSESSED",
             "#ff6b6b",
-            "DAM",
+            "ACCESS;ASSESSED",
             "#ff6b6b",
-            "HYDRO",
+            "REAR;ASSESSED",
             "#ff6b6b",
-            "REMEDIATED",
+
+            "SPAWN;DAM",
+            "#ff6b6b",
+            "ACCESS;DAM",
+            "#ff6b6b",
+            "REAR;DAM",
+            "#ff6b6b",
+
+            "SPAWN;REMEDIATED",
             "#33a02c",
+            "ACCESS;REMEDIATED",
+            "#33a02c",
+            "REAR;REMEDIATED",
+            "#33a02c",
+
             "#ff9f85"
             ],
            "line-width": [
