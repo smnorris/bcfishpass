@@ -1,6 +1,6 @@
 -- load pre-computed precip/discharge/channel width from file
 
-# drop table if exists bcfishpass.discharge;          # can't drop this, streams_vw requires discharge
+-- drop table if exists bcfishpass.discharge;          -- can't drop this, streams_vw requires discharge
 
 create table if not exists bcfishpass.discharge
 (
@@ -13,7 +13,7 @@ truncate bcfishpass.discharge;
 \copy bcfishpass.discharge FROM data/discharge.csv delimiter ',' csv header;
 
 
-drop table if exists bcfishpass.mean_annual_precip;  # as above, can't drop this
+-- drop table if exists bcfishpass.mean_annual_precip;  -- as above, can't drop this
 
 create table if not exists bcfishpass.mean_annual_precip (
  id                    integer primary key,
@@ -33,7 +33,7 @@ create index on bcfishpass.mean_annual_precip using btree (wscode_ltree);
 \copy bcfishpass.mean_annual_precip FROM data/mean_annual_precip.csv delimiter ',' csv header;
 
 
-# drop table if exists bcfishpass.channel_width;     # can't drop this
+-- drop table if exists bcfishpass.channel_width;     -- can't drop this
 
 create table if not exists bcfishpass.channel_width (
  linear_feature_id     bigint           primary key,
