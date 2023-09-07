@@ -42,6 +42,7 @@ TMP=/tmp
 all: $(GENERATED_FILES)
 
 .make/WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES:
+	mkdir -p .make
 	bcdata bc2pg $(subst .make/,,$@) -k clab_id
 	touch $@
 
