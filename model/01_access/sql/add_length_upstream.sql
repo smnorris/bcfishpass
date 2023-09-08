@@ -1,12 +1,9 @@
--- ensure column does not already exist in table
-alter table bcfishpass.:src_table drop column if exists total_network_km;
+-- do calculations in a temp table rather than running a slow UPDATE
 
--- create empty copy of table
-drop table if exists bcfishpass.tmp;
-create table bcfishpass.tmp (like bcfishpass.:src_table including all);
+create temporary table length_upstream (like bcfishpass.barriers_ch_cm_co_pk_sk);
 
 -- add new column
-alter table bcfishpass.tmp add column total_network_km double precision DEFAULT 0;
+alter table length_upstream add column if not exists total_network_km double precision DEFAULT 0;
 
 -- populate new temp table with existing data plus total_network_km column
 with upstr_length as
@@ -30,7 +27,7 @@ with upstr_length as
    )
   group by a.:src_id
 )
-insert into bcfishpass.tmp
+insert into length_upstream
 select
   a.*,
   ul.total_network_km
@@ -38,5 +35,6 @@ from bcfishpass.:src_table a
 inner join upstr_length ul on a.:src_id = ul.:src_id;
 
 -- do the switcheroo
-drop table bcfishpass.:src_table;
-alter table bcfishpass.tmp rename to :src_table;
+truncate bcfishpass.:src_table;
+insert into bcfishpass.:src_table
+select * from length_upstream;
