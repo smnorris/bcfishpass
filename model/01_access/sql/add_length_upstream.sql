@@ -1,4 +1,5 @@
 -- do calculations in a temp table rather than running a slow UPDATE
+alter table bcfishpass.:src_table drop column if exists total_network_km;
 
 create temporary table length_upstream (like bcfishpass.barriers_ch_cm_co_pk_sk);
 
@@ -35,6 +36,7 @@ from bcfishpass.:src_table a
 inner join upstr_length ul on a.:src_id = ul.:src_id;
 
 -- do the switcheroo
+alter table bcfishpass.:src_table add column total_network_km double precision DEFAULT 0;
 truncate bcfishpass.:src_table;
 insert into bcfishpass.:src_table
 select * from length_upstream;
