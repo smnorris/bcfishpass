@@ -83,20 +83,6 @@ with barriers as
       geom
   from bcfishpass.barriers_subsurfaceflow
   where watershed_group_code = :'wsg'
-  union all
-  select
-      barriers_user_definite_id as barrier_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_user_definite
-  where watershed_group_code = :'wsg'
 ),
 
 obs_upstr as
@@ -181,6 +167,38 @@ hab_upstr as
         1
       )
   group by b.barrier_id
+),
+
+barriers_filtered as (
+  select
+    b.barrier_id as barrier_load_id,
+    b.barrier_type,
+    b.barrier_name,
+    b.linear_feature_id,
+    b.blue_line_key,
+    b.downstream_route_measure,
+    b.wscode_ltree,
+    b.localcode_ltree,
+    b.watershed_group_code,
+    b.geom
+  from barriers b
+  left outer join obs_upstr_n as o on b.barrier_id = o.barrier_id
+  left outer join hab_upstr h on b.barrier_id = h.barrier_id
+  where watershed_group_code = any(
+      array(
+        select watershed_group_code
+        from bcfishpass.wsg_species_presence
+        where ch is true or cm is true or co is true or pk is true or sk is true
+      )
+  )
+  -- do not include gradient / falls / subsurface barriers with
+  --    - > 5 observations upstream
+  --    - confirmed habitat upstream
+  and
+        (
+          (o.n_obs is null or o.n_obs < 5) and
+          h.species_codes is null
+        )
 )
 
 insert into bcfishpass.barriers_ch_cm_co_pk_sk
@@ -197,36 +215,20 @@ insert into bcfishpass.barriers_ch_cm_co_pk_sk
     geom
 )
 
+select * from barriers_filtered
+union all
 select
-  b.barrier_id as barrier_load_id,
-  b.barrier_type,
-  b.barrier_name,
-  b.linear_feature_id,
-  b.blue_line_key,
-  b.downstream_route_measure,
-  b.wscode_ltree,
-  b.localcode_ltree,
-  b.watershed_group_code,
-  b.geom
-from barriers b
-left outer join obs_upstr_n as o on b.barrier_id = o.barrier_id
-left outer join hab_upstr h on b.barrier_id = h.barrier_id
-where watershed_group_code = any(
-    array(
-      select watershed_group_code
-      from bcfishpass.wsg_species_presence
-      where ch is true or cm is true or co is true or pk is true or sk is true
-    )
-)
--- do not include gradient / falls / subsurface barriers with
---    - > 5 observations upstream
---    - confirmed habitat upstream
--- but always include user added barriers
-and (
-      (
-        (o.n_obs is null or o.n_obs < 5) and
-        h.species_codes is null
-      ) or
-    b.barrier_type in ('EXCLUSION', 'PSCIS_NOT_ACCESSIBLE', 'MISC')
-)
+    barriers_user_definite_id as barrier_load_id,
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+from bcfishpass.barriers_user_definite
+where watershed_group_code = :'wsg'
+
 on conflict do nothing;
