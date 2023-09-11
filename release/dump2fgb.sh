@@ -13,8 +13,9 @@ PARALLEL="parallel --halt now,fail=1 --jobs 4 --no-run-if-empty"
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
+rm -rf fgb       # clear existing dump
+mkdir -p fgb     # make new folder for dump (but note that ogr2ogr can write direct to s3)
 
-mkdir -p fgb
 $PSQL -c "create schema if not exists temp"
 
 # -----------------------------------------
@@ -468,7 +469,7 @@ ogr2ogr \
 $PSQL -c "drop table temp.transport_line"
 
 # sync to s3
-cd fgb; aws s3 sync . s3://bcfishpass/ --acl public-read
+cd fgb; aws s3 sync . s3://bcfishpass/ --acl public-read --no-progress
 
 # cleanup
-cd ../ ; rm -rf fgb
+# cd ../ ; rm -rf fgb
