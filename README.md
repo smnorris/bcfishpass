@@ -8,11 +8,7 @@
 - model passability/accessibility of streams based on species swimming ability
 - model streams with potential for spawning and rearing activity (for select species)
 - report on habitat/connectivity based indicators to support prioritization of assessment and remediation
-
-Also provided are tools for mapping features in the database:
-
-- [basic web viewer](https://www.hillcrestgeo.ca/projects/bcfishpass/)
-- comprehensive QGIS layer file
+- provide planning maps displaying connecivity and modelling status via a comprehensive QGIS layer file
 
 
 See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
