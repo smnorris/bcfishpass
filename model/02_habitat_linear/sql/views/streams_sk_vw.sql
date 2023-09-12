@@ -1,7 +1,20 @@
 drop view if exists bcfishpass.streams_sk_vw;
 create or replace view bcfishpass.streams_sk_vw as
+  with obs as
+(
+ select
+   segmented_stream_id,
+   array_to_string(array_agg(spp), ';') as obsrvtn_species_codes_upstr
+   from (
+    select segmented_stream_id,
+      unnest(obsrvtn_species_codes_upstr) as spp
+    from bcfishpass.streams s
+  ) as f
+  where spp = 'SK'
+  group by segmented_stream_id
+)
 select
-  segmented_stream_id,
+  s.segmented_stream_id,
   linear_feature_id,
   edge_type,
   blue_line_key,
@@ -30,8 +43,7 @@ select
   array_to_string(barriers_dams_dnstr, ';') as barriers_dams_dnstr,
   array_to_string(barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
   array_to_string(crossings_dnstr, ';') as crossings_dnstr,
-  array_to_string(obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
-  array_to_string(obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  o.obsrvtn_species_codes_upstr,
   dam_dnstr_ind,
   dam_hydro_dnstr_ind,
   remediated_dnstr_ind,
@@ -40,4 +52,5 @@ select
   mapping_code_sk as mapping_code,
   geom
 from bcfishpass.streams s
+left outer join obs o on s.segmented_stream_id = o.segmented_stream_id
 where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
