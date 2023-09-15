@@ -34,11 +34,3 @@ Archive the entire database to file in folder `$ARCHIVE/bcfishpass/db`, apending
         mkdir -p $ARCHIVE/bcfishpass/db
         pg_dump -Fc $DATABASE_URL > $ARCHIVE/bcfishpass/db/bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump
 
-
-
-## Dump to FlatGeobuf 
-
-To support creation of watershed group based field data (via Mergin), overlay selected data with watershed groups and dump to [FlatGeobuf](http://flatgeobuf.org/)
-(FlatGeobuf allows for fast access over http)
-        
-        ./dump2fgb.sh
