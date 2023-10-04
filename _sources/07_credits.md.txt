@@ -12,6 +12,7 @@ With additional funding from:
 
 - [BC Fish and Wildlife Compensation Program (FWCP)](https://fwcp.ca/)
 - [Society for Ecosystem Restoration in Northern British Columbia (SERNBC)](https://sernbc.ca/)
+- [Habitat and Conservation Trust Foundation](https://hctf.ca/)
 - [BC Salmon Restoration and Innovation Fund (BCSRIF)](https://www.dfo-mpo.gc.ca/fisheries-peches/initiatives/fish-fund-bc-fonds-peche-cb/index-eng.html)
 - [Canada Nature Fund for Aquatic Species at Risk (CNFASAR)](https://www.dfo-mpo.gc.ca/species-especes/sara-lep/cnfasar-fnceap/index-eng.html)
 - BC Ministry of Transportation and Infrastructure
