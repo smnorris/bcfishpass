@@ -8,7 +8,7 @@
 - model passability/accessibility of streams based on species swimming ability
 - model streams with potential for spawning and rearing activity (for select species)
 - report on habitat/connectivity based indicators to support prioritization of assessment and remediation
-- provide planning maps displaying connecivity and modelling status via a comprehensive QGIS layer file
+- support mapping in office and field via a comprehensive QGIS layer file
 
 
 See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
