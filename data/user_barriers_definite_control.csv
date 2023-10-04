@@ -140,6 +140,7 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 356348405,144,SUBSURFACEFLOW,f,QUES,AL,2023-05-15,local knowledge,based on information provided by Bo and Jake at LDN workshop.
 354144429,4301,FALLS,f,TAHS,CWF - BR,2022-04-01,,falls removed 1981 though apparently still a partial barrier to PK and CM
 354151971,55,FALLS,f,VICT,CWF - BR,2022-04-01,,Fish transported above falls for >50 years
+354151971,166,FALLS,f,VICT,SN,2023-09-20,,Fish transported above falls for >50 years as per falls at 55m
 354152763,499,FALLS,t,SALM,CWF - BR,2022-04-01,,Menzies Creek noted as salmon-bearing for first 1-Mile only.
 354152847,3068,FALLS,f,BRKS,CWF - BR,2022-04-01,,Catalogue of Salmon Streams notes spawners to 3 miles
 356050266,0,SUBSURFACEFLOW,t,LFRA,CWF - BR,2022-04-01,,Nothing in reference report to indicate exact location(s) of fish
@@ -191,7 +192,7 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 356361749,45743,FALLS,t,DEAD,CWF - BR,2021-12-31,,Most literature seem to indicate Reach 11 as upstream-most distribution for Steelhead (falls is at break of 10/11). Seems that fish points in Yard Ck are likely actually Yard Ck in SHUL watershed. Points in Snohoosh Lake don't seem to have a reference document. Other Steelhead points seem unreliable. I would keep this as a barrier
 356362728,1958,FALLS,t,MURT,CWF - BR,2021-12-31,,No salmon points showing upstream from here. Ok as is
 356362743,154194,FALLS,f,ADMS,CWF - BR,2022-04-01,,Multiple reference docs corroborate Coho spawning upstream of Tum Tum Lake. Falls noted as passable to Coho.
-356363034,13,FALLS,f,NARC,CWF - BR,2021-12-31,,]
+356363034,13,FALLS,t,NARC,CWF - BR,2021-12-31,,]
 356363034,153,FALLS,t,NARC,CWF - BR,2021-12-31,,Same falls number on map twice. Reference document note that The distribution of Chinook is limited to below the 5 meter falls located approximately 200 m upstream from the confluence with Narcosoli Creek. Second reference document seems to be a transferred FISS point and likely inaccurate. Downstream falls point is likely incorrect. Upstream falls point should have no Chinook upstream.
 356363170,641,FALLS,f,HARR,CWF - BR,2022-04-01,,Could not find any indication of a falls here but a few reports note Coho presence
 356363534,43468,SUBSURFACEFLOW,f,NARC,CWF - BR,2022-04-01,,CH points appear legitimate. Known spawning location documented just downstream.
