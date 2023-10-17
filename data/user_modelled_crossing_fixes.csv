@@ -6143,3 +6143,11 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 8300453,NONE,KISP,MW,2023-08-21,imagery,No visible crossing or road.
 14000798,OBS,MORR,MW,2023-08-21,imagery,Bridge Visible
 24601264,NONE,ZYMO,MW,2023-08-21,imagery,No visible crossing or road.
+2200610,NONE,PARS,MW,2023-10-17,field,No crossing found
+2200092,NONE,PARS,MW,2023-10-17,imagery,No visible crossing or road.
+3700873,NONE,PARS,MW,2023-10-17,imagery,No visible crossing or road.
+8302925,NONE,KISP,MW,2023-10-17,field,"No crossing present, nearby highway culvert goes under road."
+14000057,NONE,MORR,MW,2023-10-17,field,No crossing or road present.
+22200377,NONE,UFRA,MW,2023-10-17,imagery,No visible crossing or road.
+5402357,OBS,FRAN,MW,2023-10-17,field,Small footbridge present.
+15600287,NONE,NECR,MW,2023-10-17,field,"No crossing present, nearby highway culvert goes under road."
