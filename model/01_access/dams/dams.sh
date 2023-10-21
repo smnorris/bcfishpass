@@ -24,7 +24,7 @@ ogr2ogr -f PostgreSQL \
 $PSQL -f sql/dams.sql
 
 # report on dams that do not get matched to FWA streams
-psql --csv -c "select
+$PSQL --csv -c "select
   a.cabd_id,
   a.dam_name_en
 from cabd.dams a
