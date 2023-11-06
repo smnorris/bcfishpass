@@ -32,8 +32,9 @@ clean:
 # GRADIENT BARRIERS
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
-gradient_barriers/.make/gradient_barriers:
-	cd gradient_barriers; make
+.make/gradient_barriers:
+	cd gradient_barriers; ./gradient_barriers.sh
+	touch $@
 
 # ------
 # DAMS
@@ -96,7 +97,7 @@ gradient_barriers/.make/gradient_barriers:
 $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql \
 	.make/crossings \
 	.make/falls \
-	gradient_barriers/.make/gradient_barriers
+	.make/gradient_barriers
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \

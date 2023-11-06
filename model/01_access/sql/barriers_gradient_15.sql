@@ -13,7 +13,7 @@ INSERT INTO bcfishpass.barriers_gradient_15
     geom
 )
 SELECT
-    ((((b.blue_line_key::bigint + 1) - 354087611) * 10000000) + round(b.downstream_route_measure::bigint))::text as barrier_load_id,
+    gradient_barrier_id as barrier_load_id,
     'GRADIENT_15' as barrier_type,
     NULL as barrier_name,
     s.linear_feature_id,
