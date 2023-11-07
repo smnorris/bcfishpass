@@ -18,17 +18,6 @@ The models included in this distribution are generated as described in the :ref:
 Tables/layers included in the distribution are:
 
 
-barriers_falls
-============================
-
-Point locations of waterfalls that are likely to be barriers to fish passage.
-Features determined to be passable by expert/local input are not included.
-
-.. csv-table::
-   :file: tables/freshwater_fish_habitat_accessibility_model/barriers_falls.csv
-   :header-rows: 1
-
-
 barriers_salmon
 ============================
 
@@ -57,18 +46,6 @@ and user supplied misc barriers.
    :header-rows: 1
 
 
-barriers_subsurfaceflow
-============================
-
-Point locations of subsurface flow derived from the FWA stream network (``where
-edge_type in (1410, 1425)``). Note that *all* locations of subsurface flow are included,
-not just those used in the included modelling.
-
-.. csv-table::
-   :file: tables/freshwater_fish_habitat_accessibility_model/barriers_subsurface_flow.csv
-   :header-rows: 1
-
-
 crossings
 ============================
 
@@ -83,20 +60,6 @@ Includes barrier status, key attributes from source datasets, and various length
 
 .. csv-table::
    :file: tables/freshwater_fish_habitat_accessibility_model/crossings.csv
-   :header-rows: 1
-
-
-gradient_barriers
-============================
-
-Locations of potential :ref:`gradient barriers <gradient_barriers>`.
-Locations where a stream's slope exceeds 5, 10, 15, 20, 25, and 30% for at least
-100m upstream of the point location are included.
-Note that *all* gradient barriers for the noted gradients are included, not just
-those used in the included modelling.
-
-.. csv-table::
-   :file: tables/freshwater_fish_habitat_accessibility_model/gradient_barriers.csv
    :header-rows: 1
 
 
@@ -133,4 +96,21 @@ by `bcfishobs <https://github.com/smnorris/bcfishobs>`_.
 
 .. csv-table::
    :file: tables/freshwater_fish_habitat_accessibility_model/observations.csv
+   :header-rows: 1
+
+
+------------------
+Gradient barriers
+------------------
+A static provincial extract of the `gradient_barriers` table is available for download:
+`https://bcfishpass.s3.us-west-2.amazonaws.com/gradient_barriers.gpkg.zip <https://bcfishpass.s3.us-west-2.amazonaws.com/gradient_barriers.gpkg.zip>`_.
+
+gradient_barriers
+============================
+Output of the :ref:`gradient barrier <gradient_barriers>` analysis for commonly used gradients.
+Locations of the stream vertex where a stream's slope begins to exceed 5, 10, 15, 20, 25, and 30% for at least
+100m upstream.
+
+.. csv-table::
+   :file: tables/gradient_barriers.csv
    :header-rows: 1

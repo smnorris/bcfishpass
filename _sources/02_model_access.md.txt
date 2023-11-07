@@ -1,7 +1,8 @@
 (access)=
 # Access model
 
-`bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species. The processing steps involved are:
+`bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species in the absence of anthropogenic (e.g., dams and stream crossings) or transient natural barriers (e.g., debris flows and log jams), with an assumption that all mapped streams have sufficient flow for migration. The processing steps involved are:
+
 
 ## 1. Collect known natural barriers
 	
@@ -14,8 +15,9 @@ Collect known natural barriers: waterfalls 5m in height or more, subsurface flow
 | waterfalls   | [FWA obstructions](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions)
 | waterfalls   | [expert/user identified falls](https://github.com/smnorris/bcfishpass/blob/main/data/user_falls.csv)
 | subsurface flow | [FWA streams](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network)
-| expert/user identified barriers         | [bcfishpass](https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv)
+| expert/stakeholder identified barriers         | [bcfishpass](https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv)
 
+Natural barriers identified by stakeholders include: waterfalls or cascades not identified in provincial inventories, steep gradients not captured by modelling, channels known to be dry year-round, and other similar features.
 
 (gradient_barriers)=
 ## 2. Generate gradient barriers
@@ -24,9 +26,13 @@ FWA stream network lines hold standardized Z values; each vertex of a stream lin
 
 To identify locations where a stream's slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the `blue_line_key`) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential 'gradient barrier'.
 
-`bcfishpass` scripts create potential gradient barriers at a number of default gradients, the threshold used for any 
-given model is species dependent.
+The gradient threshold used for a given model is species dependent. Thresholds applied to existing models are:
 
+| Species            | max gradient 
+---------------------|-----------
+Pacific salmon (all) | 15%
+Steelhead            | 20%
+Bull trout           | 25%
 
 ## 3. Filter natural barriers 
 

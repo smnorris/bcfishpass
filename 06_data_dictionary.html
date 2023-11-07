@@ -51,15 +51,16 @@
 <li class="toctree-l1"><a class="reference internal" href="05_example_use_cases.html">Sample use case scenarios</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data Dictionary</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead">Freshwater Fish Habitat Accessibility MODEL - Pacific Salmon and Steelhead</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#barriers-falls">barriers_falls</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#barriers-salmon">barriers_salmon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#barriers-steelhead">barriers_steelhead</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#barriers-subsurfaceflow">barriers_subsurfaceflow</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#crossings">crossings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#gradient-barriers">gradient_barriers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-access-salmon">model_access_salmon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-access-steelhead">model_access_steelhead</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#observations">observations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gradient-barriers">Gradient barriers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">gradient_barriers</a></li>
 </ul>
 </li>
 </ul>
@@ -104,53 +105,6 @@
 <li><p>for both salmon and steelhead, potential natural barriers with 5 or more upstream observations of any of the target species (<code class="docutils literal notranslate"><span class="pre">CH,</span> <span class="pre">CM,</span> <span class="pre">CO,</span> <span class="pre">PK,</span> <span class="pre">SK,</span> <span class="pre">ST</span></code>) since January 01, 1990 are presumed to be passable</p></li>
 </ul>
 <p>Tables/layers included in the distribution are:</p>
-<section id="barriers-falls">
-<h3>barriers_falls<a class="headerlink" href="#barriers-falls" title="Link to this heading"></a></h3>
-<p>Point locations of waterfalls that are likely to be barriers to fish passage.
-Features determined to be passable by expert/local input are not included.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>column</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_falls_id</span></code></p></td>
-<td><p>Unique identifier from CABD</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_type</span></code></p></td>
-<td><p>Barrier type description</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_name</span></code></p></td>
-<td><p>Name of barrier (where applicable)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
-<td><p>From BC FWA,the unique identifier for a stream segment (flow network arc)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
-<td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_key</span></code></p></td>
-<td><p>From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
-<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
-<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
-<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
-<td><p>The watershed group code associated with the feature</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
-<td><p>The point geometry associated with the feature</p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="barriers-salmon">
 <h3>barriers_salmon<a class="headerlink" href="#barriers-salmon" title="Link to this heading"></a></h3>
 <p>Locations of natural barriers to salmon (Chinook, Chum, Coho, Pink, Sockeye) migration
@@ -251,54 +205,6 @@ and user supplied misc barriers.</p>
 <td><p>Length (km) of stream upstream of the barrier (useful for identification of erroneous high-impact barriers)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
-<td><p>The point geometry associated with the feature</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="barriers-subsurfaceflow">
-<h3>barriers_subsurfaceflow<a class="headerlink" href="#barriers-subsurfaceflow" title="Link to this heading"></a></h3>
-<p>Point locations of subsurface flow derived from the FWA stream network (<code class="docutils literal notranslate"><span class="pre">where</span>
-<span class="pre">edge_type</span> <span class="pre">in</span> <span class="pre">(1410,</span> <span class="pre">1425)</span></code>). Note that <em>all</em> locations of subsurface flow are included,
-not just those used in the included modelling.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>column</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_subsurfaceflow_id</span></code></p></td>
-<td><p>unique identifier</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_type</span></code></p></td>
-<td><p>Barrier type description</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_name</span></code></p></td>
-<td><p>Name of barrier (where applicable)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
-<td><p>From BC FWA,the unique identifier for a stream segment (flow network arc)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
-<td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_key</span></code></p></td>
-<td><p>From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
-<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
-<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
-<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
-<td><p>The watershed group code associated with the feature</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
 <td><p>The point geometry associated with the feature</p></td>
 </tr>
 </tbody>
@@ -699,53 +605,6 @@ not just those used in the included modelling.</p>
 </tbody>
 </table>
 </section>
-<section id="gradient-barriers">
-<h3>gradient_barriers<a class="headerlink" href="#gradient-barriers" title="Link to this heading"></a></h3>
-<p>Locations of potential <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barriers</span></a>.
-Locations where a stream’s slope exceeds 5, 10, 15, 20, 25, and 30% for at least
-100m upstream of the point location are included.
-Note that <em>all</em> gradient barriers for the noted gradients are included, not just
-those used in the included modelling.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>column</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gradient_barrier_id</span></code></p></td>
-<td><p>unique identifier</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gradient_class</span></code></p></td>
-<td><p>Gradient (percent) associated with the point</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
-<td><p>From BC FWA,the unique identifier for a stream segment (flow network arc)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
-<td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_key</span></code></p></td>
-<td><p>From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
-<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
-<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
-<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
-<td><p>The watershed group code associated with the feature</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
-<td><p>The point geometry associated with the feature</p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="model-access-salmon">
 <h3>model_access_salmon<a class="headerlink" href="#model-access-salmon" title="Link to this heading"></a></h3>
 <p>All FWA stream downstream of points included in <cite>barriers_salmon</cite>.  In the absence
@@ -958,6 +817,56 @@ by <a class="reference external" href="https://github.com/smnorris/bcfishobs">bc
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
 <td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
+<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
+<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
+<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
+<td><p>The watershed group code associated with the feature</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
+<td><p>The point geometry associated with the feature</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="gradient-barriers">
+<h2>Gradient barriers<a class="headerlink" href="#gradient-barriers" title="Link to this heading"></a></h2>
+<p>A static provincial extract of the <cite>gradient_barriers</cite> table is available for download:
+<a class="reference external" href="https://bcfishpass.s3.us-west-2.amazonaws.com/gradient_barriers.gpkg.zip">https://bcfishpass.s3.us-west-2.amazonaws.com/gradient_barriers.gpkg.zip</a>.</p>
+<section id="id1">
+<h3>gradient_barriers<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Output of the <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barrier</span></a> analysis for commonly used gradients.
+Locations of the stream vertex where a stream’s slope begins to exceed 5, 10, 15, 20, 25, and 30% for at least
+100m upstream.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gradient_barrier_id</span></code></p></td>
+<td><p>unique identifier</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gradient_class</span></code></p></td>
+<td><p>Gradient (percent) associated with the point</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
+<td><p>From BC FWA,the unique identifier for a stream segment (flow network arc)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
+<td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_key</span></code></p></td>
+<td><p>From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
 <td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>

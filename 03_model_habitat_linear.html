@@ -47,7 +47,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_background.html">Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_model_access.html">Access model</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Linear habitat model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linear habitat model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gradient">Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#channel-width-discharge">Channel width / discharge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connectivity-feature-type">Connectivity / feature type</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="05_example_use_cases.html">Sample use case scenarios</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_data_dictionary.html">Data Dictionary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_credits.html">Credits</a></li>
@@ -79,14 +84,33 @@
              
   <section id="linear-habitat-model">
 <span id="linear-habitat"></span><h1>Linear habitat model<a class="headerlink" href="#linear-habitat-model" title="Link to this heading"></a></h1>
-<p>Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation, the amount of usable spawning or rearing habitat is of greater interest than the amount of corridor habitat. In addition to modelling barriers to fish passage, <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> models the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).</p>
-<p>Linear habitat IP modelling is currently based on:</p>
+<p>Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of usable spawning or rearing habitat (habitat quality) is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).</p>
+<p>Linear habitat IP modelling is currently based on species specific criteria for:</p>
 <ul class="simple">
-<li><p>channel width or discharge (depending on modelling requirments and/or data availability)</p></li>
 <li><p>stream gradient</p></li>
+<li><p>channel width or discharge (depending on modelling requirments and/or data availability)</p></li>
 <li><p>connectivity (rearing streams must be connected to spawning streams)</p></li>
-<li><p>other species specific criteria</p></li>
+<li><p>feature type (spawning or rearing occurs in stream / wetland / lake etc)</p></li>
+<li><p>expert input (known spawning locations)</p></li>
 </ul>
+<section id="gradient">
+<h2>Gradient<a class="headerlink" href="#gradient" title="Link to this heading"></a></h2>
+<p>Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value of the endpoints of the stream segments. Run is the length of the steam segments. Stream segments are from the BC Freshwater Atlas, further subdivided by other stream-referenced features used in the model (streams are split at barriers and observations when processing the access model). Stream lengths used for gradient calculation can thus be changed if an observation or barrier is added to the database, breaking an existing segment into smaller segments (this results in small inconsistencies to habitat outputs for a given area over time, a known limitation of the current model).</p>
+</section>
+<section id="channel-width-discharge">
+<h2>Channel width / discharge<a class="headerlink" href="#channel-width-discharge" title="Link to this heading"></a></h2>
+<p>Spawning and rearing activity depends on sufficent flow to the stream. <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference. Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations.</p>
+<p>Discharge is modelled within the Fraser, Columbia and Peace basins:
+https://www.pacificclimate.org/data/gridded-hydrologic-model-output
+https://github.com/smnorris/bcfishpass/blob/main/model/02_habitat_linear/discharge</p>
+<p>Channel width is modelled for all of BC:
+https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/
+https://github.com/smnorris/bcfishpass/tree/main/model/02_habitat_linear/channel_width</p>
+<p>Note that results from the above models are only valid for streams with 100% of their contributing area with BC - data for contributing area and precipitiation are both cut off at the BC border.</p>
+</section>
+<section id="connectivity-feature-type">
+<h2>Connectivity / feature type<a class="headerlink" href="#connectivity-feature-type" title="Link to this heading"></a></h2>
+</section>
 </section>
 
 

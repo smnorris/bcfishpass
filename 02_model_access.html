@@ -102,7 +102,7 @@
              
   <section id="access-model">
 <span id="access"></span><h1>Access model<a class="headerlink" href="#access-model" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species. The processing steps involved are:</p>
+<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species in the absence of anthropogenic (e.g., dams and stream crossings) or transient natural barriers (e.g., debris flows and log jams), with an assumption that all mapped streams have sufficient flow for migration. The processing steps involved are:</p>
 <section id="collect-known-natural-barriers">
 <h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Link to this heading"></a></h2>
 <p>Collect known natural barriers: waterfalls 5m in height or more, subsurface flow, and miscellaneous known barriers from expert input:</p>
@@ -128,18 +128,36 @@
 <tr class="row-even"><td><p>subsurface flow</p></td>
 <td><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network">FWA streams</a></p></td>
 </tr>
-<tr class="row-odd"><td><p>expert/user identified barriers</p></td>
+<tr class="row-odd"><td><p>expert/stakeholder identified barriers</p></td>
 <td><p><a class="reference external" href="https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv">bcfishpass</a></p></td>
 </tr>
 </tbody>
 </table>
+<p>Natural barriers identified by stakeholders include: waterfalls or cascades not identified in provincial inventories, steep gradients not captured by modelling, channels known to be dry year-round, and other similar features.</p>
 </section>
 <section id="generate-gradient-barriers">
 <span id="gradient-barriers"></span><h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Link to this heading"></a></h2>
 <p>FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure <em>relative</em> elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.</p>
 <p>To identify locations where a stream’s slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code>) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential ‘gradient barrier’.</p>
-<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> scripts create potential gradient barriers at a number of default gradients, the threshold used for any
-given model is species dependent.</p>
+<p>The gradient threshold used for a given model is species dependent. Thresholds applied to existing models are:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Species</p></th>
+<th class="head"><p>max gradient</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Pacific salmon (all)</p></td>
+<td><p>15%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Steelhead</p></td>
+<td><p>20%</p></td>
+</tr>
+<tr class="row-even"><td><p>Bull trout</p></td>
+<td><p>25%</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="filter-natural-barriers">
 <h2>3. Filter natural barriers<a class="headerlink" href="#filter-natural-barriers" title="Link to this heading"></a></h2>
