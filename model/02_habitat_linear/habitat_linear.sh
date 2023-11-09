@@ -16,7 +16,7 @@ done
 
 # horsefly sockeye have their own model due to trans-watershed group spawning/rearing effects
 # (this is highly likely to be present elsewhere but has not been investigated)
-psql -f sql/horsefly_sk.sql
+$PSQL -f sql/horsefly_sk.sql
 
 # translate user habitat classifcation referencing from measures to stream segment ids
 $PSQL -f sql/user_habitat_classification.sql
