@@ -8,7 +8,7 @@
 -- ---------------------
 insert into bcfishpass.habitat_sk (
   segmented_stream_id,
-  spawning
+  rearing
 )
 SELECT DISTINCT
   s.segmented_stream_id,
