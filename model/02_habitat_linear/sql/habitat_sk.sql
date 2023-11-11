@@ -152,6 +152,7 @@ WITH spawn AS
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   WHERE
     s.watershed_group_code = :'wsg' AND
+    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
 
   ((
     wsg.model = 'cw' AND
