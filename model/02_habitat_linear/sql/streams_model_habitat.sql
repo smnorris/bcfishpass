@@ -22,20 +22,20 @@ with habitat as (
       when s.feature_code = 'GA24850150' then 'INTERMITTENT'
       else NULL
     end as mapping_code_intermittent,
-    coalesce(u.spawning_bt, bt.spawning) as model_spawning_bt,
-    coalesce(u.spawning_ch, ch.spawning) as model_spawning_ch,
-    coalesce(u.spawning_cm, cm.spawning) as model_spawning_cm,
-    coalesce(u.spawning_co, co.spawning) as model_spawning_co,
-    coalesce(u.spawning_pk, pk.spawning) as model_spawning_pk,
-    coalesce(u.spawning_sk, sk.spawning) as model_spawning_sk,
-    coalesce(u.spawning_st, st.spawning) as model_spawning_st,
-    coalesce(u.spawning_wct, wct.spawning) as model_spawning_wct,
-    coalesce(u.rearing_bt, bt.rearing) as model_rearing_bt,
-    coalesce(u.rearing_ch, ch.rearing) as model_rearing_ch,
-    coalesce(u.rearing_co, co.rearing) as model_rearing_co,
-    coalesce(u.rearing_sk, sk.rearing) as model_rearing_sk,
-    coalesce(u.rearing_st, st.rearing) as model_rearing_st,
-    coalesce(u.rearing_wct, wct.rearing) as model_rearing_wct
+    coalesce(u.spawning_bt, bt.spawning, false) as model_spawning_bt,
+    coalesce(u.spawning_ch, ch.spawning, false) as model_spawning_ch,
+    coalesce(u.spawning_cm, cm.spawning, false) as model_spawning_cm,
+    coalesce(u.spawning_co, co.spawning, false) as model_spawning_co,
+    coalesce(u.spawning_pk, pk.spawning, false) as model_spawning_pk,
+    coalesce(u.spawning_sk, sk.spawning, false) as model_spawning_sk,
+    coalesce(u.spawning_st, st.spawning, false) as model_spawning_st,
+    coalesce(u.spawning_wct, wct.spawning, false) as model_spawning_wct,
+    coalesce(u.rearing_bt, bt.rearing, false) as model_rearing_bt,
+    coalesce(u.rearing_ch, ch.rearing, false) as model_rearing_ch,
+    coalesce(u.rearing_co, co.rearing, false) as model_rearing_co,
+    coalesce(u.rearing_sk, sk.rearing, false) as model_rearing_sk,
+    coalesce(u.rearing_st, st.rearing, false) as model_rearing_st,
+    coalesce(u.rearing_wct, wct.rearing, false) as model_rearing_wct
   from bcfishpass.streams s
   left outer join bcfishpass.habitat_bt bt on s.segmented_stream_id = bt.segmented_stream_id
   left outer join bcfishpass.habitat_ch ch on s.segmented_stream_id = ch.segmented_stream_id
@@ -163,14 +163,14 @@ select
   case
     when
       s.barriers_bt_dnstr = array[]::text[] and
-      h.model_spawning_bt is null and
-      h.model_rearing_bt is null
+      h.model_spawning_bt is false and
+      h.model_rearing_bt is false
     then 'ACCESS'
-    when h.model_spawning_bt is not null
+    when h.model_spawning_bt is true
     then 'SPAWN'
     when
-      h.model_spawning_bt is null and
-      h.model_rearing_bt is not null
+      h.model_spawning_bt is false and
+      h.model_rearing_bt is true
     then 'REAR'
   end,
   case
@@ -187,14 +187,14 @@ select
   case
     when
       s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      h.model_spawning_ch is null and
-      h.model_rearing_ch is null
+      h.model_spawning_ch is false and
+      h.model_rearing_ch is false
     then 'ACCESS'
-    when h.model_spawning_ch is not null
+    when h.model_spawning_ch is true
     then 'SPAWN'
     when
-      h.model_spawning_ch is null and
-      h.model_rearing_ch is not null
+      h.model_spawning_ch is false and
+      h.model_rearing_ch is true
     then 'REAR'
   end,
   case
@@ -211,9 +211,9 @@ select
   case
     when
       s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      h.model_spawning_cm is null
+      h.model_spawning_cm is false
     then 'ACCESS'
-    when h.model_spawning_cm is not null
+    when h.model_spawning_cm is true
     then 'SPAWN'
   end,
   case
@@ -230,14 +230,14 @@ select
   case
     when
       s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      h.model_spawning_co is null and
-      h.model_rearing_co is null
+      h.model_spawning_co is false and
+      h.model_rearing_co is false
     then 'ACCESS'
-    when h.model_spawning_co is not null
+    when h.model_spawning_co is true
     then 'SPAWN'
     when
-      h.model_spawning_co is null and
-      h.model_rearing_co is not null
+      h.model_spawning_co is false and
+      h.model_rearing_co is true
     then 'REAR'
   end,
   case
@@ -254,9 +254,9 @@ select
   case
     when
       s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      h.model_spawning_pk is null
+      h.model_spawning_pk is false
     then 'ACCESS'
-    when h.model_spawning_pk is not null
+    when h.model_spawning_pk is true
     then 'SPAWN'
   end,
   case
@@ -273,14 +273,14 @@ select
   case
     when
       s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      h.model_spawning_sk is null and
-      h.model_rearing_sk is null
+      h.model_spawning_sk is false and
+      h.model_rearing_sk is false
     then 'ACCESS'
-    when h.model_spawning_sk is not null
+    when h.model_spawning_sk is true
     then 'SPAWN'
     when
-      h.model_spawning_sk is null and
-      h.model_rearing_sk is not null
+      h.model_spawning_sk is false and
+      h.model_rearing_sk is true
     then 'REAR'
   end,
   case
@@ -297,14 +297,14 @@ select
   case
     when
       s.barriers_st_dnstr = array[]::text[] and
-      h.model_spawning_st is null and
-      h.model_rearing_st is null
+      h.model_spawning_st is false and
+      h.model_rearing_st is false
     then 'ACCESS'
-    when h.model_spawning_st is not null
+    when h.model_spawning_st is true
     then 'SPAWN'
     when
-      h.model_spawning_st is null and
-      h.model_rearing_st is not null
+      h.model_spawning_st is false and
+      h.model_rearing_st is true
     then 'REAR'
   end,
   case
@@ -321,14 +321,14 @@ select
   case
     when
       s.barriers_wct_dnstr = array[]::text[] and
-      h.model_spawning_wct is null and
-      h.model_rearing_wct is null
+      h.model_spawning_wct is false and
+      h.model_rearing_wct is false
     then 'ACCESS'
-    when h.model_spawning_wct is not null
+    when h.model_spawning_wct is true
     then 'SPAWN'
     when
-      h.model_spawning_wct is null and
-      h.model_rearing_wct is not null
+      h.model_spawning_wct is false and
+      h.model_rearing_wct is true
     then 'REAR'
   end,
   case
@@ -345,34 +345,34 @@ select
   case
     when
       barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and
-      h.model_spawning_ch is null and
-      h.model_spawning_cm is null and
-      h.model_spawning_co is null and
-      h.model_spawning_pk is null and
-      h.model_spawning_sk is null and
-      h.model_rearing_ch is null and
-      h.model_rearing_co is null and
-      h.model_rearing_sk is null
+      h.model_spawning_ch is false and
+      h.model_spawning_cm is false and
+      h.model_spawning_co is false and
+      h.model_spawning_pk is false and
+      h.model_spawning_sk is false and
+      h.model_rearing_ch is false and
+      h.model_rearing_co is false and
+      h.model_rearing_sk is false
     then 'ACCESS'
     -- potential spawning
     when
-      h.model_spawning_ch is not null or
-      h.model_spawning_cm is not null or
-      h.model_spawning_co is not null or
-      h.model_spawning_pk is not null or
-      h.model_spawning_sk is not null
+      h.model_spawning_ch is true or
+      h.model_spawning_cm is true or
+      h.model_spawning_co is true or
+      h.model_spawning_pk is true or
+      h.model_spawning_sk is true
     then 'SPAWN'
     -- potential rearing (and not spawning)
     when
-      h.model_spawning_ch is null and
-      h.model_spawning_cm is null and
-      h.model_spawning_co is null and
-      h.model_spawning_pk is null and
-      h.model_spawning_sk is null and
+      h.model_spawning_ch is false and
+      h.model_spawning_cm is false and
+      h.model_spawning_co is false and
+      h.model_spawning_pk is false and
+      h.model_spawning_sk is false and
       (
-        h.model_rearing_ch is not null or
-        h.model_rearing_co is not null or
-        h.model_rearing_sk is not null
+        h.model_rearing_ch is true or
+        h.model_rearing_co is true or
+        h.model_rearing_sk is true
       )
     then 'REAR'
   end,

@@ -51,19 +51,19 @@ select
   -- potential spawning
   case
     when
-      model_spawning_ch is not null or
-      model_spawning_cm is not null or
-      model_spawning_co is not null or
-      model_spawning_pk is not null or
-      model_spawning_sk is not null
+      model_spawning_ch is true or
+      model_spawning_cm is true or
+      model_spawning_co is true or
+      model_spawning_pk is true or
+      model_spawning_sk is true
     then true
   end as spawning,
   -- potential rearing (and not spawning)
   case
     when
-      model_rearing_ch is not null or
-      model_rearing_co is not null or
-      model_rearing_sk is not null
+      model_rearing_ch is true or
+      model_rearing_co is true or
+      model_rearing_sk is true
     then true
   end as rearing,
   mapping_code_salmon as mapping_code,
