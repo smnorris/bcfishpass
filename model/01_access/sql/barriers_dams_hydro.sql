@@ -16,7 +16,7 @@ INSERT INTO bcfishpass.barriers_dams_hydro
 SELECT
     aggregated_crossings_id,
     crossing_feature_type,
-    crossing_source as barrier_name,
+    dam_name as barrier_name,
     linear_feature_id,
     blue_line_key,
     watershed_key,
@@ -29,7 +29,7 @@ FROM bcfishpass.crossings
 WHERE
   dam_id IS NOT NULL AND
   dam_use = 'Hydroelectricity' AND
-  barrier_status = 'BARRIER' AND
+  barrier_status in ('PARTIAL', 'BARRIER') AND
   blue_line_key = watershed_key AND -- do not include side channel features as barriers
   watershed_group_code = :'wsg'
 ORDER BY watershed_group_code, blue_line_key, downstream_route_measure;
