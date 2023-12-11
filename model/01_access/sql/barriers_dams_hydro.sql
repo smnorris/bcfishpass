@@ -16,7 +16,7 @@ INSERT INTO bcfishpass.barriers_dams_hydro
 SELECT
     aggregated_crossings_id,
     crossing_feature_type,
-    crossing_source as barrier_name,
+    dam_name as barrier_name,
     linear_feature_id,
     blue_line_key,
     watershed_key,
