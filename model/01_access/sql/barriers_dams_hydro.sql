@@ -29,7 +29,7 @@ FROM bcfishpass.crossings
 WHERE
   dam_id IS NOT NULL AND
   dam_use = 'Hydroelectricity' AND
-  barrier_status in ('PARTIAL', 'BARRIER') AND
+  barrier_status IN ('BARRIER', 'POTENTIAL') AND
   blue_line_key = watershed_key AND -- do not include side channel features as barriers
   watershed_group_code = :'wsg'
 ORDER BY watershed_group_code, blue_line_key, downstream_route_measure;
