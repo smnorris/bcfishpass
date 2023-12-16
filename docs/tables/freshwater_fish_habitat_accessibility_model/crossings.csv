@@ -52,8 +52,12 @@ column,description
 ``crossings_dnstr``,List of aggregated_crossings_id values for all crossings downstream
 ``barriers_anthropogenic_dnstr``,List of aggregated_crossings_id values for all anthropogenic barriers downstream
 ``barriers_anthropogenic_upstr``,List of aggregated_crossings_id values for all anthropogenic barriers upstream
+``barriers_anthropogenic_upstr_ch_cm_co_pk_sk``,List of aggregated_crossings_id values for anthropogenic barriers upstream and modelled as potentially accessible to Pacific salmon
+``barriers_anthropogenic_upstr_st``,List of aggregated_crossings_id values for all anthropogenic barriers upstream and modelled as potentially accessible to Steelhead
 ``barriers_anthropogenic_dnstr_count``,Count of anthropogenic barriers downstream
 ``barriers_anthropogenic_upstr_count``,Count of anthropogenic barriers upstream
+``barriers_anthropogenic_upstr_ch_cm_co_pk_sk``,Count of anthropogenic barriers upstream and modelled as potentially accessible to Pacific salmon
+``barriers_anthropogenic_upstr_st``,Count of anthropogenic barriers upstream and modelled as potentially accessible to Steelhead
 ``gradient``,Stream slope at point
 ``total_network_km``,Total length of stream network upstream of point
 ``total_stream_km``,Total length of streams and rivers upstream of point (does not include network connectors in lakes etc)
