@@ -200,11 +200,15 @@ select
  c.stream_magnitude,
  array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
  array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
- array_to_string(c.crossings_dnstr, ';') as crossings_dnstr,
- array_to_string(c.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
- array_to_string(c.barriers_anthropogenic_upstr, ';') as barriers_anthropogenic_upstr,
- coalesce(array_length(barriers_anthropogenic_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
- coalesce(array_length(barriers_anthropogenic_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
+ array_to_string(cd.features_dnstr, ';') as crossings_dnstr,
+ array_to_string(ad.features_dnstr, ';') as barriers_anthropogenic_dnstr,
+ array_to_string(au.features_upstr, ';') as barriers_anthropogenic_upstr,
+ array_to_string(aum.barriers_anthropogenic_upstr_ch_cm_co_pk_sk, ';') as barriers_anthropogenic_upstr_ch_cm_co_pk_sk,
+ array_to_string(aum.barriers_anthropogenic_upstr_st, ';') as barriers_anthropogenic_upstr_st,
+ coalesce(array_length(ad.features_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
+ coalesce(array_length(au.features_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
+ coalesce(array_length(aum.barriers_anthropogenic_upstr_ch_cm_co_pk_sk, 1), 0) as barriers_anthropogenic_upstr_count_ch_cm_co_pk_sk,
+ coalesce(array_length(aum.barriers_anthropogenic_upstr_st, 1), 0) as barriers_anthropogenic_upstr_count_st,
  r.gradient,
  r.total_network_km,
  r.total_stream_km,
@@ -276,6 +280,15 @@ select
  r.st_belowupstrbarriers_slopeclass30_km,
  c.geom
  from bcfishpass.crossings c
+ left outer join bcfishpass.crossings_dnstr_crossings cd
+ on c.aggregated_crossings_id = cd.aggregated_crossings_id
+ left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad
+ on c.aggregated_crossings_id = ad.aggregated_crossings_id
+ left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au
+ on c.aggregated_crossings_id = au.aggregated_crossings_id
+ left outer join bcfishpass.crossings_upstr_barriers_anthropogenic_model aum
+ on c.aggregated_crossings_id = aum.aggregated_crossings_id
  left outer join bcfishpass.crossings_upstream_access r
  on c.aggregated_crossings_id = r.aggregated_crossings_id;
+
 create index on bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw using gist (geom);
