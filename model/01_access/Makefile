@@ -154,7 +154,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 # for crossings table, barriers_anthropogenic, note what barriers are upstream/downstream of each other
 .make/index_crossings: .make/barriers_anthropogenic
 	# note all crossings downstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_crossings cascade"
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_crossings"
 	$(PSQL) -c "create table bcfishpass.crossings_dnstr_crossings (aggregated_crossings_id text primary key, features_dnstr text[])"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_dnstr( \
@@ -169,7 +169,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 	# note all anthropogenic barriers downstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_barriers_anthropogenic cascade"
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_barriers_anthropogenic"
 	$(PSQL) -c "create table bcfishpass.crossings_dnstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_dnstr text[])"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_dnstr( \
@@ -184,7 +184,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 	# note all anthropogenic barriers upstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_upstr_barriers_anthropogenic cascade"
+	$(PSQL) -c "drop table if exists bcfishpass.crossings_upstr_barriers_anthropogenic"
 	$(PSQL) -c "create table bcfishpass.crossings_upstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_upstr text[])"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_upstr( \
@@ -199,7 +199,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 	# note all anthropogenic barriers downstream of an anthropogenic barrier
-	$(PSQL) -c "drop table if exists bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic cascade"
+	$(PSQL) -c "drop table if exists bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
 	$(PSQL) -c "create table bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic (barriers_anthropogenic_id text primary key, features_dnstr text[])"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_dnstr( \
@@ -213,9 +213,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		    :'wsg');\" | \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
-	# note upstream anthropogenic barriers per model
-	$(PSQL) -f sql/crossings_upstr_barriers_anthropogenic_model.sql
-
+	# load data from _dnstr _upstr lookups back into the main tables, drop the lookups
+	$(PSQL) -f sql/index_crossings.sql
 	touch $@
 
 # -------------------------------------------------------------------------------------
