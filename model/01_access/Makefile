@@ -4,7 +4,9 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 # process all watershed groups
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+# test with just watershed groups noted in param (misses cross-wsg barreriers)
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # define the make targets that flag when the table has been built
 SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
@@ -105,7 +107,7 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql \
 	# clear barrier table
 	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"
 	# load data to barrier table in parallel
-	parallel $(PSQL) -f sql/barriers_$(BARRIERTYPE).sql -v wsg={1} ::: $(WSG)
+	parallel $(PSQL) -f sql/barriers_$(BARRIERTYPE).sql -v wsg={1} ::: $(WSGS)
 	touch $@
 
 # -----
@@ -124,7 +126,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	# clear the table
 	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"	
 	# load all features for given spp scenario to barrier table, for all groups
-	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSG)
+	parallel --no-run-if-empty $(PSQL) -f $< -v wsg={1} ::: $(WSGS)
 	# index barriers downstream
 	$(PSQL) -c "drop table if exists bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
 	$(PSQL) -c "create table bcfishpass.barriers_$(BARRIERTYPE)_dnstr (barriers_$(BARRIERTYPE)_id text primary key, features_dnstr text[])"
@@ -138,7 +140,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		    'features_dnstr', \
 		    'false', \
 		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
+		$(PSQL) -v wsg={1}" ::: $(WSGS)
 	# remove non-minimal barriers
 	echo "delete from bcfishpass.:table1 a \
 		  using bcfishpass.:table2 b \
@@ -146,6 +148,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v id=barriers_$(BARRIERTYPE)_id -v table1=barriers_$(BARRIERTYPE) -v table2=barriers_$(BARRIERTYPE)_dnstr
 	# drop the temp _dnstr table
 	$(PSQL) -c "drop table bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
+	# note how much stream is upstream of the barriers
+	$(PSQL) -f sql/add_length_upstream.sql -v src_id=barriers_$(BARRIERTYPE)_id -v src_table=barriers_$(BARRIERTYPE)
 	touch $@
 
 # ------------
@@ -165,7 +169,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		    'features_dnstr', \
 		    'false', \
 		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
+		$(PSQL) -v wsg={1}" ::: $(WSGS)
 
 	# note all anthropogenic barriers downstream of a crossing
 	$(PSQL) -c "truncate bcfishpass.crossings_dnstr_barriers_anthropogenic"
@@ -179,7 +183,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		    'features_dnstr', \
 		    'false', \
 		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
+		$(PSQL) -v wsg={1}" ::: $(WSGS)
 
 	# note all anthropogenic barriers upstream of a crossing
 	$(PSQL) -c "truncate bcfishpass.crossings_upstr_barriers_anthropogenic"
@@ -193,7 +197,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		    'features_upstr', \
 		    'false', \
 		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
+		$(PSQL) -v wsg={1}" ::: $(WSGS)
 
 	# note all anthropogenic barriers downstream of an anthropogenic barrier
 	$(PSQL) -c "truncate bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
@@ -207,10 +211,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		    'features_dnstr', \
 		    'false', \
 		    :'wsg');\" | \
-		$(PSQL) -v wsg={1}" ::: $(WSG)
+		$(PSQL) -v wsg={1}" ::: $(WSGS)
 
-	# load data from _dnstr _upstr lookups back into the main tables, drop the lookups
-	$(PSQL) -f sql/index_crossings.sql
 	touch $@
 
 # -------------------------------------------------------------------------------------

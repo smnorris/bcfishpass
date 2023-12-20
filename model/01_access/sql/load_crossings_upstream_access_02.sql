@@ -80,7 +80,7 @@ with barriers as
   from bcfishpass.crossings_upstream_access a
   inner join bcfishpass.barriers_anthropogenic b
   on a.aggregated_crossings_id = b.barriers_anthropogenic_id
-  inner join bcfishpass.crossings c
+  inner join bcfishpass.crossings_vw c
   on b.barriers_anthropogenic_id = c.aggregated_crossings_id
 ),
 
@@ -242,7 +242,7 @@ with barriers as
   from bcfishpass.crossings_upstream_access a
   inner join bcfishpass.barriers_anthropogenic b
   on a.aggregated_crossings_id = b.barriers_anthropogenic_id
-  inner join bcfishpass.crossings c
+  inner join bcfishpass.crossings_vw c
   on b.barriers_anthropogenic_id = c.aggregated_crossings_id
 ),
 
@@ -315,7 +315,7 @@ above_upstream_barriers as
     SUM(b.wct_slopeclass22_km) as wct_slopeclass22_km,
     SUM(b.wct_slopeclass30_km) as wct_slopeclass30_km
   from bcfishpass.crossings_upstream_access a
-  inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id  -- join to crossings to get barrier status and barriers downstream of given crossing
+  inner join bcfishpass.crossings_vw c on a.aggregated_crossings_id = c.aggregated_crossings_id  -- join to crossings to get barrier status and barriers downstream of given crossing
   left outer join barriers b on
      fwa_upstream(c.blue_line_key, c.downstream_route_measure, c.wscode_ltree, c.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree)
     -- barriers upstream have same downstream barrier id (or no barriers downstream)

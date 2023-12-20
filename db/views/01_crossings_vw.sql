@@ -1,7 +1,7 @@
 -- join crossings table to access and habitat upstream reports, 
 -- convert array types to text for easier dumps
 
-drop view if exists bcfishpass.crossings_vw;
+drop materialized view if exists bcfishpass.crossings_vw;
 create materialized view bcfishpass.crossings_vw as
 select distinct on (c.aggregated_crossings_id)  -- joining to streams based on measure can be error prone due to precision. Just join based on id and keep the first result
   c.aggregated_crossings_id,
@@ -46,8 +46,8 @@ select distinct on (c.aggregated_crossings_id)  -- joining to streams based on m
   c.blue_line_key,
   c.watershed_key,
   c.downstream_route_measure,
-  c.wscode_ltree as wscode,
-  c.localcode_ltree as localcode,
+  c.wscode_ltree,
+  c.localcode_ltree,
   c.watershed_group_code,
   c.gnis_stream_name,
   c.stream_order,

@@ -14,7 +14,7 @@ MODELS=$(ls sql/model_access*.sql | sed -e "s/sql\/model_access_//" | sed -e "s/
 # LOAD STREAMS
 # -----
 # clear streams table and load data from FWA
-$PSQL -c "truncate bcfispass.streams"
+$PSQL -c "truncate bcfishpass.streams"
 $PARALLEL $PSQL -f sql/load_streams.sql -v wsg={1} ::: $WSGS
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
@@ -23,27 +23,27 @@ $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 # -----
 # break at observations
 $PARALLEL \
-	"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-	$PSQL -v wsg={1} -v point_table=observations" ::: $WSGS
+  "echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+  $PSQL -v wsg={1} -v point_table=observations" ::: $WSGS
 
 # break at crossings 
 $PARALLEL \
-	"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-	$PSQL -v wsg={1} -v point_table=crossings" ::: $WSGS
+  "echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+  $PSQL -v wsg={1} -v point_table=crossings" ::: $WSGS
 
 # break at natural barriers for all given species scenarios
 for BARRIERTYPE in $MODELS
 do
-	$PARALLEL \
-		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$PSQL -v wsg={1} -v point_table=barriers_$BARRIERTYPE" ::: $WSGS 
+  $PARALLEL \
+  "echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+  $PSQL -v wsg={1} -v point_table=barriers_$BARRIERTYPE" ::: $WSGS
 done
 
 # break streams at user habitat definition endpoints
 $PSQL -f sql/user_habitat_classification_endpoints.sql
 $PARALLEL \
-		"echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-		$PSQL -v wsg={1} -v point_table=user_habitat_classification_endpoints" ::: $WSGS 
+  "echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
+  $PSQL -v wsg={1} -v point_table=user_habitat_classification_endpoints" ::: $WSGS
 
 # -----
 # INDEX 
@@ -52,17 +52,17 @@ $PARALLEL \
 $PSQL -c "truncate bcfishpass.streams_dnstr_barriers";
 for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
 do
-	$PARALLEL \
-		"echo \"SELECT bcfishpass.load_dnstr(
-		    'bcfishpass.streams',
-		    'segmented_stream_id',
-		    'bcfishpass.barriers_\"$BARRIERTYPE\"',
-		    'barriers_\"$BARRIERTYPE\"_id',
-		    'bcfishpass.streams_barriers_\"$BARRIERTYPE\"_dnstr',
-		    'barriers_\"$BARRIERTYPE\"_dnstr',
-		    'true',
-		    :'wsg');\" | \
-		$PSQL -v wsg={1}" ::: $WSGS
+  $PARALLEL \
+  "echo \"SELECT bcfishpass.load_dnstr(
+      'bcfishpass.streams',
+      'segmented_stream_id',
+      'bcfishpass.barriers_\"$BARRIERTYPE\"',
+      'barriers_\"$BARRIERTYPE\"_id',
+      'bcfishpass.streams_dnstr_barriers',
+      'barriers_\"$BARRIERTYPE\"_dnstr',
+      'true',
+      :'wsg');\" | \
+  $PSQL -v wsg={1}" ::: $WSGS
 done
 
 # also record all crossings downstream
@@ -73,7 +73,7 @@ $PARALLEL \
     'segmented_stream_id',
     'bcfishpass.crossings',
     'aggregated_crossings_id',
-    'bcfishpass.streams_crossings_dnstr',
+    'bcfishpass.streams_dnstr_crossings',
     'crossings_dnstr',
     'true',
     :'wsg');\" | \
@@ -88,7 +88,7 @@ $PARALLEL \
     'segmented_stream_id',
     'bcfishpass.barriers_remediations',
     'barriers_remediations_id',
-    'bcfishpass.streams_barriers_remediations_dnstr',
+    'bcfishpass.streams_dnstr_barriers_remediations',
     'remediations_barriers_dnstr',
     'true',
     :'wsg');\" | \
@@ -101,22 +101,8 @@ $PARALLEL $PSQL -f sql/load_streams_upstr_observations.sql -v wsg={1} ::: $WSGS
 $PSQL -c "truncate bcfishpass.streams_dnstr_species"
 $PARALLEL $PSQL -f sql/load_streams_dnstr_species.sql -v wsg={1} ::: $WSGS
 
-# -----
-# CREATE OUTPUT VIEW
-# -----
-# with indexing complete, refresh access model materialized view
-# $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
-
-# -----
-# REPORT
-# -----
-# add length upstream column to each model barrier table for easy identification of high impact barriers
-for spp in $MODELS
-do
-    $PSQL -f sql/add_length_upstream.sql -v src_table="barriers_"$spp -v src_id="barriers_"$spp"_id" ;
-done
 
 # generate crossings access report
-$PSQL -c "truncate bcfispass.crossings_upstream_access"
+$PSQL -c "truncate bcfishpass.crossings_upstream_access"
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_01.sql -v wsg={1} ::: $WSGS
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_02.sql -v wsg={1} ::: $WSGS

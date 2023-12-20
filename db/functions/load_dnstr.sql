@@ -53,7 +53,7 @@ BEGIN
         ) as d
     group by %2$s
 
-    on conflict ($2$s)
+    on conflict ( %2$s )
     do update set %6$s = EXCLUDED.%6$s;',
 table_a,
 table_a_id,
