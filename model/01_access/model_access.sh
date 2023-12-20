@@ -49,10 +49,9 @@ $PARALLEL \
 # INDEX 
 # -----
 # create tables holding lists of features that are downstream of individual stream segments
+$PSQL -c "truncate bcfishpass.streams_dnstr_barriers";
 for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS
 do
-	$PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
-	$PSQL -c "create table bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr (segmented_stream_id text primary key, barriers_"$BARRIERTYPE"_dnstr text[])"
 	$PARALLEL \
 		"echo \"SELECT bcfishpass.load_dnstr(
 		    'bcfishpass.streams',
@@ -64,13 +63,10 @@ do
 		    'true',
 		    :'wsg');\" | \
 		$PSQL -v wsg={1}" ::: $WSGS
-	# might as well add corresponding _dnstr column to streams table
-	$PSQL -c "alter table bcfishpass.streams add column barriers_"$BARRIERTYPE"_dnstr text[];"
 done
 
-# also record all crossings dnsr
-$PSQL -c "drop table if exists bcfishpass.streams_crossings_dnstr";
-$PSQL -c "create table bcfishpass.streams_crossings_dnstr (segmented_stream_id text primary key, crossings_dnstr text[])"
+# also record all crossings downstream
+$PSQL -c "truncate bcfishpass.streams_dnstr_crossings";
 $PARALLEL \
     "echo \"SELECT bcfishpass.load_dnstr(
     'bcfishpass.streams',
@@ -82,19 +78,10 @@ $PARALLEL \
     'true',
     :'wsg');\" | \
     $PSQL -v wsg={1}" ::: $WSGS
-# add corresponding _dnstr column to streams table
-$PSQL -c "alter table bcfishpass.streams add column crossings_dnstr text[];"
 
-# add dam_dnstr flag
-$PSQL -c "alter table bcfishpass.streams add column dam_dnstr_ind boolean;;"
-$PSQL -c "alter table bcfishpass.streams add column dam_hydro_dnstr_ind boolean;;"
-
-# create remediations/barriers table
-$PSQL -f sql/remediations_barriers.sql
-# record all remediations/barriers downstream
-$PSQL -c "drop table if exists bcfishpass.streams_barriers_remediations_dnstr";
-$PSQL -c "create table bcfishpass.streams_barriers_remediations_dnstr
-(segmented_stream_id text primary key, remediations_barriers_dnstr text[]);"
+# record remediations/barriers downstream (for mapping remediated stream)
+$PSQL -f sql/remediations_barriers.sql    # create required table
+$PSQL -c "truncate bcfishpass.streams_dnstr_barriers_remediations";
 $PARALLEL \
     "echo \"SELECT bcfishpass.load_dnstr(
     'bcfishpass.streams',
@@ -106,42 +93,23 @@ $PARALLEL \
     'true',
     :'wsg');\" | \
     $PSQL -v wsg={1}" ::: $WSGS
-# add a boolean remediation downstream column to streams table
-$PSQL -c "alter table bcfishpass.streams add column remediated_dnstr_ind boolean;;"
 
-# create table holding lists of observations upstream of individual stream segments
-# (this is convenience for field investigation and reporting, not an intput into the individual models)
-$PSQL -c "drop table if exists bcfishpass.streams_observations_upstr"
-$PSQL -c "create table bcfishpass.streams_observations_upstr (segmented_stream_id text primary key, obsrvtn_event_upstr bigint[], obsrvtn_species_codes_upstr text[])"
-$PARALLEL $PSQL -f sql/streams_observations_upstr.sql -v wsg={1} ::: $WSGS
-# add these columns to streams table
-$PSQL -c "alter table bcfishpass.streams add column obsrvtn_event_upstr bigint[], add column obsrvtn_species_codes_upstr text[]"
+# record observations downstream
+# (for convenience for field investigation and reporting, not as input into the individual models)
+$PSQL -c "truncate bcfishpass.streams_upstr_observations"
+$PARALLEL $PSQL -f sql/load_streams_upstr_observations.sql -v wsg={1} ::: $WSGS
+$PSQL -c "truncate bcfishpass.streams_dnstr_species"
+$PARALLEL $PSQL -f sql/load_streams_dnstr_species.sql -v wsg={1} ::: $WSGS
 
-# same for observations downstream
-$PSQL -c "drop table if exists bcfishpass.streams_species_dnstr"
-$PSQL -c "create table bcfishpass.streams_species_dnstr (segmented_stream_id text primary key, species_codes_dnstr text[])"
-$PARALLEL $PSQL -f sql/streams_species_dnstr.sql -v wsg={1} ::: $WSGS
-# add these columns to streams table
-$PSQL -c "alter table bcfishpass.streams add column species_codes_dnstr text[]"
+# -----
+# CREATE OUTPUT VIEW
+# -----
+# with indexing complete, refresh access model materialized view
+# $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
-# now bring all access model data from _upstr _dnstr tables into streams table
-$PSQL -c "drop table if exists bcfishpass.streams_model_access;"
-$PSQL -c "create table bcfishpass.streams_model_access (like bcfishpass.streams including all);"
-$PARALLEL $PSQL -f sql/streams_model_access.sql -v wsg={1} ::: $WSGS
-
-# once loaded, switch new table over into bcfishpass.streams
-$PSQL -c "drop table bcfishpass.streams"
-$PSQL -c "alter table bcfishpass.streams_model_access rename to streams"
-$PSQL -c "VACUUM ANALYZE bcfishpass.streams"
-
-# drop the no longer needed _upstr _dnstr tables
-for BARRIERTYPE in anthropogenic pscis dams dams_hydro $MODELS remediations
-do
-    $PSQL -c "drop table if exists bcfishpass.streams_barriers_"$BARRIERTYPE"_dnstr";
-done
-$PSQL -c "drop table bcfishpass.streams_observations_upstr"
-$PSQL -c "drop table bcfishpass.streams_species_dnstr"
-
+# -----
+# REPORT
+# -----
 # add length upstream column to each model barrier table for easy identification of high impact barriers
 for spp in $MODELS
 do

@@ -52,7 +52,7 @@ model AS (
     )
 )
 
-insert into bcfishpass.habitat_wct
+insert into bcfishpass.habitat_linear_wct
 (segmented_stream_id, spawning)
 select
   segmented_stream_id,
@@ -64,7 +64,7 @@ where spawning is true;
 -- ----------------------------------------------
 -- REARING ON SPAWNING STREAMS (NO CONNECTIVITY ANALYSIS)
 -- ----------------------------------------------
-INSERT INTO bcfishpass.habitat_wct (
+INSERT INTO bcfishpass.habitat_linear_wct (
   segmented_stream_id,
   rearing
 )
@@ -73,7 +73,7 @@ SELECT
   true as rearing
 FROM bcfishpass.streams s
 -- ensure stream is modelled as spawning and accessible
-INNER JOIN bcfishpass.habitat_wct h on s.segmented_stream_id = h.segmented_stream_id
+INNER JOIN bcfishpass.habitat_linear_wct h on s.segmented_stream_id = h.segmented_stream_id
 LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
 LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -183,13 +183,13 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, st.blue_line_key, st.downstream_route_measure, st.wscode_ltree, st.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, st.wscode_ltree, st.localcode_ltree))
-  INNER JOIN bcfishpass.habitat_wct h on st.segmented_stream_id = h.segmented_stream_id
+  INNER JOIN bcfishpass.habitat_linear_wct h on st.segmented_stream_id = h.segmented_stream_id
   WHERE h.spawning IS TRUE
   AND st.watershed_group_code = :'wsg'
 )
 
 -- upsert the rearing downstream of spawning clusters
-INSERT INTO bcfishpass.habitat_wct (
+INSERT INTO bcfishpass.habitat_linear_wct (
   segmented_stream_id,
   rearing
 )
@@ -289,7 +289,7 @@ downstream AS
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
-  LEFT OUTER JOIN bcfishpass.habitat_wct h ON s.segmented_stream_id = h.segmented_stream_id
+  LEFT OUTER JOIN bcfishpass.habitat_linear_wct h ON s.segmented_stream_id = h.segmented_stream_id
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
   AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),
@@ -339,7 +339,7 @@ valid_rearing AS
 )
 
 -- upsert the rearing
-INSERT INTO bcfishpass.habitat_wct (
+INSERT INTO bcfishpass.habitat_linear_wct (
   segmented_stream_id,
   rearing
 )

@@ -6,7 +6,7 @@
 -- REARING
 -- Sockeye rearing is simply all lakes >2km2, spawning is in adjacent streams
 -- ---------------------
-insert into bcfishpass.habitat_sk (
+insert into bcfishpass.habitat_linear_sk (
   segmented_stream_id,
   rearing
 )
@@ -40,7 +40,7 @@ WITH rearing_minimums AS
     s.downstream_route_measure,
     s.blue_line_key
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.habitat_sk h ON s.segmented_stream_id = h.segmented_stream_id
+  INNER JOIN bcfishpass.habitat_linear_sk h ON s.segmented_stream_id = h.segmented_stream_id
   WHERE
     s.watershed_group_code = :'wsg' AND
     h.rearing is true
@@ -121,7 +121,7 @@ dnstr_spawning AS
   WHERE b.waterbody_key IS NULL OR a.row_number < b.row_number
 )
 
-insert into bcfishpass.habitat_sk
+insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
 select
   segmented_stream_id,
@@ -191,7 +191,7 @@ spawn_upstream AS
     sp.wscode_ltree,
     sp.localcode_ltree
   )
-  inner join bcfishpass.habitat_sk h on r.segmented_stream_id = h.segmented_stream_id
+  inner join bcfishpass.habitat_linear_sk h on r.segmented_stream_id = h.segmented_stream_id
   where
     r.watershed_group_code = :'wsg' and
     h.rearing is true
@@ -237,7 +237,7 @@ clusters_near_rearing as
 )
 
 -- finally, insert the streams that compose the clusters connected to lakes
-insert into bcfishpass.habitat_sk
+insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
 select
   segmented_stream_id,

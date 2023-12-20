@@ -4,8 +4,8 @@
 -- method
 -- specify which watersheds to include, which habitat model to use
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.parameters_habitat_method;
-CREATE TABLE bcfishpass.parameters_habitat_method
+drop table if exists bcfishpass.parameters_habitat_method cascade;
+create table bcfishpass.parameters_habitat_method
 (
   watershed_group_code character varying(4),
   model text
@@ -15,8 +15,8 @@ CREATE TABLE bcfishpass.parameters_habitat_method
 -- thresholds
 -- define various spawning/rearing thresholds for species to be modelled
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.parameters_habitat_thresholds;
-CREATE TABLE bcfishpass.parameters_habitat_thresholds (
+drop table if exists bcfishpass.parameters_habitat_thresholds cascade;
+create table bcfishpass.parameters_habitat_thresholds (
   species_code text,
   spawn_gradient_max numeric,
   spawn_channel_width_min numeric,

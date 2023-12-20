@@ -5,7 +5,7 @@
 -- Simply apply the spawing model everywhere in HORS.
 -- (presumably there are other cross-wsg sockeye spawn/rearing, this needs verification)
 -- ---------------------
-insert into bcfishpass.habitat_sk
+insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
 SELECT
   s.segmented_stream_id,

@@ -69,7 +69,7 @@ hab_dnstr as
     AND a.watershed_group_code = b.watershed_group_code
 )
 
-INSERT INTO bcfishpass.streams_species_dnstr
+INSERT INTO bcfishpass.streams_dnstr_species
 (
   segmented_stream_id,
   species_codes_dnstr

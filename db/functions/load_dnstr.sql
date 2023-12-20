@@ -51,7 +51,10 @@ BEGIN
           b.localcode_ltree desc,
           b.downstream_route_measure desc
         ) as d
-    group by %2$s;',
+    group by %2$s
+
+    on conflict ($2$s)
+    do update set %6$s = EXCLUDED.%6$s;',
 table_a,
 table_a_id,
 table_b,

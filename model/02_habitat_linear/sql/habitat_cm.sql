@@ -53,7 +53,7 @@ model AS
     )
 )
 
-insert into bcfishpass.habitat_cm
+insert into bcfishpass.habitat_linear_cm
 (segmented_stream_id, spawning)
 select
   segmented_stream_id,

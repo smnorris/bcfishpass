@@ -7,8 +7,8 @@
 -- (via smallest distance or matched name) does not match correctly
 -- ***PSCIS crossings present in the lookup with no stream/modelled crossing do not get matched to a stream***
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.pscis_modelledcrossings_streams_xref;
-CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
+drop table if exists bcfishpass.pscis_modelledcrossings_streams_xref cascade;
+create table bcfishpass.pscis_modelledcrossings_streams_xref
 (
   stream_crossing_id integer PRIMARY KEY,
   modelled_crossing_id integer UNIQUE,
@@ -26,8 +26,8 @@ CREATE TABLE bcfishpass.pscis_modelledcrossings_streams_xref
 -- Note that we want simple integer unique ids for all anthropogenic barriers that remain constant.
 -- So do not autogenerate, maintain them in the csv manually for now
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_barriers_anthropogenic;
-CREATE TABLE bcfishpass.user_barriers_anthropogenic
+drop table if exists bcfishpass.user_barriers_anthropogenic cascade;
+create table bcfishpass.user_barriers_anthropogenic
 (
     user_barrier_anthropogenic_id integer PRIMARY KEY,
     blue_line_key integer,
@@ -48,8 +48,8 @@ CREATE TABLE bcfishpass.user_barriers_anthropogenic
 --
 -- User added Non-falls definite barrers (exclusions, misc, other)
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_barriers_definite;
-CREATE TABLE bcfishpass.user_barriers_definite
+drop table if exists bcfishpass.user_barriers_definite cascade;
+create table bcfishpass.user_barriers_definite
 (
     barrier_type text,
     barrier_name text,
@@ -69,8 +69,8 @@ CREATE TABLE bcfishpass.user_barriers_definite
 --
 -- Modify barrier status of natural features (fiss/fwa falls, gradient barriers, subsurface flow)
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_barriers_definite_control;
-CREATE TABLE bcfishpass.user_barriers_definite_control
+drop table if exists bcfishpass.user_barriers_definite_control cascade;
+create table bcfishpass.user_barriers_definite_control
 (
   blue_line_key integer,
   downstream_route_measure integer,
@@ -91,8 +91,8 @@ CREATE TABLE bcfishpass.user_barriers_definite_control
 -- additional falls, from various sources
 -- (not grouped in with user_barriers_definite because tracking non-barrier falls is useful)
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_falls;
-CREATE TABLE bcfishpass.user_falls
+drop table if exists bcfishpass.user_falls cascade;
+create table bcfishpass.user_falls
 (
   falls_name text,
   height numeric,
@@ -113,8 +113,8 @@ CREATE TABLE bcfishpass.user_falls
 --
 -- designate stream segments as known rearing/spawning
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_habitat_classification CASCADE;
-CREATE TABLE bcfishpass.user_habitat_classification
+drop table if exists bcfishpass.user_habitat_classification cascade;
+create table bcfishpass.user_habitat_classification
 (
   blue_line_key integer,
   downstream_route_measure double precision,
@@ -137,8 +137,8 @@ CREATE TABLE bcfishpass.user_habitat_classification
 -- user defined override for modelled crossings that are either OBS or non-existent
 -- note that this table uses modelled_crossing_id as identifier rather than blkey/measure
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_modelled_crossing_fixes;
-CREATE TABLE bcfishpass.user_modelled_crossing_fixes
+drop table if exists bcfishpass.user_modelled_crossing_fixes cascade;
+create table bcfishpass.user_modelled_crossing_fixes
 (
   modelled_crossing_id integer,
   structure text,
@@ -148,7 +148,7 @@ CREATE TABLE bcfishpass.user_modelled_crossing_fixes
   source text,
   notes text
 );
-CREATE INDEX ON bcfishpass.user_modelled_crossing_fixes (modelled_crossing_id);
+create index on bcfishpass.user_modelled_crossing_fixes (modelled_crossing_id);
 
 
 -- todo - add user_observations_qa.csv here
@@ -159,8 +159,8 @@ CREATE INDEX ON bcfishpass.user_modelled_crossing_fixes (modelled_crossing_id);
 --
 -- manual override of PSCIS status
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.user_pscis_barrier_status;
-CREATE TABLE bcfishpass.user_pscis_barrier_status
+drop table if exists bcfishpass.user_pscis_barrier_status cascade;
+create table bcfishpass.user_pscis_barrier_status
 (
   stream_crossing_id integer PRIMARY KEY,
   user_barrier_status text,
@@ -177,8 +177,8 @@ CREATE TABLE bcfishpass.user_pscis_barrier_status
 -- presence/absence of target species within all BC watershed groups
 -- SOURCE - CWF WCRP project area scoping (2020)
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.wsg_species_presence;
-CREATE TABLE bcfishpass.wsg_species_presence
+drop table if exists bcfishpass.wsg_species_presence cascade;
+create table bcfishpass.wsg_species_presence
 (
   watershed_group_code varchar(4),
   bt boolean,

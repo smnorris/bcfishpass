@@ -1,4 +1,4 @@
-INSERT INTO bcfishpass.streams_observations_upstr
+INSERT INTO bcfishpass.streams_upstr_observations
 (
   segmented_stream_id,
   obsrvtn_event_upstr,
