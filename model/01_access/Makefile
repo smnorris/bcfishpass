@@ -154,8 +154,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 # for crossings table, barriers_anthropogenic, note what barriers are upstream/downstream of each other
 .make/index_crossings: .make/barriers_anthropogenic
 	# note all crossings downstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_crossings"
-	$(PSQL) -c "create table bcfishpass.crossings_dnstr_crossings (aggregated_crossings_id text primary key, features_dnstr text[])"
+	$(PSQL) -c "truncate bcfishpass.crossings_dnstr_crossings"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_dnstr( \
 		    'bcfishpass.crossings',  \
@@ -169,8 +168,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 	# note all anthropogenic barriers downstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_dnstr_barriers_anthropogenic"
-	$(PSQL) -c "create table bcfishpass.crossings_dnstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_dnstr text[])"
+	$(PSQL) -c "truncate bcfishpass.crossings_dnstr_barriers_anthropogenic"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_dnstr( \
 		    'bcfishpass.crossings',  \
@@ -184,8 +182,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 	# note all anthropogenic barriers upstream of a crossing
-	$(PSQL) -c "drop table if exists bcfishpass.crossings_upstr_barriers_anthropogenic"
-	$(PSQL) -c "create table bcfishpass.crossings_upstr_barriers_anthropogenic (aggregated_crossings_id text primary key, features_upstr text[])"
+	$(PSQL) -c "truncate bcfishpass.crossings_upstr_barriers_anthropogenic"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_upstr( \
 		    'bcfishpass.crossings',  \
@@ -199,8 +196,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		$(PSQL) -v wsg={1}" ::: $(WSG)
 
 	# note all anthropogenic barriers downstream of an anthropogenic barrier
-	$(PSQL) -c "drop table if exists bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
-	$(PSQL) -c "create table bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic (barriers_anthropogenic_id text primary key, features_dnstr text[])"
+	$(PSQL) -c "truncate bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
 	parallel --no-run-if-empty \
 		"echo \"select bcfishpass.load_dnstr( \
 		    'bcfishpass.barriers_anthropogenic',  \
