@@ -77,8 +77,8 @@ clean:
 .make/crossings: .make/dams \
 	.make/pscis \
 	.make/dbm_mof_50k_grid \
-	sql/crossings.sql
-	$(PSQL) -f sql/crossings.sql
+	sql/load_crossings.sql
+	$(PSQL) -f sql/load_crossings.sql
 	touch $@
 
 # -----

@@ -1,13 +1,21 @@
 #!/bin/bash
 set -euxo pipefail
 
-psql $DATABASE_URL -c "create schema if not exists bcfishpass"
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-# create user editable tables
-psql -v ON_ERROR_STOP=1 $DATABASE_URL -f sql/tables.sql
-
-# load all functions
-for sql in sql/functions/*.sql ; do
-	psql $DATABASE_URL -v ON_ERROR_STOP=1 -v ON_ERROR_STOP=1 -f "$sql"
+# load schemas, tables functions
+for sql in sql/schemas/*.sql ; do
+	$PSQL -f "$sql"
 done
 
+for sql in sql/tables/*.sql ; do
+	$PSQL -f "$sql"
+done
+
+for sql in sql/functions/*.sql ; do
+	$PSQL -f "$sql"
+done
+
+for sql in sql/views/*.sql ; do
+	$PSQL -f "$sql"
+done

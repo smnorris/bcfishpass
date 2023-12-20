@@ -14,8 +14,8 @@ MODELS=$(ls sql/model_access*.sql | sed -e "s/sql\/model_access_//" | sed -e "s/
 # LOAD STREAMS
 # -----
 # clear streams table and load data from FWA
-$PSQL -f sql/streams.sql
-$PARALLEL $PSQL -f sql/streams_load.sql -v wsg={1} ::: $WSGS
+$PSQL -c "truncate bcfispass.streams"
+$PARALLEL $PSQL -f sql/load_streams.sql -v wsg={1} ::: $WSGS
 $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 
 # -----
@@ -148,7 +148,7 @@ do
     $PSQL -f sql/add_length_upstream.sql -v src_table="barriers_"$spp -v src_id="barriers_"$spp"_id" ;
 done
 
-# generate crossings report
-$PSQL -f sql/crossings_upstream_access.sql
-parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_access_load.sql -v wsg={1} ::: $WSGS
-parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_access_update.sql -v wsg={1} ::: $WSGS
+# generate crossings access report
+$PSQL -c "truncate bcfispass.crossings_upstream_access"
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_01.sql -v wsg={1} ::: $WSGS
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_02.sql -v wsg={1} ::: $WSGS

@@ -7,7 +7,7 @@ QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(Q
 
 all: model/03_habitat_lateral/data/habitat_lateral.tif
 
-.make/db: db/setup.sh db/sql/tables.sql db/sql/functions/*sql
+.make/db: db/setup.sh db/sql/functions/*sql db/tables/*sql db/sql/schemas/*sql db/sql/views/*sql
 	mkdir -p .make
 	cd db; ./setup.sh
 	touch $@

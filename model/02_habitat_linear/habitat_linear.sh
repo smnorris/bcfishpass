@@ -21,6 +21,9 @@ $PSQL -f sql/horsefly_sk.sql
 # translate user habitat classifcation referencing from measures to stream segment ids
 $PSQL -f sql/user_habitat_classification.sql
 
+# ----
+# REMOVE
+# ----
 # load habitat outputs into streams table by copying to new table
 $PSQL -c "drop table if exists bcfishpass.streams_model_habitat"
 $PSQL -c "create table bcfishpass.streams_model_habitat (like bcfishpass.streams including all);"
@@ -61,15 +64,13 @@ do
   sp=$(echo $sql | sed -e "s/sql\/habitat_//" | sed -e "s/.sql//")
   $PSQL -c 'drop table if exists bcfishpass.habitat_'$sp
 done
+# keep the habitat tables, get habitat in streams_vw
+# ----
+
 
 # generate report of habitat length upstream of all crossings
-$PSQL -f sql/crossings_upstream_habitat.sql
-parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_habitat_load.sql -v wsg={1} ::: $WSGS
-parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/crossings_upstream_habitat_update.sql -v wsg={1} ::: $WSGS
+$PSQL -c "truncate bcfishpass.crossings_upstream_habitat"
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_habitat_01.sql -v wsg={1} ::: $WSGS
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg={1} ::: $WSGS
 
-# create output views
-for vw in sql/views/*_vw.sql
-do
-  $PSQL -f $vw
-done
-
+# refresh views
