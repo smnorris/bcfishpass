@@ -223,12 +223,9 @@ select
   h.wct_rearing_belowupstrbarriers_km,
   c.geom
 from bcfishpass.crossings c
-left outer join bcfishpass.crossings_dnstr_crossings cd
-on c.aggregated_crossings_id = cd.aggregated_crossings_id
-left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad
-on c.aggregated_crossings_id = ad.aggregated_crossings_id
-left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au
-on c.aggregated_crossings_id = au.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_crossings cd on c.aggregated_crossings_id = cd.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggregated_crossings_id = au.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
 left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id;

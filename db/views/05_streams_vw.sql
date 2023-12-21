@@ -1,5 +1,5 @@
-drop view if exists bcfishpass.streams_vw;
-create view bcfishpass.streams_vw as
+drop materialized view if exists bcfishpass.streams_vw;
+create materialized view bcfishpass.streams_vw as
 select
   s.segmented_stream_id,
   s.linear_feature_id,
@@ -68,3 +68,6 @@ from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id;
+
+create unique index on bcfishpass.streams_vw (segmented_stream_id);
+create index on bcfishpass.streams_vw using gist (geom);
