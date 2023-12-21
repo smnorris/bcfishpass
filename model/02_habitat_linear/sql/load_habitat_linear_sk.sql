@@ -14,6 +14,7 @@ SELECT DISTINCT
   s.segmented_stream_id,
   true as rearing
 FROM bcfishpass.streams s
+left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
 INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
 LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk ON s.waterbody_key = lk.waterbody_key
@@ -21,7 +22,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res ON s.waterbody
 WHERE
   p.sk is true AND
   s.watershed_group_code = :'wsg' AND
-  s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
+  av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
   (
     lk.area_ha >= t.rear_lake_ha_min OR  -- lakes
     res.area_ha >= t.rear_lake_ha_min    -- reservoirs
@@ -108,12 +109,13 @@ dnstr_spawning AS
         s.gradient <= t.spawn_gradient_max AND
           (mad.mad_m3s > t.spawn_mad_min OR
           s.stream_order >= 8) AND
-        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+        av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
       THEN true
   END AS spawning
   FROM downstream_within_3k a
   LEFT OUTER JOIN too_steep b ON a.waterbody_key = b.waterbody_key
   INNER JOIN bcfishpass.streams s ON a.segmented_stream_id = s.segmented_stream_id
+  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
@@ -145,6 +147,7 @@ WITH spawn AS
     s.localcode_ltree,
     s.geom
   FROM bcfishpass.streams s
+  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -152,7 +155,7 @@ WITH spawn AS
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
+    av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
 
   ((
     wsg.model = 'cw' AND

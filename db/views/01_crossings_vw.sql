@@ -1,9 +1,9 @@
 -- join crossings table to access and habitat upstream reports, 
 -- convert array types to text for easier dumps
 
-drop materialized view if exists bcfishpass.crossings_vw;
-create materialized view bcfishpass.crossings_vw as
-select distinct on (c.aggregated_crossings_id)  -- joining to streams based on measure can be error prone due to precision. Just join based on id and keep the first result
+drop view if exists bcfishpass.crossings_vw;
+create view bcfishpass.crossings_vw as
+select
   c.aggregated_crossings_id,
   c.stream_crossing_id,
   c.dam_id,
@@ -231,7 +231,4 @@ left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au
 on c.aggregated_crossings_id = au.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
-left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
-order by aggregated_crossings_id, s.downstream_route_measure;
-
-create index on bcfishpass.crossings_vw using gist (geom);
+left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id;

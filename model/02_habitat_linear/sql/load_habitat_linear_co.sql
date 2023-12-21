@@ -1,7 +1,6 @@
 -- ==============================================
 -- COHO HABITAT POTENTIAL MODEL
 -- ==============================================
-
 -- ----------------------------------------------
 -- SPAWNING
 -- ----------------------------------------------
@@ -26,7 +25,7 @@ model AS
         s.gradient <= t.spawn_gradient_max AND
         (cw.channel_width > t.spawn_channel_width_min OR r.waterbody_key IS NOT NULL) AND
         cw.channel_width <= t.spawn_channel_width_max AND
-        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+        av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
       THEN true
       WHEN
         wsg.model = 'mad' AND
@@ -34,10 +33,11 @@ model AS
           mad.mad_m3s > t.spawn_mad_min OR
           s.stream_order >= 8
         ) AND
-        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+        av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
       THEN true
     END AS spawning
   FROM bcfishpass.streams s
+  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -128,13 +128,14 @@ WITH rearing AS
     s.blue_line_key,
     s.downstream_route_measure
   FROM bcfishpass.streams s
+  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'CO'
   WHERE
-    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND       -- accessibility check
+    av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND       -- accessibility check
     s.gradient <= t.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
@@ -219,6 +220,7 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
+  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -226,7 +228,7 @@ WITH rearing AS
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'CO'
   WHERE
     s.watershed_group_code = :'wsg' AND
-    s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND  -- accessibility check
+    av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND  -- accessibility check
     s.gradient <= t.rear_gradient_max AND         -- gradient check
     ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers/wetlands
       ( wb.waterbody_type IS NULL OR
