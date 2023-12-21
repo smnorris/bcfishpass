@@ -1,6 +1,6 @@
 -- view of stream data plus downstream barrier info
-drop view if exists bcfishpass.streams_access_vw;
-create view bcfishpass.streams_access_vw as
+drop materialized view if exists bcfishpass.streams_access_vw cascade;
+create materialized view bcfishpass.streams_access_vw as
 select
    s.segmented_stream_id,
    b.barriers_anthropogenic_dnstr,
@@ -62,3 +62,5 @@ left outer join bcfishpass.wsg_species_presence wsg_ct_dv_rb on s.watershed_grou
 left outer join bcfishpass.wsg_species_presence wsg_st on s.watershed_group_code = wsg_st.watershed_group_code and wsg_st.st is true
 left outer join bcfishpass.wsg_species_presence wsg_wct on s.watershed_group_code = wsg_wct.watershed_group_code and wsg_wct.wct is true
 left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.aggregated_crossings_id and x.pscis_status = 'REMEDIATED' and x.pscis_status = 'PASSABLE';
+
+create index on bcfishpass.streams_access_vw (segmented_stream_id)

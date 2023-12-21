@@ -37,7 +37,7 @@ model AS
       THEN true
     END AS spawning
   FROM bcfishpass.streams s
-  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -128,7 +128,7 @@ WITH rearing AS
     s.blue_line_key,
     s.downstream_route_measure
   FROM bcfishpass.streams s
-  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -180,7 +180,7 @@ ORDER BY cluster_id, wscode_ltree asc, localcode_ltree asc, downstream_route_mea
 -- find all rearing clusters with spawning either:
 --   - upstream
 --   - upstream of stream that the rearing is trib to (and rearing is within 10m of confluence)
-rearing_clusters_dnstr_of_spawn AS
+rearing_clusters_dnstr_of_spawn AS materialized
 (
   SELECT DISTINCT s.cluster_id
   FROM cluster_minimums s
@@ -220,7 +220,7 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
-  left outer join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
   LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code

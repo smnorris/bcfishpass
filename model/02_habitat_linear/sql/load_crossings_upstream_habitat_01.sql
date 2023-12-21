@@ -6,20 +6,20 @@ with upstr as materialized
   select
     a.aggregated_crossings_id,
     a.watershed_group_code,
-    s.model_spawning_bt,
-    s.model_rearing_bt,
-    s.model_spawning_ch,
-    s.model_rearing_ch,
-    s.model_spawning_cm,
-    s.model_spawning_co,
-    s.model_rearing_co,
-    s.model_spawning_pk,
-    s.model_spawning_sk,
-    s.model_rearing_sk,
-    s.model_spawning_st,
-    s.model_rearing_st,
-    s.model_spawning_wct,
-    s.model_rearing_wct,
+    h.spawning_bt,
+    h.rearing_bt,
+    h.spawning_ch,
+    h.rearing_ch,
+    h.spawning_cm,
+    h.spawning_co,
+    h.rearing_co,
+    h.spawning_pk,
+    h.spawning_sk,
+    h.rearing_sk,
+    h.spawning_st,
+    h.rearing_st,
+    h.spawning_wct,
+    h.rearing_wct,
     s.geom
   from bcfishpass.crossings a
   left outer join bcfishpass.streams s
@@ -35,6 +35,7 @@ with upstr as materialized
       true,
       1
      )
+  inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
   where a.watershed_group_code = :'wsg'
   and a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
 )
@@ -61,19 +62,19 @@ insert into bcfishpass.crossings_upstream_habitat
 select
   s.aggregated_crossings_id,
   s.watershed_group_code,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_bt is true) / 1000))::numeric, 2), 0) as bt_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_rearing_bt is true) / 1000))::numeric, 2), 0) as bt_rearing_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_ch is true) / 1000))::numeric, 2), 0) as ch_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_rearing_ch is true) / 1000))::numeric, 2), 0) as ch_rearing_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_cm is true) / 1000))::numeric, 2), 0) as cm_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_co is true) / 1000))::numeric, 2), 0) as co_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_rearing_co is true) / 1000))::numeric, 2), 0) as co_rearing_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_pk is true) / 1000))::numeric, 2), 0) as pk_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_sk is true) / 1000))::numeric, 2), 0) as sk_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_rearing_sk is true) / 1000))::numeric, 2), 0) as sk_rearing_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_st is true) / 1000))::numeric, 2), 0) as st_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_rearing_st is true) / 1000))::numeric, 2), 0) as st_rearing_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_spawning_wct is true) / 1000))::numeric, 2), 0) as wct_spawning_km,
-  coalesce(round(((sum(st_length(s.geom)) filter (where s.model_rearing_wct is true) / 1000))::numeric, 2), 0) as wct_rearing_km
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_bt is true) / 1000))::numeric, 2), 0) as bt_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.rearing_bt is true) / 1000))::numeric, 2), 0) as bt_rearing_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_ch is true) / 1000))::numeric, 2), 0) as ch_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.rearing_ch is true) / 1000))::numeric, 2), 0) as ch_rearing_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_cm is true) / 1000))::numeric, 2), 0) as cm_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_co is true) / 1000))::numeric, 2), 0) as co_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.rearing_co is true) / 1000))::numeric, 2), 0) as co_rearing_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_pk is true) / 1000))::numeric, 2), 0) as pk_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_sk is true) / 1000))::numeric, 2), 0) as sk_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.rearing_sk is true) / 1000))::numeric, 2), 0) as sk_rearing_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_st is true) / 1000))::numeric, 2), 0) as st_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.rearing_st is true) / 1000))::numeric, 2), 0) as st_rearing_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.spawning_wct is true) / 1000))::numeric, 2), 0) as wct_spawning_km,
+  coalesce(round(((sum(st_length(s.geom)) filter (where s.rearing_wct is true) / 1000))::numeric, 2), 0) as wct_rearing_km
 from upstr s
 group by s.aggregated_crossings_id, s.watershed_group_code;
