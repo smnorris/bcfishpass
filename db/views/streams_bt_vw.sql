@@ -1,5 +1,5 @@
-drop view if exists bcfishpass.streams_bt_vw;
-create or replace view bcfishpass.streams_bt_vw as
+drop materialized view if exists bcfishpass.streams_bt_vw;
+create materialized view bcfishpass.streams_bt_vw as
 with obs as
 (
  select

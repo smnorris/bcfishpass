@@ -45,7 +45,7 @@ with mcbi as (
       else NULL
     end as mapping_code_intermittent
   from bcfishpass.streams s
-  left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+  inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 )
 
 select
@@ -278,6 +278,5 @@ select
   ], ';') as mapping_code_salmon
 from bcfishpass.streams s
 inner join mcbi m on s.segmented_stream_id = m.segmented_stream_id
-left outer join bcfishpass.streams_access_vw a on a.segmented_stream_id = a.segmented_stream_id
-left outer join bcfishpass.streams_habitat_linear_vw h on a.segmented_stream_id = h.segmented_stream_id
-
+inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id;

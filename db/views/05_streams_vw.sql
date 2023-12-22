@@ -63,7 +63,7 @@ select
   m.mapping_code_st,
   m.mapping_code_wct,
   m.mapping_code_salmon,
-  geom
+  s.geom
 from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
