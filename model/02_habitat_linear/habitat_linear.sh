@@ -23,7 +23,8 @@ $PSQL -c "truncate bcfishpass.crossings_upstream_habitat"
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_habitat_01.sql -v wsg={1} ::: $WSGS
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg={1} ::: $WSGS
 
-# with habitat processing complete, refresh materialized views
+# with linear model processing complete, refresh materialized views
+$PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barrier_per_model"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 $PSQL -c "refresh materialized view bcfishpass.streams_vw"
 $PSQL -c "refresh materialized view bcfishpass.streams_bt_vw"

@@ -66,10 +66,17 @@ select
   array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
   array_to_string(cd.features_dnstr, ';') as crossings_dnstr,
   array_to_string(ad.features_dnstr, ';') as barriers_anthropogenic_dnstr,
-  array_to_string(au.features_upstr, ';') as barriers_anthropogenic_upstr,
   coalesce(array_length(ad.features_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
+  array_to_string(au.features_upstr, ';') as barriers_anthropogenic_upstr,
   coalesce(array_length(au.features_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
-
+  array_to_string(aum.barriers_upstr_bt, ';') as barriers_anthropogenic_bt_upstr,
+  coalesce(array_length(aum.barriers_upstr_bt, 1), 0) as barriers_anthropogenic_upstr_bt_count,
+  array_to_string(aum.barriers_upstr_ch_cm_co_pk_sk, ';') as barriers_anthropogenic_ch_cm_co_pk_sk_upstr,
+  coalesce(array_length(aum.barriers_upstr_ch_cm_co_pk_sk, 1), 0) as barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count,
+  array_to_string(aum.barriers_upstr_st, ';') as barriers_anthropogenic_st_upstr,
+  coalesce(array_length(aum.barriers_upstr_st, 1), 0) as barriers_anthropogenic_st_upstr_count,
+  array_to_string(aum.barriers_upstr_wct, ';') as barriers_anthropogenic_wct_upstr,
+  coalesce(array_length(aum.barriers_upstr_wct, 1), 0) as barriers_anthropogenic_wct_upstr_count,
   a.gradient,
   a.total_network_km,
   a.total_stream_km,
@@ -229,6 +236,7 @@ from bcfishpass.crossings c
 left outer join bcfishpass.crossings_dnstr_crossings cd on c.aggregated_crossings_id = cd.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggregated_crossings_id = au.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_barriers_per_model_vw aum on c.aggregated_crossings_id = aum.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
 left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
