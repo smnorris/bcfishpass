@@ -246,13 +246,6 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	./model_access.sh
 	touch $@
 
-# refresh FPTWG materialized views
-.make/fptwg: .make/model_access
-	$(PSQL) -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw"
-	$(PSQL) -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw"
-	$(PSQL) -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw"
-	touch $@
-
-.make/qa: .make/fptwg
+.make/qa: .make/model_access
 	cd qa; ./qa.sh
 	touch $@

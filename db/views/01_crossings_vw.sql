@@ -1,7 +1,7 @@
 -- join crossings table to streams / access / habitat tables
 -- and convert array types to text for easier dumps
 
-drop materialized view if exists bcfishpass.crossings_vw;
+drop materialized view if exists bcfishpass.crossings_vw cascade; -- cascade FPTWG crossings view if exists
 create materialized view bcfishpass.crossings_vw as
 select
   -- joining to streams based on measure can be error prone due to precision.
@@ -64,10 +64,9 @@ select
   s.mad_m3s,
   array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
   array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
-
-  cd.features_dnstr as crossings_dnstr,
-  ad.features_dnstr as barriers_anthropogenic_dnstr,
-  au.features_upstr as barriers_anthropogenic_upstr,
+  array_to_string(cd.features_dnstr, ';') as crossings_dnstr,
+  array_to_string(ad.features_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(au.features_upstr, ';') as barriers_anthropogenic_upstr,
   coalesce(array_length(ad.features_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
   coalesce(array_length(au.features_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
 
