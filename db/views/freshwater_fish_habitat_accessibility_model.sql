@@ -19,6 +19,7 @@ with observations as
     o.fish_observation_point_id,
     o.observation_date
   from bcfishpass.streams s
+  inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
   left outer join bcfishpass.observations_vw o
   on FWA_Upstream(
           s.blue_line_key,
@@ -34,7 +35,7 @@ with observations as
         )
   and s.watershed_group_code = o.watershed_group_code
   where o.species_code in ('CH','CM','CO','PK','SK')
-  and s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+  and a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
   ) as f
   group by segmented_stream_id
 )
@@ -56,17 +57,17 @@ select
   s.feature_code,
   array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr,
   array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
-  array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
-  array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
-  array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
-  s.dam_dnstr_ind,
-  s.dam_hydro_dnstr_ind,
-  s.remediated_dnstr_ind,
+  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  a.dam_dnstr_ind,
+  a.dam_hydro_dnstr_ind,
+  a.remediated_dnstr_ind,
   s.geom
 from bcfishpass.streams s
-left outer join observations o
-on s.segmented_stream_id = o.segmented_stream_id
-where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
+inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+left outer join observations o on s.segmented_stream_id = o.segmented_stream_id
+where a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
 
 
 drop materialized view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw;
@@ -86,6 +87,7 @@ with observations as
     o.fish_observation_point_id,
     o.observation_date
   from bcfishpass.streams s
+  inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
   left outer join bcfishpass.observations_vw o
   on FWA_Upstream(
           s.blue_line_key,
@@ -101,7 +103,7 @@ with observations as
         )
   and s.watershed_group_code = o.watershed_group_code
   where o.species_code = 'ST' 
-  and s.barriers_st_dnstr = array[]::text[]
+  and a.barriers_st_dnstr = array[]::text[]
   ) as f
   group by segmented_stream_id
 )
@@ -123,17 +125,17 @@ select
   s.feature_code,
   array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr,
   array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
-  array_to_string(s.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
-  array_to_string(s.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
-  array_to_string(s.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
-  s.dam_dnstr_ind,
-  s.dam_hydro_dnstr_ind,
-  s.remediated_dnstr_ind,
+  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  a.dam_dnstr_ind,
+  a.dam_hydro_dnstr_ind,
+  a.remediated_dnstr_ind,
   s.geom
 from bcfishpass.streams s
-left outer join observations o
-on s.segmented_stream_id = o.segmented_stream_id
-where barriers_st_dnstr = array[]::text[];
+inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+left outer join observations o on s.segmented_stream_id = o.segmented_stream_id
+where a.barriers_st_dnstr = array[]::text[];
 
 
 -- no views required for barrier tables, they can be used directly (only change would be renaming wscode/localcode)
@@ -145,10 +147,10 @@ select * from bcfishpass.observations_vw
 where species_code in ('CH','CM','CO','PK','SK','ST');
 
 
--- dump crossings 
+-- create view of crossings with just salmon/steelhead related columns
 
-drop materialized view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
-create materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
+create view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
 select
  c.aggregated_crossings_id,
  c.stream_crossing_id,
@@ -160,7 +162,7 @@ select
  c.pscis_status,
  c.crossing_type_code,
  c.crossing_subtype_code,
- array_to_string(c.modelled_crossing_type_source, ';') as modelled_crossing_type_source,
+ c.modelled_crossing_type_source,
  c.barrier_status,
  c.pscis_road_name,
  c.pscis_stream_name,
@@ -198,84 +200,81 @@ select
  c.gnis_stream_name,
  c.stream_order,
  c.stream_magnitude,
- array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
- array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
- array_to_string(c.crossings_dnstr, ';') as crossings_dnstr,
- array_to_string(c.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
- array_to_string(c.barriers_anthropogenic_upstr, ';') as barriers_anthropogenic_upstr,
- coalesce(array_length(barriers_anthropogenic_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
- coalesce(array_length(barriers_anthropogenic_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
- r.gradient,
- r.total_network_km,
- r.total_stream_km,
- r.total_lakereservoir_ha,
- r.total_wetland_ha,
- r.total_slopeclass03_waterbodies_km,
- r.total_slopeclass03_km,
- r.total_slopeclass05_km,
- r.total_slopeclass08_km,
- r.total_slopeclass15_km,
- r.total_slopeclass22_km,
- r.total_slopeclass30_km,
- r.total_belowupstrbarriers_network_km,
- r.total_belowupstrbarriers_stream_km,
- r.total_belowupstrbarriers_lakereservoir_ha,
- r.total_belowupstrbarriers_wetland_ha,
- r.total_belowupstrbarriers_slopeclass03_waterbodies_km,
- r.total_belowupstrbarriers_slopeclass03_km,
- r.total_belowupstrbarriers_slopeclass05_km,
- r.total_belowupstrbarriers_slopeclass08_km,
- r.total_belowupstrbarriers_slopeclass15_km,
- r.total_belowupstrbarriers_slopeclass22_km,
- r.total_belowupstrbarriers_slopeclass30_km,
- array_to_string(r.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
- r.ch_cm_co_pk_sk_network_km,
- r.ch_cm_co_pk_sk_stream_km,
- r.ch_cm_co_pk_sk_lakereservoir_ha,
- r.ch_cm_co_pk_sk_wetland_ha,
- r.ch_cm_co_pk_sk_slopeclass03_waterbodies_km,
- r.ch_cm_co_pk_sk_slopeclass03_km,
- r.ch_cm_co_pk_sk_slopeclass05_km,
- r.ch_cm_co_pk_sk_slopeclass08_km,
- r.ch_cm_co_pk_sk_slopeclass15_km,
- r.ch_cm_co_pk_sk_slopeclass22_km,
- r.ch_cm_co_pk_sk_slopeclass30_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_network_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_stream_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha,
- r.ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km,
- r.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km,
- array_to_string(r.barriers_st_dnstr, ';') as barriers_st_dnstr,
- r.st_network_km,
- r.st_stream_km,
- r.st_lakereservoir_ha,
- r.st_wetland_ha,
- r.st_slopeclass03_waterbodies_km,
- r.st_slopeclass03_km,
- r.st_slopeclass05_km,
- r.st_slopeclass08_km,
- r.st_slopeclass15_km,
- r.st_slopeclass22_km,
- r.st_slopeclass30_km,
- r.st_belowupstrbarriers_network_km,
- r.st_belowupstrbarriers_stream_km,
- r.st_belowupstrbarriers_lakereservoir_ha,
- r.st_belowupstrbarriers_wetland_ha,
- r.st_belowupstrbarriers_slopeclass03_waterbodies_km,
- r.st_belowupstrbarriers_slopeclass03_km,
- r.st_belowupstrbarriers_slopeclass05_km,
- r.st_belowupstrbarriers_slopeclass08_km,
- r.st_belowupstrbarriers_slopeclass15_km,
- r.st_belowupstrbarriers_slopeclass22_km,
- r.st_belowupstrbarriers_slopeclass30_km,
+ c.observedspp_dnstr,
+ c.observedspp_upstr,
+ c.crossings_dnstr,
+ c.barriers_anthropogenic_dnstr,
+ c.barriers_anthropogenic_upstr,
+ c.barriers_anthropogenic_dnstr_count,
+ c.barriers_anthropogenic_upstr_count,
+ c.gradient,
+ c.total_network_km,
+ c.total_stream_km,
+ c.total_lakereservoir_ha,
+ c.total_wetland_ha,
+ c.total_slopeclass03_waterbodies_km,
+ c.total_slopeclass03_km,
+ c.total_slopeclass05_km,
+ c.total_slopeclass08_km,
+ c.total_slopeclass15_km,
+ c.total_slopeclass22_km,
+ c.total_slopeclass30_km,
+ c.total_belowupstrbarriers_network_km,
+ c.total_belowupstrbarriers_stream_km,
+ c.total_belowupstrbarriers_lakereservoir_ha,
+ c.total_belowupstrbarriers_wetland_ha,
+ c.total_belowupstrbarriers_slopeclass03_waterbodies_km,
+ c.total_belowupstrbarriers_slopeclass03_km,
+ c.total_belowupstrbarriers_slopeclass05_km,
+ c.total_belowupstrbarriers_slopeclass08_km,
+ c.total_belowupstrbarriers_slopeclass15_km,
+ c.total_belowupstrbarriers_slopeclass22_km,
+ c.total_belowupstrbarriers_slopeclass30_km,
+ c.barriers_ch_cm_co_pk_sk_dnstr,
+ c.ch_cm_co_pk_sk_network_km,
+ c.ch_cm_co_pk_sk_stream_km,
+ c.ch_cm_co_pk_sk_lakereservoir_ha,
+ c.ch_cm_co_pk_sk_wetland_ha,
+ c.ch_cm_co_pk_sk_slopeclass03_waterbodies_km,
+ c.ch_cm_co_pk_sk_slopeclass03_km,
+ c.ch_cm_co_pk_sk_slopeclass05_km,
+ c.ch_cm_co_pk_sk_slopeclass08_km,
+ c.ch_cm_co_pk_sk_slopeclass15_km,
+ c.ch_cm_co_pk_sk_slopeclass22_km,
+ c.ch_cm_co_pk_sk_slopeclass30_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_network_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_stream_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km,
+ c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km,
+ c.barriers_st_dnstr,
+ c.st_network_km,
+ c.st_stream_km,
+ c.st_lakereservoir_ha,
+ c.st_wetland_ha,
+ c.st_slopeclass03_waterbodies_km,
+ c.st_slopeclass03_km,
+ c.st_slopeclass05_km,
+ c.st_slopeclass08_km,
+ c.st_slopeclass15_km,
+ c.st_slopeclass22_km,
+ c.st_slopeclass30_km,
+ c.st_belowupstrbarriers_network_km,
+ c.st_belowupstrbarriers_stream_km,
+ c.st_belowupstrbarriers_lakereservoir_ha,
+ c.st_belowupstrbarriers_wetland_ha,
+ c.st_belowupstrbarriers_slopeclass03_waterbodies_km,
+ c.st_belowupstrbarriers_slopeclass03_km,
+ c.st_belowupstrbarriers_slopeclass05_km,
+ c.st_belowupstrbarriers_slopeclass08_km,
+ c.st_belowupstrbarriers_slopeclass15_km,
+ c.st_belowupstrbarriers_slopeclass22_km,
+ c.st_belowupstrbarriers_slopeclass30_km,
  c.geom
- from bcfishpass.crossings c
- left outer join bcfishpass.crossings_upstream_access r
- on c.aggregated_crossings_id = r.aggregated_crossings_id;
-create index on bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw using gist (geom);
+ from bcfishpass.crossings_vw c;

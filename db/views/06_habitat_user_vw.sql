@@ -1,6 +1,6 @@
 -- translate provided measures into segmented_stream_ids for easy lookup
-DROP table IF EXISTS bcfishpass.habitat_user;
-CREATE table bcfishpass.habitat_user AS
+DROP view IF EXISTS bcfishpass.habitat_user_vw;
+CREATE view bcfishpass.habitat_user_vw AS
 WITH manual_habitat_class AS
 (
     SELECT distinct

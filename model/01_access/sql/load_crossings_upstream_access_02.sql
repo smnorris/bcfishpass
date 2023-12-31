@@ -76,12 +76,13 @@ WHERE watershed_group_code = :'wsg';
 -- reset belowupstrbarriers columns for barriers with other barriers upstream
 with barriers as
 (
-  select a.*, c.barriers_anthropogenic_dnstr
+  select
+    a.*,
+    ad.features_dnstr as barriers_anthropogenic_dnstr
   from bcfishpass.crossings_upstream_access a
-  inner join bcfishpass.barriers_anthropogenic b
-  on a.aggregated_crossings_id = b.barriers_anthropogenic_id
-  inner join bcfishpass.crossings_vw c
-  on b.barriers_anthropogenic_id = c.aggregated_crossings_id
+  inner join bcfishpass.barriers_anthropogenic b on a.aggregated_crossings_id = b.barriers_anthropogenic_id
+  --inner join bcfishpass.crossings_vw c on b.barriers_anthropogenic_id = c.aggregated_crossings_id
+  left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on b.barriers_anthropogenic_id = ad.aggregated_crossings_id
 ),
 
 above_upstream_barriers as
@@ -238,12 +239,11 @@ with barriers as
     c.downstream_route_measure,
     c.wscode_ltree,
     c.localcode_ltree,
-    c.barriers_anthropogenic_dnstr
+    ad.features_dnstr as barriers_anthropogenic_dnstr
   from bcfishpass.crossings_upstream_access a
-  inner join bcfishpass.barriers_anthropogenic b
-  on a.aggregated_crossings_id = b.barriers_anthropogenic_id
-  inner join bcfishpass.crossings_vw c
-  on b.barriers_anthropogenic_id = c.aggregated_crossings_id
+  inner join bcfishpass.barriers_anthropogenic b on a.aggregated_crossings_id = b.barriers_anthropogenic_id
+  inner join bcfishpass.crossings c on b.barriers_anthropogenic_id = c.aggregated_crossings_id
+  left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
 ),
 
 above_upstream_barriers as
@@ -315,11 +315,12 @@ above_upstream_barriers as
     SUM(b.wct_slopeclass22_km) as wct_slopeclass22_km,
     SUM(b.wct_slopeclass30_km) as wct_slopeclass30_km
   from bcfishpass.crossings_upstream_access a
-  inner join bcfishpass.crossings_vw c on a.aggregated_crossings_id = c.aggregated_crossings_id  -- join to crossings to get barrier status and barriers downstream of given crossing
+  inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id  -- join to crossings to get barrier status
+  left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
   left outer join barriers b on
      fwa_upstream(c.blue_line_key, c.downstream_route_measure, c.wscode_ltree, c.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree)
     -- barriers upstream have same downstream barrier id (or no barriers downstream)
-    and (c.barriers_anthropogenic_dnstr[1] = b.barriers_anthropogenic_dnstr[1]
+    and (ad.features_dnstr[1] = b.barriers_anthropogenic_dnstr[1]
         or b.barriers_anthropogenic_dnstr is null
         )
   where a.watershed_group_code = :'wsg'

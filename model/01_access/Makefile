@@ -87,7 +87,7 @@ clean:
 # OBSERVATIONS
 # -----
 # load observations of all spp of interest from bcfishobs to bcfishpass.observations
-.make/observations: sql/observations.sql
+.make/observations: sql/load_observations.sql
 	$(PSQL) -f $^ 
 	touch $@
 

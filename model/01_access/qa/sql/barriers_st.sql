@@ -1,4 +1,4 @@
--- check steelhead barriers with ST observations and salmon observations
+-- list steelhead barriers with steelhead or salmon observations upstream
 select
   b.barriers_st_id,
   b.barrier_type,

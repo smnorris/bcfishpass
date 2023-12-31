@@ -7,7 +7,7 @@ WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_hab
 
 
 # run all habitat queries per watershed group
-for sql in sql/load_habitat_linear_co.sql
+for sql in sql/load_habitat_linear_*.sql
 do
   sp=$(echo $sql | sed -e "s/sql\/load_habitat_linear_//" | sed -e "s/.sql//")
   $PSQL -c "truncate bcfishpass.habitat_linear_"$sp
@@ -18,12 +18,20 @@ done
 # (this is highly likely to be present elsewhere but has not been investigated)
 $PSQL -f sql/horsefly_sk.sql
 
-# translate user habitat classifcation referencing from measures to stream segment ids
-$PSQL -f sql/user_habitat_classification.sql
-
 # generate report of habitat length upstream of all crossings
 $PSQL -c "truncate bcfishpass.crossings_upstream_habitat"
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_habitat_01.sql -v wsg={1} ::: $WSGS
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg={1} ::: $WSGS
 
-# refresh materialized views?
+# with habitat processing complete, refresh materialized views
+$PSQL -c "refresh materialized view bcfishpass.crossings_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_bt_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_ch_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_cm_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_co_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_pk_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_salmon_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_sk_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_st_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_wct_vw"

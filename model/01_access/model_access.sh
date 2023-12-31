@@ -101,7 +101,6 @@ $PARALLEL $PSQL -f sql/load_streams_upstr_observations.sql -v wsg={1} ::: $WSGS
 $PSQL -c "truncate bcfishpass.streams_dnstr_species"
 $PARALLEL $PSQL -f sql/load_streams_dnstr_species.sql -v wsg={1} ::: $WSGS
 
-
 # generate crossings access report
 $PSQL -c "truncate bcfishpass.crossings_upstream_access"
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_01.sql -v wsg={1} ::: $WSGS

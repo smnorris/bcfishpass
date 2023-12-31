@@ -80,7 +80,7 @@ spawning_rearing_observed as (
     sum(st_length(geom)) filter (where (h.spawning_wct is true or h.rearing_wct is true) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_obsrvd_spawning_rearing_wct_accessible_a,
     sum(st_length(geom)) filter (where (h.spawning_wct is true or h.rearing_wct is true) and barriers_anthropogenic_dnstr is null) as length_obsrvd_spawning_rearing_wct_accessible_b
   from bcfishpass.streams_access_vw sv
-  left outer join bcfishpass.habitat_user h on sv.segmented_stream_id = h.segmented_stream_id
+  left outer join bcfishpass.habitat_user_vw h on sv.segmented_stream_id = h.segmented_stream_id
   inner join bcfishpass.streams s on sv.segmented_stream_id = s.segmented_stream_id
   group by watershed_group_code
 ),

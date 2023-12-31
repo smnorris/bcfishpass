@@ -3,22 +3,6 @@
 --
 -- extract observations for species of interest from bcfishobs
 -- --------------
-DROP TABLE IF EXISTS bcfishpass.observations cascade;
-
-CREATE TABLE bcfishpass.observations
-(
-  fish_obsrvtn_event_id bigint primary key,
-  linear_feature_id         bigint                           ,
-  blue_line_key             integer                          ,
-  wscode_ltree ltree                                         ,
-  localcode_ltree ltree                                      ,
-  downstream_route_measure  double precision                 ,
-  watershed_group_code      character varying(4)             ,
-  species_codes text[]                                       ,
-  observation_ids int[]                                      ,
-  observation_dates date[]                                    ,
-  geom geometry(PointZM, 3005)
-);
 
 
 -- insert records for watersheds of interest / spp of interest
@@ -122,58 +106,5 @@ GROUP BY p.fish_obsrvtn_event_id,
   p.watershed_group_code,
   e.geom;
 
--- index
-create index if not exists obsrvtn_linear_feature_id_idx on bcfishpass.observations (linear_feature_id);
-create index if not exists obsrvtn_blue_line_key_idx on bcfishpass.observations (blue_line_key);
-create index if not exists obsrvtn_watershed_group_code_idx on bcfishpass.observations (watershed_group_code);
-create index if not exists obsrvtn_wsc_gidx on bcfishpass.observations using gist (wscode_ltree);
-create index if not exists obsrvtn_wsc_bidx on bcfishpass.observations using btree (wscode_ltree);
-create index if not exists obsrvtn_lc_gidx on bcfishpass.observations using gist (localcode_ltree);
-create index if not exists obsrvtn_lc_bidx on bcfishpass.observations using btree (localcode_ltree);
-create index if not exists obsrvtn_geom_idx on bcfishpass.observations using gist (geom);
-
-
--- create view of distinct observations for simpler species based queries
-drop materialized view if exists bcfishpass.observations_vw cascade;
-create materialized view bcfishpass.observations_vw as
-
-with unnested as
-(select
-    unnest(observation_ids) as fish_observation_point_id,
-    unnest(species_codes) as species_code,
-    unnest(observation_dates) as observation_date,
-    fish_obsrvtn_event_id,
-    linear_feature_id,
-    blue_line_key,
-    wscode_ltree,
-    localcode_ltree,
-    downstream_route_measure,
-    watershed_group_code,
-    geom
-from bcfishpass.observations)
-select 
-  u.fish_observation_point_id,
-  u.fish_obsrvtn_event_id,
-  u.linear_feature_id,
-  u.blue_line_key,
-  u.wscode_ltree,
-  u.localcode_ltree,
-  u.downstream_route_measure,
-  u.watershed_group_code,
-  u.species_code,
-  u.observation_date,
-  o.activity_code,
-  o.activity,
-  o.life_stage_code,
-  o.life_stage,
-  o.acat_report_url,
-  u.geom
-from unnested u
-inner join whse_fish.fiss_fish_obsrvtn_pnt_sp o
-on u.fish_observation_point_id = o.fish_observation_point_id;
-
-create unique index on bcfishpass.observations_vw (fish_observation_point_id);
-create index on bcfishpass.observations_vw using gist (wscode_ltree);
-create index on bcfishpass.observations_vw using btree (wscode_ltree);
-create index on bcfishpass.observations_vw using gist (localcode_ltree);
-create index on bcfishpass.observations_vw using btree (localcode_ltree);
+-- refresh the view with the new data
+refresh materialized view bcfishpass.observations_vw;
