@@ -34,7 +34,7 @@ create table bcfishpass.crossings
     crossing_type_code text,              -- PSCIS crossing_type_code where available, model CBS/OBS otherwise
     crossing_subtype_code text,           -- PSCIS crossing_subtype_code info (BRIDGE, FORD, ROUND etc) (NULL for modelled crossings)
     modelled_crossing_type_source text[], -- for modelled crossings, what data source(s) indicate that a modelled crossing is OBS
-    barrier_status text,                  -- PSCIS barrier status if available, otherwise 'POTENTIAL' for modelled CBS, 'PASSABLE' for modelled OBS
+    barrier_status text,                  -- PSCIS barrier status if available, otherwise 'POTENTIAL' for modelled CBS, 'PASSABLE' for modelled OBS, CABD status for dams
 
     -- basic PSCIS info
     pscis_road_name text,                 -- road name from pscis assessment
