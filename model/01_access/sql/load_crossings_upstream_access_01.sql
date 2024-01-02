@@ -3,6 +3,8 @@
 -- ---------------------------------
 
 -- create temp tables to avoid memory issues on systems with limited resources
+-- (consider only reporting on barriers (or crossings on streams of order < 8 or so)
+-- to eliminate memory/disk issues with these potentially very large temp tables)
 create temporary table temp_upstr_length as
 select
   a.aggregated_crossings_id,
