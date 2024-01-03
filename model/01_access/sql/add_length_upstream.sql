@@ -1,7 +1,7 @@
 -- do calculations in a temp table rather than running a slow UPDATE
 alter table bcfishpass.:src_table drop column if exists total_network_km;
 
-create temporary table length_upstream (like bcfishpass.barriers_ch_cm_co_pk_sk);
+create temporary table length_upstream (like bcfishpass.:src_table);
 
 -- add new column
 alter table length_upstream add column if not exists total_network_km double precision DEFAULT 0;

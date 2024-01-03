@@ -1,12 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
-# Generate FPTWG salmon/steelhead access model views, then publish it and supporting data
+# Dump FPTWG salmon/steelhead access views to file
 # https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
-
-# ideally this would be run against the staging database, but it
-# refresh the views
-psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/freshwater_fish_habitat_accessibility_model.sql
 
 # clear any existing dumps
 rm -rf freshwater_fish_habitat_accessibility_MODEL.gpkg*

@@ -1,3 +1,4 @@
+-- list salmon barriers with salmon observations upstream
 select
   b.barriers_ch_cm_co_pk_sk_id,
   b.barrier_type,

@@ -7,14 +7,14 @@ QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(Q
 
 all: model/03_habitat_lateral/data/habitat_lateral.tif
 
-.make/db: db/setup.sh db/sql/tables.sql db/sql/functions/*sql
+.make/db: db/setup.sh db/functions/*sql db/tables/*sql db/schemas/*sql db/views/*sql
 	mkdir -p .make
 	cd db; ./setup.sh
 	touch $@
 
 .make/parameters: .make/db parameters/*.csv
-	$(PSQL) -c "DELETE FROM bcfishpass.parameters_habitat_method";
-	$(PSQL) -c "DELETE FROM bcfishpass.parameters_habitat_thresholds";
+	$(PSQL) -c "truncate bcfishpass.parameters_habitat_method";
+	$(PSQL) -c "truncate bcfishpass.parameters_habitat_thresholds";
 	$(PSQL) -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header";
 	$(PSQL) -c "\copy bcfishpass.parameters_habitat_thresholds FROM parameters/parameters_habitat_thresholds.csv delimiter ',' csv header";
 	touch $@
