@@ -45,9 +45,9 @@ $PSQL -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibi
 $PSQL -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw"
 $PSQL -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw"
 
-# finished.
-# add model run to log
+# Finished processing!
+# Now add model run to log, returning the id
 git_id=$(git rev-parse HEAD)
-$PSQL -c "insert into bcfishpass.log (model_type, git_id) VALUES ('LINEAR', decode('$git_id', 'hex'))"
+model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, git_id) VALUES ('LINEAR', decode('$git_id', 'hex')) returning model_run_id")
 
-# update summaries
+# load summaries

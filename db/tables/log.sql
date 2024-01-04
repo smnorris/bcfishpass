@@ -9,5 +9,4 @@ create table if not exists bcfishpass.log (
 );
 
 -- for example:
--- insert into bcfishpass.log (model_type, git_id) values
--- ('LINEAR', decode('feac3689cef93cc02a4cb4ac6a0fdadebe980f4d', 'hex'));
+-- insert into bcfishpass.log (model_type, git_id) values ('LINEAR', decode('feac3689cef93cc02a4cb4ac6a0fdadebe980f4d', 'hex')) RETURNING model_run_id;
