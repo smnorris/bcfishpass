@@ -3,6 +3,8 @@
 -- insert PSCIS crossings first, they take precedence
 -- PSCIS on modelled crossings first, to get the road tenure info from model
 -- --------------------------------
+truncate bcfishpass.crossings;
+
 insert into bcfishpass.crossings
 (
     aggregated_crossings_id,
