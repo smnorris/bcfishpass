@@ -4,12 +4,26 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 # process all watershed groups
-WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 # test with just watershed groups noted in param (misses cross-wsg barreriers)
-#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
-# define the make targets that flag when the table has been built
-SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
+# define barrier table targets
+NATURAL_BARRIERS = .make/barriers_falls \
+	.make/barriers_subsurfaceflow \
+	.make/barriers_user_definite \
+	.make/barriers_gradient_05 \
+	.make/barriers_gradient_10 \
+	.make/barriers_gradient_15 \
+	.make/barriers_gradient_20 \
+	.make/barriers_gradient_25 \
+	.make/barriers_gradient_30
+ANTH_BARRIERS = .make/barriers_anthropogenic \
+	.make/barriers_dams \
+	.make/barriers_dams_hydro \
+	.make/barriers_pscis
+
+# SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
 
 # access models - combine barriers into tables of per-species scenarios
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
@@ -94,12 +108,34 @@ clean:
 # -----
 # LOAD BARRIER TYPE TABLES
 # -----
-# Create standardized barrier tables, one per type of barrier. 
-# Process every file that matches the pattern sql/barriers_%.sql
-$(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql \
-	.make/crossings \
+# Create standardized barrier tables for natural barriers
+$(NATURAL_BARRIERS): sql/barriers_falls.sql \
+	sql/barriers_subsurfaceflow.sql \
+	sql/barriers_user_definite.sql \
+	sql/barriers_gradient_05.sql \
+	sql/barriers_gradient_10.sql \
+	sql/barriers_gradient_15.sql \
+	sql/barriers_gradient_20.sql \
+	sql/barriers_gradient_25.sql \
+	sql/barriers_gradient_30.sql \
 	.make/falls \
 	.make/gradient_barriers
+	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
+	# create the table if it does not exist
+	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
+		$(PSQL) -v barriertype=$(BARRIERTYPE)
+	# clear barrier table
+	$(PSQL) -c "truncate bcfishpass.barriers_$(BARRIERTYPE)"
+	# load data to barrier table in parallel
+	parallel $(PSQL) -f sql/barriers_$(BARRIERTYPE).sql -v wsg={1} ::: $(WSGS)
+	touch $@
+
+# Create standardized barrier tables for anthropogenic barriers
+$(ANTH_BARRIERS): .make/crossings \
+	sql/barriers_anthropogenic.sql \
+	sql/barriers_dams.sql \
+	sql/barriers_dams_hydro.sql \
+	sql/barriers_pscis.sql
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
@@ -118,7 +154,7 @@ $(SOURCE_BARRIERS): .make/barriers_%: sql/barriers_%.sql \
 # the lowest in the system)
 # Note that observations are a requirement because they can be used to cancel natural barriers
 $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
-	$(SOURCE_BARRIERS) \
+	$(NATURAL_BARRIERS) \
 	.make/observations
 	$(eval BARRIERTYPE=$(subst .make/model_access_,,$@))
 	# create table if it does not exist
@@ -156,7 +192,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 # INDEX CROSSINGS
 # ------------
 # for crossings table, barriers_anthropogenic, note what barriers are upstream/downstream of each other
-.make/index_crossings: .make/barriers_anthropogenic
+.make/index_crossings: $(ANTH_BARRIERS)
 	# note all crossings downstream of a crossing
 	$(PSQL) -c "truncate bcfishpass.crossings_dnstr_crossings"
 	parallel --no-run-if-empty \
@@ -234,6 +270,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 	touch ../02_habitat_linear/channel_width/.make/channel_width
 	mkdir -p ../02_habitat_linear/discharge/.make
 	touch ../02_habitat_linear/discharge/.make/discharge
+	touch $@
 # -------------------------------------------------------------------------------------
 
 # intermediate target for proessing all of above, but not the model_access script

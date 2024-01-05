@@ -1,0 +1,113 @@
+drop view if exists bcfishpass.wsg_crossing_summary_current;
+
+create view bcfishpass.wsg_crossing_summary_current as 
+select distinct on (watershed_group_code)
+  s.model_run_id                          ,
+  s.watershed_group_code                  ,
+  s.crossing_feature_type                 ,
+  s.n_crossings_total                     ,
+  s.n_passable_total                      ,
+  s.n_barriers_total                      ,
+  s.n_potential_total                     ,
+  s.n_unknown_total                       ,
+  s.n_barriers_accessible_bt              ,
+  s.n_potential_accessible_bt             ,
+  s.n_unknown_accessible_bt               ,
+  s.n_barriers_accessible_ch_cm_co_pk_sk  ,
+  s.n_potential_accessible_ch_cm_co_pk_sk ,
+  s.n_unknown_accessible_ch_cm_co_pk_sk   ,
+  s.n_barriers_accessible_st              ,
+  s.n_potential_accessible_st             ,
+  s.n_unknown_accessible_st               ,
+  s.n_barriers_accessible_wct             ,
+  s.n_potential_accessible_wct            ,
+  s.n_unknown_accessible_wct              ,
+  s.n_barriers_habitat_bt                 ,
+  s.n_potential_habitat_bt                ,
+  s.n_unknown_habitat_bt                  ,
+  s.n_barriers_habitat_ch                 ,
+  s.n_potential_habitat_ch                ,
+  s.n_unknown_habitat_ch                  ,
+  s.n_barriers_habitat_cm                 ,
+  s.n_potential_habitat_cm                ,
+  s.n_unknown_habitat_cm                  ,
+  s.n_barriers_habitat_co                 ,
+  s.n_potential_habitat_co                ,
+  s.n_unknown_habitat_co                  ,
+  s.n_barriers_habitat_pk                 ,
+  s.n_potential_habitat_pk                ,
+  s.n_unknown_habitat_pk                  ,
+  s.n_barriers_habitat_sk                 ,
+  s.n_potential_habitat_sk                ,
+  s.n_unknown_habitat_sk                  ,
+  s.n_barriers_habitat_salmon             ,
+  s.n_potential_habitat_salmon            ,
+  s.n_unknown_habitat_salmon              ,
+  s.n_barriers_habitat_st                 ,
+  s.n_potential_habitat_st                ,
+  s.n_unknown_habitat_st                  ,
+  s.n_barriers_habitat_wct                ,
+  s.n_potential_habitat_wct               ,
+  s.n_unknown_habitat_wct                 
+from bcfishpass.wsg_crossing_summary s
+inner join bcfishpass.log l 
+on s.model_run_id = l.model_run_id
+order by s.watershed_group_code, l.date_completed desc;
+
+
+drop view if exists bcfishpass.wsg_crossing_summary_previous;
+
+create view bcfishpass.wsg_crossing_summary_previous as
+select
+  s.model_run_id                          ,
+  s.watershed_group_code                  ,
+  s.crossing_feature_type                 ,
+  s.n_crossings_total                     ,
+  s.n_passable_total                      ,
+  s.n_barriers_total                      ,
+  s.n_potential_total                     ,
+  s.n_unknown_total                       ,
+  s.n_barriers_accessible_bt              ,
+  s.n_potential_accessible_bt             ,
+  s.n_unknown_accessible_bt               ,
+  s.n_barriers_accessible_ch_cm_co_pk_sk  ,
+  s.n_potential_accessible_ch_cm_co_pk_sk ,
+  s.n_unknown_accessible_ch_cm_co_pk_sk   ,
+  s.n_barriers_accessible_st              ,
+  s.n_potential_accessible_st             ,
+  s.n_unknown_accessible_st               ,
+  s.n_barriers_accessible_wct             ,
+  s.n_potential_accessible_wct            ,
+  s.n_unknown_accessible_wct              ,
+  s.n_barriers_habitat_bt                 ,
+  s.n_potential_habitat_bt                ,
+  s.n_unknown_habitat_bt                  ,
+  s.n_barriers_habitat_ch                 ,
+  s.n_potential_habitat_ch                ,
+  s.n_unknown_habitat_ch                  ,
+  s.n_barriers_habitat_cm                 ,
+  s.n_potential_habitat_cm                ,
+  s.n_unknown_habitat_cm                  ,
+  s.n_barriers_habitat_co                 ,
+  s.n_potential_habitat_co                ,
+  s.n_unknown_habitat_co                  ,
+  s.n_barriers_habitat_pk                 ,
+  s.n_potential_habitat_pk                ,
+  s.n_unknown_habitat_pk                  ,
+  s.n_barriers_habitat_sk                 ,
+  s.n_potential_habitat_sk                ,
+  s.n_unknown_habitat_sk                  ,
+  s.n_barriers_habitat_salmon             ,
+  s.n_potential_habitat_salmon            ,
+  s.n_unknown_habitat_salmon              ,
+  s.n_barriers_habitat_st                 ,
+  s.n_potential_habitat_st                ,
+  s.n_unknown_habitat_st                  ,
+  s.n_barriers_habitat_wct                ,
+  s.n_potential_habitat_wct               ,
+  s.n_unknown_habitat_wct
+from bcfishpass.wsg_crossing_summary s
+inner join bcfishpass.log l
+on s.model_run_id = l.model_run_id
+where l.date_completed = (select date_completed from bcfishpass.log order by date_completed desc offset 1 limit 1)
+order by watershed_group_code;
