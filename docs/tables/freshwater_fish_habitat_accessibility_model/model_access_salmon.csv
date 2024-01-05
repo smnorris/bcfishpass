@@ -13,7 +13,6 @@ column,description
 ``wscode``,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.'
 ``localcode``,A truncated version of the BC FWA local_watershed_code (trailing zeros removed and '-' replaced with '.'
 ``feature_code``,"A value based on the Canadian Council of Surveys and Mapping's (CCSM) system for classification of geographic features."
-``obsrvtn_ids_upstr``,IDs of known observations of target fish species upstream
 ``obsrvtn_upstr_salmon``,True if known salmon observations are present upstream
 ``barriers_anthropogenic_dnstr``,IDs of anthropogenic barriers downstream
 ``barriers_pscis_dnstr``,IDs of assessed PSCIS barriers downstream
