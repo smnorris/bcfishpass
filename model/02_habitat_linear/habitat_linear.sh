@@ -31,3 +31,13 @@ done
 # with linear model processing complete, refresh materialized views
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_model_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
+
+# Finished processing!
+# Now add model run to log, returning the id
+git_id=$(git rev-parse HEAD)
+model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, git_id) VALUES ('LINEAR', decode('$git_id', 'hex')) returning model_run_id")
+
+# log summaries (todo - call these functions as a trigger on adding row to bcfishpass.log table rather than calling here)
+$PSQL -c "insert into bcfishpass.wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
+$PSQL -c "insert into bcfishpass.wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
+
