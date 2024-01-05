@@ -1,23 +1,6 @@
-drop materialized view if exists bcfishpass.streams_wct_vw;
+drop view if exists bcfishpass.streams_co_vw;
 
-create materialized view bcfishpass.streams_wct_vw as
-  with obs as
-(
- select
-   segmented_stream_id,
-   array_to_string(array_agg(spp), ';') as obsrvtn_species_codes_upstr
-   from (
-    select
-      s.segmented_stream_id,
-      unnest(o.obsrvtn_species_codes_upstr) as spp
-    from bcfishpass.streams s
-    left outer join bcfishpass.streams_upstr_observations o
-    on s.segmented_stream_id = o.segmented_stream_id
-  ) as f
-  where spp = 'WCT'
-  group by segmented_stream_id
-)
-
+create view bcfishpass.streams_co_vw as
 select
   s.segmented_stream_id,
   s.linear_feature_id,
@@ -42,23 +25,22 @@ select
   s.mad_m3s,
   s.stream_order_parent,
   s.stream_order_max,
-  array_to_string(a.barriers_wct_dnstr, ';') as barriers_wct_dnstr,
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
   array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
   array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
   array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
   array_to_string(a.barriers_dams_hydro_dnstr, ';') as barriers_dams_hydro_dnstr,
   array_to_string(a.crossings_dnstr, ';') as crossings_dnstr,
-  o.obsrvtn_species_codes_upstr,
+  a.obsrvtn_upstr_co,
   a.dam_dnstr_ind,
   a.dam_hydro_dnstr_ind,
   a.remediated_dnstr_ind,
-  h.spawning_wct as spawning,
-  h.rearing_wct as rearing,
-  m.mapping_code_wct as mapping_code,
-  s.geom
+  h.spawning_co as spawning,
+  h.rearing_co as rearing,
+  m.mapping_code_co as mapping_code,
+  geom
 from bcfishpass.streams s
-left outer join obs o on s.segmented_stream_id = o.segmented_stream_id
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
-where barriers_wct_dnstr = array[]::text[];
+where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
