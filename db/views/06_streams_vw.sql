@@ -1,5 +1,5 @@
-drop materialized view if exists bcfishpass.streams_vw;
-create materialized view bcfishpass.streams_vw as
+drop view if exists bcfishpass.streams_vw;
+create view bcfishpass.streams_vw as
 select
   s.segmented_stream_id,
   s.linear_feature_id,
@@ -39,6 +39,15 @@ select
   a.remediated_dnstr_ind,
   array_to_string(a.obsrvtn_event_upstr, ';') as obsrvtn_event_upstr,
   array_to_string(a.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  a.obsrvtn_upstr_bt,
+  a.obsrvtn_upstr_ch,
+  a.obsrvtn_upstr_cm,
+  a.obsrvtn_upstr_co,
+  a.obsrvtn_upstr_pk,
+  a.obsrvtn_upstr_sk,
+  a.obsrvtn_upstr_st,
+  a.obsrvtn_upstr_wct,
+  a.obsrvtn_upstr_salmon,
   array_to_string(a.species_codes_dnstr, ';') as species_codes_dnstr,
   h.spawning_bt as model_spawning_bt,
   h.spawning_ch as model_spawning_ch,
@@ -68,6 +77,3 @@ from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id;
-
-create unique index on bcfishpass.streams_vw (segmented_stream_id);
-create index on bcfishpass.streams_vw using gist (geom);

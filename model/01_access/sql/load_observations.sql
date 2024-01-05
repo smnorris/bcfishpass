@@ -63,7 +63,7 @@ species_code_remap as (
 -- extract observations of species of interest, 
 -- within watershed groups where they are noted to occur
 -- - discarding observations outside of those groups
--- - TODO - discard observations noted to be of suspect quality in data/user_observations_qa.csv
+-- - TODO - discard observations noted to be of suspect quality
 obs as (
   SELECT
     e.fish_observation_point_id,
