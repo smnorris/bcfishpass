@@ -75,14 +75,16 @@ select
   s.localcode_ltree as localcode,
   s.feature_code,
   case
-    when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and a.obsrvtn_upstr_salmon is true then 'OBSERVED'
-    when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and a.obsrvtn_upstr_salmon is false then 'INFERRED'
-    when a.barriers_ch_cm_co_pk_sk_dnstr != array[]::text[] then 'NATURAL_BARRIER'
+    when cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0 and a.obsrvtn_upstr_salmon is true then 'OBSERVED'
+    when cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0 and a.obsrvtn_upstr_salmon is false then 'INFERRED'
+    when cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) > 0 then 'NATURAL_BARRIER'
+    else NULL
   end as model_access_salmon,
   case
-    when a.barriers_st_dnstr = array[]::text[] and a.obsrvtn_upstr_st is true then 'OBSERVED'
-    when a.barriers_st_dnstr = array[]::text[] and a.obsrvtn_upstr_st is false then 'INFERRED'
-    when a.barriers_st_dnstr != array[]::text[] then 'NATURAL_BARRIER'
+    when cardinality(a.barriers_st_dnstr) = 0 and a.obsrvtn_upstr_st is true then 'OBSERVED'
+    when cardinality(a.barriers_st_dnstr) = 0 and a.obsrvtn_upstr_st is false then 'INFERRED'
+    when cardinality(a.barriers_st_dnstr) > 0 then 'NATURAL_BARRIER'
+    else NULL
   end as model_access_steelhead,
   array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
   array_to_string(a.barriers_st_dnstr, ';') as barriers_st_dnstr,
