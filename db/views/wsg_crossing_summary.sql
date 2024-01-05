@@ -1,4 +1,4 @@
-drop view if exists bcfishpass.wsg_crossing_summary_current;
+drop view if exists bcfishpass.wsg_crossing_summary_current cascade;
 
 create view bcfishpass.wsg_crossing_summary_current as 
 select distinct on (watershed_group_code)
