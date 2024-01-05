@@ -58,6 +58,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#crossings">crossings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-access-salmon">model_access_salmon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-access-steelhead">model_access_steelhead</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-access">model_access</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#observations">observations</a></li>
 </ul>
 </li>
@@ -780,6 +781,20 @@ of anthropogenic barriers, steelhead could potentially access all the streams in
 </tr>
 </tbody>
 </table>
+</section>
+<section id="model-access">
+<h3>model_access<a class="headerlink" href="#model-access" title="Link to this heading"></a></h3>
+<p>FWA streams and access model output for watersheds with documented salmon or steelhead
+presence. Access model output columns <cite>model_access_salmon</cite> and <cite>model_access_steelhead</cite>
+indicate the modelled status of a given stream. Values are:</p>
+<p><cite>OBSERVED</cite> - no known natural barriers downstream, known observation of target species
+present upstream. In the absence of anthropogenic barriers, target species have been observed
+to access this stream.</p>
+<p><cite>INFERRED</cite> - no known natural barriers downstream, no known observation of target species
+present upstream. In the absence of anthropogenic barriers, target species could potentially
+access this stream (presuming all else is equal and adequate flow is present in the stream).</p>
+<p><cite>NATURAL_BARRIER</cite> - natural barrier downstream, inaccessible to target speces.</p>
+<p><cite>NULL</cite> - species is not documented as present in this watershed group.</p>
 </section>
 <section id="observations">
 <h3>observations<a class="headerlink" href="#observations" title="Link to this heading"></a></h3>
