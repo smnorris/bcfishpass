@@ -29,21 +29,8 @@ do
 done
 
 # with linear model processing complete, refresh materialized views
-$PSQL -c "refresh materialized view bcfishpass.streams_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_model_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_bt_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_ch_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_cm_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_co_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_pk_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_salmon_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_sk_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_st_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_wct_vw"
-$PSQL -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw"
-$PSQL -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw"
-$PSQL -c "refresh materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw"
 
 # Finished processing!
 # Now add model run to log, returning the id

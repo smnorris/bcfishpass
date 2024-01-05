@@ -39,6 +39,18 @@ select
    coalesce(ou.obsrvtn_event_upstr, array[]::bigint[]) as obsrvtn_event_upstr,
    coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) as obsrvtn_species_codes_upstr,
    coalesce(od.species_codes_dnstr, array[]::text[]) as species_codes_dnstr,
+
+   -- include per-species/species groupings boolean 'observed' accessible columns
+   case when 'BT' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_bt,
+   case when 'CH' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_ch,
+   case when 'CM' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_cm,
+   case when 'CO' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_co,
+   case when 'PK' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_pk,
+   case when 'SK' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_sk,
+   case when 'ST' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_st,
+   case when 'WCT' = any(ou.obsrvtn_species_codes_upstr) then true else false end as obsrvtn_upstr_wct,
+   case when ou.obsrvtn_species_codes_upstr && array['CH','CM','CO','PK','SK'] then true else false end as obsrvtn_upstr_salmon,
+
    cd.crossings_dnstr,
    case
      when x.aggregated_crossings_id is not null then true

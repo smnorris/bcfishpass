@@ -1,46 +1,65 @@
 -- for publication to DataBC Catalouge
 -- freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
 
-drop materialized view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw;
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw;
+create view bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw as
+select
+  segmented_stream_id,
+  linear_feature_id,
+  edge_type,
+  blue_line_key,
+  downstream_route_measure,
+  upstream_route_measure,
+  watershed_group_code,
+  gnis_name,
+  stream_order,
+  stream_magnitude,
+  gradient,
+  wscode,
+  localcode,
+  feature_code,
+  obsrvtn_upstr_salmon,
+  barriers_anthropogenic_dnstr,
+  barriers_pscis_dnstr,
+  barriers_dams_dnstr,
+  dam_dnstr_ind,
+  dam_hydro_dnstr_ind,
+  remediated_dnstr_ind,
+  geom
+from bcfishpass.streams_salmon_vw;
 
-create materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw as
 
-with observations as
-(
-  select 
-    segmented_stream_id,
-    array_agg(fish_observation_point_id) FILTER (WHERE fish_observation_point_id IS NOT NULL) AS obsrvtn_ids_upstr,
-    array_agg(observation_date) FILTER (WHERE fish_observation_point_id IS NOT NULL) AS obsrvtn_dates_upstr,
-    array_agg(DISTINCT (species_code)) FILTER (WHERE fish_observation_point_id IS NOT NULL) as obsrvtn_species_codes_upstr
-  from (
-  select distinct
-    s.segmented_stream_id,  
-    o.species_code,
-    o.fish_observation_point_id,
-    o.observation_date
-  from bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
-  left outer join bcfishpass.observations_vw o
-  on FWA_Upstream(
-          s.blue_line_key,
-          s.downstream_route_measure,
-          s.wscode_ltree,
-          s.localcode_ltree,
-          o.blue_line_key,
-          o.downstream_route_measure,
-          o.wscode_ltree,
-          o.localcode_ltree,
-          False,
-          1
-        )
-  and s.watershed_group_code = o.watershed_group_code
-  where o.species_code in ('CH','CM','CO','PK','SK')
-  and a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-  ) as f
-  group by segmented_stream_id
-)
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw;
+create view bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw as
+select
+  segmented_stream_id,
+  linear_feature_id,
+  edge_type,
+  blue_line_key,
+  downstream_route_measure,
+  upstream_route_measure,
+  watershed_group_code,
+  gnis_name,
+  stream_order,
+  stream_magnitude,
+  gradient,
+  wscode,
+  localcode,
+  feature_code,
+  obsrvtn_upstr_st,
+  barriers_anthropogenic_dnstr,
+  barriers_pscis_dnstr,
+  barriers_dams_dnstr,
+  dam_dnstr_ind,
+  dam_hydro_dnstr_ind,
+  remediated_dnstr_ind,
+  geom
+from bcfishpass.streams_st_vw;
 
-select 
+-- all streams/combined salmon/steelhead product
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
+create view bcfishpass.freshwater_fish_habitat_accessibility_model_vw as
+select
   s.segmented_stream_id,
   s.linear_feature_id,
   s.edge_type,
@@ -55,8 +74,18 @@ select
   s.wscode_ltree as wscode,
   s.localcode_ltree as localcode,
   s.feature_code,
-  array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr,
-  array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
+  case
+    when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and a.obsrvtn_upstr_salmon is true then 'OBSERVED'
+    when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and a.obsrvtn_upstr_salmon is false then 'INFERRED'
+    when a.barriers_ch_cm_co_pk_sk_dnstr != array[]::text[] then 'NATURAL_BARRIER'
+  end as model_access_salmon,
+  case
+    when a.barriers_st_dnstr = array[]::text[] and a.obsrvtn_upstr_st is true then 'OBSERVED'
+    when a.barriers_st_dnstr = array[]::text[] and a.obsrvtn_upstr_st is false then 'INFERRED'
+    when a.barriers_st_dnstr != array[]::text[] then 'NATURAL_BARRIER'
+  end as model_access_steelhead,
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
+  array_to_string(a.barriers_st_dnstr, ';') as barriers_st_dnstr,
   array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
   array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
   array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
@@ -65,90 +94,20 @@ select
   a.remediated_dnstr_ind,
   s.geom
 from bcfishpass.streams s
-inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
-left outer join observations o on s.segmented_stream_id = o.segmented_stream_id
-where a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
-
-
-drop materialized view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw;
-
-create materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw as
-with observations as
-(
-  select 
-    segmented_stream_id,
-    array_agg(fish_observation_point_id) FILTER (WHERE fish_observation_point_id IS NOT NULL) AS obsrvtn_ids_upstr,
-    array_agg(observation_date) FILTER (WHERE fish_observation_point_id IS NOT NULL) AS obsrvtn_dates_upstr,
-    array_agg(DISTINCT (species_code)) FILTER (WHERE fish_observation_point_id IS NOT NULL) as obsrvtn_species_codes_upstr
-  from (
-  select distinct
-    s.segmented_stream_id,  
-    o.species_code,
-    o.fish_observation_point_id,
-    o.observation_date
-  from bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
-  left outer join bcfishpass.observations_vw o
-  on FWA_Upstream(
-          s.blue_line_key,
-          s.downstream_route_measure,
-          s.wscode_ltree,
-          s.localcode_ltree,
-          o.blue_line_key,
-          o.downstream_route_measure,
-          o.wscode_ltree,
-          o.localcode_ltree,
-          False,
-          1
-        )
-  and s.watershed_group_code = o.watershed_group_code
-  where o.species_code = 'ST' 
-  and a.barriers_st_dnstr = array[]::text[]
-  ) as f
-  group by segmented_stream_id
-)
-
-select 
-  s.segmented_stream_id,
-  s.linear_feature_id,
-  s.edge_type,
-  s.blue_line_key,
-  s.watershed_group_code,
-  s.downstream_route_measure,
-  s.upstream_route_measure,
-  s.gnis_name,
-  s.stream_order,
-  s.stream_magnitude,
-  s.gradient,
-  s.wscode_ltree as wscode,
-  s.localcode_ltree as localcode,
-  s.feature_code,
-  array_to_string(o.obsrvtn_ids_upstr, ';') as obsrvtn_ids_upstr,
-  array_to_string(o.obsrvtn_species_codes_upstr, ';') as obsrvtn_species_codes_upstr,
-  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
-  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
-  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
-  a.dam_dnstr_ind,
-  a.dam_hydro_dnstr_ind,
-  a.remediated_dnstr_ind,
-  s.geom
-from bcfishpass.streams s
-inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
-left outer join observations o on s.segmented_stream_id = o.segmented_stream_id
-where a.barriers_st_dnstr = array[]::text[];
+left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id;
 
 
 -- no views required for barrier tables, they can be used directly (only change would be renaming wscode/localcode)
 
 -- dump observations for salmon and steelhead used in this analysis
-drop materialized view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
-create materialized view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw as
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
+create view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw as
 select * from bcfishpass.observations_vw 
 where species_code in ('CH','CM','CO','PK','SK','ST');
 
 
 -- create view of crossings with just salmon/steelhead related columns
-
 drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
 select
@@ -194,8 +153,8 @@ select
  c.blue_line_key,
  c.watershed_key,
  c.downstream_route_measure,
- c.wscode_ltree as wscode,
- c.localcode_ltree as localcode,
+ c.wscode,
+ c.localcode,
  c.watershed_group_code,
  c.gnis_stream_name,
  c.stream_order,
