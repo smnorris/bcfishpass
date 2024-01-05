@@ -37,4 +37,7 @@ $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 git_id=$(git rev-parse HEAD)
 model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, git_id) VALUES ('LINEAR', decode('$git_id', 'hex')) returning model_run_id")
 
-# load summaries
+# log summaries (todo - call these functions as a trigger on adding row to bcfishpass.log table rather than calling here)
+$PSQL -c "insert into bcfishpass.wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
+$PSQL -c "insert into bcfishpass.wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
+
