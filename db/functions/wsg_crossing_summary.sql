@@ -3,8 +3,57 @@
 --   - accessible (per model)
 --   - with spawning rearing habitat upstream (per model)
 
-drop view if exists bcfishpass.crossings_summary_vw;
-create view bcfishpass.crossings_summary_vw as
+CREATE FUNCTION bcfishpass.wsg_crossings_summary()
+RETURNS table (
+watershed_group_code                  text,
+  crossing_feature_type                 text,
+  n_crossings_total                     integer,
+  n_passable_total                      integer,
+  n_barriers_total                      integer,
+  n_potential_total                     integer,
+  n_unknown_total                       integer,
+  n_barriers_accessible_bt              integer,
+  n_potential_accessible_bt             integer,
+  n_unknown_accessible_bt               integer,
+  n_barriers_accessible_ch_cm_co_pk_sk  integer,
+  n_potential_accessible_ch_cm_co_pk_sk integer,
+  n_unknown_accessible_ch_cm_co_pk_sk   integer,
+  n_barriers_accessible_st              integer,
+  n_potential_accessible_st             integer,
+  n_unknown_accessible_st               integer,
+  n_barriers_accessible_wct             integer,
+  n_potential_accessible_wct            integer,
+  n_unknown_accessible_wct              integer,
+  n_barriers_habitat_bt                 integer,
+  n_potential_habitat_bt                integer,
+  n_unknown_habitat_bt                  integer,
+  n_barriers_habitat_ch                 integer,
+  n_potential_habitat_ch                integer,
+  n_unknown_habitat_ch                  integer,
+  n_barriers_habitat_cm                 integer,
+  n_potential_habitat_cm                integer,
+  n_unknown_habitat_cm                  integer,
+  n_barriers_habitat_co                 integer,
+  n_potential_habitat_co                integer,
+  n_unknown_habitat_co                  integer,
+  n_barriers_habitat_pk                 integer,
+  n_potential_habitat_pk                integer,
+  n_unknown_habitat_pk                  integer,
+  n_barriers_habitat_sk                 integer,
+  n_potential_habitat_sk                integer,
+  n_unknown_habitat_sk                  integer,
+  n_barriers_habitat_salmon             integer,
+  n_potential_habitat_salmon            integer,
+  n_unknown_habitat_salmon              integer,
+  n_barriers_habitat_st                 integer,
+  n_potential_habitat_st                integer,
+  n_unknown_habitat_st                  integer,
+  n_barriers_habitat_wct                integer,
+  n_potential_habitat_wct               integer,
+  n_unknown_habitat_wct                 integer
+)
+AS $$
+
 select
   watershed_group_code,
   crossing_feature_type,
@@ -152,3 +201,4 @@ select
 from bcfishpass.crossings_vw
 group by watershed_group_code, crossing_feature_type;
 
+$$ LANGUAGE SQL;

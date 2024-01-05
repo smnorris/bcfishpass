@@ -10,10 +10,76 @@
 -- - spawning or rearing habitat not isolated by dam or a known pscis barrier (accessible_a)
 -- - spawning or rearing habitat not isolated by all anthropogenic barriers (observed and modelled) (accessible_b)
 
-
-drop view if exists bcfishpass.wsg_linear_summary_vw;
-
-create view bcfishpass.wsg_linear_summary_vw as
+CREATE FUNCTION bcfishpass.wsg_linear_summary() 
+RETURNS table (
+ watershed_group_code                                     text,
+ length_total                                             numeric,
+ length_potentiallyaccessible_bt                          numeric,
+ length_potentiallyaccessible_bt_observed                 numeric,
+ length_potentiallyaccessible_bt_accessible_a             numeric,
+ length_potentiallyaccessible_bt_accessible_b             numeric,
+ length_obsrvd_spawning_rearing_bt                        numeric,
+ length_obsrvd_spawning_rearing_bt_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_bt_accessible_b           numeric,
+ length_spawning_rearing_bt                               numeric,
+ length_spawning_rearing_bt_accessible_a                  numeric,
+ length_spawning_rearing_bt_accessible_b                  numeric,
+ length_potentiallyaccessible_ch_cm_co_pk_sk              numeric,
+ length_potentiallyaccessible_ch_cm_co_pk_sk_observed     numeric,
+ length_potentiallyaccessible_ch_cm_co_pk_sk_accessible_a numeric,
+ length_potentiallyaccessible_ch_cm_co_pk_sk_accessible_b numeric,
+ length_obsrvd_spawning_rearing_ch                        numeric,
+ length_obsrvd_spawning_rearing_ch_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_ch_accessible_b           numeric,
+ length_spawning_rearing_ch                               numeric,
+ length_spawning_rearing_ch_accessible_a                  numeric,
+ length_spawning_rearing_ch_accessible_b                  numeric,
+ length_obsrvd_spawning_rearing_cm                        numeric,
+ length_obsrvd_spawning_rearing_cm_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_cm_accessible_b           numeric,
+ length_spawning_rearing_cm                               numeric,
+ length_spawning_rearing_cm_accessible_a                  numeric,
+ length_spawning_rearing_cm_accessible_b                  numeric,
+ length_obsrvd_spawning_rearing_co                        numeric,
+ length_obsrvd_spawning_rearing_co_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_co_accessible_b           numeric,
+ length_spawning_rearing_co                               numeric,
+ length_spawning_rearing_co_accessible_a                  numeric,
+ length_spawning_rearing_co_accessible_b                  numeric,
+ length_obsrvd_spawning_rearing_pk                        numeric,
+ length_obsrvd_spawning_rearing_pk_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_pk_accessible_b           numeric,
+ length_spawning_rearing_pk                               numeric,
+ length_spawning_rearing_pk_accessible_a                  numeric,
+ length_spawning_rearing_pk_accessible_b                  numeric,
+ length_obsrvd_spawning_rearing_sk                        numeric,
+ length_obsrvd_spawning_rearing_sk_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_sk_accessible_b           numeric,
+ length_spawning_rearing_sk                               numeric,
+ length_spawning_rearing_sk_accessible_a                  numeric,
+ length_spawning_rearing_sk_accessible_b                  numeric,
+ length_potentiallyaccessible_st                          numeric,
+ length_potentiallyaccessible_st_observed                 numeric,
+ length_potentiallyaccessible_st_accessible_a             numeric,
+ length_potentiallyaccessible_st_accessible_b             numeric,
+ length_obsrvd_spawning_rearing_st                        numeric,
+ length_obsrvd_spawning_rearing_st_accessible_a           numeric,
+ length_obsrvd_spawning_rearing_st_accessible_b           numeric,
+ length_spawning_rearing_st                               numeric,
+ length_spawning_rearing_st_accessible_a                  numeric,
+ length_spawning_rearing_st_accessible_b                  numeric,
+ length_potentiallyaccessible_wct                         numeric,
+ length_potentiallyaccessible_wct_observed                numeric,
+ length_potentiallyaccessible_wct_accessible_a            numeric,
+ length_potentiallyaccessible_wct_accessible_b            numeric,
+ length_obsrvd_spawning_rearing_wct                       numeric,
+ length_obsrvd_spawning_rearing_wct_accessible_a          numeric,
+ length_obsrvd_spawning_rearing_wct_accessible_b          numeric,
+ length_spawning_rearing_wct                              numeric,
+ length_spawning_rearing_wct_accessible_a                 numeric,
+ length_spawning_rearing_wct_accessible_b                 numeric
+ )
+AS $$
 
 with accessible as
 (
@@ -209,4 +275,6 @@ select
 
 from accessible a
 left outer join spawning_rearing_observed o on a.watershed_group_code = o.watershed_group_code
-left outer join spawning_rearing_modelled m  on a.watershed_group_code = m.watershed_group_code
+left outer join spawning_rearing_modelled m  on a.watershed_group_code = m.watershed_group_code;
+
+$$ LANGUAGE SQL; 
