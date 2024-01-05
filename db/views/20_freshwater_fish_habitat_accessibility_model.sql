@@ -2,7 +2,6 @@
 -- freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
 
 drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw;
-
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw as
 select
   segmented_stream_id,
@@ -56,6 +55,47 @@ select
   remediated_dnstr_ind,
   geom
 from bcfishpass.streams_st_vw;
+
+-- all streams/combined salmon/steelhead product
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
+create view bcfishpass.freshwater_fish_habitat_accessibility_model_vw as
+select
+  s.segmented_stream_id,
+  s.linear_feature_id,
+  s.edge_type,
+  s.blue_line_key,
+  s.downstream_route_measure,
+  s.upstream_route_measure,
+  s.watershed_group_code,
+  s.gnis_name,
+  s.stream_order,
+  s.stream_magnitude,
+  s.gradient,
+  s.wscode_ltree as wscode,
+  s.localcode_ltree as localcode,
+  s.feature_code,
+  case
+    when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and a.obsrvtn_upstr_salmon is true then 'OBSERVED'
+    when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] and a.obsrvtn_upstr_salmon is false then 'INFERRED'
+    when a.barriers_ch_cm_co_pk_sk_dnstr != array[]::text[] then 'NATURAL_BARRIER'
+  end as model_access_salmon,
+  case
+    when a.barriers_st_dnstr = array[]::text[] and a.obsrvtn_upstr_st is true then 'OBSERVED'
+    when a.barriers_st_dnstr = array[]::text[] and a.obsrvtn_upstr_st is false then 'INFERRED'
+    when a.barriers_st_dnstr != array[]::text[] then 'NATURAL_BARRIER'
+  end as model_access_steelhead,
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
+  array_to_string(a.barriers_st_dnstr, ';') as barriers_st_dnstr,
+  array_to_string(a.barriers_anthropogenic_dnstr, ';') as barriers_anthropogenic_dnstr,
+  array_to_string(a.barriers_pscis_dnstr, ';') as barriers_pscis_dnstr,
+  array_to_string(a.barriers_dams_dnstr, ';') as barriers_dams_dnstr,
+  a.dam_dnstr_ind,
+  a.dam_hydro_dnstr_ind,
+  a.remediated_dnstr_ind,
+  s.geom
+from bcfishpass.streams s
+left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id;
 
 
 -- no views required for barrier tables, they can be used directly (only change would be renaming wscode/localcode)
