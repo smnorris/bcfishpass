@@ -3,8 +3,8 @@
 --   - accessible (per model)
 --   - with spawning rearing habitat upstream (per model)
 
-DROP FUNCTION IF EXISTS bcfishpass.wsg_crossings_summary();
-CREATE FUNCTION bcfishpass.wsg_crossings_summary()
+DROP FUNCTION IF EXISTS bcfishpass.wsg_crossing_summary();
+CREATE FUNCTION bcfishpass.wsg_crossing_summary()
 RETURNS table (
   watershed_group_code                  text,
   crossing_feature_type                 text,
