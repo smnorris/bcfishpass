@@ -12,7 +12,7 @@ create table if not exists bcfishpass.log (
 -- usage:
 -- insert into bcfishpass.log (model_type, git_id) values ('LINEAR', decode('feac3689cef93cc02a4cb4ac6a0fdadebe980f4d', 'hex')) RETURNING model_run_id;
 
-create table bcfishpass.wsg_linear_summary (
+create table if not exists bcfishpass.wsg_linear_summary (
  model_run_id                                             integer references bcfishpass.log(model_run_id),
  watershed_group_code                                     text,
  length_total                                             numeric,
@@ -82,7 +82,7 @@ create table bcfishpass.wsg_linear_summary (
  length_spawning_rearing_wct_accessible_b                 numeric
 );
 
-create table bcfishpass.wsg_crossing_summary (
+create table if not exists bcfishpass.wsg_crossing_summary (
   model_run_id                          integer references bcfishpass.log(model_run_id),
   watershed_group_code                  text,
   crossing_feature_type                 text,
