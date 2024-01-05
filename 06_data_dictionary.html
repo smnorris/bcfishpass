@@ -795,6 +795,90 @@ present upstream. In the absence of anthropogenic barriers, target species could
 access this stream (presuming all else is equal and adequate flow is present in the stream).</p>
 <p><cite>NATURAL_BARRIER</cite> - natural barrier downstream, inaccessible to target speces.</p>
 <p><cite>NULL</cite> - species is not documented as present in this watershed group.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">segmented_stream_id</span></code></p></td>
+<td><p>Unique bcfishpass streams table identifier</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
+<td><p>From BC FWA,the unique identifier for a stream segment (flow network arc)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">edge_type</span></code></p></td>
+<td><p>A 4 digit numeric code used by the Freshwater Atlas to identify the various types of water network linear features. eg. 1050.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
+<td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
+<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">upstream_route_measure</span></code></p></td>
+<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the upstream end of the feature</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
+<td><p>The watershed group code associated with the feature</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gnis_name</span></code></p></td>
+<td><p>The BCGNIS (BC Geographical Names Information System) name associated with the GNIS feature id (an English name was used where available, otherwise another language was selected)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stream_order</span></code></p></td>
+<td><p>The calculated modified Strahler order</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stream_magnitude</span></code></p></td>
+<td><p>The calculated magnitude</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gradient</span></code></p></td>
+<td><p>Slope of the feature (percent)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
+<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
+<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feature_code</span></code></p></td>
+<td><p>A value based on the Canadian Council of Surveys and Mapping’s (CCSM) system for classification of geographic features.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">model_access_salmon</span></code></p></td>
+<td><p>Salmon access model result code. Values are ‘OBSERVED’; ‘INFERRED’; ‘NATURAL_BARRIER’. NULL indicates species is not present in watershed group</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">model_access_steelhead</span></code></p></td>
+<td><p>Steelhead access model result code. Values are ‘OBSERVED’; ‘INFERRED’; ‘NATURAL_BARRIER’. NULL indicates species is not present in watershed group</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_ch_cm_co_pk_sk_dnstr</span></code></p></td>
+<td><p>IDs of downstream natural barriers to salmon (see <cite>barriers_salmon</cite> table</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_st_dnstr</span></code></p></td>
+<td><p>IDs of downstream natural barriers to steelhead (see <cite>barriers_steelhead</cite> table)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_anthropogenic_dnstr</span></code></p></td>
+<td><p>IDs of anthropogenic barriers downstream</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_pscis_dnstr</span></code></p></td>
+<td><p>IDs of assessed PSCIS barriers downstream</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_dnstr</span></code></p></td>
+<td><p>IDs of CABD dams downstream noted as barriers</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dam_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a dam is the first barrier downstream of the stream</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dam_hydro_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a hydro dam is the first barrier downstream of the stream</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">remediated_dnstr_ind</span></code></p></td>
+<td><p>Indicates if a remediation is present downstream of the stream and before any additional barriers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
+<td><p>The point geometry associated with the feature</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="observations">
 <h3>observations<a class="headerlink" href="#observations" title="Link to this heading"></a></h3>
