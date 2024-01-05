@@ -12,10 +12,10 @@ for sql in tables/*.sql ; do
 	$PSQL -f "$sql"
 done
 
-for sql in functions/*.sql ; do
+for sql in views/*.sql ; do
 	$PSQL -f "$sql"
 done
 
-for sql in views/*.sql ; do
+for sql in functions/*.sql ; do
 	$PSQL -f "$sql"
 done

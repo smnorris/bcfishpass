@@ -5,7 +5,7 @@
 
 CREATE FUNCTION bcfishpass.wsg_crossings_summary()
 RETURNS table (
-watershed_group_code                  text,
+  watershed_group_code                  text,
   crossing_feature_type                 text,
   n_crossings_total                     integer,
   n_passable_total                      integer,

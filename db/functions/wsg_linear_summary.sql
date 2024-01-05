@@ -10,6 +10,7 @@
 -- - spawning or rearing habitat not isolated by dam or a known pscis barrier (accessible_a)
 -- - spawning or rearing habitat not isolated by all anthropogenic barriers (observed and modelled) (accessible_b)
 
+DROP FUNCTION bcfishpass.wsg_linear_summary();
 CREATE FUNCTION bcfishpass.wsg_linear_summary() 
 RETURNS table (
  watershed_group_code                                     text,
