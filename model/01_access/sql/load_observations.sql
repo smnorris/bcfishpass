@@ -4,6 +4,7 @@
 -- extract observations for species of interest from bcfishobs
 -- --------------
 
+truncate bcfishpass.observations;
 
 -- insert records for watersheds of interest / spp of interest
 INSERT INTO bcfishpass.observations
