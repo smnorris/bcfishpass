@@ -276,6 +276,7 @@ select
 
 from accessible a
 left outer join spawning_rearing_observed o on a.watershed_group_code = o.watershed_group_code
-left outer join spawning_rearing_modelled m  on a.watershed_group_code = m.watershed_group_code;
+left outer join spawning_rearing_modelled m  on a.watershed_group_code = m.watershed_group_code
+order by a.watershed_group_code;
 
 $$ LANGUAGE SQL; 

@@ -200,6 +200,7 @@ select
    ) as n_unknown_habitat_wct
 
 from bcfishpass.crossings_vw
-group by watershed_group_code, crossing_feature_type;
+group by watershed_group_code, crossing_feature_type
+order by watershed_group_code, crossing_feature_type;
 
 $$ LANGUAGE SQL;
