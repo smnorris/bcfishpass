@@ -221,4 +221,5 @@ select
   a.length_spawning_rearing_wct_accessible_b                 - b.length_spawning_rearing_wct_accessible_b                 as length_spawning_rearing_wct_accessible_b
 from bcfishpass.wsg_linear_summary_current a
 inner join bcfishpass.wsg_linear_summary_previous b
-on a.watershed_group_code = b.watershed_group_code;
+on a.watershed_group_code = b.watershed_group_code
+order by a.watershed_group_code;
