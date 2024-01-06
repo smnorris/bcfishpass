@@ -62,8 +62,8 @@ select
   s.map_upstream,
   s.channel_width,
   s.mad_m3s,
-  --array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
-  --array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
+  array_to_string(cdo.observedspp_dnstr, ';') as observedspp_dnstr,
+  array_to_string(cuo.observedspp_upstr, ';') as observedspp_upstr,
   array_to_string(cd.features_dnstr, ';') as crossings_dnstr,
   array_to_string(ad.features_dnstr, ';') as barriers_anthropogenic_dnstr,
   coalesce(array_length(ad.features_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
@@ -234,6 +234,8 @@ select
   c.geom
 from bcfishpass.crossings c
 inner join bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_observations cdo on c.aggregated_crossings_id = cdo.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_observations cuo on c.aggregated_crossings_id = cuo.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_crossings cd on c.aggregated_crossings_id = cd.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggregated_crossings_id = au.aggregated_crossings_id
