@@ -3,8 +3,6 @@
 -- insert PSCIS crossings first, they take precedence
 -- PSCIS on modelled crossings first, to get the road tenure info from model
 -- --------------------------------
-truncate bcfishpass.crossings;
-
 insert into bcfishpass.crossings
 (
     aggregated_crossings_id,
@@ -128,6 +126,7 @@ on dra.transport_line_surface_code = drasurface.transport_line_surface_code
 inner join whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id
 where e.modelled_crossing_id is not NULL   -- only PSCIS crossings that have been linked to a modelled crossing
+and e.watershed_group_code = :'wsg'
 order by e.stream_crossing_id
 on conflict do nothing;
 
@@ -338,6 +337,7 @@ on e.stream_crossing_id = f.stream_crossing_id
 inner join whse_basemapping.fwa_stream_networks_sp s
 ON e.linear_feature_id = s.linear_feature_id
 where e.modelled_crossing_id IS NULL
+and e.watershed_group_code = :'wsg'
 order by e.stream_crossing_id, distance_to_road asc
 on conflict do nothing;
 
@@ -411,6 +411,7 @@ from bcfishpass.dams d
 inner join whse_basemapping.fwa_stream_networks_sp s
 on d.linear_feature_id = s.linear_feature_id
 inner join cabd.dams cabd on d.dam_id = cabd.cabd_id::text
+where d.watershed_group_code = :'wsg'
 order by dam_id
 on conflict do nothing;
 
@@ -465,6 +466,8 @@ select
     (st_dump(st_locatealong(s.geom, d.downstream_route_measure))).geom as geom
 from bcfishpass.dams d
 inner join whse_basemapping.fwa_stream_networks_sp s on d.linear_feature_id = s.linear_feature_id
+-- note lack of watershed group code query (as these are outside of bc)
+-- just run this insert every time, the conflicts are ignored
 order by dam_id
 on conflict do nothing;
 
@@ -544,8 +547,8 @@ select
     b.stream_magnitude,
     (st_dump(st_locatealong(s.geom, b.downstream_route_measure))).geom as geom
 from misc_barriers b
-inner join whse_basemapping.fwa_stream_networks_sp s
-on b.linear_feature_id = s.linear_feature_id
+inner join whse_basemapping.fwa_stream_networks_sp s on b.linear_feature_id = s.linear_feature_id
+where b.watershed_group_code = :'wsg'
 order by user_barrier_anthropogenic_id
 on conflict do nothing;
 
@@ -660,207 +663,6 @@ on dra.transport_line_surface_code = drasurface.transport_line_surface_code
 -- where b.blue_line_key = s.watershed_key
 where (f.structure IS NULL OR coalesce(f.structure, 'CBS') = 'OBS')  -- don't include crossings that have been determined to be non-existent (f.structure = 'NONE')
 and p.stream_crossing_id IS NULL  -- don't include PSCIS crossings
+and b.watershed_group_code = :'wsg'
 order by modelled_crossing_id
 on conflict do nothing;
-
-
--- --------------------------------
--- populate crossing_feature_type column
--- --------------------------------
-update bcfishpass.crossings
-set crossing_feature_type = 'WEIR'
-where crossing_subtype_code = 'WEIR';
-
-update bcfishpass.crossings
-set crossing_feature_type = 'DAM'
-where crossing_subtype_code = 'DAM';
-
--- railway
--- pscis crossings within 50m of rail line and with RAIL in the road name
-update bcfishpass.crossings
-set crossing_feature_type = 'RAIL'
-where rail_owner_name is not null
-and aggregated_crossings_id in
-(
-  select aggregated_crossings_id
-  from bcfishpass.crossings c
-  inner join whse_basemapping.gba_railway_tracks_sp r
-  on st_dwithin(c.geom, r.geom, 50)
-  where crossing_source = 'PSCIS'
-  and upper(pscis_road_name) like '%RAIL%' and upper(pscis_road_name) not like '%TRAIL%'
-);
-
--- pscis crossings within 10m of rail line
-update bcfishpass.crossings
-set crossing_feature_type = 'RAIL'
-where rail_owner_name is not null
-and aggregated_crossings_id in
-(
-  select aggregated_crossings_id
-  from bcfishpass.crossings c
-  inner join whse_basemapping.gba_railway_tracks_sp r
-  on st_dwithin(c.geom, r.geom, 10)
-  where crossing_source = 'PSCIS'
-);
-
--- modelled rail crossings
-update bcfishpass.crossings
-set crossing_feature_type = 'RAIL'
-where rail_owner_name is not null
-and crossing_source = 'MODELLED CROSSINGS';
-
--- tenured roads
-update bcfishpass.crossings
-set crossing_feature_type = 'ROAD, RESOURCE/OTHER'
-where
-  ften_forest_file_id is not NULL OR
-  ogc_proponent is not NULL;
-
--- demographic roads
-update bcfishpass.crossings
-set crossing_feature_type = 'ROAD, DEMOGRAPHIC'
-where
-  crossing_feature_type IS NULL AND
-  transport_line_type_description IN (
-  'Road alleyway',
-  'Road arterial major',
-  'Road arterial minor',
-  'Road collector major',
-  'Road collector minor',
-  'Road freeway',
-  'Road highway major',
-  'Road highway minor',
-  'Road lane',
-  'Road local',
-  'Private driveway demographic',
-  'Road pedestrian mall',
-  'Road runway non-demographic',
-  'Road recreation demographic',
-  'Road ramp',
-  'Road restricted',
-  'Road strata',
-  'Road service',
-  'Road yield lane'
-);
-
-update bcfishpass.crossings
-set crossing_feature_type = 'TRAIL'
-where
-  crossing_feature_type IS NULL AND
-  upper(transport_line_type_description) LIKE 'TRAIL%';
-
--- everything else from DRA
-update bcfishpass.crossings
-set crossing_feature_type = 'ROAD, RESOURCE/OTHER'
-where
-  crossing_feature_type IS NULL AND
-  transport_line_type_description is not NULL;
-
--- in the absence of any of the above info, assume a PSCIS crossing is on a resource/other road
-update bcfishpass.crossings
-set crossing_feature_type = 'ROAD, RESOURCE/OTHER'
-where
-  stream_crossing_id is not NULL AND
-  crossing_feature_type IS NULL;
-
-
--- populate map tile column
-WITH tile AS
-(
-    select
-      a.aggregated_crossings_id,
-      b.map_tile_display_name
-    from bcfishpass.crossings a
-    inner join whse_basemapping.dbm_mof_50k_grid b
-    ON ST_Intersects(a.geom, b.geom)
-)
-
-update bcfishpass.crossings p
-set dbm_mof_50k_grid = t.map_tile_display_name
-from tile t
-where p.aggregated_crossings_id = t.aggregated_crossings_id;
-
-
--- downstream observations ***within the same watershed group***
-WITH spp_downstream AS
-(
-  select
-    aggregated_crossings_id,
-    array_agg(species_code) as species_codes
-  FROM
-    (
-      select distinct
-        a.aggregated_crossings_id,
-        unnest(species_codes) as species_code
-      from bcfishpass.crossings a
-      left outer join bcfishobs.fiss_fish_obsrvtn_events fo
-      on FWA_Downstream(
-      a.blue_line_key,
-      a.downstream_route_measure,
-      a.wscode_ltree,
-      a.localcode_ltree,
-      fo.blue_line_key,
-      fo.downstream_route_measure,
-      fo.wscode_ltree,
-      fo.localcode_ltree
-     )
-    and a.watershed_group_code = fo.watershed_group_code
-    order by a.aggregated_crossings_id, species_code
-    ) AS f
-  group by aggregated_crossings_id
-)
-
-update bcfishpass.crossings c
-set observedspp_dnstr = d.species_codes
-from spp_downstream d
-where c.aggregated_crossings_id = d.aggregated_crossings_id;
-
--- upstream observations ***within the same watershed group***
-WITH spp_upstream AS
-(
-  select
-    aggregated_crossings_id,
-    array_agg(species_code) as species_codes
-  FROM
-    (
-      select distinct
-        a.aggregated_crossings_id,
-        unnest(species_codes) as species_code
-      from bcfishpass.crossings a
-      left outer join bcfishobs.fiss_fish_obsrvtn_events fo
-      on FWA_Upstream(
-        a.blue_line_key,
-        a.downstream_route_measure,
-        a.wscode_ltree,
-        a.localcode_ltree,
-        fo.blue_line_key,
-        fo.downstream_route_measure,
-        fo.wscode_ltree,
-        fo.localcode_ltree
-       )
-      and a.watershed_group_code = fo.watershed_group_code
-      order by a.aggregated_crossings_id, species_code
-    ) AS f
-  group by aggregated_crossings_id
-)
-update bcfishpass.crossings c
-set observedspp_upstr = u.species_codes
-from spp_upstream u
-where c.aggregated_crossings_id = u.aggregated_crossings_id;
-
--- upstream area
--- with upstr_ha as
--- (
--- select
---   c.aggregated_crossings_id,
---   ua.upstream_area_ha
--- from bcfishpass.crossings c
--- inner join whse_basemapping.fwa_streams_watersheds_lut l
--- on c.linear_feature_id = l.linear_feature_id
--- inner join whse_basemapping.fwa_watersheds_upstream_area ua
--- on l.watershed_feature_id = ua.watershed_feature_id
--- )
--- update bcfishpass.crossings c
--- set watershed_upstr_ha = upstr_ha.upstream_area_ha
--- from upstr_ha
--- where c.aggregated_crossings_id = upstr_ha.aggregated_crossings_id;

@@ -14,18 +14,19 @@ INSERT INTO bcfishpass.barriers_pscis
 )
 
 SELECT
-    aggregated_crossings_id,
-    crossing_feature_type,
-    crossing_source as barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    watershed_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code as watershed_group_code,
-    st_force2d(geom) as geom
-FROM bcfishpass.crossings
+    c.aggregated_crossings_id,
+    cft.crossing_feature_type,
+    c.crossing_source as barrier_name,
+    c.linear_feature_id,
+    c.blue_line_key,
+    c.watershed_key,
+    c.downstream_route_measure,
+    c.wscode_ltree,
+    c.localcode_ltree,
+    c.watershed_group_code,
+    st_force2d(c.geom) as geom
+FROM bcfishpass.crossings c
+INNER JOIN bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
 WHERE
   stream_crossing_id IS NOT NULL AND
   barrier_status IN ('BARRIER', 'POTENTIAL') AND

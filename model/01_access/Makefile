@@ -94,7 +94,9 @@ clean:
 	.make/pscis \
 	.make/dbm_mof_50k_grid \
 	sql/load_crossings.sql
-	$(PSQL) -f sql/load_crossings.sql
+	$(PSQL) -c "truncate bcfishpass.crossings"
+	parallel $(PSQL) -f sql/load_crossings.sql -v wsg={1} ::: $(WSGS)
+	# compute upstr/downstr observations here (as previous)?
 	touch $@
 
 # -----
