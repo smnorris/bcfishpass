@@ -17,18 +17,19 @@ INSERT INTO bcfishpass.barriers_anthropogenic
     geom
 )
 SELECT
-    aggregated_crossings_id,
-    crossing_feature_type as barrier_type,
+    c.aggregated_crossings_id,
+    cft.crossing_feature_type as barrier_type,
     NULL as barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    watershed_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code as watershed_group_code,
-    st_force2d(geom) as geom
-FROM bcfishpass.crossings
+    c.linear_feature_id,
+    c.blue_line_key,
+    c.watershed_key,
+    c.downstream_route_measure,
+    c.wscode_ltree,
+    c.localcode_ltree,
+    c.watershed_group_code,
+    st_force2d(c.geom) as geom
+FROM bcfishpass.crossings c
+INNER JOIN bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
 WHERE
   barrier_status IN ('BARRIER', 'POTENTIAL') AND
   blue_line_key = watershed_key AND  -- do not include side channel features as barriers

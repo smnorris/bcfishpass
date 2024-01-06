@@ -14,7 +14,7 @@ select
   c.user_barrier_anthropogenic_id,
   c.modelled_crossing_id,
   c.crossing_source,
-  c.crossing_feature_type,
+  cft.crossing_feature_type,
   c.pscis_status,
   c.crossing_type_code,
   c.crossing_subtype_code,
@@ -45,7 +45,7 @@ select
   c.utm_zone,
   c.utm_easting,
   c.utm_northing,
-  c.dbm_mof_50k_grid,
+  t.map_tile_display_name as dbm_mof_50k_grid,
   c.linear_feature_id,
   c.blue_line_key,
   c.watershed_key,
@@ -62,8 +62,8 @@ select
   s.map_upstream,
   s.channel_width,
   s.mad_m3s,
-  array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
-  array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
+  --array_to_string(c.observedspp_dnstr, ';') as observedspp_dnstr,
+  --array_to_string(c.observedspp_upstr, ';') as observedspp_upstr,
   array_to_string(cd.features_dnstr, ';') as crossings_dnstr,
   array_to_string(ad.features_dnstr, ';') as barriers_anthropogenic_dnstr,
   coalesce(array_length(ad.features_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
@@ -233,6 +233,7 @@ select
   h.wct_rearing_belowupstrbarriers_km,
   c.geom
 from bcfishpass.crossings c
+inner join bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_crossings cd on c.aggregated_crossings_id = cd.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggregated_crossings_id = au.aggregated_crossings_id
@@ -240,6 +241,7 @@ left outer join bcfishpass.crossings_upstr_barriers_per_model_vw aum on c.aggreg
 left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
 left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
+left outer join whse_basemapping.dbm_mof_50k_grid t ON ST_Intersects(c.geom, t.geom)
 order by c.aggregated_crossings_id, s.downstream_route_measure;
 
 create unique index on bcfishpass.crossings_vw (aggregated_crossings_id);

@@ -27,7 +27,7 @@ create table bcfishpass.crossings
     user_barrier_anthropogenic_id bigint unique,
     modelled_crossing_id integer unique,
     crossing_source text,                 -- pscis/dam/model, can be inferred from above ids
-    crossing_feature_type text,           -- general type of crossing (rail/road/trail/dam/weir)
+    --crossing_feature_type text,           -- general type of crossing (rail/road/trail/dam/weir)
     
     -- basic crossing status/info
     pscis_status text,                    -- ASSESSED/HABITAT CONFIRMATION etc
@@ -76,7 +76,7 @@ create table bcfishpass.crossings
     utm_northing integer,
 
     -- map tile for pdfs
-    dbm_mof_50k_grid text,
+    --dbm_mof_50k_grid text,
 
     -- basic FWA info
     linear_feature_id integer,
@@ -95,8 +95,8 @@ create table bcfishpass.crossings
     -- watershed_upstr_ha double precision DEFAULT 0,
 
     -- distinct species upstream/downstream, derived from bcfishobs
-    observedspp_dnstr text[],
-    observedspp_upstr text[],
+    --observedspp_dnstr text[],
+    --observedspp_upstr text[],
   
     geom geometry(PointZM, 3005),
 
@@ -111,7 +111,7 @@ comment on column bcfishpass.crossings.dam_id IS 'BC Dams unique identifier';
 comment on column bcfishpass.crossings.user_barrier_anthropogenic_id IS 'User added misc anthropogenic barriers unique identifier';
 comment on column bcfishpass.crossings.modelled_crossing_id IS 'Modelled crossing unique identifier';
 comment on column bcfishpass.crossings.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,CABD,MISC BARRIERS}';
-comment on column bcfishpass.crossings.crossing_feature_type IS 'The general type of feature crossing the stream, valid feature types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
+--comment on column bcfishpass.crossings.crossing_feature_type IS 'The general type of feature crossing the stream, valid feature types are {DAM,RAIL,"ROAD, DEMOGRAPHIC","ROAD, RESOURCE/OTHER",TRAIL,WEIR}';
 comment on column bcfishpass.crossings.pscis_status IS 'From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED,HABITAT CONFIRMATION,DESIGN,REMEDIATED}';
 comment on column bcfishpass.crossings.crossing_type_code IS 'Defines the type of crossing present at the location of the stream crossing. Acceptable types are: OBS = Open Bottom Structure CBS = Closed Bottom Structure OTHER = Crossing structure does not fit into the above categories. Eg: ford, wier';
 comment on column bcfishpass.crossings.crossing_subtype_code IS 'Further definition of the type of crossing, one of {BRIDGE,CRTBOX,DAM,FORD,OVAL,PIPEARCH,ROUND,WEIR,WOODBOX,NULL}';
@@ -143,7 +143,7 @@ comment on column bcfishpass.crossings.dam_operating_status IS 'See CABD dams co
 comment on column bcfishpass.crossings.utm_zone IS 'UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees.';
 comment on column bcfishpass.crossings.utm_easting IS 'UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698';
 comment on column bcfishpass.crossings.utm_northing IS 'UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826';
-comment on column bcfishpass.crossings.dbm_mof_50k_grid IS 'WHSE_BASEMAPPING.DBM_MOF_50K_GRID map_tile_display_name, used for generating planning map pdfs';
+--comment on column bcfishpass.crossings.dbm_mof_50k_grid IS 'WHSE_BASEMAPPING.DBM_MOF_50K_GRID map_tile_display_name, used for generating planning map pdfs';
 comment on column bcfishpass.crossings.linear_feature_id IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)';
 comment on column bcfishpass.crossings.blue_line_key IS 'From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
 comment on column bcfishpass.crossings.watershed_key IS 'From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.';
@@ -155,8 +155,8 @@ comment on column bcfishpass.crossings.gnis_stream_name IS 'The BCGNIS (BC Geogr
 comment on column bcfishpass.crossings.stream_order IS 'Order of FWA stream at point';
 comment on column bcfishpass.crossings.stream_magnitude IS 'Magnitude of FWA stream at point';
 --comment on column bcfishpass.crossings.watershed_upstr_ha IS 'Total watershed area upstream of point (approximate, does not include area of the fundamental watershed in which the point lies)';
-comment on column bcfishpass.crossings.observedspp_dnstr IS 'Fish species observed downstream of point *within the same watershed group*';
-comment on column bcfishpass.crossings.observedspp_upstr IS 'Fish species observed upstream of point *within the same watershed group*';
+--comment on column bcfishpass.crossings.observedspp_dnstr IS 'Fish species observed downstream of point *within the same watershed group*';
+--comment on column bcfishpass.crossings.observedspp_upstr IS 'Fish species observed upstream of point *within the same watershed group*';
 comment on column bcfishpass.crossings.geom IS 'The point geometry associated with the feature';
 
 -- index for speed
