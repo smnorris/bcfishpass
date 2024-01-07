@@ -416,7 +416,7 @@ order by dam_id
 on conflict do nothing;
 
 -- --------------------------------
--- placeholders for USA dams, from user_barriers_anthropogenic
+-- non-cabd dams (placeholders for USA dams, from user_barriers_anthropogenic)
 -----------------------------------
 insert into bcfishpass.crossings
 (
@@ -466,8 +466,10 @@ select
     (st_dump(st_locatealong(s.geom, d.downstream_route_measure))).geom as geom
 from bcfishpass.dams d
 inner join whse_basemapping.fwa_stream_networks_sp s on d.linear_feature_id = s.linear_feature_id
--- note lack of watershed group code query (as these are outside of bc)
--- just run this insert every time, the conflicts are ignored
+inner join bcfishpass.user_barriers_anthropogenic ba
+  on d.blue_line_key = ba.blue_line_key
+  and d.downstream_route_measure = ba.downstream_route_measure
+where d.watershed_group_code = :'wsg'
 order by dam_id
 on conflict do nothing;
 

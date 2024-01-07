@@ -36,10 +36,47 @@ $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 
 # Finished processing!
 # Now add model run to log, returning the id
-git_id=$(git rev-parse HEAD)
-model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, git_id) VALUES ('LINEAR', decode('$git_id', 'hex')) returning model_run_id")
+# note that below logging could be done in db with triggers/functions but this works fine for now
+model_version=$(git describe)
+model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, model_version) VALUES ('LINEAR', '$model_version') returning model_run_id")
 
-# log summaries (todo - call these functions as a trigger on adding row to bcfishpass.log table rather than calling here)
+# log parameters
+$PSQL -c "insert into bcfishpass.parameters_habitat_method_log
+          (model_run_id, watershed_group_code, model)
+          select $model_run_id, watershed_group_code, model from bcfishpass.parameters_habitat_method;"
+
+$PSQL -c "insert into bcfishpass.parameters_habitat_thresholds_log (
+          model_run_id            ,
+          species_code            ,
+          spawn_gradient_max      ,
+          spawn_channel_width_min ,
+          spawn_channel_width_max ,
+          spawn_mad_min           ,
+          spawn_mad_max           ,
+          rear_gradient_max       ,
+          rear_channel_width_min  ,
+          rear_channel_width_max  ,
+          rear_mad_min            ,
+          rear_mad_max            ,
+          rear_lake_ha_min
+        )
+        select
+         $model_run_id,
+         species_code,
+         spawn_gradient_max,
+         spawn_channel_width_min,
+         spawn_channel_width_max,
+         spawn_mad_min,
+         spawn_mad_max,
+         rear_gradient_max,
+         rear_channel_width_min,
+         rear_channel_width_max,
+         rear_mad_min,
+         rear_mad_max,
+         rear_lake_ha_min
+        from bcfishpass.parameters_habitat_thresholds;"
+
+# log summaries
 $PSQL -c "insert into bcfishpass.wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
 $PSQL -c "insert into bcfishpass.wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
 

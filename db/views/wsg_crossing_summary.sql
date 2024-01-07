@@ -52,7 +52,7 @@ select
 from bcfishpass.wsg_crossing_summary s
 inner join bcfishpass.log l 
 on s.model_run_id = l.model_run_id
-where l.date_completed = (select date_completed from bcfishpass.log order by date_completed desc limit 1)
+where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc limit 1)
 order by s.watershed_group_code, s.crossing_feature_type;
 
 
@@ -110,10 +110,10 @@ select
 from bcfishpass.wsg_crossing_summary s
 inner join bcfishpass.log l
 on s.model_run_id = l.model_run_id
-where l.date_completed = (select date_completed from bcfishpass.log order by date_completed desc offset 1 limit 1)
+where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc limit 1)
 order by watershed_group_code;
 
-
+drop view if exists bcfishpass.wsg_crossing_summary_diff;
 create view bcfishpass.wsg_crossing_summary_diff as
 select
   a.watershed_group_code                  ,

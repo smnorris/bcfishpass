@@ -1,16 +1,46 @@
---do not generally drop or truncate this table - we want to retain this data
+--do not generally drop or truncate these tables - we want to retain this data
+-- but note that if dropping the main log table, all other tables must also be dropped
+-- (if they are not, model_id values get orphaned/duplicated, views will be incorrect)
 --drop table bcfishpass.log cascade;
---truncate bcfishpass.log cascade;
+--drop table bcfishpass.parameters_habitat_method_log;
+--drop table bcfishpass.parameters_habitat_thresholds_log;
+--drop table bcfishpass.wsg_linear_summary;
+--drop table bcfishpass.wsg_crossing_summary;
 create table if not exists bcfishpass.log (
   model_run_id serial primary key,
   model_type text not null,
   date_completed timestamp not null default CURRENT_TIMESTAMP,
-  git_id bytea not null,
+  model_version text not null,
   check (model_type in ('LINEAR','LATERAL'))
 );
 
 -- usage:
--- insert into bcfishpass.log (model_type, git_id) values ('LINEAR', decode('feac3689cef93cc02a4cb4ac6a0fdadebe980f4d', 'hex')) RETURNING model_run_id;
+-- insert into bcfishpass.log (model_type, model_version)
+-- values ('LINEAR', 'v0.1.dev5-71-gec2db00') RETURNING model_run_id;
+
+
+-- log parameters used for the given model run
+create table if not exists bcfishpass.parameters_habitat_method_log (
+  model_run_id integer references bcfishpass.log(model_run_id),
+  watershed_group_code character varying(4),
+  model text
+);
+
+create table if not exists bcfishpass.parameters_habitat_thresholds_log (
+ model_run_id integer references bcfishpass.log(model_run_id),
+ species_code             text   ,
+ spawn_gradient_max       numeric,
+ spawn_channel_width_min  numeric,
+ spawn_channel_width_max  numeric,
+ spawn_mad_min            numeric,
+ spawn_mad_max            numeric,
+ rear_gradient_max        numeric,
+ rear_channel_width_min   numeric,
+ rear_channel_width_max   numeric,
+ rear_mad_min             numeric,
+ rear_mad_max             numeric,
+ rear_lake_ha_min         integer
+);
 
 create table if not exists bcfishpass.wsg_linear_summary (
  model_run_id                                             integer references bcfishpass.log(model_run_id),

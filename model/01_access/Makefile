@@ -4,9 +4,9 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 # process all watershed groups
-WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 # test with just watershed groups noted in param (misses cross-wsg barreriers)
-#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # define barrier table targets
 NATURAL_BARRIERS = .make/barriers_falls \
@@ -95,8 +95,10 @@ clean:
 	.make/dbm_mof_50k_grid \
 	sql/load_crossings.sql
 	$(PSQL) -c "truncate bcfishpass.crossings"
-	parallel $(PSQL) -f sql/load_crossings.sql -v wsg={1} ::: $(WSGS)
-	# compute upstr/downstr observations here (as previous)?
+	# load crossings in series, parallel inserts can be confounded by locks
+	for wsg in $(WSGS) ; do \
+		$(PSQL) -f sql/load_crossings.sql -v wsg=$$wsg ; \
+	done
 	touch $@
 
 # -----
