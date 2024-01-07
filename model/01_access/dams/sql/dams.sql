@@ -151,3 +151,15 @@ where cabd_id in (
 '8a6b10fa-0d4f-4c45-857c-764d7e8028f8',
 '48478e95-e063-4df6-a047-6aaf6087011b'
 );
+
+# report on dams that do not get matched to FWA streams
+drop view if exists bcfishpass.dams_not_matched_to_streams;
+create view bcfishpass.dams_not_matched_to_streams as
+select
+  a.cabd_id,
+  a.dam_name_en
+from cabd.dams a
+left join bcfishpass.dams b
+on a.cabd_id::text = b.dam_id
+where b.dam_id is null
+order by a.cabd_id;
