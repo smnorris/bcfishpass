@@ -97,7 +97,7 @@ clean:
 	$(PSQL) -c "truncate bcfishpass.crossings"
 	# load crossings in series, parallel inserts can be confounded by locks
 	for wsg in $(WSGS) ; do \
-		$(PSQL) -f sql/load_crossings.sql -v wsg=$$wsg ; \
+		set -e ; $(PSQL) -f sql/load_crossings.sql -v wsg=$$wsg ; \
 	done
 	touch $@
 
