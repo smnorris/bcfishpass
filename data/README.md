@@ -2,6 +2,12 @@
 
 User editable data inputs - mostly fix tables. 
 
+## dfo_known_sockeye_lakes.csv
+
+`waterbody_poly_id` of FWA lakes known to potentially support Sockeye
+Source is `Conservation Units for Pacific Salmon under the Wild Salmon Policy, L. Blair Holtby1 and Kristine A. Ciruna2, 2007`
+Data were provided by PSF as 50k lakes shapefile then referenced to FWA.
+
 
 ## pscis_modelledcrossings_streams_xref.csv
 
@@ -66,10 +72,3 @@ Watersheds were assigned presence/absence of given species based on review of:
 This list is by no means a definitive list of watersheds that may support salmon.
 The list was generated as an input for prioritizing watersheds for further salmon/steelhead fish passage assessments.
 As such, watersheds in the Columbia (upstream of the Chief Joseph dam) and Mackenzie Basins were defined as out of scope.
-
-
-## dfo_known_sockeye_lakes.csv
-
-`waterbody_poly_id` of FWA lakes known to potentially support Sockeye
-Source is `Conservation Units for Pacific Salmon under the Wild Salmon Policy, L. Blair Holtby1 and Kristine A. Ciruna2, 2007`
-Data were provided by PSF as 50k lakes shapefile then referenced to FWA by SN.
