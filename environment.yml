@@ -16,10 +16,10 @@ dependencies:
   - owslib
   - awscli
   - psycopg2
-  - sqlalchemy<2.0
+  - sqlalchemy
   - gdal
   - rasterio
-  - geopandas>=0.13.2
+  - geopandas
   - geoalchemy2
   - rasterstats
   - scikit-image
