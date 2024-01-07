@@ -22,13 +22,3 @@ ogr2ogr -f PostgreSQL \
 
 # create bcfishpass.dams - matching the dams to streams
 $PSQL -f sql/dams.sql
-
-# report on dams that do not get matched to FWA streams
-$PSQL --csv -c "select
-  a.cabd_id,
-  a.dam_name_en
-from cabd.dams a
-left join bcfishpass.dams b
-on a.cabd_id::text = b.dam_id
-where b.dam_id is null
-order by a.cabd_id;" > dams_not_matched_to_streams.csv
