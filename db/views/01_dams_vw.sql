@@ -4,6 +4,10 @@ drop materialized view if exists bcfishpass.dams_vw cascade;
 
 create materialized view bcfishpass.dams_vw as
 
+
+-- TODO - add mechanism for temporarily filtering out passable/non-existent dams
+-- ie, add /data/cabd_temp_exclusion.csv with (cabd_id, reviewer_name,review_date,source,notes) and discard by joining here
+-- not sure if we need a lookup forcing matches of cabd features to correct FWA streams
 with cabd as (
   select
     cabd_id as dam_id,
@@ -108,15 +112,7 @@ select
   geom
 from usa;
 
-
 create unique index on bcfishpass.dams_vw (dam_id);
-create index on bcfishpass.dams_vw (linear_feature_id);
-create index on bcfishpass.dams_vw (blue_line_key);
-create index on bcfishpass.dams_vw (watershed_group_code);
-create index on bcfishpass.dams_vw using gist (wscode_ltree);
-create index on bcfishpass.dams_vw using btree (wscode_ltree);
-create index on bcfishpass.dams_vw using gist (localcode_ltree);
-create index on bcfishpass.dams_vw using btree (localcode_ltree);
 create index on bcfishpass.dams_vw using gist (geom);
 
 drop view if exists bcfishpass.dams_not_matched_to_streams;
