@@ -4,32 +4,34 @@
 
 -- ---------------------
 -- REARING
--- Sockeye rearing is simply all lakes >2km2, spawning is in adjacent streams
+-- Use DFO sockeye lakes/CUs, spawning is in adjacent streams.
+
+-- this query presumes that:
+-- - known spawning lakes have no downstream natural barriers
+-- - known spawning lakes are within sockeye watersheds
+-- (this is currently the case in Fraser test area, but there are lakes in other regions outside of SK watersheds)
 -- ---------------------
-insert into bcfishpass.habitat_linear_sk (
+insert into bcfishpass.habitat_sk (
   segmented_stream_id,
   rearing
 )
-SELECT DISTINCT
+select distinct
   s.segmented_stream_id,
   true as rearing
-FROM bcfishpass.streams s
-inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
-INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
-LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
-LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk ON s.waterbody_key = lk.waterbody_key
-LEFT OUTER JOIN whse_basemapping.fwa_manmade_waterbodies_poly res ON s.waterbody_key = res.waterbody_key
-WHERE
-  p.sk is true AND
-  s.watershed_group_code = :'wsg' AND
-  av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
-  (
-    lk.area_ha >= t.rear_lake_ha_min OR  -- lakes
-    res.area_ha >= t.rear_lake_ha_min    -- reservoirs
-  );
+from bcfishpass.dfo_known_sockeye_lakes a
+inner join whse_basemapping.fwa_lakes_poly l
+on a.waterbody_poly_id = l.waterbody_poly_id
+inner join bcfishpass.streams s
+on l.waterbody_key = s.waterbody_key
+where s.watershed_group_code = :'wsg';
+
 
 -- ---------------------
 -- SPAWNING, DOWNSTREAM
+-- todo:
+-- - use temp_sockeye_spawning table to support cross-watershed group downstream spawning
+-- - use 5% gradient barriers rather than raw stream gradient as barriers to juveniles swimming upstream to rearing lake
+-- - should downstream tribs be included?
 -- ---------------------
 -- find outlets of the rearing lakes
 WITH rearing_minimums AS
@@ -41,7 +43,7 @@ WITH rearing_minimums AS
     s.downstream_route_measure,
     s.blue_line_key
   FROM bcfishpass.streams s
-  INNER JOIN bcfishpass.habitat_linear_sk h ON s.segmented_stream_id = h.segmented_stream_id
+  INNER JOIN bcfishpass.habitat_sk h ON s.segmented_stream_id = h.segmented_stream_id
   WHERE
     s.watershed_group_code = :'wsg' AND
     h.rearing is true
@@ -109,13 +111,12 @@ dnstr_spawning AS
         s.gradient <= t.spawn_gradient_max AND
           (mad.mad_m3s > t.spawn_mad_min OR
           s.stream_order >= 8) AND
-        av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
       THEN true
   END AS spawning
   FROM downstream_within_3k a
   LEFT OUTER JOIN too_steep b ON a.waterbody_key = b.waterbody_key
   INNER JOIN bcfishpass.streams s ON a.segmented_stream_id = s.segmented_stream_id
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
   LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
@@ -123,9 +124,9 @@ dnstr_spawning AS
   WHERE b.waterbody_key IS NULL OR a.row_number < b.row_number
 )
 
-insert into bcfishpass.habitat_linear_sk
+insert into bcfishpass.habitat_sk
 (segmented_stream_id, spawning)
-select
+select distinct
   segmented_stream_id,
   spawning
 FROM dnstr_spawning
@@ -135,121 +136,29 @@ do update set spawning = EXCLUDED.spawning;
 
 
 -- ---------------------
--- SPAWNING, UPSTREAM
+-- ALL SPAWNING UPSTREAM OF REARING LAKES
 -- ---------------------
-WITH spawn AS
-(
-  SELECT
-    s.segmented_stream_id,
-    s.blue_line_key,
-    s.downstream_route_measure,
-    s.wscode_ltree,
-    s.localcode_ltree,
-    s.geom
-  FROM bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
-  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
-  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  WHERE
-    s.watershed_group_code = :'wsg' AND
-    av.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] AND
-
-  ((
-    wsg.model = 'cw' AND
-    s.gradient <= t.spawn_gradient_max AND
-    cw.channel_width > t.spawn_channel_width_min AND
-    (cw.channel_width > t.spawn_channel_width_min) AND  -- double line riv do not default to spawn cw
-    cw.channel_width <= t.spawn_channel_width_max
-  ) OR
-  (
-    wsg.model = 'mad' AND
-    s.gradient <= t.spawn_gradient_max AND
-    mad.mad_m3s > t.spawn_mad_min AND
-    mad.mad_m3s <= t.spawn_mad_max
-  ))
-
-  AND
-  (wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
-    (wb.waterbody_type IS NULL AND s.edge_type IN (1000,1100,2000,2300))
-  )
-),
-
--- find spawn upstream of rearing
-spawn_upstream AS
-(
-  SELECT DISTINCT
-    sp.*
-  FROM spawn sp
+insert into bcfishpass.habitat_sk
+(segmented_stream_id, spawning)
+select distinct
+  sp.segmented_stream_id,
+  true as spawning
+  FROM bcfishpass.temp_sockeye_spawning sp
+  inner join bcfishpass.streams s on sp.segmented_stream_id = s.segmented_stream_id
   INNER JOIN bcfishpass.streams r
   ON FWA_Upstream(
     r.blue_line_key,
     r.downstream_route_measure,
     r.wscode_ltree,
     r.localcode_ltree,
-    sp.blue_line_key,
-    sp.downstream_route_measure,
-    sp.wscode_ltree,
-    sp.localcode_ltree
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree
   )
-  inner join bcfishpass.habitat_linear_sk h on r.segmented_stream_id = h.segmented_stream_id
+  inner join bcfishpass.habitat_sk h on r.segmented_stream_id = h.segmented_stream_id
   where
     r.watershed_group_code = :'wsg' and
     h.rearing is true
-),
-
--- cluster the spawning
-clusters as
-(
-  SELECT
-    segmented_stream_id,
-    ST_ClusterDBSCAN(geom, 1, 1) over() as cid,
-    geom
-  FROM spawn_upstream
-  ORDER BY segmented_stream_id
-),
-
--- find the rearing lakes nearby
--- (spatial query on just a few lake geoms is much faster than relating
--- streams classified as rearing back to lakes, and then to the geoms)
-clusters_near_rearing as
-(
-  select
-    c.cid,
-    bool_or(lk.waterbody_key IS NOT NULL) as wb
-  from clusters c
-  left outer join whse_basemapping.fwa_lakes_poly lk
-  on st_dwithin(c.geom, lk.geom, 2)
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t
-  ON t.species_code = 'SK'
-  where lk.area_ha >= t.rear_lake_ha_min  -- lakes
-  group by c.cid
-  union all
-  select distinct
-    c.cid,
-    bool_or(res.waterbody_key IS NOT NULL) as wb
-  from clusters c
-  left outer join whse_basemapping.fwa_manmade_waterbodies_poly res
-  on st_dwithin(c.geom, res.geom, 2)
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t
-  ON t.species_code = 'SK'
-  where res.area_ha >= t.rear_lake_ha_min    -- reservoirs
-  group by c.cid
-)
-
--- finally, insert the streams that compose the clusters connected to lakes
-insert into bcfishpass.habitat_linear_sk
-(segmented_stream_id, spawning)
-select
-  segmented_stream_id,
-  true as spawning
-FROM clusters_near_rearing a
-INNER JOIN clusters b
-ON a.cid = b.cid
-WHERE a.wb is true
 on conflict (segmented_stream_id)
 do update set spawning = EXCLUDED.spawning;
-
-

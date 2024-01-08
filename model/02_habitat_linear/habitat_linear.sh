@@ -5,6 +5,7 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
+$PSQL -f sql/temp_spawning_sk.sql
 
 # run all habitat queries per watershed group
 for sql in sql/load_habitat_linear_*.sql
@@ -14,9 +15,7 @@ do
   parallel --halt now,fail=1 --no-run-if-empty $PSQL -f $sql -v wsg={1} ::: $WSGS
 done
 
-# horsefly sockeye have their own model due to trans-watershed group spawning/rearing effects
-# (this is highly likely to be present elsewhere but has not been investigated)
-$PSQL -f sql/horsefly_sk.sql
+$PSQL -c "drop table bcfishpass.temp_spawning_sk"
 
 # generate report of habitat length upstream of all crossings
 $PSQL -c "truncate bcfishpass.crossings_upstream_habitat"
