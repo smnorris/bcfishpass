@@ -152,7 +152,7 @@ where cabd_id in (
 '48478e95-e063-4df6-a047-6aaf6087011b'
 );
 
-# report on dams that do not get matched to FWA streams
+-- report on dams that do not get matched to FWA streams
 drop view if exists bcfishpass.dams_not_matched_to_streams;
 create view bcfishpass.dams_not_matched_to_streams as
 select
