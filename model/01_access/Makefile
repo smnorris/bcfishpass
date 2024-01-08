@@ -3,10 +3,8 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
-# process all watershed groups
-#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
-# test with just watershed groups noted in param (misses cross-wsg barreriers)
-WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+# watershed groups to process are defined by bcfishpass.watershed_groups_access
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.watershed_groups_access")
 
 # define barrier table targets
 NATURAL_BARRIERS = .make/barriers_falls \
@@ -23,17 +21,19 @@ ANTH_BARRIERS = .make/barriers_anthropogenic \
 	.make/barriers_dams_hydro \
 	.make/barriers_pscis
 
-# SOURCE_BARRIERS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/barriers_*.sql))
-
 # access models - combine barriers into tables of per-species scenarios
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
-
 
 all: .make/qa
 
 clean: 
 	rm -Rf .make
 
+# for access model processing that is per-watershed group, use just watershed groups noted in parameters file
+# (for testing only)
+test:
+	$(PSQL) -c "truncate bcfishpass.watershed_groups_access"
+	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from bcfishpass.parameters_habitat_method"
 
 # ------
 # FALLS

@@ -1,7 +1,5 @@
 PSQL = psql $(DATABASE_URL) -v ON_ERROR_STOP=1 # Ensure psql stops on error
-GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
-	FROM whse_basemapping.fwa_watershed_groups_poly \
-	ORDER BY watershed_group_code")
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.watershed_groups_access")
 
 # download latest from s3
 .make/download_archive:
@@ -82,11 +80,11 @@ GROUPS = $(shell psql $(DATABASE_URL) -AtX -c "SELECT watershed_group_code \
 	$(PSQL) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source
-	parallel $(PSQL) -f sql/02_intersect_dra.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL) -f sql/03_intersect_ften.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL) -f sql/04_intersect_ogc.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL) -f sql/05_intersect_ogcpre06.sql -v wsg={1} ::: $(GROUPS)
-	parallel $(PSQL) -f sql/06_intersect_railway.sql -v wsg={1} ::: $(GROUPS)
+	parallel $(PSQL) -f sql/02_intersect_dra.sql -v wsg={1} ::: $(WSGS)
+	parallel $(PSQL) -f sql/03_intersect_ften.sql -v wsg={1} ::: $(WSGS)
+	parallel $(PSQL) -f sql/04_intersect_ogc.sql -v wsg={1} ::: $(WSGS)
+	parallel $(PSQL) -f sql/05_intersect_ogcpre06.sql -v wsg={1} ::: $(WSGS)
+	parallel $(PSQL) -f sql/06_intersect_railway.sql -v wsg={1} ::: $(WSGS)
 
 	# remove duplicate crossings introduced by using multiple sources
 	$(PSQL) -f sql/07_remove_duplicates.sql
