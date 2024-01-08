@@ -4,9 +4,9 @@
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1          # point psql to db and stop on errors
 
 # process all watershed groups
-WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 # test with just watershed groups noted in param (misses cross-wsg barreriers)
-#WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 # define barrier table targets
 NATURAL_BARRIERS = .make/barriers_falls \
@@ -55,9 +55,16 @@ clean:
 # ------
 # DAMS
 # ------
-.make/dams:  dams/dams.sh dams/sql/dams.sql
+.make/dams:
 	mkdir -p .make
-	cd dams; ./dams.sh
+	$(PSQL) -c "truncate cabd.dams"
+	ogr2ogr -f PostgreSQL \
+	  "PG:$(DATABASE_URL)" \
+	  -append \
+	  -nln cabd.dams \
+	  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+	  OGRGeoJSON
+	$(PSQL) -c "refresh materialized view bcfishpass.dams_vw"
 	touch $@
 
 # ------

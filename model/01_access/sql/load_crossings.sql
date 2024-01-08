@@ -407,7 +407,7 @@ select
     s.stream_order,
     s.stream_magnitude,
     (st_dump(st_locatealong(s.geom, d.downstream_route_measure))).geom as geom
-from bcfishpass.dams d
+from bcfishpass.dams_vw d
 inner join whse_basemapping.fwa_stream_networks_sp s
 on d.linear_feature_id = s.linear_feature_id
 inner join cabd.dams cabd on d.dam_id = cabd.cabd_id::text
@@ -464,7 +464,7 @@ select
     s.stream_order,
     s.stream_magnitude,
     (st_dump(st_locatealong(s.geom, d.downstream_route_measure))).geom as geom
-from bcfishpass.dams d
+from bcfishpass.dams_vw d
 inner join whse_basemapping.fwa_stream_networks_sp s on d.linear_feature_id = s.linear_feature_id
 inner join bcfishpass.user_barriers_anthropogenic ba
   on d.blue_line_key = ba.blue_line_key
