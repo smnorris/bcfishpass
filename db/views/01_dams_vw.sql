@@ -3,16 +3,14 @@
 drop materialized view if exists bcfishpass.dams_vw cascade;
 
 create materialized view bcfishpass.dams_vw as
-
-
--- TODO - add mechanism for temporarily filtering out passable/non-existent dams
--- ie, add /data/cabd_temp_exclusion.csv with (cabd_id, reviewer_name,review_date,source,notes) and discard by joining here
--- not sure if we need a lookup forcing matches of cabd features to correct FWA streams
 with cabd as (
   select
-    cabd_id as dam_id,
-    st_transform(geom, 3005) as geom
-  from cabd.dams
+    d.cabd_id as dam_id,
+    st_transform(d.geom, 3005) as geom
+  from cabd.dams d
+  -- exclude any dam noted in user exclusion table
+  left outer join bcfishpass.user_cabd_dams_exclusions x on d.cabd_id = x.cabd_id
+  where x.cabd_id is null
 ),
 
 nearest AS

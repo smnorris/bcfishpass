@@ -84,6 +84,20 @@ create table bcfishpass.user_barriers_definite_control
   primary key (blue_line_key, downstream_route_measure)
 );
 
+-- --------------
+-- USER CABD EXCLUSIONS
+--
+-- ids of cabd dams to exclude
+-- --------------
+drop table if exists bcfishpass.user_cabd_dams_exclusions;
+create table bcfishpass.user_cabd_dams_exclusions (
+  cabd_id       text,
+  reviewer_name text,
+  review_date   date,
+  source        text,
+  notes         text,
+  primary key (cabd_id)
+);
 
 -- --------------
 -- USER FALLS

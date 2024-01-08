@@ -33,6 +33,10 @@ Currently, controls the barrier status of natural barriers (gradient, falls, sub
 NOTE -  this table will only be used to identify modelled barriers known to be passable 
 (gradient, subsurface flow) once bcfishpass incorporates CABD falls
 
+## user_cabd_dams_exclusions.csv
+
+List of CABD dams to exclude from analysis (generally due to incorrect location or incorrect passability status).
+Use as temporary fix and submit any location or passability status to CWF for fix in source.
 
 ## user_falls.csv
 
