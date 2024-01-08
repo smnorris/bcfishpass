@@ -110,7 +110,7 @@ select
 from bcfishpass.wsg_crossing_summary s
 inner join bcfishpass.log l
 on s.model_run_id = l.model_run_id
-where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc limit 1)
+where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc offset 1 limit 1)
 order by watershed_group_code;
 
 drop view if exists bcfishpass.wsg_crossing_summary_diff;

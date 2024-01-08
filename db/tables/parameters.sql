@@ -30,3 +30,11 @@ create table bcfishpass.parameters_habitat_thresholds (
   rear_mad_max numeric,
   rear_lake_ha_min integer
 );
+
+
+-- --------------
+-- list of watershed groups to process in access model/crossings
+-- defaults to all
+-- --------------
+drop table if exists bcfishpass.watershed_groups_access;
+create table bcfishpass.watershed_groups_access as select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly;
