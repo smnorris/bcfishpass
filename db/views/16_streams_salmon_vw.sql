@@ -1,4 +1,4 @@
-drop view if exists bcfishpass.streams_salmon_vw;
+drop view if exists bcfishpass.streams_salmon_vw cascade;
 
 create view bcfishpass.streams_salmon_vw as
 select
@@ -53,10 +53,29 @@ select
       h.rearing_sk is true
     then true
   end as rearing,
+  -- known spawning
+  case
+    when
+      hu.spawning_ch is true or
+      hu.spawning_cm is true or
+      hu.spawning_co is true or
+      hu.spawning_pk is true or
+      hu.spawning_sk is true
+    then true
+  end as spawning_known,
+  -- known rearing
+  case
+    when
+      hu.rearing_ch is true or
+      hu.rearing_co is true or
+      hu.rearing_sk is true
+    then true
+  end as rearing_known,
   m.mapping_code_salmon as mapping_code,
   s.geom
 from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
+left outer join bcfishpass.habitat_user_vw hu on s.segmented_stream_id = h.segmented_stream_id
 where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];

@@ -1,4 +1,4 @@
-drop view if exists bcfishpass.streams_st_vw;
+drop view if exists bcfishpass.streams_st_vw cascade;
 
 create view bcfishpass.streams_st_vw as
 select
@@ -37,10 +37,13 @@ select
   a.remediated_dnstr_ind,
   h.spawning_st as spawning,
   h.rearing_st as rearing,
+  hu.spawning_st as spawning_known,
+  hu.rearing_st as rearing_known,
   m.mapping_code_st as mapping_code,
   s.geom
 from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
+left outer join bcfishpass.habitat_user_vw hu on s.segmented_stream_id = h.segmented_stream_id
 where barriers_st_dnstr = array[]::text[];
