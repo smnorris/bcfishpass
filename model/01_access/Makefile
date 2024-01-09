@@ -34,7 +34,8 @@ clean_natural:
 	rm -f .make/model_access_*
 
 clean_access:
-	rm -f .make/model_access_*
+	rm -f .make/model_access*
+	rm -f .make/qa
 
 clean_anth:
 	rm -f .make/crossings
@@ -44,6 +45,7 @@ clean_anth:
 	rm -f .make/index_crossings
 	rm -f .make/model_access
 	rm -f .make/model_access_prep
+	rm -f .make/qa
 
 # for access model processing that is per-watershed group, use just watershed groups noted in parameters file
 # (for testing only)
