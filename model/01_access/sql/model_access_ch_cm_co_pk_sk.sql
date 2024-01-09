@@ -1,88 +1,102 @@
+-- adaptation of Parken CO model for PSF - only use natural barriers on streams of order 4 and greater
+
 with barriers as
 (
   select
       barriers_gradient_15_id as barrier_id,
       barrier_type,
       barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_15
-  where watershed_group_code = :'wsg'
+      b.linear_feature_id,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_gradient_15 b
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+  where b.watershed_group_code = :'wsg' and s.stream_order > 3
   union all
   select
       barriers_gradient_20_id as barrier_id,
       barrier_type,
       barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_20
-  where watershed_group_code = :'wsg'
+      b.linear_feature_id,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_gradient_20 b
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+  where b.watershed_group_code = :'wsg' and s.stream_order > 3
   union all
   select
       barriers_gradient_25_id as barrier_id,
       barrier_type,
       barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_25
-  where watershed_group_code = :'wsg'
+      b.linear_feature_id,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_gradient_25 b
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+  where b.watershed_group_code = :'wsg' and s.stream_order > 3
   union all
   select
       barriers_gradient_30_id as barrier_id,
       barrier_type,
       barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_30
-  where watershed_group_code = :'wsg'
+      b.linear_feature_id,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_gradient_30 b
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+  where b.watershed_group_code = :'wsg' and s.stream_order > 3
   union all
   select
       barriers_falls_id as barrier_id,
       barrier_type,
       barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_falls
-  where watershed_group_code = :'wsg'
+      b.linear_feature_id,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_falls b
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+  where b.watershed_group_code = :'wsg' and s.stream_order > 3
   union all
   select
       barriers_subsurfaceflow_id as barrier_id,
       barrier_type,
       barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_subsurfaceflow
-  where watershed_group_code = :'wsg'
+      b.linear_feature_id,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
+      b.watershed_group_code,
+      b.geom
+  from bcfishpass.barriers_subsurfaceflow b
+  inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+  where b.watershed_group_code = :'wsg' and s.stream_order > 3
 ),
 
 obs_upstr as
@@ -201,9 +215,9 @@ barriers_filtered as (
         )
 )
 
-insert into bcfishpass.barriers_ch_cm_co_pk_sk
+insert into bcfishpass.barriers_co_parken
 (
-    barriers_ch_cm_co_pk_sk_id,
+    barriers_co_parken_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -218,17 +232,19 @@ insert into bcfishpass.barriers_ch_cm_co_pk_sk
 select * from barriers_filtered
 union all
 select
-    barriers_user_definite_id as barrier_load_id,
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-from bcfishpass.barriers_user_definite
-where watershed_group_code = :'wsg'
+    b.barriers_user_definite_id as barrier_load_id,
+    b.barrier_type,
+    b.barrier_name,
+    b.linear_feature_id,
+    b.blue_line_key,
+    b.downstream_route_measure,
+    b.wscode_ltree,
+    b.localcode_ltree,
+    b.watershed_group_code,
+    b.geom
+from bcfishpass.barriers_user_definite b
+inner join whse_basemapping.fwa_stream_networks_sp s
+  on b.linear_feature_id = s.linear_feature_id
+where b.watershed_group_code = :'wsg' and s.stream_order > 3
 
 on conflict do nothing;
