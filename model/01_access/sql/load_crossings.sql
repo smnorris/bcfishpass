@@ -164,6 +164,7 @@ WITH rail AS
   ON st_intersects(pt.geom, wsg.geom)
   and nn.distance_to_road < 25
   where pt.modelled_crossing_id IS NULL
+  and pt.watershed_group_code = :'wsg'
 ),
 
 dra as
@@ -186,6 +187,7 @@ dra as
   ON st_intersects(pt.geom, wsg.geom)
   and nn.distance_to_road < 30
   where pt.modelled_crossing_id IS NULL
+  and pt.watershed_group_code = :'wsg'
 ),
 
 ften as (
@@ -209,6 +211,7 @@ ften as (
   ON st_intersects(pt.geom, wsg.geom)
   and nn.distance_to_road < 30
   where pt.modelled_crossing_id IS NULL
+  and pt.watershed_group_code = :'wsg'
 ),
 
 -- combine DRA and FTEN into a road lookup
