@@ -45,8 +45,6 @@ clean_anth:
 	rm -f .make/model_access
 	rm -f .make/model_access_prep
 
-
-
 # for access model processing that is per-watershed group, use just watershed groups noted in parameters file
 # (for testing only)
 test:
