@@ -37,13 +37,13 @@ select
   a.remediated_dnstr_ind,
   h.spawning_bt as spawning,
   h.rearing_bt as rearing,
-  hu.spawning_bt as spawning_known,
-  hu.rearing_bt as rearing_known,
+  hk.spawning_bt as spawning_known,
+  hk.rearing_bt as rearing_known,
   m.mapping_code_bt as mapping_code,
   s.geom
 from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
-left outer join bcfishpass.streams_habitat_user_vw hu on s.segmented_stream_id = hu.segmented_stream_id
+left outer join bcfishpass.streams_habitat_known_vw hk on s.segmented_stream_id = hk.segmented_stream_id
 where cardinality(a.barriers_bt_dnstr) = 0;
