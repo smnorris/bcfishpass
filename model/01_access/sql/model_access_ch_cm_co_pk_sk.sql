@@ -100,7 +100,7 @@ with barriers as
   union all
   -- all streams of order 1,2 are barriers
   -- (could be simpler to just exclude streams with this order from resulting model?)
-  select distinct on (blue_line_key)
+  select * from (select distinct on (blue_line_key)
     linear_feature_id::text as barrier_id,
     'ORDER_UNDER_3' as barrier_type,
     null as barrier_name,
@@ -112,9 +112,9 @@ with barriers as
     watershed_group_code,
     st_force2d(st_startpoint(geom)) as geom
   from whse_basemapping.fwa_stream_networks_sp
-  where watershed_group_code = 'VICT'
+  where watershed_group_code = :'wsg'
   and stream_order in (1, 2) and waterbody_key is null
-  order by blue_line_key, downstream_route_measure asc
+  order by blue_line_key, downstream_route_measure asc) as f
 ),
 
 obs_upstr as
