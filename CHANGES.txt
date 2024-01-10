@@ -3,9 +3,9 @@ Changes
 
 All issue numbers are relative to https://github.com/smnorris/bcfishpass/issues
 
-v0.1.1 (2024-)
+v0.1.1 (2024-01-09)
 -------------------
--
+- remove typo creating cross-join in stream views
 
 v0.1.0 (2024-01-08)
 -------------------
