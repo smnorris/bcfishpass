@@ -1,6 +1,260 @@
+-- crossing feature type
+drop view if exists bcfishpass.crossings_feature_type_vw cascade;
+create view bcfishpass.crossings_feature_type_vw as
+select
+  aggregated_crossings_id,
+  case 
+    when crossing_subtype_code = 'WEIR' then 'WEIR'
+    when crossing_subtype_code = 'DAM' then 'DAM'
+    -- RAIL, pscis crossings within 50m of rail line and with RAIL in the road name
+    when 
+      rail_owner_name is not null
+      and aggregated_crossings_id in (
+        select 
+          aggregated_crossings_id
+        from bcfishpass.crossings c
+        inner join whse_basemapping.gba_railway_tracks_sp r
+        on st_dwithin(c.geom, r.geom, 50)
+        where crossing_source = 'PSCIS'
+        and upper(pscis_road_name) like '%RAIL%' and upper(pscis_road_name) not like '%TRAIL%'
+      ) 
+    then 'RAIL'
+    -- RAIL, pscis crossings within 10m of rail line
+    when 
+      rail_owner_name is not null
+      and aggregated_crossings_id in (
+        select 
+          aggregated_crossings_id
+        from bcfishpass.crossings c
+        inner join whse_basemapping.gba_railway_tracks_sp r
+        on st_dwithin(c.geom, r.geom, 10)
+        where crossing_source = 'PSCIS'
+      )
+    then 'RAIL'
+    -- modelled rail crossings
+    when 
+      rail_owner_name is not null
+      and crossing_source = 'MODELLED CROSSINGS'
+    then 'RAIL'
+    -- tenured roads
+    when 
+      ften_forest_file_id is not NULL OR
+      ogc_proponent is not NULL
+    then 'ROAD, RESOURCE/OTHER'
+    -- demographic roads
+    when
+      transport_line_type_description IN (
+        'Road alleyway',
+        'Road arterial major',
+        'Road arterial minor',
+        'Road collector major',
+        'Road collector minor',
+        'Road freeway',
+        'Road highway major',
+        'Road highway minor',
+        'Road lane',
+        'Road local',
+        'Private driveway demographic',
+        'Road pedestrian mall',
+        'Road runway non-demographic',
+        'Road recreation demographic',
+        'Road ramp',
+        'Road restricted',
+        'Road strata',
+        'Road service',
+        'Road yield lane'
+      )
+    then 'ROAD, DEMOGRAPHIC'
+    -- trails
+    when
+      upper(transport_line_type_description) LIKE 'TRAIL%'
+    then 'TRAIL'
+    -- everything else (DRA)
+    when
+      transport_line_type_description is not NULL
+    then 'ROAD, RESOURCE/OTHER'
+    -- in the absence of any of the above info, assume a PSCIS crossing is on a resource/other road    
+    when 
+      stream_crossing_id is not NULL
+    then 'ROAD, RESOURCE/OTHER'
+  end as crossing_feature_type
+from bcfishpass.crossings;
+
+
+-- counts of anthropogenic barriers upstream per access model
+-- (for example, number of barriers on steelhead accessible stream upstream of given barrier)
+drop materialized view if exists bcfishpass.crossings_upstr_barriers_per_model_vw cascade;
+
+create materialized view bcfishpass.crossings_upstr_barriers_per_model_vw as
+
+with access_models as (
+  select
+    c.aggregated_crossings_id,
+    a.barriers_bt_dnstr,
+    a.barriers_ch_cm_co_pk_sk_dnstr,
+    a.barriers_ct_dv_rb_dnstr,
+    a.barriers_st_dnstr,
+    a.barriers_wct_dnstr
+  from bcfishpass.crossings c
+  left outer join bcfishpass.streams s ON s.blue_line_key = c.blue_line_key
+  AND round(s.downstream_route_measure::numeric, 4) <= round(c.downstream_route_measure::numeric, 4)
+  AND round(s.upstream_route_measure::numeric, 4) > round(c.downstream_route_measure::numeric, 4)
+  AND s.watershed_group_code = c.watershed_group_code
+  left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+),
+
+barriers_unnested as (
+  select
+    a.aggregated_crossings_id,
+    unnest(a.features_upstr) as barrier_upstr
+    from bcfishpass.crossings_upstr_barriers_anthropogenic a
+),
+
+barriers_upstr as (
+  select
+    b.aggregated_crossings_id,
+    b.barrier_upstr,
+    m.barriers_bt_dnstr,
+    m.barriers_ch_cm_co_pk_sk_dnstr,
+    m.barriers_ct_dv_rb_dnstr,
+    m.barriers_st_dnstr,
+    m.barriers_wct_dnstr
+  from barriers_unnested b
+  left outer join access_models m on b.barrier_upstr = m.aggregated_crossings_id
+),
+
+barriers_upstr_per_model as (
+  select
+    c.aggregated_crossings_id,
+    array_agg(barrier_upstr) filter (where u.barriers_bt_dnstr = array[]::text[]) as barriers_upstr_bt,
+    array_agg(barrier_upstr) filter (where u.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]) as barriers_upstr_ch_cm_co_pk_sk,
+    array_agg(barrier_upstr) filter (where u.barriers_ct_dv_rb_dnstr = array[]::text[]) as barriers_upstr_ct_dv_rb,
+    array_agg(barrier_upstr) filter (where u.barriers_st_dnstr = array[]::text[]) as barriers_upstr_st,
+    array_agg(barrier_upstr) filter (where u.barriers_wct_dnstr = array[]::text[]) as barriers_upstr_wct
+  from bcfishpass.crossings c
+  inner join barriers_upstr u on c.aggregated_crossings_id = u.aggregated_crossings_id
+  group by c.aggregated_crossings_id
+)
+
+select
+ c.aggregated_crossings_id            ,
+ bpm.barriers_upstr_bt                ,
+ bpm.barriers_upstr_ch_cm_co_pk_sk    ,
+ bpm.barriers_upstr_ct_dv_rb          ,
+ bpm.barriers_upstr_st                ,
+ bpm.barriers_upstr_wct
+from bcfishpass.crossings c
+left outer join barriers_upstr_per_model bpm
+on c.aggregated_crossings_id = bpm.aggregated_crossings_id;
+
+create unique index on bcfishpass.crossings_upstr_barriers_per_model_vw (aggregated_crossings_id);
+
+
+-- below datasets are not guaranteed to exist, leave this out for now
+
+--drop materialized view if exists bcfishpass.crossings_admin;
+--create materialized view bcfishpass.crossings_admin;
+--SELECT DISTINCT ON (c.aggregated_crossings_id) -- some of the admin areas are not clean/distinct, make sure to select just one
+--  c.aggregated_crossings_id,
+--  rd.admin_area_abbreviation as abms_regional_district,
+--  muni.admin_area_abbreviation as abms_municipality,
+--  ir.english_name as clab_indian_reserve_name,
+--  ir.band_name as clab_indian_reserve_band_name,
+--  np.english_name as clab_national_park_name,
+--  pp.protected_lands_name as bc_protected_lands_name,
+--  pmbc.owner_type as pmbc_owner_type,
+--  nr.region_org_unit_name as adm_nr_region,
+--  nr.district_name as adm_nr_district
+--FROM bcfishpass.crossings c
+--LEFT OUTER JOIN whse_legal_admin_boundaries.abms_regional_districts_sp rd
+--ON ST_Intersects(c.geom, rd.geom)
+--LEFT OUTER JOIN whse_legal_admin_boundaries.abms_municipalities_sp muni
+--ON ST_Intersects(c.geom, muni.geom)
+--LEFT OUTER JOIN whse_admin_boundaries.adm_indian_reserves_bands_sp ir
+--ON ST_Intersects(c.geom, ir.geom)
+--LEFT OUTER JOIN whse_admin_boundaries.clab_national_parks np
+--ON ST_Intersects(c.geom, np.geom)
+--LEFT OUTER JOIN whse_tantalis.ta_park_ecores_pa_svw pp
+--ON ST_Intersects(c.geom, pp.geom)
+--LEFT OUTER JOIN whse_cadastre.pmbc_parcel_fabric_poly_svw pmbc
+--ON ST_Intersects(c.geom, pmbc.geom)
+--LEFT OUTER JOIN whse_admin_boundaries.adm_nr_districts_sp nr
+--ON ST_Intersects(c.geom, pmbc.geom)
+--ORDER BY c.aggregated_crossings_id, rd.admin_area_abbreviation, muni.admin_area_abbreviation, ir.english_name, pp.protected_lands_name, pmbc.owner_type, nr.district_name;
+
+
+-- downstream observations ***within the same watershed group***
+drop materialized view if exists bcfishpass.crossings_dnstr_observations_vw cascade;
+
+create materialized view bcfishpass.crossings_dnstr_observations_vw as
+select
+  aggregated_crossings_id,
+  array_agg(species_code) as observedspp_dnstr
+FROM
+  (
+    select distinct
+      a.aggregated_crossings_id,
+      unnest(species_codes) as species_code
+    from bcfishpass.crossings a
+    left outer join bcfishobs.fiss_fish_obsrvtn_events fo
+    on FWA_Downstream(
+      a.blue_line_key,
+      a.downstream_route_measure,
+      a.wscode_ltree,
+      a.localcode_ltree,
+      fo.blue_line_key,
+      fo.downstream_route_measure,
+      fo.wscode_ltree,
+      fo.localcode_ltree
+   )
+  and a.watershed_group_code = fo.watershed_group_code
+  order by a.aggregated_crossings_id, species_code
+  ) AS f
+group by aggregated_crossings_id;
+
+create index on bcfishpass.crossings_dnstr_observations_vw (aggregated_crossings_id);
+
+
+-- upstream observations ***within the same watershed group***
+drop materialized view if exists bcfishpass.crossings_upstr_observations_vw cascade;
+
+create materialized view bcfishpass.crossings_upstr_observations_vw as
+select
+  aggregated_crossings_id,
+  array_agg(species_code) as observedspp_upstr
+FROM
+  (
+    select distinct
+      a.aggregated_crossings_id,
+      unnest(species_codes) as species_code
+    from bcfishpass.crossings a
+    left outer join bcfishobs.fiss_fish_obsrvtn_events fo
+    on FWA_Upstream(
+      a.blue_line_key,
+      a.downstream_route_measure,
+      a.wscode_ltree,
+      a.localcode_ltree,
+      fo.blue_line_key,
+      fo.downstream_route_measure,
+      fo.wscode_ltree,
+      fo.localcode_ltree
+     )
+    and a.watershed_group_code = fo.watershed_group_code
+    order by a.aggregated_crossings_id, species_code
+  ) AS f
+group by aggregated_crossings_id;
+
+create index on bcfishpass.crossings_upstr_observations_vw (aggregated_crossings_id);
+
+
+
+-- final output crossings view -
 -- join crossings table to streams / access / habitat tables
 -- and convert array types to text for easier dumps
 
+--
+-- todo - does this need to be materialized?
+--
 drop materialized view if exists bcfishpass.crossings_vw cascade; -- cascade FPTWG crossings view if exists
 create materialized view bcfishpass.crossings_vw as
 select
@@ -234,8 +488,8 @@ select
   c.geom
 from bcfishpass.crossings c
 inner join bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
-left outer join bcfishpass.crossings_dnstr_observations cdo on c.aggregated_crossings_id = cdo.aggregated_crossings_id
-left outer join bcfishpass.crossings_upstr_observations cuo on c.aggregated_crossings_id = cuo.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_observations_vw cdo on c.aggregated_crossings_id = cdo.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_observations_vw cuo on c.aggregated_crossings_id = cuo.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_crossings cd on c.aggregated_crossings_id = cd.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggregated_crossings_id = au.aggregated_crossings_id
