@@ -33,6 +33,7 @@ $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_mode
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations"
 $PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_habitat_known_vw"
 
 # Finished processing!
 # Now add model run to log, returning the id
