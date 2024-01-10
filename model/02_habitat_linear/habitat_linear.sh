@@ -30,8 +30,8 @@ done
 
 # with linear model processing complete, refresh materialized views
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_model_vw"
-$PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations"
-$PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations"
+$PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations_vw"
+$PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 $PSQL -c "refresh materialized view bcfishpass.streams_habitat_known_vw"
 
