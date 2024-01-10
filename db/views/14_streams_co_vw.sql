@@ -45,5 +45,5 @@ from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
-left outer join bcfishpass.habitat_user_vw hu on s.segmented_stream_id = h.segmented_stream_id
+left outer join bcfishpass.streams_habitat_user_vw hu on s.segmented_stream_id = hu.segmented_stream_id
 where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
