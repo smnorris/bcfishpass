@@ -29,6 +29,22 @@ all: .make/qa
 clean: 
 	rm -Rf .make
 
+clean_natural:
+       rm -f $(NATURAL_BARRIERS)
+       rm -f .make/model_access_*
+
+clean_access:
+       rm -f .make/model_access_*
+
+clean_anth:
+       rm -f .make/crossings
+       rm -f .make/dams
+       rm -f .make/pscis
+       rm -f $(ANTH_BARRIERS)
+       rm -f .make/index_crossings
+       rm -f .make/model_access
+       rm -f .make/model_access_prep
+
 # for access model processing that is per-watershed group, use just watershed groups noted in parameters file
 # (for testing only)
 test:
