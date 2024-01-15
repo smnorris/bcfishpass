@@ -216,9 +216,9 @@ barriers_filtered as (
         )
 )
 
-insert into bcfishpass.barriers_co_parken
+insert into bcfishpass.barriers_ch_cm_co_pk_sk
 (
-    barriers_co_parken_id,
+    barriers_ch_cm_co_pk_sk_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
