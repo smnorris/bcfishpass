@@ -28,7 +28,8 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.wate
 	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW
 	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --primary_key og_road_segment_permit_id
 	bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --primary_key og_petrlm_dev_rd_pre06_pub_id
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id
+	$(PSQL) -c "truncate whse_basemapping.gba_railway_tracks_sp"  # railway tracks table must already exist, just refresh
+	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id -a
 	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
 	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
 	# get dra from ftp

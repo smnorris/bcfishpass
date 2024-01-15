@@ -57,7 +57,12 @@ Once the database is created, load requirements `fwapg` and `bcfishobs` as per i
 
 ## Usage
 
-With `fwapg` and `bcfishobs` loaded to your database, build `bcfishpass`:
+With `fwapg` and `bcfishobs` completed, load railways and map tiles (currently required for output `crossings_vw`):
+
+    bcdata bc2pg whse_basemapping.gba_railway_tracks_sp
+    bcdata bc2pg whse_basemapping.dbm_mof_50k_grid
+
+Finally, build `bcfishpass`:
 
     make
 
