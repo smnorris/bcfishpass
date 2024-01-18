@@ -77,7 +77,7 @@ COMMENT ON FUNCTION postgisftw.wcrp_barrier_count IS
 'Return count of crossings per crossing_feature_type within specified watershed group.
 Returns count of crossings accessible to target species if model_status=ACCESSIBLE is specified,
 Returns count of crossings below modelled habitat if model_status=HABITAT is specified
-Returns count of all crossings model_status=ALL is specified (default)';;
+Returns count of all crossings if model_status=ALL is specified (default)';
 
 REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_barrier_count FROM public;
 
