@@ -28,6 +28,9 @@ do
     $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg=$wsg
 done
 
+# load wcrp 'all species' upstream habitat summaries
+$PSQL -f sql/load_crossings_upstream_habitat_wcrp.sql
+
 # with linear model processing complete, refresh materialized views
 $PSQL -c "refresh materialized view bcfishpass.streams_habitat_known_vw"
 $PSQL -c "refresh materialized view bcfishpass.streams_habitat_linear_vw"
