@@ -26,6 +26,7 @@ with upstr as materialized
     h.rearing_st,
     h.spawning_wct,
     h.rearing_wct,
+    s.edge_type,
     st_length(s.geom) as length_metre
   from bcfishpass.crossings a
   left outer join bcfishpass.streams s
@@ -52,6 +53,8 @@ insert into bcfishpass.crossings_upstream_habitat_wcrp
 (
   aggregated_crossings_id,
   watershed_group_code,
+  co_rearing_km,
+  sk_rearing_km,
   all_spawning_km,
   all_rearing_km,
   all_spawningrearing_km
@@ -59,31 +62,77 @@ insert into bcfishpass.crossings_upstream_habitat_wcrp
 select
   s.aggregated_crossings_id,
   s.watershed_group_code,
-  coalesce(round(((sum(length_metre) filter (where 
+  -- coho rearing gets 50% boost in wetlands
+  round(
+    (
+      (
+        coalesce(sum(length_metre) FILTER (WHERE s.rearing_co IS TRUE), 0) +
+        coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND edge_type = 1050), 0)
+      ) / 1000
+    )::numeric, 2
+  ) AS co_rearing_km,
+--  -- all sockeye rearing gets 50% boost
+  round(
+    (
+      (
+        coalesce(sum(length_metre * 1.5) FILTER (WHERE s.rearing_sk IS TRUE), 0)
+      ) / 1000
+    )::numeric, 2
+  ) as sk_rearing_km,
+
+  -- all spawning
+  coalesce(round(((sum(length_metre) filter (where
     s.spawning_ch is true or
     s.spawning_co is true or
     s.spawning_sk is true or
     s.spawning_st is true or
     s.spawning_wct is true) / 1000))::numeric, 2), 0) as all_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where
-    s.rearing_ch is true or
-    s.rearing_co is true or
-    s.rearing_sk is true or
-    s.rearing_st is true or
-    s.rearing_wct is true) / 1000))::numeric, 2), 0) as all_rearing_km,
-  coalesce(round(((sum(length_metre) filter (where
-    s.spawning_ch is true or
-    s.spawning_co is true or
-    s.spawning_sk is true or
-    s.spawning_st is true or
-    s.spawning_wct is true or
-    s.rearing_ch is true or
-    s.rearing_co is true or
-    s.rearing_sk is true or
-    s.rearing_st is true or
-    s.rearing_wct is true) / 1000))::numeric, 2), 0) as all_spawningrearing_km
+
+  -- all rearing
+  round(
+      (
+        (
+          coalesce(sum(length_metre) FILTER (
+            WHERE
+            s.rearing_ch IS TRUE OR
+            s.rearing_st IS TRUE OR
+            s.rearing_sk IS TRUE OR
+            s.rearing_co IS TRUE OR
+            s.rearing_wct IS TRUE
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.edge_type = 1050), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE), 0)
+        ) / 1000)::numeric, 2
+  ) as all_rearing_km,
+
+  -- all spawning or rearing
+  round(
+      (
+        (
+          coalesce(sum(length_metre) FILTER (
+            WHERE
+            s.spawning_ch is true or
+            s.spawning_co is true or
+            s.spawning_sk is true or
+            s.spawning_st is true or
+            s.spawning_wct is true or
+            s.rearing_ch is true or
+            s.rearing_st is true or
+            s.rearing_sk is true or
+            s.rearing_co is true or
+            s.rearing_wct is true
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.edge_type = 1050), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE), 0)
+        ) / 1000)::numeric, 2
+  ) as all_spawningrearing_km
 from upstr s
-group by s.aggregated_crossings_id, s.watershed_group_code;
+group by s.watershed_group_code, s.aggregated_crossings_id
+order by s.watershed_group_code, s.aggregated_crossings_id;
 
 
 -- set belowupstrbarriers columns, defaulting to full amount

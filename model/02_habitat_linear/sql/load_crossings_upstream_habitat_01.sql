@@ -62,19 +62,19 @@ insert into bcfishpass.crossings_upstream_habitat
 select
   s.aggregated_crossings_id,
   s.watershed_group_code,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_bt is true) / 1000))::numeric, 2), 0) as bt_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.rearing_bt is true) / 1000))::numeric, 2), 0) as bt_rearing_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_ch is true) / 1000))::numeric, 2), 0) as ch_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.rearing_ch is true) / 1000))::numeric, 2), 0) as ch_rearing_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_cm is true) / 1000))::numeric, 2), 0) as cm_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_co is true) / 1000))::numeric, 2), 0) as co_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.rearing_co is true) / 1000))::numeric, 2), 0) as co_rearing_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_pk is true) / 1000))::numeric, 2), 0) as pk_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_sk is true) / 1000))::numeric, 2), 0) as sk_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.rearing_sk is true) / 1000))::numeric, 2), 0) as sk_rearing_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_st is true) / 1000))::numeric, 2), 0) as st_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.rearing_st is true) / 1000))::numeric, 2), 0) as st_rearing_km,
-  coalesce(round(((sum(length_metre) filter (where s.spawning_wct is true) / 1000))::numeric, 2), 0) as wct_spawning_km,
-  coalesce(round(((sum(length_metre) filter (where s.rearing_wct is true) / 1000))::numeric, 2), 0) as wct_rearing_km
+  coalesce(((sum(length_metre) filter (where s.spawning_bt is true) / 1000))::numeric, 0) as bt_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.rearing_bt is true) / 1000))::numeric, 0) as bt_rearing_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_ch is true) / 1000))::numeric, 0) as ch_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.rearing_ch is true) / 1000))::numeric, 0) as ch_rearing_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_cm is true) / 1000))::numeric, 0) as cm_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_co is true) / 1000))::numeric, 0) as co_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.rearing_co is true) / 1000))::numeric, 0) as co_rearing_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_pk is true) / 1000))::numeric, 0) as pk_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_sk is true) / 1000))::numeric, 0) as sk_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.rearing_sk is true) / 1000))::numeric, 0) as sk_rearing_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_st is true) / 1000))::numeric, 0) as st_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.rearing_st is true) / 1000))::numeric, 0) as st_rearing_km,
+  coalesce(((sum(length_metre) filter (where s.spawning_wct is true) / 1000))::numeric, 0) as wct_spawning_km,
+  coalesce(((sum(length_metre) filter (where s.rearing_wct is true) / 1000))::numeric, 0) as wct_rearing_km
 from upstr s
 group by s.aggregated_crossings_id, s.watershed_group_code;
