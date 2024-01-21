@@ -55,7 +55,6 @@ insert into bcfishpass.crossings_upstream_habitat_wcrp
   watershed_group_code,
   co_rearing_km,
   sk_rearing_km,
-  all_spawning_km,
   all_rearing_km,
   all_spawningrearing_km
 )
@@ -79,14 +78,6 @@ select
       ) / 1000
     )::numeric, 2
   ) as sk_rearing_km,
-
-  -- all spawning
-  coalesce(round(((sum(length_metre) filter (where
-    s.spawning_ch is true or
-    s.spawning_co is true or
-    s.spawning_sk is true or
-    s.spawning_st is true or
-    s.spawning_wct is true) / 1000))::numeric, 2), 0) as all_spawning_km,
 
   -- all rearing
   round(
@@ -138,7 +129,8 @@ order by s.watershed_group_code, s.aggregated_crossings_id;
 -- set belowupstrbarriers columns, defaulting to full amount
 UPDATE bcfishpass.crossings_upstream_habitat_wcrp p
 SET
-  all_spawning_belowupstrbarriers_km = all_spawning_km,
+  co_rearing_belowupstrbarriers_km = co_rearing_km,
+  sk_rearing_belowupstrbarriers_km = sk_rearing_km,
   all_rearing_belowupstrbarriers_km = all_rearing_km,
   all_spawningrearing_belowupstrbarriers_km = all_spawningrearing_km;
 
@@ -148,7 +140,8 @@ with barriers as
 (
   select
     h.aggregated_crossings_id,
-    h.all_spawning_km,
+    h.co_rearing_km,
+    h.sk_rearing_km,
     h.all_rearing_km,
     h.all_spawningrearing_km,
     ad.features_dnstr as barriers_anthropogenic_dnstr
@@ -161,7 +154,8 @@ above_upstream_barriers as
 (
   select
     a.aggregated_crossings_id,
-    sum(b.all_spawning_km) as all_spawning_km,
+    sum(b.co_rearing_km) as co_rearing_km,
+    sum(b.sk_rearing_km) as sk_rearing_km,
     sum(b.all_rearing_km) as all_rearing_km,
     sum(b.all_spawningrearing_km) as all_spawningrearing_km
   from bcfishpass.crossings_upstream_habitat_wcrp a
@@ -173,7 +167,8 @@ above_upstream_barriers as
 
 update bcfishpass.crossings_upstream_habitat_wcrp a
 SET
-  all_spawning_belowupstrbarriers_km = round((a.all_spawning_km - b.all_spawning_km)::numeric, 2),
+  co_rearing_belowupstrbarriers_km = round((a.co_rearing_km - b.co_rearing_km)::numeric, 2),
+  sk_rearing_belowupstrbarriers_km = round((a.sk_rearing_km - b.sk_rearing_km)::numeric, 2),
   all_rearing_belowupstrbarriers_km = round((a.all_rearing_km - b.all_rearing_km)::numeric, 2),
   all_spawningrearing_belowupstrbarriers_km = round((a.all_spawningrearing_km - b.all_spawningrearing_km)::numeric, 2)
 from above_upstream_barriers b
