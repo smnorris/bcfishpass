@@ -23,56 +23,36 @@ BEGIN
 
 RETURN query
 
--- total habitat blocked by each barrier type / SEVERITY
 with barriers as (
   select
+    c.watershed_group_code,
     ft.crossing_feature_type,
-    ROUND(SUM(c.ch_spawning_belowupstrbarriers_km)::numeric, 2) as ch_spawning_blocked_km,
-    ROUND(SUM(c.ch_rearing_belowupstrbarriers_km)::numeric, 2) as ch_rearing_blocked_km,
-    ROUND(SUM(c.co_spawning_belowupstrbarriers_km)::numeric, 2) as co_spawning_blocked_km,
-    ROUND(SUM(h_wcrp.co_rearing_belowupstrbarriers_km)::numeric, 2) as co_rearing_blocked_km,
-    ROUND(SUM(c.sk_spawning_belowupstrbarriers_km)::numeric, 2) as sk_spawning_blocked_km,
-    ROUND(SUM(h.sk_rearing_belowupstrbarriers_km)::numeric, 2) as sk_rearing_blocked_km,
-    ROUND(SUM(c.st_spawning_belowupstrbarriers_km)::numeric, 2) as st_spawning_blocked_km,
-    ROUND(SUM(c.st_rearing_belowupstrbarriers_km)::numeric, 2) as st_rearing_blocked_km,
-    ROUND(SUM(h_wcrp.all_spawning_belowupstrbarriers_km)::numeric, 2) as all_spawning_blocked_km,
-    ROUND(SUM(h_wcrp.all_rearing_belowupstrbarriers_km)::numeric, 2) as all_rearing_blocked_km,
-    ROUND(SUM(h_wcrp.all_spawningrearing_belowupstrbarriers_km)::numeric, 2) as all_spawningrearing_blocked_km,
-    ROUND(SUM(h_wcrp.all_spawningrearing_km)::numeric, 2) as all_spawningrearing_km
-  FROM bcfishpass.crossings_upstream_habitat c
-  inner join bcfishpass.crossings_feature_type_vw ft
-  on c.aggregated_crossings_id = ft.aggregated_crossings_id
-  left outer join bcfishpass.crossings_upstream_habitat_wcrp h_wcrp
-  on c.aggregated_crossings_id = h_wcrp.aggregated_crossings_id
+    ROUND(SUM(h_wcrp.all_spawningrearing_belowupstrbarriers_km)::numeric, 2) as all_spawningrearing_blocked_km
+  FROM bcfishpass.crossings c
+  inner join bcfishpass.crossings_upstream_habitat uh using (aggregated_crossings_id)
+  inner join bcfishpass.crossings_feature_type_vw ft using (aggregated_crossings_id)
+  inner join bcfishpass.crossings_upstream_habitat_wcrp h_wcrp using (aggregated_crossings_id)
   WHERE c.barrier_status IN ('POTENTIAL', 'BARRIER')
   AND c.aggregated_crossings_id != '1100002536' -- don't count the Elko Dam in ELKR
-  AND c.watershed_group_code = 'QUES'
-  GROUP BY ft.crossing_feature_type
-  ORDER BY ft.crossing_feature_type
+  AND c.watershed_group_code = v_wsg
+  GROUP BY c.watershed_group_code, ft.crossing_feature_type
+  ORDER BY c.watershed_group_code, ft.crossing_feature_type
 ),
 
-    percent AS (
-      SELECT
-          *,
-          ROUND(n.all_spawningrearing_blocked_km*100 / (SELECT all_habitat FROM postgisftw.wcrp_watershed_connectivity_status(v_wsg)) ,2) as extent_pct
-          FROM barriers n
-          INNER JOIN (
-          SELECT b.watershed_group_code
-          FROM barriers b
-          WHERE b.all_spawningrearing_blocked_km != 0
-          group by b.watershed_group_code
-          ) as num USING (watershed_group_code)
-          WHERE n.watershed_group_code = v_wsg
-          --AND n.crossing_feature_type = feature
-    )
-
+total AS (
   SELECT
-      p.watershed_group_code,
-      p.crossing_feature_type,
-      p.all_spawningrearing_blocked_km,
-      (SELECT all_habitat FROM postgisftw.wcrp_watershed_connectivity_status('QUES')) as total_habitat_km,
-      p.extent_pct
-  FROM percent p;
+    b.crossing_feature_type,
+    b.all_spawningrearing_blocked_km,
+    (SELECT all_habitat FROM postgisftw.wcrp_habitat_connectivity_status(v_wsg)) as total_habitat_km
+  FROM barriers b
+)
+
+SELECT
+  t.crossing_feature_type,
+  t.all_spawningrearing_blocked_km,
+  t.total_habitat_km,
+  round((t.all_spawningrearing_blocked_km / t.total_habitat_km) * 100, 2) as extent_pct
+FROM total t;
 
 END
 
@@ -80,9 +60,10 @@ END
 $$;
 
 COMMENT ON FUNCTION postgisftw.wcrp_barrier_extent IS
-'Provided is a watershed name and a crossing feature type according to the structure of bcbarriers.
-The output is a percentage of the sum of the crossing feature within the watershed relative to the
-sum of all crossing feature types in the watershed. ';
+'Return km of all blocked spawning and rearing by barrier type, and the percentage of
+total spawning and rearing within given watershed group that this blocked habitat represents.';
 
 
 REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_barrier_extent FROM public;
+
+-- select * from postgisftw.wcrp_barrier_extent('QUES');

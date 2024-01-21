@@ -28,7 +28,7 @@ do
     $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg=$wsg
 done
 
-# load wcrp 'all species' upstream habitat summaries
+# load wcrp specific upstream habitat summaries (co/sk 1.5x factors, 'all_species' columns)
 $PSQL -f sql/load_crossings_upstream_habitat_wcrp.sql
 
 # with linear model processing complete, refresh materialized views
