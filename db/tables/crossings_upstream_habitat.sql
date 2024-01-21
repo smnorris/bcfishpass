@@ -52,6 +52,8 @@ create table bcfishpass.crossings_upstream_habitat_wcrp (
   co_rearing_belowupstrbarriers_km      double precision DEFAULT 0,
   sk_rearing_km                         double precision DEFAULT 0,
   sk_rearing_belowupstrbarriers_km      double precision DEFAULT 0,
+  all_spawning_km                        double precision DEFAULT 0,
+  all_spawning_belowupstrbarriers_km     double precision DEFAULT 0,
   all_rearing_km                        double precision DEFAULT 0,
   all_rearing_belowupstrbarriers_km     double precision DEFAULT 0,
   all_spawningrearing_km                double precision DEFAULT 0,
