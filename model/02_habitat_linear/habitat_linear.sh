@@ -18,6 +18,11 @@ done
 # (this is highly likely to be present elsewhere but has not been investigated)
 $PSQL -f sql/horsefly_sk.sql
 
+# with linear model processing complete, refresh streams materialized views
+$PSQL -c "refresh materialized view bcfishpass.streams_habitat_known_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_habitat_linear_vw"
+$PSQL -c "refresh materialized view bcfishpass.streams_mapping_code_vw"
+
 # generate report of habitat length upstream of all crossings
 $PSQL -c "truncate bcfishpass.crossings_upstream_habitat"
 # load data in parallel
@@ -31,11 +36,7 @@ done
 # load wcrp specific upstream habitat summaries (co/sk 1.5x factors, 'all_species' columns)
 $PSQL -f sql/load_crossings_upstream_habitat_wcrp.sql
 
-# with linear model processing complete, refresh materialized views
-$PSQL -c "refresh materialized view bcfishpass.streams_habitat_known_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_habitat_linear_vw"
-$PSQL -c "refresh materialized view bcfishpass.streams_mapping_code_vw"
-
+# refresh crossings views
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_model_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations_vw"
