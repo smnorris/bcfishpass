@@ -33,6 +33,9 @@ do
     $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg=$wsg
 done
 
+# load wcrp specific upstream habitat summaries (co/sk 1.5x factors, 'all_species' columns)
+$PSQL -f sql/load_crossings_upstream_habitat_wcrp.sql
+
 # refresh crossings views
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_model_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations_vw"
