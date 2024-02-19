@@ -56,19 +56,19 @@ select
   -- known spawning
   case
     when
-      hu.spawning_ch is true or
-      hu.spawning_cm is true or
-      hu.spawning_co is true or
-      hu.spawning_pk is true or
-      hu.spawning_sk is true
+      hk.spawning_ch is true or
+      hk.spawning_cm is true or
+      hk.spawning_co is true or
+      hk.spawning_pk is true or
+      hk.spawning_sk is true
     then true
   end as spawning_known,
   -- known rearing
   case
     when
-      hu.rearing_ch is true or
-      hu.rearing_co is true or
-      hu.rearing_sk is true
+      hk.rearing_ch is true or
+      hk.rearing_co is true or
+      hk.rearing_sk is true
     then true
   end as rearing_known,
   m.mapping_code_salmon as mapping_code,
@@ -77,5 +77,5 @@ from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
-left outer join bcfishpass.streams_habitat_user_vw hu on s.segmented_stream_id = hu.segmented_stream_id
-where barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];
+left outer join bcfishpass.streams_habitat_known_vw hk on s.segmented_stream_id = hk.segmented_stream_id
+where a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[];

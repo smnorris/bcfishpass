@@ -45,7 +45,7 @@ with habitat as (
   left outer join bcfishpass.habitat_sk sk on s.segmented_stream_id = sk.segmented_stream_id
   left outer join bcfishpass.habitat_st st on s.segmented_stream_id = st.segmented_stream_id
   left outer join bcfishpass.habitat_wct wct on s.segmented_stream_id = wct.segmented_stream_id
-  left outer join bcfishpass.habitat_user_vw u on s.segmented_stream_id = u.segmented_stream_id
+  left outer join bcfishpass.streams_habitat_known_vw u on s.segmented_stream_id = u.segmented_stream_id
   where s.watershed_group_code = :'wsg'
 )
 

@@ -1,4 +1,4 @@
-drop table bcfishpass.mean_annual_precip;
+drop table if exists bcfishpass.mean_annual_precip;
 create table bcfishpass.mean_annual_precip (
  id                    integer primary key,
  wscode_ltree          ltree  ,
