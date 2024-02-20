@@ -272,8 +272,8 @@ def get_precip(db, bounds, DEM, dem_meta, data_path):
       b.map,
       (st_dump(a.geom)).geom as geom
     from whse_basemapping.fwa_watersheds_poly a
-    inner join bcfishpass.mean_annual_precip b
-    on a.wscode_ltree = b.wscode_ltree and a.localcode_ltree = b.localcode_ltree
+    left outer join whse_basemapping.fwa_stream_networks_mean_annual_precip b
+      on a.wscode_ltree = b.wscode_ltree and a.localcode_ltree = b.localcode_ltree
     where a.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
     and b.map is not null;
     """

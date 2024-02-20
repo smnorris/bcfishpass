@@ -73,10 +73,8 @@ select
     when
       transport_line_type_description is not NULL
     then 'ROAD, RESOURCE/OTHER'
-    -- in the absence of any of the above info, assume a PSCIS crossing is on a resource/other road    
-    when 
-      stream_crossing_id is not NULL
-    then 'ROAD, RESOURCE/OTHER'
+    -- in the absence of any of the above info, assume a resource/other road
+    else 'ROAD, RESOURCE/OTHER'
   end as crossing_feature_type
 from bcfishpass.crossings;
 

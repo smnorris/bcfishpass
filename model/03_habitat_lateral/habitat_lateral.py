@@ -119,7 +119,7 @@ LATERAL_SOURCES = {
     )).geom
   ) as geom
 from bcfishpass.streams s
-left outer join bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
 where
   watershed_group_code = %(wsg)s and
   edge_type in (1000,1100,2000,2300) and
