@@ -74,9 +74,16 @@ test:
 # ------
 # DAMS
 # ------
-.make/dams:  dams/dams.sh dams/sql/dams.sql
+.make/dams:
 	mkdir -p .make
-	cd dams; ./dams.sh
+	$(PSQL) -c "truncate cabd.dams"
+	ogr2ogr -f PostgreSQL \
+	  "PG:$(DATABASE_URL)" \
+	  -append \
+	  -nln cabd.dams \
+	  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+	  OGRGeoJSON
+	$(PSQL) -c "refresh materialized view bcfishpass.dams_vw"
 	touch $@
 
 # ------

@@ -39,8 +39,8 @@ SELECT
   s.stream_magnitude,
   s.feature_code,
   ua.upstream_area_ha,
-  s.stream_order_parent,
-  s.stream_order_max,
+  op.stream_order_parent,
+  om.stream_order_max,
   p.map_upstream,
   cw.channel_width,
   mad.mad_m3s,
@@ -50,6 +50,8 @@ LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
 ON s.linear_feature_id = l.linear_feature_id
 LEFT OUTER JOIN whse_basemapping.fwa_watersheds_upstream_area ua  -- use left join in case the lookup has not been updated with latest FWA data
 ON l.watershed_feature_id = ua.watershed_feature_id
+left outer join whse_basemapping.fwa_stream_networks_order_parent op on s.blue_line_key = op.blue_line_key
+left outer join whse_basemapping.fwa_stream_networks_order_max om on s.blue_line_key_50k = om.blue_line_key
 LEFT OUTER JOIN bcfishpass.mean_annual_precip p ON s.wscode_ltree = p.wscode_ltree AND s.localcode_ltree = p.localcode_ltree
 LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
 LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
