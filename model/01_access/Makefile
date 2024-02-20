@@ -83,7 +83,7 @@ test:
 	  -nln cabd.dams \
 	  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
 	  OGRGeoJSON
-	$(PSQL) -c "refresh materialized view bcfishpass.dams_vw"
+	$(PSQL) -c "refresh materialized view cabd.dams_vw"
 	touch $@
 
 # ------
