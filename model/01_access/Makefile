@@ -63,7 +63,7 @@ test:
 	cd falls; ./falls.sh
 	touch $@
 
-# not currently used
+# ready to go but not currently used
 .make/cabd_waterfalls:
 	mkdir -p .make
 	$(PSQL) -c "truncate cabd.waterfalls"
@@ -74,6 +74,7 @@ test:
 	  "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
 	  OGRGeoJSON
 	$(PSQL) -c "refresh materialized view bcfishpass.falls_vw"
+	$(PSQL) -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
 	touch $@
 
 # ------

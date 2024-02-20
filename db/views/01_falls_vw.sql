@@ -87,6 +87,7 @@ p.downstream_route_measure + .001 < s.upstream_route_measure;
 create unique index on bcfishpass.falls_vw (falls_id);
 create index on bcfishpass.falls_vw using gist (geom);
 
+-- a view of falls that do not get matched to streams
 drop view if exists bcfishpass.falls_not_matched_to_streams;
 create view bcfishpass.falls_not_matched_to_streams as
 select
@@ -97,3 +98,62 @@ left outer join bcfishpass.falls_vw b
 on a.cabd_id::text = b.falls_id
 where b.falls_id is null
 order by a.cabd_id;
+
+
+-- a view of all falls, with counts of observations upstream, for salmon and steelhead
+drop materialized view if exists bcfishpass.falls_upstr_anadromous_vw;
+
+create materialized view bcfishpass.falls_upstr_anadromous_vw as
+with upstr_sal as (
+  select
+    f.falls_id,
+    count(*) as n_sal
+  from bcfishpass.falls_vw f
+  inner join bcfishpass.observations_vw o
+  on fwa_upstream(
+        f.blue_line_key,
+        f.downstream_route_measure,
+        f.wscode_ltree,
+        f.localcode_ltree,
+        o.blue_line_key,
+        o.downstream_route_measure,
+        o.wscode_ltree,
+        o.localcode_ltree,
+        false,
+        1
+      )
+  where o.species_code in ('CH','CM','CO','PK','SK')
+  and o.observation_date > date('1990-01-01')
+  group by f.falls_id
+),
+
+upstr_st as (
+  select
+    f.falls_id,
+    count(*) as n_st
+  from bcfishpass.falls_vw f
+  inner join bcfishpass.observations_vw o
+  on fwa_upstream(
+        f.blue_line_key,
+        f.downstream_route_measure,
+        f.wscode_ltree,
+        f.localcode_ltree,
+        o.blue_line_key,
+        o.downstream_route_measure,
+        o.wscode_ltree,
+        o.localcode_ltree,
+        false,
+        1
+      )
+  where o.species_code = 'ST'
+  and o.observation_date > date('1990-01-01')
+  group by f.falls_id
+)
+
+select
+ f.falls_id,
+ s1.n_sal as n_obs_salmon_since_1990,
+ s2.n_st as n_obs_steelhead_since_1990
+from bcfishpass.falls_vw f
+left outer join upstr_sal s1 on f.falls_id = s1.falls_id
+left outer join upstr_st s2 on f.falls_id = s2.falls_id;
