@@ -86,3 +86,14 @@ p.downstream_route_measure + .001 < s.upstream_route_measure;
 
 create unique index on bcfishpass.falls_vw (falls_id);
 create index on bcfishpass.falls_vw using gist (geom);
+
+drop view if exists bcfishpass.falls_not_matched_to_streams;
+create view bcfishpass.falls_not_matched_to_streams as
+select
+  a.cabd_id,
+  a.fall_name_en
+from cabd.waterfalls a
+left outer join bcfishpass.falls_vw b
+on a.cabd_id::text = b.falls_id
+where b.falls_id is null
+order by a.cabd_id;
