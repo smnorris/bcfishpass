@@ -67,7 +67,7 @@ create table bcfishpass.user_barriers_definite
 -- --------------
 -- USER_BARRIERS_DEFINITE_CONTROL
 --
--- Modify barrier status of natural features (fiss/fwa falls, gradient barriers, subsurface flow)
+-- Modify barrier status of natural features (waterfalls, gradient barriers, subsurface flow)
 -- --------------
 drop table if exists bcfishpass.user_barriers_definite_control cascade;
 create table bcfishpass.user_barriers_definite_control

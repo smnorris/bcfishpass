@@ -63,6 +63,19 @@ test:
 	cd falls; ./falls.sh
 	touch $@
 
+# not currently used
+.make/cabd_waterfalls:
+	mkdir -p .make
+	$(PSQL) -c "truncate cabd.waterfalls"
+	ogr2ogr -f PostgreSQL \
+	  "PG:$(DATABASE_URL)" \
+	  -append \
+	  -nln cabd.waterfalls \
+	  "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+	  OGRGeoJSON
+	$(PSQL) -c "refresh materialized view bcfishpass.falls_vw"
+	touch $@
+
 # ------
 # GRADIENT BARRIERS
 # ------
@@ -83,7 +96,7 @@ test:
 	  -nln cabd.dams \
 	  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
 	  OGRGeoJSON
-	$(PSQL) -c "refresh materialized view cabd.dams_vw"
+	$(PSQL) -c "refresh materialized view bcfishpass.dams_vw"
 	touch $@
 
 # ------
