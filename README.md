@@ -37,13 +37,6 @@ An `environment.yml` file is provided to install the required tools:
     conda env create -f environment.yml
     conda activate bcfishpass
 
-Note that `cdo` is required for processing NetCDF discharge files, but this tool is not currently included in the conda environment.
-If processing discharge based habitat models, install `cdo` separately:
-
-- `conda install cdo` (if your system supports this, this may not work on ARM based Macs) 
-- `brew install cdo` 
-- install from [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install)
-
 If the database you are working with does not already exist, create it:
 
     createdb bcfishpass
