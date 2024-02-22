@@ -113,7 +113,7 @@ sozip \
   freshwater_fish_habitat_accessibility_MODEL.gpkg.zip \
   freshwater_fish_habitat_accessibility_MODEL.gpkg
 
-# bucket objects are not open by default
+aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass
 aws s3api put-object-acl \
   --bucket bcfishpass \
   --key freshwater_fish_habitat_accessibility_MODEL.gpkg.zip \
