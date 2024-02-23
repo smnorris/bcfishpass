@@ -1,13 +1,13 @@
 name: Run latest gdal
 run-name: ${{ github.actor }} Try installing and running latest gdal
 on: workflow_dispatch
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Checkout Repository
       uses: actions/checkout@v2
     - name: Install GDAL
