@@ -3,6 +3,9 @@ run-name: ${{ github.actor }} Try installing and running latest gdal
 on: workflow_dispatch
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 jobs:
   build:
     runs-on: ubuntu-latest
