@@ -1,12 +1,11 @@
-# from https://github.com/adempiere/docs/blob/master/.github/workflows/main.yml
-# This is a basic workflow to help you get started with Actions
 name: docs-deploy
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
   push:
-    branches: [ main ]
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    paths:
+      - 'docs/**'
+  create:
+    tags:
+      - '*'
 jobs:
   docs:
     runs-on: ubuntu-latest
