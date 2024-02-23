@@ -41,7 +41,3 @@ sozip \
   test.gpkg
 
 aws s3 cp test.gpkg.zip s3://bcfishpass
-aws s3api put-object-acl \
-  --bucket bcfishpass \
-  --key test.gpkg.zip \
-  --acl public-read
