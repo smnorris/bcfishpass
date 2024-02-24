@@ -54,6 +54,11 @@ test:
 	$(PSQL) -c "truncate bcfishpass.watershed_groups_access"
 	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from bcfishpass.parameters_habitat_method"
 
+# revert to processing all watershed groups
+full:
+	$(PSQL) -c "truncate bcfishpass.watershed_groups_access"
+	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly"
+
 # ------
 # FALLS
 # ------
