@@ -6,7 +6,7 @@
 --drop table bcfishpass.parameters_habitat_thresholds_log;
 --drop table bcfishpass.wsg_linear_summary;
 --drop table bcfishpass.wsg_crossing_summary;
-create table if not exists bcfishpass.log (
+create table bcfishpass.log (
   model_run_id serial primary key,
   model_type text not null,
   date_completed timestamp not null default CURRENT_TIMESTAMP,
@@ -20,13 +20,13 @@ create table if not exists bcfishpass.log (
 
 
 -- log parameters used for the given model run
-create table if not exists bcfishpass.parameters_habitat_method_log (
+create table bcfishpass.parameters_habitat_method_log (
   model_run_id integer references bcfishpass.log(model_run_id),
   watershed_group_code character varying(4),
   model text
 );
 
-create table if not exists bcfishpass.parameters_habitat_thresholds_log (
+create table bcfishpass.parameters_habitat_thresholds_log (
  model_run_id integer references bcfishpass.log(model_run_id),
  species_code             text   ,
  spawn_gradient_max       numeric,
@@ -42,7 +42,7 @@ create table if not exists bcfishpass.parameters_habitat_thresholds_log (
  rear_lake_ha_min         integer
 );
 
-create table if not exists bcfishpass.wsg_linear_summary (
+create table bcfishpass.wsg_linear_summary (
  model_run_id                                             integer references bcfishpass.log(model_run_id),
  watershed_group_code                                     text,
  length_total                                             numeric,
@@ -112,7 +112,7 @@ create table if not exists bcfishpass.wsg_linear_summary (
  length_spawning_rearing_wct_accessible_b                 numeric
 );
 
-create table if not exists bcfishpass.wsg_crossing_summary (
+create table bcfishpass.wsg_crossing_summary (
   model_run_id                          integer references bcfishpass.log(model_run_id),
   watershed_group_code                  text,
   crossing_feature_type                 text,

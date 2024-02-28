@@ -5,9 +5,6 @@
 -- unique segmented stream id is created by combining blkey and measure
 -- (with measure rounded to nearest mm, because some source stream lines are really short)
 -- --------------
-
-drop table if exists bcfishpass.streams cascade;
-
 create table bcfishpass.streams
 (
   segmented_stream_id       text

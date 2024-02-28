@@ -1,5 +1,4 @@
 -- crossing feature type
-drop view if exists bcfishpass.crossings_feature_type_vw cascade;
 create view bcfishpass.crossings_feature_type_vw as
 select
   aggregated_crossings_id,
@@ -81,8 +80,6 @@ from bcfishpass.crossings;
 
 -- counts of anthropogenic barriers upstream per access model
 -- (for example, number of barriers on steelhead accessible stream upstream of given barrier)
-drop materialized view if exists bcfishpass.crossings_upstr_barriers_per_model_vw cascade;
-
 create materialized view bcfishpass.crossings_upstr_barriers_per_model_vw as
 
 with access_models as (
@@ -148,42 +145,37 @@ on c.aggregated_crossings_id = bpm.aggregated_crossings_id;
 create unique index on bcfishpass.crossings_upstr_barriers_per_model_vw (aggregated_crossings_id);
 
 
--- below datasets are not guaranteed to exist, leave this out for now
-
---drop materialized view if exists bcfishpass.crossings_admin;
---create materialized view bcfishpass.crossings_admin;
---SELECT DISTINCT ON (c.aggregated_crossings_id) -- some of the admin areas are not clean/distinct, make sure to select just one
---  c.aggregated_crossings_id,
---  rd.admin_area_abbreviation as abms_regional_district,
---  muni.admin_area_abbreviation as abms_municipality,
---  ir.english_name as clab_indian_reserve_name,
---  ir.band_name as clab_indian_reserve_band_name,
---  np.english_name as clab_national_park_name,
---  pp.protected_lands_name as bc_protected_lands_name,
---  pmbc.owner_type as pmbc_owner_type,
---  nr.region_org_unit_name as adm_nr_region,
---  nr.district_name as adm_nr_district
---FROM bcfishpass.crossings c
---LEFT OUTER JOIN whse_legal_admin_boundaries.abms_regional_districts_sp rd
---ON ST_Intersects(c.geom, rd.geom)
---LEFT OUTER JOIN whse_legal_admin_boundaries.abms_municipalities_sp muni
---ON ST_Intersects(c.geom, muni.geom)
---LEFT OUTER JOIN whse_admin_boundaries.adm_indian_reserves_bands_sp ir
---ON ST_Intersects(c.geom, ir.geom)
---LEFT OUTER JOIN whse_admin_boundaries.clab_national_parks np
---ON ST_Intersects(c.geom, np.geom)
---LEFT OUTER JOIN whse_tantalis.ta_park_ecores_pa_svw pp
---ON ST_Intersects(c.geom, pp.geom)
---LEFT OUTER JOIN whse_cadastre.pmbc_parcel_fabric_poly_svw pmbc
---ON ST_Intersects(c.geom, pmbc.geom)
---LEFT OUTER JOIN whse_admin_boundaries.adm_nr_districts_sp nr
---ON ST_Intersects(c.geom, pmbc.geom)
---ORDER BY c.aggregated_crossings_id, rd.admin_area_abbreviation, muni.admin_area_abbreviation, ir.english_name, pp.protected_lands_name, pmbc.owner_type, nr.district_name;
+create materialized view bcfishpass.crossings_admin AS
+SELECT DISTINCT ON (c.aggregated_crossings_id) -- some of the admin areas are not clean/distinct, make sure to select just one
+  c.aggregated_crossings_id,
+  rd.admin_area_abbreviation as abms_regional_district,
+  muni.admin_area_abbreviation as abms_municipality,
+  ir.english_name as clab_indian_reserve_name,
+  ir.band_name as clab_indian_reserve_band_name,
+  np.english_name as clab_national_park_name,
+  pp.protected_lands_name as bc_protected_lands_name,
+  pmbc.owner_type as pmbc_owner_type,
+  nr.region_org_unit_name as adm_nr_region,
+  nr.district_name as adm_nr_district
+FROM bcfishpass.crossings c
+LEFT OUTER JOIN whse_legal_admin_boundaries.abms_regional_districts_sp rd
+ON ST_Intersects(c.geom, rd.geom)
+LEFT OUTER JOIN whse_legal_admin_boundaries.abms_municipalities_sp muni
+ON ST_Intersects(c.geom, muni.geom)
+LEFT OUTER JOIN whse_admin_boundaries.adm_indian_reserves_bands_sp ir
+ON ST_Intersects(c.geom, ir.geom)
+LEFT OUTER JOIN whse_admin_boundaries.clab_national_parks np
+ON ST_Intersects(c.geom, np.geom)
+LEFT OUTER JOIN whse_tantalis.ta_park_ecores_pa_svw pp
+ON ST_Intersects(c.geom, pp.geom)
+LEFT OUTER JOIN whse_cadastre.pmbc_parcel_fabric_poly_svw pmbc
+ON ST_Intersects(c.geom, pmbc.geom)
+LEFT OUTER JOIN whse_admin_boundaries.adm_nr_districts_spg nr
+ON ST_Intersects(c.geom, pmbc.geom)
+ORDER BY c.aggregated_crossings_id, rd.admin_area_abbreviation, muni.admin_area_abbreviation, ir.english_name, pp.protected_lands_name, pmbc.owner_type, nr.district_name;
 
 
 -- downstream observations ***within the same watershed group***
-drop materialized view if exists bcfishpass.crossings_dnstr_observations_vw cascade;
-
 create materialized view bcfishpass.crossings_dnstr_observations_vw as
 select
   aggregated_crossings_id,
@@ -214,8 +206,6 @@ create index on bcfishpass.crossings_dnstr_observations_vw (aggregated_crossings
 
 
 -- upstream observations ***within the same watershed group***
-drop materialized view if exists bcfishpass.crossings_upstr_observations_vw cascade;
-
 create materialized view bcfishpass.crossings_upstr_observations_vw as
 select
   aggregated_crossings_id,
@@ -249,7 +239,6 @@ create index on bcfishpass.crossings_upstr_observations_vw (aggregated_crossings
 -- final output crossings view -
 -- join crossings table to streams / access / habitat tables
 -- and convert array types to text for easier dumps
-drop materialized view if exists bcfishpass.crossings_vw cascade; -- cascade FPTWG crossings view if exists
 create materialized view bcfishpass.crossings_vw as
 select
   -- joining to streams based on measure can be error prone due to precision.
@@ -499,8 +488,6 @@ create index on bcfishpass.crossings_vw using gist (geom);
 
 
 -- wcrp version of the output crossings view -
-
-drop materialized view if exists bcfishpass.crossings_wcrp_vw cascade; -- cascade FPTWG crossings view if exists
 create materialized view bcfishpass.crossings_wcrp_vw as
 select
   -- joining to streams based on measure can be error prone due to precision.

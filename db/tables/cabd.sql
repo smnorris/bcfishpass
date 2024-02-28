@@ -1,6 +1,4 @@
 -- dams
-drop table if exists cabd.dams cascade;
-
 create table cabd.dams (
   cabd_id                      text                 ,
   use_pollution_code           integer              ,
@@ -108,8 +106,6 @@ create table cabd.dams (
 );
 
 -- waterfalls
-drop table if exists cabd.waterfalls cascade;
-
 create table cabd.waterfalls (
   cabd_id                  text                 ,
   fall_name_fr             text                 ,

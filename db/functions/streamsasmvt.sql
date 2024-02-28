@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION bcfishpass.streamsasmvt(
+CREATE FUNCTION bcfishpass.streamsasmvt(
             z integer, x integer, y integer)
 RETURNS bytea
 AS $$

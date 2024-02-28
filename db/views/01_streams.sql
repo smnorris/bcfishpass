@@ -1,6 +1,4 @@
 -- access - view of stream data plus downstream barrier info
-drop materialized view if exists bcfishpass.streams_access_vw cascade;
-
 create materialized view bcfishpass.streams_access_vw as
 select
    s.segmented_stream_id,
@@ -79,7 +77,6 @@ left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.a
 create unique index on bcfishpass.streams_access_vw (segmented_stream_id);
 
 -- view of known/observed spawning / rearing locations (from CWF/FISS/PSE) for easy ref
-drop materialized view if exists bcfishpass.streams_habitat_known_vw;
 CREATE materialized view bcfishpass.streams_habitat_known_vw AS
 WITH manual_habitat_class AS
 (
@@ -167,7 +164,6 @@ ORDER BY segmented_stream_id;
 create unique index on bcfishpass.streams_habitat_known_vw (segmented_stream_id);
 
 -- combine various modelled habitat tables into single modelled habitat view
-drop materialized view if exists bcfishpass.streams_habitat_linear_vw;
 create materialized view bcfishpass.streams_habitat_linear_vw as
 select
   s.segmented_stream_id,
@@ -216,9 +212,6 @@ create unique index on bcfishpass.streams_habitat_linear_vw (segmented_stream_id
 -- Third item of array is only present if the stream is intermittent
 -- INTERMITTENT
 -- (note - consider adding a non-intermittent code for easier classification?)
-
-
-drop materialized view if exists bcfishpass.streams_mapping_code_vw;
 
 create materialized view bcfishpass.streams_mapping_code_vw as
 

@@ -7,9 +7,6 @@
 -- 3. Modelled crossings (culverts and bridges)
 -- 4. Other ?
 -- --------------
-
-drop table if exists bcfishpass.crossings cascade;
-
 create table bcfishpass.crossings
 (
   -- Note how the aggregated crossing id combines the various ids to create a unique integer, after assigning PSCIS crossings their source crossing id

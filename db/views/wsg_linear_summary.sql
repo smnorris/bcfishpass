@@ -1,4 +1,3 @@
-drop view if exists bcfishpass.wsg_linear_summary_current cascade;
 create view bcfishpass.wsg_linear_summary_current as 
 select distinct on (watershed_group_code)
   s.model_run_id                                             ,
@@ -74,7 +73,6 @@ on s.model_run_id = l.model_run_id
 order by s.watershed_group_code, l.date_completed desc;
 
 
-drop view if exists bcfishpass.wsg_linear_summary_previous;
 create view bcfishpass.wsg_linear_summary_previous as
 select
   s.model_run_id                                           ,
@@ -150,7 +148,7 @@ on s.model_run_id = l.model_run_id
 where l.date_completed = (select date_completed from bcfishpass.log order by date_completed desc offset 1 limit 1)
 order by watershed_group_code;
 
-drop view if exists bcfishpass.wsg_linear_summary_diff;
+
 create view bcfishpass.wsg_linear_summary_diff as
 select
   a.watershed_group_code                                     ,

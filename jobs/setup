@@ -1,0 +1,72 @@
+#!/bin/bash
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+#-------
+# set up (almost) empty db schema
+# (run as db superuser)
+#-------
+
+# create fwa schema
+git clone https://github.com/smnorris/fwapg.git
+cd fwapg; make .make/db; cd .. ; rm -rf fwapg
+
+# create bcfishobs schema (and load selected data)
+git clone https://github.com/smnorris/bcfishobs.git
+cd bcfishobs; make .make/setup; cd ..; rm -rf bcfishobs
+
+$PSQL -f db/schemas.sql
+
+# create empty whse tables
+for table in whse_admin_boundaries.clab_indian_reserves \
+    whse_admin_boundaries.clab_national_parks \
+    whse_admin_boundaries.adm_nr_districts_spg \
+    whse_basemapping.bcgs_20k_grid \
+    whse_basemapping.dbm_mof_50k_grid \
+    whse_basemapping.gba_local_reg_greenspaces_sp \
+    whse_basemapping.gba_railway_structure_lines_sp \
+    whse_basemapping.gba_railway_tracks_sp \
+    whse_basemapping.gba_transmission_lines_sp \
+    whse_basemapping.gns_geographical_names_sp \
+    whse_basemapping.nts_250k_grid \
+    whse_basemapping.trim_cultural_lines \
+    whse_basemapping.trim_cultural_points \
+    whse_basemapping.trim_ebm_airfields \
+    whse_basemapping.trim_ebm_ocean \
+    whse_basemapping.utmg_utm_zones_sp \
+    whse_cadastre.pmbc_parcel_fabric_poly_svw \
+    whse_environmental_monitoring.envcan_hydrometric_stn_sp \
+    whse_fish.fiss_obstacles_pnt_sp \
+    whse_fish.fiss_stream_sample_sites_sp \
+    whse_fish.pscis_assessment_svw \
+    whse_fish.pscis_assessment_svw \
+    whse_fish.pscis_design_proposal_svw \
+    whse_fish.pscis_habitat_confirmation_svw \
+    whse_fish.pscis_remediation_svw \
+    whse_forest_tenure.ften_range_poly_svw \
+    whse_forest_tenure.ften_road_section_lines_svw \
+    whse_imagery_and_base_maps.mot_road_structure_sp \
+    whse_legal_admin_boundaries.abms_municipalities_sp \
+    whse_legal_admin_boundaries.abms_regional_districts_sp \
+    whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp \
+    whse_mineral_tenure.og_road_segment_permit_sp \
+    whse_tantalis.ta_conservancy_areas_svw \
+    whse_tantalis.ta_crown_tenures_svw \
+    whse_tantalis.ta_park_ecores_pa_svw
+do
+    bcdata bc2pg -e $table
+done
+
+# create bcfishpass tables/views/functions
+for sql in db/tables/*.sql ; do
+  $PSQL -f "$sql"
+done
+
+for sql in db/views/*.sql ; do
+  $PSQL -f "$sql"
+done
+
+for sql in db/functions/*.sql ; do
+  $PSQL -f "$sql"
+done

@@ -1,9 +1,6 @@
 -- summarize spawning/rearing/spawning&rearing habitat lengths per group, by accessibility
 
-drop view if exists bcfishpass.wcrp_habitat_connectivity_status_vw;
-
 create view bcfishpass.wcrp_habitat_connectivity_status_vw as
-
 with length_totals as
 (
 -- all spawning (ch/co/st/sk/wct) - calculation is simple, just add it up
