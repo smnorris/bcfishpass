@@ -79,7 +79,7 @@ LATERAL_SOURCES = {
     # -----------------------
     "spawning_rearing": """select
       st_multi((st_dump(st_union(st_buffer(s.geom, 30)))).geom) as geom
-    from bcfishpass.streams s
+    from bcfishpass.streams_vw s
     where
     s.watershed_group_code = %(wsg)s and
      (
@@ -118,7 +118,7 @@ LATERAL_SOURCES = {
       )
     )).geom
   ) as geom
-from bcfishpass.streams s
+from bcfishpass.streams_vw s
 left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
 where
   watershed_group_code = %(wsg)s and
@@ -157,7 +157,7 @@ where
     (
       select c.*
     from bcfishpass.crossings c
-    left outer join bcfishpass.streams s
+    left outer join bcfishpass.streams_vw s
       ON c.linear_feature_id = s.linear_feature_id
       AND c.downstream_route_measure > s.downstream_route_measure - .001
       AND c.downstream_route_measure + .001 < s.upstream_route_measure
