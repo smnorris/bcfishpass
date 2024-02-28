@@ -4,12 +4,10 @@ channels:
   - defaults
 dependencies:
   - make
-  - wget
   - zip
   - unzip
   - parallel
   - libpq
-  - jq
   - python
   - pip
   - requests
@@ -21,7 +19,6 @@ dependencies:
   - rasterio
   - geopandas
   - geoalchemy2
-  - rasterstats
   - scikit-image
   - seaborn
   - pip:

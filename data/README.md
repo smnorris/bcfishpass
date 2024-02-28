@@ -36,7 +36,7 @@ NOTE -  this table will only be used to identify modelled barriers known to be p
 ## user_cabd_dams_exclusions.csv
 
 List of CABD dams to exclude from analysis (generally due to incorrect location or incorrect passability status).
-Use as temporary fix and submit any location or passability status to CWF for fix in source.
+To be used as temporary fix only - submit any location or passability status to CWF [here](https://forms.office.com/Pages/ResponsePage.aspx?id=A8N2i-wB1UCNmmwvbXjc15ERVmcC4dFPn5j4q5-aulRURE1TSjBJNEtDNlY0WTlXVFY5MkFOMzRVUS4u)
 
 ## user_falls.csv
 
