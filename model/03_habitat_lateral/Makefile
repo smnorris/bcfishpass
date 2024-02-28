@@ -26,10 +26,10 @@ clean:
 	rm -rf data
 	rm -rf .make
 
-# published floodplain definitions
+# load published floodplain definitions
 .make/cwb_floodplains_bc_area_svw: 
 	mkdir -p .make
-	bcdata bc2pg WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
+	bcdata bc2pg -r WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
 	touch $@
 
 # ESA world landcover - download from S3 bucket
