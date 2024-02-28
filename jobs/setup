@@ -22,6 +22,7 @@ $PSQL -f db/schemas.sql
 for table in whse_admin_boundaries.clab_indian_reserves \
     whse_admin_boundaries.clab_national_parks \
     whse_admin_boundaries.adm_nr_districts_spg \
+    whse_admin_boundaries.adm_indian_reserves_bands_sp \
     whse_basemapping.bcgs_20k_grid \
     whse_basemapping.dbm_mof_50k_grid \
     whse_basemapping.gba_local_reg_greenspaces_sp \
@@ -52,7 +53,6 @@ for table in whse_admin_boundaries.clab_indian_reserves \
     whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp \
     whse_mineral_tenure.og_road_segment_permit_sp \
     whse_tantalis.ta_conservancy_areas_svw \
-    whse_tantalis.ta_crown_tenures_svw \
     whse_tantalis.ta_park_ecores_pa_svw
 do
     bcdata bc2pg -e $table
