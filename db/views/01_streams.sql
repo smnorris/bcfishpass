@@ -562,6 +562,7 @@ select
   hk.rearing_ch as known_rearing_ch,
   hk.rearing_co as known_rearing_co,
   hk.rearing_sk as known_rearing_sk,
+  hk.rearing_st as known_rearing_st,
   hk.rearing_wct as known_rearing_wct,
   m.mapping_code_bt,
   m.mapping_code_ch,
