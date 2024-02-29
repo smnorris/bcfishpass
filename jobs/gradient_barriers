@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# load *all* gradient barriers
+# (bcfishpass defaults to processesing just groups included in parameters)
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+
+cd model/01_access/gradient_barriers
+parallel $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS
