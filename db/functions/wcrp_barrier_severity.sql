@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS postgisftw.wcrp_barrier_severity(text);
-
 CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group_code TEXT)
 
 -- watershed_group_code: BULK, LNIC, HORS, BOWR, QUES, CARR, ELKR

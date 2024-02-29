@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS postgisftw.wcrp_barrier_extent(TEXT);
-
 CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group_code TEXT)
 
 -- watershed_group_code: BULK, LNIC, HORS, BOWR, QUES, CARR, ELKR

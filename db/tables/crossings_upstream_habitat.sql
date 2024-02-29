@@ -1,6 +1,4 @@
 -- report on habitat upstream, per species
-drop table if exists bcfishpass.crossings_upstream_habitat cascade;
-
 create table bcfishpass.crossings_upstream_habitat (
   aggregated_crossings_id               text primary key,
   watershed_group_code                  character varying (4),
@@ -43,8 +41,6 @@ create table bcfishpass.crossings_upstream_habitat (
 --  - barriers only
 --  - currently ch/co/sk/st/wct where they exist in watersheds of interest
 --  - apply 1.5x multiplier to co rearing in wetlands and all sk rearing
-drop table if exists bcfishpass.crossings_upstream_habitat_wcrp cascade;
-
 create table bcfishpass.crossings_upstream_habitat_wcrp (
   aggregated_crossings_id               text primary key,
   watershed_group_code                  character varying (4),

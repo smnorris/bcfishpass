@@ -1,6 +1,6 @@
 -- compare records in table a and table b,
 -- and record in output table (as an array) all ids from b that are downstream of given id for table a
-CREATE OR REPLACE FUNCTION bcfishpass.load_upstr(
+CREATE FUNCTION bcfishpass.load_upstr(
   table_a text, 
   table_a_id text, 
   table_b text, 

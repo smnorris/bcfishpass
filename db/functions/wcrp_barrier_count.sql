@@ -1,5 +1,4 @@
 -- function to query the view (so it is visible in pgfs)
-DROP FUNCTION IF EXISTS postgisftw.wcrp_barrier_count;
 CREATE FUNCTION postgisftw.wcrp_barrier_count(
   watershed_group_code TEXT,
   model_status TEXT default 'ALL'

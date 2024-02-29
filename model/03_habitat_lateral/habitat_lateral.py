@@ -62,12 +62,13 @@ LATERAL_SOURCES = {
     "sidechannels": """select
       st_multi((st_dump(st_union(st_buffer(s.geom, 60)))).geom) as geom
     from bcfishpass.streams s
+    left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
     where
       s.watershed_group_code = %(wsg)s and
       s.edge_type in (1000,1100,2000,2300) and
       (
-        s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or
-        s.barriers_st_dnstr = array[]::text[]
+         cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
+         cardinality(a.barriers_st_dnstr) = 0
       ) and
       s.stream_order_parent > 5 and
       s.gradient <= .01 and
@@ -80,29 +81,31 @@ LATERAL_SOURCES = {
     "spawning_rearing": """select
       st_multi((st_dump(st_union(st_buffer(s.geom, 30)))).geom) as geom
     from bcfishpass.streams s
+    left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+    left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
     where
     s.watershed_group_code = %(wsg)s and
      (
       (
         (
-          barriers_st_dnstr = array[]::text[] or
-          barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
+         cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
+         cardinality(a.barriers_st_dnstr) = 0
         )
         and stream_order >= 7
       )
       or
       (
         (
-        model_spawning_ch is true or
-        model_spawning_co is true or
-        model_spawning_sk is true or
-        model_spawning_st is true or
-        model_spawning_pk is true or
-        model_spawning_cm is true or
-        model_rearing_ch is true or
-        model_rearing_co is true or
-        model_rearing_sk is true or
-        model_rearing_st is true
+        h.spawning_ch is true or
+        h.spawning_co is true or
+        h.spawning_sk is true or
+        h.spawning_st is true or
+        h.spawning_pk is true or
+        h.spawning_cm is true or
+        h.rearing_ch is true or
+        h.rearing_co is true or
+        h.rearing_sk is true or
+        h.rearing_st is true
         )
       )
     );""",
@@ -119,13 +122,14 @@ LATERAL_SOURCES = {
     )).geom
   ) as geom
 from bcfishpass.streams s
+left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
 where
   watershed_group_code = %(wsg)s and
   edge_type in (1000,1100,2000,2300) and
   (
-    barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or
-    barriers_st_dnstr = array[]::text[]
+    cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
+    cardinality(a.barriers_st_dnstr) = 0
   );""",
     # -----------------------
     # rail
@@ -143,7 +147,7 @@ where
     # -----------------------
     "rail_bridges": """select
       st_multi(st_buffer(geom, 30)) as geom
-    from bcfishpass.crossings
+    from bcfishpass.crossings_vw
     where crossing_feature_type = 'RAIL'
     and barrier_status NOT IN ('POTENTIAL','BARRIER')
     and crossing_type_code != 'CBS'
@@ -156,15 +160,16 @@ where
     with xings as
     (
       select c.*
-    from bcfishpass.crossings c
+    from bcfishpass.crossings_vw c
     left outer join bcfishpass.streams s
       ON c.linear_feature_id = s.linear_feature_id
       AND c.downstream_route_measure > s.downstream_route_measure - .001
       AND c.downstream_route_measure + .001 < s.upstream_route_measure
       AND c.watershed_group_code = s.watershed_group_code
+    left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
     where
       c.crossing_feature_type = 'RAIL' and
-      (s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or s.barriers_st_dnstr = array[]::text[]) and
+      ( cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or cardinality(a.barriers_st_dnstr) = 0) and
       (
         c.barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
         or c.crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -177,6 +182,7 @@ where
       -- use flat endcap to ensure that the cut is done properly
       st_multi((st_dump(st_union(st_buffer(s.geom, 30, 'endcap=flat join=round')))).geom) as geom
     from bcfishpass.streams s
+    left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
     left outer join xings b
     on FWA_Downstream(
           s.blue_line_key,
@@ -185,14 +191,14 @@ where
           s.localcode_ltree,
           b.blue_line_key,
           b.downstream_route_measure,
-          b.wscode_ltree,
-          b.localcode_ltree,
+          b.wscode,
+          b.localcode,
           true,
           1
         )
     where
     s.watershed_group_code = %(wsg)s and
-    (s.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or s.barriers_st_dnstr = array[]::text[])
+    ( cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or cardinality(a.barriers_st_dnstr) = 0)
     --and
     --(
     --  (

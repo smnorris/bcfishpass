@@ -1,5 +1,3 @@
-drop view if exists bcfishpass.wsg_crossing_summary_current cascade;
-
 create view bcfishpass.wsg_crossing_summary_current as 
 select
   s.model_run_id                          ,
@@ -56,8 +54,6 @@ where l.model_run_id = (select model_run_id from bcfishpass.log order by model_r
 order by s.watershed_group_code, s.crossing_feature_type;
 
 
-drop view if exists bcfishpass.wsg_crossing_summary_previous;
-
 create view bcfishpass.wsg_crossing_summary_previous as
 select
   s.model_run_id                          ,
@@ -113,7 +109,6 @@ on s.model_run_id = l.model_run_id
 where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc offset 1 limit 1)
 order by watershed_group_code;
 
-drop view if exists bcfishpass.wsg_crossing_summary_diff;
 create view bcfishpass.wsg_crossing_summary_diff as
 select
   a.watershed_group_code                  ,

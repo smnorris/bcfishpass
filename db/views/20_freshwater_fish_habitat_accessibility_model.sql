@@ -1,7 +1,6 @@
 -- for publication to DataBC Catalouge
 -- freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
 
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_vw as
 select
   s.segmented_stream_id,
@@ -47,14 +46,12 @@ left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id 
 -- no views required for barrier tables, they can be used directly (only change would be renaming wscode/localcode)
 
 -- dump observations for salmon and steelhead used in this analysis
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw as
 select * from bcfishpass.observations_vw 
 where species_code in ('CH','CM','CO','PK','SK','ST');
 
 
 -- create view of crossings with just salmon/steelhead related columns
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
 select
  c.aggregated_crossings_id,

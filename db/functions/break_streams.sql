@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION bcfishpass.break_streams(point_table text, wsg text)
+CREATE FUNCTION bcfishpass.break_streams(point_table text, wsg text)
   RETURNS VOID
   LANGUAGE plpgsql AS
 $func$

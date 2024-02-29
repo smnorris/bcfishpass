@@ -1,7 +1,4 @@
 -- reference CABD dams to FWA stream network
-
-drop materialized view if exists bcfishpass.dams_vw cascade;
-
 create materialized view bcfishpass.dams_vw as
 with cabd as (
   select
@@ -113,7 +110,6 @@ from usa;
 create unique index on bcfishpass.dams_vw (dam_id);
 create index on bcfishpass.dams_vw using gist (geom);
 
-drop view if exists bcfishpass.dams_not_matched_to_streams;
 create view bcfishpass.dams_not_matched_to_streams as
 select
   a.cabd_id,

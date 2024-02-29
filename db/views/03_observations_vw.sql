@@ -1,7 +1,5 @@
 -- create view of distinct observations for simpler species based queries
-drop materialized view if exists bcfishpass.observations_vw cascade;
 create materialized view bcfishpass.observations_vw as
-
 with unnested as
 (select
     unnest(observation_ids) as fish_observation_point_id,

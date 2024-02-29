@@ -1,6 +1,6 @@
 -- create table for holding barriers of given type
 
-CREATE OR REPLACE FUNCTION bcfishpass.create_barrier_table(barriertype text)
+CREATE FUNCTION bcfishpass.create_barrier_table(barriertype text)
   RETURNS VOID
   LANGUAGE plpgsql AS
 $func$
