@@ -102,11 +102,11 @@ data/esa_bc.tif:
 		$@
 
 # run VCA for each watershed group
-$(VALLEY_OUTPUTS): valley_confinement.py ../../.make/habitat_linear
+$(VALLEY_OUTPUTS): valley_confinement.py
 	mkdir -p data
 	$(eval WSG=$(patsubst data/temp/%/valleys.tif,%,$@))
 	mkdir -p data/temp/$(WSG)
-	python valley_confinement.py $(WSG) -o $@ -d data/temp/$(WSG)
+	python valley_confinement.py -wsg $(WSG) -o $@ -d data/temp/$(WSG)
 
 # run lateral analysis for each watershed group
 $(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
