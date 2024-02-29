@@ -1,7 +1,5 @@
 -- load CABD falls and any misc (temporary) additions from bcfishpass table
 
-drop materialized view if exists bcfishpass.falls_vw cascade;
-
 create materialized view bcfishpass.falls_vw as
 
 with cabd as (
@@ -88,7 +86,6 @@ create unique index on bcfishpass.falls_vw (falls_id);
 create index on bcfishpass.falls_vw using gist (geom);
 
 -- a view of falls that do not get matched to streams
-drop view if exists bcfishpass.falls_not_matched_to_streams;
 create view bcfishpass.falls_not_matched_to_streams as
 select
   a.cabd_id,
@@ -101,8 +98,6 @@ order by a.cabd_id;
 
 
 -- a view of all falls, with counts of observations upstream, for salmon and steelhead
-drop materialized view if exists bcfishpass.falls_upstr_anadromous_vw;
-
 create materialized view bcfishpass.falls_upstr_anadromous_vw as
 with upstr_sal as (
   select

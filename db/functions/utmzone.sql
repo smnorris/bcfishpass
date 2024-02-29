@@ -3,7 +3,7 @@
 -- DROP FUNCTION utmzone(geometry);
 -- Usage: SELECT ST_Transform(the_geom, utmzone(ST_Centroid(the_geom)) )FROM sometable;
 
-CREATE OR REPLACE FUNCTION public.utmzone(geometry)
+CREATE FUNCTION public.utmzone(geometry)
    RETURNS integer AS
  $BODY$
  DECLARE

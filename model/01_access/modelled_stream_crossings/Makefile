@@ -21,61 +21,6 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.wate
 	rm -rf data/modelled_stream_crossings.gpkg
 	touch $@
 
-# note that while modelled crossings are loaded from archive above, we still need roads/railways etc
-# for further analysis
-.make/download_bcdata:
-	# Get non-dra road data direct from BCGW, requesting full datasets (bcfishpass crossing scripts filter out what is needed)
-	bcdata bc2pg WHSE_FOREST_TENURE.FTEN_ROAD_SECTION_LINES_SVW
-	bcdata bc2pg WHSE_MINERAL_TENURE.OG_ROAD_SEGMENT_PERMIT_SP --primary_key og_road_segment_permit_id
-	bcdata bc2pg WHSE_MINERAL_TENURE.OG_PETRLM_DEV_RDS_PRE06_PUB_SP --primary_key og_petrlm_dev_rd_pre06_pub_id
-	$(PSQL) -c "truncate whse_basemapping.gba_railway_tracks_sp"  # railway tracks table must already exist, just refresh
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP --primary_key railway_track_id -a
-	bcdata bc2pg WHSE_BASEMAPPING.GBA_RAILWAY_STRUCTURE_LINES_SP --primary_key RAILWAY_STRUCTURE_LINE_ID
-	bcdata bc2pg WHSE_IMAGERY_AND_BASE_MAPS.MOT_ROAD_STRUCTURE_SP --primary_key HWY_STRUCTURE_CLASS_ID
-	# get dra from ftp
-	wget --trust-server-names -qNP data ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip
-	unzip -qun data/dgtl_road_atlas.gdb.zip -d data
-	ogr2ogr \
-		-f PostgreSQL \
-		"PG:$(DATABASE_URL)" \
-		-overwrite \
-		-lco GEOMETRY_NAME=geom \
-		-lco FID=transport_line_id \
-		-nln whse_basemapping.transport_line \
-		data/dgtl_road_atlas.gdb \
-		TRANSPORT_LINE
-	# load the code tables
-	ogr2ogr \
-		-f PostgreSQL \
-		"PG:$(DATABASE_URL)" \
-		-overwrite \
-		-nln whse_basemapping.transport_line_type_code \
-		data/dgtl_road_atlas.gdb \
-		TRANSPORT_LINE_TYPE_CODE
-	ogr2ogr \
-		-f PostgreSQL \
-		"PG:$(DATABASE_URL)" \
-		-overwrite \
-		-nln whse_basemapping.transport_line_surface_code \
-		data/dgtl_road_atlas.gdb \
-		TRANSPORT_LINE_SURFACE_CODE
-	ogr2ogr \
-		-f PostgreSQL \
-		"PG:$(DATABASE_URL)" \
-		-overwrite \
-		-nln whse_basemapping.transport_line_divided_code \
-		data/dgtl_road_atlas.gdb \
-		TRANSPORT_LINE_DIVIDED_CODE
-	ogr2ogr \
-		-f PostgreSQL \
-		"PG:$(DATABASE_URL)" \
-		-overwrite \
-		-nln whse_basemapping.transport_line_structure_code \
-		data/dgtl_road_atlas.gdb \
-		TRANSPORT_LINE_STRUCTURE_CODE
-	rm -rf data/dgtl_road_atlas.gdb
-	touch $@
-
 # run the overlays/analysis
 .make/modelled_stream_crossings: .make/download_archive .make/download_bcdata
 	$(PSQL) -f sql/01_create_output_table.sql

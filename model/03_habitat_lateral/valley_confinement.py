@@ -173,22 +173,19 @@ def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
         SELECT
           s.linear_feature_id,
           s.wscode_ltree,
-          round(ua.upstream_area_ha::numeric) as upstream_area_ha,
+          round(s.upstream_area_ha::numeric) as upstream_area_ha,
           s.stream_order_parent,
           s.gradient,
           s.geom
         FROM bcfishpass.streams s
-        LEFT OUTER JOIN whse_basemapping.fwa_streams_watersheds_lut l
-        ON s.linear_feature_id = l.linear_feature_id
-        INNER JOIN whse_basemapping.fwa_watersheds_upstream_area ua
-        ON l.watershed_feature_id = ua.watershed_feature_id
+        left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
         where s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
         and s.gradient < .3
         and (
-          barriers_ch_cm_co_pk_sk_dnstr = array[]::text[] or
-          barriers_st_dnstr = array[]::text[] or
-          barriers_wct_dnstr = array[]::text[] or
-          barriers_bt_dnstr = array[]::text[]
+          cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
+          cardinality(a.barriers_st_dnstr) = 0  or
+          cardinality(a.barriers_wct_dnstr) = 0  or
+          cardinality(a.barriers_bt_dnstr) = 0
         )
     ),
     sidechannels as (
@@ -196,12 +193,11 @@ def get_streams(db, bounds, minimum_drainage_area, DEM, dem_meta, data_path):
           s.linear_feature_id,
           s.wscode_ltree,
           0 as upstream_area_ha,
-          s.stream_order_parent,
+          s2.stream_order_parent,
           s.gradient,
           s.geom
         from whse_basemapping.fwa_stream_networks_sp s
-        inner join streams s2
-        on s.wscode_ltree = s2.wscode_ltree
+        inner join streams s2 on s.wscode_ltree = s2.wscode_ltree
         where
           s.geom && ST_MakeEnvelope(%(xmin)s,%(ymin)s,%(xmax)s,%(ymax)s)
           and s.gradient < .05
@@ -320,7 +316,7 @@ def get_precip(db, bounds, DEM, dem_meta, data_path):
 def valley_confinement(
     db_url,
     out_file,
-    watershed_group_code=None,
+    watershed_group_code,
     data_path="data",
     minimum_drainage_area=1000,
     slope_threshold=9,
@@ -361,18 +357,18 @@ def valley_confinement(
     # load input rasters
     # ---------------------
 
-    # dem
-    if not os.path.exists(os.path.join(data_path, "dem.tif")) and watershed_group_code:
-        LOG.info("no existing dem")
-        if watershed_group_code and not dem_path:
+    # use dem in data_path if present
+    if not os.path.exists(os.path.join(data_path, "dem.tif")):
+        # otherwise, clip existing dem if dem_path provided
+        if dem_path:
+            LOG.info("clipping existing dem")
+            clip_dem(watershed_group_code, bounds, dem_path, data_path)
+        # if dem present and no path provided, download fresh dem
+        else:
             LOG.info("downloading dem")
             download_dem(watershed_group_code, bounds, data_path)
-            dem_path = os.path.join(data_path, "dem.tif")
-        if watershed_group_code and dem_path:
-            LOG.info("clipping dem")
-            clip_dem(watershed_group_code, bounds, dem_path, data_path)
-            dem_path = os.path.join(data_path, "dem.tif")
 
+    dem_path = os.path.join(data_path, "dem.tif")
     dem = rasterio.open(dem_path)
     dem_meta = dem.meta
     DEM = dem.read(1)
@@ -738,7 +734,7 @@ def read_config(config_file):
 )
 @click.option(
     "--dem",
-    type=click.Path(exists=True),
+    type=click.Path(),
     default=os.environ.get("DEM10M"),
     help="Path to existing 10m DEM",
 )

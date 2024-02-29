@@ -1,4 +1,3 @@
-drop view if exists bcfishpass.wcrp_barrier_count_vw;
 create view bcfishpass.wcrp_barrier_count_vw as
 with model_status as (
 select 

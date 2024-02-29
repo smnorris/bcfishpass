@@ -20,20 +20,20 @@ from ( \
 all: .make/habitat_lateral
 
 clean:
-	$(PSQL) -c "DROP TABLE IF EXISTS whse_basemapping.cwb_floodplains_bc_area_svw"
 	$(PSQL) -c "DROP TABLE IF EXISTS bcfishpass.habitat_lateral"
 	$(PSQL) -c "DROP TABLE IF EXISTS bcfishpass.habitat_lateral_disconnected_rail"
 	rm -rf data
 	rm -rf .make
 
-# published floodplain definitions
+# load published floodplain definitions
 .make/cwb_floodplains_bc_area_svw: 
 	mkdir -p .make
-	bcdata bc2pg WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
+	bcdata bc2pg -r WHSE_BASEMAPPING.CWB_FLOODPLAINS_BC_AREA_SVW
 	touch $@
 
 # ESA world landcover - download from S3 bucket
 data/esa_bc.tif:	
+	mkdir -p data
 	aws s3 cp s3://esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N54W123_Map.tif \
 		$(TMP)/ESA_WorldCover_10m_2020_v100_N54W123_Map.tif --no-sign-request
 	aws s3 cp s3://esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N57W120_Map.tif \
@@ -102,10 +102,11 @@ data/esa_bc.tif:
 		$@
 
 # run VCA for each watershed group
-$(VALLEY_OUTPUTS): valley_confinement.py ../../.make/habitat_linear
+$(VALLEY_OUTPUTS): valley_confinement.py
+	mkdir -p data
 	$(eval WSG=$(patsubst data/temp/%/valleys.tif,%,$@))
 	mkdir -p data/temp/$(WSG)
-	python valley_confinement.py $(WSG) -o $@ -d data/temp/$(WSG)
+	python valley_confinement.py -wsg $(WSG) -o $@ -d data/temp/$(WSG)
 
 # run lateral analysis for each watershed group
 $(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
