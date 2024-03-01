@@ -11,5 +11,5 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-    - name: Run GDAL Command
+    - name: Run job script
       run: jobs/gradient_barriers
