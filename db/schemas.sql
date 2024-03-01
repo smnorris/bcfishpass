@@ -1,3 +1,4 @@
+create schema bcdata;
 create schema bcfishpass;
 create schema cabd;
 create schema whse_admin_boundaries;
