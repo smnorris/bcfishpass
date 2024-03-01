@@ -1,4 +1,4 @@
-name: Initial load of non-fwa bcfishpass required data
+name: Initial data load
 run-name: ${{ github.actor }} initial load of non-fwa bcfishpass required data
 on: workflow_dispatch
 env:
