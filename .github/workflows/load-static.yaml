@@ -1,0 +1,24 @@
+name: load-static
+run-name: ${{ github.actor }} load FWA and static data
+on: workflow_dispatch
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  load-fwa:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Run job script
+      run: jobs/load_fwa
+  load-static:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Run job script
+      run: jobs/load_static
