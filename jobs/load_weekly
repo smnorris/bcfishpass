@@ -8,19 +8,14 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # bcdata loads
-bcdata bc2pg -r whse_basemapping.gns_geographical_names_sp
-bcdata bc2pg -r whse_environmental_monitoring.envcan_hydrometric_stn_sp
 bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
 bcdata bc2pg -r whse_fish.fiss_obstacles_pnt_sp
-bcdata bc2pg -r whse_fish.fiss_stream_sample_sites_sp
 bcdata bc2pg -r whse_forest_tenure.ften_road_section_lines_svw
 bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
 
 # other loads
 jobs/cabd
 jobs/whse_basemapping.transport_line
-jobs/whse_cadastre.pmbc_parcel_fabric_poly_svw
 
 # update derivative products
-$PSQL -c "refresh materialized view bcdata.ften_range_poly_carto_vw.sql"
 jobs/bcfishobs
