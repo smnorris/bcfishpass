@@ -1,0 +1,30 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# load/refresh non-fwa data required for bcfishpass model
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# modelled crossings - roads and known crossing structures
+bcdata bc2pg -r whse_basemapping.gba_railway_structure_lines_sp
+bcdata bc2pg -r whse_basemapping.gba_railway_tracks_sp
+bcdata bc2pg -r whse_forest_tenure.ften_road_section_lines_svw
+bcdata bc2pg -r whse_imagery_and_base_maps.mot_road_structure_sp
+bcdata bc2pg -r whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp
+bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
+./jobs/whse_basemapping.transport_line
+
+# assessed crossings - PSCIS
+bcdata bc2pg -r whse_fish.pscis_assessment_svw
+bcdata bc2pg -r whse_fish.pscis_design_proposal_svw
+bcdata bc2pg -r whse_fish.pscis_habitat_confirmation_svw
+bcdata bc2pg -r whse_fish.pscis_remediation_svw
+
+# fish observations
+bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
+git clone https://github.com/smnorris/bcfishobs
+cd bcfishobs; mkdir -p .make
+make -t .make/fiss_fish_obsrvtn_pnt_sp
+make --debug=basic

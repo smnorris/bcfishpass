@@ -1,12 +1,11 @@
 #!/bin/bash
 set -euxo pipefail
 
-PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+#-------
+# set up (almost) empty db schema (run as db superuser)
+#-------
 
-#-------
-# set up (almost) empty db schema
-# (run as db superuser)
-#-------
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # create fwa schema
 git clone https://github.com/smnorris/fwapg.git
