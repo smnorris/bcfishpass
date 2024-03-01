@@ -3,6 +3,7 @@ set -euxo pipefail
 
 #-------
 # Load FWA data
+# (not included in load_static to ensure job fits within gha time limits)
 #-------
 git clone https://github.com/smnorris/fwapg
 cd fwapg
