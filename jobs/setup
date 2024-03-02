@@ -45,7 +45,6 @@ for table in whse_admin_boundaries.clab_indian_reserves \
     whse_fish.pscis_design_proposal_svw \
     whse_fish.pscis_habitat_confirmation_svw \
     whse_fish.pscis_remediation_svw \
-    whse_forest_tenure.ften_range_poly_svw \
     whse_forest_tenure.ften_road_section_lines_svw \
     whse_imagery_and_base_maps.mot_road_structure_sp \
     whse_legal_admin_boundaries.abms_municipalities_sp \
