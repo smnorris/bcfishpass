@@ -25,6 +25,36 @@ ogr2ogr \
    pmbc_parcel_fabric_poly_svw
 
 # load to target & drop temp
-$PSQL -c "truncate whse_cadastre.pmbc_parcel_fabric_poly_svw"
-$PSQL -c "insert into whse_cadastre.pmbc_parcel_fabric_poly_svw select * from bcdata.pmbc_parcel_fabric_poly_svw"
+# note that schemas do not quite match
+$PSQL -c "truncate whse_cadastre.pmbc_parcel_fabric_poly_svw;
+          insert into whse_cadastre.pmbc_parcel_fabric_poly_svw (
+            parcel_fabric_poly_id ,
+            parcel_name           ,
+            plan_number           ,
+            pin                   ,
+            pid_number            ,
+            parcel_status         ,
+            parcel_class          ,
+            owner_type            ,
+            parcel_start_date     ,
+            municipality          ,
+            regional_district     ,
+            when_updated          ,
+            geom
+          )
+          select
+            parcel_fabric_poly_id ,
+            parcel_name           ,
+            plan_number           ,
+            pin                   ,
+            pid                   ,
+            parcel_status         ,
+            parcel_class          ,
+            owner_type            ,
+            parcel_start_date     ,
+            municipality          ,
+            regional_district     ,
+            when_updated          ,
+            geom
+          from bcdata.pmbc_parcel_fabric_poly_svw"
 $PSQL -c "drop table bcdata.pmbc_parcel_fabric_poly_svw"
