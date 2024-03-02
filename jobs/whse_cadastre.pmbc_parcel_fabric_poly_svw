@@ -13,14 +13,14 @@ curl \
   https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
 
 ogr2ogr \
-   --config PG_USE_COPY YES \
-   -t_srs EPSG:3005 \
-   -dim XY \
    -f PostgreSQL \
    PG:$DATABASE_URL \
+   --config PG_USE_COPY YES \
+   -overwrite \
+   -t_srs EPSG:3005 \
+   -dim XY \
    -lco GEOMETRY_NAME=geom \
    -lco FID=PARCEL_FABRIC_POLY_ID \
-   -overwrite \
    -nln bcdata.pmbc_parcel_fabric_poly_svw \
    /tmp/pmbc_parcel_fabric_poly_svw.gdb.zip \
    pmbc_parcel_fabric_poly_svw

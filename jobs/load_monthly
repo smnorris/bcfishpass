@@ -17,7 +17,6 @@ bcdata bc2pg -r whse_basemapping.gba_transmission_lines_sp
 bcdata bc2pg -r whse_basemapping.gns_geographical_names_sp
 bcdata bc2pg -r whse_environmental_monitoring.envcan_hydrometric_stn_sp
 bcdata bc2pg -r whse_fish.fiss_stream_sample_sites_sp
-bcdata bc2pg -r whse_forest_tenure.ften_range_poly_svw
 bcdata bc2pg -r whse_imagery_and_base_maps.mot_road_structure_sp
 bcdata bc2pg -r whse_legal_admin_boundaries.abms_municipalities_sp
 bcdata bc2pg -r whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp
@@ -28,5 +27,4 @@ bcdata bc2pg -r whse_tantalis.ta_park_ecores_pa_svw
 jobs/whse_cadastre.pmbc_parcel_fabric_poly_svw
 
 # additional processing
-$PSQL -c "refresh materialized view bcdata.ften_range_poly_carto_vw"
 $PSQL -c "refresh materialized view bcdata.parks"
