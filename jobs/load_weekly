@@ -10,6 +10,10 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # bcdata loads
 bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
 bcdata bc2pg -r whse_fish.fiss_obstacles_pnt_sp
+bcdata bc2pg -r whse_fish.pscis_assessment_svw
+bcdata bc2pg -r whse_fish.pscis_design_proposal_svw
+bcdata bc2pg -r whse_fish.pscis_habitat_confirmation_svw
+bcdata bc2pg -r whse_fish.pscis_remediation_svw
 bcdata bc2pg -r whse_forest_tenure.ften_road_section_lines_svw
 bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
 
