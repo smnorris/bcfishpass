@@ -8,9 +8,9 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # rename downloaded file so ogr can read without unzipping
-wget --trust-server-names -qN \
-   -O /tmp/pmbc_parcel_fabric_poly_svw.gdb.zip \
-   https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
+curl \
+  -o /tmp/pmbc_parcel_fabric_poly_svw.gdb.zip \
+  https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
 
 ogr2ogr \
    --config PG_USE_COPY YES \
