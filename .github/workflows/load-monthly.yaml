@@ -1,4 +1,4 @@
-name: load-weekly
+name: load-monthly
 run-name: ${{ github.actor }} Monthly data refresh
 on:
   schedule:
