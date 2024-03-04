@@ -21,5 +21,4 @@ bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
 jobs/cabd
 jobs/whse_basemapping.transport_line
 
-# update derivative products
-jobs/bcfishobs
+# note that weekly bcfishobs processing is scheduled on bcfishpass db using bcfishobs repository
