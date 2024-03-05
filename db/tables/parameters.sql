@@ -35,3 +35,6 @@ create table bcfishpass.parameters_habitat_thresholds (
 create table bcfishpass.watershed_groups_access (
   watershed_group_code character varying(4)
 );
+-- and default to all watershed groups
+insert into bcfishpass.watershed_groups_access
+  select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly;
