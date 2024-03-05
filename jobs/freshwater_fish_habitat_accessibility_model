@@ -114,7 +114,3 @@ sozip \
   freshwater_fish_habitat_accessibility_MODEL.gpkg
 
 aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass
-aws s3api put-object-acl \
-  --bucket bcfishpass \
-  --key freshwater_fish_habitat_accessibility_MODEL.gpkg.zip \
-  --acl public-read
