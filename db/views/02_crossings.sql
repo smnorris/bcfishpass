@@ -145,7 +145,7 @@ on c.aggregated_crossings_id = bpm.aggregated_crossings_id;
 create unique index on bcfishpass.crossings_upstr_barriers_per_model_vw (aggregated_crossings_id);
 
 
-create materialized view bcfishpass.crossings_admin AS
+create materialized view bcfishpass.crossings_admin_vw AS
 SELECT DISTINCT ON (c.aggregated_crossings_id) -- some of the admin areas are not clean/distinct, make sure to select just one
   c.aggregated_crossings_id,
   rd.admin_area_abbreviation as abms_regional_district,

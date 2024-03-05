@@ -40,7 +40,9 @@ $PSQL -f sql/load_crossings_upstream_habitat_wcrp.sql
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_model_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations_vw"
+#$PSQL -c "refresh materialized view bcfishpass.crossings_admin"  # generate admin as needed for now, this query is too resource intensive
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
+
 
 # Finished processing!
 # Now add model run to log, returning the id

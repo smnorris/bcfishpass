@@ -58,8 +58,10 @@ ogr2ogr \
   TRANSPORT_LINE_STRUCTURE_CODE
 
 #-------
-# Tiles/grids/cartographic
+# Admin areas/tiles/grids/cartographic
 #-------
+bcdata bc2pg -r whse_admin_boundaries.adm_indian_reserves_bands_sp
+bcdata bc2pg -r whse_admin_boundaries.adm_nr_districts_spg
 bcdata bc2pg -r whse_basemapping.bcgs_20k_grid
 bcdata bc2pg -r whse_basemapping.dbm_mof_50k_grid
 bcdata bc2pg -r whse_basemapping.nts_250k_grid
@@ -68,3 +70,5 @@ bcdata bc2pg -r whse_basemapping.trim_cultural_points --query "FCODE='CC90000000
 bcdata bc2pg -r whse_basemapping.trim_ebm_airfields
 bcdata bc2pg -r whse_basemapping.trim_ebm_ocean
 bcdata bc2pg -r whse_basemapping.utmg_utm_zones_sp
+bcdata bc2pg -r whse_legal_admin_boundaries.abms_municipalities_sp
+bcdata bc2pg -r whse_legal_admin_boundaries.abms_regional_districts_sp

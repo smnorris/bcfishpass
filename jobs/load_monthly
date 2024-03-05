@@ -30,3 +30,6 @@ jobs/whse_cadastre.pmbc_parcel_fabric_poly_svw
 # additional processing
 $PSQL -c "refresh materialized view bcdata.parks"
 $PSQL -c "refresh materialized view bcdata.ften_range_poly_carto_vw"
+
+
+
