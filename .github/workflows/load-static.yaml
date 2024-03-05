@@ -10,7 +10,7 @@ jobs:
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Run job script
       run: jobs/load_fwa
   load-static:
@@ -19,6 +19,6 @@ jobs:
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Run job script
       run: jobs/load_static
