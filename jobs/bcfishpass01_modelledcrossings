@@ -10,7 +10,7 @@ mkdir .make
 make --debug=basic .make/data
 
 # build the crossings
-cd $PROJECTS/bcfishpass/model/01_access/modelled_stream_crossings
+cd model/01_access/modelled_stream_crossings
 rm -Rf .make
 rm -Rf data
 make .make/modelled_stream_crossings --debug=basic
