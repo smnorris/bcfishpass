@@ -5,7 +5,7 @@ on:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
-  modelled-stream-crossings:
+  xings:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
@@ -14,21 +14,21 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  jobs/bcfishpass01_modelledcrossings
-jobs:
-  model-prep:
+  prep:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  jobs/bcfishpass02_prep
-jobs:
-  model-prep:
+  model:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: prep
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
