@@ -1,11 +1,13 @@
-PSQL = psql $(DATABASE_URL) -v ON_ERROR_STOP=1 # Ensure psql stops on error
+PSQL = psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.watershed_groups_access")
 
 # download latest from s3
 .make/download_archive:
 	mkdir -p .make
 	mkdir -p data
-	wget --trust-server-names -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip
+	curl \
+	  -o data/modelled_stream_crossings.gpkg.zip \
+	  https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip
 	unzip -qun data/modelled_stream_crossings.gpkg.zip -d data
 	ogr2ogr \
 		-f PostgreSQL \
@@ -22,7 +24,7 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.wate
 	touch $@
 
 # run the overlays/analysis
-.make/modelled_stream_crossings: .make/download_archive .make/download_bcdata
+.make/modelled_stream_crossings: .make/download_archive
 	$(PSQL) -f sql/01_create_output_table.sql
 
 	# load preliminary crossings, iterating through watershed groups for each data source
@@ -38,5 +40,4 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.wate
 
 	# assign modelled_crossing_id from previous version to ensure consistency
 	$(PSQL) -f sql/09_match_archived_crossings.sql
-	echo "new modelled stream crossings created, see bcfishpass/release for loading to s3"
 	touch $@

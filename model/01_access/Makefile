@@ -123,13 +123,6 @@ full:
 	cd pscis; ./pscis.sh
 	touch $@
 
-# ------
-# map tile index
-# ------
-.make/dbm_mof_50k_grid:
-	mkdir -p .make
-	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
-	touch $@
 
 # -----
 # CROSSINGS
@@ -137,7 +130,6 @@ full:
 # combine modelled crossings, pscis, dams into bcfishpass.crossings
 .make/crossings: .make/dams \
 	.make/pscis \
-	.make/dbm_mof_50k_grid \
 	sql/load_crossings.sql
 	$(PSQL) -c "truncate bcfishpass.crossings"
 	# load crossings in series, parallel inserts can be confounded by locks
