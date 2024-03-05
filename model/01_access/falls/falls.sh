@@ -32,7 +32,7 @@ PSQL_CMD="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # load additional (unpublished) obstacle data (provided by the Province, 2014)
 mkdir -p data
-wget --trust-server-names -qNP data \
+curl -o data/whse_fish.fiss_obstacles_unpublished.csv.zip \
   https://hillcrestgeo.ca/outgoing/public/whse_fish/whse_fish.fiss_obstacles_unpublished.csv.zip
 unzip -qjun -d data data/whse_fish.fiss_obstacles_unpublished.csv.zip
 
