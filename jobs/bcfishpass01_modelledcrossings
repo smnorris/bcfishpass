@@ -22,6 +22,7 @@ ogr2ogr \
 	PG:$DATABASE_URL \
 	-nlt PointZM \
 	-nln modelled_stream_crossings \
+	-FID modelled_crossing_id \
 	-sql "select \
 		 modelled_crossing_id, \
 		 modelled_crossing_type, \

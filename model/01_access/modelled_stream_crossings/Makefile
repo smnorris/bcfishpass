@@ -12,7 +12,6 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.wate
 	ogr2ogr \
 		-f PostgreSQL \
 		"PG:$(DATABASE_URL)" \
-		-lco FID=modelled_crossing_id \
 		-overwrite \
 		-nln bcfishpass.modelled_stream_crossings_archive \
 		data/modelled_stream_crossings.gpkg \
