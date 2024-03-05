@@ -1,0 +1,16 @@
+name: bcfishpass
+run-name: ${{ github.actor }} Run bcfishpass
+on:
+  workflow_dispatch:
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  modelled-stream-crossings:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/bcfishpass01_modelledcrossings

@@ -5,7 +5,7 @@ set -euxo pipefail
 # Process/refresh modelled crossings
 #-------
 
-# load latest user data fixes
+# load latest data fixes to the db
 make --debug=basic .make/data
 
 # build the crossings
