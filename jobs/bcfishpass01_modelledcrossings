@@ -6,6 +6,7 @@ set -euxo pipefail
 #-------
 
 # load latest data fixes to the db
+mkdir .make
 make --debug=basic .make/data
 
 # build the crossings

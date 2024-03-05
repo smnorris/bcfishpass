@@ -11,6 +11,7 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 # (run /jobs/setup, load fwa and bcfishobs)
 
 .make/parameters: parameters/*.csv
+	mkdir -p .make
 	$(PSQL) -c "truncate bcfishpass.parameters_habitat_method";
 	$(PSQL) -c "truncate bcfishpass.parameters_habitat_thresholds";
 	$(PSQL) -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header";
@@ -18,6 +19,7 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 	touch $@
 
 .make/data: data/*.csv
+	mkdir -p .make
 	cd data; ./load.sh
 	touch $@
 
