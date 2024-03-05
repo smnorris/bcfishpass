@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# Run the access model and habitat model
+#-------
+
+# run access model
+cd model/01_access
+./model_access.sh
+
+# run habitat model
+cd ../02_habitat_linear
+./habitat_linear.sh

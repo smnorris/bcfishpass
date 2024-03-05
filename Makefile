@@ -7,7 +7,7 @@ QA_ACCESS_OUTPUTS = $(patsubst reports/access/sql/%.sql,reports/access/%.csv,$(Q
 
 all: model/03_habitat_lateral/data/habitat_lateral.tif
 
-# NOTE - db is presumed to exist
+# NOTE - db must exist and be set up
 # (run /jobs/setup, load fwa and bcfishobs)
 
 .make/parameters: parameters/*.csv

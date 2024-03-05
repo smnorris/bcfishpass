@@ -42,7 +42,7 @@ ogr2ogr \
 		from bcfishpass.modelled_stream_crossings"
 
 sozip modelled_stream_crossings.gpkg.zip modelled_stream_crossings.gpkg
-aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/modelled_stream_crossings_test.gpkg.zip
+aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass/modelled_stream_crossings.gpkg.zip
 
 echo "Latest modelled crossings data now available at:"
 echo "https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip"

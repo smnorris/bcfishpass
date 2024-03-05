@@ -112,7 +112,6 @@ full:
 .make/modelled_stream_crossings:
 	mkdir -p .make
 	cd modelled_stream_crossings; make .make/download_archive
-	cd modelled_stream_crossings; make .make/download_bcdata # also download roads/railways for reference
 	touch $@
 
 # ------
