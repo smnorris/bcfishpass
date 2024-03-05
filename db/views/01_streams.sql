@@ -203,7 +203,9 @@ create unique index on bcfishpass.streams_habitat_linear_vw (segmented_stream_id
 -- SPAWN  - potential spawning (or spawning and rearing)
 -- REAR   - potential rearing (not spawning)
 
--- Second item of array is the feature type of the next barrier (or crossing, if a remediation) downstream:
+-- Second item of array depends on the species
+--    - for resident spp, this is the feature type of the **next** barrier (or crossing, if a remediation) downstream
+--    - for anadromous spp, this is the feature of the most downstream barrier, unless the next crossing  dowstream is a remediation
 -- REMEDIATED - a remediation
 -- DAM        - a dam that is classed as a barrier
 -- ASSESSED   - PSCIS assessed barrier
@@ -215,7 +217,7 @@ create unique index on bcfishpass.streams_habitat_linear_vw (segmented_stream_id
 
 create materialized view bcfishpass.streams_mapping_code_vw as
 
-with mcbi as (
+with mcbi_r as (
   select
     s.segmented_stream_id,
     case
@@ -232,6 +234,24 @@ with mcbi as (
         a.dam_dnstr_ind is false
       then 'MODELLED'
       when a.barriers_anthropogenic_dnstr is null then 'NONE' -- no barriers exist downstream
+    end as mapping_code_barrier,
+    case
+      when s.feature_code = 'GA24850150' then 'INTERMITTENT'
+      else NULL
+    end as mapping_code_intermittent
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+),
+
+mcbi_a as (
+ select
+    s.segmented_stream_id,
+    case
+      when a.remediated_dnstr_ind is true then 'REMEDIATED'           -- remediated crossing is downstream (with no additional barriers in between)
+      when a.barriers_dams_dnstr is not null then 'DAM'               -- a dam barrier is present downstream
+      when a.barriers_pscis_dnstr is not null then 'ASSESSED'    -- a pscis barrier is present downstream
+      when a.barriers_anthropogenic_dnstr is not null then 'MODELLED' -- a modelled barrier is downstream
+      when a.barriers_anthropogenic_dnstr is null then 'NONE'         -- no barriers exist downstream
     end as mapping_code_barrier,
     case
       when s.feature_code = 'GA24850150' then 'INTERMITTENT'
@@ -259,11 +279,11 @@ select
   end,
   case
     when a.barriers_bt_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then mr.mapping_code_barrier
   else null end,
   case
     when a.barriers_bt_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then mr.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_bt,
 
@@ -283,11 +303,11 @@ select
   end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_ch,
 
@@ -302,11 +322,11 @@ select
   end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_cm,
 
@@ -326,11 +346,11 @@ select
   end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_co,
 
@@ -345,11 +365,11 @@ select
   end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_pk,
 
@@ -369,11 +389,11 @@ select
   end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_sk,
 
@@ -393,11 +413,11 @@ select
   end,
   case
     when a.barriers_st_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_st_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_st,
 
@@ -417,11 +437,11 @@ select
   end,
   case
     when a.barriers_wct_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then mr.mapping_code_barrier
   else null end,
   case
     when a.barriers_wct_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then mr.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_wct,
   array_to_string(array[
@@ -462,15 +482,16 @@ select
   end,
    case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_barrier
+    then ma.mapping_code_barrier
   else null end,
   case
     when a.barriers_ch_cm_co_pk_sk_dnstr = array[]::text[]
-    then m.mapping_code_intermittent
+    then ma.mapping_code_intermittent
   else null end
   ], ';') as mapping_code_salmon
 from bcfishpass.streams s
-inner join mcbi m on s.segmented_stream_id = m.segmented_stream_id
+inner join mcbi_r mr on s.segmented_stream_id = mr.segmented_stream_id
+inner join mcbi_a ma on s.segmented_stream_id = ma.segmented_stream_id
 inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id;
 
@@ -478,7 +499,6 @@ create unique index on bcfishpass.streams_mapping_code_vw (segmented_stream_id);
 
 
 -- final output spatial streams view
-drop view if exists bcfishpass.streams_vw;
 create view bcfishpass.streams_vw as
 select
   s.segmented_stream_id,
