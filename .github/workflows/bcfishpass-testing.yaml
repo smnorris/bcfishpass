@@ -5,10 +5,22 @@ on:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
+  parameters:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_newgraph/*csv parameters/
+          make --debug=basic .make/parameters
   xings:
     runs-on: ubuntu-latest
     environment: testing
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: parameters
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

@@ -53,7 +53,11 @@ Set up the database schema:
 
 Load FWA data:
 
-    jobs/load_fwa
+    git clone https://github.com/smnorris/fwapg
+    cd fwapg
+    mkdir -p .make; touch .make/db  # just reload data
+    mkdir -p data
+    make --debug=basicjobs/load_fwa
 
 Load all additional data:
 

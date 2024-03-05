@@ -5,9 +5,7 @@ set -euxo pipefail
 # Prep access model
 #-------
 
-# load parameters and latest data fixes to the db
-cp parameters/example_newgraph/*csv parameters/
-make --debug=basic .make/parameters
+# load latest data fixes to the db
 make --debug=basic .make/data
 
 # already built
