@@ -14,5 +14,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  |
+          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
           git describe
           
