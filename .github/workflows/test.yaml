@@ -12,7 +12,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+          with:
+            fetch-tags: 'true'
       - name: Run the jobs
         run:  |
-          echo "Ref: ${{ github.ref }}"
-          echo "SHA: ${{ github.sha }}"
+          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
+          git describe
