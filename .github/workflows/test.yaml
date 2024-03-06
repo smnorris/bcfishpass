@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-          with:
-            fetch-tags: 'true'
+        with:
+          fetch-tags: 'true'
       - name: Run the jobs
         run:  |
           git config --global --add safe.directory /__w/bcfishpass/bcfishpass
