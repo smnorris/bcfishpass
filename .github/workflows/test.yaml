@@ -12,17 +12,15 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
-        run:  |
-          # Fetch tags to ensure that git describe works correctly
-          git fetch --tags
-
-          # Use git describe to get the version information
-          VERSION=$(git describe --tags --abbrev=0) # --tags includes all tags, --abbrev=0 gives the full tag
-          COMMITS=$(git rev-list ${VERSION}..HEAD --count) # Count of commits since the last tag
-          COMMIT_HASH=$(git rev-parse --short HEAD) # Short commit hash
-
-          # Print version information
-          echo "Version: ${VERSION}"
-          echo "Commits since last tag: ${COMMITS}"
-          echo "Commit hash: ${COMMIT_HASH}"
+        with:
+          fetch-tags: 'true'
+      - name: Git describe
+        id: ghd
+        uses: proudust/gh-describe@v2
+      - name: Check outputs
+        run: |
+          echo "describe  : ${{ steps.ghd.outputs.describe }}"
+          echo "tag       : ${{ steps.ghd.outputs.tag }}"
+          echo "distance  : ${{ steps.ghd.outputs.distance }}"
+          echo "sha       : ${{ steps.ghd.outputs.sha }}"
+          echo "short-sha : ${{ steps.ghd.outputs.short-sha }}"
