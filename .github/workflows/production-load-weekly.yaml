@@ -9,7 +9,7 @@ env:
 jobs:
   data-refresh:
     runs-on: ubuntu-latest
-    environment: testing
+    environment: staging
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
