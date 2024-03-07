@@ -13,14 +13,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
-          fetch-tags: 'true'
-      - name: Git describe
-        id: ghd
-        uses: proudust/gh-describe@v2
-      - name: Check outputs
-        run: |
-          echo "describe  : ${{ steps.ghd.outputs.describe }}"
-          echo "tag       : ${{ steps.ghd.outputs.tag }}"
-          echo "distance  : ${{ steps.ghd.outputs.distance }}"
-          echo "sha       : ${{ steps.ghd.outputs.sha }}"
-          echo "short-sha : ${{ steps.ghd.outputs.short-sha }}"
+            fetch-tags: true
+            fetch-depth: 0
+      - name: Run the jobs
+        run:  |
+          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
+          git describe
