@@ -1,4 +1,4 @@
-name: bcfishpass-testing
+name: testing-bcfishpass
 run-name: ${{ github.actor }} Run bcfishpass on test
 on:
   workflow_dispatch:

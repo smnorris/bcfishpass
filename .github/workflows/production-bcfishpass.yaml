@@ -1,4 +1,4 @@
-name: bcfishpass-production
+name: production-bcfishpass
 run-name: ${{ github.actor }} Run bcfishpass on prod
 on:
   workflow_dispatch:

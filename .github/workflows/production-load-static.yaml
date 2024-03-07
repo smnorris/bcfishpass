@@ -1,4 +1,4 @@
-name: load-static
+name: production-load-static
 run-name: ${{ github.actor }} load FWA and static data
 on: workflow_dispatch
 env:
