@@ -5,7 +5,7 @@ on:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
-  parameters:
+  load-parameters:
     runs-on: ubuntu-latest
     environment: testing
     container: ghcr.io/smnorris/bcfishpass:main
@@ -16,11 +16,11 @@ jobs:
         run:  |
           cp parameters/example_newgraph/*csv parameters/
           make --debug=basic .make/parameters
-  xings:
+  load-xings:
     runs-on: ubuntu-latest
     environment: testing
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: parameters
+    needs: load-parameters
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: testing
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: xings
+    needs: load-xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
