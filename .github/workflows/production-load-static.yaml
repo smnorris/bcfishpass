@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-fwa
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
