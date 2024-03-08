@@ -10,4 +10,4 @@ Additional internal tables are created by model scripts.
 
 From repository root, with $DATABASE_URL connection defined as db superuser:
 
-	.jobs/setup
+	jobs/setup
