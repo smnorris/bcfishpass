@@ -46,7 +46,7 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemappin
 	ogr2ogr \
 		-f GPKG \
 		modelled_stream_crossings.gpkg.zip \
-		PG:$DATABASE_URL \
+		PG:$(DATABASE_URL) \
 		-nlt PointZM \
 		-nln modelled_stream_crossings \
 		-FID modelled_crossing_id \
