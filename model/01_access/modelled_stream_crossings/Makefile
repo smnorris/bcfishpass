@@ -1,5 +1,5 @@
 PSQL = psql $(DATABASE_URL) -v ON_ERROR_STOP=1
-WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.watershed_groups_access")
+WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
 # download latest from s3
 .make/download_archive:
