@@ -125,7 +125,7 @@ dnstr_spawning AS
 
 insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
-select
+select distinct
   segmented_stream_id,
   spawning
 FROM dnstr_spawning
@@ -242,7 +242,7 @@ clusters_near_rearing as
 -- finally, insert the streams that compose the clusters connected to lakes
 insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
-select
+select distinct
   segmented_stream_id,
   true as spawning
 FROM clusters_near_rearing a
@@ -251,5 +251,3 @@ ON a.cid = b.cid
 WHERE a.wb is true
 on conflict (segmented_stream_id)
 do update set spawning = EXCLUDED.spawning;
-
-
