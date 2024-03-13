@@ -1,8 +1,15 @@
 #!/bin/bash
 set -euxo pipefail
 
+#-------
+# load forest cover
+#-------
+
+# ** note the file name changes yearly **
+year=2023
+
 # download file
-curl -o /tmp/VEG_COMP_LYR_R1_POLY_$year.gdb.zip
+curl -o /tmp/VEG_COMP_LYR_R1_POLY_$year.gdb.zip \
   https://pub.data.gov.bc.ca/datasets/02dba161-fdb7-48ae-a4bb-bd6ef017c36d/current/VEG_COMP_LYR_R1_POLY_$year.gdb.zip
 
 ogr2ogr \
