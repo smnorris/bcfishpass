@@ -332,7 +332,7 @@ select
   a.geom
 from whse_basemapping.fwa_assessment_watersheds_poly a
 left outer join bcfishpass.fwa_assessment_watersheds_waterbodies_vw wb on a.watershed_feature_id = wb.watershed_feature_id
-left outer join bcfishpass.fptwg_summary_linear l on a.watershed_feature_id = l.watershed_feature_id
-left outer join bcfishpass.fptwg_summary_crossings c on a.watershed_feature_id = c.watershed_feature_id
-left outer join bcfishpass.fptwg_summary_observations o on a.watershed_feature_id = o.watershed_feature_id
-left outer join bcfishpass.fptwg_summary_roads r on a.watershed_feature_id = r.watershed_feature_id;
+left outer join bcfishpass.fptwg_summary_linear_vw l on a.watershed_feature_id = l.watershed_feature_id
+left outer join bcfishpass.fptwg_summary_crossings_vw c on a.watershed_feature_id = c.watershed_feature_id
+left outer join bcfishpass.fptwg_summary_observations_vw o on a.watershed_feature_id = o.watershed_feature_id
+left outer join bcfishpass.fptwg_summary_roads_vw r on a.watershed_feature_id = r.watershed_feature_id;
