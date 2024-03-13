@@ -47,6 +47,7 @@ for table in whse_admin_boundaries.clab_indian_reserves \
     whse_fish.pscis_remediation_svw \
     whse_forest_tenure.ften_range_poly_svw \
     whse_forest_tenure.ften_road_section_lines_svw \
+    whse_forest_vegetation.veg_comp_lyr_r1_poly \
     whse_imagery_and_base_maps.mot_road_structure_sp \
     whse_legal_admin_boundaries.abms_municipalities_sp \
     whse_legal_admin_boundaries.abms_regional_districts_sp \
@@ -57,6 +58,21 @@ for table in whse_admin_boundaries.clab_indian_reserves \
 do
     bcdata bc2pg -e -c 1 $table
 done
+
+# additional indexes for veg
+$PSQL -c \
+  "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (inventory_standard_cd); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (non_productive_descriptor_cd); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (species_pct_1); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (species_cd_1); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (site_index); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_1); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_2); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_3); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_4); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_5); \
+   CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (map_id);"
 
 # create bcfishpass tables/views/functions
 for sql in db/tables/*.sql ; do

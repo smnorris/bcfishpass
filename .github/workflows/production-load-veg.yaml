@@ -1,0 +1,15 @@
+name: production-load-veg
+run-name: ${{ github.actor }} load forest cover
+on: workflow_dispatch
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  load-veg:
+    runs-on: ubuntu-latest
+    environment: staging
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Run job script
+      run: jobs/whse_forest_vegetation.veg_comp_lyr_r1_poly
