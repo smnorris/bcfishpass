@@ -149,7 +149,7 @@ select
   array_length(array_agg(distinct o.species_code order by o.species_code), 1) as n_speciesobserved,
   count(*) filter (where o.species_code in ('CH','CM','CO','PK','SK')) as n_salmonobservations,
   count(*) filter (where o.species_code = 'ST') as n_steelheadobservations,
-  count(*) filter (where o.species_code in ('ACT', 'ADV', 'CH', 'CM', 'CO', 'EU', 'GSG', 'PK', 'PL', 'RL', 'SK', 'ST', 'WSG')) as n_anadromousobservations
+  count(*) filter (where o.species_code in ('ACT', 'ADV', 'CCT', 'CH', 'CM', 'CO', 'EU', 'GSG', 'PK', 'PL', 'RL', 'SK', 'ST', 'WSG')) as n_anadromousobservations
 from bcfishobs.fiss_fish_obsrvtn_events_vw o
 inner join whse_basemapping.fwa_assessment_watersheds_streams_lut l on o.linear_feature_id = l.linear_feature_id
 group by l.assmnt_watershed_id;
