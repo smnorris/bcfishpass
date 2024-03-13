@@ -226,6 +226,15 @@ create index on bcfishpass.fptwg_summary_roads (watershed_feature_id);
 create view bcfishpass.fptwg_summary as
 select
   a.watershed_feature_id,
+  a.watershed_group_code,
+  a.gnis_name_1,
+  a.wscode_ltree as wscode,
+  a.localcode_ltree as localcode,
+  a.left_right_tributary,
+  a.watershed_order,
+  a.watershed_magnitude,
+  a.local_watershed_order,
+  a.local_watershed_magnitude,
   wb.n_lakes,
   wb.area_lakes,
   wb.n_manmade_waterbodies,
@@ -319,7 +328,8 @@ select
   r.length_rail,
   r.length_resourceroad,
   r.length_demographicroad,
-  r.length_trail
+  r.length_trail,
+  a.geom
 from whse_basemapping.fwa_assessment_watersheds_poly a
 left outer join bcfishpass.fwa_assessment_watersheds_waterbodies_vw wb on a.watershed_feature_id = wb.watershed_feature_id
 left outer join bcfishpass.fptwg_summary_linear l on a.watershed_feature_id = l.watershed_feature_id
