@@ -60,7 +60,7 @@ do
 done
 
 # additional indexes for veg
-psql -v ON_ERROR_STOP=1 $DATABASE_URL -c \
+$PSQL -c \
   "CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (for_mgmt_land_base_ind); \
    CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (inventory_standard_cd); \
    CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (non_productive_descriptor_cd); \
