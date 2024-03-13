@@ -60,7 +60,7 @@ order by a.watershed_feature_id;
 
 create index on bcfishpass.fwa_assessment_watersheds_waterbodies_vw (watershed_feature_id);
 
-create materialized view bcfishpass.fptwg_summary_linear as
+create materialized view bcfishpass.fptwg_summary_linear_vw as
   select
     l.assmnt_watershed_id as watershed_feature_id,
     sum(st_length(geom)) as length_total,
@@ -103,9 +103,9 @@ create materialized view bcfishpass.fptwg_summary_linear as
   inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
   inner join whse_basemapping.fwa_assessment_watersheds_streams_lut l on s.linear_feature_id = l.linear_feature_id
   group by l.assmnt_watershed_id;
-create index on bcfishpass.fptwg_summary_linear (watershed_feature_id);
+create index on bcfishpass.fptwg_summary_linear_vw (watershed_feature_id);
 
-create materialized view bcfishpass.fptwg_summary_crossings as
+create materialized view bcfishpass.fptwg_summary_crossings_vw as
 select
   l.assmnt_watershed_id as watershed_feature_id,
   count(*) as n_crossings_total,
@@ -139,9 +139,9 @@ select
 from bcfishpass.crossings_vw c
 inner join whse_basemapping.fwa_assessment_watersheds_streams_lut l on c.linear_feature_id = l.linear_feature_id
 group by l.assmnt_watershed_id;
-create index on bcfishpass.fptwg_summary_crossings (watershed_feature_id);
+create index on bcfishpass.fptwg_summary_crossings_vw (watershed_feature_id);
 
-create materialized view bcfishpass.fptwg_summary_observations as
+create materialized view bcfishpass.fptwg_summary_observations_vw as
 select
   l.assmnt_watershed_id as watershed_feature_id,
   count(*) as n_fishobservations,
@@ -153,9 +153,9 @@ select
 from bcfishobs.fiss_fish_obsrvtn_events_vw o
 inner join whse_basemapping.fwa_assessment_watersheds_streams_lut l on o.linear_feature_id = l.linear_feature_id
 group by l.assmnt_watershed_id;
-create index on bcfishpass.fptwg_summary_observations (watershed_feature_id);
+create index on bcfishpass.fptwg_summary_observations_vw (watershed_feature_id);
 
-create materialized view bcfishpass.fptwg_summary_roads as
+create materialized view bcfishpass.fptwg_summary_roads_vw as
 with roads as (
   select
     w.watershed_feature_id,
@@ -221,9 +221,9 @@ select
 from roads
 where st_dimension(geom) = 1
 group by watershed_feature_id;
-create index on bcfishpass.fptwg_summary_roads (watershed_feature_id);
+create index on bcfishpass.fptwg_summary_roads_vw (watershed_feature_id);
 
-create view bcfishpass.fptwg_summary as
+create view bcfishpass.fptwg_assmt_wsd_summary_vw as
 select
   a.watershed_feature_id,
   a.watershed_group_code,
