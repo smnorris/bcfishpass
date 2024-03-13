@@ -43,7 +43,6 @@ $PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations_vw"
 #$PSQL -c "refresh materialized view bcfishpass.crossings_admin"  # generate admin as needed for now, this query is too resource intensive
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 
-
 # Finished processing!
 # Now add model run to log, returning the id
 # note that below logging could be done in db with triggers/functions but this works fine for now
@@ -90,3 +89,8 @@ $PSQL -c "insert into bcfishpass.parameters_habitat_thresholds_log (
 $PSQL -c "insert into bcfishpass.wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
 $PSQL -c "insert into bcfishpass.wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
 
+# refresh fptwg summary views
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_linear"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_crossings"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_observations"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_roads"
