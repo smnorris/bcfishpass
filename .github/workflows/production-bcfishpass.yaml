@@ -24,8 +24,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
-        run:  jobs/bcfishpass01_modelledcrossings
+      - name: Build modelled crossings
+        run:  jobs/bcfishpass01_modelled_stream_crossings
+      - name: Release modelled crossings
+        run:  jobs/release_modelled_stream_crossings
   prep:
     runs-on: ubuntu-latest
     environment: staging
@@ -60,4 +62,4 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/freshwater_fish_habitat_accessibility_model
+        run:  jobs/release_freshwater_fish_habitat_accessibility_model

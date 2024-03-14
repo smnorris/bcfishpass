@@ -7,6 +7,9 @@ set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
+# *note*
+# weekly bcfishobs processing is scheduled via workflow bcfishobs repository
+
 # bcdata loads
 bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
 bcdata bc2pg -r whse_fish.fiss_obstacles_pnt_sp
@@ -17,8 +20,33 @@ bcdata bc2pg -r whse_fish.pscis_remediation_svw
 bcdata bc2pg -r whse_forest_tenure.ften_road_section_lines_svw
 bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
 
-# other loads
-jobs/cabd
-jobs/whse_basemapping.transport_line
+# cabd
+$PSQL -c "truncate cabd.dams"
+ogr2ogr -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -append \
+  -nln cabd.dams \
+  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+  OGRGeoJSON
 
-# note that weekly bcfishobs processing is scheduled on bcfishpass db using bcfishobs repository
+$PSQL -c "truncate cabd.waterfalls"
+ogr2ogr -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -append \
+  -nln cabd.waterfalls \
+  "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+  OGRGeoJSON
+
+# DRA
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  --config PG_USE_COPY YES \
+  -lco GEOMETRY_NAME=geom \
+  -lco FID=transport_line_id \
+  -nln bcdata.transport_line \
+  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE
+$PSQL -c "truncate whse_basemapping.transport_line;
+          insert into whse_basemapping.transport_line select * from bcdata.transport_line"
+$PSQL -c "drop table bcdata.transport_line"
