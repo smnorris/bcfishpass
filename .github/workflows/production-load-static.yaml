@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v4
     - name: Run job script
       run: jobs/load_fwa
-  load-static:
+  load-bcfishobs-static:
     runs-on: ubuntu-latest
     environment: staging
     container: ghcr.io/smnorris/bcfishpass:main
@@ -28,7 +28,7 @@ jobs:
         mkdir -p .make
         make -t .make/setup
         make .make/load_static
-  load-static:
+  load-bcfishpass-static:
     runs-on: ubuntu-latest
     environment: staging
     container: ghcr.io/smnorris/bcfishpass:main
@@ -36,5 +36,5 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Run job script
+    - name: Load static bcfishpass data
       run: jobs/load_static
