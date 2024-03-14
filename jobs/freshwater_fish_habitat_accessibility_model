@@ -16,6 +16,12 @@
 
 set -euxo pipefail
 
+# refresh required materialized views
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_linear_vw"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_crossings_vw"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_observations_vw"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_roads_vw"
+
 ogr2ogr \
     -f GPKG \
     freshwater_fish_habitat_accessibility_MODEL.gpkg \

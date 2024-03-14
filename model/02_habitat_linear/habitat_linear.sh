@@ -88,9 +88,3 @@ $PSQL -c "insert into bcfishpass.parameters_habitat_thresholds_log (
 # log summaries
 $PSQL -c "insert into bcfishpass.wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
 $PSQL -c "insert into bcfishpass.wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
-
-# refresh fptwg summary views
-$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_linear"
-$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_crossings"
-$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_observations"
-$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_roads"
