@@ -6,7 +6,7 @@ env:
 jobs:
   load-fwa:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
     - name: Checkout Repository
@@ -15,7 +15,7 @@ jobs:
       run: jobs/load_fwa
   load-bcfishobs-static:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: load-fwa
     steps:
@@ -30,7 +30,7 @@ jobs:
         make .make/load_static
   load-bcfishpass-static:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: load-fwa
     steps:

@@ -7,7 +7,7 @@ env:
 jobs:
   load-parameters:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
@@ -18,7 +18,7 @@ jobs:
           make --debug=basic .make/parameters
   build-xings:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: load-parameters
     steps:
@@ -30,7 +30,7 @@ jobs:
         run:  jobs/release_modelled_stream_crossings
   prep:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: build-xings
     steps:
@@ -40,7 +40,7 @@ jobs:
         run:  jobs/bcfishpass02_prep
   model:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: prep
     steps:
@@ -55,7 +55,7 @@ jobs:
           jobs/bcfishpass03_model
   release:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: model
     steps:

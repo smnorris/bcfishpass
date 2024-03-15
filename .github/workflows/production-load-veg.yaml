@@ -6,7 +6,7 @@ env:
 jobs:
   load-veg:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
     - name: Checkout Repository
