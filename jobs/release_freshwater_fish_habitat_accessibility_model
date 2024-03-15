@@ -16,6 +16,8 @@
 
 set -euxo pipefail
 
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
 # refresh required materialized views
 $PSQL -c "refresh materialized view bcfishpass.fptwg_summary_linear_vw"
 $PSQL -c "refresh materialized view bcfishpass.fptwg_summary_crossings_vw"
