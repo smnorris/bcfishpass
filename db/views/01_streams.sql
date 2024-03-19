@@ -151,7 +151,10 @@ SELECT
   bool_or(h.rearing_co) as rearing_co,
   bool_or(h.rearing_sk) as rearing_sk,
   bool_or(h.rearing_st) as rearing_st,
-  bool_or(h.rearing_wct) as rearing_wct
+  bool_or(h.rearing_wct) as rearing_wct,
+  h.reviewer_name,
+  h.source,
+  h.notes
 FROM bcfishpass.streams s
 INNER JOIN manual_habitat_class h
 ON s.blue_line_key = h.blue_line_key
