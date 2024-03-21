@@ -1902,10 +1902,10 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24734790,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,Local knowledge; cut block site visited by partner and no road/structure exists
 4602684,NONE,ELKR,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 6800319,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge/OBS
-6800240,FORD,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800240,NONE,HORS,MC,2024-03-14,DWB field assessments 2021,no structure found during assessment
 6800648,OBS,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,bridge/OBS
 6800657,FORD,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-6800520,NONE,HORS,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
+6800520,NONE,HORS,MC,2024-03-14,DWB field assessments 2021,no structure found during assessment
 1805549,OBS,BULK,KK,2022-01-01,Bing/Google/ESRI imagery,to check
 24724375,NONE,THOM,KK,2022-01-01,Bing/Google/ESRI imagery,stream does not exist as mapped
 19004716,OBS,SQAM,KK,2022-01-01,Bing/Google/ESRI imagery,check crossing to south not marked
@@ -5954,9 +5954,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1801773,NONE,BULK,TMK,2022-12-20,imagery,no visible structure
 1801133,NONE,BULK,TMK,2022-12-20,PSCIS assessment,no visible crossing
 1802374,NONE,BULK,TMK,2022-12-20,PSCIS assessment,no visible crossing
-6800298,NONE,HORS,TMK,2022-02-07,imagery,no visible crossing
+6800298,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
 6800581,NONE,HORS,TMK,2022-02-07,passable in PSCIS,no visible crossing
-6801130,NONE,HORS,TMK,2022-02-07,imagery,no visible crossing
+6801130,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
 6801356,NONE,HORS,TMK,2022-02-07,imagery,no visible crossing
 24718987,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
 24718984,NONE,QUES,TMK,2023-03-24,imagery,no visible crossing
@@ -6161,3 +6161,5 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 22200074,NONE,UFRA,MW,2023-11-23,field,No visible crossing or road.
 22202127,NONE,UFRA,MW,2023-11-23,field,Downstream railway crossing runs under both sets of tracks.
 3700192,NONE,CRKD,AI,2024-01-02,Bing/Google/ESRI, no structure
+6800484,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
+6801356,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment

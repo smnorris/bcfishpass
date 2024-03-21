@@ -1306,3 +1306,4 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 6731,PASSABLE,PARS,MW,2023-08-14,Bridge; Imagery Review
 125204,PASSABLE,PARS,MW,2023-08-14,Bridge; Imagery Review
 197962,PASSABLE,MORR,MW,2023-08-21,Bridge; Imagery Review
+198872,PASSABLE,HORS,MC,2024-03-14,"Abandoned culvert in stream, but is not a barrier. Also 197761 is a duplicate PCSIS point."

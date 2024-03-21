@@ -22,7 +22,7 @@ MISC,Intermittent barrier on trib to Moffat Creek,356327400,288,HORS,SH,2021-01-
 MISC,Intermittent barrier on trib to Horsefly River,356243886,58,HORS,SH,2021-01-01,CWF WCRP,"Unlikely fish bearing, industrial zone"
 MISC,Spillway,356553439,574,ELKR,NJO,2021-01-01,CWF WCRP,Barrier seperating genetically distinct populations
 MISC,Spillway,356560765,2935,ELKR,NJO,2021-01-01,CWF WCRP,Drainage pond blocking passage
-MISC,Cascade/chute,356363278,1000,HORS,BR,2021-01-01,CWF WCRP,Natural bedrock chute that is blocking passage
+MISC,Cascade/chute,356363278,1000,HORS,MC,2024-03-21,CWF WCRP,Natural bedrock chute that is blocking passage. Noted in assessment comments for stream_crossing_id 57292.
 MISC,,360751655,132,BULK,CWF,2021-01-01,CWF WCRP,based on assessment comments (and imagery review where required)
 MISC,,360775623,2302,BULK,CWF,2021-01-01,CWF WCRP,based on assessment comments (and imagery review where required)
 MISC,,356361185,323,HORS,CWF,2021-01-01,CWF WCRP,based on assessment comments (and imagery review where required)
@@ -224,3 +224,4 @@ MISC,,356351031,2473,LNIC,CWF,2023-04-11,CWF WCRP,impassable natural barrier ~21
 MISC,,356364423,7707,QUES,CWF,2023-04-25,CWF WCRP,"Beaver Falls are a hard barrier, based on information provided by participants at LDN workshop."
 MISC,,356342526,110,BOWR,CWF,2023-04-25,CWF WCRP,"Alluvial fan based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
 GRADIENT_25,,360874126,463.62,LRDO,SN,2023-09-05,https://a100.gov.bc.ca/pub/acat/documents/r585/whalen_report_1068061634267_b3539f3bfa6440d4af43a65105c6e978.pdf,no anadromous spp in Whalen Lake CO; observations upstream are stocked
+MISC,Impassable cascade barrier on Bassett Creek,356363278,1000,HORS,MC,2024-02-23,PSCIS assessement comments,Bedrock channel w/ cascade sections below impassable
