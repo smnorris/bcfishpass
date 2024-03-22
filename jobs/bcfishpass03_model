@@ -7,7 +7,8 @@ set -euxo pipefail
 
 # run access model
 cd model/01_access
-./model_access.sh
+./model_access_1.sh
+./model_access_2.sh
 
 # run habitat model
 cd ../02_habitat_linear

@@ -298,7 +298,8 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 # run the access model
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
 .make/model_access: .make/model_access_prep
-	./model_access.sh
+	./model_access_1.sh
+	./model_access_2.sh
 	touch $@
 
 .make/qa: .make/model_access
