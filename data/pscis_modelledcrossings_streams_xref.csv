@@ -2447,7 +2447,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 124227,1802179,,BULK,,
 124228,,,BULK,,
 124229,,17034068,BULK,,
-124240,6800082,,HORS,,
 124241,6800083,,HORS,,
 124242,,,HORS,,
 124243,,,HORS,,
@@ -3558,4 +3557,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198680,3700003,,CRKD,AI,Confirmed in field that this is actual location of Neilson Creek
 198719,3702074,,CRKD,AI,Confirmed in field that this is actual location of Balsam Creek
 124240,6800082,,HORS,MC,Using assessment comments to match PSCIS point to Black Creek Rd modelled crossing
-197180,,701418136,HORS,MC,"PSCIS point is on a driveway with no modelled crossing, snapping point to nearest stream "
+197180,,701418136,HORS,MC,"PSCIS point is on a driveway with no modelled crossing, snapping point to nearest stream"
