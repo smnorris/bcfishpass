@@ -3440,7 +3440,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197043,11300440,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
 197044,11300554,,LNIC,NJO,Matched to closest stream model (Manual Review)
 197045,11300474,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
-197180,,,HORS,NJO,Not on a mapped stream
 197181,6801622,,HORS,,
 197544,,,ELKR,SN,not on mapped stream
 197580,4600026,,ELKR,SN,
