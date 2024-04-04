@@ -5,8 +5,8 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 3142,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 3143,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 57760,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-57761,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-57763,BARRIER,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+57761,PASSABLE,BULK,LB,2024-02-27,"Based on assessment comments, structure is a ford and no fish passage concerns"
+57763,PASSABLE,BULK,LB,2024-02-27,"Previous fix made in error, update fix table entry to passable"
 57764,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 57766,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 57767,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -120,7 +120,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 58119,BARRIER,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 58120,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 58121,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-58122,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+58122,PASSABLE,BULK,LB,2024-02-27,"Based on assessment comments, structure is a ford and no fish passage concerns"
 58123,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 58124,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 58127,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -548,7 +548,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 195941,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 195942,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 195945,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-195950,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+195950,PASSABLE,BULK,LB,2024-02-27,"Based on assessment comments, structure is a ford and no fish passage concerns"
 195958,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 195959,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 195961,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1307,3 +1307,24 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 125204,PASSABLE,PARS,MW,2023-08-14,Bridge; Imagery Review
 197962,PASSABLE,MORR,MW,2023-08-21,Bridge; Imagery Review
 198872,PASSABLE,HORS,MC,2024-03-14,"Abandoned culvert in stream, but is not a barrier. Also 197761 is a duplicate PCSIS point."
+198109,PASSABLE,BULK,LB,2024-04-03,"PSCIS comments indicate a transmission line with a ford, but no crossing structure."
+198111,PASSABLE,BULK,LB,2024-04-03,"PSCIS comments indicate it is a walking trail with a ford, but no crossing structure."
+57944,POTENTIAL,BULK,LB,2024-04-03,Based on local knowledge this structure should be classified as potential.
+123446,POTENTIAL,BULK,LB,2024-04-03,Based on local knowledge this structure should be classified as potential.
+195944,POTENTIAL,BULK,LB,2024-04-03,Based on local knowledge this structure should be classified as potential.
+58228,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123491,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123496,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123501,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123504,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123527,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123535,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123551,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123559,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123593,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+123596,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+195370,PASSABLE,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is passable.
+197663,POTENTIAL,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is a potential barrier.
+197976,POTENTIAL,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is a potential barrier.
+197657,PASSABLE,BULK,LB,2024-04-03,Comments indicate this structure was re-assessed as passable in 2023
+123770,POTENTIAL,BULK,LB,2024-04-03,Based on local knowledge this structure should be classified as potential.
