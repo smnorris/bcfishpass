@@ -3464,7 +3464,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197656,1800071,,BULK,SN,Match based on assessor notes and map review
 197658,1800062,,BULK,NJO,Matched to clossest Crossing
 197659,1805594,,BULK,LB,Matched made based on attributes indicating this structure is located on a railway.  Structure with stream crossing id = 197661 was also updated.
-197660,1805594,,BULK,AI,Matched to closest stream model (not sure why it didn't happen automatically
 197661,1800066,,BULK,LB,"197661 currently not getting matched to a modelled crossing. 197659 is being incorrectly matched to 1800066, 197661 is the correct match based on location and stream and road information."
 197662,1800060,,BULK,NJO,Matched to closest Crossing
 197663,1800213,,BULK,NJO,Matched to closest Crossing
