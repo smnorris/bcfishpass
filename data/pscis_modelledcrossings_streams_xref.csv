@@ -9,7 +9,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 3047,1804647,,BULK,,
 3048,1803799,,BULK,NJO,Correct match
 3050,1803993,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-3051,17059351,,BULK,,
+3051,1803997,,BULK,LB,"Match made based on road name and location. Previously matched to 17059351, which no longer exists."
 3052,1803711,,BULK,,
 3053,1804002,,BULK,,
 3054,1803558,,BULK,,
@@ -939,7 +939,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57919,1803250,,BULK,,
 57920,1800138,,BULK,,
 57921,1801498,,BULK,,
-57922,,,BULK,NJO,Not on a modelled stream
+57922,,17037835,BULK,LB,"Additional crossing downstream of 57921 on unmapped road, should be snapped to stream.This record already exists in the fix table, but should be updated."
 57923,,17037632,BULK,NJO,Site needs review - Seems to be a mess
 57924,1806091,,BULK,NJO,Matched to closest stream model (Manual Review)
 57925,1800005,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
@@ -993,7 +993,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57975,1801603,,BULK,,
 57976,,,BULK,,
 57977,1800353,,BULK,,
-57978,,17034905,BULK,,
+57978,1800352,,BULK,LB,matched to modelled crossing (Manual Review)
 57979,,17034678,BULK,,
 57980,1801572,,BULK,,
 57981,,,BULK,,
@@ -1915,7 +1915,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123515,1801306,,BULK,,
 123516,1802431,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123517,1801317,,BULK,,
-123518,,,BULK,NJO,Not on a mapped stream
+123518,1802984,,BULK,LB,Match based on location and assessment note that it is a power line right of way.
 123519,1800935,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123520,1800934,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123521,1806004,,BULK,,
@@ -2133,7 +2133,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 123774,1800629,,BULK,,
 123775,1800161,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 123776,24703647,,BULK,,
-123777,,17027328,BULK,,
+123777,1800129,,BULK,LB,Match PSCIS point to modelled crossing based on location and road name.
 123778,1800377,,BULK,,
 123779,1805284,,BULK,,
 123780,1804756,,BULK,,
@@ -2590,7 +2590,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 124427,1800128,,BULK,,
 124428,1800039,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 124429,1800000,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
-124430,1803470,,BULK,,
+124430,24742852,,BULK,LB,"Match made based on location. Previously matched to 1803470, which no longer exists."
 124432,,17008393,BULK,,
 124433,,17008171,BULK,,
 124434,,17009137,BULK,,
@@ -3463,9 +3463,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197655,1800073,,BULK,NJO,Matched to clossest Crossing
 197656,1800071,,BULK,SN,Match based on assessor notes and map review
 197658,1800062,,BULK,NJO,Matched to clossest Crossing
-197659,1800066,,BULK,NJO,Matched to clossest Crossing
+197659,1805594,,BULK,LB,Matched made based on attributes indicating this structure is located on a railway.  Structure with stream crossing id = 197661 was also updated.
 197660,1805594,,BULK,AI,Matched to closest stream model (not sure why it didn't happen automatically
-197661,,,BULK,NJO,Not modelled crossing or reference matching
+197661,1800066,,BULK,LB,"197661 currently not getting matched to a modelled crossing. 197659 is being incorrectly matched to 1800066, 197661 is the correct match based on location and stream and road information."
 197662,1800060,,BULK,NJO,Matched to closest Crossing
 197663,1800213,,BULK,NJO,Matched to closest Crossing
 197664,1800076,,BULK,NJO,Matched to closest Crossing
@@ -3557,3 +3557,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198719,3702074,,CRKD,AI,Confirmed in field that this is actual location of Balsam Creek
 124240,6800082,,HORS,MC,Using assessment comments to match PSCIS point to Black Creek Rd modelled crossing
 197180,,701418136,HORS,MC,"PSCIS point is on a driveway with no modelled crossing, snapping point to nearest stream"
+197938,,,BULK,LB,"PSCIS assessment is on unmapped side channel, prevent match to mainstem."
