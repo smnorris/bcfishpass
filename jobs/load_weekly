@@ -38,7 +38,7 @@ ogr2ogr -f PostgreSQL \
   OGRGeoJSON
 
 # DRA
--mkdir -p tmp
+mkdir -p tmp
 curl ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
   -o tmp/dgtl_road_atlas.gdb.zip
 $PSQL -c "drop table if exists bcdata.transport_line" # in case of any failed loads
