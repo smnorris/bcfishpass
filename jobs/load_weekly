@@ -38,6 +38,10 @@ ogr2ogr -f PostgreSQL \
   OGRGeoJSON
 
 # DRA
+mkdir -p tmp
+curl ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  -o tmp/dgtl_road_atlas.gdb.zip
+
 ogr2ogr \
   -f PostgreSQL \
   "PG:$DATABASE_URL" \
@@ -45,7 +49,7 @@ ogr2ogr \
   -lco GEOMETRY_NAME=geom \
   -lco FID=transport_line_id \
   -nln bcdata.transport_line \
-  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  /vsizip/tmp/dgtl_road_atlas.gdb.zip \
   TRANSPORT_LINE
 $PSQL -c "truncate whse_basemapping.transport_line;
           insert into whse_basemapping.transport_line select * from bcdata.transport_line"
