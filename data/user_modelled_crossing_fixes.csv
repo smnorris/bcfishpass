@@ -6029,9 +6029,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24703045,OBS,BOWR,SS,2023-03-27,Bing Virtual Earth,Bridge Visible
 24738214,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
 24738255,NONE,BOWR,SS,2023-03-27,Bing Virtual Earth,No visible crossing
-11303928,NONE,LNIC,TMK,2023-03-31,Field assessment,no crossing
-11304111,NONE,LNIC,TMK,2023-03-31,Field assessment/imagery,no crossing
-11301807,NONE,LNIC,TMK,2023-03-31,FIELD ASSESSMENT,no crossing
+11303928,NONE,LNIC,LB,2024-04-09,Field assessment/imagery,Comments indicate crossing does not exist
+11304111,FORD,LNIC,LB,2024-04-09,Field assessment/imagery,Comments in assessment indicate bridge was washed out but debris remain.  Structure classified as Ford.
+11301807,NONE,LNIC,LB,2024-04-09,Field assessment/imagery,Comments indicate crossing does not exist
 17100326,NONE,QUES,AL,2023-04-25,local knowledge,Stream no longer flows in this direction. This is not a real crossing.
 17102298,NONE,QUES,AL,2023-04-25,local knowledge,no crossing
 2301101,OBS,CARR,AL,2023-04-25,local knowledge,bridge visible
@@ -6163,3 +6163,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3700192,NONE,CRKD,AI,2024-01-02,Bing/Google/ESRI, no structure
 6800484,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
 6801356,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
+11304215,NONE,LNIC,LB,2024-04-09,Field assessment,Comments indicate this crossing has been removed
+11300428,NONE,LNIC,LB,2024-04-09,Imagery review,
+11300427,NONE,LNIC,LB,2024-04-09,Imagery review,
