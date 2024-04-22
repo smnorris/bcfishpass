@@ -1243,7 +1243,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 196941,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196944,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196945,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-196947,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+196947,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 196957,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196964,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196971,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1251,27 +1251,27 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 196974,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196975,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196978,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-196981,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+196981,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 196983,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196984,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-196985,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+196985,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 196998,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197003,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197004,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197005,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197007,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197009,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+197005,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
+197007,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
+197009,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 197012,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197015,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197016,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197028,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197029,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+197015,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
+197016,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
+197028,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
+197029,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 197030,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197032,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197033,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197034,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197038,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-197040,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+197040,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 3138,BARRIER,BULK,AI,2021-01-01,"error in crossing_type_description.  Should be ""Closed Bottom Structure"""
 197535,PASSABLE,ELKR,NJO,2021-01-01,Manual review
 197536,PASSABLE,ELKR,NJO,2021-01-01,Manual review
@@ -1328,3 +1328,5 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 197976,POTENTIAL,BULK,LB,2024-04-03,PSCIS assessment comment indicates this structure is a potential barrier.
 197657,PASSABLE,BULK,LB,2024-04-03,Comments indicate this structure was re-assessed as passable in 2023
 123770,POTENTIAL,BULK,LB,2024-04-03,Based on local knowledge this structure should be classified as potential.
+197018,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
+197017,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
