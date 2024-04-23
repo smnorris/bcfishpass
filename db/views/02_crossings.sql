@@ -706,7 +706,7 @@ left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggreg
 left outer join bcfishpass.crossings_upstr_barriers_per_model_vw aum on c.aggregated_crossings_id = aum.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
-left outer join bcfishpass.crossings_upstream_habitat_wcrp h_wcrp on c.aggregated_crossings_id = h.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstream_habitat_wcrp h_wcrp on c.aggregated_crossings_id = h_wcrp.aggregated_crossings_id
 left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
 left outer join whse_basemapping.dbm_mof_50k_grid t ON ST_Intersects(c.geom, t.geom)
 order by c.aggregated_crossings_id, s.downstream_route_measure;
