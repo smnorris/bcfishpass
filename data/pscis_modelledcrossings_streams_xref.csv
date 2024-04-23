@@ -3377,7 +3377,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 196980,11305644,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
 196981,11303881,,LNIC,,
 196982,11305112,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
-196983,,,LNIC,,
+196983,11304439,,LNIC,LB,Matched to modelled crossing based on stream name and modelled crossing ID in assessment photos.
 196984,11305464,,LNIC,,
 196985,11303981,,LNIC,,
 196986,11305394,,LNIC,,
@@ -3408,8 +3408,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197011,11304724,,LNIC,,
 197012,11301912,,LNIC,,
 197013,11300356,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
-197014,,,LNIC,,
-197015,11300916,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
+197014,11300916,,LNIC,LB,"Imagery review, joined based on attributes indicating this is a CBS."
+197015,,701781647,LNIC,LB,"Based on comment, should be downstream of 197014 which is snapped to modelled_crossing_id 11300916"
 197016,11301168,,LNIC,,
 197017,11301953,,LNIC,,
 197018,11301281,,LNIC,,
@@ -3420,10 +3420,10 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197023,11300331,,LNIC,,
 197024,11304065,,LNIC,,
 197025,11300429,,LNIC,NJO,Matched to closest stream model (Manual Review)
-197026,,,LNIC,NJO,Not on a modelled stream
+197026,,701782399,LNIC,LB,"FWA stream mapped incorrectly, actually flows to the north, PSCIS assessment notes Salem creek as the stream."
 197027,11300028,,LNIC,,
 197028,11301939,,LNIC,,
-197029,,701784542,LNIC,,
+197029,11304666,,LNIC,LB,Matched to modelled crossing based on comment and modelled crossing ID in assessment photos.
 197030,11304404,,LNIC,,
 197031,11301028,,LNIC,NJO,Matched to closest stream model (Manual Review)
 197032,24713771,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3434,7 +3434,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197037,11300130,,LNIC,,
 197038,11300852,,LNIC,,
 197039,11300400,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
-197040,,,LNIC,,
+197040,,701779804,LNIC,LB,"PSCIS assessment comments note that assessment was done on a spur off 500th ave, crossing Kwinshatin Creek, matching to nearest point on Kwinshatin Creek to 500th ave spur."
 197041,11300445,,LNIC,,
 197042,11300021,,LNIC,,
 197043,11300440,,LNIC,SN,matched to nearest modelled crossing within 15m (instream)
@@ -3557,3 +3557,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 124240,6800082,,HORS,MC,Using assessment comments to match PSCIS point to Black Creek Rd modelled crossing
 197180,,701418136,HORS,MC,"PSCIS point is on a driveway with no modelled crossing, snapping point to nearest stream"
 197938,,,BULK,LB,"PSCIS assessment is on unmapped side channel, prevent match to mainstem."
+197685,11303316,,LNIC,LB,Matched to closest modelled crossing.
+197892,24731175,,LNIC,LB,Matched to modelled crossing located on digitized transportation line based on assessment comments
+198883,11303791,,LNIC,LB,Matched to closest modelled crossing.
+198881,11300797,,LNIC,LB,Matched to closest modelled crossing.
+198882,11303627,,LNIC,LB,Matched to closest modelled crossing.
