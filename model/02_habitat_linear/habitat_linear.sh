@@ -41,7 +41,7 @@ $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_barriers_per_mode
 $PSQL -c "refresh materialized view bcfishpass.crossings_upstr_observations_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_dnstr_observations_vw"
 #$PSQL -c "refresh materialized view bcfishpass.crossings_admin"  # generate admin as needed for now, this query is too resource intensive
-#$PSQL -c "refresh materialized view bcfishpass.bcfishpass.crossings_wcrp_vw"
+$PSQL -c "refresh materialized view bcfishpass.bcfishpass.crossings_wcrp_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 
 # Finished processing!
