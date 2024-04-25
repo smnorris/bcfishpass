@@ -85,31 +85,103 @@ usa as
   AND ROUND(a.downstream_route_measure::numeric) >= ROUND(s.downstream_route_measure::numeric)
   AND ROUND(a.downstream_route_measure::numeric) < ROUND(s.upstream_route_measure::numeric)
   where a.barrier_type = 'DAM'
+),
+
+dams as (
+  select * from cabd_pts
+  union all
+  select
+    dam_id,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    distance_to_stream,
+    watershed_group_code,
+    barrier_name as dam_name_en,
+    null as height_m,
+    null as owner,
+    null as dam_use,
+    null as operating_status,
+    null as passability_status_code,
+    geom
+  from usa
+),
+
+upstr_sal as (
+  select
+    d.dam_id,
+    count(*) as n_sal
+  from dams d
+  inner join bcfishpass.observations_vw o
+  on fwa_upstream(
+        d.blue_line_key,
+        d.downstream_route_measure,
+        d.wscode_ltree,
+        d.localcode_ltree,
+        o.blue_line_key,
+        o.downstream_route_measure,
+        o.wscode_ltree,
+        o.localcode_ltree,
+        false,
+        1
+      )
+  where o.species_code in ('CH','CM','CO','PK','SK')
+  and o.observation_date > date('1990-01-01')
+  group by d.dam_id
+),
+
+upstr_st as (
+  select
+    d.dam_id,
+    count(*) as n_st
+  from dams d
+  inner join bcfishpass.observations_vw o
+  on fwa_upstream(
+        d.blue_line_key,
+        d.downstream_route_measure,
+        d.wscode_ltree,
+        d.localcode_ltree,
+        o.blue_line_key,
+        o.downstream_route_measure,
+        o.wscode_ltree,
+        o.localcode_ltree,
+        false,
+        1
+      )
+  where o.species_code = 'ST'
+  and o.observation_date > date('1990-01-01')
+  group by d.dam_id
 )
 
-select * from cabd_pts
-union all
-select 
-  dam_id,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  wscode_ltree,
-  localcode_ltree,
-  distance_to_stream,
-  watershed_group_code,
-  barrier_name as dam_name_en,
-  null as height_m,
-  null as owner,
-  null as dam_use,
-  null as operating_status,
-  null as passability_status_code,
-  geom
-from usa;
+select
+  d.dam_id,
+  d.linear_feature_id,
+  d.blue_line_key,
+  d.downstream_route_measure,
+  d.wscode_ltree,
+  d.localcode_ltree,
+  d.distance_to_stream,
+  d.watershed_group_code,
+  d.dam_name_en,
+  d.height_m,
+  d.owner,
+  d.dam_use,
+  d.operating_status,
+  d.passability_status_code,
+  s1.n_sal as n_obs_salmon_since_1990,
+  s2.n_st as n_obs_steelhead_since_1990,
+  d.geom
+from dams d
+left outer join upstr_sal s1 on d.dam_id = s1.dam_id
+left outer join upstr_st s2 on d.dam_id = s2.dam_id;
 
 create unique index on bcfishpass.dams_vw (dam_id);
 create index on bcfishpass.dams_vw using gist (geom);
 
+
+-- note dams not matched to streams
 create view bcfishpass.dams_not_matched_to_streams as
 select
   a.cabd_id,

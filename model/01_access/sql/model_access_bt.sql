@@ -64,8 +64,8 @@ with all_barriers as
 obs as
 (
   select *
-  from bcfishpass.observations
-  where species_codes && array['BT','CH','CM','CO','PK','SK','ST'] is true
+  from bcfishpass.observations_vw
+  where species_code in ('BT','CH','CM','CO','PK','SK','ST')
 ),
 
 barriers as
@@ -94,7 +94,7 @@ barriers as
         False,
         1
       )
-  where o.species_codes is null
+  where o.species_code is null
 
   union all
 

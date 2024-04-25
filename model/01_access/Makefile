@@ -99,13 +99,6 @@ full:
 	done
 	touch $@
 
-# -----
-# OBSERVATIONS
-# -----
-# load observations of all spp of interest from bcfishobs to bcfishpass.observations
-.make/observations: sql/load_observations.sql
-	$(PSQL) -f $^ 
-	touch $@
 
 # -----
 # LOAD BARRIER TYPE TABLES
@@ -154,9 +147,9 @@ $(ANTH_BARRIERS): .make/crossings \
 # group being modelled, then retain only the records with no other records downstream (ie, only
 # the lowest in the system)
 # Note that observations are a requirement because they can be used to cancel natural barriers
+# (but this is presumed to already be present)
 $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
-	$(NATURAL_BARRIERS) \
-	.make/observations
+	$(NATURAL_BARRIERS)
 	$(eval BARRIERTYPE=$(subst .make/model_access_,,$@))
 	# create table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | $(PSQL) -v barriertype=$(BARRIERTYPE)

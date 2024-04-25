@@ -93,11 +93,11 @@ obs_upstr as
     b.blue_line_key,
     b.downstream_route_measure,
     b.watershed_group_code,
-    unnest(o.species_codes) as spp,
-    unnest(o.observation_ids) as obs,
-    unnest(o.observation_dates) as obs_dt
+    o.species_code as spp,
+    o.fish_observation_point_id as obs,
+    o.observation_date as obs_dt
   from barriers b
-  inner join bcfishpass.observations o
+  inner join bcfishpass.observations_vw o
   on fwa_upstream(
         b.blue_line_key,
         b.downstream_route_measure,
@@ -113,7 +113,7 @@ obs_upstr as
   -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
   left outer join bcfishpass.user_barriers_definite_control bc
   on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
-  where o.species_codes && array['CH','CM','CO','PK','SK']
+  where o.species_code in ('CH','CM','CO','PK','SK')
   and bc.barrier_ind is null
 ),
 
