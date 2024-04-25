@@ -37,6 +37,10 @@ ogr2ogr -f PostgreSQL \
   "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
 
+$PSQL -c "refresh materialized view bcfishpass.dams_vw"
+$PSQL -c "refresh materialized view bcfishpass.falls_vw"
+$PSQL -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
+
 # DRA
 mkdir -p tmp
 curl ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \

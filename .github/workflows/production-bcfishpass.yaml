@@ -17,12 +17,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Load parameters
+      - name: Load csv data, parameters
         run:  |
           cp parameters/example_newgraph/*csv parameters/
-          make --debug=basic .make/parameters
-      - name: Load latest data files
-        run:  jobs/load_csv
+          jobs/load_csv
   build-xings:
     runs-on: ubuntu-latest
     environment: production

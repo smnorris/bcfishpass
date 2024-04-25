@@ -8,7 +8,7 @@ on:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
-  load-parameters:
+  load-csv:
     runs-on: ubuntu-latest
     environment: testing
     container: ghcr.io/smnorris/bcfishpass:main
@@ -18,7 +18,7 @@ jobs:
       - name: Run the jobs
         run:  |
           cp parameters/example_newgraph/*csv parameters/
-          make --debug=basic .make/parameters
+          jobs/load_csv
   load-xings:
     runs-on: ubuntu-latest
     environment: testing
@@ -37,8 +37,6 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Load latest data files
-        run:  jobs/load_csv
       - name: Run the jobs
         run:  jobs/bcfishpass02_prep
   model:

@@ -10,20 +10,12 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 # NOTE - db must exist and be set up
 # (run /jobs/setup, load fwa and bcfishobs)
 
-.make/parameters: parameters/*.csv
-	mkdir -p .make
-	$(PSQL) -c "truncate bcfishpass.parameters_habitat_method";
-	$(PSQL) -c "truncate bcfishpass.parameters_habitat_thresholds";
-	$(PSQL) -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header";
-	$(PSQL) -c "\copy bcfishpass.parameters_habitat_thresholds FROM parameters/parameters_habitat_thresholds.csv delimiter ',' csv header";
-	touch $@
-
-.make/data: data/*.csv
+.make/load_csv: jobs/load_csv
 	mkdir -p .make
 	jobs/load_csv
 	touch $@
 
-.make/model_access: .make/data .make/parameters
+.make/model_access: .make/load_csv
 	cd model/01_access; make
 	touch $@
 
