@@ -20,7 +20,7 @@ select
   s.activity,
   s.life_stage,
   s.acat_report_url
-from bcfishpass.dams d
+from bcfishpass.dams_vw d
 inner join bcfishpass.observations_vw o on 
  fwa_upstream(
    d.blue_line_key, d.downstream_route_measure, d.wscode_ltree, d.localcode_ltree,

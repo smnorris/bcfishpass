@@ -40,7 +40,6 @@ clean_access:
 
 clean_anth:
 	rm -f .make/crossings
-	rm -f .make/dams
 	rm -f .make/pscis
 	rm -f $(ANTH_BARRIERS)
 	rm -f .make/index_crossings
@@ -60,49 +59,12 @@ full:
 	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly"
 
 # ------
-# FALLS
-# ------
-.make/falls: falls/falls.sh \
-	falls/sql/falls.sql
-	mkdir -p .make
-	cd falls; ./falls.sh
-	touch $@
-
-# ready to go but not currently used
-.make/cabd_waterfalls:
-	mkdir -p .make
-	$(PSQL) -c "truncate cabd.waterfalls"
-	ogr2ogr -f PostgreSQL \
-	  "PG:$(DATABASE_URL)" \
-	  -append \
-	  -nln cabd.waterfalls \
-	  "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
-	  OGRGeoJSON
-	$(PSQL) -c "refresh materialized view bcfishpass.falls_vw"
-	$(PSQL) -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
-	touch $@
-
-# ------
 # GRADIENT BARRIERS
 # ------
 # Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
 .make/gradient_barriers:
-	cd gradient_barriers; ./gradient_barriers.sh
-	touch $@
-
-# ------
-# DAMS
-# ------
-.make/dams:
 	mkdir -p .make
-	$(PSQL) -c "truncate cabd.dams"
-	ogr2ogr -f PostgreSQL \
-	  "PG:$(DATABASE_URL)" \
-	  -append \
-	  -nln cabd.dams \
-	  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
-	  OGRGeoJSON
-	$(PSQL) -c "refresh materialized view bcfishpass.dams_vw"
+	cd gradient_barriers; ./gradient_barriers.sh
 	touch $@
 
 # ------
@@ -127,7 +89,7 @@ full:
 # CROSSINGS
 # -----
 # combine modelled crossings, pscis, dams into bcfishpass.crossings
-.make/crossings: .make/dams \
+.make/crossings: \
 	.make/pscis \
 	sql/load_crossings.sql
 	$(PSQL) -c "truncate bcfishpass.crossings"
@@ -158,7 +120,6 @@ $(NATURAL_BARRIERS): sql/barriers_falls.sql \
 	sql/barriers_gradient_20.sql \
 	sql/barriers_gradient_25.sql \
 	sql/barriers_gradient_30.sql \
-	.make/falls \
 	.make/gradient_barriers
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
