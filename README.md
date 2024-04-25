@@ -51,16 +51,9 @@ Set up the database schema:
 
     jobs/setup
 
-Load FWA data:
+Load FWA and various additional source data:
 
-    git clone https://github.com/smnorris/fwapg
-    cd fwapg
-    mkdir -p .make; touch .make/db  # just reload data
-    mkdir -p data
-    make --debug=basicjobs/load_fwa
-
-Load all additional data:
-
+    jobs/load_fwa
     jobs/load_static
     jobs/load_monthly
     jobs/load_weekly
@@ -71,7 +64,6 @@ Run `bcfishobs`:
     cd bcfishobs
     mkdir -p .make
     make -t .make/setup
-    make -t .make/load_static
     make -t .make/fiss_fish_obsrvtn_pnt_sp
     make --debug=basic
 

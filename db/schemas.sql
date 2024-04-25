@@ -1,3 +1,4 @@
+-- create schemas not created by fwapg/bcfishobs scripts
 create schema bcdata;
 create schema bcfishpass;
 create schema cabd;

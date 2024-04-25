@@ -67,7 +67,7 @@ select distinct on (watershed_group_code)
   s.length_spawning_rearing_wct                              ,
   s.length_spawning_rearing_wct_accessible_a                 ,
   s.length_spawning_rearing_wct_accessible_b
-from bcfishpass.wsg_linear_summary s
+from bcfishpass.log_wsg_linear_summary s
 inner join bcfishpass.log l 
 on s.model_run_id = l.model_run_id
 order by s.watershed_group_code, l.date_completed desc;
@@ -142,7 +142,7 @@ select
   s.length_spawning_rearing_wct                              ,
   s.length_spawning_rearing_wct_accessible_a                 ,
   s.length_spawning_rearing_wct_accessible_b
-from bcfishpass.wsg_linear_summary s
+from bcfishpass.log_wsg_linear_summary s
 inner join bcfishpass.log l
 on s.model_run_id = l.model_run_id
 where l.date_completed = (select date_completed from bcfishpass.log order by date_completed desc offset 1 limit 1)

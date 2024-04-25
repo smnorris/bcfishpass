@@ -47,7 +47,7 @@ select
   s.n_barriers_habitat_wct                ,
   s.n_potential_habitat_wct               ,
   s.n_unknown_habitat_wct                 
-from bcfishpass.wsg_crossing_summary s
+from bcfishpass.log_wsg_crossing_summary s
 inner join bcfishpass.log l 
 on s.model_run_id = l.model_run_id
 where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc limit 1)
@@ -103,7 +103,7 @@ select
   s.n_barriers_habitat_wct                ,
   s.n_potential_habitat_wct               ,
   s.n_unknown_habitat_wct
-from bcfishpass.wsg_crossing_summary s
+from bcfishpass.log_wsg_crossing_summary s
 inner join bcfishpass.log l
 on s.model_run_id = l.model_run_id
 where l.model_run_id = (select model_run_id from bcfishpass.log order by model_run_id desc offset 1 limit 1)

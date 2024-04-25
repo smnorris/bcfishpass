@@ -74,15 +74,20 @@ $PSQL -c \
    CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_5); \
    CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (map_id);"
 
+# create source data tables/views
+for sql in db/sources/*.sql ; do
+  $PSQL -f "$sql"
+done
+
 # create bcfishpass tables/views/functions
-for sql in db/tables/*.sql ; do
+for sql in db/bcfishpass/tables/*.sql ; do
   $PSQL -f "$sql"
 done
 
-for sql in db/views/*.sql ; do
+for sql in db/bcfishpass/views/*.sql ; do
   $PSQL -f "$sql"
 done
 
-for sql in db/functions/*.sql ; do
+for sql in db/bcfishpass/functions/*.sql ; do
   $PSQL -f "$sql"
 done
