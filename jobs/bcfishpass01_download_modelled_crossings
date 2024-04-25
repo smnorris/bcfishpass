@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# Download modelled crossings
+#-------
+
+cd model/01_access/modelled_stream_crossings
+make .make/download_archive

@@ -1,0 +1,40 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# upgrade bcfishpass schema (and wcrp summaries) by dropping and re-creating
+# note - schema of all tables named bcfishpass.log_ is presumed to be unchanged.
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# dump logs
+pg_dump -t bcfishpass.log* -Fc bcfishpass_dev -a > bcfishpass_log.dump
+
+# drop bcfishpass and associated tables
+$PSQL -c "drop schema bcfishpass cascade"
+$PSQL -c "drop function postgisftw.wcrp_barrier_count"
+$PSQL -c "drop function postgisftw.wcrp_barrier_extent"
+$PSQL -c "drop function postgisftw.wcrp_barrier_severity"
+$PSQL -c "drop function postgisftw.wcrp_habitat_connectivity_status"
+
+# re-create
+$PSQL -c "create schema bcfishpass"
+
+for sql in db/bcfishpass/tables/*.sql ; do
+  $PSQL -f "$sql"
+done
+
+for sql in db/bcfishpass/views/*.sql ; do
+  $PSQL -f "$sql"
+done
+
+for sql in db/bcfishpass/functions/*.sql ; do
+  $PSQL -f "$sql"
+done
+
+# restore logs
+pg_restore -d bcfishpass_dev -a bcfishpass_log.dump
+
+# note
+echo "bcfishpass schema has been re-created, remember to reapply all necessary grants"
