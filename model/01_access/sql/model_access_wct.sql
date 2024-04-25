@@ -10,38 +10,9 @@ with all_barriers as
     localcode_ltree,
     watershed_group_code,
     geom
-  from bcfishpass.barriers_gradient_20
+  from bcfishpass.barriers_gradient
   where watershed_group_code = :'wsg'
-
-  union all
-
-  select
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-  from bcfishpass.barriers_gradient_25
-  where watershed_group_code = :'wsg'
-
-  union all
-
-  select
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-  from bcfishpass.barriers_gradient_30
-  where watershed_group_code = :'wsg'
+  and barrier_type in ('GRADIENT_20', 'GRADIENT_25', 'GRADIENT_30')
 
   union all
 

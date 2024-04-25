@@ -10,12 +10,7 @@ WSGS = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.wate
 NATURAL_BARRIERS = .make/barriers_falls \
 	.make/barriers_subsurfaceflow \
 	.make/barriers_user_definite \
-	.make/barriers_gradient_05 \
-	.make/barriers_gradient_10 \
-	.make/barriers_gradient_15 \
-	.make/barriers_gradient_20 \
-	.make/barriers_gradient_25 \
-	.make/barriers_gradient_30
+	.make/barriers_gradient
 ANTH_BARRIERS = .make/barriers_anthropogenic \
 	.make/barriers_dams \
 	.make/barriers_dams_hydro \
@@ -107,12 +102,7 @@ full:
 $(NATURAL_BARRIERS): sql/barriers_falls.sql \
 	sql/barriers_subsurfaceflow.sql \
 	sql/barriers_user_definite.sql \
-	sql/barriers_gradient_05.sql \
-	sql/barriers_gradient_10.sql \
-	sql/barriers_gradient_15.sql \
-	sql/barriers_gradient_20.sql \
-	sql/barriers_gradient_25.sql \
-	sql/barriers_gradient_30.sql \
+	sql/barriers_gradient.sql \
 	.make/gradient_barriers
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
