@@ -20,7 +20,7 @@ all: model/03_habitat_lateral/data/habitat_lateral.tif
 
 .make/data: data/*.csv
 	mkdir -p .make
-	cd data; ./load.sh
+	jobs/load_csv
 	touch $@
 
 .make/model_access: .make/data .make/parameters

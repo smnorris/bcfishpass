@@ -5,9 +5,6 @@ set -euxo pipefail
 # Prep access model
 #-------
 
-# load latest data fixes to the db
-make --debug=basic .make/data
-
 # already built
 cd model/01_access
 mkdir -p .make
