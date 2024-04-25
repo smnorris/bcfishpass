@@ -10,17 +10,19 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 jobs:
-  load-parameters:
+  load-csv:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load parameters
         run:  |
           cp parameters/example_newgraph/*csv parameters/
           make --debug=basic .make/parameters
+      - name: Load latest data files
+        run:  jobs/load_csv
   build-xings:
     runs-on: ubuntu-latest
     environment: production
@@ -41,8 +43,6 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Load latest data files
-        run:  jobs/load_csv
       - name: Run the jobs
         run:  jobs/bcfishpass02_prep
   model:
