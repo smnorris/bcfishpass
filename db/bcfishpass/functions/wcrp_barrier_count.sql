@@ -3,7 +3,7 @@ CREATE FUNCTION postgisftw.wcrp_barrier_count(
   watershed_group_code TEXT,
   model_status TEXT default 'ALL'
 )
--- watershed_group_code: BULK, LNIC, HORS, BOWR, QUES, CARR, ELKR
+
 -- model_status        : HABITAT, ACCESSIBLE, ALL (default)
 
 RETURNS TABLE (

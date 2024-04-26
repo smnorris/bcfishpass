@@ -54,10 +54,10 @@ Set up the database schema:
 Load FWA and various additional source data:
 
     jobs/load_fwa
-    jobs/load_static
+    jobs/load_static                      # builds gradient barriers, which is only dependent on FWA
     jobs/load_monthly
     jobs/load_weekly
-    jobs/load_modelled_crossings
+    jobs/load_modelled_stream_crossings
 
 Run `bcfishobs` (ignoring schema creation and data download as those are taken care of in above steps):
 
@@ -67,10 +67,6 @@ Run `bcfishobs` (ignoring schema creation and data download as those are taken c
     make -t .make/setup
     make -t .make/fiss_fish_obsrvtn_pnt_sp
     make --debug=basic
-
-Build gradient barriers:
-
-    jobs/build_gradient_barriers
 
 Run the model:
 

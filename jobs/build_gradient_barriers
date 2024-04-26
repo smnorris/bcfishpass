@@ -1,8 +1,0 @@
-#!/bin/bash
-set -euxo pipefail
-
-# ------
-# Build all gradient barriers (5/10/15/20/25/30% thresholds)
-# ------
-
-cd model/01_access/gradient_barriers; ./gradient_barriers.sh

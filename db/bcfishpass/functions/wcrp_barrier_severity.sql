@@ -1,7 +1,5 @@
 CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group_code TEXT)
 
--- watershed_group_code: BULK, LNIC, HORS, BOWR, QUES, CARR, ELKR
-
 RETURNS TABLE(
   structure_type TEXT,
   n_assessed_barrier bigint,

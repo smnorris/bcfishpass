@@ -39,8 +39,8 @@ on c.aggregated_crossings_id = ft.aggregated_crossings_id
 left outer join model_status ms
 on c.aggregated_crossings_id = ms.aggregated_crossings_id 
 -- WCRP watersheds only
-WHERE c.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
+inner join bcfishpass.wcrp w on c.watershed_group_code = w.watershed_group_code
 -- do not include flathead
-AND c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
+WHERE c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree IS FALSE
 GROUP BY c.watershed_group_code, ms.model_status, ft.crossing_feature_type
 ORDER BY c.watershed_group_code, ms.model_status, ft.crossing_feature_type;
