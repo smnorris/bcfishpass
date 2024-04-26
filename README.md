@@ -23,7 +23,7 @@ See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
 - [fwapg](https://github.com/smnorris/fwapg)
 - [bcfishobs](https://github.com/smnorris/bcfishobs)
 
-## Setup
+## Setup / Usage
 
 `bcfishpass` is a collection of shell/sql/Python scripts. To download and use the latest:
 
@@ -59,7 +59,7 @@ Load FWA and various additional source data:
     jobs/load_weekly
     jobs/load_modelled_crossings
 
-Run `bcfishobs`:
+Run `bcfishobs` (ignoring schema creation and data download as those are taken care of in above steps):
 
     git clone git@github.com:smnorris/bcfishobs.git
     cd bcfishobs

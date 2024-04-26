@@ -10,9 +10,6 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # *note*
 # weekly bcfishobs processing is scheduled via workflow bcfishobs repository
 
-# bcfishpass observations
-$PSQL -c "refresh materialized view bcfishpass.observations_vw"
-
 # bcdata loads
 bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
 bcdata bc2pg -r whse_fish.fiss_obstacles_pnt_sp
@@ -39,10 +36,6 @@ ogr2ogr -f PostgreSQL \
   -nln cabd.waterfalls \
   "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
-
-$PSQL -c "refresh materialized view bcfishpass.dams_vw"
-$PSQL -c "refresh materialized view bcfishpass.falls_vw"
-$PSQL -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
 
 # DRA
 mkdir -p tmp

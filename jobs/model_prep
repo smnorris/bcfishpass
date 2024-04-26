@@ -5,7 +5,12 @@ set -euxo pipefail
 # Prep access model
 #-------
 
-# refresh pscis
+# refresh observations/dams/falls/pscis
+$PSQL -c "refresh materialized view bcfishpass.observations_vw"
+$PSQL -c "refresh materialized view bcfishpass.dams_vw"
+$PSQL -c "refresh materialized view bcfishpass.falls_vw"
+$PSQL -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
+
 cd model/01_access/pscis; ./pscis.sh; cd ..
 
 # build barriers/crossings and index
