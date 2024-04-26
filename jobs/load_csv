@@ -13,6 +13,6 @@ $PSQL -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_
 $PSQL -c "\copy bcfishpass.parameters_habitat_thresholds FROM parameters/parameters_habitat_thresholds.csv delimiter ',' csv header";
 
 for table in data/*.csv; do
-	psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "TRUNCATE bcfishpass.$(basename -- $table .csv)";
-	psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "\copy bcfishpass.$(basename -- $table .csv) FROM $table delimiter ',' csv header";
+  $PSQL -c "TRUNCATE bcfishpass.$(basename -- $table .csv)";
+  $PSQL -c "\copy bcfishpass.$(basename -- $table .csv) FROM $table delimiter ',' csv header";
 done

@@ -33,10 +33,12 @@ Currently, controls the barrier status of natural barriers (gradient, falls, sub
 NOTE -  this table will only be used to identify modelled barriers known to be passable 
 (gradient, subsurface flow) once bcfishpass incorporates CABD falls
 
+
 ## user_cabd_dams_exclusions.csv
 
 List of CABD dams to exclude from analysis (generally due to incorrect location or incorrect passability status).
 To be used as temporary fix only - submit any location or passability status to CWF [here](https://forms.office.com/Pages/ResponsePage.aspx?id=A8N2i-wB1UCNmmwvbXjc15ERVmcC4dFPn5j4q5-aulRURE1TSjBJNEtDNlY0WTlXVFY5MkFOMzRVUS4u)
+
 
 ## user_falls.csv
 
@@ -60,6 +62,11 @@ no road is present)
 
 Update the barrier status of PSCIS crossings (for bcfishpass modelling only). PSCIS submissions can be slow,
 support planning by adding barrier status of a crossing before a submission is made.
+
+
+## wcrp.csv
+
+A list of watershed groups and target species for CWF WCRP reporting.
 
 
 ## wsg_species_presence.csv
