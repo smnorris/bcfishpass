@@ -91,3 +91,7 @@ done
 for sql in db/bcfishpass/functions/*.sql ; do
   $PSQL -f "$sql"
 done
+
+for sql in db/bcfishpass/reports/*.sql ; do
+  $PSQL -f "$sql"
+done

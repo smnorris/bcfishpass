@@ -12,11 +12,13 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 pg_dump -t bcfishpass.log* -Fc bcfishpass_dev -a > bcfishpass_log.dump
 
 # drop bcfishpass and associated tables
-$PSQL -c "drop schema bcfishpass cascade"
-$PSQL -c "drop function postgisftw.wcrp_barrier_count"
-$PSQL -c "drop function postgisftw.wcrp_barrier_extent"
-$PSQL -c "drop function postgisftw.wcrp_barrier_severity"
-$PSQL -c "drop function postgisftw.wcrp_habitat_connectivity_status"
+$PSQL -c "drop schema if exists bcfishpass cascade"
+$PSQL -c "drop function if exists postgisftw.wcrp_barrier_count"
+$PSQL -c "drop function if exists postgisftw.wcrp_barrier_extent"
+$PSQL -c "drop function if exists postgisftw.wcrp_barrier_severity"
+$PSQL -c "drop function if exists postgisftw.wcrp_habitat_connectivity_status"
+
+# delete roads so refreshing the
 
 # re-create
 $PSQL -c "create schema bcfishpass"
@@ -33,8 +35,10 @@ for sql in db/bcfishpass/functions/*.sql ; do
   $PSQL -f "$sql"
 done
 
+# note that db/bcfishpass/reports/* is not re-created (slow to process) recreate if/when needed
+
 # restore logs
-pg_restore -d bcfishpass_dev -a bcfishpass_log.dump
+pg_restore -d $DATABASE_URL -a bcfishpass_log.dump
 
 # note
 echo "bcfishpass schema has been re-created, remember to reapply all necessary grants"

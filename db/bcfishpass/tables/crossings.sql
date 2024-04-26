@@ -47,10 +47,12 @@ create table bcfishpass.crossings
 
     -- forest road tenure info
     ften_forest_file_id text,
+    ften_road_section_id text,
     ften_file_type_description text,
     ften_client_number text,
     ften_client_name text,
     ften_life_cycle_status_code text,
+    ften_map_label text,
 
     -- rail info
     rail_track_name text,
@@ -84,7 +86,7 @@ create table bcfishpass.crossings
     localcode_ltree ltree,
     watershed_group_code text,
     gnis_stream_name text,
-    
+
     stream_order integer,
     stream_magnitude integer,
 
@@ -94,7 +96,7 @@ create table bcfishpass.crossings
     -- distinct species upstream/downstream, derived from bcfishobs
     --observedspp_dnstr text[],
     --observedspp_upstr text[],
-  
+
     geom geometry(PointZM, 3005),
 
     -- only one crossing per location please
@@ -123,10 +125,12 @@ comment on column bcfishpass.crossings.transport_line_structured_name_1 IS 'DRA 
 comment on column bcfishpass.crossings.transport_line_type_description IS 'DRA road type, taken from the nearest DRA road (within 30m)';
 comment on column bcfishpass.crossings.transport_line_surface_description IS 'DRA road surface, taken from the nearest DRA road (within 30m)';
 comment on column bcfishpass.crossings.ften_forest_file_id IS 'FTEN road forest_file_id value, taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings.ften_road_section_id IS 'FTEN road road_section_id value, taken from the nearest FTEN road (within 30m)';
 comment on column bcfishpass.crossings.ften_file_type_description IS 'FTEN road tenure type (Forest Service Road, Road Permit, etc), taken from the nearest FTEN road (within 30m)';
 comment on column bcfishpass.crossings.ften_client_number IS 'FTEN road client number, taken from the nearest FTEN road (within 30m)';
 comment on column bcfishpass.crossings.ften_client_name IS 'FTEN road client name, taken from the nearest FTEN road (within 30m)';
 comment on column bcfishpass.crossings.ften_life_cycle_status_code IS 'FTEN road life_cycle_status_code (active or retired, pending roads are not included), taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings.ften_map_label IS 'FTEN road map_label value, taken from the nearest FTEN road (within 30m)';
 comment on column bcfishpass.crossings.rail_track_name IS 'Railway name, taken from nearest railway (within 25m)';
 comment on column bcfishpass.crossings.rail_owner_name IS 'Railway owner name, taken from nearest railway (within 25m)';
 comment on column bcfishpass.crossings.rail_operator_english_name IS 'Railway operator name, taken from nearest railway (within 25m)';;
