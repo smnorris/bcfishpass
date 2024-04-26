@@ -2,7 +2,9 @@
 set -euxo pipefail
 
 #-------
-# Download modelled crossings archive, load to db
+# Download modelled crossings from archive, load to db. Run when:
+# - initializing the primary bcfishpass database
+# - running any bcfishpass db other than the primary db (only the primary db needs to generate the crossings)
 #-------
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
