@@ -9,14 +9,14 @@ In addition to generating the intersection points of roads/railways and streams,
 - maintain a consistent unique identifier value (`modelled_crossing_id`) that is stable with script re-runs
 
 **NOTE** 
-`bcfishpass` downloads an archive of modelled stream crossings generated weekly by this repository. This ensures that the `modelled_crossing_id` values for new records are consistent for all users as roads are added to the landscape.
+To ensure that the `modelled_crossing_id` values are consistent, load existing crossings from s3 before running this job.
 
 
-## Run scripts
+## Run job
 
-To generate a fresh set of crossings using the latest roads data, and load correct ids to the output from the archive:
+To generate a fresh set of crossings using the latest roads data, using existing ids from existing table `bcfishpass.modelled_stream_crossings` where applicable:
 
-    make .make/modelled_stream_crossings
+    ./modelled_stream_crossings.sh
 
 
 ## Fixes

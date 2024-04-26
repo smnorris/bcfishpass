@@ -74,7 +74,7 @@ intersections_measures AS
 )
 
 -- finally, generate the point from the measure.
-INSERT INTO bcfishpass.modelled_stream_crossings
+INSERT INTO bcfishpass.modelled_stream_crossings_build
   (ften_road_section_lines_id,
   linear_feature_id,
   blue_line_key,

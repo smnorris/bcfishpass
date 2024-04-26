@@ -43,7 +43,7 @@ WITH matched_xings AS
     nn.ften_road_section_lines_id as ften_road_section_lines_id_keep,
     nn.og_road_segment_permit_id as og_road_segment_permit_id_keep,
     nn.og_petrlm_dev_rd_pre06_pub_id as og_petrlm_dev_rd_pre06_pub_id_keep
-  FROM bcfishpass.modelled_stream_crossings t1
+  FROM bcfishpass.modelled_stream_crossings_build t1
   CROSS JOIN LATERAL
     (SELECT
      modelled_crossing_id,
@@ -52,7 +52,7 @@ WITH matched_xings AS
          og_road_segment_permit_id,
          og_petrlm_dev_rd_pre06_pub_id,
        ST_Distance(t1.geom, t2.geom) as dist
-     FROM bcfishpass.modelled_stream_crossings t2
+     FROM bcfishpass.modelled_stream_crossings_build t2
      WHERE t2.transport_line_id IS NOT NULL
      ORDER BY t1.geom <-> t2.geom
      LIMIT 1) as nn
@@ -60,7 +60,7 @@ WITH matched_xings AS
   AND nn.dist < 20
   ORDER BY t1.modelled_crossing_id
 )
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET ften_road_section_lines_id = m.ften_road_section_lines_id_del
 FROM matched_xings m
 WHERE x.modelled_crossing_id = m.modelled_crossing_id_keep;
@@ -80,7 +80,7 @@ WITH matched_xings AS
     nn.ften_road_section_lines_id as ften_road_section_lines_id_keep,
     nn.og_road_segment_permit_id as og_road_segment_permit_id_keep,
     nn.og_petrlm_dev_rd_pre06_pub_id as og_petrlm_dev_rd_pre06_pub_id_keep
-  FROM bcfishpass.modelled_stream_crossings t1
+  FROM bcfishpass.modelled_stream_crossings_build t1
   CROSS JOIN LATERAL
     (SELECT
        modelled_crossing_id,
@@ -89,7 +89,7 @@ WITH matched_xings AS
          og_road_segment_permit_id,
          og_petrlm_dev_rd_pre06_pub_id,
        ST_Distance(t1.geom, t2.geom) as dist
-     FROM bcfishpass.modelled_stream_crossings t2
+     FROM bcfishpass.modelled_stream_crossings_build t2
      WHERE t2.transport_line_id IS NOT NULL
      ORDER BY t1.geom <-> t2.geom
      LIMIT 1) as nn
@@ -98,7 +98,7 @@ WITH matched_xings AS
   AND nn.dist < 20
   ORDER BY t1.modelled_crossing_id
 )
-DELETE FROM bcfishpass.modelled_stream_crossings x
+DELETE FROM bcfishpass.modelled_stream_crossings_build x
 WHERE modelled_crossing_id IN (SELECT modelled_crossing_id_del FROM matched_xings);
 
 
@@ -119,7 +119,7 @@ SELECT
     nn.ften_road_section_lines_id as ften_road_section_lines_id_keep,
     nn.og_road_segment_permit_id as og_road_segment_permit_id_keep,
     nn.og_petrlm_dev_rd_pre06_pub_id as og_petrlm_dev_rd_pre06_pub_id_keep
-  FROM bcfishpass.modelled_stream_crossings t1
+  FROM bcfishpass.modelled_stream_crossings_build t1
     CROSS JOIN LATERAL
       (SELECT
         modelled_crossing_id,
@@ -128,7 +128,7 @@ SELECT
          og_road_segment_permit_id,
          og_petrlm_dev_rd_pre06_pub_id,
          ST_Distance(t1.geom, t2.geom) as dist
-       FROM bcfishpass.modelled_stream_crossings t2
+       FROM bcfishpass.modelled_stream_crossings_build t2
        WHERE t2.transport_line_id IS NOT NULL OR t2.ften_road_section_lines_id IS NOT NULL
        ORDER BY t1.geom <-> t2.geom
        LIMIT 1) as nn
@@ -136,7 +136,7 @@ SELECT
     AND nn.dist < 20
     ORDER BY t1.modelled_crossing_id
 )
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET og_road_segment_permit_id = m.og_road_segment_permit_id_del
 FROM matched_xings m
 WHERE x.modelled_crossing_id = m.modelled_crossing_id_keep;
@@ -155,7 +155,7 @@ SELECT
     nn.ften_road_section_lines_id as ften_road_section_lines_id_keep,
     nn.og_road_segment_permit_id as og_road_segment_permit_id_keep,
     nn.og_petrlm_dev_rd_pre06_pub_id as og_petrlm_dev_rd_pre06_pub_id_keep
-  FROM bcfishpass.modelled_stream_crossings t1
+  FROM bcfishpass.modelled_stream_crossings_build t1
     CROSS JOIN LATERAL
       (SELECT
          modelled_crossing_id,
@@ -164,7 +164,7 @@ SELECT
          og_road_segment_permit_id,
          og_petrlm_dev_rd_pre06_pub_id,
          ST_Distance(t1.geom, t2.geom) as dist
-       FROM bcfishpass.modelled_stream_crossings t2
+       FROM bcfishpass.modelled_stream_crossings_build t2
        WHERE t2.transport_line_id IS NOT NULL OR t2.ften_road_section_lines_id IS NOT NULL
        ORDER BY t1.geom <-> t2.geom
        LIMIT 1) as nn
@@ -174,7 +174,7 @@ SELECT
     AND nn.dist < 20
     ORDER BY t1.modelled_crossing_id
 )
-DELETE FROM bcfishpass.modelled_stream_crossings
+DELETE FROM bcfishpass.modelled_stream_crossings_build
 WHERE modelled_crossing_id IN (SELECT modelled_crossing_id_del FROM matched_xings);
 
 -- -----------------------------------------------------------
@@ -194,7 +194,7 @@ SELECT
     nn.ften_road_section_lines_id as ften_road_section_lines_id_keep,
     nn.og_road_segment_permit_id as og_road_segment_permit_id_keep,
     nn.og_petrlm_dev_rd_pre06_pub_id as og_petrlm_dev_rd_pre06_pub_id_keep
-  FROM bcfishpass.modelled_stream_crossings t1
+  FROM bcfishpass.modelled_stream_crossings_build t1
     CROSS JOIN LATERAL
       (SELECT
          modelled_crossing_id,
@@ -203,7 +203,7 @@ SELECT
          og_road_segment_permit_id,
          og_petrlm_dev_rd_pre06_pub_id,
          ST_Distance(t1.geom, t2.geom) as dist
-       FROM bcfishpass.modelled_stream_crossings t2
+       FROM bcfishpass.modelled_stream_crossings_build t2
        WHERE
          t2.transport_line_id IS NOT NULL
          OR t2.ften_road_section_lines_id IS NOT NULL
@@ -214,7 +214,7 @@ SELECT
     AND nn.dist < 20
     ORDER BY t1.modelled_crossing_id
 )
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET og_petrlm_dev_rd_pre06_pub_id = m.og_petrlm_dev_rd_pre06_pub_id_del
 FROM matched_xings m
 WHERE x.modelled_crossing_id = m.modelled_crossing_id_keep;
@@ -233,7 +233,7 @@ SELECT
     nn.ften_road_section_lines_id as ften_road_section_lines_id_keep,
     nn.og_road_segment_permit_id as og_road_segment_permit_id_keep,
     nn.og_petrlm_dev_rd_pre06_pub_id as og_petrlm_dev_rd_pre06_pub_id_keep
-  FROM bcfishpass.modelled_stream_crossings t1
+  FROM bcfishpass.modelled_stream_crossings_build t1
     CROSS JOIN LATERAL
       (SELECT
          modelled_crossing_id,
@@ -242,7 +242,7 @@ SELECT
          og_road_segment_permit_id,
          og_petrlm_dev_rd_pre06_pub_id,
          ST_Distance(t1.geom, t2.geom) as dist
-       FROM bcfishpass.modelled_stream_crossings t2
+       FROM bcfishpass.modelled_stream_crossings_build t2
        WHERE
          t2.transport_line_id IS NOT NULL
          OR t2.ften_road_section_lines_id IS NOT NULL
@@ -256,5 +256,5 @@ SELECT
     AND nn.dist < 20
     ORDER BY t1.modelled_crossing_id
 )
-DELETE FROM bcfishpass.modelled_stream_crossings
+DELETE FROM bcfishpass.modelled_stream_crossings_build
 WHERE modelled_crossing_id IN (SELECT modelled_crossing_id_del FROM matched_xings);

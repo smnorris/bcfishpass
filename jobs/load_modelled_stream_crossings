@@ -1,0 +1,63 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# Download modelled crossings archive, load to db
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+mkdir -p tmp
+
+curl \
+  -o tmp/modelled_stream_crossings.gpkg.zip \
+  https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip
+
+unzip -qun tmp/modelled_stream_crossings.gpkg.zip -d tmp
+
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -overwrite \
+  -nln bcfishpass.modelled_stream_crossings_archive \
+  tmp/modelled_stream_crossings.gpkg \
+  modelled_stream_crossings
+
+$PSQL -c "truncate bcfishpass.modelled_stream_crossings;
+  insert into bcfishpass.modelled_stream_crossings (
+  modelled_crossing_id,
+  modelled_crossing_type,
+  modelled_crossing_type_source,
+  transport_line_id,
+  ften_road_section_lines_id,
+  og_road_segment_permit_id,
+  og_petrlm_dev_rd_pre06_pub_id,
+  railway_track_id,
+  linear_feature_id,
+  blue_line_key,
+  downstream_route_measure,
+  wscode_ltree,
+  localcode_ltree,
+  watershed_group_code,
+  geom
+)
+select
+  modelled_crossing_id,
+  modelled_crossing_type,
+  string_to_array(modelled_crossing_type_source, '; ') as modelled_crossing_type_source,
+  transport_line_id,
+  ften_road_section_lines_id,
+  og_road_segment_permit_id,
+  og_petrlm_dev_rd_pre06_pub_id,
+  railway_track_id,
+  linear_feature_id,
+  blue_line_key,
+  downstream_route_measure,
+  wscode_ltree::ltree,
+  localcode_ltree::ltree,
+  watershed_group_code,
+  geom
+from bcfishpass.modelled_stream_crossings_archive;
+drop table bcfishpass.modelled_stream_crossings_archive;"
+
+rm -rf tmp

@@ -63,22 +63,12 @@ full:
 	touch $@
 
 # ------
-# MODELLED ROAD-STREAM CROSSINGS
-# ------
-# Load modelled crossings from archive posted to s3 (this ensures consistent modelled crossing ids for all users)
-.make/modelled_stream_crossings:
-	mkdir -p .make
-	cd modelled_stream_crossings; make .make/download_archive
-	touch $@
-
-# ------
 # PSCIS STREAM CROSSINGS
 # ------
 .make/pscis: .make/modelled_stream_crossings
 	mkdir -p .make
 	cd pscis; ./pscis.sh
 	touch $@
-
 
 # -----
 # CROSSINGS
@@ -93,7 +83,6 @@ full:
 		set -e ; $(PSQL) -f sql/load_crossings.sql -v wsg=$$wsg ; \
 	done
 	touch $@
-
 
 # -----
 # LOAD BARRIER TYPE TABLES
