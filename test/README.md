@@ -25,6 +25,19 @@ Run the model:
 	jobs/model_prep
 	jobs/model_run
 
+## Upgrading
+
+Run `jobs/upgrade` to test an upgrade without re-generating the db.
+After the upgrade completes, reload data in bcfishpass schema and re-run model:
+
+    jobs/load_modelled_stream_crossings
+    cp parameters/example_testing/*csv parameters
+    jobs/load_csv
+    jobs/model_prep
+    jobs/model_run
+
+
+
 
 ## Validation
 
