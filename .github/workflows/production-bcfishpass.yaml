@@ -30,9 +30,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Build modelled crossings
-        run:  jobs/bcfishpass01_build_modelled_stream_crossings
-      - name: Release modelled crossings
-        run:  jobs/release_modelled_stream_crossings
+        run:  jobs/build_modelled_stream_crossings
   prep:
     runs-on: ubuntu-latest
     environment: production
@@ -42,7 +40,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/bcfishpass02_prep
+        run:  jobs/model_prep
   model:
     runs-on: ubuntu-latest
     environment: production
@@ -57,7 +55,7 @@ jobs:
       - name: Run the jobs
         run:  |
           git config --global --add safe.directory /__w/bcfishpass/bcfishpass
-          jobs/bcfishpass03_model
+          jobs/model_run
   release:
     runs-on: ubuntu-latest
     environment: production

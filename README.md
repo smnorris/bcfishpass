@@ -57,6 +57,7 @@ Load FWA and various additional source data:
     jobs/load_static
     jobs/load_monthly
     jobs/load_weekly
+    jobs/load_modelled_crossings
 
 Run `bcfishobs`:
 
@@ -67,9 +68,11 @@ Run `bcfishobs`:
     make -t .make/fiss_fish_obsrvtn_pnt_sp
     make --debug=basic
 
-Finally, navigate back to the root bcfishpass folder and build `bcfishpass`:
+Build gradient barriers:
 
-    make
+    jobs/build_gradient_barriers
 
-Note that it is possible (and often preferred) to build components of the modelling separately. 
-Refer to the various README files in the subfolders within the `model` folder for more info.
+Run the model:
+
+    jobs/model_prep
+    jobs/model_run

@@ -28,7 +28,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/bcfishpass01_download_modelled_crossings
+        run:  jobs/load_modelled_stream_crossings
   prep:
     runs-on: ubuntu-latest
     environment: testing
@@ -38,7 +38,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/bcfishpass02_prep
+        run:  jobs/model_prep
   model:
     runs-on: ubuntu-latest
     environment: testing
@@ -53,4 +53,4 @@ jobs:
       - name: Run the jobs
         run:  |
           git config --global --add safe.directory /__w/bcfishpass/bcfishpass
-          jobs/bcfishpass03_model
+          jobs/model_run
