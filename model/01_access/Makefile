@@ -19,7 +19,7 @@ ANTH_BARRIERS = .make/barriers_anthropogenic \
 # access models - combine barriers into tables of per-species scenarios
 ACCESS_MODELS = $(patsubst sql/%.sql, .make/%, $(wildcard sql/model_access_*.sql))
 
-all: .make/qa
+all: .make/model_access
 
 clean: 
 	rm -Rf .make
@@ -35,7 +35,6 @@ clean_access:
 
 clean_anth:
 	rm -f .make/crossings
-	rm -f .make/pscis
 	rm -f $(ANTH_BARRIERS)
 	rm -f .make/index_crossings
 	rm -f .make/model_access_prep
@@ -53,29 +52,11 @@ full:
 	$(PSQL) -c "truncate bcfishpass.watershed_groups_access"
 	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly"
 
-# ------
-# GRADIENT BARRIERS
-# ------
-# Generate all gradient barriers at 5/10/15/20/25/30% thresholds.
-.make/gradient_barriers:
-	mkdir -p .make
-	cd gradient_barriers; ./gradient_barriers.sh
-	touch $@
-
-# ------
-# PSCIS STREAM CROSSINGS
-# ------
-.make/pscis: .make/modelled_stream_crossings
-	mkdir -p .make
-	cd pscis; ./pscis.sh
-	touch $@
-
 # -----
 # CROSSINGS
 # -----
 # combine modelled crossings, pscis, dams into bcfishpass.crossings
 .make/crossings: \
-	.make/pscis \
 	sql/load_crossings.sql
 	$(PSQL) -c "truncate bcfishpass.crossings"
 	# load crossings in series, parallel inserts can be confounded by locks
@@ -91,8 +72,7 @@ full:
 $(NATURAL_BARRIERS): sql/barriers_falls.sql \
 	sql/barriers_subsurfaceflow.sql \
 	sql/barriers_user_definite.sql \
-	sql/barriers_gradient.sql \
-	.make/gradient_barriers
+	sql/barriers_gradient.sql
 	$(eval BARRIERTYPE=$(subst .make/barriers_,,$@))
 	# create the table if it does not exist
 	echo "select bcfishpass.create_barrier_table(:'barriertype')" | \
@@ -233,8 +213,4 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 .make/model_access: .make/model_access_prep
 	./model_access_1.sh
 	./model_access_2.sh
-	touch $@
-
-.make/qa: .make/model_access
-	cd qa; ./qa.sh
 	touch $@
