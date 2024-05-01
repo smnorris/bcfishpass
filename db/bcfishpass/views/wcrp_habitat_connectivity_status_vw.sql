@@ -80,7 +80,7 @@ with length_totals as
   from bcfishpass.streams s
   inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
   inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
-  where s.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
+  inner join bcfishpass.wcrp w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
   group by s.watershed_group_code
 
 UNION ALL
@@ -137,7 +137,7 @@ UNION ALL
   from bcfishpass.streams s
   inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
   inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
-  where s.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
+  inner join bcfishpass.wcrp w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
   group by s.watershed_group_code
 )
 
