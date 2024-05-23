@@ -44,8 +44,7 @@ with upstr as materialized
      )
   inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
   inner join bcfishpass.wcrp w on a.watershed_group_code = w.watershed_group_code
-  --where a.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
-  and a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
+  where a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
   -- barriers only
   and a.barrier_status in ('BARRIER', 'POTENTIAL')
 )
