@@ -20,6 +20,8 @@ model AS
     cw.channel_width,
     s.gradient,
     CASE
+      WHEN hk.spawning_ch is true  -- observed/known habitat
+      THEN true
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= t.spawn_gradient_max AND
@@ -40,12 +42,13 @@ model AS
   inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
   left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
-  INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
-  LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
-  LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'CH'
-  INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
-  LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
-  WHERE
+  inner join bcfishpass.parameters_habitat_method wsg on s.watershed_group_code = wsg.watershed_group_code
+  left outer join whse_basemapping.fwa_waterbodies wb on s.waterbody_key = wb.waterbody_key
+  left outer join bcfishpass.parameters_habitat_thresholds t on t.species_code = 'CH'
+  inner join bcfishpass.wsg_species_presence p on s.watershed_group_code = p.watershed_group_code
+  left outer join rivers r on s.waterbody_key = r.waterbody_key
+  left outer join bcfishpass.streams_habitat_known_vw hk on s.segmented_stream_id = hk.segmented_stream_id
+  where
     p.ch is true AND
     s.watershed_group_code = :'wsg' AND
     -- streams and rivers only
@@ -353,5 +356,22 @@ SELECT
 FROM rearing_clusters a
 INNER JOIN valid_rearing b
 ON a.cid = b.cid
+on conflict (segmented_stream_id)
+do update set rearing = EXCLUDED.rearing;
+
+-- finally, add any known/observed rearing
+with observed_rearing as (
+  select segmented_stream_id
+  from bcfishpass.streams_habitat_known_vw
+  where rearing_ch is true
+)
+INSERT INTO bcfishpass.habitat_linear_ch (
+  segmented_stream_id,
+  rearing
+)
+SELECT
+   a.segmented_stream_id,
+   true as rearing
+FROM observed_rearing a
 on conflict (segmented_stream_id)
 do update set rearing = EXCLUDED.rearing;
