@@ -229,3 +229,17 @@ create table bcfishpass.wcrp
   wct boolean,
   notes text
 );
+
+
+-- --------------
+-- CABD to FWA BLUE LINE KEY LOOKUP
+--
+-- link CABD waterfalls and dams to correct FWA stream
+-- --------------
+create table bcfishpass.user_cabd_blkey_xref (
+  cabd_id text,
+  blue_line_key integer,
+  reviewer_name text,
+  review_date date,
+  notes text
+);

@@ -1,15 +1,16 @@
 -- load CABD falls and any misc (temporary) additions from bcfishpass table
-
 create materialized view bcfishpass.falls_vw as
 
 with cabd as (
   select
-    cabd_id as falls_id,
-    st_transform(geom, 3005) as geom
-  from cabd.waterfalls
+    w.cabd_id as falls_id,
+    x.blue_line_key,
+    st_transform(w.geom, 3005) as geom
+  from cabd.waterfalls w
+  left outer join bcfishpass.user_cabd_blkey_xref x on w.cabd_id = x.cabd_id
 ),
 
-nearest AS
+matched AS
 (
   select
     pt.falls_id,
@@ -36,7 +37,40 @@ nearest AS
     order by str.geom <-> pt.geom
     limit 1
   ) as str
-  where st_distance(str.geom, pt.geom) <= 65
+  where
+    st_distance(str.geom, pt.geom) <= 65 and
+    pt.blue_line_key is null
+
+  union all
+
+  select distinct on (falls_id) -- distinct on in case two segments are equidistant
+    pt.falls_id,
+    str.linear_feature_id,
+    str.blue_line_key,
+    str.wscode_ltree,
+    str.localcode_ltree,
+    str.watershed_group_code,
+    str.geom,
+    st_distance(str.geom, pt.geom) as distance_to_stream,
+    st_interpolatepoint(str.geom, pt.geom) as downstream_route_measure
+  from cabd pt
+  cross join lateral (
+    select
+      linear_feature_id,
+      blue_line_key,
+      wscode_ltree,
+      localcode_ltree,
+      watershed_group_code,
+      geom
+    from whse_basemapping.fwa_stream_networks_sp str
+    where pt.blue_line_key = str.blue_line_key
+    and pt.blue_line_key is not null
+    and str.localcode_ltree is not null
+    and not str.wscode_ltree <@ '999'
+    order by str.geom <-> pt.geom
+    limit 1
+  ) as str
+  order by falls_id, distance_to_stream
 ),
 
 cabd_pts as (
@@ -56,7 +90,7 @@ cabd_pts as (
       else false
     end as barrier_ind,
     ((st_dump(ST_Force2D(st_locatealong(n.geom, n.downstream_route_measure)))).geom)::geometry(Point, 3005) AS geom
-  FROM nearest n
+  FROM matched n
   inner join cabd.waterfalls cabd on n.falls_id = cabd.cabd_id
   order by falls_id, distance_to_stream
 )
