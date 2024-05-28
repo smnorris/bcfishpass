@@ -9,15 +9,6 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
 #-------
-# Gradient barriers
-# load *all* gradient barriers as one time job
-# (bcfishpass defaults to processesing just groups included in parameters)
-#-------
-cd model/01_access/gradient_barriers
-$PSQL -c "truncate bcfishpass.gradient_barriers"  # just in case job failed
-parallel $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS
-
-#-------
 # DRA code tables
 #-------
 $PSQL -c "truncate whse_basemapping.transport_line_type_code;

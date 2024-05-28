@@ -7,6 +7,4 @@ set -euxo pipefail
 #-------
 git clone https://github.com/smnorris/fwapg
 cd fwapg
-mkdir -p .make; touch .make/db  # db schema/functions/etc are presumed to already exist, just reload data
-mkdir -p data
 make --debug=basic

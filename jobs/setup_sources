@@ -7,14 +7,6 @@ set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-# create fwa schema
-git clone https://github.com/smnorris/fwapg.git
-cd fwapg; make .make/db; cd .. ; rm -rf fwapg
-
-# create bcfishobs schema (and load selected data)
-git clone https://github.com/smnorris/bcfishobs.git
-cd bcfishobs; make .make/setup; cd ..; rm -rf bcfishobs
-
 $PSQL -f db/schemas.sql
 
 # create empty whse tables
@@ -79,19 +71,3 @@ for sql in db/sources/*.sql ; do
   $PSQL -f "$sql"
 done
 
-# create bcfishpass tables/views/functions
-for sql in db/bcfishpass/tables/*.sql ; do
-  $PSQL -f "$sql"
-done
-
-for sql in db/bcfishpass/views/*.sql ; do
-  $PSQL -f "$sql"
-done
-
-for sql in db/bcfishpass/functions/*.sql ; do
-  $PSQL -f "$sql"
-done
-
-for sql in db/bcfishpass/reports/*.sql ; do
-  $PSQL -f "$sql"
-done

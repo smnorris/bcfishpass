@@ -47,26 +47,33 @@ All scripts presume that the `DATABASE_URL` environment variable points to your 
 
     export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass
 
-Set up the database schema:
+Create schemas, empty source tables:
 
-    jobs/setup
+    jobs/setup_sources
 
-Load FWA and various additional source data:
+Load FWA:
 
-    jobs/load_fwa
-    jobs/load_static                      # builds gradient barriers, which is only dependent on FWA
-    jobs/load_monthly
-    jobs/load_weekly
-    jobs/load_modelled_stream_crossings
+    git clone https://github.com/smnorris/fwapg
+    cd fwapg
+    make --debug=basic
 
-Run `bcfishobs` (ignoring schema creation and data download as those are taken care of in above steps):
+Load/run `bcfishobs`:
 
     git clone git@github.com:smnorris/bcfishobs.git
     cd bcfishobs
-    mkdir -p .make
-    make -t .make/setup
-    make -t .make/fiss_fish_obsrvtn_pnt_sp
     make --debug=basic
+
+Load additional source data:
+
+    jobs/load_static                     
+    jobs/load_monthly
+    jobs/load_weekly
+
+Setup bcfishpass schema and load cached bcfishpass data:
+
+    jobs/setup_bcfishpass
+    jobs/load_gradient_barriers
+    jobs/load_modelled_stream_crossings
 
 Run the model:
 

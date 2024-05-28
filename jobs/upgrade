@@ -18,8 +18,6 @@ $PSQL -c "drop function if exists postgisftw.wcrp_barrier_extent"
 $PSQL -c "drop function if exists postgisftw.wcrp_barrier_severity"
 $PSQL -c "drop function if exists postgisftw.wcrp_habitat_connectivity_status"
 
-# delete roads so refreshing the
-
 # re-create
 $PSQL -c "create schema bcfishpass"
 

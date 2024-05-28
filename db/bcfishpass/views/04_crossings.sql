@@ -701,6 +701,7 @@ select
   h_wcrp.all_spawningrearing_belowupstrbarriers_km,
   c.geom
 from bcfishpass.crossings c
+inner join bcfishpass.wcrp w on c.watershed_group_code = w.watershed_group_code  -- only include crossings in WCRP watersheds
 inner join bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
 left outer join bcfishpass.crossings_dnstr_observations_vw cdo on c.aggregated_crossings_id = cdo.aggregated_crossings_id
 left outer join bcfishpass.crossings_upstr_observations_vw cuo on c.aggregated_crossings_id = cuo.aggregated_crossings_id

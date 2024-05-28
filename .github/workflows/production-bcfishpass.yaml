@@ -30,7 +30,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Build modelled crossings
-        run:  jobs/build_modelled_stream_crossings
+        run:  jobs/model_stream_crossings
   prep:
     runs-on: ubuntu-latest
     environment: production

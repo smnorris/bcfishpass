@@ -2,42 +2,15 @@
 
 ## Create dump file
 
-Bootstrap a database, load only selected data, dump to file:
+Bootstrap database `bcfishpass_test` with fwapg/bcfishobs, load selected data, dump to file, drop db:
 
-    export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
-    createdb bcfishpass_test
     ./build.sh
-
 
 ## Testing usage
 
-Create database and load data:
+Restore fwapg/bcfishobs db from dump, load data, run model:
 
-    createdb bcfishpass_test
-    $PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
-    pg_restore -d bcfishpass_test bcfishpass_test.dump  # ignore errors, the ltree/fwa_upstream queries and related views work once loaded
-
-Run the model:
-
-    export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
-    cp parameters/example_testing/*csv parameters
-    jobs/load_csv
-	jobs/model_prep
-	jobs/model_run
-
-## Upgrading
-
-Run `jobs/upgrade` to test an upgrade without re-generating the db.
-After the upgrade completes, reload data in bcfishpass schema and re-run model:
-
-    jobs/load_modelled_stream_crossings
-    cp parameters/example_testing/*csv parameters
-    jobs/load_csv
-    jobs/model_prep
-    jobs/model_run
-
-
-
+    ./test.sh
 
 ## Validation
 
