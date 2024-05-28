@@ -36,3 +36,6 @@ model/01_access/qa/*csv
 # only include example parameters,
 # not whatever is being used for a given project/test
 parameters/parameters_habitat*.csv
+
+# postgres dump files
+*.dump
