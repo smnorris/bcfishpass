@@ -3,14 +3,16 @@ create materialized view bcfishpass.dams_vw as
 with cabd as (
   select
     d.cabd_id as dam_id,
+    blk.blue_line_key,
     st_transform(d.geom, 3005) as geom
   from cabd.dams d
   -- exclude any dam noted in user exclusion table
   left outer join bcfishpass.user_cabd_dams_exclusions x on d.cabd_id = x.cabd_id
+  left outer join bcfishpass.user_cabd_blkey_xref blk on d.cabd_id = blk.cabd_id
   where x.cabd_id is null
 ),
 
-nearest AS
+matched AS
 (
   select
     pt.dam_id,
@@ -33,11 +35,43 @@ nearest AS
       geom
     from whse_basemapping.fwa_stream_networks_sp str
     where str.localcode_ltree is not null
+    and pt.blue_line_key is null
     and not str.wscode_ltree <@ '999'
     order by str.geom <-> pt.geom
     limit 1
   ) as str
   where st_distance(str.geom, pt.geom) <= 65
+
+  union all
+
+  select distinct on (dam_id) -- distinct on in case two segments are equidistant
+    pt.dam_id,
+    str.linear_feature_id,
+    str.blue_line_key,
+    str.wscode_ltree,
+    str.localcode_ltree,
+    str.watershed_group_code,
+    str.geom,
+    st_distance(str.geom, pt.geom) as distance_to_stream,
+    st_interpolatepoint(str.geom, pt.geom) as downstream_route_measure
+  from cabd pt
+  cross join lateral (
+    select
+      linear_feature_id,
+      blue_line_key,
+      wscode_ltree,
+      localcode_ltree,
+      watershed_group_code,
+      geom
+    from whse_basemapping.fwa_stream_networks_sp str
+    where pt.blue_line_key = str.blue_line_key
+    and pt.blue_line_key is not null
+    and str.localcode_ltree is not null
+    and not str.wscode_ltree <@ '999'
+    order by str.geom <-> pt.geom
+    limit 1
+  ) as str
+  order by dam_id, distance_to_stream
 ),
 
   -- ensure only one feature returned, and interpolate the geom on the stream
@@ -60,7 +94,7 @@ cabd_pts as
     cabd.passability_status_code,
 
     ((st_dump(ST_Force2D(st_locatealong(n.geom, n.downstream_route_measure)))).geom)::geometry(Point, 3005) AS geom
-  FROM nearest n
+  FROM matched n
   inner join cabd.dams cabd on n.dam_id = cabd.cabd_id
   order by dam_id, distance_to_stream
 ),
