@@ -35,5 +35,5 @@ With this information, users can:
 
 For more background and references, see:
 
-- [Fish Passage Technical Working Group (FPTWG)](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage) and BC's "Strategic Approach" to barrier assessment and remediation  
-- [Rebellato et al (2024)](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf).
+- [Fish Passage Technical Working Group (FPTWG)](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage) and the "Strategic Approach" to barrier assessment and remediation  
+- [Effects of rail infrastructure on Pacific salmon and steelhead habitat connectivity in British Columbia](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf), Rebellato et al (2024)
