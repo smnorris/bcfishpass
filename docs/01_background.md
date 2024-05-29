@@ -1,13 +1,39 @@
 # Background
 
-The multi-agency Fish Passage Technical Working Group (FPTWG) was formed in 2007 when the Province of British Columbia, the Government of Canada, and several provincial forest industry associations identified the need to address the issue of road stream crossings fragmenting freshwater fish habitat throughout BC.  Roads and railways built prior to the mid 20th century did not prioritize fish passage, and the original crossing structures are often still in place. Even crossings designed and installed with fish passage in mind are often degraded over time, leading to perched outlets, culverts collapsing or infilling with debris, and other issues that can impede passage of fish. To assist with restoration of fish habitat connectivity, the FPTWG [provides standard methods and tools](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage/fish-passage-technical) for prioritization, assessment, and remediation of crossings. 
+Dams and linear infrastructure such as roads and railways cross streams and rivers, often using structures that can impede fish passage and fragment freshwater systems. Roads and railways built prior to the mid 20th century did not prioritize fish passage, and the original crossing structures are often still in place. Even crossings designed and installed with fish passage in mind are often degraded over time, leading to perched outlets, culverts collapsing or infilling with debris, and other issues that can impede passage of fish. 
 
-With over 500,000 mapped locations of road/rail stream crossings representing potential barriers across BC, field assessment for all sites is not feasible and tools for site prioritization are required. Developed by Hillcrest Geographics for the FPTWG, the Canadian Wildlife Foundation (CWF), the Pacific Salmon Foundation (PSF), and others `bcfishpass` provides users a common reference point by modelling and/or tracking:
+With more than half a million mapped road-stream crossings and dams across BC, field assessment of all sites is impractical and tools are required to prioritize where fieldwork should be done. `bcfishpass` provides users a common reference point by modelling and tracking:
 
-- natural barriers to fish passage (waterfalls, subsurface flow, steep gradients, other)
-- the potential range of accessible streams for various fish species, based on swimming ability (ie, identify all stream downstream of natural barriers), referred to in this document as '*potentially accessible habitat*'
-- streams with the potential to support spawning and rearing stages of various species life cycles (based on stream slope and modelled discharge), referred to in this document as '*potentially usable habitat*'
-- known anthropogenic barriers (dams, PSCIS assessed barriers, other)
-- potential anthropogenic barriers (mapped road/railway stream crossings)
+1. Natural barriers to fish passage (waterfalls, subsurface flow, steep gradients, other)
 
-With this information, users can eliminate many potential barriers from further consideration (for example, sites upstream of natural barriers or hydro dams) and further prioritize watersheds or individual sites for assessment or remediation by ranking by various indicators (for example, length of upstream spawning/rearing habitat and number of potential anthropogenic barriers downstream).
+2. The potential range of accessible streams for various fish species, based on swimming ability (ie, identify all stream downstream of natural barriers), referred to in this document as '*potentially accessible habitat*'
+
+3. Streams with the potential to support spawning and rearing stages of various species life cycles (based on stream slope and modelled discharge / channel width intrinsic potential (IP) models), referred to in this document as '*spawning/rearing habitat*'
+
+4. Known anthropogenic barriers (dams, road-stream crossings field assessed as barriers, other)
+
+5. Potential anthropogenic barriers (dams, mapped road-stream crossings)
+
+6. Potential lateral (floodplain) habitat connected to modelled spawning/rearing habitat (DRAFT)
+
+7. Potential lateral habitat that has been isolated by known or potential anthropogenic barriers (DRAFT)
+
+With this information, users can:
+
+- eliminate thousands of crossing from further consideration (for example, sites upstream of natural barriers or hydro dams without fish passage structures)
+
+- create watershed-level or location specific connectivity status reports
+
+- prioritize sites for field assessment by ranking indicators (eg, length of upstream spawning/rearing habitat, number of potential anthropogenic barriers downstream)
+
+- communicate and visualize the extent of potential fish passage issues across British Columbia (per species and crossing type)
+
+- use model outputs as inputs to other models, such as:
+	+ habitat based inputs to fisheries population models
+	+ landscape/regional level timber supply analysis (as riparian area buffer source)
+
+
+For more background and references, see:
+
+- [Fish Passage Technical Working Group (FPTWG)](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage) and the "Strategic Approach" to barrier assessment and remediation  
+- [Effects of rail infrastructure on Pacific salmon and steelhead habitat connectivity in British Columbia](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf), Rebellato et al (2024)
