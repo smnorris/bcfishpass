@@ -11,10 +11,10 @@ bcfishpass
 The ``bcfishpass`` database:
 
 - tracks/models natural barriers to fish passage (waterfalls, steep gradients, other)
-- tracks/models anthropogenic barriers to fish passage (dams, road/rail stream crossings (culverts), other)
+- tracks/models anthropogenic barriers to fish passage (dams, road-stream crossings, other)
 - models accessibility of streams to given fish species based on natural and anthropogenic barriers
 - models potential spawning and rearing habitat for select species based on stream gradient and either modelled discharge or modelled channel width
-- enables prioritization of stream crossing sites for field assessment
+- enables prioritization of road-stream crossing sites for field assessment
 - provides tools for visualizing and quantifying aquatic connectivity / fish passage issues in BC
 
 
