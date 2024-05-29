@@ -104,7 +104,8 @@
              
   <section id="access-model">
 <span id="access"></span><h1>Access model<a class="headerlink" href="#access-model" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species in the absence of anthropogenic (e.g., dams and stream crossings) or transient natural barriers (e.g., debris flows and log jams), with an assumption that all mapped streams have sufficient flow for migration. The processing steps involved are:</p>
+<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration.</p>
+<p>The processing steps involved are:</p>
 <section id="collect-known-natural-barriers">
 <h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Link to this heading"></a></h2>
 <p>Collect known natural barriers: waterfalls 5m in height or more, subsurface flow, and miscellaneous known barriers from expert input:</p>
@@ -335,7 +336,7 @@
 <p>Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are <a class="reference external" href="https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip">available for download as geopackage</a>.
 For information regarding this data package:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#link_to_be_determined"><span class="xref myst">DataBC metadata(link TBD)</span></a></p></li>
+<li><p><a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead">DataBC metadata</a></p></li>
 <li><p><a class="reference internal" href="06_data_dictionary.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead"><span class="std std-ref">data dictionary</span></a></p></li>
 </ul>
 </section>
