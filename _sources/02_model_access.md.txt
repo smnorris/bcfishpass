@@ -165,16 +165,25 @@ This can be due to a number of different data issues:
 As expert and local knowledge of natural barriers is added to `bcfishpass` and as more potential barriers are assessed, the quality of modelling outputs will improve.
 
 Submissions of data fixes to improve the fish passage model are welcome, particularly:
+
 - locations of natural barriers to fish passage that are not present in the inventories
 - identification of modelled natural barriers that are not barriers to fish passage
 - identification of modelled potential barriers that do not exist or are known to be passable
 
 
-## 10. Publication / distribution
+## 10. Processing and publication / distribution
 
-Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are [available for download as geopackage](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip).
-For information regarding this data package:
-- [DataBC metadata](https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
-- [data dictionary](06_data_dictionary.rst#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
+Model inputs and outputs are refreshed on a scheduled basis, and processed via github actions - the status of these workflows is available here:
 
+- data refresh [monthly](https://github.com/smnorris/bcfishpass/actions/workflows/production-load-monthly.yaml) / [weekly ](https://github.com/smnorris/bcfishpass/actions/workflows/production-load-weekly.yaml)
+- [weekly model refresh](https://github.com/smnorris/bcfishpass/actions/workflows/production-bcfishpass.yaml)
+
+The weekly model processing workflow generates a file based data package (as geopackage), posted to object storage for public distribution:
+
+- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
+
+- general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/
+freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
+
+- complete [data dictionary](https://smnorris.github.io/bcfishpass/06_data_dictionary.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Dictionary &mdash; bcfishpass v0.5.0 documentation</title>
+  <title>Data Dictionary &mdash; bcfishpass v0.1.dev2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=929716b1" />
@@ -16,7 +16,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=e663822d"></script>
+        <script src="_static/documentation_options.js?v=7bed0d46"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -953,45 +953,6 @@ by <a class="reference external" href="https://github.com/smnorris/bcfishobs">bc
 <p>Output of the <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barrier</span></a> analysis for commonly used gradients.
 Locations of the stream vertex where a stream’s slope begins to exceed 5, 10, 15, 20, 25, and 30% for at least
 100m upstream.</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>column</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gradient_barrier_id</span></code></p></td>
-<td><p>unique identifier</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gradient_class</span></code></p></td>
-<td><p>Gradient (percent) associated with the point</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
-<td><p>From BC FWA,the unique identifier for a stream segment (flow network arc)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
-<td><p>From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_key</span></code></p></td>
-<td><p>From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
-<td><p>The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
-<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
-<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
-<td><p>The watershed group code associated with the feature</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
-<td><p>The point geometry associated with the feature</p></td>
-</tr>
-</tbody>
-</table>
 </section>
 </section>
 </section>
@@ -1007,7 +968,7 @@ Locations of the stream vertex where a stream’s slope begins to exceed 5, 10, 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, bcfishpass contributors.</p>
+    <p>&#169; Copyright 2023, Simon Norris, bcfishpass contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
