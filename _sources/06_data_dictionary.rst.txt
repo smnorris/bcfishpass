@@ -122,19 +122,3 @@ by `bcfishobs <https://github.com/smnorris/bcfishobs>`_.
    :file: tables/freshwater_fish_habitat_accessibility_model/observations.csv
    :header-rows: 1
 
-
-------------------
-Gradient barriers
-------------------
-A static provincial extract of the `gradient_barriers` table is available for download:
-`https://bcfishpass.s3.us-west-2.amazonaws.com/gradient_barriers.gpkg.zip <https://bcfishpass.s3.us-west-2.amazonaws.com/gradient_barriers.gpkg.zip>`_.
-
-gradient_barriers
-============================
-Output of the :ref:`gradient barrier <gradient_barriers>` analysis for commonly used gradients.
-Locations of the stream vertex where a stream's slope begins to exceed 5, 10, 15, 20, 25, and 30% for at least
-100m upstream.
-
-.. csv-table::
-   :file: tables/gradient_barriers.csv
-   :header-rows: 1
