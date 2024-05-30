@@ -40,7 +40,7 @@ Bull trout           | 25%
 
 For anadromous species, natural barriers downstream of [Known Fish Observations](https://github.com/smnorris/bcfishobs) are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead assume all natural barrier features with 5 or more observations upstream since 1990 are not currently barriers to fish passage.
 
-For resident species, models generally remove any natural barrier below an observation.
+For potamodromous (freshwater migration only) species such as Bull Trout and Westslope Cutthroat Trout, models remove any natural barrier below an observation.
 
 ## 4. Identify stream downstream of all natural barriers
 
