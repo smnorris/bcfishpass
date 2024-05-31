@@ -25,7 +25,7 @@ These stream buffers are combined with lakes, wetlands, rivers, reservoirs and m
 
 #### 3. Mapped historical floodplains
 
-Historical floodplains are downloaded from the [BC Data Catalogue]((https://catalogue.data.gov.bc.ca/dataset/mapped-floodplains-in-bc-historical). 
+Historical floodplains are downloaded from the [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/mapped-floodplains-in-bc-historical). 
 
 ### Processing
 
