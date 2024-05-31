@@ -1,11 +1,10 @@
 ============================
-Data Dictionary
+Data Distribution
 ============================
 
 ------------------
-Access model - Pacific Salmon and Steelhead
+Access model (Pacific Salmon and Steelhead only)
 ------------------
 
-A weekly bcfishpass data extract of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is provided by the Province of BC.
+A `weekly provincial data extract <https://bcgov.github.io/bc_freshwater_fish_habitat_accessibility_model/04_data_distribution.html>` of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is provided by the Province of BC. See documentation in the bcgov repository for full data definitions.
 
-Click [here](https://bcgov.github.io/bc_freshwater_fish_habitat_accessibility_model/04_data_distribution.html) for full documentation and download link.
