@@ -182,8 +182,7 @@ The weekly model processing workflow generates a file based data package (as geo
 
 - download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
 
-- general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/
-freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
+- general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 
 - complete [data dictionary](https://smnorris.github.io/bcfishpass/06_data_dictionary.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 

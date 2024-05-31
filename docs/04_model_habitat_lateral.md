@@ -43,4 +43,4 @@ The resulting area is described as "lateral habitat". Fragmentation of lateral h
 
 2. Breach resulting railway corridor raster at locations of known open bottom structures (note that the rail corridor raster is not breached at locations of closed bottom structures known/assessed as be passable as these structures may hold back sediments, have major effects on floodplain functionality, or be impassible under high-flow conditions when floodplain access typically occurs)
 
-3. Using the `morphology.label` tool in the [scikit image processing library](https://scikit-image.org/docs/stable/api/skimage.morphology.html#skimage.morphology.labelLateral), identify lateral habitat connected to rivers/streams and habitat that has been disconnected by the railway corridor raster.
+3. Using the `morphology.label` tool in the [scikit image processing library](https://scikit-image.org/docs/stable/api/skimage.morphology.html#skimage.morphology.labelLateral), identify lateral habitat connected to rivers/streams and habitat that has been disconnected by the railway corridor raster
