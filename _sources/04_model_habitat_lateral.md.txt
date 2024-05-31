@@ -1,6 +1,6 @@
 ## Lateral habitat model (DRAFT)
 
-A raster based model is used to rough approximation of floodplains and off-channel habitat and quantify the level of fragmentation by road-stream crossings. 
+A raster based model is used to roughly approximate floodplains and off-channel habitat, quantify the level of potential fragmentation by road-stream crossings, and identify areas for potential field assessment.
 
 Note that the current model was developed for the [Rail effects on Salmon report](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf) and currently only considers watersheds within that study area (having Pacific Salmon / Steelhead and railway lines), and only models habitat fragmentation caused by rail crossings. See this report for more details.
 
@@ -14,27 +14,28 @@ The valley confinement algorithm (VCA) extracts unconfined valleys from an analy
 
 Streams are selected and buffered using this criteria:
 
-| criteria | buffer (m) |
-|---------| ------|
-| Side channels (first order tributaries to rivers of order >=5, with gradient <= 0.01 and modelled as potentially accessible to Pacific salmon and Steelhead) | 60 |
-| Modelled as spawning/rearing for Pacific salmon and Steelhead  | 30 |
-| Modelled as potentially accessible for Pacific salmon and Steelhead | 20, plus modelled channel width |
 
-These stream buffers are combined with lakes, wetlands, rivers, reservoirs and merged into a single layer.
+60m: side channels (first order tributaries to rivers of order >=5, with gradient <= 0.01 and modelled as potentially accessible to Pacific salmon and Steelhead)
+
+30m: stream modelled as spawning/rearing for Pacific salmon and Steelhead
+
+20m (plus modelled channel width): stream modelled as potentially accessible for Pacific salmon and Steelhead
+
+These stream buffers are combined with lakes, wetlands, rivers, reservoirs and merged into a single layer
 
 #### 3. Mapped historical floodplains
 
 Historical floodplains are downloaded from the [BC Data Catalogue]((https://catalogue.data.gov.bc.ca/dataset/mapped-floodplains-in-bc-historical). 
 
-### Processing 
+### Processing
 
-1. The three sources are combined into an initial floodplain raster layer
+1. The three sources noted above are combined into an initial floodplain raster layer
 
 2. The floodplain raster is refined to exclude regions with no connectivity to stream segments modelled as spawning/rearing habitat (i.e., a region of floodplain must touch or be connected to spawning or rearing habitat to be included)
 
 3. Areas mapped as urban in the 10m resolution [European Space Agency Land Cover](https://esa-worldcover.org/en) are excluded (unlikely to provide suitable habitat regardless of connectivity)
 
-4. All of the Fraser Valley downstream of Agassiz is excluded (drainage and land use in this area is too modified for these methods to produce reasonable results) 
+4. All of the Fraser Valley downstream of Agassiz is excluded (drainage and land use in this area is too modified for these methods to produce reasonable results)
 
 The resulting area is described as "lateral habitat". Fragmentation of lateral habitat by rail crossings is then modelled with these steps:
 

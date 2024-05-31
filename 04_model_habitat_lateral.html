@@ -88,7 +88,7 @@
              
   <section id="lateral-habitat-model-draft">
 <h1>Lateral habitat model (DRAFT)<a class="headerlink" href="#lateral-habitat-model-draft" title="Link to this heading"></a></h1>
-<p>A raster based model is used to rough approximation of floodplains and off-channel habitat and quantify the level of fragmentation by road-stream crossings.</p>
+<p>A raster based model is used to roughly approximate floodplains and off-channel habitat, quantify the level of potential fragmentation by road-stream crossings, and identify areas for potential field assessment.</p>
 <p>Note that the current model was developed for the <a class="reference external" href="https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf">Rail effects on Salmon report</a> and currently only considers watersheds within that study area (having Pacific Salmon / Steelhead and railway lines), and only models habitat fragmentation caused by rail crossings. See this report for more details.</p>
 <p>Three general sources of potential floodplain/off-channel habitat data are combined:</p>
 <section id="unconfined-valleys">
@@ -98,25 +98,10 @@
 <section id="fwa-waterbodies-and-streams">
 <h2>2. FWA waterbodies and streams<a class="headerlink" href="#fwa-waterbodies-and-streams" title="Link to this heading"></a></h2>
 <p>Streams are selected and buffered using this criteria:</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>criteria</p></th>
-<th class="head"><p>buffer (m)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Side channels (first order tributaries to rivers of order &gt;=5, with gradient &lt;= 0.01 and modelled as potentially accessible to Pacific salmon and Steelhead)</p></td>
-<td><p>60</p></td>
-</tr>
-<tr class="row-odd"><td><p>Modelled as spawning/rearing for Pacific salmon and Steelhead</p></td>
-<td><p>30</p></td>
-</tr>
-<tr class="row-even"><td><p>Modelled as potentially accessible for Pacific salmon and Steelhead</p></td>
-<td><p>20, plus modelled channel width</p></td>
-</tr>
-</tbody>
-</table>
-<p>These stream buffers are combined with lakes, wetlands, rivers, reservoirs and merged into a single layer.</p>
+<p>60m: side channels (first order tributaries to rivers of order &gt;=5, with gradient &lt;= 0.01 and modelled as potentially accessible to Pacific salmon and Steelhead)</p>
+<p>30m: stream modelled as spawning/rearing for Pacific salmon and Steelhead</p>
+<p>20m (plus modelled channel width): stream modelled as potentially accessible for Pacific salmon and Steelhead</p>
+<p>These stream buffers are combined with lakes, wetlands, rivers, reservoirs and merged into a single layer</p>
 </section>
 <section id="mapped-historical-floodplains">
 <h2>3. Mapped historical floodplains<a class="headerlink" href="#mapped-historical-floodplains" title="Link to this heading"></a></h2>
@@ -125,7 +110,7 @@
 <section id="processing">
 <h2>Processing<a class="headerlink" href="#processing" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>The three sources are combined into an initial floodplain raster layer</p></li>
+<li><p>The three sources noted above are combined into an initial floodplain raster layer</p></li>
 <li><p>The floodplain raster is refined to exclude regions with no connectivity to stream segments modelled as spawning/rearing habitat (i.e., a region of floodplain must touch or be connected to spawning or rearing habitat to be included)</p></li>
 <li><p>Areas mapped as urban in the 10m resolution <a class="reference external" href="https://esa-worldcover.org/en">European Space Agency Land Cover</a> are excluded (unlikely to provide suitable habitat regardless of connectivity)</p></li>
 <li><p>All of the Fraser Valley downstream of Agassiz is excluded (drainage and land use in this area is too modified for these methods to produce reasonable results)</p></li>
