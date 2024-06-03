@@ -213,25 +213,6 @@ create table bcfishpass.dfo_known_sockeye_lakes (
 
 
 -- --------------
--- WCRP WATERSHED GROUPS
---
--- watersheds and target species for CWF reporting
--- --------------
-create table bcfishpass.wcrp
-(
-  watershed_group_code varchar(4),
-  ch boolean,
-  cm boolean,
-  co boolean,
-  pk boolean,
-  sk boolean,
-  st boolean,
-  wct boolean,
-  notes text
-);
-
-
--- --------------
 -- CABD to FWA BLUE LINE KEY LOOKUP
 --
 -- link CABD waterfalls and dams to correct FWA stream
