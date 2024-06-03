@@ -1,3 +1,4 @@
+\d bcfishpass.crossings
 -- --------------
 -- WCRP WATERSHED GROUPS
 --
@@ -23,7 +24,7 @@ create table bcfishpass.wcrp_watersheds
 -- --------------
 
 create table bcfishpass.wcrp_confirmed_barriers (
-  aggregated_crossing_id text primary key,
+  aggregated_crossings_id text primary key,
   internal_name text,
   watercourse_name text,
   road_name text,
@@ -42,8 +43,8 @@ create table bcfishpass.wcrp_confirmed_barriers (
   partial_passability_notes text,
   upstream_habitat_quality text,
   constructability text,
-  estimated_cost text,
-  cost_benefit_ratio text,
+  estimated_cost integer,
+  cost_benefit_ratio integer,
   priority text CHECK (priority IN ('High','Medium','Low')),
   next_steps text CHECK (next_steps IN (
     'Engage with barrier owner',
@@ -61,11 +62,11 @@ create table bcfishpass.wcrp_confirmed_barriers (
   next_steps_lead text,
   next_steps_others_involved text,
   reason text,
-  notes text
+  comments text
 );
 
 create table bcfishpass.wcrp_data_deficient_structures (
-  aggregated_crossing_id text primary key,
+  aggregated_crossings_id text primary key,
   internal_name text,
   watercourse_name text,
   road_name text,
@@ -93,6 +94,13 @@ create table bcfishpass.wcrp_data_deficient_structures (
 );
 
 create table bcfishpass.wcrp_excluded_structures (
+  aggregated_crossings_id text primary key,
+  internal_name text,
+  watercourse_name text,
+  road_name text,
+  easting integer,
+  northing integer,
+  zone integer,
   exclusion_reason text CHECK (exclusion_reason IN ('Passable', 'No structure','No key upstream habitat','No structure/key upstream habitat')),
   exclusion_method text CHECK (exclusion_method IN ('Imagery review','Field assessment','Local knowledge','Informal assessment')),
   comments text,
