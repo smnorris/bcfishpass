@@ -29,7 +29,7 @@ Note that stream lengths and resulting gradient will change if a new observation
 
 
 
-## Channel width / discharge
+## Discharge / channel width
 
 Spawning and rearing activity depends on sufficent flow to the stream. `bcfishpass` can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference. 
 Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations. 
@@ -44,7 +44,7 @@ Channel width is modelled for all of BC:
 - [Poisson Consulting](https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/) model based on upstream area / precipitation
 - [data collection/preparation](https://github.com/smnorris/fwapg/tree/main/extras/channel_width)
 
-**NOTE** contributing area and precipitiation datasets used to date are both cut off at the BC border
+**NOTE** contributing area (FWA watersheds) and precipitiation (ClimateBC) datasets used to model discharge / channel width are both cut off at the BC border:
 
 - *all results from the above models are only valid for streams with 100% of their contributing area with BC*
 - *streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions*
