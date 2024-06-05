@@ -99,26 +99,29 @@
 <p>Output model data is augmented with observed spawning locations from <a class="reference external" href="https://catalogue.data.gov.bc.ca/dataset/known-bc-fish-observations-and-bc-fish-distributions">FISS</a> via <a class="reference external" href="https://github.com/smnorris/bcfishobs">bcfishobs</a>, PSF’s <a class="reference external" href="https://www.salmonexplorer.ca">Pacific Salmon Explorer</a>, and CWF <a class="reference external" href="https://www.globalconservationsolutions.com/wp-content/uploads/2022/03/CWF-WCRP-Guide.pdf">WCRP</a> stakeholder inputs.</p>
 <section id="gradient">
 <h2>Gradient<a class="headerlink" href="#gradient" title="Link to this heading"></a></h2>
-<p>Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value of the endpoints of the stream segments. Run is the length of the steam segments. Stream segments are from the BC Freshwater Atlas, further subdivided by other stream-referenced features used in the model (streams are split at barriers and observations when processing the access model). Stream lengths used for gradient calculation can thus be changed if an observation or barrier is added to the database, breaking an existing segment into smaller segments (this results in small inconsistencies to habitat outputs for a given area over time, a known limitation of the current model).</p>
+<p>Per species spawning/rearing gradient thresholds were taken from the literature and, where unavailable in the literature, derived from known fish spawning locations.</p>
+<p>Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value of the endpoints of the stream segments. Run is the length of the steam segments.</p>
+<p>Stream segments are BC Freshwater Atlas stream network features, further subdivided by other stream-referenced features used in the model (streams are split at barriers and observations when processing the access model).</p>
+<p>Note that stream lengths and resulting gradient will change if a new observation or barrier is added to the database, breaking an existing segment into smaller segments. This results in small inconsistencies to modelled spawning/rearing outputs for a given area over time, a known limitation of the current model.</p>
 </section>
 <section id="channel-width-discharge">
 <h2>Channel width / discharge<a class="headerlink" href="#channel-width-discharge" title="Link to this heading"></a></h2>
-<p>Spawning and rearing activity depends on sufficent flow to the stream. <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference. Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations.</p>
+<p>Spawning and rearing activity depends on sufficent flow to the stream. <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference.
+Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations.</p>
 <p>Discharge is modelled within the Fraser, Columbia and Peace basins:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.pacificclimate.org/data/gridded-hydrologic-model-output">PCIC source</a></p></li>
-<li><p><a class="reference external" href="https://github.com/smnorris/bcfishpass/blob/main/model/02_habitat_linear/discharge">upsampling of source to FWA streams</a></p></li>
+<li><p><a class="reference external" href="https://github.com/smnorris/fwapg/tree/main/extras/discharge">upsampling of source to FWA streams</a></p></li>
 </ul>
 <p>Channel width is modelled for all of BC:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/">Poisson Consulting</a> model based on upstream area / precipitation</p></li>
-<li><p>preparation of data used for the channel width model is documented in <a class="reference external" href="https://github.com/smnorris/fwapg/tree/main/extras/channel_width">fwapg</a></p></li>
+<li><p><a class="reference external" href="https://github.com/smnorris/fwapg/tree/main/extras/channel_width">data collection/preparation</a></p></li>
 </ul>
-<p><strong>NOTE</strong><br />
-Contributing area and precipitiation datasets used to date are both cut off at the BC border.</p>
+<p><strong>NOTE</strong> contributing area and precipitiation datasets used to date are both cut off at the BC border</p>
 <ul class="simple">
 <li><p><em>all results from the above models are only valid for streams with 100% of their contributing area with BC</em></p></li>
-<li><p><em>streams with contributing area outside of BC and thus invalid spawning/rearing ARE NOT CURRENTLY NOTED in model outputs/file distributions</em></p></li>
+<li><p><em>streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions</em></p></li>
 </ul>
 </section>
 <section id="feature-type-and-connectivity">

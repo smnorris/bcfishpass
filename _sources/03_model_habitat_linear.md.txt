@@ -19,27 +19,35 @@ Output model data is augmented with observed spawning locations from [FISS](http
 
 ## Gradient
 
-Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value of the endpoints of the stream segments. Run is the length of the steam segments. Stream segments are from the BC Freshwater Atlas, further subdivided by other stream-referenced features used in the model (streams are split at barriers and observations when processing the access model). Stream lengths used for gradient calculation can thus be changed if an observation or barrier is added to the database, breaking an existing segment into smaller segments (this results in small inconsistencies to habitat outputs for a given area over time, a known limitation of the current model).
+Per species spawning/rearing gradient thresholds were taken from the literature and, where unavailable in the literature, derived from known fish spawning locations.
+
+Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value of the endpoints of the stream segments. Run is the length of the steam segments.  
+
+Stream segments are BC Freshwater Atlas stream network features, further subdivided by other stream-referenced features used in the model (streams are split at barriers and observations when processing the access model).  
+
+Note that stream lengths and resulting gradient will change if a new observation or barrier is added to the database, breaking an existing segment into smaller segments. This results in small inconsistencies to modelled spawning/rearing outputs for a given area over time, a known limitation of the current model.
+
+
 
 ## Channel width / discharge
 
-Spawning and rearing activity depends on sufficent flow to the stream. `bcfishpass` can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference. Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations. 
+Spawning and rearing activity depends on sufficent flow to the stream. `bcfishpass` can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference. 
+Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations. 
 
 Discharge is modelled within the Fraser, Columbia and Peace basins:  
 
 - [PCIC source](https://www.pacificclimate.org/data/gridded-hydrologic-model-output)
-- [upsampling of source to FWA streams](https://github.com/smnorris/bcfishpass/blob/main/model/02_habitat_linear/discharge)
+- [upsampling of source to FWA streams](https://github.com/smnorris/fwapg/tree/main/extras/discharge)
 
 Channel width is modelled for all of BC:  
 
 - [Poisson Consulting](https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/) model based on upstream area / precipitation
-- preparation of data used for the channel width model is documented in [fwapg](https://github.com/smnorris/fwapg/tree/main/extras/channel_width)
+- [data collection/preparation](https://github.com/smnorris/fwapg/tree/main/extras/channel_width)
 
-**NOTE**  
-Contributing area and precipitiation datasets used to date are both cut off at the BC border.  
+**NOTE** contributing area and precipitiation datasets used to date are both cut off at the BC border
 
 - *all results from the above models are only valid for streams with 100% of their contributing area with BC*
-- *streams with contributing area outside of BC and thus invalid spawning/rearing ARE NOT CURRENTLY NOTED in model outputs/file distributions*
+- *streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions*
 
 
 
