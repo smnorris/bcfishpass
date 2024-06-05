@@ -41,7 +41,7 @@ For various species and life stages, further refinement/selection of streams mod
 | Species | Life stage | Additional criteria/refinement |
 |---------|------------|--------------------------------|
 | Bull Trout | spawning   | within streams/rivers
-| Bull Trout | rearing    | within streams/rivers AND (on spawning stream OR downstream of spawning stream OR on a  tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5%)   |
+| Bull Trout | rearing    | within streams/rivers AND ( <br>   on spawning stream OR <br> downstream of spawning stream OR <br> on a  tributary downstream of spawning and beginning within 10m of the tributary OR <br> < 10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing)   |
 | Chinook | spawning   | within streams/rivers          |
 | Chinook | rearing    | (within streams/rivers OR any wetland - not restricted by gradient and discharge/channel width) AND (on spawning stream OR downstream of spawning stream OR on a  tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5%)   |
 | Chum | spawning   | within streams/rivers
