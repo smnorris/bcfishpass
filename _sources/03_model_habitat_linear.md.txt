@@ -36,7 +36,7 @@ https://github.com/smnorris/bcfishpass/blob/main/parameters/example_testing/para
 
 ## Connectivity / feature type
 
-For various species and life stages, further refinement/selection of streams modelled as potential spawning/rearing habitat based on gradient and discharge/channel width is applied via feature type and connectivity criteria:
+For various species and life stages, further refinement/selection of streams modelled as potential spawning/rearing habitat (based on gradient and discharge/channel width) is applied via feature type and connectivity criteria:
 
 | Species | Life stage | Additional criteria/refinement |
 |---------|------------|--------------------------------|
