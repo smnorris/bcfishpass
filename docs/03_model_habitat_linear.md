@@ -10,7 +10,12 @@ Linear spawning/rearing habitat modelling is currently based on species specific
 - connectivity (rearing streams must be connected to spawning streams)
 - feature type (spawning or rearing occurs in stream / wetland / lake etc)
 
-Output model data is also augmented with known/observed spawning locations (from FISS observations, PSF Pacific Salmon Explorer, and CWF WCRP stakeholder input)
+Per species threshold values for stream gradient and discharge/channel width are noted (and can be adjusted) in the file [parameters_habitat_thresholds.csv](
+https://github.com/smnorris/bcfishpass/blob/main/parameters/example_testing/parameters_habitat_thresholds.csv).
+
+Sources (via literature and analysis) for these values for Pacific salmon and steelhead are documented in Table 1 of [Rebelatto et al (2024)](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf).
+
+Output model data is augmented with observed spawning locations from [FISS](https://catalogue.data.gov.bc.ca/dataset/known-bc-fish-observations-and-bc-fish-distributions) via [bcfishobs](https://github.com/smnorris/bcfishobs), PSF's [Pacific Salmon Explorer](https://www.salmonexplorer.ca), and CWF [WCRP](https://www.globalconservationsolutions.com/wp-content/uploads/2022/03/CWF-WCRP-Guide.pdf) stakeholder inputs.
 
 ## Gradient
 
@@ -20,18 +25,22 @@ Gradient of each stream segment is calculated as rise over run. Rise is taken fr
 
 Spawning and rearing activity depends on sufficent flow to the stream. `bcfishpass` can be configured to use either mean annual discharge (m3/s) or channel width (m) (as a discharge proxy), depending on data availability and/or user preference. Per species spawning and rearing discharge/channel width thresholds are taken from the literature and, where unavailable in the literature, derived from known fish spawning locations. 
 
-Discharge is modelled within the Fraser, Columbia and Peace basins: 
-https://www.pacificclimate.org/data/gridded-hydrologic-model-output
-https://github.com/smnorris/bcfishpass/blob/main/model/02_habitat_linear/discharge
+Discharge is modelled within the Fraser, Columbia and Peace basins:  
 
-Channel width is modelled for all of BC:
-https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/
-https://github.com/smnorris/bcfishpass/tree/main/model/02_habitat_linear/channel_width
+- [PCIC source](https://www.pacificclimate.org/data/gridded-hydrologic-model-output)
+- [upsampling of source to FWA streams](https://github.com/smnorris/bcfishpass/blob/main/model/02_habitat_linear/discharge)
 
-Note that results from the above models are only valid for streams with 100% of their contributing area with BC - data for contributing area and precipitiation are both cut off at the BC border.
+Channel width is modelled for all of BC:  
 
-Values and sources for Pacific salmon and steelhead gradient and discharge/channel width thresholds are documented in Table 1 of [Rebelatto et al (2024)](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf), and can be adjusted per-model via the [parameters_habitat_thresholds.csv](
-https://github.com/smnorris/bcfishpass/blob/main/parameters/example_testing/parameters_habitat_thresholds.csv) file.
+- [Poisson Consulting](https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/) model based on upstream area / precipitation
+- preparation of data used for the channel width model is documented in [fwapg](https://github.com/smnorris/fwapg/tree/main/extras/channel_width)
+
+**NOTE**  
+Contributing area and precipitiation datasets used to date are both cut off at the BC border.  
+
+- *all results from the above models are only valid for streams with 100% of their contributing area with BC*
+- *streams with contributing area outside of BC and thus invalid spawning/rearing ARE NOT CURRENTLY NOTED in model outputs/file distributions*
+
 
 
 ## Feature type and connectivity
