@@ -41,18 +41,18 @@ For various species and life stages, further refinement/selection of streams mod
 | Species | Life stage | Additional criteria/refinement |
 |---------|------------|--------------------------------|
 | Bull Trout | spawning   | within streams/rivers
-| Bull Trout | rearing    | within streams/rivers AND ( <br>   on spawning stream OR <br> downstream of spawning stream OR <br> on a  tributary downstream of spawning and beginning within 10m of the tributary OR <br> < 10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing)   |
+| Bull Trout | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <br> <10km upstream of spawning with no stream segment of slope >=5% between the spawning and potential rearing <br>)   |
 | Chinook | spawning   | within streams/rivers          |
-| Chinook | rearing    | (within streams/rivers OR any wetland - not restricted by gradient and discharge/channel width) AND (on spawning stream OR downstream of spawning stream OR on a  tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5%)   |
+| Chinook | rearing    | (within streams/rivers OR any wetland - not restricted by gradient and discharge/channel width) AND (<br> on spawning stream OR downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5% <br>)   |
 | Chum | spawning   | within streams/rivers
 | Chum | rearing    | No rearing modelled (this species does not generally rear in fresh water)   |
 | Coho | spawning   | within streams/rivers
-| Coho | rearing    | within streams/rivers matching gradient/AND (on spawning stream OR downstream of spawning stream OR on a  tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5%)   |
+| Coho | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> )  |
 | Pink | spawning   | within streams/rivers
 | Pink | rearing    | No rearing modelled (this species does not generally rear in fresh water)   |
-| Sockeye | spawning   | within streams/rivers AND (up to 3km downstream of rearing lake with no stream segment of gradient >=5% between the rearing lake and the potential spawning stream OR upstream of the rearing lake and connected to the rearing lake (within 2m))|
+| Sockeye | spawning   | within streams/rivers AND ( <br> <3km downstream of rearing lake, with no stream segment of slope >=5% between the rearing lake and the potential spawning stream OR <br> upstream of the rearing lake and connected to the rearing lake (within 2m) <br>)|
 | Sockeye | rearing    | lakes of >= 2km2   |
 | Steelhead | spawning   | within streams/rivers          |
-| Steelhead | rearing    | within streams/rivers AND (on spawning stream OR downstream of spawning stream OR on a  tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5%)   |
+| Steelhead | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> ) |
 | Westslope Cutthroat Trout | spawning   | within streams/rivers          |
-| Westslope Cutthroat Trout | rearing    | within streams/rivers AND (on spawning stream OR downstream of spawning stream OR on a  tributary downstream of spawning and beginning within 10m of the tributary OR upstream of spawning until disconnected by stream segment of slope exceeding 5%)   |
+| Westslope Cutthroat Trout | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> )   |
