@@ -15,16 +15,17 @@ https://github.com/smnorris/bcfishpass/blob/main/parameters/example_testing/para
 
 Sources (via literature and analysis) for these values for Pacific salmon and steelhead are documented in Table 1 of [Rebelatto et al (2024)](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf).
 
-Streams with observed spawning or rearing (from [FISS](https://catalogue.data.gov.bc.ca/dataset/known-bc-fish-observations-and-bc-fish-distributions) via [bcfishobs](https://github.com/smnorris/bcfishobs), PSF's [Pacific Salmon Explorer](https://www.salmonexplorer.ca), and CWF [WCRP](https://www.globalconservationsolutions.com/wp-content/uploads/2022/03/CWF-WCRP-Guide.pdf) stakeholder inputs) are automatically classified as spawning or rearing regardless of stream characteristics.
+Output model data is augmented with observed spawning locations from [FISS](https://catalogue.data.gov.bc.ca/dataset/known-bc-fish-observations-and-bc-fish-distributions) via [bcfishobs](https://github.com/smnorris/bcfishobs), PSF's [Pacific Salmon Explorer](https://www.salmonexplorer.ca), and CWF [WCRP](https://www.globalconservationsolutions.com/wp-content/uploads/2022/03/CWF-WCRP-Guide.pdf) stakeholder inputs.
 
 ## Gradient
 
 Per species spawning/rearing gradient thresholds were taken from the literature and, where unavailable in the literature, derived from known fish spawning locations.
 
-Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value (elevation) of the endpoints of the stream segments. Run is the length of the steam segments.  
-Stream segments are BC Freshwater Atlas stream network features, further subdivided by other stream-referenced features used in the model (when processing the access model, streams are split at natural barriers, anthropogenic crossings, and at locations of FISS observations of species listed [here](https://github.com/smnorris/bcfishpass/blob/main/model/01_access/sql/load_observations.sql) - currently `BT`,`CH`,`CM`,`CO`,`CT`,`DV`,`GR`,`PK`,`RB`,`SK`,`ST`,`WCT`).  
+Gradient of each stream segment is calculated as rise over run. Rise is taken from the Z value of the endpoints of the stream segments. Run is the length of the steam segments.  
 
-Note that stream lengths and resulting gradient will change if a new natural barrier, anthropogenic crossing, or observation is added to the database - breaking an existing segment into smaller segments. These changes to gradient can result in small inconsistencies to modelled spawning/rearing outputs for a given area over time.
+Stream segments are BC Freshwater Atlas stream network features, further subdivided by other stream-referenced features used in the model (streams are split at barriers and observations when processing the access model).  
+
+Note that stream lengths and resulting gradient will change if a new observation or barrier is added to the database, breaking an existing segment into smaller segments. This results in small inconsistencies to modelled spawning/rearing outputs for a given area over time, a known limitation of the current model.
 
 
 
