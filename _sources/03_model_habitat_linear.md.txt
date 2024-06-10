@@ -13,7 +13,7 @@ Linear spawning/rearing habitat modelling is currently based on species specific
 Per species threshold values for stream gradient and discharge/channel width are noted (and can be adjusted) in the file [parameters_habitat_thresholds.csv](
 https://github.com/smnorris/bcfishpass/blob/main/parameters/example_testing/parameters_habitat_thresholds.csv).
 
-Sources (via literature and analysis) for these values for Pacific salmon and steelhead are documented in Table 1 of [Rebelatto et al (2024)](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf).
+Sources for these values for Pacific salmon and steelhead are documented in Table 1 of [Rebelatto et al (2024)](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf). Gradient and discharge thresholds are derived from the literature and from analysis of known spawning stream characteristics. Channel width thresholds are designed to be generous, eliminating very small streams from consideration but retaining many streams that may be of marginal habitat.
 
 Streams with observed spawning or rearing (from [FISS](https://catalogue.data.gov.bc.ca/dataset/known-bc-fish-observations-and-bc-fish-distributions) via [bcfishobs](https://github.com/smnorris/bcfishobs), PSF's [Pacific Salmon Explorer](https://www.salmonexplorer.ca), and CWF [WCRP](https://www.globalconservationsolutions.com/wp-content/uploads/2022/03/CWF-WCRP-Guide.pdf) stakeholder inputs) are automatically classified as spawning or rearing regardless of stream characteristics.
 
