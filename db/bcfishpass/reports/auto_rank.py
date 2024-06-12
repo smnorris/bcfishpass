@@ -12,7 +12,6 @@ import argparse
 import getpass
 import psycopg2 as pg2
 
-
 def makeParser():
     p = argparse.ArgumentParser(description='Rank barriers in a WCRP')
     p.add_argument('wcrp', choices=['hors', 'bulk', 'lnic', 'elkr', 'bonp', 'eagle', 'bessette', 'bela_atna_necl'], nargs=1, type=str)
@@ -25,6 +24,11 @@ def buildCondition(wcrp):
 
     :wcrp: the wcrp that is having its barriers ranked
     """
+
+    global species
+
+    species = 'ch_cm_co_pk_sk'
+
     if wcrp == 'eagle':
         return """
             --Eagle River
@@ -84,6 +88,11 @@ def buildCondition(wcrp):
                 )
             )
             """
+    elif wcrp == 'elkr':
+        species = 'wct'
+        return f"""
+            "watershed_group_code" IN ('{wcrp}')
+            """
     else:
         # In all other cases, just the watershed group code
         return f"""
@@ -122,8 +131,8 @@ def runQuery(condition, conn):
             ,gnis_stream_name
             ,barriers_anthropogenic_dnstr
             ,barriers_anthropogenic_dnstr_count
-            ,barriers_anthropogenic_ch_cm_co_pk_sk_upstr
-            ,barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count
+            ,barriers_anthropogenic_{species}_upstr
+            ,barriers_anthropogenic_{species}_upstr_count
             ,all_spawning_km
             ,all_spawning_belowupstrbarriers_km
             ,all_rearing_km
@@ -137,7 +146,7 @@ def runQuery(condition, conn):
             AND all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND all_spawningrearing_belowupstrbarriers_km  != 0
             AND {condition}
-            AND barriers_ch_cm_co_pk_sk_dnstr = '';
+            AND barriers_{species}_dnstr = ''
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;
@@ -151,7 +160,7 @@ def runQuery(condition, conn):
             """
         cursor.execute(q_make_table)
 
-        q_group_barriers = """
+        q_group_barriers = f"""
             -- Index for speeding up queries
             DROP INDEX IF EXISTS rank_idx;
             DROP INDEX IF EXISTS rank_idx_set_id;
@@ -191,9 +200,9 @@ def runQuery(condition, conn):
                         continue_loop := FALSE;
                     ELSE
                         with avgVals as ( -- Cumulative average gain per barrier for ungrouped barriers with the same blue line key 
-                            select id, blue_line_key, set_id, barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count, all_spawningrearing_belowupstrbarriers_km 
-                                ,AVG(all_spawningrearing_belowupstrbarriers_km ) OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count DESC) as average
-                                ,ROW_NUMBER() OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count DESC) as row_num
+                            select id, blue_line_key, set_id, barriers_anthropogenic_{species}_upstr_count, all_spawningrearing_belowupstrbarriers_km 
+                                ,AVG(all_spawningrearing_belowupstrbarriers_km ) OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_{species}_upstr_count DESC) as average
+                                ,ROW_NUMBER() OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_{species}_upstr_count DESC) as row_num
                             from bcfishpass.ranked_barriers
                             where set_id < grp_offset
                         ),
@@ -403,7 +412,18 @@ def runQuery(condition, conn):
             WHERE {condition};
 
             INSERT INTO bcfishpass.wcrp_ranked_barriers
-            SELECT *
+            SELECT 
+                 aggregated_crossings_id
+                ,set_id
+                ,total_hab_gain_set
+                ,num_barriers_set
+                ,avg_gain_per_barrier
+                ,dnstr_set_ids
+                ,rank_avg_gain_per_barrier
+                ,rank_avg_gain_tiered
+                ,rank_total_upstr_hab
+                ,rank_combined
+                ,tier_combined
             FROM bcfishpass.ranked_barriers;
 
             DROP TABLE bcfishpass.ranked_barriers;
