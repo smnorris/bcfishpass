@@ -699,6 +699,16 @@ select
   h_wcrp.all_rearing_belowupstrbarriers_km,
   h_wcrp.all_spawningrearing_km,
   h_wcrp.all_spawningrearing_belowupstrbarriers_km,
+  r.set_id,
+  r.total_hab_gain_set,
+  r.num_barriers_set,
+  r.avg_gain_per_barrier,
+  r.dnstr_set_ids,
+  r.rank_avg_gain_per_barrier,
+  r.rank_avg_gain_tiered,
+  r.rank_total_upstr_hab,
+  r.rank_combined,
+  r.tier_combined,
   c.geom
 from bcfishpass.crossings c
 inner join bcfishpass.wcrp_watersheds w on c.watershed_group_code = w.watershed_group_code  -- only include crossings in WCRP watersheds
@@ -714,6 +724,7 @@ left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossing
 left outer join bcfishpass.crossings_upstream_habitat_wcrp h_wcrp on c.aggregated_crossings_id = h_wcrp.aggregated_crossings_id
 left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
 left outer join whse_basemapping.dbm_mof_50k_grid t ON ST_Intersects(c.geom, t.geom)
+left outer join bcfishpass.wcrp_ranked_barriers r ON c.aggregated_crossings_id = r.aggregated_crossings_id
 order by c.aggregated_crossings_id, s.downstream_route_measure;
 
 create unique index on bcfishpass.crossings_wcrp_vw (aggregated_crossings_id);
