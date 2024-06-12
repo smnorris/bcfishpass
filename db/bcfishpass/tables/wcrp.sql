@@ -122,3 +122,17 @@ create table bcfishpass.wcrp_rehabilitiated_structures (
   comments text,
   supporting_links text
 );
+
+create table bcfishpass.wcrp_ranked_barriers (
+	aggregated_crossings_id text primary key,
+	set_id numeric,
+	total_hab_gain_set numeric,
+	num_barriers_set integer,
+	avg_gain_per_barrier numeric,
+	dnstr_set_ids character varying[],
+	rank_avg_gain_per_barrier numeric,
+	rank_avg_gain_tiered numeric,
+	rank_total_upstr_hab numeric,
+	rank_combined numeric, 
+	tier_combined character varying
+);
