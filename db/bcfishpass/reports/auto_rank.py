@@ -7,6 +7,7 @@ and ranks them by a combination of immediaate and longterm gain.
 This populate the wcrp_ranked_barriers table with whichever wcrp is specified.
 """
 
+import os
 import sys
 import argparse
 import getpass
@@ -432,29 +433,14 @@ def runQuery(condition, conn):
     conn.commit()
 
 
-def dbConnect():
-    """
-    Connect to the database
-    """
-    dbHost = "cabd-postgres-prod.postgres.database.azure.com"
-    dbPort = "5432"
-    dbName = "bcfishpass"
-    dbUser = input(f"""Enter username to access {dbName}:\n""")
-    dbPassword = getpass.getpass(f"""Enter password to access {dbName}:\n""")
-    return pg2.connect(database=dbName,
-                   user=dbUser,
-                   host=dbHost,
-                   password=dbPassword,
-                   port=dbPort)
-
-
 def main():
     parser = makeParser()
     args = parser.parse_args()
     condition = buildCondition(args.wcrp[0])
-    conn = dbConnect()
+    conn = pg2.connect(os.environ["DATABASE_URL"])
     runQuery(condition, conn)
     print("Done!")
+
 
 if __name__ == "__main__":
     main()
