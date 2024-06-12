@@ -13,10 +13,26 @@ import argparse
 import getpass
 import psycopg2 as pg2
 
+
 def makeParser():
-    p = argparse.ArgumentParser(description='Rank barriers in a WCRP')
-    p.add_argument('wcrp', choices=['hors', 'bulk', 'lnic', 'elkr', 'bonp', 'eagle', 'bessette', 'bela_atna_necl'], nargs=1, type=str)
+    p = argparse.ArgumentParser(description="Rank barriers in a WCRP")
+    p.add_argument(
+        "wcrp",
+        choices=[
+            "hors",
+            "bulk",
+            "lnic",
+            "elkr",
+            "bonp",
+            "eagle",
+            "bessette",
+            "bela_atna_necl",
+        ],
+        nargs=1,
+        type=str,
+    )
     return p
+
 
 def buildCondition(wcrp):
     """
@@ -28,9 +44,9 @@ def buildCondition(wcrp):
 
     global species
 
-    species = 'ch_cm_co_pk_sk'
+    species = "ch_cm_co_pk_sk"
 
-    if wcrp == 'eagle':
+    if wcrp == "eagle":
         return """
             --Eagle River
             FWA_Upstream(
@@ -45,7 +61,7 @@ def buildCondition(wcrp):
             localcode
             );
             """
-    elif wcrp == 'bessette':
+    elif wcrp == "bessette":
         return """
             -- Bessette Creek
             FWA_Upstream(
@@ -60,7 +76,7 @@ def buildCondition(wcrp):
             localcode
             );
             """
-    elif wcrp == 'bela_atna_necl':
+    elif wcrp == "bela_atna_necl":
         return """
             ("watershed_group_code" IN ('BELA','ATNA')
                 OR
@@ -89,8 +105,8 @@ def buildCondition(wcrp):
                 )
             )
             """
-    elif wcrp == 'elkr':
-        species = 'wct'
+    elif wcrp == "elkr":
+        species = "wct"
         return f"""
             "watershed_group_code" IN ('{wcrp}')
             """
@@ -99,6 +115,7 @@ def buildCondition(wcrp):
         return f"""
             "watershed_group_code" IN ('{wcrp}')
             """
+
 
 def runQuery(condition, conn):
     """
@@ -239,9 +256,9 @@ def runQuery(condition, conn):
                 END LOOP;
             END $$;
             """
-        
+
         cursor.execute(q_group_barriers)
-        
+
         q_calc_group_gains = """ 
             ----------------- CALCULATE GROUP GAINS -------------------------	
                 
