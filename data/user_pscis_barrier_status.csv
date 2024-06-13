@@ -1319,3 +1319,5 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 197017,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
 196200,PASSABLE,TABR,SN,2024-06-03,"Crossing has been remediated, see https://news.gov.bc.ca/releases/2020TRAN0099-001219"
 196223,PASSABLE,TABR,SN,2024-06-03,Imagery clearly shows crossing has been remediated with a bridge installation
+197664,POTENTIAL,BULK,LB,2024-06-13,This structure is a CBS and was incorrectly assigned 'Passable' due to information sourced from a PSCIS assessment.
+197665,POTENTIAL,BULK,LB,2024-06-13,This structure is a CBS and was incorrectly assigned 'Passable' due to information sourced from a PSCIS assessment.
