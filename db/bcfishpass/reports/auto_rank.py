@@ -8,10 +8,9 @@ This populate the wcrp_ranked_barriers table with whichever wcrp is specified.
 """
 
 import os
-import sys
 import argparse
-import getpass
 import psycopg2 as pg2
+from urllib.parse import urlparse
 
 
 def makeParser():
@@ -164,7 +163,7 @@ def runQuery(condition, conn):
             AND all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND all_spawningrearing_belowupstrbarriers_km  != 0
             AND {condition}
-            AND barriers_{species}_dnstr = ''
+            AND barriers_{species}_dnstr = '';
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;
@@ -454,7 +453,15 @@ def main():
     parser = makeParser()
     args = parser.parse_args()
     condition = buildCondition(args.wcrp[0])
-    conn = pg2.connect(os.environ["DATABASE_URL"])
+    p = urlparse(os.environ["DATABASE_URL"])
+    pg_conn_dict = {
+        'dbname': p.path[1:],
+        'user': p.username,
+        'password': p.password,
+        'port': p.port,
+        'host': p.hostname
+    }
+    conn = pg2.connect(**pg_conn_dict)
     runQuery(condition, conn)
     print("Done!")
 
