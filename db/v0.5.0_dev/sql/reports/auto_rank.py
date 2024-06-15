@@ -457,7 +457,6 @@ def main():
     parser = makeParser()
     args = parser.parse_args()
     condition = buildCondition(args.wcrp[0])
-<<<<<<< HEAD
     p = urlparse(os.environ["DATABASE_URL"])
     pg_conn_dict = {
         'dbname': p.path[1:],
@@ -467,9 +466,6 @@ def main():
         'host': p.hostname
     }
     conn = pg2.connect(**pg_conn_dict)
-=======
-    conn = pg2.connect(os.environ["DATABASE_URL"])
->>>>>>> 4ed1a4e42dff561a6751e38728950003f919d782
     runQuery(condition, conn)
     print("Done!")
 
