@@ -78,3 +78,10 @@ Run the model:
 
     jobs/model_prep
     jobs/model_run
+
+# Backups
+
+Backup strategies will vary but it can be useful to dump the entire database to file.  
+This appends the date and commit tag date to the file name:
+
+        pg_dump -Fc $DATABASE_URL > bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump    
