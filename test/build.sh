@@ -31,7 +31,7 @@ for table in fwa_watershed_groups_poly \
   fwa_stream_networks_discharge \
   fwa_stream_networks_mean_annual_precip;
   do
-    $PSQL -c "delete from $table where watershed_group_code not in (select watershed_group_code from fwa_watershed_groups_poly)";
+    $PSQL -c "delete from $table where watershed_group_code not in (select distinct watershed_group_code from whse_basemapping.fwa_stream_networks_sp)";
 done
 
 $PSQL -c "delete from whse_basemapping.fwa_stream_networks_channel_width where linear_feature_id not in (select linear_feature_id from whse_basemapping.fwa_stream_networks_sp)"
@@ -48,9 +48,16 @@ cd bcfishobs
 make --debug=basic
 cd .. ; rm -rf bcfishobs
 
-# load bcfishpass required data
-cd ../
-jobs/setup
+# set up the source data schema
+cd ../db/sources; ./migrate.sh; cd ..
+
+# run all migration scripts present in /db
+for tag in v* ;do
+    cd "$tag"; ./migrate.sh; cd ..
+done
+cd ..
+
+# load source data
 jobs/load_static
 jobs/load_monthly
 jobs/load_weekly

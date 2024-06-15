@@ -4,6 +4,7 @@ set -euxo pipefail
 #-------
 # upgrade bcfishpass schema (and wcrp summaries) by dropping and re-creating
 # note - schema of all tables named bcfishpass.log_ is presumed to be unchanged.
+# note - remove this file once migrations are in place
 #-------
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"

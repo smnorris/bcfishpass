@@ -8,6 +8,9 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
+# **
+# ** note temp dra data cache to be replaced with updated source**
+# **
 #-------
 # DRA code tables
 #-------
@@ -21,7 +24,7 @@ ogr2ogr \
   -update \
   -append \
   -nln whse_basemapping.transport_line_type_code \
-  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
   TRANSPORT_LINE_TYPE_CODE
 ogr2ogr \
   -f PostgreSQL \
@@ -29,7 +32,7 @@ ogr2ogr \
   -update \
   -append \
   -nln whse_basemapping.transport_line_surface_code \
-  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
   TRANSPORT_LINE_SURFACE_CODE
 ogr2ogr \
   -f PostgreSQL \
@@ -37,7 +40,7 @@ ogr2ogr \
   -update \
   -append \
   -nln whse_basemapping.transport_line_divided_code \
-  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
   TRANSPORT_LINE_DIVIDED_CODE
 ogr2ogr \
   -f PostgreSQL \
@@ -45,7 +48,7 @@ ogr2ogr \
   -update \
   -append \
   -nln whse_basemapping.transport_line_structure_code \
-  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
   TRANSPORT_LINE_STRUCTURE_CODE
 
 #-------

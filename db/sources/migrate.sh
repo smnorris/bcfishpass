@@ -1,15 +1,19 @@
 #!/bin/bash
 set -euxo pipefail
 
-#-------
-# set up (almost) empty db schema (run as db superuser)
-#-------
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-$PSQL -f db/schemas.sql
+# create required schemas
+$PSQL -f sql/schemas.sql
 
-# create empty whse tables
+# define cabd
+$PSQL -f sql/cabd.sql
+
+# define dra
+$PSQL -f sql/whse_basemapping.transport_line.sql
+
+# create whse tables as specified by bcdc api, using bc2pg
 for table in whse_admin_boundaries.clab_indian_reserves \
     whse_admin_boundaries.clab_national_parks \
     whse_admin_boundaries.adm_nr_districts_spg \
@@ -66,8 +70,6 @@ $PSQL -c \
    CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (bclcs_level_5); \
    CREATE INDEX ON whse_forest_vegetation.veg_comp_lyr_r1_poly (map_id);"
 
-# create source data tables/views
-for sql in db/sources/*.sql ; do
-  $PSQL -f "$sql"
-done
-
+# create additional views on source data
+$PSQL -f sql/bcdata.ften_range_poly_carto_vw.sql
+$PSQL -f sql/bcdata.parks.sql
