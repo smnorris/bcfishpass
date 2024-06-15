@@ -361,9 +361,13 @@ do update set rearing = EXCLUDED.rearing;
 
 -- finally, add any known/observed rearing
 with observed_rearing as (
-  select segmented_stream_id
-  from bcfishpass.streams_habitat_known_vw
+  select
+    hk.segmented_stream_id
+  from bcfishpass.streams_habitat_known_vw hk
+  left outer join bcfishpass.streams s
+  on hk.segmented_stream_id = s.segmented_stream_id
   where rearing_ch is true
+  and s.watershed_group_code = :'wsg'
 )
 INSERT INTO bcfishpass.habitat_linear_ch (
   segmented_stream_id,
