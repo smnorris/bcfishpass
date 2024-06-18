@@ -145,6 +145,88 @@ with length_totals as
   inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
   inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
   group by s.watershed_group_code
+
+  UNION ALL
+
+  -- Upstream of Elko Dam
+  SELECT
+    s.watershed_group_code,
+    'UPSTREAM_ELKO' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(s.geom)) FILTER (
+            WHERE
+              (h.spawning_wct IS TRUE AND w.wct IS TRUE) OR
+              (h.rearing_wct IS TRUE AND w.wct IS TRUE)
+          ), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+  -- total acccessible km
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE (
+              (h.spawning_wct IS TRUE AND w.wct IS TRUE) OR
+              (h.rearing_wct IS TRUE AND w.wct IS TRUE)
+            )
+            AND a.barriers_anthropogenic_dnstr = (select barriers_anthropogenic_dnstr 
+							  from bcfishpass.streams s
+							  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+							  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+							  where segmented_stream_id like '356570562.22912000')), 0)
+    ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  where FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- only above Elko Dam
+  group by s.watershed_group_code
+  
+UNION ALL
+  -- Downstream of Elko Dam
+  SELECT
+    s.watershed_group_code,
+    'DOWNSTREAM_ELKO' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(s.geom)) FILTER (
+            WHERE
+              (h.spawning_wct IS TRUE AND w.wct IS TRUE) OR
+              (h.rearing_wct IS TRUE AND w.wct IS TRUE)
+          ), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+  -- total acccessible km
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE (
+              (h.spawning_wct IS TRUE AND w.wct IS TRUE) OR
+              (h.rearing_wct IS TRUE AND w.wct IS TRUE)
+            )
+			AND a.barriers_anthropogenic_dnstr IS NULL
+			AND a.barriers_wct_dnstr = array[]::text[]
+			OR a.barriers_anthropogenic_dnstr = (select distinct barriers_anthropogenic_dnstr 
+												  from bcfishpass.streams s
+												  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+												  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+												  where linear_feature_id = 706872063)), 0) 
+    ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  where wscode_ltree <@ '300.625474.584724'::ltree  -- on the elk system and not above elko dam
+  AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree)
+  group by s.watershed_group_code
 )
 
 select
