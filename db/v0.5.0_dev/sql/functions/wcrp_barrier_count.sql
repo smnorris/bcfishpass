@@ -1,12 +1,13 @@
 -- function to query the view (so it is visible in pgfs)
 CREATE FUNCTION postgisftw.wcrp_barrier_count(
   watershed_group_code TEXT,
-  model_status TEXT default 'ALL'
+  model_status TEXT default 'OVERVIEW'
 )
 
 -- model_status        : HABITAT, ACCESSIBLE, ALL (default)
 
 RETURNS TABLE (
+ status TEXT,
  crossing_feature_type TEXT,
  n_passable bigint,
  n_barrier bigint,
@@ -29,6 +30,7 @@ IF (v_model_status = 'ALL')
 then return query
 
 SELECT
+  v_model_status as status,
   v.crossing_feature_type,
   sum(v.n_passable)::bigint as n_passable,
   sum(v.n_barrier)::bigint as n_barrier,
@@ -42,6 +44,7 @@ GROUP BY v.crossing_feature_type;
 ELSIF (v_model_status = 'ACCESSIBLE')
 then return query
 SELECT
+  v_model_status as status,
   v.crossing_feature_type,
   sum(v.n_passable)::bigint as n_passable,
   sum(v.n_barrier)::bigint as n_barrier,
@@ -57,6 +60,48 @@ group by v.crossing_feature_type;
 ELSIF (v_model_status = 'HABITAT')
 then return query
 SELECT
+  v_model_status as status,
+  v.crossing_feature_type,
+  v.n_passable::bigint as n_passable,
+  v.n_barrier::bigint as n_barrier,
+  v.n_potential::bigint as n_potential,
+  v.n_unknown::bigint as n_unknown,
+  (v.n_passable + v.n_barrier + v.n_potential + v.n_unknown)::bigint as total
+FROM bcfishpass.wcrp_barrier_count_vw v
+WHERE
+  v.watershed_group_code = v_wsg and
+  v.model_status = 'HABITAT';
+
+ELSIF (v_model_status = 'OVERVIEW')
+then return query
+SELECT
+  'ALL' as status,
+  v.crossing_feature_type,
+  sum(v.n_passable)::bigint as n_passable,
+  sum(v.n_barrier)::bigint as n_barrier,
+  sum(v.n_potential)::bigint as n_potential,
+  sum(v.n_unknown)::bigint as n_unknown,
+  (sum(v.n_passable) + sum(v.n_barrier) + sum(v.n_potential) + sum(v.n_unknown))::bigint as total
+FROM bcfishpass.wcrp_barrier_count_vw v
+WHERE v.watershed_group_code = v_wsg
+GROUP BY v.crossing_feature_type
+UNION ALL
+SELECT
+  'ACCESSIBLE' as status,
+  v.crossing_feature_type,
+  sum(v.n_passable)::bigint as n_passable,
+  sum(v.n_barrier)::bigint as n_barrier,
+  sum(v.n_potential)::bigint as n_potential,
+  sum(v.n_unknown)::bigint as n_unknown,
+  (sum(v.n_passable) + sum(v.n_barrier) + sum(v.n_potential) + sum(v.n_unknown))::bigint as total
+FROM bcfishpass.wcrp_barrier_count_vw v
+WHERE
+  v.watershed_group_code = v_wsg and
+  v.model_status in ('ACCESSIBLE', 'HABITAT')
+group by v.crossing_feature_type
+UNION ALL
+SELECT
+  'HABITAT' as status,
   v.crossing_feature_type,
   v.n_passable::bigint as n_passable,
   v.n_barrier::bigint as n_barrier,
