@@ -4,16 +4,18 @@ select
    c.aggregated_crossings_id,
    case 
    when 
-    h.ch_spawning_km > 0 or h.ch_rearing_km > 0 or 
-    h.co_spawning_km > 0 or h.co_rearing_km > 0 or 
-    h.sk_spawning_km > 0 or h.sk_rearing_km > 0 or
-    h.st_spawning_km > 0 or h.st_rearing_km > 0 or
-    h.wct_spawning_km > 0 or h.wct_rearing_km > 0
+    ((h.ch_spawning_km > 0 or h.ch_rearing_km > 0) and w.ch IS TRUE) or 
+    ((h.co_spawning_km > 0 or h.co_rearing_km > 0) and w.co IS TRUE) or 
+    ((h.sk_spawning_km > 0 or h.sk_rearing_km > 0) and w.sk IS TRUE) or
+    ((h.st_spawning_km > 0 or h.st_rearing_km > 0) and w.st IS TRUE) or
+    ((h.wct_spawning_km > 0 or h.wct_rearing_km > 0) and w.wct IS TRUE) 
    then 'HABITAT'
    when 
-    cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0 or 
-    cardinality(a.barriers_st_dnstr) = 0 or
-    cardinality(a.barriers_wct_dnstr) = 0
+	(w.ch IS TRUE and cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0) or 
+	(w.co IS TRUE and cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0) or 
+	(w.sk IS TRUE and cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0) or
+	(w.st IS TRUE and cardinality(a.barriers_st_dnstr) = 0) or
+	(w.wct IS TRUE and cardinality(a.barriers_wct_dnstr) = 0)
    then 'ACCESSIBLE'
    else 'NATURAL_BARRIER'
    end as model_status
@@ -22,6 +24,8 @@ left outer join bcfishpass.crossings_upstream_access a
 on c.aggregated_crossings_id = a.aggregated_crossings_id 
 left outer join bcfishpass.crossings_upstream_habitat h
 on c.aggregated_crossings_id = h.aggregated_crossings_id 
+left outer join bcfishpass.wcrp_watersheds w 
+on c.watershed_group_code = w.watershed_group_code
 )
 
 SELECT

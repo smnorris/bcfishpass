@@ -20,13 +20,26 @@ RETURN query
 
 -- dams and assessed crossings on potentially accessible streams (to target spp)
 -- - n total
--- - n barriers
+-- - n barriers assessed
 -- - pct barriers
 SELECT
   cft.crossing_feature_type,
-  count(*) filter (where c.barrier_status in ('BARRIER', 'POTENTIAL')) as n_barrier,
+  count(*) filter (where c.barrier_status in ('BARRIER', 'POTENTIAL') AND c.pscis_status = 'ASSESSED') as n_barriers_assessed,
+  count(*) filter (where c.pscis_status NOT IN ('ASSESSED') OR c.pscis_status IS NULL) as n_unassessed,
   count(*) as n_total,
-  round((count(*) filter (where c.barrier_status in ('BARRIER', 'POTENTIAL'))::numeric / count(*)::numeric) * 100, 1) as pct_barrier
+  CASE 
+  	WHEN count(*) filter (where c.barrier_status in ('BARRIER', 'POTENTIAL') AND c.pscis_status = 'ASSESSED')::numeric != 0
+	THEN
+	  round(
+		((count(*) filter (where c.barrier_status in ('BARRIER', 'POTENTIAL') AND c.pscis_status = 'ASSESSED')::numeric         -- # assess structures where barrier status IN (BARRIER, POTENTIAL)
+		  + ((count(*) filter (where c.barrier_status in ('BARRIER', 'POTENTIAL') AND c.pscis_status = 'ASSESSED')::numeric 
+				/ count(*) filter (where c.pscis_status = 'ASSESSED')::numeric)                                                     -- Failure rate (# assessed that are barrier or potential / total # assessed)
+			* count(*) filter (where c.pscis_status != 'ASSESSED' OR c.pscis_status IS NULL)::numeric)                            -- # unassessed structures
+		  )
+		/ count(*)::numeric) * 100                                                                                              -- total # of structures
+		, 1 )
+	ELSE 0.0 -- 0 if no assessed barriers
+  END as pct_barrier
 from bcfishpass.crossings c
 inner join bcfishpass.crossings_feature_type_vw cft using (aggregated_crossings_id)
 inner join bcfishpass.crossings_upstream_access a using (aggregated_crossings_id)
@@ -51,7 +64,7 @@ $$;
 COMMENT ON FUNCTION postgisftw.wcrp_barrier_severity IS
 'For given watershed group, returns count of dams/pscis crossings on potentially accessible streams
 - n total
-- n barrier
+- n barriers assessed
 - pct that are barrier';
 
 REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_barrier_severity FROM public;
