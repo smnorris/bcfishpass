@@ -76,7 +76,7 @@ barriers as
         o.wscode_ltree,
         o.localcode_ltree,
         False,
-        1
+        20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )
   where o.species_code is null
 
