@@ -67,7 +67,7 @@ obs_upstr as
         o.wscode_ltree,
         o.localcode_ltree,
         false,
-        1
+        20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )
   -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
   left outer join bcfishpass.user_barriers_definite_control bc
@@ -123,7 +123,7 @@ hab_upstr as
         h.wscode_ltree,
         h.localcode_ltree,
         false,
-        1
+        20       -- a large tolerance to discard habitat that ends at more or less the same location as the barrier (within 20m)
       )
   group by b.barrier_id
 ),
