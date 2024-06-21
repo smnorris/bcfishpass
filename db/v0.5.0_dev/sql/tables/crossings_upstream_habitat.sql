@@ -35,23 +35,3 @@ create table bcfishpass.crossings_upstream_habitat (
   wct_spawning_belowupstrbarriers_km    double precision DEFAULT 0,
   wct_rearing_belowupstrbarriers_km     double precision DEFAULT 0
 );
-
-
--- wcrp 'all species' upstream habitat reporting  (for columns where it differs from above table)
---  - barriers only
---  - currently ch/co/sk/st/wct where they exist in watersheds of interest
---  - apply 1.5x multiplier to co rearing in wetlands and all sk rearing
-create table bcfishpass.crossings_upstream_habitat_wcrp (
-  aggregated_crossings_id               text primary key,
-  watershed_group_code                  character varying (4),
-  co_rearing_km                         double precision DEFAULT 0,
-  co_rearing_belowupstrbarriers_km      double precision DEFAULT 0,
-  sk_rearing_km                         double precision DEFAULT 0,
-  sk_rearing_belowupstrbarriers_km      double precision DEFAULT 0,
-  all_spawning_km                        double precision DEFAULT 0,
-  all_spawning_belowupstrbarriers_km     double precision DEFAULT 0,
-  all_rearing_km                        double precision DEFAULT 0,
-  all_rearing_belowupstrbarriers_km     double precision DEFAULT 0,
-  all_spawningrearing_km                double precision DEFAULT 0,
-  all_spawningrearing_belowupstrbarriers_km    double precision DEFAULT 0
-);
