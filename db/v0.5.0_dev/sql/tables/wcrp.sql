@@ -16,6 +16,28 @@ create table bcfishpass.wcrp_watersheds
   notes text
 );
 
+
+-- --------------
+-- WCRP specific upstream habitat reporting  (for columns where it differs from bcfishpass.crossings_upstream_habitat)
+--  - 'all species' is target species as defined in wcrp_watersheds
+--  - apply 1.5x multiplier to co rearing in wetlands and to all sk rearing
+-- --------------
+create table bcfishpass.crossings_upstream_habitat_wcrp (
+  aggregated_crossings_id               text primary key,
+  watershed_group_code                  character varying (4),
+  co_rearing_km                         double precision DEFAULT 0,
+  co_rearing_belowupstrbarriers_km      double precision DEFAULT 0,
+  sk_rearing_km                         double precision DEFAULT 0,
+  sk_rearing_belowupstrbarriers_km      double precision DEFAULT 0,
+  all_spawning_km                        double precision DEFAULT 0,
+  all_spawning_belowupstrbarriers_km     double precision DEFAULT 0,
+  all_rearing_km                        double precision DEFAULT 0,
+  all_rearing_belowupstrbarriers_km     double precision DEFAULT 0,
+  all_spawningrearing_km                double precision DEFAULT 0,
+  all_spawningrearing_belowupstrbarriers_km    double precision DEFAULT 0
+);
+
+
 -- --------------
 -- WCRP TRACKING TABLES
 --
