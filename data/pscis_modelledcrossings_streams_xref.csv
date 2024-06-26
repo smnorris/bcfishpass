@@ -3562,3 +3562,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198883,11303791,,LNIC,LB,Matched to closest modelled crossing.
 198881,11300797,,LNIC,LB,Matched to closest modelled crossing.
 198882,11303627,,LNIC,LB,Matched to closest modelled crossing.
+NULL,23800079,,USHU,LS,Point slightly off from satellite

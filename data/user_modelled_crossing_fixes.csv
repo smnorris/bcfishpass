@@ -21680,3 +21680,29 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11304259,OBS,LNIC,LB,2024-06-11,Bing/Google/ESRI imagery,
 11302218,FORD,LNIC,LB,2024-06-12,Bing/Google/ESRI imagery,
 11302231,FORD,LNIC,LB,2024-06-13,Bing/Google/ESRI imagery,
+23800730,CBS,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+23800940,OBS,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,bridge - changed from CBS to OBS
+23801453,OBS,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,bridge - changed from CBS to OBS
+24720709,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+24720744,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+24720767,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+24734514,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+24734515,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+24734548,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no structure
+24734567,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - no crossing
+24734569,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete - duplicate crossing point
+18300001,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300007,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300008,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300011,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300012,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300150,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300151,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300160,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300307,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300312,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18300590,CBS,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Change to Barrier (it is a culvert)
+18300892,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+18303245,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete
+18303470,,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
+23800103,,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,Delete (kept d/s point)
