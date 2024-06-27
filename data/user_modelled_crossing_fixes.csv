@@ -6163,3 +6163,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3700192,NONE,CRKD,AI,2024-01-02,Bing/Google/ESRI, no structure
 6800484,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
 6801356,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
+1400002,NONE,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Road no longer exists
+18300020,CBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Replaced with new CBS in summer 2023
+18303484,CBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Barrier confirmed
+18303506,OBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Fish getting past this structure  (Bridge)
+1400589,CBS,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Culvert is Barrier
+1400042,CBS,BONP,MC,2024-06-27,Local Knowledge,"Local Knowledge - Two poorly installed culverts, Barrier. Entire Creek is groundwater"
