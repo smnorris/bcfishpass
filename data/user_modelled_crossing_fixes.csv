@@ -21687,3 +21687,12 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 18303506,OBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Fish getting past this structure  (Bridge)
 1400589,CBS,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Culvert is Barrier
 1400042,CBS,BONP,MC,2024-06-27,Local Knowledge,"Local Knowledge - Two poorly installed culverts, Barrier. Entire Creek is groundwater"
+4603156,NONE,ELKR,MC,2024-06-27,imagery,South Line Creek runs parallel to road in satellite imagery. Crossing does not exist. Remove.
+4603391,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Site of a landslide. Remove?
+4603392,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Remove?
+4603432,NONE,ELKR,MC,2024-06-27,BC Parks,Confirmed by BC Parks to not exist. Recreational trail erroneously mapped in DRA. Remove crossing from model
+4603971,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Remove?
+4604464,NONE,ELKR,MC,2024-06-27,imagery,South Line Creek runs parallel road in satellite imagery. Crossing does not exist. Remove.
+24734832,NONE,ELKR,MC,2024-06-27,BC Parks,Confirmed by BC Parks to not exist. Recreational trail erroneously mapped in DRA. Remove crossing from model
+4605600,OBS,ELKR,MC,2024-06-27,imagery,bridge
+4603974,NONE,ELKR,MC,2024-06-27,imagery,No crossing visible
