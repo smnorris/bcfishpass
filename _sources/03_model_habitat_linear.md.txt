@@ -1,7 +1,7 @@
 (linear_habitat)=
 # Linear spawning/rearing habitat model
 
-Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of potential spawning or rearing habitat is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, `bcfishpass` can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).
+Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of usable spawning or rearing habitat (habitat quality) is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, `bcfishpass` can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).
 
 Linear spawning/rearing habitat modelling is currently based on species specific criteria for:
 
@@ -43,12 +43,10 @@ Channel width is modelled for all of BC:
 - [Poisson Consulting](https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/) model based on upstream area / precipitation
 - [data collection/preparation](https://github.com/smnorris/fwapg/tree/main/extras/channel_width)
 
-**NOTES**  
+**NOTE** contributing area (FWA watersheds) and precipitiation (ClimateBC) datasets used to model discharge / channel width are both cut off at the BC border:
 
-1. Discharge and channel width models are based on historic climate data
-2. Contributing area (FWA watersheds) and precipitiation (ClimateBC) datasets used to model discharge / channel width are both cut off at the BC border:
-	- *all results from the above models are only valid for streams with 100% of their contributing area with BC*
-	- *streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions*
+- *all results from the above models are only valid for streams with 100% of their contributing area with BC*
+- *streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions*
 
 
 
