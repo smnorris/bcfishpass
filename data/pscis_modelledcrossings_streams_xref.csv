@@ -3559,3 +3559,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198719,3702074,,CRKD,AI,Confirmed in field that this is actual location of Balsam Creek
 124240,6800082,,HORS,MC,Using assessment comments to match PSCIS point to Black Creek Rd modelled crossing
 197180,,701418136,HORS,MC,"PSCIS point is on a driveway with no modelled crossing, snapping point to nearest stream "
+197571,4600316,,ELKR,MC,satellite imagery shows stream flowing to north before crossing under road. Matched PSCIS 197571

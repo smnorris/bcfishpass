@@ -734,7 +734,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50258,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50260,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50261,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-50263,POTENTIAL,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
+50263,PASSABLE,ELKR,MC,2024-03-27,Ford crossing based on assessment
 50264,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50265,POTENTIAL,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50266,POTENTIAL,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -784,7 +784,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 61632,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 61635,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 61636,PASSABLE,ELKR,CWF,2021-01-01,NJO - Flag for review - based on assessment comments (and imagery review where required)
-61637,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+61637,PASSABLE,ELKR,MC,2024-03-26,Assessment states that this is not a barrier
 62123,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62134,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62135,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1307,3 +1307,36 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 125204,PASSABLE,PARS,MW,2023-08-14,Bridge; Imagery Review
 197962,PASSABLE,MORR,MW,2023-08-21,Bridge; Imagery Review
 198872,PASSABLE,HORS,MC,2024-03-14,"Abandoned culvert in stream, but is not a barrier. Also 197761 is a duplicate PCSIS point."
+197823,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197824,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197826,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197563,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197803,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197805,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197816,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197818,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197819,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197820,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197821,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197822,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197846,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197847,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197831,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197837,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197838,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197839,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197788,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197789,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197790,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197791,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197801,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197804,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197797,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197808,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197811,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197841,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197856,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197858,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+197860,PASSABLE,ELKR,MC,2024-06-27,Ford crossing based on assessment
+62245,PASSABLE,ELKR,MC,2024-06-27,This crossing has been rehabilitated
+62293,POTENTIAL,ELKR,MC,2024-06-27,"Channel blew out and formed a new channel through road. Not clear if this ""ford"" is passable."
