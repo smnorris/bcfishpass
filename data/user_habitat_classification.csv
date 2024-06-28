@@ -15248,6 +15248,7 @@
 360887120,20,120,TSAY,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,source point snapped to closest stream within 250m
 360887414,204,304,KITL,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,source point snapped to closest stream within 250m
 360879788,0,100,NASC,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,manually matched
+<<<<<<< HEAD
 360804808,253,527.036659,BULK,CH,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,"PSE point is not located on a modelled stream, closest modelled stream line to PSE point was selected."
 360864873,633,937,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
 360864873,1218.44764,1570,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
@@ -15294,3 +15295,11 @@
 360873822,22478,22509.83251,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,River sockeye
 360873822,168869,170329.9685,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,River sockeye
 360881038,0,280.2148356,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,Lake sockeye
+360804115,652.18,852.93,BULK,CO,spawning,t,LB,2024-06-17,Pacific Salmon Foundation,
+356209928,25.6202005,486.7184822,SHUL,CO,Rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge -CO rearing habitati
+356209928,486.719176,822,SHUL,CO,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO Spawning
+356343800,0,838,SHUL,SK,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO and SK Spawning
+356348431,1481,1681,SHUL,SK,Rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
+356348431,1481,1781,SHUL,SK,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
+356137288,265.6052138,408,SHUL,SK,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Adult SK observed up to rail line
+356347377,0,558,BONP,CH,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - major spawning for CH
