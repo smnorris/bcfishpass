@@ -15248,7 +15248,6 @@
 360887120,20,120,TSAY,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,source point snapped to closest stream within 250m
 360887414,204,304,KITL,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,source point snapped to closest stream within 250m
 360879788,0,100,NASC,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,manually matched
-<<<<<<< HEAD
 360804808,253,527.036659,BULK,CH,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,"PSE point is not located on a modelled stream, closest modelled stream line to PSE point was selected."
 360864873,633,937,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
 360864873,1218.44764,1570,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
