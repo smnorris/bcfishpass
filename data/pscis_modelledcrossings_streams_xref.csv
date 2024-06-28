@@ -3562,5 +3562,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198883,11303791,,LNIC,LB,Matched to closest modelled crossing.
 198881,11300797,,LNIC,LB,Matched to closest modelled crossing.
 198882,11303627,,LNIC,LB,Matched to closest modelled crossing.
-197180,,701418136,HORS,MC,"PSCIS point is on a driveway with no modelled crossing, snapping point to nearest stream "
 197571,4600316,,ELKR,MC,satellite imagery shows stream flowing to north before crossing under road. Matched PSCIS 197571

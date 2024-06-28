@@ -6163,7 +6163,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3700192,NONE,CRKD,AI,2024-01-02,Bing/Google/ESRI, no structure
 6800484,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
 6801356,NONE,HORS,MC,2024-03-14,DWB field assessments 2023,no structure found during assessment
-<<<<<<< HEAD
 11304215,NONE,LNIC,LB,2024-04-09,Field assessment,Comments indicate this crossing has been removed
 11300428,NONE,LNIC,LB,2024-04-09,Imagery review,
 11300427,NONE,LNIC,LB,2024-04-09,Imagery review,
@@ -21696,3 +21695,26 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24734832,NONE,ELKR,MC,2024-06-27,BC Parks,Confirmed by BC Parks to not exist. Recreational trail erroneously mapped in DRA. Remove crossing from model
 4605600,OBS,ELKR,MC,2024-06-27,imagery,bridge
 4603974,NONE,ELKR,MC,2024-06-27,imagery,No crossing visible
+23800730,CBS,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,no road present
+23800940,OBS,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,bridge
+23801453,OBS,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,bridge
+24720709,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,no road present
+24720744,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,no road present
+24720767,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,no road present
+24734514,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,no road present
+24734515,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,no road present
+24734548,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,
+24734569,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300001,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300007,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300008,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300011,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300012,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300150,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300151,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300307,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300312,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+18300892,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+23800103,NONE,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,duplicate crossing - removed in favour of d/s location
+18300160,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
+23800079,OBS,USHU,LS,2025-06-28,Bing/Google/ESRI imagery,bridge visible
