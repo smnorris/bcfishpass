@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Linear spawning/rearing habitat model &mdash; bcfishpass v0.5.0 documentation</title>
+  <title>Linear spawning/rearing habitat model &mdash; bcfishpass v0.1.dev2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=929716b1" />
@@ -16,7 +16,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=e663822d"></script>
+        <script src="_static/documentation_options.js?v=7bed0d46"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -86,7 +86,7 @@
              
   <section id="linear-spawning-rearing-habitat-model">
 <span id="linear-habitat"></span><h1>Linear spawning/rearing habitat model<a class="headerlink" href="#linear-spawning-rearing-habitat-model" title="Link to this heading"></a></h1>
-<p>Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of usable spawning or rearing habitat (habitat quality) is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).</p>
+<p>Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of potential spawning or rearing habitat is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, <code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).</p>
 <p>Linear spawning/rearing habitat modelling is currently based on species specific criteria for:</p>
 <ul class="simple">
 <li><p>stream gradient</p></li>
@@ -118,11 +118,16 @@ Per species spawning and rearing discharge/channel width thresholds are taken fr
 <li><p><a class="reference external" href="https://www.poissonconsulting.ca/temporary-hidden-link/859859031/channel-width-21b/">Poisson Consulting</a> model based on upstream area / precipitation</p></li>
 <li><p><a class="reference external" href="https://github.com/smnorris/fwapg/tree/main/extras/channel_width">data collection/preparation</a></p></li>
 </ul>
-<p><strong>NOTE</strong> contributing area (FWA watersheds) and precipitiation (ClimateBC) datasets used to model discharge / channel width are both cut off at the BC border:</p>
+<p><strong>NOTES</strong></p>
+<ol class="arabic simple">
+<li><p>Discharge and channel width models are based on historic climate data</p></li>
+<li><p>Contributing area (FWA watersheds) and precipitiation (ClimateBC) datasets used to model discharge / channel width are both cut off at the BC border:</p>
 <ul class="simple">
 <li><p><em>all results from the above models are only valid for streams with 100% of their contributing area with BC</em></p></li>
 <li><p><em>streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions</em></p></li>
 </ul>
+</li>
+</ol>
 </section>
 <section id="feature-type-and-connectivity">
 <h2>Feature type and connectivity<a class="headerlink" href="#feature-type-and-connectivity" title="Link to this heading"></a></h2>
@@ -215,7 +220,7 @@ Per species spawning and rearing discharge/channel width thresholds are taken fr
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, bcfishpass contributors.</p>
+    <p>&#169; Copyright 2023, Simon Norris, bcfishpass contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
