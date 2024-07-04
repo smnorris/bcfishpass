@@ -7,7 +7,6 @@
 -- (via smallest distance or matched name) does not match correctly
 -- ***PSCIS crossings present in the lookup with no stream/modelled crossing do not get matched to a stream***
 -- --------------
-drop table if exists bcfishpass.pscis_modelledcrossings_streams_xref cascade;
 create table bcfishpass.pscis_modelledcrossings_streams_xref
 (
   stream_crossing_id integer PRIMARY KEY,
@@ -26,7 +25,6 @@ create table bcfishpass.pscis_modelledcrossings_streams_xref
 -- Note that we want simple integer unique ids for all anthropogenic barriers that remain constant.
 -- So do not autogenerate, maintain them in the csv manually for now
 -- --------------
-drop table if exists bcfishpass.user_barriers_anthropogenic cascade;
 create table bcfishpass.user_barriers_anthropogenic
 (
     user_barrier_anthropogenic_id integer PRIMARY KEY,
@@ -48,7 +46,6 @@ create table bcfishpass.user_barriers_anthropogenic
 --
 -- User added Non-falls definite barrers (exclusions, misc, other)
 -- --------------
-drop table if exists bcfishpass.user_barriers_definite cascade;
 create table bcfishpass.user_barriers_definite
 (
     barrier_type text,
@@ -67,9 +64,8 @@ create table bcfishpass.user_barriers_definite
 -- --------------
 -- USER_BARRIERS_DEFINITE_CONTROL
 --
--- Modify barrier status of natural features (fiss/fwa falls, gradient barriers, subsurface flow)
+-- Modify barrier status of natural features (waterfalls, gradient barriers, subsurface flow)
 -- --------------
-drop table if exists bcfishpass.user_barriers_definite_control cascade;
 create table bcfishpass.user_barriers_definite_control
 (
   blue_line_key integer,
@@ -84,6 +80,19 @@ create table bcfishpass.user_barriers_definite_control
   primary key (blue_line_key, downstream_route_measure)
 );
 
+-- --------------
+-- USER CABD EXCLUSIONS
+--
+-- ids of cabd dams to exclude
+-- --------------
+create table bcfishpass.user_cabd_dams_exclusions (
+  cabd_id       text,
+  reviewer_name text,
+  review_date   date,
+  source        text,
+  notes         text,
+  primary key (cabd_id)
+);
 
 -- --------------
 -- USER FALLS
@@ -91,7 +100,6 @@ create table bcfishpass.user_barriers_definite_control
 -- additional falls, from various sources
 -- (not grouped in with user_barriers_definite because tracking non-barrier falls is useful)
 -- --------------
-drop table if exists bcfishpass.user_falls cascade;
 create table bcfishpass.user_falls
 (
   falls_name text,
@@ -113,7 +121,6 @@ create table bcfishpass.user_falls
 --
 -- designate stream segments as known rearing/spawning
 -- --------------
-drop table if exists bcfishpass.user_habitat_classification cascade;
 create table bcfishpass.user_habitat_classification
 (
   blue_line_key integer,
@@ -137,7 +144,6 @@ create table bcfishpass.user_habitat_classification
 -- user defined override for modelled crossings that are either OBS or non-existent
 -- note that this table uses modelled_crossing_id as identifier rather than blkey/measure
 -- --------------
-drop table if exists bcfishpass.user_modelled_crossing_fixes cascade;
 create table bcfishpass.user_modelled_crossing_fixes
 (
   modelled_crossing_id integer,
@@ -159,7 +165,6 @@ create index on bcfishpass.user_modelled_crossing_fixes (modelled_crossing_id);
 --
 -- manual override of PSCIS status
 -- --------------
-drop table if exists bcfishpass.user_pscis_barrier_status cascade;
 create table bcfishpass.user_pscis_barrier_status
 (
   stream_crossing_id integer PRIMARY KEY,
@@ -177,7 +182,6 @@ create table bcfishpass.user_pscis_barrier_status
 -- presence/absence of target species within all BC watershed groups
 -- SOURCE - CWF WCRP project area scoping (2020)
 -- --------------
-drop table if exists bcfishpass.wsg_species_presence cascade;
 create table bcfishpass.wsg_species_presence
 (
   watershed_group_code varchar(4),
@@ -203,7 +207,6 @@ create table bcfishpass.wsg_species_presence
 -- include waterbody_poly_id in this table if a given lake is/was known to support sockeye
 -- source DFO conservation units via PSF
 -- --------------------
-drop table if exists bcfishpass.dfo_known_sockeye_lakes cascade;
 create table bcfishpass.dfo_known_sockeye_lakes (
   waterbody_poly_id integer primary key
 );

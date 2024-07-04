@@ -118,14 +118,14 @@ dnstr_spawning AS
   inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
-  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   WHERE b.waterbody_key IS NULL OR a.row_number < b.row_number
 )
 
 insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
-select
+select distinct
   segmented_stream_id,
   spawning
 FROM dnstr_spawning
@@ -148,8 +148,8 @@ WITH spawn AS
     s.geom
   FROM bcfishpass.streams s
   inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
@@ -242,7 +242,7 @@ clusters_near_rearing as
 -- finally, insert the streams that compose the clusters connected to lakes
 insert into bcfishpass.habitat_linear_sk
 (segmented_stream_id, spawning)
-select
+select distinct
   segmented_stream_id,
   true as spawning
 FROM clusters_near_rearing a
@@ -251,5 +251,3 @@ ON a.cid = b.cid
 WHERE a.wb is true
 on conflict (segmented_stream_id)
 do update set spawning = EXCLUDED.spawning;
-
-

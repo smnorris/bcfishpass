@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# Load FWA data
+# (not included in load_static to ensure job fits within gha time limits)
+#-------
+git clone https://github.com/smnorris/fwapg
+cd fwapg
+mkdir -p .make; touch .make/db  # db schema/functions/etc are presumed to already exist, just reload data
+mkdir -p data
+make --debug=basic

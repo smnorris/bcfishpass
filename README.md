@@ -23,7 +23,6 @@ See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
 - [fwapg](https://github.com/smnorris/fwapg)
 - [bcfishobs](https://github.com/smnorris/bcfishobs)
 
-
 ## Setup
 
 `bcfishpass` is a collection of shell/sql/Python scripts. To download and use the latest:
@@ -31,18 +30,14 @@ See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
 
-Presuming PostgreSQL/PostGIS are already installed, the easiest way to install dependencies is likely via `conda`.
-An `environment.yml` file is provided to install the required tools:
+Install required tools using your preferred method. For local development, `conda` can be simplest:
 
     conda env create -f environment.yml
     conda activate bcfishpass
 
-Note that `cdo` is required for processing NetCDF discharge files, but this tool is not currently included in the conda environment.
-If processing discharge based habitat models, install `cdo` separately:
+A Docker image is also provided:
 
-- `conda install cdo` (if your system supports this, this may not work on ARM based Macs) 
-- `brew install cdo` 
-- install from [from source](https://code.mpimet.mpg.de/projects/cdo/wiki/Cdo#Download-Compile-Install)
+    docker pull ghcr.io/smnorris/bcfishpass:main
 
 If the database you are working with does not already exist, create it:
 
@@ -52,17 +47,35 @@ All scripts presume that the `DATABASE_URL` environment variable points to your 
 
     export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass
 
-Once the database is created, load requirements `fwapg` and `bcfishobs` as per instructions in the respective projects.
+Set up the database schema:
 
+    jobs/setup
 
-## Usage
+Load FWA data:
 
-With `fwapg` and `bcfishobs` completed, load railways and map tiles (currently required for output `crossings_vw`):
+    git clone https://github.com/smnorris/fwapg
+    cd fwapg
+    mkdir -p .make; touch .make/db  # just reload data
+    mkdir -p data
+    make --debug=basicjobs/load_fwa
 
-    bcdata bc2pg whse_basemapping.gba_railway_tracks_sp
-    bcdata bc2pg whse_basemapping.dbm_mof_50k_grid
+Load all additional data:
 
-Finally, build `bcfishpass`:
+    jobs/load_static
+    jobs/load_monthly
+    jobs/load_weekly
+
+Run `bcfishobs`:
+
+    git clone git@github.com:smnorris/bcfishobs.git
+    cd bcfishobs
+    mkdir -p .make
+    make -t .make/setup
+    make -t .make/load_static
+    make -t .make/fiss_fish_obsrvtn_pnt_sp
+    make --debug=basic
+
+Finally, navigate back to the root bcfishpass folder and build `bcfishpass`:
 
     make
 

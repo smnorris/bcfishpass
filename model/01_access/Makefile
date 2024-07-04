@@ -54,6 +54,11 @@ test:
 	$(PSQL) -c "truncate bcfishpass.watershed_groups_access"
 	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from bcfishpass.parameters_habitat_method"
 
+# revert to processing all watershed groups
+full:
+	$(PSQL) -c "truncate bcfishpass.watershed_groups_access"
+	$(PSQL) -c "insert into bcfishpass.watershed_groups_access select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly"
+
 # ------
 # FALLS
 # ------
@@ -61,6 +66,20 @@ test:
 	falls/sql/falls.sql
 	mkdir -p .make
 	cd falls; ./falls.sh
+	touch $@
+
+# ready to go but not currently used
+.make/cabd_waterfalls:
+	mkdir -p .make
+	$(PSQL) -c "truncate cabd.waterfalls"
+	ogr2ogr -f PostgreSQL \
+	  "PG:$(DATABASE_URL)" \
+	  -append \
+	  -nln cabd.waterfalls \
+	  "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+	  OGRGeoJSON
+	$(PSQL) -c "refresh materialized view bcfishpass.falls_vw"
+	$(PSQL) -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
 	touch $@
 
 # ------
@@ -74,9 +93,16 @@ test:
 # ------
 # DAMS
 # ------
-.make/dams:  dams/dams.sh dams/sql/dams.sql
+.make/dams:
 	mkdir -p .make
-	cd dams; ./dams.sh
+	$(PSQL) -c "truncate cabd.dams"
+	ogr2ogr -f PostgreSQL \
+	  "PG:$(DATABASE_URL)" \
+	  -append \
+	  -nln cabd.dams \
+	  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
+	  OGRGeoJSON
+	$(PSQL) -c "refresh materialized view bcfishpass.dams_vw"
 	touch $@
 
 # ------
@@ -86,7 +112,6 @@ test:
 .make/modelled_stream_crossings:
 	mkdir -p .make
 	cd modelled_stream_crossings; make .make/download_archive
-	cd modelled_stream_crossings; make .make/download_bcdata # also download roads/railways for reference
 	touch $@
 
 # ------
@@ -97,13 +122,6 @@ test:
 	cd pscis; ./pscis.sh
 	touch $@
 
-# ------
-# map tile index
-# ------
-.make/dbm_mof_50k_grid:
-	mkdir -p .make
-	bcdata bc2pg WHSE_BASEMAPPING.DBM_MOF_50K_GRID
-	touch $@
 
 # -----
 # CROSSINGS
@@ -111,7 +129,6 @@ test:
 # combine modelled crossings, pscis, dams into bcfishpass.crossings
 .make/crossings: .make/dams \
 	.make/pscis \
-	.make/dbm_mof_50k_grid \
 	sql/load_crossings.sql
 	$(PSQL) -c "truncate bcfishpass.crossings"
 	# load crossings in series, parallel inserts can be confounded by locks
@@ -274,36 +291,15 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 
 	touch $@
 
-# -------------------------------------------------------------------------------------
-# download pre-computed precip/discharge/channel width and load to db
-# (required for inclusion in bcfishpass.streams)
-# this can be removed with fix of #344, or at least moving this download into fwapg
-# -------------------------------------------------------------------------------------
-.make/data:
-	mkdir -p data
-	wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/channel_width.csv
-	wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/mean_annual_precip.csv
-	wget -qNP data https://bcfishpass.s3.us-west-2.amazonaws.com/discharge.csv
-	$(PSQL) -f sql/load_map_mad_cw.sql
-	# because we are downloading these files rather than building from scratch,
-	# create the make targets so habitat script does not try and build
-	mkdir -p ../02_habitat_linear/precipitation/.make
-	touch ../02_habitat_linear/precipitation/.make/precip
-	mkdir -p ../02_habitat_linear/channel_width/.make
-	touch ../02_habitat_linear/channel_width/.make/channel_width
-	mkdir -p ../02_habitat_linear/discharge/.make
-	touch ../02_habitat_linear/discharge/.make/discharge
-	touch $@
-# -------------------------------------------------------------------------------------
-
 # intermediate target for proessing all of above, but not the model_access script
-.make/model_access_prep: $(ACCESS_MODELS) .make/index_crossings .make/data
+.make/model_access_prep: $(ACCESS_MODELS) .make/index_crossings
 	touch $@
 
 # run the access model
 # (breaking streams and recording what is upstream/downstream of a given stream segment)
 .make/model_access: .make/model_access_prep
-	./model_access.sh
+	./model_access_1.sh
+	./model_access_2.sh
 	touch $@
 
 .make/qa: .make/model_access

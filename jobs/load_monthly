@@ -1,0 +1,109 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# monthly data refresh
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# bcdata loads
+# ----
+bcdata bc2pg -r whse_admin_boundaries.clab_indian_reserves
+bcdata bc2pg -r whse_admin_boundaries.clab_national_parks
+bcdata bc2pg -r whse_basemapping.gba_local_reg_greenspaces_sp
+bcdata bc2pg -r whse_basemapping.gba_railway_structure_lines_sp
+bcdata bc2pg -r whse_basemapping.gba_railway_tracks_sp
+bcdata bc2pg -r whse_basemapping.gba_transmission_lines_sp
+bcdata bc2pg -r whse_basemapping.gns_geographical_names_sp
+bcdata bc2pg -r whse_environmental_monitoring.envcan_hydrometric_stn_sp
+bcdata bc2pg -r whse_fish.fiss_stream_sample_sites_sp
+bcdata bc2pg -r whse_forest_tenure.ften_range_poly_svw
+bcdata bc2pg -r whse_imagery_and_base_maps.mot_road_structure_sp
+bcdata bc2pg -r whse_legal_admin_boundaries.abms_municipalities_sp
+bcdata bc2pg -r whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp
+bcdata bc2pg -r whse_tantalis.ta_conservancy_areas_svw
+bcdata bc2pg -r whse_tantalis.ta_park_ecores_pa_svw
+
+# DRA
+mkdir -p tmp
+# **
+# ** note temp dra data cache, to be replaced with new download location or a bc2pg download **
+# **
+#curl ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+#  -o tmp/dgtl_road_atlas.gdb.zip
+$PSQL -c "drop table if exists bcdata.transport_line" # in case of any failed loads
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  --config PG_USE_COPY YES \
+  -lco GEOMETRY_NAME=geom \
+  -lco FID=transport_line_id \
+  -nln bcdata.transport_line \
+  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE
+$PSQL -c "truncate whse_basemapping.transport_line;
+          insert into whse_basemapping.transport_line select * from bcdata.transport_line"
+$PSQL -c "drop table bcdata.transport_line"
+
+# parcel fabric, renaming download so it can be read without unzipping
+# ----
+curl \
+  -o /tmp/pmbc_parcel_fabric_poly_svw.gdb.zip \
+  https://pub.data.gov.bc.ca/datasets/4cf233c2-f020-4f7a-9b87-1923252fbc24/pmbc_parcel_fabric_poly_svw.zip
+
+ogr2ogr \
+   -f PostgreSQL \
+   PG:$DATABASE_URL \
+   --config PG_USE_COPY YES \
+   -overwrite \
+   -t_srs EPSG:3005 \
+   -dim XY \
+   -lco GEOMETRY_NAME=geom \
+   -lco FID=PARCEL_FABRIC_POLY_ID \
+   -nln bcdata.pmbc_parcel_fabric_poly_svw \
+   /tmp/pmbc_parcel_fabric_poly_svw.gdb.zip \
+   pmbc_parcel_fabric_poly_svw
+
+# load to target & drop temp (note that schemas do not quite match)
+$PSQL -c "truncate whse_cadastre.pmbc_parcel_fabric_poly_svw;
+          insert into whse_cadastre.pmbc_parcel_fabric_poly_svw (
+            parcel_fabric_poly_id ,
+            parcel_name           ,
+            plan_number           ,
+            pin                   ,
+            pid_number            ,
+            parcel_status         ,
+            parcel_class          ,
+            owner_type            ,
+            parcel_start_date     ,
+            municipality          ,
+            regional_district     ,
+            when_updated          ,
+            geom
+          )
+          select
+            parcel_fabric_poly_id ,
+            parcel_name           ,
+            plan_number           ,
+            pin                   ,
+            pid                   ,
+            parcel_status         ,
+            parcel_class          ,
+            owner_type            ,
+            parcel_start_date     ,
+            municipality          ,
+            regional_district     ,
+            when_updated          ,
+            geom
+          from bcdata.pmbc_parcel_fabric_poly_svw"
+$PSQL -c "drop table bcdata.pmbc_parcel_fabric_poly_svw"
+
+# additional processing
+# ----
+$PSQL -c "refresh materialized view bcdata.parks"
+# range view is too resource intensive for some clients - schedule this job elsewhere
+#$PSQL -c "refresh materialized view bcdata.ften_range_poly_carto_vw"
+
+
+

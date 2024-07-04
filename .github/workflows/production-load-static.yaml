@@ -1,0 +1,40 @@
+name: production-load-static
+run-name: ${{ github.actor }} load FWA and static data
+on: workflow_dispatch
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  load-fwa:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Run job script
+      run: jobs/load_fwa
+  load-bcfishobs-static:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-fwa
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        repository: smnorris/bcfishobs
+    - name: Load bcfishobs static data
+      run: |
+        mkdir -p .make
+        make -t .make/setup
+        make .make/load_static
+  load-bcfishpass-static:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-fwa
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Load static bcfishpass data
+      run: jobs/load_static

@@ -1,0 +1,124 @@
+#!/bin/bash
+
+# Copyright 2024 Province of British Columbia
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# refresh required materialized views
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_linear_vw"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_crossings_vw"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_observations_vw"
+$PSQL -c "refresh materialized view bcfishpass.fptwg_summary_roads_vw"
+
+ogr2ogr \
+    -f GPKG \
+    freshwater_fish_habitat_accessibility_MODEL.gpkg \
+    PG:$DATABASE_URL \
+    -nln crossings \
+    -nlt PointZM \
+    -sql "select *
+          from bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    freshwater_fish_habitat_accessibility_MODEL.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_salmon \
+    -nlt PointZM \
+    -sql "select
+            barriers_ch_cm_co_pk_sk_id,
+            barrier_type,
+            barrier_name,
+            linear_feature_id,
+            blue_line_key,
+            watershed_key,
+            downstream_route_measure,
+            wscode_ltree as wscode,
+            localcode_ltree as localcode,
+            watershed_group_code,
+            total_network_km,
+            geom
+            from bcfishpass.barriers_ch_cm_co_pk_sk"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    freshwater_fish_habitat_accessibility_MODEL.gpkg \
+    PG:$DATABASE_URL \
+    -nln barriers_steelhead \
+    -nlt PointZM \
+    -sql "select
+			 barriers_st_id,
+			 barrier_type,
+			 barrier_name,
+			 linear_feature_id,
+			 blue_line_key,
+			 watershed_key,
+			 downstream_route_measure,
+			 wscode_ltree as wscode,
+			 localcode_ltree as localcode,
+			 watershed_group_code,
+			 total_network_km,
+			 geom
+  		  from bcfishpass.barriers_st"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    freshwater_fish_habitat_accessibility_MODEL.gpkg \
+    PG:$DATABASE_URL \
+    -nln model_access \
+    -nlt LineStringZM \
+    -sql "select * from bcfishpass.freshwater_fish_habitat_accessibility_model_vw"
+
+ogr2ogr \
+    -f GPKG \
+    -append \
+    -update \
+    freshwater_fish_habitat_accessibility_MODEL.gpkg \
+    PG:$DATABASE_URL \
+    -nln observations \
+    -nlt PointZM \
+    -sql "select
+     fish_observation_point_id,
+     fish_obsrvtn_event_id,
+     species_code,
+     observation_date,
+     activity_code,
+     activity,
+     life_stage_code,
+     life_stage,
+     acat_report_url,
+     linear_feature_id,
+     blue_line_key,
+     downstream_route_measure,
+     wscode_ltree as wscode,
+     localcode_ltree as localcode,
+     watershed_group_code,
+     geom
+     from bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw"
+
+# requires gdal >=3.7
+sozip \
+  freshwater_fish_habitat_accessibility_MODEL.gpkg.zip \
+  freshwater_fish_habitat_accessibility_MODEL.gpkg
+
+aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass

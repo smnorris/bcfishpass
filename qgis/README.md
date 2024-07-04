@@ -15,18 +15,6 @@ With the service configuration file in place, open QGIS, right click on PostgreS
     [x] Use estimated table metadata
 
 
-### Load additional base data
-
-The QGIS layer file includes several data sources that are not loaded to the `bcfishpass` database by default.
-
-To download these additional sources to the postgres db specified by `$DATABASE_URL`:
-
-    make
-
-The makefile downloads most layers provincially, but contours are split up into chunks (1:250k tiles).
-To minimize bandwidth use, consider editing `tctr_tiles.txt` to include only the NTS 250k tiles within your area of interest.
-
-
 ## 48x36 30k pdfs
 
 When generating pdfs, remember to:

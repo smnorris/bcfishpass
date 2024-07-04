@@ -4,7 +4,6 @@
 -- method
 -- specify which watersheds to include, which habitat model to use
 -- --------------
-drop table if exists bcfishpass.parameters_habitat_method cascade;
 create table bcfishpass.parameters_habitat_method
 (
   watershed_group_code character varying(4),
@@ -15,7 +14,6 @@ create table bcfishpass.parameters_habitat_method
 -- thresholds
 -- define various spawning/rearing thresholds for species to be modelled
 -- --------------
-drop table if exists bcfishpass.parameters_habitat_thresholds cascade;
 create table bcfishpass.parameters_habitat_thresholds (
   species_code text,
   spawn_gradient_max numeric,
@@ -31,10 +29,12 @@ create table bcfishpass.parameters_habitat_thresholds (
   rear_lake_ha_min integer
 );
 
-
 -- --------------
 -- list of watershed groups to process in access model/crossings
--- defaults to all
 -- --------------
-drop table if exists bcfishpass.watershed_groups_access;
-create table bcfishpass.watershed_groups_access as select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly;
+create table bcfishpass.watershed_groups_access (
+  watershed_group_code character varying(4)
+);
+-- and default to all watershed groups
+insert into bcfishpass.watershed_groups_access
+  select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly;

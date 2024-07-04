@@ -1,0 +1,74 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# one time data loads/processing
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
+
+#-------
+# Gradient barriers
+# load *all* gradient barriers as one time job
+# (bcfishpass defaults to processesing just groups included in parameters)
+#-------
+cd model/01_access/gradient_barriers
+$PSQL -c "truncate bcfishpass.gradient_barriers"  # just in case job failed
+parallel $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS
+
+#-------
+# DRA code tables
+#-------
+$PSQL -c "truncate whse_basemapping.transport_line_type_code;
+          truncate whse_basemapping.transport_line_surface_code;
+          truncate whse_basemapping.transport_line_divided_code;
+          truncate whse_basemapping.transport_line_structure_code;"
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -update \
+  -append \
+  -nln whse_basemapping.transport_line_type_code \
+  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE_TYPE_CODE
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -update \
+  -append \
+  -nln whse_basemapping.transport_line_surface_code \
+  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE_SURFACE_CODE
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -update \
+  -append \
+  -nln whse_basemapping.transport_line_divided_code \
+  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE_DIVIDED_CODE
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -update \
+  -append \
+  -nln whse_basemapping.transport_line_structure_code \
+  /vsizip//vsicurl/ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE_STRUCTURE_CODE
+
+#-------
+# Admin areas/tiles/grids/cartographic
+#-------
+bcdata bc2pg -r whse_admin_boundaries.adm_indian_reserves_bands_sp
+bcdata bc2pg -r whse_admin_boundaries.adm_nr_districts_spg
+bcdata bc2pg -r whse_basemapping.bcgs_20k_grid
+bcdata bc2pg -r whse_basemapping.dbm_mof_50k_grid
+bcdata bc2pg -r whse_basemapping.nts_250k_grid
+bcdata bc2pg -r whse_basemapping.trim_cultural_lines --query "FCODE='EA21400000'"
+bcdata bc2pg -r whse_basemapping.trim_cultural_points --query "FCODE='CC90000000'"
+bcdata bc2pg -r whse_basemapping.trim_ebm_airfields
+bcdata bc2pg -r whse_basemapping.trim_ebm_ocean
+bcdata bc2pg -r whse_basemapping.utmg_utm_zones_sp
+bcdata bc2pg -r whse_legal_admin_boundaries.abms_municipalities_sp
+bcdata bc2pg -r whse_legal_admin_boundaries.abms_regional_districts_sp

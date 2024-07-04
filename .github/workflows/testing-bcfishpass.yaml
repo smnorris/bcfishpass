@@ -1,0 +1,58 @@
+name: testing-bcfishpass
+run-name: ${{ github.actor }} Run bcfishpass on test
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  load-parameters:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_newgraph/*csv parameters/
+          make --debug=basic .make/parameters
+  load-xings:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-parameters
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cd model/01_access/modelled_stream_crossings
+          make .make/download_archive
+  prep:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-xings
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/bcfishpass02_prep
+  model:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: prep
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+            fetch-tags: true
+            fetch-depth: 0
+      - name: Run the jobs
+        run:  |
+          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
+          jobs/bcfishpass03_model

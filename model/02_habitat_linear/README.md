@@ -23,7 +23,6 @@ Using files provided in subfolders in `parameters` as a guide, place parameters 
 
 To modify models beyond what is provided in the parameters files, edit `sql/model_habitat_<spp>.sql` as required.
 To add a new model, create a new file for the species of interest `sql/model_habitat_<spp>.sql`	and adapt existing model queries as required.
-Consider also creating a view for map visualization, using various existing views `sql/map_<spp>_vw.sql` as a guide.
 
 
 ## Add areas of known spawning/rearing

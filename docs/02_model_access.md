@@ -1,7 +1,9 @@
 (access)=
 # Access model
 
-`bcfishpass` is an update and extension of the BC Fish Passage Technical Working Group (FPTWG) Fish Passage modelling - the basic logic for evaluating connectivity is much the same as in previous versions. Using the [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) stream as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species in the absence of anthropogenic (e.g., dams and stream crossings) or transient natural barriers (e.g., debris flows and log jams), with an assumption that all mapped streams have sufficient flow for migration. The processing steps involved are:
+`bcfishpass` is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration. 
+
+The processing steps involved are:
 
 
 ## 1. Collect known natural barriers
@@ -38,7 +40,7 @@ Bull trout           | 25%
 
 For anadromous species, natural barriers downstream of [Known Fish Observations](https://github.com/smnorris/bcfishobs) are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead assume all natural barrier features with 5 or more observations upstream since 1990 are not currently barriers to fish passage.
 
-For resident species, models generally remove any natural barrier below an observation.
+For potamodromous (freshwater migration only) species such as Bull Trout and Westslope Cutthroat Trout, models remove any natural barrier below an observation.
 
 ## 4. Identify stream downstream of all natural barriers
 
@@ -163,16 +165,24 @@ This can be due to a number of different data issues:
 As expert and local knowledge of natural barriers is added to `bcfishpass` and as more potential barriers are assessed, the quality of modelling outputs will improve.
 
 Submissions of data fixes to improve the fish passage model are welcome, particularly:
+
 - locations of natural barriers to fish passage that are not present in the inventories
 - identification of modelled natural barriers that are not barriers to fish passage
 - identification of modelled potential barriers that do not exist or are known to be passable
 
 
-## 10. Publication / distribution
+## 10. Processing and publication / distribution
 
-Current (weekly refresh) access model outputs for Pacific Salmon and Steelhead are [available for download as geopackage](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip).
-For information regarding this data package:
-- [DataBC metadata(link TBD)](link_to_be_determined)
-- [data dictionary](06_data_dictionary.rst#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
+Model inputs and outputs are refreshed on a scheduled basis, and processed via github actions - the status of these workflows is available here:
 
+- data refresh [monthly](https://github.com/smnorris/bcfishpass/actions/workflows/production-load-monthly.yaml) / [weekly ](https://github.com/smnorris/bcfishpass/actions/workflows/production-load-weekly.yaml)
+- [weekly model refresh](https://github.com/smnorris/bcfishpass/actions/workflows/production-bcfishpass.yaml)
+
+The weekly model processing workflow generates a file based data package (as geopackage), posted to object storage for public distribution:
+
+- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
+
+- general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
+
+- complete [data dictionary](https://smnorris.github.io/bcfishpass/06_data_dictionary.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 

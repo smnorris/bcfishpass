@@ -1,5 +1,4 @@
 -- crossing feature type
-drop view if exists bcfishpass.crossings_feature_type_vw cascade;
 create view bcfishpass.crossings_feature_type_vw as
 select
   aggregated_crossings_id,
@@ -81,8 +80,6 @@ from bcfishpass.crossings;
 
 -- counts of anthropogenic barriers upstream per access model
 -- (for example, number of barriers on steelhead accessible stream upstream of given barrier)
-drop materialized view if exists bcfishpass.crossings_upstr_barriers_per_model_vw cascade;
-
 create materialized view bcfishpass.crossings_upstr_barriers_per_model_vw as
 
 with access_models as (
@@ -148,42 +145,37 @@ on c.aggregated_crossings_id = bpm.aggregated_crossings_id;
 create unique index on bcfishpass.crossings_upstr_barriers_per_model_vw (aggregated_crossings_id);
 
 
--- below datasets are not guaranteed to exist, leave this out for now
-
---drop materialized view if exists bcfishpass.crossings_admin;
---create materialized view bcfishpass.crossings_admin;
---SELECT DISTINCT ON (c.aggregated_crossings_id) -- some of the admin areas are not clean/distinct, make sure to select just one
---  c.aggregated_crossings_id,
---  rd.admin_area_abbreviation as abms_regional_district,
---  muni.admin_area_abbreviation as abms_municipality,
---  ir.english_name as clab_indian_reserve_name,
---  ir.band_name as clab_indian_reserve_band_name,
---  np.english_name as clab_national_park_name,
---  pp.protected_lands_name as bc_protected_lands_name,
---  pmbc.owner_type as pmbc_owner_type,
---  nr.region_org_unit_name as adm_nr_region,
---  nr.district_name as adm_nr_district
---FROM bcfishpass.crossings c
---LEFT OUTER JOIN whse_legal_admin_boundaries.abms_regional_districts_sp rd
---ON ST_Intersects(c.geom, rd.geom)
---LEFT OUTER JOIN whse_legal_admin_boundaries.abms_municipalities_sp muni
---ON ST_Intersects(c.geom, muni.geom)
---LEFT OUTER JOIN whse_admin_boundaries.adm_indian_reserves_bands_sp ir
---ON ST_Intersects(c.geom, ir.geom)
---LEFT OUTER JOIN whse_admin_boundaries.clab_national_parks np
---ON ST_Intersects(c.geom, np.geom)
---LEFT OUTER JOIN whse_tantalis.ta_park_ecores_pa_svw pp
---ON ST_Intersects(c.geom, pp.geom)
---LEFT OUTER JOIN whse_cadastre.pmbc_parcel_fabric_poly_svw pmbc
---ON ST_Intersects(c.geom, pmbc.geom)
---LEFT OUTER JOIN whse_admin_boundaries.adm_nr_districts_sp nr
---ON ST_Intersects(c.geom, pmbc.geom)
---ORDER BY c.aggregated_crossings_id, rd.admin_area_abbreviation, muni.admin_area_abbreviation, ir.english_name, pp.protected_lands_name, pmbc.owner_type, nr.district_name;
+create materialized view bcfishpass.crossings_admin_vw AS
+SELECT DISTINCT ON (c.aggregated_crossings_id) -- some of the admin areas are not clean/distinct, make sure to select just one
+  c.aggregated_crossings_id,
+  rd.admin_area_abbreviation as abms_regional_district,
+  muni.admin_area_abbreviation as abms_municipality,
+  ir.english_name as clab_indian_reserve_name,
+  ir.band_name as clab_indian_reserve_band_name,
+  np.english_name as clab_national_park_name,
+  pp.protected_lands_name as bc_protected_lands_name,
+  pmbc.owner_type as pmbc_owner_type,
+  nr.region_org_unit_name as adm_nr_region,
+  nr.district_name as adm_nr_district
+FROM bcfishpass.crossings c
+LEFT OUTER JOIN whse_legal_admin_boundaries.abms_regional_districts_sp rd
+ON ST_Intersects(c.geom, rd.geom)
+LEFT OUTER JOIN whse_legal_admin_boundaries.abms_municipalities_sp muni
+ON ST_Intersects(c.geom, muni.geom)
+LEFT OUTER JOIN whse_admin_boundaries.adm_indian_reserves_bands_sp ir
+ON ST_Intersects(c.geom, ir.geom)
+LEFT OUTER JOIN whse_admin_boundaries.clab_national_parks np
+ON ST_Intersects(c.geom, np.geom)
+LEFT OUTER JOIN whse_tantalis.ta_park_ecores_pa_svw pp
+ON ST_Intersects(c.geom, pp.geom)
+LEFT OUTER JOIN whse_cadastre.pmbc_parcel_fabric_poly_svw pmbc
+ON ST_Intersects(c.geom, pmbc.geom)
+LEFT OUTER JOIN whse_admin_boundaries.adm_nr_districts_spg nr
+ON ST_Intersects(c.geom, pmbc.geom)
+ORDER BY c.aggregated_crossings_id, rd.admin_area_abbreviation, muni.admin_area_abbreviation, ir.english_name, pp.protected_lands_name, pmbc.owner_type, nr.district_name;
 
 
 -- downstream observations ***within the same watershed group***
-drop materialized view if exists bcfishpass.crossings_dnstr_observations_vw cascade;
-
 create materialized view bcfishpass.crossings_dnstr_observations_vw as
 select
   aggregated_crossings_id,
@@ -214,8 +206,6 @@ create index on bcfishpass.crossings_dnstr_observations_vw (aggregated_crossings
 
 
 -- upstream observations ***within the same watershed group***
-drop materialized view if exists bcfishpass.crossings_upstr_observations_vw cascade;
-
 create materialized view bcfishpass.crossings_upstr_observations_vw as
 select
   aggregated_crossings_id,
@@ -249,11 +239,6 @@ create index on bcfishpass.crossings_upstr_observations_vw (aggregated_crossings
 -- final output crossings view -
 -- join crossings table to streams / access / habitat tables
 -- and convert array types to text for easier dumps
-
---
--- todo - does this need to be materialized?
---
-drop materialized view if exists bcfishpass.crossings_vw cascade; -- cascade FPTWG crossings view if exists
 create materialized view bcfishpass.crossings_vw as
 select
   -- joining to streams based on measure can be error prone due to precision.
@@ -500,3 +485,231 @@ order by c.aggregated_crossings_id, s.downstream_route_measure;
 
 create unique index on bcfishpass.crossings_vw (aggregated_crossings_id);
 create index on bcfishpass.crossings_vw using gist (geom);
+
+
+-- wcrp version of the output crossings view -
+create materialized view bcfishpass.crossings_wcrp_vw as
+select
+  -- joining to streams based on measure can be error prone due to precision.
+  -- Join to streams on linear_feature_id and keep the first result
+  -- (since streams are segmented there is often >1 match)
+  distinct on (c.aggregated_crossings_id)
+  c.aggregated_crossings_id,
+  c.stream_crossing_id,
+  c.dam_id,
+  c.user_barrier_anthropogenic_id,
+  c.modelled_crossing_id,
+  c.crossing_source,
+  cft.crossing_feature_type,
+  c.pscis_status,
+  c.crossing_type_code,
+  c.crossing_subtype_code,
+  array_to_string(c.modelled_crossing_type_source, ';') as modelled_crossing_type_source,
+  c.barrier_status,
+  c.pscis_road_name,
+  c.pscis_stream_name,
+  c.pscis_assessment_comment,
+  c.pscis_assessment_date,
+  c.pscis_final_score,
+  c.transport_line_structured_name_1,
+  c.transport_line_type_description,
+  c.transport_line_surface_description,
+  c.ften_forest_file_id,
+  c.ften_file_type_description,
+  c.ften_client_number,
+  c.ften_client_name,
+  c.ften_life_cycle_status_code,
+  c.rail_track_name,
+  c.rail_owner_name,
+  c.rail_operator_english_name,
+  c.ogc_proponent,
+  c.dam_name,
+  c.dam_height,
+  c.dam_owner,
+  c.dam_use,
+  c.dam_operating_status,
+  c.utm_zone,
+  c.utm_easting,
+  c.utm_northing,
+  t.map_tile_display_name as dbm_mof_50k_grid,
+  c.linear_feature_id,
+  c.blue_line_key,
+  c.watershed_key,
+  c.downstream_route_measure,
+  c.wscode_ltree as wscode,
+  c.localcode_ltree as localcode,
+  c.watershed_group_code,
+  c.gnis_stream_name,
+  c.stream_order,
+  c.stream_magnitude,
+  s.upstream_area_ha,
+  s.stream_order_parent,
+  s.stream_order_max,
+  s.map_upstream,
+  s.channel_width,
+  s.mad_m3s,
+  array_to_string(cdo.observedspp_dnstr, ';') as observedspp_dnstr,
+  array_to_string(cuo.observedspp_upstr, ';') as observedspp_upstr,
+  array_to_string(cd.features_dnstr, ';') as crossings_dnstr,
+  array_to_string(ad.features_dnstr, ';') as barriers_anthropogenic_dnstr,
+  coalesce(array_length(ad.features_dnstr, 1), 0) as barriers_anthropogenic_dnstr_count,
+  array_to_string(au.features_upstr, ';') as barriers_anthropogenic_upstr,
+  coalesce(array_length(au.features_upstr, 1), 0) as barriers_anthropogenic_upstr_count,
+  array_to_string(aum.barriers_upstr_bt, ';') as barriers_anthropogenic_bt_upstr,
+  coalesce(array_length(aum.barriers_upstr_bt, 1), 0) as barriers_anthropogenic_upstr_bt_count,
+  array_to_string(aum.barriers_upstr_ch_cm_co_pk_sk, ';') as barriers_anthropogenic_ch_cm_co_pk_sk_upstr,
+  coalesce(array_length(aum.barriers_upstr_ch_cm_co_pk_sk, 1), 0) as barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count,
+  array_to_string(aum.barriers_upstr_st, ';') as barriers_anthropogenic_st_upstr,
+  coalesce(array_length(aum.barriers_upstr_st, 1), 0) as barriers_anthropogenic_st_upstr_count,
+  array_to_string(aum.barriers_upstr_wct, ';') as barriers_anthropogenic_wct_upstr,
+  coalesce(array_length(aum.barriers_upstr_wct, 1), 0) as barriers_anthropogenic_wct_upstr_count,
+  a.gradient,
+  a.total_network_km,
+  a.total_stream_km,
+  a.total_lakereservoir_ha,
+  a.total_wetland_ha,
+  a.total_slopeclass03_waterbodies_km,
+  a.total_slopeclass03_km,
+  a.total_slopeclass05_km,
+  a.total_slopeclass08_km,
+  a.total_slopeclass15_km,
+  a.total_slopeclass22_km,
+  a.total_slopeclass30_km,
+  a.total_belowupstrbarriers_network_km,
+  a.total_belowupstrbarriers_stream_km,
+  a.total_belowupstrbarriers_lakereservoir_ha,
+  a.total_belowupstrbarriers_wetland_ha,
+  a.total_belowupstrbarriers_slopeclass03_waterbodies_km,
+  a.total_belowupstrbarriers_slopeclass03_km,
+  a.total_belowupstrbarriers_slopeclass05_km,
+  a.total_belowupstrbarriers_slopeclass08_km,
+  a.total_belowupstrbarriers_slopeclass15_km,
+  a.total_belowupstrbarriers_slopeclass22_km,
+  a.total_belowupstrbarriers_slopeclass30_km,
+
+  -- access models
+  array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
+  a.ch_cm_co_pk_sk_network_km,
+  a.ch_cm_co_pk_sk_stream_km,
+  a.ch_cm_co_pk_sk_lakereservoir_ha,
+  a.ch_cm_co_pk_sk_wetland_ha,
+  a.ch_cm_co_pk_sk_slopeclass03_waterbodies_km,
+  a.ch_cm_co_pk_sk_slopeclass03_km,
+  a.ch_cm_co_pk_sk_slopeclass05_km,
+  a.ch_cm_co_pk_sk_slopeclass08_km,
+  a.ch_cm_co_pk_sk_slopeclass15_km,
+  a.ch_cm_co_pk_sk_slopeclass22_km,
+  a.ch_cm_co_pk_sk_slopeclass30_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_network_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_stream_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km,
+  a.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km,
+
+  array_to_string(a.barriers_st_dnstr, ';') as barriers_st_dnstr,
+  a.st_network_km,
+  a.st_stream_km,
+  a.st_lakereservoir_ha,
+  a.st_wetland_ha,
+  a.st_slopeclass03_waterbodies_km,
+  a.st_slopeclass03_km,
+  a.st_slopeclass05_km,
+  a.st_slopeclass08_km,
+  a.st_slopeclass15_km,
+  a.st_slopeclass22_km,
+  a.st_slopeclass30_km,
+  a.st_belowupstrbarriers_network_km,
+  a.st_belowupstrbarriers_stream_km,
+  a.st_belowupstrbarriers_lakereservoir_ha,
+  a.st_belowupstrbarriers_wetland_ha,
+  a.st_belowupstrbarriers_slopeclass03_waterbodies_km,
+  a.st_belowupstrbarriers_slopeclass03_km,
+  a.st_belowupstrbarriers_slopeclass05_km,
+  a.st_belowupstrbarriers_slopeclass08_km,
+  a.st_belowupstrbarriers_slopeclass15_km,
+  a.st_belowupstrbarriers_slopeclass22_km,
+  a.st_belowupstrbarriers_slopeclass30_km,
+
+  array_to_string(a.barriers_wct_dnstr, ';') as barriers_wct_dnstr,
+  a.wct_network_km,
+  a.wct_stream_km,
+  a.wct_lakereservoir_ha,
+  a.wct_wetland_ha,
+  a.wct_slopeclass03_waterbodies_km,
+  a.wct_slopeclass03_km,
+  a.wct_slopeclass05_km,
+  a.wct_slopeclass08_km,
+  a.wct_slopeclass15_km,
+  a.wct_slopeclass22_km,
+  a.wct_slopeclass30_km,
+  a.wct_belowupstrbarriers_network_km,
+  a.wct_belowupstrbarriers_stream_km,
+  a.wct_belowupstrbarriers_lakereservoir_ha,
+  a.wct_belowupstrbarriers_wetland_ha,
+  a.wct_belowupstrbarriers_slopeclass03_waterbodies_km,
+  a.wct_belowupstrbarriers_slopeclass03_km,
+  a.wct_belowupstrbarriers_slopeclass05_km,
+  a.wct_belowupstrbarriers_slopeclass08_km,
+  a.wct_belowupstrbarriers_slopeclass15_km,
+  a.wct_belowupstrbarriers_slopeclass22_km,
+  a.wct_belowupstrbarriers_slopeclass30_km,
+
+  -- habitat models
+  h.ch_spawning_km,
+  h.ch_rearing_km,
+  h.ch_spawning_belowupstrbarriers_km,
+  h.ch_rearing_belowupstrbarriers_km,
+  h.cm_spawning_km,
+  h.cm_spawning_belowupstrbarriers_km,
+  h.co_spawning_km,
+  h_wcrp.co_rearing_km,
+  h.co_rearing_ha,
+  h.co_spawning_belowupstrbarriers_km,
+  h_wcrp.co_rearing_belowupstrbarriers_km,
+  h.co_rearing_belowupstrbarriers_ha,
+  h.pk_spawning_km,
+  h.pk_spawning_belowupstrbarriers_km,
+  h.sk_spawning_km,
+  h_wcrp.sk_rearing_km,
+  h.sk_rearing_ha,
+  h.sk_spawning_belowupstrbarriers_km,
+  h_wcrp.sk_rearing_belowupstrbarriers_km,
+  h.sk_rearing_belowupstrbarriers_ha,
+  h.st_spawning_km,
+  h.st_rearing_km,
+  h.st_spawning_belowupstrbarriers_km,
+  h.st_rearing_belowupstrbarriers_km,
+  h.wct_spawning_km,
+  h.wct_rearing_km,
+  h.wct_spawning_belowupstrbarriers_km,
+  h.wct_rearing_belowupstrbarriers_km,
+  h_wcrp.all_spawning_km,
+  h_wcrp.all_spawning_belowupstrbarriers_km,
+  h_wcrp.all_rearing_km,
+  h_wcrp.all_rearing_belowupstrbarriers_km,
+  h_wcrp.all_spawningrearing_km,
+  h_wcrp.all_spawningrearing_belowupstrbarriers_km,
+  c.geom
+from bcfishpass.crossings c
+inner join bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_observations_vw cdo on c.aggregated_crossings_id = cdo.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_observations_vw cuo on c.aggregated_crossings_id = cuo.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_crossings cd on c.aggregated_crossings_id = cd.aggregated_crossings_id
+left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_barriers_anthropogenic au on c.aggregated_crossings_id = au.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstr_barriers_per_model_vw aum on c.aggregated_crossings_id = aum.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstream_access a on c.aggregated_crossings_id = a.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstream_habitat h on c.aggregated_crossings_id = h.aggregated_crossings_id
+left outer join bcfishpass.crossings_upstream_habitat_wcrp h_wcrp on c.aggregated_crossings_id = h_wcrp.aggregated_crossings_id
+left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
+left outer join whse_basemapping.dbm_mof_50k_grid t ON ST_Intersects(c.geom, t.geom)
+order by c.aggregated_crossings_id, s.downstream_route_measure;
+
+create unique index on bcfishpass.crossings_wcrp_vw (aggregated_crossings_id);
+create index on bcfishpass.crossings_wcrp_vw using gist (geom);

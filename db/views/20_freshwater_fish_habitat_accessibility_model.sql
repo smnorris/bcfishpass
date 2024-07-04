@@ -1,63 +1,6 @@
 -- for publication to DataBC Catalouge
 -- freshwater_fish_habitat_accessibility_MODEL.gpkg.zip
 
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw;
-create view bcfishpass.freshwater_fish_habitat_accessibility_model_salmon_vw as
-select
-  segmented_stream_id,
-  linear_feature_id,
-  edge_type,
-  blue_line_key,
-  downstream_route_measure,
-  upstream_route_measure,
-  watershed_group_code,
-  gnis_name,
-  stream_order,
-  stream_magnitude,
-  gradient,
-  wscode,
-  localcode,
-  feature_code,
-  obsrvtn_upstr_salmon,
-  barriers_anthropogenic_dnstr,
-  barriers_pscis_dnstr,
-  barriers_dams_dnstr,
-  dam_dnstr_ind,
-  dam_hydro_dnstr_ind,
-  remediated_dnstr_ind,
-  geom
-from bcfishpass.streams_salmon_vw;
-
-
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw;
-create view bcfishpass.freshwater_fish_habitat_accessibility_model_steelhead_vw as
-select
-  segmented_stream_id,
-  linear_feature_id,
-  edge_type,
-  blue_line_key,
-  downstream_route_measure,
-  upstream_route_measure,
-  watershed_group_code,
-  gnis_name,
-  stream_order,
-  stream_magnitude,
-  gradient,
-  wscode,
-  localcode,
-  feature_code,
-  obsrvtn_upstr_st,
-  barriers_anthropogenic_dnstr,
-  barriers_pscis_dnstr,
-  barriers_dams_dnstr,
-  dam_dnstr_ind,
-  dam_hydro_dnstr_ind,
-  remediated_dnstr_ind,
-  geom
-from bcfishpass.streams_st_vw;
-
--- all streams/combined salmon/steelhead product
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_vw as
 select
   s.segmented_stream_id,
@@ -103,14 +46,12 @@ left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id 
 -- no views required for barrier tables, they can be used directly (only change would be renaming wscode/localcode)
 
 -- dump observations for salmon and steelhead used in this analysis
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw as
 select * from bcfishpass.observations_vw 
 where species_code in ('CH','CM','CO','PK','SK','ST');
 
 
 -- create view of crossings with just salmon/steelhead related columns
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
 select
  c.aggregated_crossings_id,

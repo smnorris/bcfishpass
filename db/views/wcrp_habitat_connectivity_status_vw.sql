@@ -1,0 +1,154 @@
+-- summarize spawning/rearing/spawning&rearing habitat lengths per group, by accessibility
+
+create view bcfishpass.wcrp_habitat_connectivity_status_vw as
+with length_totals as
+(
+-- all spawning (ch/co/st/sk/wct) - calculation is simple, just add it up
+-- ---------------
+  SELECT
+    s.watershed_group_code,
+    'SPAWNING' as habitat_type,
+    coalesce(round((SUM(ST_Length(s.geom)) FILTER (WHERE
+      h.spawning_ch IS TRUE OR
+      h.spawning_co IS TRUE OR
+      h.spawning_st IS TRUE OR
+      h.spawning_sk IS TRUE OR
+      h.spawning_wct IS TRUE
+    ) / 1000)::numeric, 2), 0) as total_km,
+
+    -- spawning accessible
+    coalesce(round((SUM(ST_Length(s.geom)) FILTER (WHERE
+      (h.spawning_ch IS TRUE OR
+      h.spawning_co IS TRUE OR
+      h.spawning_st IS TRUE OR
+      h.spawning_sk IS TRUE OR
+      h.spawning_wct IS TRUE)
+      AND a.barriers_anthropogenic_dnstr IS NULL
+    ) / 1000)::numeric, 2), 0) as accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  where s.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
+  group by s.watershed_group_code
+  
+ UNION ALL
+ 
+-- REARING length
+-- --------------
+-- rearing is more complex, add an extra .5 for CO/SK rearing in wetlands/lakes respectively
+
+ SELECT
+   s.watershed_group_code,
+   'REARING' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE
+            h.rearing_ch IS TRUE OR
+            h.rearing_st IS TRUE OR
+            h.rearing_sk IS TRUE OR
+            h.rearing_co IS TRUE OR
+            h.rearing_wct IS TRUE
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(SUM(ST_Length(s.geom) * .5) FILTER (WHERE h.rearing_co IS TRUE AND s.edge_type = 1050), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(SUM(ST_Length(s.geom) * .5) FILTER (WHERE h.spawning_sk IS TRUE), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+    -- rearing accessible
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE (
+              h.rearing_ch IS TRUE OR
+              h.rearing_co IS TRUE OR
+              h.rearing_st IS TRUE OR
+              h.rearing_sk IS TRUE OR
+              h.rearing_wct IS TRUE)
+            AND a.barriers_anthropogenic_dnstr IS NULL
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.rearing_co IS TRUE AND edge_type = 1050 AND barriers_anthropogenic_dnstr IS NULL), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.spawning_sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL), 0)
+        ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  where s.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
+  group by s.watershed_group_code
+
+UNION ALL
+  -- spawning or rearing - total km of habitat
+  SELECT
+    s.watershed_group_code,
+    'ALL' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(s.geom)) FILTER (WHERE
+            h.spawning_ch IS TRUE OR
+            h.spawning_co IS TRUE OR
+            h.spawning_st IS TRUE OR
+            h.spawning_sk IS TRUE OR
+            h.spawning_wct IS TRUE OR
+            h.rearing_ch IS TRUE OR
+            h.rearing_co IS TRUE OR
+            h.rearing_st IS TRUE OR
+            h.rearing_sk IS TRUE OR
+            h.rearing_wct IS TRUE
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(SUM(ST_Length(s.geom) * .5) FILTER (WHERE h.rearing_co IS TRUE AND s.edge_type = 1050), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.spawning_sk IS TRUE), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+  -- total acccessible km
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (WHERE
+            (
+              h.spawning_ch IS TRUE OR
+              h.spawning_co IS TRUE OR
+              h.spawning_st IS TRUE OR
+              h.spawning_sk IS TRUE OR
+              h.spawning_wct IS TRUE OR
+              h.rearing_ch IS TRUE OR
+              h.rearing_co IS TRUE OR
+              h.rearing_st IS TRUE OR
+              h.rearing_sk IS TRUE OR
+              h.rearing_wct IS TRUE
+            )
+            AND a.barriers_anthropogenic_dnstr IS NULL), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.rearing_co IS TRUE AND edge_type = 1050 AND a.barriers_anthropogenic_dnstr IS NULL), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.spawning_sk IS TRUE AND a.barriers_anthropogenic_dnstr IS NULL), 0)
+    ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  where s.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
+  group by s.watershed_group_code
+)
+
+select
+  watershed_group_code,
+  habitat_type,
+  total_km,
+  accessible_km,
+  round((accessible_km / (total_km + .0001)) * 100, 2) as pct_accessible  -- add small amt to avoid division by zero
+from length_totals
+order by watershed_group_code, habitat_type desc;
+
+
+--select * from bcfishpass.wcrp_habitat_connectivity_status_vw;

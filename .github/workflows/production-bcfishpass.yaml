@@ -1,0 +1,70 @@
+name: production-bcfishpass
+run-name: ${{ github.actor }} Run bcfishpass on prod
+on:
+  schedule:
+    - cron: '0 23 * * SAT'
+  workflow_dispatch:
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+jobs:
+  load-parameters:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_newgraph/*csv parameters/
+          make --debug=basic .make/parameters
+  build-xings:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-parameters
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build modelled crossings
+        run:  jobs/bcfishpass01_modelled_stream_crossings
+      - name: Release modelled crossings
+        run:  jobs/release_modelled_stream_crossings
+  prep:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: build-xings
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/bcfishpass02_prep
+  model:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: prep
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+            fetch-tags: true
+            fetch-depth: 0
+      - name: Run the jobs
+        run:  |
+          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
+          jobs/bcfishpass03_model
+  release:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/release_freshwater_fish_habitat_accessibility_model

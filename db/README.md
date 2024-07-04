@@ -8,4 +8,6 @@ Additional internal tables are created by model scripts.
 
 ## Usage
 
-	./setup.sh
+From repository root, with $DATABASE_URL connection defined as db superuser:
+
+	jobs/setup

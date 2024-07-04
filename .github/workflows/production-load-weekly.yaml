@@ -1,0 +1,18 @@
+name: production-load-weekly
+run-name: ${{ github.actor }} Weekly data refresh
+on:
+  schedule:
+    - cron: '0 23 * * FRI'
+  workflow_dispatch:
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  data-refresh:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run: jobs/load_weekly

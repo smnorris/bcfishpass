@@ -1,0 +1,32 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# release modelled crossings as zipped .gpkg
+#-------
+
+ogr2ogr \
+  -f GPKG \
+  modelled_stream_crossings.gpkg.zip \
+  PG:$DATABASE_URL \
+  -nlt PointZM \
+  -nln modelled_stream_crossings \
+  -sql "select
+    modelled_crossing_id,
+    modelled_crossing_type,
+    array_to_string(modelled_crossing_type_source, '; ') as modelled_crossing_type_source,
+    transport_line_id,
+    ften_road_section_lines_id,
+    og_road_segment_permit_id,
+    og_petrlm_dev_rd_pre06_pub_id,
+    railway_track_id,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+  from bcfishpass.modelled_stream_crossings"
+
+aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass

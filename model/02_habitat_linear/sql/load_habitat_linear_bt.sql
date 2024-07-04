@@ -38,8 +38,8 @@ model AS
     END AS spawning
   FROM bcfishpass.streams s
   inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'BT'
@@ -76,8 +76,8 @@ SELECT
 FROM bcfishpass.streams s
 -- ensure stream is modelled as spawning and accessible
 INNER JOIN bcfishpass.habitat_linear_bt h on s.segmented_stream_id = h.segmented_stream_id
-LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
+left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
 LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'BT'
@@ -121,8 +121,8 @@ WITH rearing AS
     s.downstream_route_measure
   FROM bcfishpass.streams s
   inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'BT'
@@ -206,8 +206,8 @@ WITH rearing AS
     s.geom
   FROM bcfishpass.streams s
   inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.discharge mad ON s.linear_feature_id = mad.linear_feature_id
-  LEFT OUTER JOIN bcfishpass.channel_width cw ON s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
+  left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.waterbody_key
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'BT'

@@ -1,6 +1,4 @@
 -- report on potentially accessible lengths and areas upstream, per species scenario / model
-drop table if exists bcfishpass.crossings_upstream_access cascade;
-
 create table bcfishpass.crossings_upstream_access (
   aggregated_crossings_id                                  text primary key,
   watershed_group_code                                     character varying (4),
