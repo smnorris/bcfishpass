@@ -58,7 +58,9 @@ select
     e.current_crossing_type_code as crossing_type_code,
     e.current_crossing_subtype_code as crossing_subtype_code,
     case
-      when mf.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
+      when mf.structure = 'OBS' THEN array['MANUAL FIX']   -- tag modelled crossings that have been manually identified as OBS
+                                                           -- NOTE - why do we do this? modelled crossing type is not retained (replaced by PSCIS crossing type)
+                                                           -- Why note where it comes from?
       else m.modelled_crossing_type_source
     end AS modelled_crossing_type_source,
     case
