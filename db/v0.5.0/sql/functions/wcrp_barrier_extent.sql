@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS postgisftw.wcrp_barrier_extent;
+
 CREATE FUNCTION postgisftw.wcrp_barrier_extent(watershed_group_code TEXT)
 
 

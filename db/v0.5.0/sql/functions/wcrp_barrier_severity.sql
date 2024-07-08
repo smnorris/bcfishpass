@@ -1,3 +1,4 @@
+DROP FUNCTION IF EXISTS postgisftw.wcrp_barrier_severity;
 CREATE FUNCTION postgisftw.wcrp_barrier_severity(watershed_group_code TEXT)
 
 RETURNS TABLE(

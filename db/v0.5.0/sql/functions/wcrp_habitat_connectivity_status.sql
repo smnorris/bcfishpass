@@ -1,4 +1,6 @@
 -- report on total modelled habitat vs accessible modelled habitat
+DROP FUNCTION IF EXISTS postgisftw.wcrp_habitat_connectivity_status;
+
 CREATE OR REPLACE FUNCTION postgisftw.wcrp_habitat_connectivity_status(
   watershed_group_code TEXT,
   habitat_type TEXT default 'ALL'
