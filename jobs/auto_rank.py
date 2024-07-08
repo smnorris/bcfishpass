@@ -163,11 +163,7 @@ def runQuery(condition, conn):
             AND all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND all_spawningrearing_belowupstrbarriers_km  != 0
             AND {condition}
-<<<<<<< HEAD
             AND barriers_{species}_dnstr = '';
-=======
-            AND barriers_{species}_dnstr = ''
->>>>>>> 4ed1a4e42dff561a6751e38728950003f919d782
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;
