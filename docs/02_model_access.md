@@ -8,18 +8,20 @@ The processing steps involved are:
 
 ## 1. Collect known natural barriers
 	
-Collect known natural barriers: waterfalls 5m in height or more, subsurface flow, and miscellaneous known barriers from expert input:
+Collect known natural barriers: 
 
-| barrier type | source
----------------|-----------
-| waterfalls   | [FISS obstacles](https://catalogue.data.gov.bc.ca/dataset/provincial-obstacles-to-fish-passage)
-| waterfalls   | [FISS obstacles, unpublished](https://www.hillcrestgeo.ca/outgoing/public/whse_fish)
-| waterfalls   | [FWA obstructions](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions)
-| waterfalls   | [expert/user identified falls](https://github.com/smnorris/bcfishpass/blob/main/data/user_falls.csv)
-| subsurface flow | [FWA streams](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network)
+| barrier type                    | source
+|------------------------------   |-----------
+| waterfalls (of height >=5m)     | [Canadian Aquatic Barriers Database (CABD)](https://aquaticbarriers.ca)
+| subsurface flow                 | [FWA streams](https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-network)
 | expert/stakeholder identified barriers         | [bcfishpass](https://github.com/smnorris/bcfishpass/blob/main/data/user_barriers_definite.csv)
 
-Natural barriers identified by stakeholders include: waterfalls or cascades not identified in provincial inventories, steep gradients not captured by modelling, channels known to be dry year-round, and other similar features.
+Natural barriers identified by stakeholders include: 
+
+- waterfalls or cascades not identified in existing inventories / CABD
+- steep gradients not captured by modelling
+- channels known to be dry year-round
+- other similar features
 
 (gradient_barriers)=
 ## 2. Generate gradient barriers
