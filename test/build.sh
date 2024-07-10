@@ -7,7 +7,7 @@ set -euxo pipefail
 
 DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS="BELA\nBULK\nCOWN\nELKR\nHORS\nLNIC\nSANJ\nVICT"       # edit here to adjust testing watersheds (could pull from parameters/example_testing/parameters_habitat_method)
+WSGS="BELA\nBULK\nCOWN\nELKR\nHORS\nLNIC\nPARS\nSANJ\nVICT"       # edit here to adjust testing watersheds (could pull from parameters/example_testing/parameters_habitat_method)
 
 createdb bcfishpass_test
 
