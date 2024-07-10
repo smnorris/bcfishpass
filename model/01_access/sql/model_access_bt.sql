@@ -1,6 +1,7 @@
-with all_barriers as
+with barriers as
 (
   select
+    barriers_gradient_id as barrier_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -17,6 +18,7 @@ with all_barriers as
   union all
 
   select
+    barriers_falls_id as barrier_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -32,6 +34,7 @@ with all_barriers as
   union all
 
   select
+    barriers_subsurfaceflow_id as barrier_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -133,7 +136,7 @@ hab_upstr as
 
 barriers_filtered as (
   select
-    b.barrier_id as barrier_load_id,
+    b.barrier_id,
     b.barrier_type,
     b.barrier_name,
     b.linear_feature_id,
@@ -158,7 +161,7 @@ barriers_filtered as (
   --    - confirmed BT (or salmon/steelhead) habitat upstream
   and
         (
-          o.n_obs is null and
+          (o.n_obs is null or o.n_obs < 1) and
           h.species_codes is null
         )
 )
@@ -176,39 +179,20 @@ insert into bcfishpass.barriers_bt
     watershed_group_code,
     geom
 )
--- add a primary key guaranteed to be unique provincially (presuming unique blkey/measure values within 1m)
-select
-  barrier_load_id,
-  barrier_type,
-  barrier_name,
-  linear_feature_id,
-  blue_line_key,
-  downstream_route_measure,
-  wscode_ltree,
-  localcode_ltree,
-  watershed_group_code,
-  geom
-from barriers b
-where watershed_group_code = any(
-            array(
-              select watershed_group_code
-              from bcfishpass.wsg_species_presence
-              where bt is true
-            )
-          )
+select * from barriers_filtered
 union all
 -- include *all* user added features, even those below observations
   select
-      (((blue_line_key::bigint + 1) - 354087611) * 10000000) + round(downstream_route_measure::bigint) as barrier_load_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_user_definite
-  where watershed_group_code = :'wsg'
+    barriers_user_definite_id as barrier_load_id,
+    barrier_type,
+    barrier_name,
+    linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree,
+    localcode_ltree,
+    watershed_group_code,
+    geom
+from bcfishpass.barriers_user_definite
+where watershed_group_code = :'wsg'
 on conflict do nothing;
