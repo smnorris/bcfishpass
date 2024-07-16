@@ -58,7 +58,7 @@ gradeclass AS
 
 -- Although we are calculating slope at each vertex, we don't need to retain all this information -
 -- for a given continuous set of vertices with the same slope (say 15@2400m 15@2420m 15@2500m 15@2540m),
--- only the slope at the most downstream point (2400m) needs to be retained.
+-- only the slope at the most downstream point/minimum measure (2400m) needs to be retained.
 -- Grouping continuous classes (islands) together is done via count/lag window functions (thank you Erwin B)
 -- https://dba.stackexchange.com/questions/166374/grouping-or-window/166397#166397
 -- NOTE - this could also be done as a recursive query, (potentially easier to read)
