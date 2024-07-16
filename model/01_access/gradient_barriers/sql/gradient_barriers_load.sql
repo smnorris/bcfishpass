@@ -3,31 +3,35 @@ WITH grade100m AS
   SELECT
     sv.blue_line_key,
     ROUND(sv.downstream_route_measure::numeric, 2) as downstream_route_measure,
+    -- elevation at vertex (from subquery below)
     ROUND(sv.elevation::numeric, 2) as elevation_a,
+    -- interpolation of elevation 100m upstream of the vertex
     ROUND((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 100)))).geom))::numeric, 2) as elevation_b,
+    -- gradient between the two points on the stream
     ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 100)))).geom) - sv.elevation) / 100)::numeric, 4) as gradient
-  FROM
-  (SELECT
-    linear_feature_id,
-    blue_line_key,
-    edge_type,
-    ((ST_LineLocatePoint(geom, ST_PointN(geom, generate_series(1, ST_NPoints(geom) - 1))) * length_metre) + downstream_route_measure) as downstream_route_measure,
-    ST_Z(ST_PointN(geom, generate_series(1, ST_NPoints(geom) - 1))) AS elevation
-  FROM whse_basemapping.fwa_stream_networks_sp s
-  WHERE watershed_group_code = :'wsg'
-  AND blue_line_key = watershed_key
-  AND edge_type != 6010
-  ORDER BY blue_line_key, downstream_route_measure
+  FROM (
+    -- get elevation of every vertex on the given stream
+    SELECT
+      linear_feature_id,
+      blue_line_key,
+      edge_type,
+      ((ST_LineLocatePoint(geom, ST_PointN(geom, generate_series(1, ST_NPoints(geom) - 1))) * length_metre) + downstream_route_measure) as downstream_route_measure,
+      ST_Z(ST_PointN(geom, generate_series(1, ST_NPoints(geom) - 1))) AS elevation
+    FROM whse_basemapping.fwa_stream_networks_sp s
+    WHERE watershed_group_code = :'wsg'
+    AND blue_line_key = watershed_key
+    AND edge_type != 6010
+    ORDER BY blue_line_key, downstream_route_measure
   ) as sv
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
   ON sv.blue_line_key = s2.blue_line_key AND
-     sv.downstream_route_measure + 100 >= s2.downstream_route_measure AND -- find stream segment 100m up
+     sv.downstream_route_measure + 100 >= s2.downstream_route_measure AND -- find stream segment 100m upstream of given segment
      sv.downstream_route_measure + 100 < s2.upstream_route_measure
   WHERE sv.edge_type IN (1000,1050,1100,1150,1250,1350,1410,2000,2300)
   AND s2.edge_type != 6010
 ),
 
--- note the slope classes
+-- note the slope classes of the vertices
 gradeclass AS
 (
   SELECT
@@ -52,9 +56,10 @@ gradeclass AS
   ORDER BY blue_line_key, downstream_route_measure
 ),
 
--- Group the continuous same-slope class segments (islands) together (thank you Erwin B)
+-- We only want to retain the most downstream point of a given continuous slope classification
+-- To do this, group the continuous same-slope class segments (islands) together (thank you Erwin B)
 -- https://dba.stackexchange.com/questions/166374/grouping-or-window/166397#166397
--- NOTE - this could also be done as a recursive query, potentially much easier to read
+-- NOTE - this could also be done as a recursive query, (potentially easier to read)
 
 islands AS
 (
