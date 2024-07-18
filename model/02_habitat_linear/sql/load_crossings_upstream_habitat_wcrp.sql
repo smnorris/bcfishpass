@@ -161,6 +161,8 @@ with barriers as
     h.all_spawningrearing_km,
     ad.features_dnstr as barriers_anthropogenic_dnstr
   from bcfishpass.crossings_upstream_habitat_wcrp h
+  -- barriers only
+  inner join bcfishpass.barriers_anthropogenic b on h.aggregated_crossings_id = b.barriers_anthropogenic_id
   -- get the dnstr barrier ids
   left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on h.aggregated_crossings_id = ad.aggregated_crossings_id
 ),
