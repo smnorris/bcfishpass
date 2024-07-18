@@ -2,4 +2,5 @@
 set -euxo pipefail
 
 
-PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+psql $DATABASE_URL -f sql/wcrp_crossings_vw.sql
