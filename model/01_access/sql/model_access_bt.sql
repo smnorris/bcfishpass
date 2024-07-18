@@ -75,11 +75,7 @@ obs_upstr as
         false,
         20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )
-  -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
-  left outer join bcfishpass.user_barriers_definite_control bc
-  on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
   where o.species_code in ('BT','CH','CM','CO','PK','SK','ST')
-  and bc.barrier_ind is null
 ),
 
 obs_upstr_n as
