@@ -16,10 +16,10 @@ SELECT
       b.localcode_ltree,
       b.downstream_route_measure as meas_b,
       b.fish_obsrvtn_event_id as upstr_id,
-      unnest(species_codes) as species_code
+      b.species_code
     FROM
       bcfishpass.streams a
-    INNER JOIN bcfishpass.observations b ON
+    INNER JOIN bcfishpass.observations_vw b ON
       FWA_Upstream(
         a.blue_line_key,
         a.downstream_route_measure,

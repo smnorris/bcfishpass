@@ -21727,5 +21727,21 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17103896,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"Old clear area, may be part of mine. Cleared in the last 1-3 years. Small (2x2m) wetland with cattails seen, but no water or streams. No culverts. "
 17102208,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"Very old road, overgrown. No crossing found. Slightly wet area but no water seen. "
 17102191,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen. "
-17100098,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No wetland/water. No culvert seen on road. Private property on either side of road. 
+17100098,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No wetland/water. No culvert seen on road. Private property on either side of road.
 17102374,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,Cannot find inlet. Bottom of culvert disintegrated where it touches ground. No water.
+17104186,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
+1400691,OBS,BONP,LB,2024-07-11,imagery,
+1404128,OBS,BONP,LB,2024-07-11,imagery,
+1406051,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line
+1406050,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line
+1406094,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line. Leaving most downstream structure 1406093
+1406095,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line. Leaving most downstream structure 1406093
+24739453,OBS,BONP,LB,2024-07-11,imagery,
+24743296,NONE,BONP,LB,2024-07-11,imagery,Structures are really close together and there likely isn't two. Leaving most downstream structure 24743298
+1402061,FORD,BONP,LB,2024-07-11,imagery,
+1402301,FORD,BONP,LB,2024-07-11,imagery,
+1402720,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of transportation line.  There is no road here meaning no crossing.
+1403172,FORD,BONP,LB,2024-07-11,imagery,
+1405747,FORD,BONP,LB,2024-07-11,imagery,
+11302064,NONE,LNIC,LB,2024-07-16,imagery,Ortho image indicates the stream has likely migrated/been redirected to the north and no longer crosses this road.
+11301333,OBS,LNIC,LB,2024-07-16,imagery,Appears to be a bridge on sat imagery- stream goes to north of where it's mapped

@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+#-------
+# set up database schema from scratch (apart from fwa/bcfishobs)
+#-------
+
+# source dataset schemas
+cd db/sources; ./migrate.sh; cd ..
+
+# bcfishpass schema and all migrations
+for tag in v* ;do
+    cd "$tag"; ./migrate.sh; cd ..
+done
+
+cd ..

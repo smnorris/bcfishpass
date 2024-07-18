@@ -24,7 +24,7 @@ SELECT
     f.localcode_ltree,
     f.watershed_group_code,
     f.geom
-FROM bcfishpass.falls f
+FROM bcfishpass.falls_vw f
 INNER JOIN whse_basemapping.fwa_stream_networks_sp s
 ON f.linear_feature_id = s.linear_feature_id
 WHERE

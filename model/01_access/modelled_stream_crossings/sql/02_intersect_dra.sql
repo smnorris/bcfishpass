@@ -164,7 +164,7 @@ crossing_geoms AS
 )
 
 -- and finally, join back to closest road and insert the result into the crossing table
-INSERT INTO bcfishpass.modelled_stream_crossings
+INSERT INTO bcfishpass.modelled_stream_crossings_build
   (
     transport_line_id,
     linear_feature_id,

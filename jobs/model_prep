@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# Prep access model
+#-------
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# refresh observations/dams/falls
+$PSQL -c "refresh materialized view bcfishpass.observations_vw"
+$PSQL -c "refresh materialized view bcfishpass.dams_vw"
+$PSQL -c "refresh materialized view bcfishpass.falls_vw"
+$PSQL -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
+
+# load pscis
+cd model/01_access/pscis; ./pscis.sh; cd ..
+
+# load crossings table
+$PSQL -c "truncate bcfishpass.crossings"
+for wsg in $($PSQL -AXt -c "select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly");
+do
+	set -e ; $PSQL -f sql/load_crossings.sql -v wsg=$wsg ;
+done
+
+# build and index barriers
+make clean
+make --debug=basic
