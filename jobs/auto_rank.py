@@ -4,13 +4,15 @@
 
 This python script generates sets for barriers in a wcrp
 and ranks them by a combination of immediaate and longterm gain.
-This populate the wcrp_ranked_barriers table with whichever wcrp is specified.
+This populates the wcrp_ranked_barriers table with whichever wcrp is specified.
 """
 
 import os
 import argparse
 import psycopg2 as pg2
 from urllib.parse import urlparse
+
+import sys
 
 
 def makeParser():
@@ -21,11 +23,13 @@ def makeParser():
             "hors",
             "bulk",
             "lnic",
-            "elkr",
+            "elkr_upstr",
+            "elkr_dnstr",
             "bonp",
             "eagle",
             "bessette",
             "bela_atna_necl",
+            "bowr_ques_carr"
         ],
         nargs=1,
         type=str,
@@ -41,12 +45,8 @@ def buildCondition(wcrp):
     :wcrp: the wcrp that is having its barriers ranked
     """
 
-    global species
-
-    species = "ch_cm_co_pk_sk"
-
     if wcrp == "eagle":
-        return """
+        condition = """
             --Eagle River
             FWA_Upstream(
             356364536,
@@ -54,14 +54,15 @@ def buildCondition(wcrp):
             2901,
             '100.190442.999098.995997.725308'::ltree,
             '100.190442.999098.995997.725308'::ltree,
-            blue_line_key,
-            downstream_route_measure,
-            wscode,
-            localcode
-            );
+            c.blue_line_key,
+            c.downstream_route_measure,
+            c.wscode_ltree,
+            c.localcode_ltree
+            )
             """
+        wcrp_schema = "tho_shu"
     elif wcrp == "bessette":
-        return """
+        condition = """
             -- Bessette Creek
             FWA_Upstream(
             356349528,
@@ -69,15 +70,16 @@ def buildCondition(wcrp):
             0,
             '100.190442.999098.995997.730848.543292'::ltree,
             '100.190442.999098.995997.730848.543292'::ltree,
-            blue_line_key,
-            downstream_route_measure,
-            wscode,
-            localcode
-            );
+            c.blue_line_key,
+            c.downstream_route_measure,
+            c.wscode_ltree,
+            c.localcode_ltree
+            )
             """
+        wcrp_schema = "tho_shu"
     elif wcrp == "bela_atna_necl":
-        return """
-            ("watershed_group_code" IN ('BELA','ATNA')
+        condition = """
+            (c."watershed_group_code" IN ('BELA','ATNA')
                 OR
                 FWA_Upstream( -- Subset of NECL watershed  
                 360884575, 
@@ -85,10 +87,10 @@ def buildCondition(wcrp):
                 63, 
                 '910.275583.004276'::ltree, 
                 '910.275583.004276'::ltree,
-                blue_line_key, 
-                downstream_route_measure, 
-                wscode, 
-                localcode
+                c.blue_line_key, 
+                c.downstream_route_measure, 
+                c.wscode_ltree, 
+                c.localcode_ltree
                 )
                 OR
                 FWA_Upstream( -- Subset of NECL watershed  
@@ -97,26 +99,76 @@ def buildCondition(wcrp):
                 58, 
                 '910.275583.004276'::ltree, 
                 '910.275583.004276.020918'::ltree,
-                blue_line_key, 
-                downstream_route_measure, 
-                wscode, 
-                localcode
+                c.blue_line_key, 
+                c.downstream_route_measure, 
+                c.wscode_ltree, 
+                c.localcode_ltree
                 )
             )
             """
-    elif wcrp == "elkr":
-        species = "wct"
-        return f"""
-            "watershed_group_code" IN ('{wcrp}')
+        wcrp_schema = wcrp
+    # elif wcrp == "elkr":
+    #     condition = """
+    #         c."watershed_group_code" IN ('ELKR')
+    #         -- do not include flathead in ELKR
+    #         and c.wscode_ltree <@ '300.602565.854327.993941.902282.132363'::ltree is false
+    #         """
+    #     wcrp_schema = wcrp
+    elif wcrp == "elkr_upstr":
+        condition = """
+            c."watershed_group_code" IN ('ELKR')
+            AND 
+            FWA_Upstream(
+                356570562, 
+                22910, 
+                22910, 
+                '300.625474.584724'::ltree, 
+                '300.625474.584724.100997'::ltree, 
+                c.blue_line_key, 
+                c.downstream_route_measure, 
+                c.wscode_ltree, 
+                c.localcode_ltree
+            ) -- only above Elko Dam
+        """
+        wcrp_schema = "elkr"
+    elif wcrp == "elkr_dnstr":
+        condition = """
+            c."watershed_group_code" IN ('ELKR')
+            AND
+            wscode_ltree <@ '300.625474.584724'::ltree  -- on the elk system and not above elko dam
+            AND 
+            NOT FWA_Upstream(
+                356570562, 
+                22910, 
+                22910, 
+                '300.625474.584724'::ltree, 
+                '300.625474.584724.100997'::ltree, 
+                c.blue_line_key, 
+                c.downstream_route_measure, 
+                c.wscode_ltree, 
+                c.localcode_ltree
+            )
+        """
+        wcrp_schema = "elkr"
+    elif wcrp == "bowr_ques_carr":
+        condition = """
+            c."watershed_group_code" IN ('BOWR', 'QUES', 'CARR')
             """
+        wcrp_schema = "bowr_ques_carr"
     else:
         # In all other cases, just the watershed group code
-        return f"""
-            "watershed_group_code" IN ('{wcrp}')
+        condition = f"""
+            c."watershed_group_code" IN ('{wcrp.upper()}')
             """
+        if wcrp == 'bonp':
+            wcrp_schema = 'tho_shu'
+        else:
+            wcrp_schema = wcrp
+    
+    return condition, wcrp_schema
 
 
-def runQuery(condition, conn):
+def runQuery(condition, wcrp, wcrp_schema, conn):
     """
     Runs the set of queries to rank barriers
 
@@ -129,41 +181,45 @@ def runQuery(condition, conn):
             DROP TABLE IF EXISTS bcfishpass.ranked_barriers;
 
             select 
-            aggregated_crossings_id
-            ,crossing_source
-            ,crossing_feature_type
-            ,pscis_status
-            ,crossing_type_code
-            ,crossing_subtype_code
-            ,barrier_status
-            ,pscis_road_name
-            ,pscis_stream_name
-            ,pscis_assessment_comment
-            ,pscis_assessment_date
-            ,utm_zone
-            ,utm_easting
-            ,utm_northing
-            ,blue_line_key
-            ,watershed_group_code
-            ,gnis_stream_name
-            ,barriers_anthropogenic_dnstr
-            ,barriers_anthropogenic_dnstr_count
-            ,barriers_anthropogenic_{species}_upstr
-            ,barriers_anthropogenic_{species}_upstr_count
-            ,all_spawning_km
-            ,all_spawning_belowupstrbarriers_km
-            ,all_rearing_km
-            ,all_rearing_belowupstrbarriers_km
-            ,all_spawningrearing_km
-            ,all_spawningrearing_belowupstrbarriers_km
-            ,geom
+            cv.aggregated_crossings_id
+            ,cv.crossing_source
+            ,cv.crossing_feature_type
+            ,cv.pscis_status
+            ,cv.crossing_type_code
+            ,cv.crossing_subtype_code
+            ,cv.barrier_status
+            ,cv.pscis_road_name
+            ,cv.pscis_stream_name
+            ,cv.pscis_assessment_comment
+            ,cv.pscis_assessment_date
+            ,cv.utm_zone
+            ,cv.utm_easting
+            ,cv.utm_northing
+            ,cv.blue_line_key
+            ,cv.watershed_group_code
+            ,cv.gnis_stream_name
+            ,cv.barriers_anthropogenic_dnstr
+            ,cv.barriers_anthropogenic_dnstr_count
+            ,cv.barriers_anthropogenic_habitat_wcrp_upstr
+            ,case 
+				when cv.barriers_anthropogenic_habitat_wcrp_upstr_count IS NULL THEN 0
+				else cv.barriers_anthropogenic_habitat_wcrp_upstr_count
+			end
+            ,cv.all_spawning_km
+            ,cv.all_spawning_belowupstrbarriers_km
+            ,cv.all_rearing_km
+            ,cv.all_rearing_belowupstrbarriers_km
+            ,abs(cv.all_spawningrearing_km) as all_spawningrearing_km
+            ,abs(cv.all_spawningrearing_belowupstrbarriers_km) as all_spawningrearing_belowupstrbarriers_km
+            ,cv.geom
             into bcfishpass.ranked_barriers
-            from bcfishpass.crossings_wcrp_vw
-            where barrier_status != 'PASSABLE'
-            AND all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
-            AND all_spawningrearing_belowupstrbarriers_km  != 0
-            AND {condition}
-            AND barriers_{species}_dnstr = '';
+            from bcfishpass.crossings_wcrp_vw cv
+            join bcfishpass.crossings c 
+                on c.aggregated_crossings_id = cv.aggregated_crossings_id
+            where cv.barrier_status != 'PASSABLE'
+            AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
+            AND cv.all_spawningrearing_belowupstrbarriers_km  != 0
+            AND {condition};
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;
@@ -217,9 +273,9 @@ def runQuery(condition, conn):
                         continue_loop := FALSE;
                     ELSE
                         with avgVals as ( -- Cumulative average gain per barrier for ungrouped barriers with the same blue line key 
-                            select id, blue_line_key, set_id, barriers_anthropogenic_{species}_upstr_count, all_spawningrearing_belowupstrbarriers_km 
-                                ,AVG(all_spawningrearing_belowupstrbarriers_km ) OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_{species}_upstr_count DESC) as average
-                                ,ROW_NUMBER() OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_{species}_upstr_count DESC) as row_num
+                            select id, blue_line_key, set_id, barriers_anthropogenic_habitat_wcrp_upstr_count, all_spawningrearing_belowupstrbarriers_km 
+                                ,AVG(all_spawningrearing_belowupstrbarriers_km ) OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_habitat_wcrp_upstr_count DESC) as average
+                                ,ROW_NUMBER() OVER(PARTITION BY set_id ORDER BY barriers_anthropogenic_habitat_wcrp_upstr_count DESC) as row_num
                             from bcfishpass.ranked_barriers
                             where set_id < grp_offset
                         ),
@@ -425,8 +481,11 @@ def runQuery(condition, conn):
         q_pop_table = f"""
             ---- Insert values into wcrp_ranked_barriers table
 
-            DELETE FROM bcfishpass.wcrp_ranked_barriers 
-            WHERE {condition};
+            DELETE 
+            FROM bcfishpass.wcrp_ranked_barriers r
+            USING bcfishpass.crossings_wcrp_vw cv, bcfishpass.crossings c
+            WHERE r.aggregated_crossings_id = c.aggregated_crossings_id
+            AND {condition};
 
             INSERT INTO bcfishpass.wcrp_ranked_barriers
             SELECT 
@@ -446,13 +505,70 @@ def runQuery(condition, conn):
             DROP TABLE bcfishpass.ranked_barriers;
             """
         cursor.execute(q_pop_table)
+
+        q_wcrp_rank_table = f"""
+            -- Create a table to join crossings_wcrp_vw and wcrp_ranked_barriers fields in wcrp schema
+
+            DROP TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp};
+
+            CREATE TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} as
+            (
+                select 
+                cv.aggregated_crossings_id
+                ,cv.crossing_source
+                ,cv.crossing_feature_type
+                ,cv.pscis_status
+                ,cv.crossing_type_code
+                ,cv.crossing_subtype_code
+                ,cv.barrier_status
+                ,cv.pscis_road_name
+                ,cv.pscis_stream_name
+                ,cv.pscis_assessment_comment
+                ,cv.pscis_assessment_date
+                ,cv.utm_zone
+                ,cv.utm_easting
+                ,cv.utm_northing
+                ,cv.blue_line_key
+                ,cv.watershed_group_code
+                ,cv.gnis_stream_name
+                ,cv.barriers_anthropogenic_dnstr
+                ,cv.barriers_anthropogenic_dnstr_count
+                ,cv.barriers_anthropogenic_habitat_wcrp_upstr
+                ,cv.barriers_anthropogenic_habitat_wcrp_upstr_count
+                ,cv.all_spawning_km
+                ,cv.all_spawning_belowupstrbarriers_km
+                ,cv.all_rearing_km
+                ,cv.all_rearing_belowupstrbarriers_km
+                ,cv.all_spawningrearing_km
+                ,cv.all_spawningrearing_belowupstrbarriers_km
+                ,r.set_id
+                ,r.total_hab_gain_set
+                ,r.num_barriers_set
+                ,r.avg_gain_per_barrier
+                ,r.dnstr_set_ids
+                ,r.rank_avg_gain_per_barrier
+                ,r.rank_avg_gain_tiered
+                ,r.rank_combined
+                ,r.tier_combined
+                ,cv.geom
+                from bcfishpass.wcrp_ranked_barriers r
+                join bcfishpass.crossings_wcrp_vw cv
+                    on r.aggregated_crossings_id = cv.aggregated_crossings_id
+                join bcfishpass.crossings c
+                    on c.aggregated_crossings_id = cv.aggregated_crossings_id
+                where {condition}
+                order by rank_combined
+            )
+            """
+        cursor.execute(q_wcrp_rank_table)
     conn.commit()
 
 
 def main():
     parser = makeParser()
     args = parser.parse_args()
-    condition = buildCondition(args.wcrp[0])
+    wcrp = args.wcrp[0]
+    condition, wcrp_schema = buildCondition(wcrp)
     p = urlparse(os.environ["DATABASE_URL"])
     pg_conn_dict = {
         'dbname': p.path[1:],
@@ -462,7 +578,7 @@ def main():
         'host': p.hostname
     }
     conn = pg2.connect(**pg_conn_dict)
-    runQuery(condition, conn)
+    runQuery(condition, wcrp, wcrp_schema, conn)
     print("Done!")
 
 
