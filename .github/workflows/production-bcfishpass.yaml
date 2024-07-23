@@ -25,17 +25,26 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: load-csv
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Build modelled crossings
+      - name: Load modelled crossings from archive
         run:  jobs/load_modelled_stream_crossings
-  prep:
+  model-xings:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: load-xings
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build modelled crossings
+        run:  jobs/model_stream_crossings
+  prep:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
