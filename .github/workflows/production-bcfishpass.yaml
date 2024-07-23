@@ -25,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-csv
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
