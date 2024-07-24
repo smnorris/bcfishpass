@@ -2482,7 +2482,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 18300265,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 18300279,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
 18300592,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-18300421,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 18300356,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 18301074,NONE,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 18300776,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
@@ -21681,8 +21680,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11302218,FORD,LNIC,LB,2024-06-12,Bing/Google/ESRI imagery,
 11302231,FORD,LNIC,LB,2024-06-13,Bing/Google/ESRI imagery,
 1400002,NONE,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Road no longer exists
-18300020,CBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Replaced with new CBS in summer 2023
-18303484,CBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Barrier confirmed
 18303506,OBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Fish getting past this structure  (Bridge)
 4603156,NONE,ELKR,MC,2024-06-27,imagery,South Line Creek runs parallel to road in satellite imagery. Crossing does not exist. Remove.
 4603391,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Site of a landslide. Remove?
