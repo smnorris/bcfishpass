@@ -2482,7 +2482,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 18300265,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 18300279,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,
 18300592,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-18300421,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 18300356,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 18301074,NONE,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 18300776,OBS,SHUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
@@ -21681,11 +21680,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11302218,FORD,LNIC,LB,2024-06-12,Bing/Google/ESRI imagery,
 11302231,FORD,LNIC,LB,2024-06-13,Bing/Google/ESRI imagery,
 1400002,NONE,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Road no longer exists
-18300020,CBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Replaced with new CBS in summer 2023
-18303484,CBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Barrier confirmed
 18303506,OBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Fish getting past this structure  (Bridge)
-1400589,CBS,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Culvert is Barrier
-1400042,CBS,BONP,MC,2024-06-27,Local Knowledge,"Local Knowledge - Two poorly installed culverts, Barrier. Entire Creek is groundwater"
 4603156,NONE,ELKR,MC,2024-06-27,imagery,South Line Creek runs parallel to road in satellite imagery. Crossing does not exist. Remove.
 4603391,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Site of a landslide. Remove?
 4603392,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Remove?
@@ -21718,16 +21713,32 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 23800103,NONE,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,duplicate crossing - removed in favour of d/s location
 18300160,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
 23800079,OBS,USHU,LS,2025-06-28,Bing/Google/ESRI imagery,bridge visible
+17104186,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
+1501277,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No culvert, Low marshy ground on either side of road. No Channel. Small lake to south, wetland to north. Depression in road possibly from culvert removal."
+1501283,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No sign of a crossing, but old grown in road nearby. Wetland downstream. "
+1501281,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No culvert. Old road crossing pulled 10+ years ago. Alder, large cobbles. "
+1501282,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No crossing, no passage issues. Fish in stream."
+17103908,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No Barrier or culvert. No water/wetland.
+17100487,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
+17100488,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
+17103896,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"Old clear area, may be part of mine. Cleared in the last 1-3 years. Small (2x2m) wetland with cattails seen, but no water or streams. No culverts. "
+17102208,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"Very old road, overgrown. No crossing found. Slightly wet area but no water seen. "
+17102191,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen. "
+17100098,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No wetland/water. No culvert seen on road. Private property on either side of road.
+17102374,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,Cannot find inlet. Bottom of culvert disintegrated where it touches ground. No water.
 17104186,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
-1501277,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,"No culvert, Low marshy ground on either side of road. No Channel. Small lake to south, wetland to north. Depression in road possibly from culvert removal."
-1501283,NONE,BOWR,MC,2024-07-08,WCRP partner field assessments,"No sign of a crossing, but old grown in road nearby. Wetland downstream."
-1501281,NONE,BOWR,MC,2024-07-08,WCRP partner field assessments,"No culvert. Old road crossing pulled 10+ years ago. Alder, large cobbles."
-1501282,NONE,BOWR,MC,2024-07-08,WCRP partner field assessments,"No crossing, no passage issues. Fish in stream."
-17103908,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No Barrier or culvert. No water/wetland.
-17100487,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
-17100488,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
-17103896,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,"Old clear area, may be part of mine. Cleared in the last 1-3 years. Small (2x2m) wetland with cattails seen, but no water or streams. No culverts."
-17102208,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,"Very old road, overgrown. No crossing found. Slightly wet area but no water seen."
-17102191,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen."
-17100098,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No wetland/water. No culvert seen on road. Private property on either side of road.
-17102374,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,Cannot find inlet. Bottom of culvert disintegrated where it touches ground. No water.
+1400691,OBS,BONP,LB,2024-07-11,imagery,
+1404128,OBS,BONP,LB,2024-07-11,imagery,
+1406051,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line
+1406050,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line
+1406094,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line. Leaving most downstream structure 1406093
+1406095,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line. Leaving most downstream structure 1406093
+24739453,OBS,BONP,LB,2024-07-11,imagery,
+24743296,NONE,BONP,LB,2024-07-11,imagery,Structures are really close together and there likely isn't two. Leaving most downstream structure 24743298
+1402061,FORD,BONP,LB,2024-07-11,imagery,
+1402301,FORD,BONP,LB,2024-07-11,imagery,
+1402720,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of transportation line.  There is no road here meaning no crossing.
+1403172,FORD,BONP,LB,2024-07-11,imagery,
+1405747,FORD,BONP,LB,2024-07-11,imagery,
+11302064,NONE,LNIC,LB,2024-07-16,imagery,Ortho image indicates the stream has likely migrated/been redirected to the north and no longer crosses this road.
+11301333,OBS,LNIC,LB,2024-07-16,imagery,Appears to be a bridge on sat imagery- stream goes to north of where it's mapped

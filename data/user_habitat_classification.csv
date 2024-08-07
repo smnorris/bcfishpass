@@ -3475,13 +3475,12 @@
 354153558,9698,9798,ALBN,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 354153574,819.72,1406.76,COMX,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 354153574,1356,1456,COMX,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-354153615,0,16058.09,PARK,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+354153615,0,16050,PARK,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 354153615,1362,1462,PARK,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,1362,1462,PARK,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,3011,3111,PARK,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,5725,5825,PARK,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,14589,14689,PARK,CM,spawning,t,SN,2023-08-17,FISS spawning points,
-354153615,16007,16107,PARK,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 354153626,4172,4272,TAHS,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 354153637,1628,1728,CAMB,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 354153684,53,1505.31,CLAY,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -14872,7 +14871,7 @@
 360887120,19988,20088,TSAY,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 360887120,22207,22307,TSAY,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 360887120,22867,22967,TSAY,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-360887178,2228.49,8202.77,BABL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
+360887178,2228.49,8100,BABL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,adjusted upstream measure down ~100m to fall downstream of 25pct gradient barrier
 360887178,4109,4209,BABL,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 360887178,4109,4209,BABL,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 360887278,45966,46066,LSKE,PK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -15294,12 +15293,15 @@
 360873822,168869,170329.9685,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,River sockeye
 360881038,0,280.2148356,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,Lake sockeye
 360804115,652.18,852.93,BULK,CO,spawning,t,LB,2024-06-17,Pacific Salmon Foundation,
-356209928,25.6202005,486.7184822,SHUL,CO,Rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO rearing habitat
-356209928,486.719176,822,SHUL,CO,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO Spawning
-356343800,0,838,SHUL,SK,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO and SK Spawning
-356348431,1481,1681,SHUL,SK,Rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
-356348431,1481,1781,SHUL,SK,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
-356137288,265.6052138,408,SHUL,SK,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Adult SK observed up to rail line
-356347377,0,558,BONP,CH,Spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - major spawning for CH
-356311064,6630,8353.604837,QUES,CO,rearing,f,MC,2024-07-04,Field assessments,No channel or water
-356287539,1403.205103,1444.490069,QUES,CO,rearing,f,MC,2024-07-04,Field assessments,No wetland/water
+356209928,25.6202005,486.7184822,SHUL,CO,rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO rearing habitat
+356209928,486.719176,822,SHUL,CO,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO Spawning
+356343800,0,838,SHUL,SK,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO and SK Spawning
+356348431,1481,1781,SHUL,SK,rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
+356348431,1481,1781,SHUL,SK,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
+356137288,0,408,SHUL,SK,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Adult SK observed up to rail line
+356347377,0,558,BONP,CH,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - major spawning for CH
+356311064,6630,8353.604837,QUES,CO,rearing,f,MC,2024-07-04,Lhtako Dene WCRP Field Assessments,No channel or water
+356287539,1403.205103,1444.490069,QUES,CO,rearing,f,MC,2024-07-04,Lhtako Dene WCRP Field Assessments,No wetland/water
+355995081,0,4932,LNIC,CH,spawning,t,LB,2024-07-30,Pacific Salmon Foundation,
+355995081,0,4932,LNIC,CO,spawning,t,LB,2024-07-30,Pacific Salmon Foundation,
+355995081,0,4932,LNIC,ST,spawning,t,LB,2024-07-30,Pacific Salmon Foundation,

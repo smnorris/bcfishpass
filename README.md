@@ -68,14 +68,11 @@ Load source data:
     jobs/load_static                     
     jobs/load_monthly
     jobs/load_weekly
-
-Load cached bcfishpass data:
-
-    jobs/load_gradient_barriers
     jobs/load_modelled_stream_crossings
 
 Run the model:
 
+    jobs/model_stream_crossings    # (optionally - this is only needs to be run on the primary provincial bcfishpass database)
     jobs/model_prep
     jobs/model_run
 

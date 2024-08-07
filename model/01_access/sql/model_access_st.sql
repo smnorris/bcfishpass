@@ -123,7 +123,7 @@ hab_upstr as
         h.wscode_ltree,
         h.localcode_ltree,
         false,
-        20  -- a large tolerance to discard habitat that ends at more or less the same location as the barrier (within 20m)
+        200  -- a v large tolerance to discard habitat that ends at more or less the same location as the barrier
       )
   group by b.barrier_id
 ),
