@@ -3,7 +3,7 @@
 @author: Andrew Pozzuoli
 
 This python script generates sets for barriers in a wcrp
-and ranks them by a combination of immediaate and longterm gain.
+and ranks them by a combination of immediate and longterm gain.
 This populates the wcrp_ranked_barriers table with whichever wcrp is specified.
 """
 
@@ -218,7 +218,7 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
             where cv.barrier_status != 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
-            AND cv.all_spawningrearing_belowupstrbarriers_km  != 0
+            AND cv.all_spawningrearing_km  != 0
             AND {condition};
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
@@ -232,7 +232,7 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
 
             """
         cursor.execute(q_make_table)
-
+        
         q_group_barriers = f"""
             -- Index for speeding up queries
             DROP INDEX IF EXISTS rank_idx;
