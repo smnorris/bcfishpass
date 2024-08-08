@@ -1,10 +1,11 @@
 BEGIN;
 
--- final output crossings view -
--- join crossings table to streams / access / habitat tables
--- and convert array types to text for easier dumps
+-- drop dependent views
 drop view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
+drop materialized view bcfishpass.fptwg_summary_crossings_vw;
 drop materialized view bcfishpass.crossings_vw;
+
+-- recreate crossings_vw, now with modelled_crossing_office_review_date
 
 create materialized view bcfishpass.crossings_vw as
 select
@@ -310,7 +311,7 @@ comment on column bcfishpass.crossings_vw.stream_magnitude IS 'Magnitude of FWA 
 comment on column bcfishpass.crossings_vw.geom IS 'The point geometry associated with the feature';
 
 
--- create view of crossings with just salmon/steelhead related columns
+-- recreate dependent views
 create view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
 select
  c.aggregated_crossings_id,
@@ -444,5 +445,42 @@ select
  c.st_belowupstrbarriers_slopeclass30_km,
  c.geom
  from bcfishpass.crossings_vw c;
+
+create materialized view bcfishpass.fptwg_summary_crossings_vw as
+select
+  l.assmnt_watershed_id as watershed_feature_id,
+  count(*) as n_crossings_total,
+  count(*) filter (where crossing_feature_type = 'DAM') as n_dam,
+  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'PASSABLE') as n_dam_passable,
+  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'POTENTIAL') as n_dam_potential,
+  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'UNKNOWN') as n_dam_unknown,
+  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'BARRIER') as n_dam_barrier,
+  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_dam_barrier_salmon,
+  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_dam_barrier_steelhead,
+  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'ASSESSED') as n_pscisassessment,
+  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'HABITAT CONFIRMATION') as n_pscisconfirmation,
+  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'DESIGN') as n_pscisdesign,
+  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'REMEDIATED') as n_pscisremediation,
+  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'PASSABLE') as n_pscis_passable,
+  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'POTENTIAL') as n_pscis_potential,
+  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'UNKNOWN') as n_pscis_unknown,
+  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'BARRIER') as n_pscis_barrier,
+  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_pscis_barrier_salmon,
+  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_pscis_barrier_steelhead,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS') as n_modelledxings,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'PASSABLE') as n_modelledxings_passable,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'POTENTIAL') as n_modelledxings_potential,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'UNKNOWN') as n_modelledxings_unknown,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'BARRIER') as n_modelledxings_barrier,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_modelledxings_barrier_salmon,
+  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_modelledxings_barrier_steelhead,
+  count(*) filter (where crossing_source = 'MISC BARRIERS') as n_miscbarriers,
+  count(*) filter (where crossing_source = 'MISC BARRIERS' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_miscbarriers_barrier_salmon,
+  count(*) filter (where crossing_source = 'MISC BARRIERS' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_miscbarriers_barrier_steelhead
+from bcfishpass.crossings_vw c
+inner join whse_basemapping.fwa_assessment_watersheds_streams_lut l on c.linear_feature_id = l.linear_feature_id
+group by l.assmnt_watershed_id;
+create index on bcfishpass.fptwg_summary_crossings_vw (watershed_feature_id);
+
 
 COMMIT;
