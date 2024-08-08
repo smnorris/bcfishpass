@@ -1,9 +1,9 @@
 BEGIN;
 
 -- drop dependent views
-drop view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
-drop materialized view bcfishpass.fptwg_summary_crossings_vw;
-drop materialized view bcfishpass.crossings_vw;
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_crossings_vw;
+drop materialized view if exists bcfishpass.crossings_vw;
 
 -- recreate crossings_vw, now with modelled_crossing_office_review_date
 
