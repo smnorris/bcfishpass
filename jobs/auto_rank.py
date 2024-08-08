@@ -558,7 +558,12 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
                     on c.aggregated_crossings_id = cv.aggregated_crossings_id
                 where {condition}
                 order by rank_combined
-            )
+            );
+
+            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT SELECT TO cwf_user;
+            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT ALL TO cwf_analyst;
+            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT SELECT TO bcfishpass_user;
+            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT ALL TO cwf_analyst;
             """
         cursor.execute(q_wcrp_rank_table)
     conn.commit()
