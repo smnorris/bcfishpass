@@ -1,3 +1,5 @@
+BEGIN;
+
 -- final output crossings view -
 -- join crossings table to streams / access / habitat tables
 -- and convert array types to text for easier dumps
@@ -442,3 +444,5 @@ select
  c.st_belowupstrbarriers_slopeclass30_km,
  c.geom
  from bcfishpass.crossings_vw c;
+
+COMMIT;
