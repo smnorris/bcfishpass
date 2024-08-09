@@ -509,62 +509,55 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
         q_wcrp_rank_table = f"""
             -- Create a table to join crossings_wcrp_vw and wcrp_ranked_barriers fields in wcrp schema
 
-            DROP TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp};
+            TRUNCATE TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp};
 
-            CREATE TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} as
-            (
-                select 
-                cv.aggregated_crossings_id
-                ,cv.crossing_source
-                ,cv.crossing_feature_type
-                ,cv.pscis_status
-                ,cv.crossing_type_code
-                ,cv.crossing_subtype_code
-                ,cv.barrier_status
-                ,cv.pscis_road_name
-                ,cv.pscis_stream_name
-                ,cv.pscis_assessment_comment
-                ,cv.pscis_assessment_date
-                ,cv.utm_zone
-                ,cv.utm_easting
-                ,cv.utm_northing
-                ,cv.blue_line_key
-                ,cv.watershed_group_code
-                ,cv.gnis_stream_name
-                ,cv.barriers_anthropogenic_dnstr
-                ,cv.barriers_anthropogenic_dnstr_count
-                ,cv.barriers_anthropogenic_habitat_wcrp_upstr
-                ,cv.barriers_anthropogenic_habitat_wcrp_upstr_count
-                ,cv.all_spawning_km
-                ,cv.all_spawning_belowupstrbarriers_km
-                ,cv.all_rearing_km
-                ,cv.all_rearing_belowupstrbarriers_km
-                ,cv.all_spawningrearing_km
-                ,cv.all_spawningrearing_belowupstrbarriers_km
-                ,r.set_id
-                ,r.total_hab_gain_set
-                ,r.num_barriers_set
-                ,r.avg_gain_per_barrier
-                ,r.dnstr_set_ids
-                ,r.rank_avg_gain_per_barrier
-                ,r.rank_avg_gain_tiered
-                ,r.rank_combined
-                ,r.tier_combined
-                ,cv.geom
-                from bcfishpass.wcrp_ranked_barriers r
-                join bcfishpass.crossings_wcrp_vw cv
-                    on r.aggregated_crossings_id = cv.aggregated_crossings_id
-                join bcfishpass.crossings c
-                    on c.aggregated_crossings_id = cv.aggregated_crossings_id
-                where {condition}
-                order by rank_combined
-            );
-
-            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT SELECT TO cwf_user;
-            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT ALL TO cwf_analyst;
-            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT SELECT TO bcfishpass_user;
-            ALTER TABLE wcrp_{wcrp_schema}.ranked_barriers_{wcrp} GRANT ALL TO cwf_analyst;
-            """
+            INSERT INTO wcrp_{wcrp_schema}.ranked_barriers_{wcrp} 
+            select 
+            cv.aggregated_crossings_id
+            ,cv.crossing_source
+            ,cv.crossing_feature_type
+            ,cv.pscis_status
+            ,cv.crossing_type_code
+            ,cv.crossing_subtype_code
+            ,cv.barrier_status
+            ,cv.pscis_road_name
+            ,cv.pscis_stream_name
+            ,cv.pscis_assessment_comment
+            ,cv.pscis_assessment_date
+            ,cv.utm_zone
+            ,cv.utm_easting
+            ,cv.utm_northing
+            ,cv.blue_line_key
+            ,cv.watershed_group_code
+            ,cv.gnis_stream_name
+            ,cv.barriers_anthropogenic_dnstr
+            ,cv.barriers_anthropogenic_dnstr_count
+            ,cv.barriers_anthropogenic_habitat_wcrp_upstr
+            ,cv.barriers_anthropogenic_habitat_wcrp_upstr_count
+            ,cv.all_spawning_km
+            ,cv.all_spawning_belowupstrbarriers_km
+            ,cv.all_rearing_km
+            ,cv.all_rearing_belowupstrbarriers_km
+            ,cv.all_spawningrearing_km
+            ,cv.all_spawningrearing_belowupstrbarriers_km
+            ,r.set_id
+            ,r.total_hab_gain_set
+            ,r.num_barriers_set
+            ,r.avg_gain_per_barrier
+            ,r.dnstr_set_ids
+            ,r.rank_avg_gain_per_barrier
+            ,r.rank_avg_gain_tiered
+            ,r.rank_combined
+            ,r.tier_combined
+            ,cv.geom
+            from bcfishpass.wcrp_ranked_barriers r
+            join bcfishpass.crossings_wcrp_vw cv
+                on r.aggregated_crossings_id = cv.aggregated_crossings_id
+            join bcfishpass.crossings c
+                on c.aggregated_crossings_id = cv.aggregated_crossings_id
+            where {condition}
+            order by rank_combined;
+        """ 
         cursor.execute(q_wcrp_rank_table)
     conn.commit()
 
