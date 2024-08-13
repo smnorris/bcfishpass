@@ -7,12 +7,12 @@ BEGIN;
 -- This is not simple though - fptwg views depend on crossings_vw.
 -- This is poor design and should be fixed... but pending that fix, just drop them here
 -- and then re-create with a call to the original scripts.
-drop materialized view if exists bcfishpass.fwa_assessment_watersheds_waterbodies_vw;
-drop materialized view if exists bcfishpass.fptwg_summary_linear_vw;
-drop materialized view if exists bcfishpass.fptwg_summary_crossings_vw;
-drop materialized view if exists bcfishpass.fptwg_summary_observations_vw;
-drop materialized view if exists bcfishpass.fptwg_summary_roads_vw;
 drop view if exists bcfishpass.fptwg_assmt_wsd_summary_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_roads_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_observations_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_crossings_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_linear_vw;
+drop materialized view if exists bcfishpass.fwa_assessment_watersheds_waterbodies_vw;
 drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
 drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
 drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
