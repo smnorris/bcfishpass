@@ -1,12 +1,27 @@
+-- add review date to crossings_vw
+-- addition of just a single column requires a lot of code
+
 BEGIN;
 
--- drop dependent views
-drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
+-- Materialized views cannot be altered, they must be dropped/recreated.
+-- This is not simple though - fptwg views depend on crossings_vw.
+-- This is poor design and should be fixed... but pending that fix, just drop them here
+-- and then re-create with a call to the original scripts.
+drop materialized view if exists bcfishpass.fwa_assessment_watersheds_waterbodies_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_linear_vw;
 drop materialized view if exists bcfishpass.fptwg_summary_crossings_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_observations_vw;
+drop materialized view if exists bcfishpass.fptwg_summary_roads_vw;
+drop view if exists bcfishpass.fptwg_assmt_wsd_summary_vw;
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw;
+drop view if exists bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw;
+
+
+-- drop view that needs to be redefined
 drop materialized view if exists bcfishpass.crossings_vw;
 
 -- recreate crossings_vw, now with modelled_crossing_office_review_date
-
 create materialized view bcfishpass.crossings_vw as
 select
   -- joining to streams based on measure can be error prone due to precision.
@@ -310,178 +325,6 @@ comment on column bcfishpass.crossings_vw.gnis_stream_name IS 'The BCGNIS (BC Ge
 comment on column bcfishpass.crossings_vw.stream_order IS 'Order of FWA stream at point';
 comment on column bcfishpass.crossings_vw.stream_magnitude IS 'Magnitude of FWA stream at point';
 comment on column bcfishpass.crossings_vw.geom IS 'The point geometry associated with the feature';
-
-
--- recreate dependent views
-create view bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw as
-select
- c.aggregated_crossings_id,
- c.stream_crossing_id,
- c.dam_id,
- c.user_barrier_anthropogenic_id,
- c.modelled_crossing_id,
- c.crossing_source,
- c.crossing_feature_type,
- c.pscis_status,
- c.crossing_type_code,
- c.crossing_subtype_code,
- c.modelled_crossing_type_source,
- c.modelled_crossing_office_review_date,
- c.barrier_status,
- c.pscis_road_name,
- c.pscis_stream_name,
- c.pscis_assessment_comment,
- c.pscis_assessment_date,
- c.pscis_final_score,
- c.transport_line_structured_name_1,
- c.transport_line_type_description,
- c.transport_line_surface_description,
- c.ften_forest_file_id,
- c.ften_file_type_description,
- c.ften_client_number,
- c.ften_client_name,
- c.ften_life_cycle_status_code,
- c.rail_track_name,
- c.rail_owner_name,
- c.rail_operator_english_name,
- c.ogc_proponent,
- c.dam_name,
- c.dam_height,
- c.dam_owner,
- c.dam_use,
- c.dam_operating_status,
- c.utm_zone,
- c.utm_easting,
- c.utm_northing,
- c.dbm_mof_50k_grid,
- c.linear_feature_id,
- c.blue_line_key,
- c.watershed_key,
- c.downstream_route_measure,
- c.wscode,
- c.localcode,
- c.watershed_group_code,
- c.gnis_stream_name,
- c.stream_order,
- c.stream_magnitude,
- c.observedspp_dnstr,
- c.observedspp_upstr,
- c.crossings_dnstr,
- c.barriers_anthropogenic_dnstr,
- c.barriers_anthropogenic_dnstr_count,
- c.barriers_anthropogenic_upstr,
- c.barriers_anthropogenic_upstr_count,
- c.barriers_anthropogenic_ch_cm_co_pk_sk_upstr,
- c.barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count,
- c.barriers_anthropogenic_st_upstr,
- c.barriers_anthropogenic_st_upstr_count,
- c.gradient,
- c.total_network_km,
- c.total_stream_km,
- c.total_lakereservoir_ha,
- c.total_wetland_ha,
- c.total_slopeclass03_waterbodies_km,
- c.total_slopeclass03_km,
- c.total_slopeclass05_km,
- c.total_slopeclass08_km,
- c.total_slopeclass15_km,
- c.total_slopeclass22_km,
- c.total_slopeclass30_km,
- c.total_belowupstrbarriers_network_km,
- c.total_belowupstrbarriers_stream_km,
- c.total_belowupstrbarriers_lakereservoir_ha,
- c.total_belowupstrbarriers_wetland_ha,
- c.total_belowupstrbarriers_slopeclass03_waterbodies_km,
- c.total_belowupstrbarriers_slopeclass03_km,
- c.total_belowupstrbarriers_slopeclass05_km,
- c.total_belowupstrbarriers_slopeclass08_km,
- c.total_belowupstrbarriers_slopeclass15_km,
- c.total_belowupstrbarriers_slopeclass22_km,
- c.total_belowupstrbarriers_slopeclass30_km,
- c.barriers_ch_cm_co_pk_sk_dnstr,
- c.ch_cm_co_pk_sk_network_km,
- c.ch_cm_co_pk_sk_stream_km,
- c.ch_cm_co_pk_sk_lakereservoir_ha,
- c.ch_cm_co_pk_sk_wetland_ha,
- c.ch_cm_co_pk_sk_slopeclass03_waterbodies_km,
- c.ch_cm_co_pk_sk_slopeclass03_km,
- c.ch_cm_co_pk_sk_slopeclass05_km,
- c.ch_cm_co_pk_sk_slopeclass08_km,
- c.ch_cm_co_pk_sk_slopeclass15_km,
- c.ch_cm_co_pk_sk_slopeclass22_km,
- c.ch_cm_co_pk_sk_slopeclass30_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_network_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_stream_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha,
- c.ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km,
- c.ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km,
- c.barriers_st_dnstr,
- c.st_network_km,
- c.st_stream_km,
- c.st_lakereservoir_ha,
- c.st_wetland_ha,
- c.st_slopeclass03_waterbodies_km,
- c.st_slopeclass03_km,
- c.st_slopeclass05_km,
- c.st_slopeclass08_km,
- c.st_slopeclass15_km,
- c.st_slopeclass22_km,
- c.st_slopeclass30_km,
- c.st_belowupstrbarriers_network_km,
- c.st_belowupstrbarriers_stream_km,
- c.st_belowupstrbarriers_lakereservoir_ha,
- c.st_belowupstrbarriers_wetland_ha,
- c.st_belowupstrbarriers_slopeclass03_waterbodies_km,
- c.st_belowupstrbarriers_slopeclass03_km,
- c.st_belowupstrbarriers_slopeclass05_km,
- c.st_belowupstrbarriers_slopeclass08_km,
- c.st_belowupstrbarriers_slopeclass15_km,
- c.st_belowupstrbarriers_slopeclass22_km,
- c.st_belowupstrbarriers_slopeclass30_km,
- c.geom
- from bcfishpass.crossings_vw c;
-
-create materialized view bcfishpass.fptwg_summary_crossings_vw as
-select
-  l.assmnt_watershed_id as watershed_feature_id,
-  count(*) as n_crossings_total,
-  count(*) filter (where crossing_feature_type = 'DAM') as n_dam,
-  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'PASSABLE') as n_dam_passable,
-  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'POTENTIAL') as n_dam_potential,
-  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'UNKNOWN') as n_dam_unknown,
-  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'BARRIER') as n_dam_barrier,
-  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_dam_barrier_salmon,
-  count(*) filter (where crossing_feature_type = 'DAM' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_dam_barrier_steelhead,
-  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'ASSESSED') as n_pscisassessment,
-  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'HABITAT CONFIRMATION') as n_pscisconfirmation,
-  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'DESIGN') as n_pscisdesign,
-  count(*) filter (where crossing_source = 'PSCIS' and pscis_status = 'REMEDIATED') as n_pscisremediation,
-  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'PASSABLE') as n_pscis_passable,
-  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'POTENTIAL') as n_pscis_potential,
-  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'UNKNOWN') as n_pscis_unknown,
-  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'BARRIER') as n_pscis_barrier,
-  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_pscis_barrier_salmon,
-  count(*) filter (where crossing_source = 'PSCIS' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_pscis_barrier_steelhead,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS') as n_modelledxings,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'PASSABLE') as n_modelledxings_passable,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'POTENTIAL') as n_modelledxings_potential,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'UNKNOWN') as n_modelledxings_unknown,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'BARRIER') as n_modelledxings_barrier,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_modelledxings_barrier_salmon,
-  count(*) filter (where crossing_source = 'MODELLED CROSSINGS' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_modelledxings_barrier_steelhead,
-  count(*) filter (where crossing_source = 'MISC BARRIERS') as n_miscbarriers,
-  count(*) filter (where crossing_source = 'MISC BARRIERS' and barrier_status = 'BARRIER' and barriers_ch_cm_co_pk_sk_dnstr = '') as n_miscbarriers_barrier_salmon,
-  count(*) filter (where crossing_source = 'MISC BARRIERS' and barrier_status = 'BARRIER' and barriers_st_dnstr = '') as n_miscbarriers_barrier_steelhead
-from bcfishpass.crossings_vw c
-inner join whse_basemapping.fwa_assessment_watersheds_streams_lut l on c.linear_feature_id = l.linear_feature_id
-group by l.assmnt_watershed_id;
-create index on bcfishpass.fptwg_summary_crossings_vw (watershed_feature_id);
 
 
 COMMIT;
