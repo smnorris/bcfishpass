@@ -7,7 +7,7 @@ $func$
 BEGIN
 
     EXECUTE format('
-        CREATE TABLE IS NOT EXISTS %I.%I
+        CREATE TABLE IF NOT EXISTS %I.%I
         (
             aggregated_crossings_id text,
             crossing_source text,
