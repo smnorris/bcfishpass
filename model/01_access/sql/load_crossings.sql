@@ -403,6 +403,8 @@ select
       when cabd.passability_status_code = 2 THEN 'POTENTIAL'
       when cabd.passability_status_code = 3 THEN 'PASSABLE'
       when cabd.passability_status_code = 4 THEN 'UNKNOWN'
+      when cabd.passability_status_code = 5 THEN 'PASSABLE'
+      when cabd.passability_status_code = 6 THEN 'PASSABLE'
     end AS barrier_status,
 
     -- cabd attributes
