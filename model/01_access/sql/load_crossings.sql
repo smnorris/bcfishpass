@@ -23,10 +23,12 @@ insert into bcfishpass.crossings
     transport_line_type_description,
     transport_line_surface_description,
     ften_forest_file_id,
+    ften_road_section_id,
     ften_file_type_description,
     ften_client_number,
     ften_client_name,
     ften_life_cycle_status_code,
+    ften_map_label,
     rail_track_name,
     rail_owner_name,
     rail_operator_english_name,
@@ -56,7 +58,9 @@ select
     e.current_crossing_type_code as crossing_type_code,
     e.current_crossing_subtype_code as crossing_subtype_code,
     case
-      when mf.structure = 'OBS' THEN array['MANUAL FIX']   -- note modelled crossings that have been manually identified as OBS
+      when mf.structure = 'OBS' THEN array['MANUAL FIX']   -- tag modelled crossings that have been manually identified as OBS
+                                                           -- NOTE - why do we do this? modelled crossing type is not retained (replaced by PSCIS crossing type)
+                                                           -- Why note where it comes from?
       else m.modelled_crossing_type_source
     end AS modelled_crossing_type_source,
     case
@@ -75,10 +79,12 @@ select
     drasurface.description as transport_line_surface_description,
 
     ften.forest_file_id as ften_forest_file_id,
+    ften.road_section_id as ften_road_section_id,
     ften.file_type_description as ften_file_type_description,
     ften.client_number as ften_client_number,
     ften.client_name as ften_client_name,
     ften.life_cycle_status_code as ften_life_cycle_status_code,
+    ften.map_label as ften_map_label,
 
     rail.track_name as rail_track_name,
     rail.owner_name AS rail_owner_name,
@@ -86,9 +92,9 @@ select
 
     coalesce(ogc1.proponent, ogc2.proponent) as ogc_proponent,
 
-    substring(to_char(utmzone(e.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(st_transform(e.geom, utmzone(e.geom)))::int as utm_easting,
-    st_y(st_transform(e.geom, utmzone(e.geom)))::int as utm_northing,
+    substring(to_char(bcfishpass.utmzone(e.geom),'999999') from 6 for 2)::int as utm_zone,
+    st_x(st_transform(e.geom, bcfishpass.utmzone(e.geom)))::int as utm_easting,
+    st_y(st_transform(e.geom, bcfishpass.utmzone(e.geom)))::int as utm_northing,
     e.linear_feature_id,
     e.blue_line_key,
     s.watershed_key,
@@ -149,10 +155,12 @@ WITH rail AS
      NULL as transport_line_type_description,
      NULL as transport_line_surface_description,
      NULL as ften_forest_file_id,
+     NULL as ften_road_section_id,
      NULL as ften_file_type_description,
      NULL AS ften_client_number,
      NULL AS ften_client_name,
      NULL AS ften_life_cycle_status_code,
+     NULL AS ften_map_label,
      track_name as rail_track_name,
      owner_name as rail_owner_name,
      operator_english_name as rail_operator_english_name,
@@ -198,10 +206,12 @@ ften as (
   cross join lateral
   (select
      forest_file_id,
+     road_section_id,
      file_type_description,
      client_number,
      client_name,
      life_cycle_status_code,
+     map_label,
      ST_Distance(rd.geom, pt.geom) as distance_to_road
    from whse_forest_tenure.ften_road_section_lines_svw AS rd
    where life_cycle_status_code NOT IN ('PENDING')
@@ -223,10 +233,12 @@ roads AS
     dratype.description AS transport_line_type_description,
     drasurface.description AS transport_line_surface_description,
     b.forest_file_id AS ften_forest_file_id,
+    b.road_section_id as ften_road_section_id,
     b.file_type_description AS ften_file_type_description,
     b.client_number AS ften_client_number,
     b.client_name AS ften_client_name,
     b.life_cycle_status_code AS ften_life_cycle_status_code,
+    b.map_label as ften_map_label,
     NULL as rail_owner_name,
     NULL as rail_track_name,
     NULL as rail_operator_english_name,
@@ -264,10 +276,12 @@ insert into bcfishpass.crossings
     transport_line_surface_description,
 
     ften_forest_file_id,
+    ften_road_section_id,
     ften_file_type_description,
     ften_client_number,
     ften_client_name,
     ften_life_cycle_status_code,
+    ften_map_label,
 
     rail_track_name,
     rail_owner_name,
@@ -309,16 +323,18 @@ select distinct ON (e.stream_crossing_id)
     r.transport_line_type_description,
     r.transport_line_surface_description,
     r.ften_forest_file_id,
+    r.ften_road_section_id,
     r.ften_file_type_description,
     r.ften_client_number,
     r.ften_client_name,
     r.ften_life_cycle_status_code,
+    r.ften_map_label,
     r.rail_track_name,
     r.rail_owner_name,
     r.rail_operator_english_name,
-    substring(to_char(utmzone(e.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(st_transform(e.geom, utmzone(e.geom)))::int as utm_easting,
-    st_y(st_transform(e.geom, utmzone(e.geom)))::int as utm_northing,
+    substring(to_char(bcfishpass.utmzone(e.geom),'999999') from 6 for 2)::int as utm_zone,
+    st_x(st_transform(e.geom, bcfishpass.utmzone(e.geom)))::int as utm_easting,
+    st_y(st_transform(e.geom, bcfishpass.utmzone(e.geom)))::int as utm_northing,
     e.linear_feature_id,
     e.blue_line_key,
     s.watershed_key,
@@ -387,6 +403,8 @@ select
       when cabd.passability_status_code = 2 THEN 'POTENTIAL'
       when cabd.passability_status_code = 3 THEN 'PASSABLE'
       when cabd.passability_status_code = 4 THEN 'UNKNOWN'
+      when cabd.passability_status_code = 5 THEN 'PASSABLE'
+      when cabd.passability_status_code = 6 THEN 'PASSABLE'
     end AS barrier_status,
 
     -- cabd attributes
@@ -396,9 +414,9 @@ select
     cabd.dam_use,
     cabd.operating_status as dam_operating_status,
 
-    substring(to_char(utmzone(d.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(ST_transform(d.geom, utmzone(d.geom)))::int as utm_easting,
-    st_y(st_transform(d.geom, utmzone(d.geom)))::int as utm_northing,
+    substring(to_char(bcfishpass.utmzone(d.geom),'999999') from 6 for 2)::int as utm_zone,
+    st_x(ST_transform(d.geom, bcfishpass.utmzone(d.geom)))::int as utm_easting,
+    st_y(st_transform(d.geom, bcfishpass.utmzone(d.geom)))::int as utm_northing,
     d.linear_feature_id,
     d.blue_line_key,
     s.watershed_key,
@@ -453,9 +471,9 @@ select
     'DAM' AS crossing_subtype_code,
     'BARRIER' AS barrier_status,
     'USA DAM PLACEHOLDER' as dam_name,
-    substring(to_char(utmzone(d.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(ST_transform(d.geom, utmzone(d.geom)))::int as utm_easting,
-    st_y(st_transform(d.geom, utmzone(d.geom)))::int as utm_northing,
+    substring(to_char(bcfishpass.utmzone(d.geom),'999999') from 6 for 2)::int as utm_zone,
+    st_x(ST_transform(d.geom, bcfishpass.utmzone(d.geom)))::int as utm_easting,
+    st_y(st_transform(d.geom, bcfishpass.utmzone(d.geom)))::int as utm_northing,
     d.linear_feature_id,
     d.blue_line_key,
     s.watershed_key,
@@ -537,9 +555,9 @@ select
     'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
     b.barrier_type AS crossing_subtype_code,
     'BARRIER' AS barrier_status,
-    substring(to_char(utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(st_transform(b.geom, utmzone(b.geom)))::int as utm_easting,
-    st_y(st_transform(b.geom, utmzone(b.geom)))::int as utm_northing,
+    substring(to_char(bcfishpass.utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
+    st_x(st_transform(b.geom, bcfishpass.utmzone(b.geom)))::int as utm_easting,
+    st_y(st_transform(b.geom, bcfishpass.utmzone(b.geom)))::int as utm_northing,
     b.linear_feature_id,
     b.blue_line_key,
     b.watershed_key,
@@ -574,10 +592,12 @@ insert into bcfishpass.crossings
     transport_line_type_description,
     transport_line_surface_description,
     ften_forest_file_id,
+    ften_road_section_id,
     ften_file_type_description,
     ften_client_number,
     ften_client_name,
     ften_life_cycle_status_code,
+    ften_map_label,
     rail_track_name,
     rail_owner_name,
     rail_operator_english_name,
@@ -619,10 +639,12 @@ select
     drasurface.description AS transport_line_surface_description,
 
     ften.forest_file_id AS ften_forest_file_id,
+    ften.road_section_id as ften_road_section_id,
     ften.file_type_description AS ften_file_type_description,
     ften.client_number AS ften_client_number,
     ften.client_name AS ften_client_name,
     ften.life_cycle_status_code AS ften_life_cycle_status_code,
+    ften.map_label as ften_map_label,
 
     rail.track_name AS rail_track_name,
     rail.owner_name AS rail_owner_name,
@@ -630,9 +652,9 @@ select
 
     coalesce(ogc1.proponent, ogc2.proponent) as ogc_proponent,
 
-    substring(to_char(utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(ST_transform(b.geom, utmzone(b.geom)))::int as utm_easting,
-    st_y(st_transform(b.geom, utmzone(b.geom)))::int as utm_northing,
+    substring(to_char(bcfishpass.utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
+    st_x(ST_transform(b.geom, bcfishpass.utmzone(b.geom)))::int as utm_easting,
+    st_y(st_transform(b.geom, bcfishpass.utmzone(b.geom)))::int as utm_northing,
     b.linear_feature_id,
     b.blue_line_key,
     s.watershed_key,

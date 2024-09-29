@@ -3475,13 +3475,12 @@
 354153558,9698,9798,ALBN,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 354153574,819.72,1406.76,COMX,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 354153574,1356,1456,COMX,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-354153615,0,16058.09,PARK,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+354153615,0,16050,PARK,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 354153615,1362,1462,PARK,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,1362,1462,PARK,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,3011,3111,PARK,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,5725,5825,PARK,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 354153615,14589,14689,PARK,CM,spawning,t,SN,2023-08-17,FISS spawning points,
-354153615,16007,16107,PARK,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 354153626,4172,4272,TAHS,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 354153637,1628,1728,CAMB,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 354153684,53,1505.31,CLAY,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -5037,12 +5036,10 @@
 356333065,2611,2711,QUES,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356333203,0,1894.72,MORK,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356333292,0,100,ADMS,SK,spawning,t,SN,2023-08-17,FISS spawning points,
-356333292,0.13,2115.15,ADMS,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356333292,0.13,2116.03,ADMS,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
+356333292,0.13,2110,ADMS,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356333292,0.13,2110,ADMS,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
 356333292,927,1027,ADMS,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356333292,927,1027,ADMS,SK,spawning,t,SN,2023-08-17,FISS spawning points,
-356333292,2065,2165,ADMS,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-356333292,2065,2165,ADMS,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356333292,5130,5230,ADMS,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356333292,5130,5230,ADMS,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356333695,63.21,554.63,LSAL,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -5723,7 +5720,6 @@
 356358537,5374.14,19518.82,STUL,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356358537,19462,19562,STUL,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356358538,151.14,291.41,CHES,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356358538,242,342,CHES,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356358551,0.32,3792.11,HORS,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356358624,266.17,33842.02,STUR,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356358731,0.48,2014.9,SHUL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
@@ -14873,7 +14869,7 @@
 360887120,19988,20088,TSAY,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 360887120,22207,22307,TSAY,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 360887120,22867,22967,TSAY,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-360887178,2228.49,8202.77,BABL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
+360887178,2228.49,8100,BABL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,adjusted upstream measure down ~100m to fall downstream of 25pct gradient barrier
 360887178,4109,4209,BABL,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 360887178,4109,4209,BABL,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 360887278,45966,46066,LSKE,PK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -15248,3 +15244,62 @@
 360887120,20,120,TSAY,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,source point snapped to closest stream within 250m
 360887414,204,304,KITL,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,source point snapped to closest stream within 250m
 360879788,0,100,NASC,SK,spawning,t,SN,2023-09-01,Pacific Salmon Foundation,manually matched
+360804808,253,527.036659,BULK,CH,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,"PSE point is not located on a modelled stream, closest modelled stream line to PSE point was selected."
+360864873,633,937,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360864873,1218.44764,1570,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360864873,2726.758367,2759.987934,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360864873,2759.987698,3470.320998,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360863724,3731.574678,4305.947686,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360863724,4746.707562,5251.772658,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360863724,5423.264994,6481.649414,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360863724,8879.167339,9760.187428,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360863724,9828.927197,10178.13952,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881038,22595.62553,24262.43,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,upstream - 60.693 m
+360881038,16287.7434,16620.68,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,upstream + 205.680 m
+360881038,13318.00732,13680.67328,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881038,12252.85924,12361.61961,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881038,11021.93646,11489.59747,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,13577.3221,13817,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,13154.92876,13260.1015,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,12597.56393,12822.44773,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,11063.15656,12469.67504,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,10256.05868,10783.66856,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,8801.525509,9695.724414,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,8144.75516,8215.652824,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,7354.913446,7606.228152,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,7174.07935,7203.960744,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,6273.923593,6361.483933,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,5335.256936,5380.321258,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,1364.83797,5006.353881,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360881993,696.5582911,845.8527961,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360816308,1905,2218.63,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,Downstream + 194.979 m
+360749382,0,1764.93108,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360816176,0,711.7030546,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360716584,406,733.9339867,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360865670,3315.436955,5115.83,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,Upstream - 110.991 m
+360886524,697.3901048,845.3869285,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360869846,0,2806.75,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,downstream + 417.402 m
+360779258,4147,4929.47,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,downstream +283.473 m
+360884501,0,1190.91,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,upstream - 33.269 m
+360685108,0,1824.48,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,downstream of + 941.483 m
+360766713,0,384.8959035,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,upstream - 82.128 m
+360873822,262680.15,263743.7308,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,downstream - 58.527 m
+360886221,60433.59806,60611.48,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,upstream + 17.481 m
+360886221,60093.67974,60215.14288,BULK,CO,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,
+360886614,0,31.22541492,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,River sockeye
+360873822,22478,22509.83251,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,River sockeye
+360873822,168869,170329.9685,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,River sockeye
+360881038,0,280.2148356,BULK,SK,spawning,t,LB,2024-06-06,Pacific Salmon Foundation,Lake sockeye
+360804115,652.18,852.93,BULK,CO,spawning,t,LB,2024-06-17,Pacific Salmon Foundation,
+356209928,25.6202005,486.7184822,SHUL,CO,rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO rearing habitat
+356209928,486.719176,822,SHUL,CO,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO Spawning
+356343800,0,838,SHUL,SK,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - CO and SK Spawning
+356348431,1481,1781,SHUL,SK,rearing,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
+356348431,1481,1781,SHUL,SK,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Some SK seen 300m upstream
+356137288,0,408,SHUL,SK,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - Adult SK observed up to rail line
+356347377,0,558,BONP,CH,spawning,t,MC,2024-06-27,Local Knowledge,Local Knowledge - major spawning for CH
+356311064,6630,8353.604837,QUES,CO,rearing,f,MC,2024-07-04,Lhtako Dene WCRP Field Assessments,No channel or water
+356287539,1403.205103,1444.490069,QUES,CO,rearing,f,MC,2024-07-04,Lhtako Dene WCRP Field Assessments,No wetland/water
+355995081,0,4932,LNIC,CH,spawning,t,LB,2024-07-30,Pacific Salmon Foundation,
+355995081,0,4932,LNIC,CO,spawning,t,LB,2024-07-30,Pacific Salmon Foundation,
+355995081,0,4932,LNIC,ST,spawning,t,LB,2024-07-30,Pacific Salmon Foundation,

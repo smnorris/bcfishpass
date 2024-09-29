@@ -25,6 +25,27 @@ bcdata bc2pg -r whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp
 bcdata bc2pg -r whse_tantalis.ta_conservancy_areas_svw
 bcdata bc2pg -r whse_tantalis.ta_park_ecores_pa_svw
 
+# DRA
+mkdir -p tmp
+# **
+# ** note temp dra data cache, to be replaced with new download location or a bc2pg download **
+# **
+#curl ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
+#  -o tmp/dgtl_road_atlas.gdb.zip
+$PSQL -c "drop table if exists bcdata.transport_line" # in case of any failed loads
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  --config PG_USE_COPY YES \
+  -lco GEOMETRY_NAME=geom \
+  -lco FID=transport_line_id \
+  -nln bcdata.transport_line \
+  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
+  TRANSPORT_LINE
+$PSQL -c "truncate whse_basemapping.transport_line;
+          insert into whse_basemapping.transport_line select * from bcdata.transport_line"
+$PSQL -c "drop table bcdata.transport_line"
+
 # parcel fabric, renaming download so it can be read without unzipping
 # ----
 curl \

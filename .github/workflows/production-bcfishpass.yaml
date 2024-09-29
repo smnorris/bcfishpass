@@ -10,39 +10,47 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 jobs:
-  load-parameters:
+  load-csv:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load csv data, parameters
         run:  |
           cp parameters/example_newgraph/*csv parameters/
-          make --debug=basic .make/parameters
-  build-xings:
+          jobs/load_csv
+  load-xings:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: load-parameters
+    needs: load-csv
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Load modelled crossings from archive
+        run:  jobs/load_modelled_stream_crossings
+  model-xings:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Build modelled crossings
-        run:  jobs/bcfishpass01_modelled_stream_crossings
-      - name: Release modelled crossings
-        run:  jobs/release_modelled_stream_crossings
+        run:  jobs/model_stream_crossings
   prep:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: build-xings
+    needs: model-xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/bcfishpass02_prep
+        run:  jobs/model_prep
   model:
     runs-on: ubuntu-latest
     environment: production
@@ -57,7 +65,7 @@ jobs:
       - name: Run the jobs
         run:  |
           git config --global --add safe.directory /__w/bcfishpass/bcfishpass
-          jobs/bcfishpass03_model
+          jobs/model_run
   release:
     runs-on: ubuntu-latest
     environment: production

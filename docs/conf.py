@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'bcfishpass'
-copyright = '2023, Simon Norris, bcfishpass contributors'
+copyright = '2024, bcfishpass contributors'
 author = 'Simon Norris, bcfishpass contributors'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.1.dev2'
+release = 'v0.5.0'
 
 
 # -- General configuration ---------------------------------------------------

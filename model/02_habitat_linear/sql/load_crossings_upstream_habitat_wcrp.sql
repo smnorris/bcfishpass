@@ -1,10 +1,8 @@
--- report on all ch/co/sk/st/wct habitat present in WCRP watersheds
--- note that this query presumes that if any of these species are present
--- in a given group, they are all of interest in the reporting
-
--- ** if adding a new watershed group or target species, additional per-watershed group logic may be required **
--- (for example, SHUL contains co/sk/wct - if WCT were not a target species in this watershed group, logic would be
--- required to exclude it from the 'all' computations)
+-- report on target species habitat present in WCRP watersheds
+-- NOTE
+-- If a barrier has another WCRP watershed upstream, the WCRP target species for that upstream watershed will be used
+-- to derive the 'all species' spawning/rearing summaries within that watershed.
+-- This should not generally be an issue, cross-watershed barriers are generally major dams that are out of scope for WCRP reporting
 
 truncate bcfishpass.crossings_upstream_habitat_wcrp;
 
@@ -26,6 +24,11 @@ with upstr as materialized
     h.rearing_st,
     h.spawning_wct,
     h.rearing_wct,
+    w.ch,
+    w.co,
+    w.sk,
+    w.st,
+    w.wct,
     s.edge_type,
     st_length(s.geom) as length_metre
   from bcfishpass.crossings a
@@ -43,10 +46,8 @@ with upstr as materialized
       1
      )
   inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
-  where a.watershed_group_code in ('BULK','LNIC','HORS','BOWR','QUES','CARR','ELKR')
-  and a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
-  -- barriers only
-  and a.barrier_status in ('BARRIER', 'POTENTIAL')
+  inner join bcfishpass.wcrp_watersheds w on a.watershed_group_code = w.watershed_group_code
+  where a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
 )
 
 insert into bcfishpass.crossings_upstream_habitat_wcrp
@@ -66,8 +67,8 @@ select
   round(
     (
       (
-        coalesce(sum(length_metre) FILTER (WHERE s.rearing_co IS TRUE), 0) +
-        coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND edge_type = 1050), 0)
+        coalesce(sum(length_metre) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE), 0) +
+        coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE AND edge_type = 1050), 0)
       ) / 1000
     )::numeric, 2
   ) AS co_rearing_km,
@@ -76,18 +77,20 @@ select
   round(
     (
       (
-        coalesce(sum(length_metre * 1.5) FILTER (WHERE s.rearing_sk IS TRUE), 0)
+        coalesce(sum(length_metre * 1.5) FILTER (WHERE s.rearing_sk IS TRUE AND s.sk IS TRUE), 0)
       ) / 1000
     )::numeric, 2
   ) as sk_rearing_km,
 
   -- all spawning
-  coalesce(round(((sum(length_metre) filter (where
-    s.spawning_ch is true or
-    s.spawning_co is true or
-    s.spawning_sk is true or
-    s.spawning_st is true or
-    s.spawning_wct is true) / 1000))::numeric, 2), 0) as all_spawning_km,
+  coalesce(round(((sum(length_metre) filter (
+    where
+    (s.spawning_ch is true and s.ch is true) or
+    (s.spawning_co is true and s.co is true) or
+    (s.spawning_sk is true and s.sk is true) or
+    (s.spawning_st is true and s.st is true) or
+    (s.spawning_wct is true and s.wct is true)
+  ) / 1000))::numeric, 2), 0) as all_spawning_km,
 
   -- all rearing
   round(
@@ -95,16 +98,16 @@ select
         (
           coalesce(sum(length_metre) FILTER (
             WHERE
-            s.rearing_ch IS TRUE OR
-            s.rearing_st IS TRUE OR
-            s.rearing_sk IS TRUE OR
-            s.rearing_co IS TRUE OR
-            s.rearing_wct IS TRUE
+            (s.rearing_ch IS TRUE AND s.ch IS TRUE) OR
+            (s.rearing_st IS TRUE AND s.st IS TRUE) OR
+            (s.rearing_sk IS TRUE AND s.sk IS TRUE) OR
+            (s.rearing_co IS TRUE AND s.co IS TRUE) OR
+            (s.rearing_wct IS TRUE AND s.wct IS TRUE)
           ), 0) +
           -- add .5 coho rearing in wetlands
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.edge_type = 1050), 0) +
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE AND s.edge_type = 1050), 0) +
           -- add .5 sockeye rearing in lakes (all of it)
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE), 0)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE AND s.sk IS TRUE), 0)
         ) / 1000)::numeric, 2
   ) as all_rearing_km,
 
@@ -114,21 +117,21 @@ select
         (
           coalesce(sum(length_metre) FILTER (
             WHERE
-            s.spawning_ch is true or
-            s.spawning_co is true or
-            s.spawning_sk is true or
-            s.spawning_st is true or
-            s.spawning_wct is true or
-            s.rearing_ch is true or
-            s.rearing_st is true or
-            s.rearing_sk is true or
-            s.rearing_co is true or
-            s.rearing_wct is true
+            (s.spawning_ch is true and s.ch is true) or
+            (s.spawning_co is true and s.co is true) or
+            (s.spawning_sk is true and s.sk is true) or
+            (s.spawning_st is true and s.st is true) or
+            (s.spawning_wct is true and s.wct is true) or
+            (s.rearing_ch is true and s.ch is true) or
+            (s.rearing_st is true and s.st is true) or
+            (s.rearing_sk is true and s.sk is true) or
+            (s.rearing_co is true and s.co is true) or
+            (s.rearing_wct is true and s.wct is true)
           ), 0) +
           -- add .5 coho rearing in wetlands
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.edge_type = 1050), 0) +
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE AND s.edge_type = 1050), 0) +
           -- add .5 sockeye rearing in lakes (all of it)
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE), 0)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE AND s.sk IS TRUE), 0)
         ) / 1000)::numeric, 2
   ) as all_spawningrearing_km
 from upstr s
@@ -158,6 +161,8 @@ with barriers as
     h.all_spawningrearing_km,
     ad.features_dnstr as barriers_anthropogenic_dnstr
   from bcfishpass.crossings_upstream_habitat_wcrp h
+  -- barriers only
+  inner join bcfishpass.barriers_anthropogenic b on h.aggregated_crossings_id = b.barriers_anthropogenic_id
   -- get the dnstr barrier ids
   left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on h.aggregated_crossings_id = ad.aggregated_crossings_id
 ),

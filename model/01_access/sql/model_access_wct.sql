@@ -10,38 +10,9 @@ with all_barriers as
     localcode_ltree,
     watershed_group_code,
     geom
-  from bcfishpass.barriers_gradient_20
+  from bcfishpass.barriers_gradient
   where watershed_group_code = :'wsg'
-
-  union all
-
-  select
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-  from bcfishpass.barriers_gradient_25
-  where watershed_group_code = :'wsg'
-
-  union all
-
-  select
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-  from bcfishpass.barriers_gradient_30
-  where watershed_group_code = :'wsg'
+  and barrier_type in ('GRADIENT_20', 'GRADIENT_25', 'GRADIENT_30')
 
   union all
 
@@ -77,8 +48,8 @@ with all_barriers as
 obs as
 (
   select *
-  from bcfishpass.observations
-  where species_codes && array['WCT'] IS TRUE
+  from bcfishpass.observations_vw
+  where species_code = 'WCT'
 ),
 
 barriers as
@@ -105,9 +76,9 @@ barriers as
         o.wscode_ltree,
         o.localcode_ltree,
         False,
-        1
+        20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )
-  where o.species_codes is null
+  where o.species_code is null
 
   union all
 

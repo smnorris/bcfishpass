@@ -16,7 +16,7 @@ RUN apt-get update && apt-get --assume-yes upgrade \
     && apt-get -qq install -y --no-install-recommends python3-pip \
     && apt-get -qq install -y --no-install-recommends python3-psycopg2 \
     && pip3 install --upgrade numpy \
-    && pip3 install bcdata==0.10.2 \
+    && pip3 install bcdata==0.10.4 \
     && pip3 install scikit-image \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \

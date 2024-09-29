@@ -36,21 +36,3 @@ ogr2ogr -f PostgreSQL \
   -nln cabd.waterfalls \
   "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
-
-# DRA
-mkdir -p tmp
-curl ftp://ftp.geobc.gov.bc.ca/sections/outgoing/bmgs/DRA_Public/dgtl_road_atlas.gdb.zip \
-  -o tmp/dgtl_road_atlas.gdb.zip
-$PSQL -c "drop table if exists bcdata.transport_line" # in case of any failed loads
-ogr2ogr \
-  -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  --config PG_USE_COPY YES \
-  -lco GEOMETRY_NAME=geom \
-  -lco FID=transport_line_id \
-  -nln bcdata.transport_line \
-  /vsizip/tmp/dgtl_road_atlas.gdb.zip \
-  TRANSPORT_LINE
-$PSQL -c "truncate whse_basemapping.transport_line;
-          insert into whse_basemapping.transport_line select * from bcdata.transport_line"
-$PSQL -c "drop table bcdata.transport_line"

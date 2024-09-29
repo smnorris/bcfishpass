@@ -3,7 +3,7 @@
 with all_barriers as
 (
   select
-    barriers_gradient_25_id as barrier_id,
+    barriers_gradient_id as barrier_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
@@ -13,24 +13,9 @@ with all_barriers as
     localcode_ltree,
     watershed_group_code,
     geom
-  from bcfishpass.barriers_gradient_25
+  from bcfishpass.barriers_gradient
   where watershed_group_code = :'wsg'
-
-  union all
-
-  select
-    barriers_gradient_30_id as barrier_id,
-    barrier_type,
-    barrier_name,
-    linear_feature_id,
-    blue_line_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    geom
-  from bcfishpass.barriers_gradient_30
-  where watershed_group_code = :'wsg'
+  and barrier_type in ('GRADIENT_25', 'GRADIENT_30')
 
   union all
 
@@ -69,9 +54,9 @@ with all_barriers as
 obs as
 (
   select *
-  from bcfishpass.observations
+  from bcfishpass.observations_vw
   -- include bt as equivalent to dv for this model
-  where species_codes && array['BT','DV','CT','RB'] is true
+  where species_code in ('BT','DV','CT','RB')
 ),
 
 -- known habitat to any species will be accessible to these species.
@@ -142,7 +127,7 @@ barriers as
         1
       )
   left outer join hab_upstr h on b.barrier_id = h.barrier_id
-  where o.species_codes is null
+  where o.species_code is null
   and h.species_codes is null
 
   union all

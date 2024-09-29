@@ -51,11 +51,11 @@ model_version=$(git describe)
 model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, model_version) VALUES ('LINEAR', '$model_version') returning model_run_id")
 
 # log parameters
-$PSQL -c "insert into bcfishpass.parameters_habitat_method_log
+$PSQL -c "insert into bcfishpass.log_parameters_habitat_method
           (model_run_id, watershed_group_code, model)
           select $model_run_id, watershed_group_code, model from bcfishpass.parameters_habitat_method;"
 
-$PSQL -c "insert into bcfishpass.parameters_habitat_thresholds_log (
+$PSQL -c "insert into bcfishpass.log_parameters_habitat_thresholds (
           model_run_id            ,
           species_code            ,
           spawn_gradient_max      ,
@@ -87,5 +87,5 @@ $PSQL -c "insert into bcfishpass.parameters_habitat_thresholds_log (
         from bcfishpass.parameters_habitat_thresholds;"
 
 # log summaries
-$PSQL -c "insert into bcfishpass.wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
-$PSQL -c "insert into bcfishpass.wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
+$PSQL -c "insert into bcfishpass.log_wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
+$PSQL -c "insert into bcfishpass.log_wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"

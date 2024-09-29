@@ -23,7 +23,7 @@ See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
 - [fwapg](https://github.com/smnorris/fwapg)
 - [bcfishobs](https://github.com/smnorris/bcfishobs)
 
-## Setup
+## Setup / Usage
 
 `bcfishpass` is a collection of shell/sql/Python scripts. To download and use the latest:
 
@@ -47,37 +47,38 @@ All scripts presume that the `DATABASE_URL` environment variable points to your 
 
     export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass
 
-Set up the database schema:
-
-    jobs/setup
-
-Load FWA data:
+Load FWA:
 
     git clone https://github.com/smnorris/fwapg
     cd fwapg
-    mkdir -p .make; touch .make/db  # just reload data
-    mkdir -p data
-    make --debug=basicjobs/load_fwa
+    make --debug=basic
 
-Load all additional data:
-
-    jobs/load_static
-    jobs/load_monthly
-    jobs/load_weekly
-
-Run `bcfishobs`:
+Load/run `bcfishobs`:
 
     git clone git@github.com:smnorris/bcfishobs.git
     cd bcfishobs
-    mkdir -p .make
-    make -t .make/setup
-    make -t .make/load_static
-    make -t .make/fiss_fish_obsrvtn_pnt_sp
     make --debug=basic
 
-Finally, navigate back to the root bcfishpass folder and build `bcfishpass`:
+Create db schema:
 
-    make
+    jobs/db_setup
 
-Note that it is possible (and often preferred) to build components of the modelling separately. 
-Refer to the various README files in the subfolders within the `model` folder for more info.
+Load source data:
+
+    jobs/load_static                     
+    jobs/load_monthly
+    jobs/load_weekly
+    jobs/load_modelled_stream_crossings
+
+Run the model:
+
+    jobs/model_stream_crossings    # (optionally - this is only needs to be run on the primary provincial bcfishpass database)
+    jobs/model_prep
+    jobs/model_run
+
+# Backups
+
+Backup strategies will vary but it can be useful to dump the entire database to file.  
+This appends the date and commit tag date to the file name:
+
+        pg_dump -Fc $DATABASE_URL > bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump    

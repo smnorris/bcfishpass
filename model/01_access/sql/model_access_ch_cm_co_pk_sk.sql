@@ -1,7 +1,7 @@
 with barriers as
 (
   select
-      barriers_gradient_15_id as barrier_id,
+      barriers_gradient_id as barrier_id,
       barrier_type,
       barrier_name,
       linear_feature_id,
@@ -11,50 +11,9 @@ with barriers as
       localcode_ltree,
       watershed_group_code,
       geom
-  from bcfishpass.barriers_gradient_15
+  from bcfishpass.barriers_gradient
   where watershed_group_code = :'wsg'
-  union all
-  select
-      barriers_gradient_20_id as barrier_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_20
-  where watershed_group_code = :'wsg'
-  union all
-  select
-      barriers_gradient_25_id as barrier_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_25
-  where watershed_group_code = :'wsg'
-  union all
-  select
-      barriers_gradient_30_id as barrier_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient_30
-  where watershed_group_code = :'wsg'
+  and barrier_type in ('GRADIENT_15', 'GRADIENT_20', 'GRADIENT_25', 'GRADIENT_30')
   union all
   select
       barriers_falls_id as barrier_id,
@@ -93,11 +52,11 @@ obs_upstr as
     b.blue_line_key,
     b.downstream_route_measure,
     b.watershed_group_code,
-    unnest(o.species_codes) as spp,
-    unnest(o.observation_ids) as obs,
-    unnest(o.observation_dates) as obs_dt
+    o.species_code as spp,
+    o.fish_observation_point_id as obs,
+    o.observation_date as obs_dt
   from barriers b
-  inner join bcfishpass.observations o
+  inner join bcfishpass.observations_vw o
   on fwa_upstream(
         b.blue_line_key,
         b.downstream_route_measure,
@@ -108,12 +67,12 @@ obs_upstr as
         o.wscode_ltree,
         o.localcode_ltree,
         false,
-        1
+        20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )
   -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
   left outer join bcfishpass.user_barriers_definite_control bc
   on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
-  where o.species_codes && array['CH','CM','CO','PK','SK']
+  where o.species_code in ('CH','CM','CO','PK','SK')
   and bc.barrier_ind is null
 ),
 
@@ -164,7 +123,7 @@ hab_upstr as
         h.wscode_ltree,
         h.localcode_ltree,
         false,
-        1
+        200       -- a v large tolerance to discard habitat that ends at more or less the same location as the barrier
       )
   group by b.barrier_id
 ),

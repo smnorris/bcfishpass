@@ -5,10 +5,10 @@ with obsrvtn as (
     b.wscode_ltree,
     b.localcode_ltree,
     b.downstream_route_measure as meas_b,
-    unnest(species_codes) as species_code
+    b.species_code
   from
     bcfishpass.streams a
-  inner join bcfishpass.observations b on
+  inner join bcfishpass.observations_vw b on
     fwa_downstream(
       a.blue_line_key,
       a.downstream_route_measure,

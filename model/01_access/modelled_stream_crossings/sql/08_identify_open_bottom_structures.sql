@@ -3,7 +3,7 @@
 -- -----------------------------------------------
 
 -- Start with stream order
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET
   modelled_crossing_type = 'OBS',
   modelled_crossing_type_source = ARRAY['FWA_STREAM_ORDER']
@@ -16,7 +16,7 @@ AND s.stream_order >= 6
 AND s.linear_feature_id != 701296585;
 
 -- double line streams/waterbodies
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET
   modelled_crossing_type = 'OBS',
   modelled_crossing_type_source = modelled_crossing_type_source||ARRAY['FWA_EDGE_TYPE']
@@ -35,21 +35,21 @@ WITH mot_bridges AS
     (SELECT
        modelled_crossing_id,
        ST_Distance(a.geom, b.geom) as dist
-     FROM bcfishpass.modelled_stream_crossings b
+     FROM bcfishpass.modelled_stream_crossings_build b
      ORDER BY a.geom <-> b.geom
      LIMIT 1) as nn
   WHERE UPPER(a.bmis_structure_type) = 'BRIDGE'
   AND UPPER(a.bmis_struct_status_type_desc) = 'OPEN/IN USE'
   AND nn.dist < 15
 )
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET modelled_crossing_type = 'OBS',
 modelled_crossing_type_source = modelled_crossing_type_source||ARRAY['MOT_ROAD_STRUCTURE_SP']
 FROM mot_bridges y
 WHERE x.modelled_crossing_id = y.modelled_crossing_id;
 
 -- DRA structures, simply join on id
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET
   modelled_crossing_type = 'OBS',
   modelled_crossing_type_source = modelled_crossing_type_source||ARRAY['TRANSPORT_LINE_STRUCTURE_CODE']
@@ -59,7 +59,7 @@ AND r.transport_line_structure_code IN ('B','C','E','F','O','R','V');
 
 -- Railway structures don't join back to railway tracks 1:1, find crossings
 -- within 10.5m of the bridges (because crossings were clustered to 20m)
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET
   modelled_crossing_type = 'OBS',
   modelled_crossing_type_source = modelled_crossing_type_source||ARRAY['GBA_RAILWAY_STRUCTURE_LINES_SP']
@@ -70,7 +70,7 @@ AND x.railway_track_id IS NOT NULL;
 
 -- default everything else to CBS
 -- (but note that PSCIS will replace many of these with OBS)
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET modelled_crossing_type = 'CBS'
 WHERE modelled_crossing_type IS NULL;
 
@@ -84,13 +84,13 @@ WITH de_duped AS
   (
     SELECT DISTINCT
       modelled_crossing_id, unnest(modelled_crossing_type_source) as modelled_crossing_type_source
-    FROM bcfishpass.modelled_stream_crossings
+    FROM bcfishpass.modelled_stream_crossings_build
     ORDER BY modelled_crossing_id, modelled_crossing_type_source
   ) as f
   GROUP BY modelled_crossing_id
 )
 
-UPDATE bcfishpass.modelled_stream_crossings x
+UPDATE bcfishpass.modelled_stream_crossings_build x
 SET modelled_crossing_type_source = d.modelled_crossing_type_source
 FROM de_duped d
 WHERE x.modelled_crossing_id = d.modelled_crossing_id;
