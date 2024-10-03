@@ -21,6 +21,7 @@ git clone https://github.com/smnorris/fwapg
 cd fwapg
 echo -e $WSGS > wsg.txt
 make --debug=basic .make/fwa_stream_networks_sp
+make --debug=basic .make/fwa_watersheds_poly
 make --debug=basic .make/fwa_watershed_groups_poly
 make --debug=basic .make/fwa_assessment_watersheds_poly
 make --debug=basic .make/extras
