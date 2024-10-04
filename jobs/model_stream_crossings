@@ -33,5 +33,5 @@ ogr2ogr \
     geom
   from bcfishpass.modelled_stream_crossings"
 
-aws s3 cp modelled_stream_crossings.gpkg.zip s3://bcfishpass
+aws s3 cp modelled_stream_crossings.gpkg.zip s3://bchamp --acl public-read
 rm modelled_stream_crossings.gpkg.zip

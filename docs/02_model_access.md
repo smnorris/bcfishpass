@@ -182,7 +182,7 @@ Model inputs and outputs are refreshed on a scheduled basis, and processed via g
 
 The weekly model processing workflow generates a file based data package (as geopackage), posted to object storage for public distribution:
 
-- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
+- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://nrs.objectstore.gov.bc.ca/bchamp/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
 
 - general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 

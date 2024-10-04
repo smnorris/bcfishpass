@@ -13,7 +13,7 @@ mkdir -p tmp
 
 curl \
   -o tmp/modelled_stream_crossings.gpkg.zip \
-  https://bcfishpass.s3.us-west-2.amazonaws.com/modelled_stream_crossings.gpkg.zip
+  https://nrs.objectstore.gov.bc.ca/bchamp/modelled_stream_crossings.gpkg.zip
 
 unzip -qun tmp/modelled_stream_crossings.gpkg.zip -d tmp
 

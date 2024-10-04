@@ -121,4 +121,4 @@ sozip \
   freshwater_fish_habitat_accessibility_MODEL.gpkg.zip \
   freshwater_fish_habitat_accessibility_MODEL.gpkg
 
-aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bcfishpass
+aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bchamp --acl public-read
