@@ -1351,3 +1351,4 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 62245,PASSABLE,ELKR,MC,2024-06-27,This crossing has been rehabilitated
 62293,POTENTIAL,ELKR,MC,2024-06-27,"Channel blew out and formed a new channel through road. Not clear if this ""ford"" is passable."
 124249,PASSABLE,HORS,MC,2024-09-26,Was backwatered due to beaver dam. This is a barrier.
+124069,BARRIER,HORS,LB,2024-10-07,Updated to Barrier from Passable based on information from Biologist.
