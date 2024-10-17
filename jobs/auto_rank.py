@@ -29,7 +29,8 @@ def makeParser():
             "eagle",
             "bessette",
             "bela_atna_necl",
-            "bowr_ques_carr"
+            "bowr_ques_carr",
+            "tuzitol_tah"
         ],
         nargs=1,
         type=str,
@@ -155,6 +156,10 @@ def buildCondition(wcrp):
             c."watershed_group_code" IN ('BOWR', 'QUES', 'CARR')
             """
         wcrp_schema = "bowr_ques_carr"
+    elif wcrp == "tuzitol_tah":
+        condition = """
+            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'STUR')
+        """
     else:
         # In all other cases, just the watershed group code
         condition = f"""
