@@ -133,7 +133,7 @@ MESC,,t,,,,,,,t,,,,
 MESI,t,,,,,t,t,,t,,,,Mackenzie basin
 MFRA,,t,,,,,,,t,,,,
 MFRT,,,,,,,t,,,,,,Mackenzie basin
-MIDR,t,,,,,t,,,t,t,,,
+MIDR,t,t,,,,t,,,t,t,,,
 MILL,,,,,,,t,,,,,,Mackenzie basin
 MMUS,t,,,,,t,t,,t,,,,Mackenzie basin
 MORI,,,t,t,t,t,,t,t,t,t,,
@@ -198,7 +198,7 @@ SWIR,t,t,,,,t,t,,,,,,
 TABR,t,t,,,,t,,,t,,,,
 TAHR,t,,,,t,t,,,t,t,t,,
 TAHS,,t,t,t,t,t,,t,t,t,t,,
-TAKL,t,,,,,t,,,t,t,,,
+TAKL,t,t,,,,t,,,t,t,,,
 TASR,t,,,,,t,,,t,t,,,
 TATR,,t,,,,t,t,,t,t,,,
 TAYR,t,,,,,t,,,t,,t,,
