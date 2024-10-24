@@ -61,11 +61,11 @@ For various species and life stages, further filtering of streams to model as po
 | Bull Trout | spawning   | within streams/rivers
 | Bull Trout | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <br> <10km upstream of spawning with no stream segment of slope >=5% between the spawning and potential rearing <br>)   |
 | Chinook | spawning   | within streams/rivers          |
-| Chinook | rearing    | (within streams/rivers OR wetland) AND (<br> on spawning stream OR downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <br> <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> )<br>  **Note** - *Chinook rearing in wetlands is not initially restricted by gradient and discharge/channel width*|
+| Chinook | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <br> <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> )|
 | Chum | spawning   | within streams/rivers
 | Chum | rearing    | No rearing modelled (this species does not generally rear in fresh water)   |
 | Coho | spawning   | within streams/rivers
-| Coho | rearing    | within streams/rivers AND ( <br> on spawning stream OR <br> downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <br> <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> )  |
+| Coho | rearing    | (within streams/rivers OR wetland) AND (<br> on spawning stream OR downstream of spawning stream OR <br> on a tributary downstream of spawning and beginning within 10m of the tributary OR <br> <10km upstream of spawning with no stream segment of slope exceeding 5% between the spawning and potential rearing <br> )<br>  **Note** - *Coho rearing in wetlands is not initially restricted by gradient and discharge/channel width*  |
 | Pink | spawning   | within streams/rivers
 | Pink | rearing    | No rearing modelled (this species does not generally rear in fresh water)   |
 | Sockeye | spawning   | within streams/rivers AND ( <br> <3km downstream of rearing lake, with no stream segment of slope >=5% between the rearing lake and the potential spawning stream OR <br> upstream of the rearing lake and connected to the rearing lake (within 2m) <br>)|
