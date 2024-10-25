@@ -135,8 +135,13 @@
 </section>
 <section id="generate-gradient-barriers">
 <span id="gradient-barriers"></span><h2>2. Generate gradient barriers<a class="headerlink" href="#generate-gradient-barriers" title="Link to this heading"></a></h2>
-<p>FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure <em>relative</em> elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.</p>
-<p>To identify locations where a stream’s slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code>) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential ‘gradient barrier’.</p>
+<p>FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure <em>relative</em> elevation is clean - all streams flow downhill (see the <a class="reference external" href="ftp://ftp.gdbc.gov.bc.ca/sections/outgoing/bmgs/FWA_Public//Documents/FWA-SegmentElevation.TechnicalSpecification.v0.7.pdf">Technical Specification</a> for details). With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.</p>
+<p>To identify locations where a stream’s slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code>) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential ‘gradient barrier’.
+100m was chosen as the interval because:</p>
+<ul class="simple">
+<li><p>100m is the traditional minimum length used for measuring slope and defining reaches in BC, as per the <a class="reference external" href="https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/fish-data-information/fishstream.pdf">Fish Stream Guidebook</a></p></li>
+<li><p>smoothing the FWA stream profile over 100m removes small irregularities in the data (spikes)</p></li>
+</ul>
 <p>The gradient threshold used for a given model is species dependent. Thresholds applied to existing models are:</p>
 <table class="docutils align-default">
 <thead>
@@ -290,6 +295,13 @@
 <p>The FWA stream network is based on TRIM I stream linework. Streams tend to be under-represented in wet, coastal areas and over-represented in dry interior areas.</p>
 <p>TRIM features were delineated through air photo interpretation and have varying degrees of accuracy – particularly when it comes to smaller streams.   TRIM commonly under-represents the number of streams in the wetter, coastal areas of the province and field surveyors may regularly find small streams which were not visible on the original air photos due to canopy, terrain, shadows, etc.  As a result, these streams do not exist in the FWA and as a result, the model.  In wet areas, field crews will tend to find additional streams and road-stream crossings.</p>
 <p>Conversely, in the drier, interior portions of the province, TRIM may over-represent the number or magnitude of streams.  These may be ephemeral or intermittent streams which only have water in them at the wettest times of the year.  Field crews often report finding only a ‘dry draw’ at locations where a stream has been shown on the mapping.</p>
+<p>Also, while Z values of FWA geometries have been smoothed to ensure that all streams flow downhill, elevation errors are still present:</p>
+<ul class="simple">
+<li><p>error present in the DEM will also be present in the FWA</p></li>
+<li><p>resolution of elevation is limited by the resolution of the DEM</p></li>
+<li><p>resolution of elevation is further limited by the smoothing/cleaning processing</p></li>
+<li><p>despite the smoothing to FWA elevations, some small elevations spikes remain</p></li>
+</ul>
 </section>
 <section id="known-barriers-and-observations">
 <h3>Known barriers and observations<a class="headerlink" href="#known-barriers-and-observations" title="Link to this heading"></a></h3>
