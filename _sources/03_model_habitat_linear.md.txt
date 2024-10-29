@@ -7,8 +7,8 @@ Linear spawning/rearing habitat modelling is currently based on species specific
 
 - stream gradient
 - channel width or discharge (depending on modelling requirments and/or data availability)
-- connectivity (rearing streams must be connected to spawning streams)
-- feature type (spawning or rearing occurs in stream / wetland / lake etc)
+- network connectivity (rearing stream segments must have a specific type of connectivity to spawning stream segments)
+- feature type (whether spawning/rearing occurs in stream / wetland / lake etc)
 
 Per species threshold values for stream gradient and discharge/channel width are noted (and can be adjusted) in the file [parameters_habitat_thresholds.csv](
 https://github.com/smnorris/bcfishpass/blob/main/parameters/example_testing/parameters_habitat_thresholds.csv).
@@ -52,7 +52,7 @@ Channel width is modelled for all of BC:
 
 
 
-## Feature type and connectivity
+## Feature type and network connectivity
 
 Before a segment can be modelled as spawning or rearing, segments with suitable gradient and discharge/channel width are further filtered by feature type and network connectivity. These criteria vary by species and life stage:
 
