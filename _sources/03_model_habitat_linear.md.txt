@@ -54,7 +54,7 @@ Channel width is modelled for all of BC:
 
 ## Feature type and connectivity
 
-For various species and life stages, further filtering of streams to model as potential spawning/rearing habitat (based on gradient and discharge/channel width) is applied via feature type and connectivity criteria:
+Before a segment can be modelled as spawning or rearing, segments with suitable gradient and discharge/channel width are further filtered by feature type and network connectivity. These criteria vary by species and life stage:
 
 | Species | Life stage | Additional feature type and connectivity criteria |
 |---------|------------|--------------------------------|
