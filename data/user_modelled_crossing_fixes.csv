@@ -7862,7 +7862,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 2300212,,CARR,KK,2022-01-28,Bing/Google/ESRI imagery,
 2300235,,CARR,KK,2022-01-28,Bing/Google/ESRI imagery,
 2300260,,CARR,KK,2022-01-28,Bing/Google/ESRI imagery,
-2300291,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
 2300378,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
 2300391,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
 2300643,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
@@ -21088,3 +21087,4 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1405747,FORD,BONP,LB,2024-07-11,imagery,
 11302064,NONE,LNIC,LB,2024-07-16,imagery,Ortho image indicates the stream has likely migrated/been redirected to the north and no longer crosses this road.
 11301333,OBS,LNIC,LB,2024-07-16,imagery,Appears to be a bridge on sat imagery- stream goes to north of where it's mapped
+2300291,NONE,CARR,LB,2024-11-04,Lhtako Dene WCRP Field Assessment 2023,"River left has an old concrete, log, and metal cribbing structure located on the bank immediately adjacent to the stream, perhaps used to draft water from stream. Large angle iron driven vertically into stream bed and intake pipe visible in stream bed. No manmade barrier to fish passage at this location but there is a beaver dam present immediately downstream of structure"
