@@ -13,8 +13,7 @@ create table bcfishpass.wcrp_watersheds
   sk boolean,
   st boolean,
   wct boolean,
-  notes text,
-  wcrp varchar(32)
+  notes text
 );
 
 

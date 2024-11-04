@@ -1,3 +1,6 @@
+-- Add the wcrp column to the wcrp_watersheds table
+alter table bcfishpass.wcrp_watersheds
+add column wcrp varchar(32);
 
 -- This function joins the tracking table to bcfishpass.crossings_wcrp_vw on the barrier ID
 create or replace function wcrp_hors.join_tracking_table_crossings_wcrp_vw(p_wcrp text)
