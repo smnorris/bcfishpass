@@ -1,0 +1,47 @@
+#!/bin/bash
+set -euxo pipefail
+
+# We do not use the official public DRA data because it no longer matches our db schema
+# Replicate public portion of password protected DRA distribution to publicly accessible file
+# (requires $DRAPWD)
+
+# download
+curl \
+  -o /tmp/transport_line.gdb.zip \
+  https://nrs.objectstore.gov.bc.ca/itqlyp/GBA/PROVINCE/transport_line.gdb.zip
+
+# extract password protected zipfile
+unzip \
+  -P $DRAPWD \
+  -d /tmp \
+  -o \
+  /tmp/transport_line.gdb.zip
+
+# post public portion of dataset to bchamp object storage
+ogr2ogr \
+  -f GPKG \
+  /tmp/transport_line.gpkg.zip \
+  /tmp/transport_line.gdb \
+  -sql "select
+     TRANSPORT_LINE_ID,
+     CUSTODIAN_PARTNER_ORG,
+     CAPTURE_DATE,
+     DATA_CAPTURE_METHOD_CODE,
+     TOTAL_NUMBER_OF_LANES,
+     STRUCTURED_NAME_1,
+     STRUCTURED_NAME_2,
+     STRUCTURED_NAME_3,
+     STRUCTURED_NAME_4,
+     STRUCTURED_NAME_5,
+     HIGHWAY_ROUTE_1,
+     HIGHWAY_EXIT_NUMBER,
+     TRANSPORT_LINE_TYPE_CODE,
+     TRANSPORT_LINE_SURFACE_CODE,
+     TRANSPORT_LINE_STRUCTURE_CODE,
+     GEOMETRY
+  from TRANSPORT_LINE"
+
+aws s3 cp /tmp/transport_line.gpkg.zip s3://bchamp --acl public-read
+
+rm /tmp/transport_line.gdb.zip
+rm /tmp/transport_line.gpkg.zip

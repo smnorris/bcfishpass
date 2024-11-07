@@ -15,4 +15,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run: jobs/load_monthly
+        run: |
+          jobs/replicate_dra
+          jobs/load_monthly
