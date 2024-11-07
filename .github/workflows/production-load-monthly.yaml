@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DRAPWD: ${{ secrets.DRAPWD }}
 jobs:
   data-refresh:
     runs-on: ubuntu-latest
