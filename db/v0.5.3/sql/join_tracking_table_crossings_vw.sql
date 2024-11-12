@@ -119,11 +119,12 @@ begin
 				   from bcfishpass.crossings_wcrp_vw cv
 				   full outer join wcrp_%I.combined_tracking_table_%I tt 
 				   	on tt.barrier_id = cv.aggregated_crossings_id
-					where cv.watershed_group_code in 
+					where (cv.watershed_group_code in 
 						(select watershed_group_code 
 						from bcfishpass.wcrp_watersheds 
 						where wcrp ilike %L)
-						and cv.all_spawningrearing_km > 0', p_wcrp, p_wcrp, p_wcrp, p_wcrp, p_wcrp);
+						and cv.all_spawningrearing_km > 0) 
+						or tt.barrier_id is not null', p_wcrp, p_wcrp, p_wcrp, p_wcrp, p_wcrp);
 end
 $$
 language plpgsql;
