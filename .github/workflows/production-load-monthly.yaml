@@ -6,6 +6,14 @@ on:
   workflow_dispatch:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DRAPWD: ${{ secrets.DRAPWD }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
+  AWS_S3_ENDPOINT: nrs.objectstore.gov.bc.ca
+  AWS_VIRTUAL_HOSTING: FALSE
+  AWS_EC2_METADATA_DISABLED: True
+  CPL_VSISTDIN_BUFFER_LIMIT: -1
 jobs:
   data-refresh:
     runs-on: ubuntu-latest
@@ -15,4 +23,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run: jobs/load_monthly
+        run: |
+          jobs/replicate_dra
+          jobs/load_monthly

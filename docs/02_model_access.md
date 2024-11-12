@@ -26,9 +26,13 @@ Natural barriers identified by stakeholders include:
 (gradient_barriers)=
 ## 2. Generate gradient barriers
 
-FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure *relative* elevation is clean - all streams flow downhill. With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.
+FWA stream network lines hold standardized Z values; each vertex of a stream line holds an associated elevation value derived from the BC Digital Elevation Model. Absolute elevation accuracy is subject to error in the DEM, but all elevations have been processed to ensure *relative* elevation is clean - all streams flow downhill (see the [Technical Specification](ftp://ftp.gdbc.gov.bc.ca/sections/outgoing/bmgs/FWA_Public//Documents/FWA-SegmentElevation.TechnicalSpecification.v0.7.pdf) for details). With these clean Z values, we can confidently calculate a reasonable estimate of the gradient of a stream at any point.
 
 To identify locations where a stream's slope exceeds a given threshold, the model starts at the mouth of a stream (identified by the `blue_line_key`) and iterates through each vertex of the stream flow line.  At each vertex, it calculates the slope of the stream from the vertex to 100m upstream. Wherever the measured slope exceeds the value of the given threshold(s), this location and slope is recorded as a potential 'gradient barrier'.
+100m was chosen as the interval because:
+
+- 100m is the traditional minimum length used for measuring slope and defining reaches in BC, as per the [Fish Stream Guidebook](https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/fish-data-information/fishstream.pdf)
+- smoothing the FWA stream profile over 100m removes small irregularities in the data (spikes)
 
 The gradient threshold used for a given model is species dependent. Thresholds applied to existing models are:
 
@@ -137,6 +141,12 @@ TRIM features were delineated through air photo interpretation and have varying 
 
 Conversely, in the drier, interior portions of the province, TRIM may over-represent the number or magnitude of streams.  These may be ephemeral or intermittent streams which only have water in them at the wettest times of the year.  Field crews often report finding only a ‘dry draw’ at locations where a stream has been shown on the mapping.
 
+Also, while Z values of FWA geometries have been smoothed to ensure that all streams flow downhill, elevation errors are still present:
+- error present in the DEM will also be present in the FWA
+- resolution of elevation is limited by the resolution of the DEM
+- resolution of elevation is further limited by the smoothing/cleaning processing
+- despite the smoothing to FWA elevations, some small elevations spikes remain
+
 ### Known barriers and observations
 
 The barrier and fish observation inventories have similar limitations.  Fish observation data is based on the results of field sampling and fish collection permits.  The distribution and scale of this work has typically been driven by development requirements in the resource industries.  As such, the model is based on unevenly distributed data points.  Areas that have seen more development and resource extraction tend to have a higher density of sampling and observation points while other, less developed areas tend to have sparse or non-existent fish observation and barrier data.
@@ -182,7 +192,7 @@ Model inputs and outputs are refreshed on a scheduled basis, and processed via g
 
 The weekly model processing workflow generates a file based data package (as geopackage), posted to object storage for public distribution:
 
-- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://bcfishpass.s3.us-west-2.amazonaws.com/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
+- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://nrs.objectstore.gov.bc.ca/bchamp/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
 
 - general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
 

@@ -544,7 +544,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 4602803,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 4602864,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 4602883,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
-4602974,OBS,ELKR,AI,2021-01-01,Bing/Google/ESRI imagery,bridge
 4603111,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
 4603133,NONE,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 4603202,OBS,ELKR,AL,2021-01-01,Bing/Google/ESRI imagery,
@@ -1283,26 +1282,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12201892,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
 12201949,NONE,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 12201958,OBS,LSAL,NMW,2021-01-01,Bing/Google/ESRI imagery,
-12600059,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-12600060,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-12600251,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-12600252,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-12600253,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-12600830,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
-12600942,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
-12600978,NONE,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-12601052,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
-12601160,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
-12601343,OBS,LTRE,AL,2021-01-01,Bing/Google/ESRI imagery,
-13500026,NONE,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-13500797,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13500848,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13500944,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13500966,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13501048,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13501095,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13501106,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
-13501137,OBS,MIDR,AL,2021-01-01,Bing/Google/ESRI imagery,
 13800160,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
 13800203,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no road
 13800318,NONE,MORI,OB,2021-01-01,Bing/Google/ESRI imagery,no crossing
@@ -1586,70 +1565,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19103274,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
 19103305,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
 19104909,OBS,STHM,AL,2021-01-01,Bing/Google/ESRI imagery,
-19300009,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19300178,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300290,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300295,NONE,STUL,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
-19300357,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19300396,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300410,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300424,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19300485,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19300490,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300498,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300502,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300576,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300581,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19300588,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19300597,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300643,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300755,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300768,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19300993,OBS,STUL,SN,2021-01-01,Bing/Google/ESRI imagery,
-19301036,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19301062,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19301069,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19301080,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19301081,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19301201,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19301353,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19301391,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19301405,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19301524,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19301706,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19301843,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19302144,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19302230,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19302293,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302294,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302344,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302444,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302451,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302485,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302489,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302490,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302491,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302492,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302493,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302494,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302512,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302517,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302525,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302528,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302529,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302530,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302554,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19302645,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302646,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302647,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302652,OBS,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,
-19302666,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302671,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302672,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302677,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19302678,NONE,STUL,OB,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-19401338,NONE,STUR,SN,2021-01-01,Bing/Google/ESRI imagery,no structure
-19401414,OBS,STUR,AL,2021-01-01,Bing/Google/ESRI imagery,
 19600061,OBS,SWIR,PK,2021-01-01,Bing/Google/ESRI imagery,
 19700281,OBS,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,
 19700363,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
@@ -1669,35 +1584,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19703574,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 19703578,NONE,TABR,SN,2021-01-01,Bing/Google/ESRI imagery,no crossing
 19703632,NONE,TABR,AL,2021-01-01,Bing/Google/ESRI imagery,no road/structure
-20000000,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000195,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20000238,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000349,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000428,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000429,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000435,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000453,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000496,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000711,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000776,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000941,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20000943,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
-20000971,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20001172,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001201,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20001265,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20001275,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20001309,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001373,OBS,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,
-20001659,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001660,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001698,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001699,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001706,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
-20001718,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001828,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001834,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no road
-20001854,NONE,TAKL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
 20500191,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
 20500653,OBS,THOM,PK,2021-01-01,Bing/Google/ESRI imagery,
 20501101,OBS,THOM,OB,2021-01-01,Bing/Google/ESRI imagery,
@@ -2003,29 +1889,14 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17907948,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,to check
 8802593,OBS,KLUM,KK,2022-01-01,Bing/Google/ESRI imagery,to check
 1400112,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - looks like bridge
-20001009,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
-20001029,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
-20001055,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
-20001129,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
-20001311,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-20001379,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - looks like bridge
 1401521,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
 1401523,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visble crossing
-24741607,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-24741608,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 1401587,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 1401965,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 1402048,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 1402062,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,"to be checked, looks like a bridge in satellite imagery"
 1402079,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - looks like a bridge in satellite imagery
-20000581,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
-20000788,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
-20001048,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
-20001368,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no road visible
-20001378,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 12200168,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-20001538,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-20001391,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 1403857,OBS,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 21501028,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,
 21501083,OBS,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,"to check, probably bridge"
@@ -2069,11 +1940,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17500864,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 100002543,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,
 23804134,OBS,USHU,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-24200092,NONE,UTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-24200013,FORD,UTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
 17502395,NONE,SAJR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 24400557,FORD,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-24200608,OBS,UTRE,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 24400521,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 24400522,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 24401549,NONE,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
@@ -2321,22 +2189,14 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12202258,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 12201825,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
 12202021,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
-12600939,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 12202304,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-12600263,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-12600461,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
 12202185,OBS,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,
 12202360,NONE,LSAL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-24739480,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-12601069,OBS,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,
-12601231,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 13900909,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-12601232,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 13900339,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,road not mapped correctly
 13900340,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,stream appears to be mapped incorrectly
 13900341,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
 13900963,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-24739495,NONE,LTRE,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 13900096,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 13901249,FORD,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
 13901083,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
@@ -2508,21 +2368,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19107261,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,road mapped incorrectly
 19107125,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,road mapped incorrectly
 19107155,NONE,STHM,KK,2022-01-01,Bing/Google/ESRI imagery,road mapped incorrectly
-19300658,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to visible structure
-19301497,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
-19302225,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-19301009,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-19300476,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-19301583,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-19301824,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
-19300000,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
-19301298,NONE,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
-19301107,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-19300977,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
 19700613,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-19300583,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
-19302329,NONE,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
-19300495,FORD,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
 19500183,NONE,SUST,KK,2022-01-01,Bing/Google/ESRI imagery,"no visible stream, or possible fording"
 19700869,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 19700760,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
@@ -2559,13 +2405,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19703287,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 19703550,NONE,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 19703428,OBS,TABR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-20000488,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
-20000339,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-20000184,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
-20000196,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,"no crossing, stream seems to be mapped incorrectly"
-20000529,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
 2800228,NONE,CHWK,KK,2022-01-01,Bing/Google/ESRI imagery,"Mapping error, stream does not cross road in satellite imagery"
-20000784,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
 1403039,NONE,BONP,KK,2022-01-01,Bing/Google/ESRI imagery,no visible stream
 5400520,NONE,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 5402526,OBS,FRAN,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
@@ -2592,26 +2432,20 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 9901503,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 9903833,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 9903678,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-13500985,NONE,MIDR,KK,2022-01-01,Bing/Google/ESRI imagery,no road crossing mapped or visible on satellite
 9904058,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
-13501031,NONE,MIDR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 13903051,NONE,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
 9904500,OBS,LCHL,KK,2022-01-01,Bing/Google/ESRI imagery,
 14900259,NONE,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 17101290,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 17100563,NONE,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 24715892,OBS,MORK,KK,2022-01-01,Bing/Google/ESRI imagery,
-20000980,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 14903592,OBS,NARC,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 17102703,OBS,QUES,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
 10300419,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
-20001054,OBS,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,
 14001774,NONE,MORR,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 10300421,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
-20001535,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 10300396,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 10300968,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
-20001700,NONE,TAKL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible road
 15604705,OBS,NECR,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 10301166,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
 10301165,OBS,LFRA,KK,2022-01-01,Bing/Google/ESRI imagery,
@@ -2638,8 +2472,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 21501423,NONE,TWAC,KK,2022-01-01,Bing/Google/ESRI imagery,no visible crossing
 23202185,OBS,UNTH,KK,2022-01-01,Bing/Google/ESRI imagery,
 24720363,OBS,SETN,KK,2022-01-01,Bing/Google/ESRI imagery,
-19300001,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - probable bridge
-19301907,OBS,STUL,KK,2022-01-01,Bing/Google/ESRI imagery,
 24400247,FORD,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
 24403889,OBS,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,to check - possible bridge
 24401001,FORD,WILL,KK,2022-01-01,Bing/Google/ESRI imagery,no visible structure
@@ -2785,7 +2617,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24744276,NONE,KITR,KK,2022-01-19,Bing/Google/ESRI imagery,no road
 24728297,NONE,HOMA,KK,2022-01-19,Bing/Google/ESRI imagery,no visible road
 24742764,OBS,TOBA,KK,2022-01-19,Bing/Google/ESRI imagery,
-24742979,NONE,MIDR,KK,2022-01-19,Bing/Google/ESRI imagery,no visible road
 6001245,OBS,GRAI,KK,2022-01-19,Bing/Google/ESRI imagery,to check - possible bridge
 13802007,OBS,MORI,KK,2022-01-19,Bing/Google/ESRI imagery,
 13802347,OBS,MORI,KK,2022-01-19,Bing/Google/ESRI imagery,
@@ -2796,7 +2627,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 20703367,OBS,TOBA,KK,2022-01-19,Bing/Google/ESRI imagery,
 20100504,NONE,TASR,KK,2022-01-19,Bing/Google/ESRI imagery,no visible crossing
 15900915,NONE,NIEL,KK,2022-01-19,Bing/Google/ESRI imagery,no visible crossing
-24742980,NONE,MIDR,KK,2022-01-19,Bing/Google/ESRI imagery,no visible crossing
 7304526,OBS,JERV,KK,2022-01-19,Bing/Google/ESRI imagery,
 7303862,OBS,JERV,KK,2022-01-19,Bing/Google/ESRI imagery,to check - possible bridge
 7302653,NONE,JERV,KK,2022-01-19,Bing/Google/ESRI imagery,no visible road
@@ -3034,24 +2864,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24500392,NONE,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
 503862,NONE,BABL,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
 504416,NONE,BABL,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19401386,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401375,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,to check - possible bridge
-19401364,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401265,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19401260,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19401216,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401209,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 24736862,NONE,ZYMO,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401860,FORD,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible structure
-19401016,FORD,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible structure
-19400145,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
-19400681,FORD,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
-19400648,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19400560,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,to check - possible bridge
-19400556,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19400549,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19400536,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19400480,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
 24500439,OBS,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,
 24500410,NONE,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
 24500396,NONE,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
@@ -3064,9 +2877,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24500388,NONE,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
 24500386,NONE,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
 24500247,OBS,WORC,KK,2022-01-25,Bing/Google/ESRI imagery,to check - probable bridge
-19400639,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible crossing
-19401258,NONE,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
-19401384,OBS,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 24702014,OBS,MBNK,KK,2022-01-25,Bing/Google/ESRI imagery,
 24715027,OBS,MBNK,KK,2022-01-25,Bing/Google/ESRI imagery,
 12800007,NONE,MBNK,KK,2022-01-25,Bing/Google/ESRI imagery,no visible road
@@ -3097,39 +2907,26 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12901116,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12901065,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901494,OBS,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401664,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - possible bridge
-19401133,FORD,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible structure
-19400425,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901066,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901559,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901059,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12902361,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visble road
 1501591,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 1503384,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19401449,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - probable bridge
-19401536,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 24728162,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19401584,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - possible bridge
-19401700,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - probable bridge
-19401780,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - possible bridge
-19401889,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12901067,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-24742716,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12901062,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901060,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901560,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901565,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901570,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901058,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19400192,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12901057,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12900908,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12901581,OBS,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,
 6500939,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 1501866,OBS,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - possible bridge
-19400059,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 1501182,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
-19400745,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12900821,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12902328,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12900001,OBS,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,
@@ -3140,22 +2937,17 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 6500943,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 6501068,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 6501077,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19401011,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 24728123,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901068,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19401445,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - probable bridge
 24745099,NONE,MSKE,KK,2022-01-26,Bing/Google/ESRI imagery,no crossing
 24728153,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 24728089,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19401274,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - possible bridge
-19401388,FORD,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible structure
 6500347,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12902556,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 1501794,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 6500648,OBS,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - possible bridge
 1503173,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12902542,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
-19401134,FORD,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible structure
 1503383,NONE,BOWR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901069,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901063,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
@@ -3171,19 +2963,14 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12901075,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 24731099,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible crossing
 12901076,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19400331,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 24745085,NONE,MAHD,KK,2022-01-26,Bing/Google/ESRI imagery,no crossing
-19400310,NONE,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901077,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901078,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19400217,FORD,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible structure
 24746052,NONE,SETN,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901079,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901080,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 24728163,NONE,HERR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19400204,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,to check - probable bridge
 12901081,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
-19400028,OBS,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 12901082,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12901083,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,no visible road
 12902479,NONE,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,to road visible
@@ -4037,7 +3824,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 16601980,NONE,PARS,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 17100899,NONE,QUES,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 22201127,NONE,UFRA,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
-19301922,NONE,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 13902551,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 13902265,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 13901486,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
@@ -4076,7 +3862,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 16600896,NONE,PARS,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 16601769,NONE,PARS,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 17501707,NONE,SAJR,KK,2022-03-02,Bing/Google/ESRI imagery,no visible crossing
-19300429,OBS,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,to check - possible bridge
 16601196,NONE,PARS,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 17501004,NONE,SAJR,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 13905705,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
@@ -4086,11 +3871,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 8500441,NONE,KITR,KK,2022-03-02,Bing/Google/ESRI imagery,no visible crossing
 8800046,NONE,KLUM,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 17500664,NONE,SAJR,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
-19301921,NONE,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 13906121,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 17102368,NONE,QUES,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 8800045,NONE,KLUM,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
-19300616,NONE,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
 13906302,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 14902526,NONE,NARC,KK,2022-03-02,Bing/Google/ESRI imagery,no crossing - mapping error
 22200211,NONE,UFRA,KK,2022-03-02,Bing/Google/ESRI imagery,no visible road
@@ -5212,35 +4995,16 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24745096,NONE,MSKE,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24745102,NONE,MSKE,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300024,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24741609,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24741611,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24741606,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001607,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300595,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300194,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300060,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20000733,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001007,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001123,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001816,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 600822,OBS,BABR,KK,2022-03-21,Bing/Google/ESRI imagery,to check - probable bridge
 24740024,NONE,BABR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24741610,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24747438,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24747437,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20000740,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24746153,NONE,STUL,KK,2022-03-21,Bing/Google/ESRI imagery,no crossing - mapping error
-13501303,NONE,MIDR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001469,OBS,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,
 4300654,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300655,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24741612,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001407,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20000968,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001671,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001126,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300527,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001473,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300652,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300455,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300669,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
@@ -5250,36 +5014,19 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 601082,NONE,BABR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 601065,NONE,BABR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24740022,NONE,BABR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24739949,NONE,MIDR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 8302507,NONE,KISP,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 8302505,NONE,KISP,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24746979,NONE,COTR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible crossing
 17102362,NONE,QUES,KK,2022-03-21,Bing/Google/ESRI imagery,no crossing
-24734758,NONE,STUL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-24739498,NONE,LTRE,KK,2022-03-21,Bing/Google/ESRI imagery,no visible crossing
 24743556,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24747439,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24743559,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24743569,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001170,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20000878,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-20001185,OBS,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,
-20000010,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no road visible
-20000009,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no road visible
-20000245,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no road visible
-20000244,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no road visible
-20000932,NONE,TAKL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-13501079,NONE,MIDR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-13500150,NONE,MIDR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible crossing
-13500786,NONE,MIDR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-13500785,NONE,MIDR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 8302396,OBS,KISP,KK,2022-03-21,Bing/Google/ESRI imagery,to check - possible bridge
 8301929,NONE,KISP,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-19301985,NONE,STUL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24743560,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24747440,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 4300660,NONE,DRIR,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
-19300789,NONE,STUL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible crossing
 24743543,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24743561,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
 24747425,NONE,BABL,KK,2022-03-21,Bing/Google/ESRI imagery,no visible road
@@ -5904,9 +5651,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 5404962,OBS,FRAN,KK,2022-04-01,Bing/Google/ESRI imagery,
 5403717,OBS,FRAN,KK,2022-04-01,Bing/Google/ESRI imagery,to check - probable bridge
 5400533,NONE,FRAN,KK,2022-04-01,Bing/Google/ESRI imagery,no visible crossing
-24746305,NONE,TAKL,KK,2022-04-01,Bing/Google/ESRI imagery,no visible road
 17700842,OBS,SALR,KK,2022-04-01,Bing/Google/ESRI imagery,to check - probable bridge
-19300112,OBS,STUL,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
 5400376,OBS,FRAN,KK,2022-04-01,Bing/Google/ESRI imagery,
 14902139,FORD,NARC,KK,2022-04-01,Bing/Google/ESRI imagery,no visible crossing
 24737898,OBS,BLAR,KK,2022-04-01,Bing/Google/ESRI imagery,
@@ -5922,7 +5667,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 15601330,FORD,NECR,KK,2022-04-01,Bing/Google/ESRI imagery,no visible structure
 9901851,OBS,LCHL,KK,2022-04-01,Bing/Google/ESRI imagery,"to check, possible bridge"
 12202101,OBS,LSAL,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
-13500137,OBS,MIDR,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
 17501302,OBS,SAJR,KK,2022-04-01,Bing/Google/ESRI imagery,
 17500970,OBS,SAJR,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
 17500984,OBS,SAJR,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
@@ -5937,7 +5681,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1201434,OBS,BLAR,KK,2022-04-01,Bing/Google/ESRI imagery,
 12201800,FORD,LSAL,KK,2022-04-01,Bing/Google/ESRI imagery,no visible structure
 24731063,OBS,MSTR,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
-19301070,OBS,STUL,KK,2022-04-01,Bing/Google/ESRI imagery,to check - possible bridge
 24704568,OBS,BUKL,SN,2022-04-14,Bing/Google/ESRI imagery,bridge visible
 10304990,NONE,LFRA,SN,2022-04-22,imagery,rail yard - redundant crossing
 10305068,NONE,LFRA,SN,2022-04-22,imagery,rail yard - redundant crossing
@@ -8118,7 +7861,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 2300212,,CARR,KK,2022-01-28,Bing/Google/ESRI imagery,
 2300235,,CARR,KK,2022-01-28,Bing/Google/ESRI imagery,
 2300260,,CARR,KK,2022-01-28,Bing/Google/ESRI imagery,
-2300291,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
 2300378,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
 2300391,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
 2300643,,CARR,KK,2022-01-27,Bing/Google/ESRI imagery,
@@ -12712,9 +12454,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12401354,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401355,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401356,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
-12600010,,LTRE,KK,2022-01-11,Bing/Google/ESRI imagery,
-12600015,,LTRE,KK,2022-01-11,Bing/Google/ESRI imagery,
-12600020,,LTRE,KK,2022-01-12,Bing/Google/ESRI imagery,
 12400522,,LSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 12400715,,LSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 12400718,,LSKE,KK,2022-03-02,Bing/Google/ESRI imagery,
@@ -12732,42 +12471,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12400867,,LSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 12401156,,LSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 12401303,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
-12600396,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600397,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600398,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600399,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600400,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600402,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12601144,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600226,,LTRE,KK,2022-03-03,Bing/Google/ESRI imagery,
-12600244,,LTRE,KK,2022-03-03,Bing/Google/ESRI imagery,
-12600374,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600390,,LTRE,KK,2022-03-03,Bing/Google/ESRI imagery,
-12600391,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600392,,LTRE,KK,2022-03-03,Bing/Google/ESRI imagery,
-12600124,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12600125,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12601249,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601250,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601251,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601252,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601253,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601254,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601255,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601256,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601257,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601258,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601259,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601260,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601261,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601262,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601263,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601264,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601265,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601266,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-12601431,,LTRE,KK,2022-01-17,Bing/Google/ESRI imagery,
-12601148,,LTRE,KK,2022-03-02,Bing/Google/ESRI imagery,
-12601151,,LTRE,KK,2022-01-17,Bing/Google/ESRI imagery,
 12800019,,MBNK,KK,2022-01-25,Bing/Google/ESRI imagery,
 12800012,,MBNK,KK,2022-01-25,Bing/Google/ESRI imagery,
 12900034,,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,
@@ -12883,62 +12586,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 13301429,,MFRA,KK,2022-02-25,Bing/Google/ESRI imagery,
 13301452,,MFRA,KK,2022-02-25,Bing/Google/ESRI imagery,
 13301774,,MFRA,KK,2022-02-25,Bing/Google/ESRI imagery,
-13500161,,MIDR,KK,2022-01-10,Bing/Google/ESRI imagery,
-13500528,,MIDR,KK,2022-01-12,Bing/Google/ESRI imagery,
-13500925,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13500403,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13500981,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13501018,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13501037,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13501133,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501134,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501135,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501136,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501138,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501139,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501140,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501141,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501142,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501143,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501144,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501145,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501146,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501147,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501148,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501149,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501150,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501151,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501152,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501153,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501154,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501155,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501156,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501157,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501158,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501159,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501160,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501161,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501162,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501163,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501164,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501165,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501166,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501167,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501168,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501169,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501170,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501171,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501172,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501174,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13500926,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13501175,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501176,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13500977,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
-13501177,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501178,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-13501179,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
 13801090,,MORI,KK,2022-01-19,Bing/Google/ESRI imagery,
-13501244,,MIDR,KK,2022-01-17,Bing/Google/ESRI imagery,
 13800047,,MORI,KK,2022-01-19,Bing/Google/ESRI imagery,
 13800130,,MORI,KK,2022-01-19,Bing/Google/ESRI imagery,
 13800171,,MORI,KK,2022-01-19,Bing/Google/ESRI imagery,
@@ -16114,7 +15762,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17100095,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100096,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100097,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
-17100098,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100106,,QUES,KK,2022-03-02,Bing/Google/ESRI imagery,
 17100108,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100114,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
@@ -17390,24 +17037,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19107357,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
 19107359,,STHM,KK,2022-03-03,Bing/Google/ESRI imagery,
 19107361,,STHM,KK,2022-03-09,Bing/Google/ESRI imagery,
-19300735,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
 19200049,,STIR,KK,2022-01-21,Bing/Google/ESRI imagery,
 19200050,,STIR,KK,2022-01-21,Bing/Google/ESRI imagery,
-19300003,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19300004,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19300017,,STUL,KK,2022-01-11,Bing/Google/ESRI imagery,
-19300028,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300030,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300031,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300034,,STUL,KK,2022-01-17,Bing/Google/ESRI imagery,
-19300036,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19300398,,STUL,KK,2022-01-17,Bing/Google/ESRI imagery,
-19300469,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300475,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300500,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300504,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300505,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19300525,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
 19106873,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
 19106874,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
 19106875,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
@@ -17495,207 +17126,18 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19107087,,STHM,KK,2022-03-08,Bing/Google/ESRI imagery,
 19107124,,STHM,KK,2022-03-03,Bing/Google/ESRI imagery,
 19107126,,STHM,KK,2022-03-09,Bing/Google/ESRI imagery,
-19300987,,STUL,KK,2022-01-11,Bing/Google/ESRI imagery,
-19301000,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19300808,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19301055,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19301094,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19301286,,STUL,KK,2022-01-11,Bing/Google/ESRI imagery,
 19700104,,TABR,KK,2022-02-25,Bing/Google/ESRI imagery,
-19300866,,STUL,KK,2022-01-12,Bing/Google/ESRI imagery,
-19301352,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19301359,,STUL,KK,2022-03-02,Bing/Google/ESRI imagery,
-19301748,,STUL,KK,2022-01-17,Bing/Google/ESRI imagery,
-19301510,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19302213,,STUL,KK,2022-01-10,Bing/Google/ESRI imagery,
-19302250,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302251,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302252,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302253,,STUL,KK,2022-01-12,Bing/Google/ESRI imagery,
-19302254,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302255,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302256,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302257,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302258,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302259,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302260,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302261,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302262,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302263,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302264,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302265,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302266,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302267,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302268,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302269,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302270,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302271,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302272,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302273,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19301912,,STUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-19301976,,STUL,KK,2022-01-11,Bing/Google/ESRI imagery,
 19700330,,TABR,KK,2022-02-25,Bing/Google/ESRI imagery,
-19302274,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302275,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302276,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
 19700161,,TABR,KK,2022-02-25,Bing/Google/ESRI imagery,
-19301804,,STUL,KK,2022-01-17,Bing/Google/ESRI imagery,
-19302277,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302279,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302280,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302281,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302282,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302283,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302284,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302285,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19302286,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-19400150,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19302561,,STUL,KK,2022-01-11,Bing/Google/ESRI imagery,
-19400170,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 19700333,,TABR,KK,2022-03-01,Bing/Google/ESRI imagery,
-19400177,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400183,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400185,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400186,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400187,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400198,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400234,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400434,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400457,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400458,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400459,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400001,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400002,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400003,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400253,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400005,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400006,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400475,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400478,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400483,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400486,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400487,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400489,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400025,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400259,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400265,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400029,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400272,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400519,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400277,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400039,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400040,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400279,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400045,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400285,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400296,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400063,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400542,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400297,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400547,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400551,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400568,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400574,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400087,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400090,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400103,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400578,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400298,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400308,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19700163,,TABR,KK,2022-02-25,Bing/Google/ESRI imagery,
-19400588,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400132,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400330,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400334,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400634,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400335,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400345,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400351,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400772,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400356,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400367,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400781,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400784,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400786,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400376,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400659,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400660,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400392,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400679,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400393,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400402,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400404,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400848,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400407,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400851,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 19700162,,TABR,KK,2022-02-25,Bing/Google/ESRI imagery,
-19400855,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400413,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400703,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400426,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401355,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401052,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401368,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401059,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401063,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401069,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401383,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401080,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401083,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19700165,,TABR,KK,2022-02-25,Bing/Google/ESRI imagery,
-19400906,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19400919,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401389,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400941,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400943,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401390,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19400947,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401149,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500425,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
-19401411,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401165,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500325,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401413,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401417,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401424,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401167,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401168,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401170,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401191,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401436,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401201,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401448,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401208,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401217,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401451,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401222,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401035,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401453,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401036,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401454,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401045,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401457,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401047,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401460,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401662,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401259,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401266,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401481,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401484,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401306,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401309,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
-19401488,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401317,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401319,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401321,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401323,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
-19401326,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500227,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401350,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19700095,,TABR,KK,2022-03-02,Bing/Google/ESRI imagery,
-19401501,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 19500110,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401516,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500114,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500115,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500116,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17706,10 +17148,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500121,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500122,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500123,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401521,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 19500135,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500140,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401523,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 19500141,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500143,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500148,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17718,7 +17158,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500153,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500155,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500157,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401868,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500160,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19700168,,TABR,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500161,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17744,7 +17183,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500182,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500012,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500013,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401561,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500014,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500015,,SUST,KK,2022-03-02,Bing/Google/ESRI imagery,
 19500020,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17783,11 +17221,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500220,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500067,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500069,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401563,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500070,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401565,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500226,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401577,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500228,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500231,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500232,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17830,10 +17265,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500468,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
 19500469,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
 19500470,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
-19401578,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500471,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
 19500472,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
-19401582,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500326,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500327,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500328,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17842,16 +17275,12 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500474,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
 19500330,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500331,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401583,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500340,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401589,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500341,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500342,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500343,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401590,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500346,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500350,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19401610,,STUR,KK,2022-01-26,Bing/Google/ESRI imagery,
 19500354,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500368,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500369,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -17871,7 +17300,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19700171,,TABR,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500487,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
 19500488,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
-19401618,,STUR,KK,2022-01-25,Bing/Google/ESRI imagery,
 19500379,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500385,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500386,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -18550,61 +17978,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19703336,,TABR,KK,2021-12-15,Bing/Google/ESRI imagery,
 19703185,,TABR,KK,2022-03-10,Bing/Google/ESRI imagery,
 19703212,,TABR,KK,2022-03-10,Bing/Google/ESRI imagery,
-20000201,,TAKL,KK,2022-03-02,Bing/Google/ESRI imagery,
-20000281,,TAKL,KK,2022-03-02,Bing/Google/ESRI imagery,
-20000016,,TAKL,KK,2022-03-02,Bing/Google/ESRI imagery,
-20000017,,TAKL,KK,2022-03-02,Bing/Google/ESRI imagery,
 20500545,,THOM,KK,2022-03-09,Bing/Google/ESRI imagery,
-20000782,,TAKL,KK,2022-01-17,Bing/Google/ESRI imagery,
-20000793,,TAKL,KK,2022-01-17,Bing/Google/ESRI imagery,
 20500035,,THOM,KK,2022-02-25,Bing/Google/ESRI imagery,
 20100008,,TASR,KK,2022-01-28,Bing/Google/ESRI imagery,
-20001241,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001242,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001243,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001244,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001245,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001246,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001247,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001248,,TAKL,KK,2022-01-17,Bing/Google/ESRI imagery,
-20001249,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001250,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001251,,TAKL,KK,2022-01-10,Bing/Google/ESRI imagery,
-20001252,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001253,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001254,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001255,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001256,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001257,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001258,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001259,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001260,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001261,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001262,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001263,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001264,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001266,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001267,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001268,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001269,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001270,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001271,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001272,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001273,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001274,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001276,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001277,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001278,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001279,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001280,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001281,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001282,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001283,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001284,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001285,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001286,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001287,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-20001289,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
 20100046,,TASR,KK,2022-01-19,Bing/Google/ESRI imagery,
 20100047,,TASR,KK,2022-01-19,Bing/Google/ESRI imagery,
 20100057,,TASR,KK,2022-01-28,Bing/Google/ESRI imagery,
@@ -20426,21 +19802,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24000007,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000008,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24300556,,VICT,KK,2022-03-07,Bing/Google/ESRI imagery,
-24200859,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200860,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200861,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200862,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200864,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200865,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200866,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200867,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200868,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200869,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200870,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200871,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200872,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200873,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24200874,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
 24300182,,VICT,KK,2022-03-18,Bing/Google/ESRI imagery,
 24300183,,VICT,KK,2022-03-18,Bing/Google/ESRI imagery,
 24300184,,VICT,KK,2022-03-18,Bing/Google/ESRI imagery,
@@ -20984,7 +20345,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24715065,,MCGR,KK,2022-01-26,Bing/Google/ESRI imagery,further review required
 24714928,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 24714929,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
-24715499,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
 24714930,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 24714931,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 24714932,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
@@ -21016,16 +20376,10 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24714958,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 24714959,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 24714960,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
-24714983,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
-24714984,,LTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
 24714737,,LSAL,KK,2021-12-17,Bing/Google/ESRI imagery,
 24714739,,LSAL,KK,2021-12-17,Bing/Google/ESRI imagery,
 24714740,,LSAL,KK,2021-12-17,Bing/Google/ESRI imagery,
 24715653,,MORK,KK,2021-12-16,Bing/Google/ESRI imagery,
-24715500,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-24715501,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-24715502,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
-24715503,,MIDR,KK,2021-12-17,Bing/Google/ESRI imagery,
 24715898,,MORK,KK,2021-12-16,Bing/Google/ESRI imagery,
 24716808,,NECR,KK,2021-12-15,Bing/Google/ESRI imagery,
 24715899,,MORK,KK,2021-12-16,Bing/Google/ESRI imagery,
@@ -21160,12 +20514,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24722283,,SQAM,KK,2021-12-13,Bing/Google/ESRI imagery,
 24722284,,SQAM,KK,2021-12-14,Bing/Google/ESRI imagery,
 24723243,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
-24723783,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-24723784,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-24723785,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-24723786,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-24723787,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
-24723788,,TAKL,KK,2021-12-17,Bing/Google/ESRI imagery,
 24723794,,TASR,KK,2022-01-28,Bing/Google/ESRI imagery,
 24725861,,UFRA,KK,2021-12-16,Bing/Google/ESRI imagery,
 24723244,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
@@ -21177,7 +20525,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24723292,,STHM,KK,2021-12-17,Bing/Google/ESRI imagery,
 24724359,,THOM,KK,2021-12-16,Bing/Google/ESRI imagery,
 24724360,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
-24723332,,STUL,KK,2022-01-10,Bing/Google/ESRI imagery,
 24724361,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
 24724362,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
 24724363,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
@@ -21189,7 +20536,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24724369,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
 24724370,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
 24724371,,THOM,KK,2021-12-14,Bing/Google/ESRI imagery,
-24723382,,STUL,KK,2021-12-17,Bing/Google/ESRI imagery,
 24723477,,SUST,KK,2021-12-17,Bing/Google/ESRI imagery,
 24724372,,THOM,KK,2021-12-16,Bing/Google/ESRI imagery,
 24724373,,THOM,KK,2021-12-16,Bing/Google/ESRI imagery,
@@ -21258,7 +20604,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24727702,,BELA,KK,2022-01-28,Bing/Google/ESRI imagery,
 24727363,,PARK,KK,2021-12-20,Bing/Google/ESRI imagery,
 24727628,,THOM,KK,2021-12-16,Bing/Google/ESRI imagery,
-24726974,,UTRE,KK,2021-12-17,Bing/Google/ESRI imagery,
 24727101,,VICT,KK,2022-03-18,Bing/Google/ESRI imagery,
 24727130,,VICT,KK,2021-12-20,Bing/Google/ESRI imagery,
 24727131,,VICT,KK,2021-12-20,Bing/Google/ESRI imagery,
@@ -21607,7 +20952,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24742598,,NARC,KK,2022-03-07,Bing/Google/ESRI imagery,
 24742822,,ZYMO,KK,2022-01-21,Bing/Google/ESRI imagery,
 24742823,,ZYMO,KK,2022-01-21,Bing/Google/ESRI imagery,
-24742981,,MIDR,KK,2022-01-19,Bing/Google/ESRI imagery,
 24742861,,ALBN,KK,2022-02-11,Bing/Google/ESRI imagery,
 24742891,,ELKR,KK,2022-03-03,Bing/Google/ESRI imagery,
 24742892,,ELKR,KK,2022-03-03,Bing/Google/ESRI imagery,
@@ -21713,19 +21057,19 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 23800103,NONE,USHU,LS,2024-06-26,Bing/Google/ESRI imagery,duplicate crossing - removed in favour of d/s location
 18300160,NONE,SHUL,LS,2024-06-26,Bing/Google/ESRI imagery,redundant mulit-lane highway crossing - removed in favour of most d/s location
 23800079,OBS,USHU,LS,2025-06-28,Bing/Google/ESRI imagery,bridge visible
-17104186,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
-1501277,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No culvert, Low marshy ground on either side of road. No Channel. Small lake to south, wetland to north. Depression in road possibly from culvert removal."
-1501283,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No sign of a crossing, but old grown in road nearby. Wetland downstream. "
-1501281,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No culvert. Old road crossing pulled 10+ years ago. Alder, large cobbles. "
-1501282,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No crossing, no passage issues. Fish in stream."
-17103908,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No Barrier or culvert. No water/wetland.
-17100487,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
-17100488,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
-17103896,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"Old clear area, may be part of mine. Cleared in the last 1-3 years. Small (2x2m) wetland with cattails seen, but no water or streams. No culverts. "
-17102208,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"Very old road, overgrown. No crossing found. Slightly wet area but no water seen. "
-17102191,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen. "
-17100098,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,No wetland/water. No culvert seen on road. Private property on either side of road.
-17102374,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessments,Cannot find inlet. Bottom of culvert disintegrated where it touches ground. No water.
+17104186,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,No channel or water. Culvert on side road connecting manmade ditch line along road.
+1501277,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No culvert, Low marshy ground on either side of road. No Channel. Small lake to south, wetland to north. Depression in road possibly from culvert removal."
+1501283,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No sign of a crossing, but old grown in road nearby. Wetland downstream. "
+1501281,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No culvert. Old road crossing pulled 10+ years ago. Alder, large cobbles. "
+1501282,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No crossing, no passage issues. Fish in stream."
+17103908,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,No Barrier or culvert. No water/wetland.
+17100487,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
+17100488,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
+17103896,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"Old clear area, may be part of mine. Cleared in the last 1-3 years. Small (2x2m) wetland with cattails seen, but no water or streams. No culverts. "
+17102208,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"Very old road, overgrown. No crossing found. Slightly wet area but no water seen. "
+17102191,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen. "
+17100098,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,No wetland/water. No culvert seen on road. Private property on either side of road.
+17102374,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,Cannot find inlet. Bottom of culvert disintegrated where it touches ground. No water.
 17104186,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
 1400691,OBS,BONP,LB,2024-07-11,imagery,
 1404128,OBS,BONP,LB,2024-07-11,imagery,
@@ -21742,3 +21086,4 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1405747,FORD,BONP,LB,2024-07-11,imagery,
 11302064,NONE,LNIC,LB,2024-07-16,imagery,Ortho image indicates the stream has likely migrated/been redirected to the north and no longer crosses this road.
 11301333,OBS,LNIC,LB,2024-07-16,imagery,Appears to be a bridge on sat imagery- stream goes to north of where it's mapped
+2300291,NONE,CARR,LB,2024-11-04,Lhtako Dene WCRP Field Assessment 2023,"River left has an old concrete, log, and metal cribbing structure located on the bank immediately adjacent to the stream, perhaps used to draft water from stream. Large angle iron driven vertically into stream bed and intake pipe visible in stream bed. No manmade barrier to fish passage at this location but there is a beaver dam present immediately downstream of structure"
