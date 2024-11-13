@@ -5,9 +5,12 @@ as
 $$
 begin 
 	execute format('create or replace view wcrp_%I.combined_tracking_table_crossings_wcrp_vw_%I as
-         select 
-          tt.barrier_id,
-          cv.crossing_source,
+				  select 
+				  case
+				    	when tt.barrier_id is not null then tt.barrier_id
+						else cv.aggregated_crossings_id
+					end as barrier_id,
+				  cv.crossing_source,
 					cv.crossing_feature_type,
 					cv.pscis_status,
 					cv.crossing_type_code,
@@ -114,8 +117,14 @@ begin
 					tt.notes,
 					tt.supporting_links
 				   from bcfishpass.crossings_wcrp_vw cv
-				   right join wcrp_%I.combined_tracking_table_%I tt 
-				   	on tt.barrier_id = cv.aggregated_crossings_id', p_wcrp, p_wcrp, p_wcrp, p_wcrp);
+				  full outer join wcrp_%I.combined_tracking_table_%I tt 
+				   	on tt.barrier_id = cv.aggregated_crossings_id
+					where (cv.watershed_group_code in 
+						(select watershed_group_code 
+						from bcfishpass.wcrp_watersheds 
+						where wcrp ilike %L)
+						and cv.all_spawningrearing_km > 0) 
+						or tt.barrier_id is not null', p_wcrp, p_wcrp, p_wcrp, p_wcrp, p_wcrp);
 end
 $$
 language plpgsql;
