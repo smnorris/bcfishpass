@@ -5,12 +5,12 @@ as
 $$
 begin 
 	execute format('create or replace view wcrp_%I.combined_tracking_table_crossings_wcrp_vw_%I as
-				   select 
-				   	case
+				  select 
+				  case
 				    	when tt.barrier_id is not null then tt.barrier_id
 						else cv.aggregated_crossings_id
 					end as barrier_id,
-				   	cv.crossing_source,
+				  cv.crossing_source,
 					cv.crossing_feature_type,
 					cv.pscis_status,
 					cv.crossing_type_code,
@@ -88,7 +88,7 @@ begin
 					cv.rank_combined,
 					cv.tier_combined,
 					cv.geom,
-				   	tt.internal_name,
+				  tt.internal_name,
 					tt.watercourse_name,
 					tt.road_name,
 					tt.structure_type,
@@ -117,7 +117,7 @@ begin
 					tt.notes,
 					tt.supporting_links
 				   from bcfishpass.crossings_wcrp_vw cv
-				   full outer join wcrp_%I.combined_tracking_table_%I tt 
+				  full outer join wcrp_%I.combined_tracking_table_%I tt 
 				   	on tt.barrier_id = cv.aggregated_crossings_id
 					where (cv.watershed_group_code in 
 						(select watershed_group_code 
