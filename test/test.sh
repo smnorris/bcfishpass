@@ -8,21 +8,6 @@ createdb bcfishpass_test
 $PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
 pg_restore -d bcfishpass_test bcfishpass_test.dump
 
-# drop the existing schema and postgisftw.wcrp functions from test db
-$PSQL -c "drop schema bcfishpass cascade"
-$PSQL -c "drop function postgisftw.wcrp_barrier_count"
-$PSQL -c "drop function postgisftw.wcrp_barrier_extent"
-$PSQL -c "drop function postgisftw.wcrp_barrier_severity"
-$PSQL -c "drop function postgisftw.wcrp_habitat_connectivity_status"
-
-
-# run all migration scripts present in /db
-cd ../db
-for tag in v* ;do
-    cd "$tag"; ./migrate.sh; cd ..
-done
-cd ..
-
 # load parameters and run jobs
 cp parameters/example_testing/*csv parameters
 jobs/load_csv
