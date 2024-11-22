@@ -16,69 +16,71 @@ See the [Documentation](https://smnorris.github.io/bcfishpass/) for details.
 ## General requirements
 
 - bash
-- GDAL (tested with v3.6)
-- a PostgreSQL / PostGIS database (tested with v14/v3.3)
-- Python (tested with v3.11.0)
+- GDAL
+- PostgreSQL / PostGIS
+- Python
 - [bcdata](https://github.com/smnorris/bcdata)
 - [fwapg](https://github.com/smnorris/fwapg)
 - [bcfishobs](https://github.com/smnorris/bcfishobs)
 
-## Setup / Usage
+## Development setup
 
 `bcfishpass` is a collection of shell/sql/Python scripts. To download and use the latest:
 
     git clone https://github.com/smnorris/bcfishpass.git
     cd bcfishpass
 
-Install required tools using your preferred method. For local development, `conda` can be simplest:
-
-    conda env create -f environment.yml
-    conda activate bcfishpass
-
-A Docker image is also provided:
-
-    docker pull ghcr.io/smnorris/bcfishpass:main
-
-If the database you are working with does not already exist, create it:
-
-    createdb bcfishpass
-
-All scripts presume that the `DATABASE_URL` environment variable points to your database. For example:
+All scripts presume the path to an existing PostGIS enabled database is defined by the environment variable `$DATABASE_URL`:
 
     export DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass
 
-Load FWA:
+Install all other required tools/dependencies using your preferred package manager or via Docker.
+A `conda` environment and a `Dockerfile` are provided:
 
-    git clone https://github.com/smnorris/fwapg
-    cd fwapg
-    make --debug=basic
+#### Conda
 
-Load/run `bcfishobs`:
+    conda env create -f environment.yml
+    conda activate bcfishpass
+    jobs/<script>
 
-    git clone git@github.com:smnorris/bcfishobs.git
-    cd bcfishobs
-    make --debug=basic
+#### Docker
 
-Create db schema:
+    docker compose build
+    docker compose up -d
+    docker compose run --rm runner jobs/<script>
 
-    jobs/db_setup
+Docker is configured to write the database to `postgres-data` - even if containers are deleted, the database will be retained here.
+If you have shut down Docker or the container, start it up again with this command:
 
-Load source data:
+    docker-compose up -d
 
-    jobs/load_static                     
-    jobs/load_monthly
-    jobs/load_weekly
-    jobs/load_modelled_stream_crossings
+Connect to the db from your host OS via the port specified in `docker-compose.yml`:
 
-Run the model:
+    psql -p 8001 -U postgres bcfishpass
 
-    jobs/model_stream_crossings    # (optionally - this is only needs to be run on the primary provincial bcfishpass database)
-    jobs/model_prep
-    jobs/model_run
+Stop the containers (without deleting):
 
-# Backups
+    docker compose stop
 
-Backup strategies will vary but it can be useful to dump the entire database to file.  
-This appends the date and commit tag date to the file name:
+Delete the containers:
 
-        pg_dump -Fc $DATABASE_URL > bcfishpass.$(git describe --tags --abbrev=0).$(date +%F).dump    
+    docker compose down
+
+To build/load/dump a small database for development/testing:
+
+    docker compose build
+    docker compose up -d
+    cd test
+    docker compose run --rm runner build_db.sh
+
+Note that `build_db.sh` dumps all required inputs to a postgresql dump file - once it has been run once, a testing database can be quickly restored from the dump rather than loading from scratch:
+
+    cd ..
+    docker compose down           # shut down the vm
+    rm -rf postgres-data          # remove the testing db data folder
+    docker compose up -d          # restart docker, create_db is automatically run
+    pg_restore -d $DATABASE_URL test/bcfishpass_test.dump  # call restore from local OS
+
+Run the models on the testing watershed groups:
+
+    docker compose run --rm runner test.sh
