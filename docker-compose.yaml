@@ -1,0 +1,30 @@
+services:
+  db:
+    build:
+      context: docker/db
+    container_name: bcfishpass-db
+    command: postgres -c default_statistics_target=100 -c max_connections=20 -c max_locks_per_transaction=64 -c checkpoint_timeout=30min -c maintenance_work_mem=1GB -c effective_cache_size=16GB -c work_mem=500MB -c max_wal_size=10GB -c wal_buffers=16MB -c shared_buffers=8GB
+    ports:
+      - ${DB_PORT}:5432
+    shm_size: 16gb
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=bcfishpass_test
+  runner:
+    build: docker/runner
+    container_name: bcfishpass-runner
+    volumes:
+      - "./:/home/bcfishpass"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/bcfishpass
+    depends_on:
+      db:
+        condition: service_healthy
