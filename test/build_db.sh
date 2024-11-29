@@ -5,11 +5,9 @@ set -euxo pipefail
 # Build a minimal fwapg/bcfishobs database for testing
 # ------
 
-DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS="BELA\nBULK\nCOWN\nELKR\nHORS\nLNIC\nPARS\nSANJ\nVICT"       # edit here to adjust testing watersheds (could pull from parameters/example_testing/parameters_habitat_method)
 
-createdb bcfishpass_test
 
 # ------
 # load_fwa
@@ -21,6 +19,7 @@ git clone https://github.com/smnorris/fwapg
 cd fwapg
 echo -e $WSGS > wsg.txt
 make --debug=basic .make/fwa_stream_networks_sp
+make --debug=basic .make/fwa_watersheds_poly
 make --debug=basic .make/fwa_watershed_groups_poly
 make --debug=basic .make/fwa_assessment_watersheds_poly
 make --debug=basic .make/extras
@@ -104,9 +103,6 @@ $PSQL -c "vacuum full analyze"
 
 # what are the biggest relations?
 #https://stackoverflow.com/questions/21738408/postgresql-list-and-order-tables-by-size
-
+$PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
 # dump the database (~200MB)
-pg_dump -Fc bcfishpass_test > bcfishpass_test.dump
-
-# cleanup
-psql postgres -c "drop database bcfishpass_test"
+pg_dump -Fc $DATABASE_URL > bcfishpass_test.dump
