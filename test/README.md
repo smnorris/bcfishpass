@@ -1,14 +1,14 @@
 # A minimal db for development and testing
 
-## Create dump file
+## Create database dump file
 
-Bootstrap database `bcfishpass_test` with fwapg/bcfishobs, load selected data, dump to file, drop db:
+Bootstrap database `bcfishpass_test` with latest schema, fwapg/bcfishobs, load selected data, dump to file:
 
-    ./build.sh
+    ./build_db.sh
 
-## Testing usage
+## Test bcfishpass scripts
 
-Restore fwapg/bcfishobs db from dump, load data, run model:
+Run model:
 
     ./test.sh
 
