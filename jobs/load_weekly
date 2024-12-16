@@ -17,8 +17,6 @@ bcdata bc2pg -r whse_fish.pscis_assessment_svw
 bcdata bc2pg -r whse_fish.pscis_design_proposal_svw
 bcdata bc2pg -r whse_fish.pscis_habitat_confirmation_svw
 bcdata bc2pg -r whse_fish.pscis_remediation_svw
-bcdata bc2pg -r whse_forest_tenure.ften_road_section_lines_svw
-bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
 
 # cabd
 $PSQL -c "truncate cabd.dams"
