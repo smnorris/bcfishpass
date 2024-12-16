@@ -286,7 +286,7 @@ def get_precip(db, bounds, DEM, dem_meta, data_path):
     A = features.rasterize(
         (
             (geom, value)
-            for geom, value in zip(precip_features.geometry, precip_features.map)
+            for geom, value in zip(precip_features.geometry, precip_features["map"])
         ),
         out_shape=DEM.shape,
         transform=dem_meta["transform"],

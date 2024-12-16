@@ -37,7 +37,7 @@ $PSQL -c "delete from whse_basemapping.fwa_stream_networks_channel_width where l
 $PSQL -c "delete from whse_basemapping.fwa_assessment_watersheds_lut where watershed_feature_id not in (select watershed_feature_id from whse_basemapping.fwa_assessment_watersheds_poly)"
 $PSQL -c "delete from whse_basemapping.fwa_assessment_watersheds_streams_lut where assmnt_watershed_id not in (select watershed_feature_id from whse_basemapping.fwa_assessment_watersheds_poly)"
 $PSQL -c "delete from whse_basemapping.fwa_waterbodies_upstream_area where linear_feature_id not in (select linear_feature_id from whse_basemapping.fwa_stream_networks_sp)"
-$PSQL -c "delete from whse_basemapping.fwa_watersheds_upstream_area" # just delete all of this
+$PSQL -c "delete from whse_basemapping.fwa_watersheds_upstream_area where linear_feature_id not in (select linear_feature_id from whse_basemapping.fwa_stream_networks_sp)" 
 
 cd .. ; rm -rf fwapg
 
