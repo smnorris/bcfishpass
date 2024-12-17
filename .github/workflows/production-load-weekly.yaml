@@ -15,4 +15,4 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run: jobs/load_weekly
+        run: cd jobs && ./load_weekly
