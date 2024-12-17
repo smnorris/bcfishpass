@@ -22,7 +22,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         -t_srs EPSG:3005 \
         -append \
         -nln $source \
-        /vsis3/bchamp/bcdata/$source.parquet \
+        /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
         $source
     fi
 done
