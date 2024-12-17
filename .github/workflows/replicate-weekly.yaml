@@ -1,5 +1,5 @@
 name: bcdata-replicate-weekly
-run-name: ${{ github.actor }} Monthly data replication
+run-name: ${{ github.actor }} Weekly data replication
 on:
   schedule:
     - cron: '0 23 * * THU'
@@ -22,4 +22,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run: |
-          jobs/replicate_bcgw W
+          cd jobs && replicate_bcgw W
