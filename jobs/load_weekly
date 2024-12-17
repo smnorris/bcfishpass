@@ -11,28 +11,35 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # weekly bcfishobs processing is scheduled via workflow bcfishobs repository
 
 # bcdata loads
-bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
-bcdata bc2pg -r whse_fish.fiss_obstacles_pnt_sp
-bcdata bc2pg -r whse_fish.pscis_assessment_svw
-bcdata bc2pg -r whse_fish.pscis_design_proposal_svw
-bcdata bc2pg -r whse_fish.pscis_habitat_confirmation_svw
-bcdata bc2pg -r whse_fish.pscis_remediation_svw
-bcdata bc2pg -r whse_forest_tenure.ften_road_section_lines_svw
-bcdata bc2pg -r whse_mineral_tenure.og_road_segment_permit_sp
+jq -c '.[]' bcgw_sources.json | while read item; do
+    schedule=$(jq -r '.schedule' <<< "$item")
+    source=$(jq -r '.source' <<< "$item")
+    if [ "$schedule" == "W" ] ; then
+      echo "Loading $source from cache"
+
+      ogr2ogr -f PostgreSQL \
+        "PG:$DATABASE_URL" \
+        --config OGR_TRUNCATE=YES \
+        -append \
+        -nln $source \
+        /vsis3/bchamp/bcdata/$source.parquet \
+        $source
+    fi
+done
 
 # cabd
-$PSQL -c "truncate cabd.dams"
 ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
   -append \
+  --config OGR_TRUNCATE=YES \
   -nln cabd.dams \
   "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
 
-$PSQL -c "truncate cabd.waterfalls"
 ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
   -append \
+  --config OGR_TRUNCATE=YES \
   -nln cabd.waterfalls \
   "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON

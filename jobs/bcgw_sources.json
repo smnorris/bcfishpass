@@ -1,0 +1,94 @@
+[
+    {
+        "source": "whse_fish.fiss_fish_obsrvtn_pnt_sp",
+        "schedule": "W"
+    },
+    {
+        "source": "whse_fish.fiss_obstacles_pnt_sp",
+        "schedule": "W"
+    },
+    {
+        "source": "whse_fish.pscis_assessment_svw",
+        "schedule": "W"
+    },
+    {
+        "source": "whse_fish.pscis_design_proposal_svw",
+        "schedule": "W"
+    },
+    {
+        "source": "whse_fish.pscis_habitat_confirmation_svw",
+        "schedule": "W"
+    },
+    {
+        "source": "whse_fish.pscis_remediation_svw",
+        "schedule": "W"
+    },
+    {
+        "source": "whse_admin_boundaries.clab_indian_reserves",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_admin_boundaries.clab_national_parks",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_basemapping.gba_local_reg_greenspaces_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_basemapping.gba_railway_structure_lines_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_basemapping.gba_railway_tracks_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_basemapping.gba_transmission_lines_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_basemapping.gns_geographical_names_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_environmental_monitoring.envcan_hydrometric_stn_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_fish.fiss_stream_sample_sites_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_forest_tenure.ften_range_poly_svw",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_imagery_and_base_maps.mot_road_structure_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_legal_admin_boundaries.abms_municipalities_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_tantalis.ta_conservancy_areas_svw",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_tantalis.ta_park_ecores_pa_svw",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_forest_tenure.ften_road_section_lines_svw",
+        "schedule": "M"
+    },
+    {
+        "source": "whse_mineral_tenure.og_road_segment_permit_sp",
+        "schedule": "M"
+    }
+]
