@@ -1,0 +1,25 @@
+name: bcdata-replicate-monthly
+run-name: ${{ github.actor }} Monthly data replication
+on:
+  schedule:
+    - cron: '0 15 14 * *'
+  workflow_dispatch:
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
+  AWS_S3_ENDPOINT: nrs.objectstore.gov.bc.ca
+  AWS_VIRTUAL_HOSTING: FALSE
+  AWS_EC2_METADATA_DISABLED: True
+  CPL_VSISTDIN_BUFFER_LIMIT: -1
+jobs:
+  replicate:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run: |
+          jobs/replicate_bcgw M
