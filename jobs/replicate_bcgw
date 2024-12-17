@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euxo pipefail
+
+# dump sources matching frequency (D/M/W/Q/A) to object storage
+jq -c '.[]' bcgw_sources.json | while read item; do
+    schedule=$(jq -r '.schedule' <<< "$item")
+    source=$(jq -r '.source' <<< "$item")
+    if [ "$schedule" == $1 ] ; then
+
+      echo "Replicating $source to object storage"
+
+      bcdata dump $source --promote-to-multi |
+        ogr2ogr -f Parquet \
+          /vsis3/bchamp/bcdata/$source.parquet \
+          /vsistdin/
+    fi
+done

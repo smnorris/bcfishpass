@@ -9,21 +9,21 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # bcdata loads
 # ----
-bcdata bc2pg -r whse_admin_boundaries.clab_indian_reserves
-bcdata bc2pg -r whse_admin_boundaries.clab_national_parks
-bcdata bc2pg -r whse_basemapping.gba_local_reg_greenspaces_sp
-bcdata bc2pg -r whse_basemapping.gba_railway_structure_lines_sp
-bcdata bc2pg -r whse_basemapping.gba_railway_tracks_sp
-bcdata bc2pg -r whse_basemapping.gba_transmission_lines_sp
-bcdata bc2pg -r whse_basemapping.gns_geographical_names_sp
-bcdata bc2pg -r whse_environmental_monitoring.envcan_hydrometric_stn_sp
-bcdata bc2pg -r whse_fish.fiss_stream_sample_sites_sp
-bcdata bc2pg -r whse_forest_tenure.ften_range_poly_svw
-bcdata bc2pg -r whse_imagery_and_base_maps.mot_road_structure_sp
-bcdata bc2pg -r whse_legal_admin_boundaries.abms_municipalities_sp
-bcdata bc2pg -r whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp
-bcdata bc2pg -r whse_tantalis.ta_conservancy_areas_svw
-bcdata bc2pg -r whse_tantalis.ta_park_ecores_pa_svw
+jq -c '.[]' bcgw_sources.json | while read item; do
+    schedule=$(jq -r '.schedule' <<< "$item")
+    source=$(jq -r '.source' <<< "$item")
+    if [ "$schedule" == "M" ] ; then
+      echo "Loading $source from cache"
+
+      ogr2ogr -f PostgreSQL \
+        "PG:$DATABASE_URL" \
+        --config OGR_TRUNCATE=YES \
+        -append \
+        -nln $source \
+        /vsis3/bchamp/bcdata/$source.parquet \
+        $source
+    fi
+done
 
 # load DRA from bchamp bucket (with public portion of source transport_line schema)
 $PSQL -c "drop table if exists bcdata.transport_line" # in case of any failed loads
