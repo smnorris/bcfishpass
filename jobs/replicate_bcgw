@@ -9,7 +9,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
 
       echo "Replicating $source to object storage"
 
-      bcdata dump $source --promote-to-multi |
+      bcdata dump $source --promote-to-multi -v |
         ogr2ogr -f Parquet \
           /vsis3/bchamp/bcdata/$source.parquet \
           /vsistdin/
