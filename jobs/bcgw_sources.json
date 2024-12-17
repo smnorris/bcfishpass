@@ -1,5 +1,10 @@
 [
     {
+        "source": "whse_fish.fiss_fish_obsrvtn_pnt_sp",
+        "query": "POINT_TYPE_CODE = 'Observation'",
+        "schedule": "W"
+    },
+    {
         "source": "whse_fish.fiss_obstacles_pnt_sp",
         "query": "",
         "schedule": "W"
