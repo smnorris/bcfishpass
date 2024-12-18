@@ -24,7 +24,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         -nln $source \
         --config PG_USE_COPY=YES \
         /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
-        $source
+        $source || exit 1
     fi
 done
 
