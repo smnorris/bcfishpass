@@ -28,56 +28,16 @@ jq -c '.[]' bcgw_sources.json | while read item; do
     fi
 done
 
-# load DRA from bchamp bucket (with public portion of source transport_line schema)
-$PSQL -c "drop table if exists bcdata.transport_line" # in case of any failed loads
-ogr2ogr \
-  -f PostgreSQL \
+# load DRA
+ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
-  --config PG_USE_COPY YES \
-  -lco GEOMETRY_NAME=geom \
-  -lco FID=transport_line_id \
-  -nln bcdata.transport_line \
-  /vsizip//vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/transport_line.gpkg.zip \
-  TRANSPORT_LINE
-$PSQL -c "truncate whse_basemapping.transport_line;
-          insert into whse_basemapping.transport_line
-          (
-            transport_line_id,
-            custodian_partner_org,
-            capture_date,
-            data_capture_method_code,
-            total_number_of_lanes,
-            structured_name_1,
-            structured_name_2,
-            structured_name_3,
-            structured_name_4,
-            structured_name_5,
-            highway_route_1,
-            highway_exit_number,
-            transport_line_type_code,
-            transport_line_surface_code,
-            transport_line_structure_code,
-            geom
-          )
-          select
-            transport_line_id,
-            custodian_partner_org,
-            capture_date,
-            data_capture_method_code,
-            total_number_of_lanes,
-            structured_name_1,
-            structured_name_2,
-            structured_name_3,
-            structured_name_4,
-            structured_name_5,
-            highway_route_1,
-            highway_exit_number,
-            transport_line_type_code,
-            transport_line_surface_code,
-            transport_line_structure_code,
-            geom
-      from bcdata.transport_line"
-$PSQL -c "drop table bcdata.transport_line"
+  --config OGR_TRUNCATE=YES \
+  -append \
+  -nln whse_basemapping.transport_line \
+  --debug ON \
+  --config PG_USE_COPY=YES \
+  /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.parquet \
+  transport_line
 
 # parcel fabric, renaming download so it can be read without unzipping
 # ----
