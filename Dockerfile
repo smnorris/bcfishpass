@@ -28,7 +28,7 @@ WORKDIR /home/bcfishpass
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/python -m pip install -U pip && \
     /opt/venv/bin/python -m pip install --no-cache-dir --upgrade numpy && \
-    /opt/venv/bin/python -m pip install --no-cache-dir bcdata && \
+    /opt/venv/bin/python -m pip install --no-cache-dir bcdata==0.15.0 && \
     /opt/venv/bin/python -m pip install --no-cache-dir scikit-image
 
 ENV PATH="/opt/venv/bin:$PATH"

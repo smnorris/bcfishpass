@@ -18,8 +18,6 @@ jq -c '.[]' bcgw_sources.json | while read item; do
       ogr2ogr -f PostgreSQL \
         "PG:$DATABASE_URL" \
         --config OGR_TRUNCATE=YES \
-        -s_srs EPSG:4326 \
-        -t_srs EPSG:3005 \
         -append \
         -nln $source \
         --config PG_USE_COPY=YES \
