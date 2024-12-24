@@ -33,6 +33,7 @@ ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
   -append \
   --config OGR_TRUNCATE=YES \
+  --config PG_USE_COPY=YES \
   -nln cabd.dams \
   "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
@@ -41,6 +42,7 @@ ogr2ogr -f PostgreSQL \
   "PG:$DATABASE_URL" \
   -append \
   --config OGR_TRUNCATE=YES \
+  --config PG_USE_COPY=YES \
   -nln cabd.waterfalls \
   "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
   OGRGeoJSON
