@@ -8,48 +8,20 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
 
-# **
-# ** note temp dra data cache to be replaced with updated source**
-# **
+
 #-------
 # DRA code tables
 #-------
-$PSQL -c "truncate whse_basemapping.transport_line_type_code;
-          truncate whse_basemapping.transport_line_surface_code;
-          truncate whse_basemapping.transport_line_divided_code;
-          truncate whse_basemapping.transport_line_structure_code;"
-ogr2ogr \
-  -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  -update \
-  -append \
-  -nln whse_basemapping.transport_line_type_code \
-  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
-  TRANSPORT_LINE_TYPE_CODE
-ogr2ogr \
-  -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  -update \
-  -append \
-  -nln whse_basemapping.transport_line_surface_code \
-  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
-  TRANSPORT_LINE_SURFACE_CODE
-ogr2ogr \
-  -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  -update \
-  -append \
-  -nln whse_basemapping.transport_line_divided_code \
-  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
-  TRANSPORT_LINE_DIVIDED_CODE
-ogr2ogr \
-  -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  -update \
-  -append \
-  -nln whse_basemapping.transport_line_structure_code \
-  /vsizip//vsicurl/https://bcfishpass.s3.us-west-2.amazonaws.com/dgtl_road_atlas.gdb.zip \
-  TRANSPORT_LINE_STRUCTURE_CODE
+aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_type_code.csv .
+aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv .
+aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv .
+aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv .
+
+$PSQL -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_type_code FROM whse_basemapping.transport_line_type_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_surface_code FROM whse_basemapping.transport_line_surface_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_divided_code FROM whse_basemapping.transport_line_divided_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_structure_code FROM whse_basemapping.transport_line_structure_code.csv delimiter ',' csv header"
 
 #-------
 # Admin areas/tiles/grids/cartographic

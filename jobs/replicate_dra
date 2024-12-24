@@ -42,4 +42,27 @@ ogr2ogr \
      GEOMETRY as geometry
   from TRANSPORT_LINE"
 
-aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/transport_line.parquet --acl public-read
+# dump dra code tables to csv and send to s3 vis awscli
+ogr2ogr \
+  -f CSV \
+  /tmp/whse_basemapping.transport_line_structure_code.csv \
+  /tmp/transport_line.gdb \
+  TRANSPORT_LINE_STRUCTURE_CODE
+
+ogr2ogr \
+  -f CSV \
+  /tmp/whse_basemapping.transport_line_type_code.csv \
+  /tmp/transport_line.gdb \
+  TRANSPORT_LINE_TYPE_CODE
+
+ogr2ogr \
+  -f CSV \
+  /tmp/whse_basemapping.transport_line_surface_code.csv \
+  /tmp/transport_line.gdb \
+  TRANSPORT_LINE_SURFACE_CODE
+
+aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/whse_basemapping.transport_line.parquet --acl public-read
+aws s3 cp /tmp/whse_basemapping.transport_line_structure_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv
+aws s3 cp /tmp/whse_basemapping.transport_line_type_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_type_code.csv
+aws s3 cp /tmp/whse_basemapping.transport_line_surface_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv
+
