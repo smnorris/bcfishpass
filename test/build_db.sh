@@ -57,10 +57,11 @@ done
 cd ..
 
 # load source data
-jobs/load_static
-jobs/load_monthly
-jobs/load_weekly
-cd test
+cd jobs
+./load_static
+./load_monthly
+./load_weekly
+cd ../test
 
 # delete data not needed for basic model (rather than editing the job files)
 $PSQL -c "delete from whse_admin_boundaries.adm_indian_reserves_bands_sp;
