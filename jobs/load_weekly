@@ -11,14 +11,6 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # weekly bcfishobs processing is scheduled via workflow bcfishobs repository
 
 # bcdata loads
-<<<<<<< HEAD
-bcdata bc2pg -r whse_fish.fiss_fish_obsrvtn_pnt_sp --query "POINT_TYPE_CODE = 'Observation'"
-bcdata bc2pg -r whse_fish.fiss_obstacles_pnt_sp
-bcdata bc2pg -r whse_fish.pscis_assessment_svw
-bcdata bc2pg -r whse_fish.pscis_design_proposal_svw
-bcdata bc2pg -r whse_fish.pscis_habitat_confirmation_svw
-bcdata bc2pg -r whse_fish.pscis_remediation_svw
-=======
 jq -c '.[]' bcgw_sources.json | while read item; do
     schedule=$(jq -r '.schedule' <<< "$item")
     source=$(jq -r '.source' <<< "$item")
@@ -35,7 +27,6 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         $source || exit 1
     fi
 done
->>>>>>> main
 
 # cabd
 ogr2ogr -f PostgreSQL \
