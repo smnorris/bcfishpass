@@ -19,17 +19,10 @@ unzip \
 
 # write required layer and lookups
 ogr2ogr \
-<<<<<<< HEAD
-  -f GPKG \
-  /tmp/transport_line.gpkg \
-  /tmp/transport_line.gdb \
-  -nln transport_line \
-=======
   -f Parquet \
   /tmp/transport_line.parquet \
   /tmp/transport_line.gdb \
   -lco FID=transport_line_id \
->>>>>>> main
   -sql "select
      TRANSPORT_LINE_ID as transport_line_id,
      CUSTODIAN_PARTNER_ORG as custodian_partner_org,
@@ -49,51 +42,4 @@ ogr2ogr \
      GEOMETRY as geometry
   from TRANSPORT_LINE"
 
-<<<<<<< HEAD
-ogr2ogr \
-  -f GPKG \
-  /tmp/transport_line.gpkg \
-  /tmp/transport_line.gdb \
-  -append \
-  -nln transport_line_type_code \
-  -sql "select * from TRANSPORT_LINE_TYPE_CODE"
-
-ogr2ogr \
-  -f GPKG \
-  /tmp/transport_line.gpkg \
-  /tmp/transport_line.gdb \
-  -append \
-  -nln transport_line_surface_code \
-  -sql "select * from TRANSPORT_LINE_SURFACE_CODE"
-
-ogr2ogr \
-  -f GPKG \
-  /tmp/transport_line.gpkg \
-  /tmp/transport_line.gdb \
-  -append \
-  -nln transport_line_divided_code \
-  -sql "select * from TRANSPORT_LINE_DIVIDED_CODE"
-
-ogr2ogr \
-  -f GPKG \
-  /tmp/transport_line.gpkg \
-  /tmp/transport_line.gdb \
-  -append \
-  -nln transport_line_structure_code \
-  -sql "select * from TRANSPORT_LINE_STRUCTURE_CODE"
-
-sozip \
-  /tmp/transport_line.gpkg.zip \
-  /tmp/transport_line.gpkg
-
-aws s3 cp \
-  /tmp/transport_line.gpkg.zip \
-  s3://bchamp/bcdata/transport_line.gpkg.zip \
-  --acl public-read
-
-rm /tmp/transport_line.gdb.zip
-rm /tmp/transport_line.gpkg
-rm /tmp/transport_line.gpkg.zip
-=======
 aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/transport_line.parquet --acl public-read
->>>>>>> main
