@@ -37,7 +37,6 @@ for table in whse_admin_boundaries.clab_indian_reserves \
     whse_fish.fiss_obstacles_pnt_sp \
     whse_fish.fiss_stream_sample_sites_sp \
     whse_fish.pscis_assessment_svw \
-    whse_fish.pscis_assessment_svw \
     whse_fish.pscis_design_proposal_svw \
     whse_fish.pscis_habitat_confirmation_svw \
     whse_fish.pscis_remediation_svw \

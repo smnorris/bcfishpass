@@ -9,6 +9,7 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # bcdata loads
 # ----
+<<<<<<< HEAD
 bcdata bc2pg -r whse_admin_boundaries.clab_indian_reserves
 bcdata bc2pg -r whse_admin_boundaries.clab_national_parks
 bcdata bc2pg -r whse_basemapping.gba_local_reg_greenspaces_sp
@@ -78,6 +79,35 @@ $PSQL -c "truncate whse_basemapping.transport_line;
             geom
       from bcdata.transport_line"
 $PSQL -c "drop table bcdata.transport_line"
+=======
+jq -c '.[]' bcgw_sources.json | while read item; do
+    schedule=$(jq -r '.schedule' <<< "$item")
+    source=$(jq -r '.source' <<< "$item")
+    if [ "$schedule" == "M" ] ; then
+      echo "Loading $source from cache"
+
+      ogr2ogr -f PostgreSQL \
+        "PG:$DATABASE_URL" \
+        --config OGR_TRUNCATE=YES \
+        -append \
+        -nln $source \
+        --config PG_USE_COPY=YES \
+        /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
+        $source || exit 1
+    fi
+done
+
+# load DRA
+ogr2ogr -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  --config OGR_TRUNCATE=YES \
+  -append \
+  -nln whse_basemapping.transport_line \
+  --debug ON \
+  --config PG_USE_COPY=YES \
+  /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.parquet \
+  transport_line
+>>>>>>> main
 
 #-------
 # refresh code tables - unlikely to change, but simple/quick to load

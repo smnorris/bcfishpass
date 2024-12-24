@@ -19,29 +19,37 @@ unzip \
 
 # write required layer and lookups
 ogr2ogr \
+<<<<<<< HEAD
   -f GPKG \
   /tmp/transport_line.gpkg \
   /tmp/transport_line.gdb \
   -nln transport_line \
+=======
+  -f Parquet \
+  /tmp/transport_line.parquet \
+  /tmp/transport_line.gdb \
+  -lco FID=transport_line_id \
+>>>>>>> main
   -sql "select
-     TRANSPORT_LINE_ID,
-     CUSTODIAN_PARTNER_ORG,
-     CAPTURE_DATE,
-     DATA_CAPTURE_METHOD_CODE,
-     TOTAL_NUMBER_OF_LANES,
-     STRUCTURED_NAME_1,
-     STRUCTURED_NAME_2,
-     STRUCTURED_NAME_3,
-     STRUCTURED_NAME_4,
-     STRUCTURED_NAME_5,
-     HIGHWAY_ROUTE_1,
-     HIGHWAY_EXIT_NUMBER,
-     TRANSPORT_LINE_TYPE_CODE,
-     TRANSPORT_LINE_SURFACE_CODE,
-     TRANSPORT_LINE_STRUCTURE_CODE,
-     GEOMETRY
+     TRANSPORT_LINE_ID as transport_line_id,
+     CUSTODIAN_PARTNER_ORG as custodian_partner_org,
+     CAPTURE_DATE as capture_date,
+     DATA_CAPTURE_METHOD_CODE as data_capture_method_code,
+     TOTAL_NUMBER_OF_LANES as total_number_of_lanes,
+     STRUCTURED_NAME_1 as structured_name_1,
+     STRUCTURED_NAME_2 as structured_name_2,
+     STRUCTURED_NAME_3 as structured_name_3,
+     STRUCTURED_NAME_4 as structured_name_4,
+     STRUCTURED_NAME_5 as structured_name_5,
+     HIGHWAY_ROUTE_1 as highway_route_1,
+     HIGHWAY_EXIT_NUMBER as highway_exit_number,
+     TRANSPORT_LINE_TYPE_CODE as transport_line_type_code,
+     TRANSPORT_LINE_SURFACE_CODE as transport_line_surface_code,
+     TRANSPORT_LINE_STRUCTURE_CODE as transport_line_structure_code,
+     GEOMETRY as geometry
   from TRANSPORT_LINE"
 
+<<<<<<< HEAD
 ogr2ogr \
   -f GPKG \
   /tmp/transport_line.gpkg \
@@ -86,3 +94,6 @@ aws s3 cp \
 rm /tmp/transport_line.gdb.zip
 rm /tmp/transport_line.gpkg
 rm /tmp/transport_line.gpkg.zip
+=======
+aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/transport_line.parquet --acl public-read
+>>>>>>> main

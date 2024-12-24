@@ -1,12 +1,10 @@
-name: production-load-monthly
-run-name: ${{ github.actor }} Monthly data refresh
+name: bcdata-replicate-weekly
+run-name: ${{ github.actor }} Weekly data replication
 on:
   schedule:
-    - cron: '0 15 15 * *'
+    - cron: '0 23 * * THU'
   workflow_dispatch:
 env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  DRAPWD: ${{ secrets.DRAPWD }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
@@ -15,7 +13,7 @@ env:
   AWS_EC2_METADATA_DISABLED: True
   CPL_VSISTDIN_BUFFER_LIMIT: -1
 jobs:
-  data-refresh:
+  replicate:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
@@ -24,4 +22,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run: |
-          cd jobs && ./replicate_dra && ./load_monthly
+          cd jobs && ./replicate_bcgw W

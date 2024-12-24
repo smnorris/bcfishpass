@@ -1,0 +1,23 @@
+#!/bin/bash
+set -euxo pipefail
+
+# dump sources matching frequency (D/M/W/Q/A) to object storage
+jq -c '.[]' bcgw_sources.json | while read item; do
+    schedule=$(jq -r '.schedule' <<< "$item")
+    source=$(jq -r '.source' <<< "$item")
+    query=$(jq -r '.query' <<< "$item")
+    pk=$(jq -r '.primary_key' <<< "$item")
+    if [ "$schedule" == $1 ] ; then
+
+      echo "Replicating $source to object storage"
+
+      bcdata dump --promote-to-multi -l --query "$query" -v $source |
+        ogr2ogr -f Parquet \
+          -lco FID=$pk \
+          /vsis3/bchamp/bcdata/$source.parquet \
+          /vsistdin/
+
+      aws s3api put-object-acl --bucket bchamp --key bcdata/$source.parquet --acl public-read
+
+    fi
+done

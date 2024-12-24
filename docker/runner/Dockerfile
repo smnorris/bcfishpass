@@ -1,4 +1,5 @@
-FROM ghcr.io/osgeo/gdal:ubuntu-small-3.10.0
+FROM ghcr.io/osgeo/gdal:ubuntu-full-3.10.0
+
 
 RUN apt-get update && apt-get --assume-yes upgrade \
     && apt-get -qq install -y --no-install-recommends postgresql-common \
@@ -12,6 +13,7 @@ RUN apt-get update && apt-get --assume-yes upgrade \
     && apt-get -qq install -y --no-install-recommends zip \
     && apt-get -qq install -y --no-install-recommends unzip \
     && apt-get -qq install -y --no-install-recommends parallel \
+    && apt-get -qq install -y --no-install-recommends jq \
     && apt-get -qq install -y --no-install-recommends python3-pip \
     && apt-get -qq install -y --no-install-recommends python3-dev \
     && apt-get -qq install -y --no-install-recommends python3-venv \
@@ -27,7 +29,7 @@ WORKDIR /home/bcfishpass
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/python -m pip install -U pip && \
     /opt/venv/bin/python -m pip install --no-cache-dir --upgrade numpy && \
-    /opt/venv/bin/python -m pip install --no-cache-dir bcdata && \
+    /opt/venv/bin/python -m pip install --no-cache-dir bcdata==0.15.0 && \
     /opt/venv/bin/python -m pip install --no-cache-dir scikit-image
 
 ENV PATH="/opt/venv/bin:$PATH"
