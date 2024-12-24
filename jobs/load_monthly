@@ -32,10 +32,9 @@ ogr2ogr -f PostgreSQL \
   --config OGR_TRUNCATE=YES \
   -append \
   -nln whse_basemapping.transport_line \
-  --debug ON \
   --config PG_USE_COPY=YES \
-  /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.parquet \
-  transport_line
+  /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line.parquet \
+  whse_basemapping.transport_line
 
 #-------
 # refresh code tables - unlikely to change, but simple/quick to load
