@@ -21,6 +21,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         "PG:$DATABASE_URL" \
         --config OGR_TRUNCATE=YES \
         -append \
+        -preserve_fid \
         -nln $source \
         --config PG_USE_COPY=YES \
         /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
