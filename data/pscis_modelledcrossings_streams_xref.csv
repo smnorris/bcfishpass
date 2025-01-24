@@ -1254,13 +1254,11 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 58255,,,BULK,NJO,Not on a mapped stream
 58256,1800139,,BULK,,
 58257,1806028,,BULK,NJO,Matched to closest stream model (Manual Review)
-58258,1800143,,BULK,NJO,Matched to closest stream model (Manual Review)
 58259,1802702,,BULK,,
 58260,1800012,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 58261,1800010,,BULK,,
 58262,1801576,,BULK,,
 58263,1801500,,BULK,,
-58264,,,BULK,,
 58265,,17084892,BULK,,
 58266,1802928,,BULK,SN,matched to nearest modelled crossing within 15m (instream)
 58267,1802929,,BULK,,
@@ -3564,4 +3562,5 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198882,11303627,,LNIC,LB,Matched to closest modelled crossing.
 197571,4600316,,ELKR,MC,satellite imagery shows stream flowing to north before crossing under road. Matched PSCIS 197571
 198944,24601268,,ZYMO,LS,Matched to modelled crossing 24601268 as per 2023 field assessment. Currenly incorrectly linked to modelled crossing 24742819.
-58264,1800143,,BULK,LS,"Simpson Creek is incorrectly mapped in FWA, and PSCIS crossing 58264 should be linked to modelled crossing 1800143, confirmed during 2024 field assessment. Modelled crossing 1800143 is currenly incorrectly linked to PSCIS crossing 58258."
+58264,1800143,,BULK,LS,"Simpson Creek is incorrectly mapped in FWA, and PSCIS crossing 58264 should be linked to modelled crossing 1800143, confirmed during 2024 field assessment. Modelled crossing 1800143 is currenly incorrectly linked to PSCIS crossing 58258.
+58258,,,BULK,SN,"Not on mapped stream. See issues in New Graph repoting - FWA mapping for Simpson Creek is incorrect"
