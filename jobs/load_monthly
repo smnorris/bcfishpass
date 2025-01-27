@@ -38,6 +38,47 @@ ogr2ogr -f PostgreSQL \
   /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line.parquet \
   whse_basemapping.transport_line
 
+#-------
+# refresh code tables - unlikely to change, but simple/quick to load
+#-------
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -append \
+  --config OGR_TRUNCATE YES \
+  -nln whse_basemapping.transport_line_type_code \
+  /vsizip//vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.gpkg.zip \
+  transport_line_type_code
+
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -append \
+  --config OGR_TRUNCATE YES \
+  -nln whse_basemapping.transport_line_surface_code \
+  /vsizip//vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.gpkg.zip \
+  transport_line_surface_code
+
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -append \
+  --config OGR_TRUNCATE YES \
+  -nln whse_basemapping.transport_line_divided_code \
+  /vsizip//vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.gpkg.zip \
+  transport_line_divided_code
+
+ogr2ogr \
+  -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  -append \
+  --config OGR_TRUNCATE YES \
+  -nln whse_basemapping.transport_line_structure_code \
+  /vsizip//vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/transport_line.gpkg.zip \
+  transport_line_structure_code
+
+
+
 # parcel fabric, renaming download so it can be read without unzipping
 # ----
 curl \

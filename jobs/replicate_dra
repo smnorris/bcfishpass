@@ -17,7 +17,7 @@ unzip \
   -o \
   /tmp/transport_line.gdb.zip
 
-# post public portion of dataset to bchamp object storage
+# write required layer and lookups
 ogr2ogr \
   -f Parquet \
   /tmp/transport_line.parquet \

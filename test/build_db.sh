@@ -5,11 +5,9 @@ set -euxo pipefail
 # Build a minimal fwapg/bcfishobs database for testing
 # ------
 
-DATABASE_URL=postgresql://postgres@localhost:5432/bcfishpass_test
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS="BELA\nBULK\nCOWN\nELKR\nHORS\nLNIC\nPARS\nSANJ\nVICT"       # edit here to adjust testing watersheds (could pull from parameters/example_testing/parameters_habitat_method)
 
-createdb bcfishpass_test
 
 # ------
 # load_fwa
@@ -21,9 +19,13 @@ git clone https://github.com/smnorris/fwapg
 cd fwapg
 echo -e $WSGS > wsg.txt
 make --debug=basic .make/fwa_stream_networks_sp
+make --debug=basic .make/fwa_watersheds_poly
 make --debug=basic .make/fwa_watershed_groups_poly
 make --debug=basic .make/fwa_assessment_watersheds_poly
 make --debug=basic .make/extras
+make --debug=basic .make/fwa_streams_watersheds_lut
+make --debug=basic .make/fwa_stream_networks_order_max
+make --debug=basic .make/fwa_stream_networks_order_parent
 
 # keep the data slim - retain only in testing groups (where wsg defined)
 for table in fwa_watershed_groups_poly \
@@ -38,7 +40,7 @@ $PSQL -c "delete from whse_basemapping.fwa_stream_networks_channel_width where l
 $PSQL -c "delete from whse_basemapping.fwa_assessment_watersheds_lut where watershed_feature_id not in (select watershed_feature_id from whse_basemapping.fwa_assessment_watersheds_poly)"
 $PSQL -c "delete from whse_basemapping.fwa_assessment_watersheds_streams_lut where assmnt_watershed_id not in (select watershed_feature_id from whse_basemapping.fwa_assessment_watersheds_poly)"
 $PSQL -c "delete from whse_basemapping.fwa_waterbodies_upstream_area where linear_feature_id not in (select linear_feature_id from whse_basemapping.fwa_stream_networks_sp)"
-$PSQL -c "delete from whse_basemapping.fwa_watersheds_upstream_area" # just delete all of this
+#$PSQL -c "delete from whse_basemapping.fwa_watersheds_upstream_area where linear_feature_id not in (select linear_feature_id from whse_basemapping.fwa_stream_networks_sp)" 
 
 cd .. ; rm -rf fwapg
 
@@ -58,10 +60,11 @@ done
 cd ..
 
 # load source data
-jobs/load_static
-jobs/load_monthly
-jobs/load_weekly
-cd test
+cd jobs
+./load_static
+./load_monthly
+./load_weekly
+cd ../test
 
 # delete data not needed for basic model (rather than editing the job files)
 $PSQL -c "delete from whse_admin_boundaries.adm_indian_reserves_bands_sp;
@@ -104,9 +107,6 @@ $PSQL -c "vacuum full analyze"
 
 # what are the biggest relations?
 #https://stackoverflow.com/questions/21738408/postgresql-list-and-order-tables-by-size
-
+$PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
 # dump the database (~200MB)
-pg_dump -Fc bcfishpass_test > bcfishpass_test.dump
-
-# cleanup
-psql postgres -c "drop database bcfishpass_test"
+pg_dump -Fc $DATABASE_URL > bcfishpass_test.dump
