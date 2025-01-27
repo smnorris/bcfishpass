@@ -23,6 +23,9 @@ make --debug=basic .make/fwa_watersheds_poly
 make --debug=basic .make/fwa_watershed_groups_poly
 make --debug=basic .make/fwa_assessment_watersheds_poly
 make --debug=basic .make/extras
+make --debug=basic .make/fwa_streams_watersheds_lut
+make --debug=basic .make/fwa_stream_networks_order_max
+make --debug=basic .make/fwa_stream_networks_order_parent
 
 # keep the data slim - retain only in testing groups (where wsg defined)
 for table in fwa_watershed_groups_poly \
