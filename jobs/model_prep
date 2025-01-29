@@ -7,26 +7,6 @@ set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-# CABD is refreshed weekly, but refresh here anyway to ensure we are always working with the very latest
-ogr2ogr -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  -append \
-  -nln cabd.dams \
-  --config OGR_TRUNCATE=YES \
-  --config PG_USE_COPY=YES \
-  "https://cabd-web.azurewebsites.net/cabd-api/features/dams?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
-  OGRGeoJSON
-
-ogr2ogr -f PostgreSQL \
-  "PG:$DATABASE_URL" \
-  -append \
-  -nln cabd.waterfalls \
-  --config OGR_TRUNCATE=YES \
-  --config PG_USE_COPY=YES \
-  "https://cabd-web.azurewebsites.net/cabd-api/features/waterfalls?filter=province_territory_code:eq:bc&filter=use_analysis:eq:true" \
-  OGRGeoJSON
-
-
 # refresh observations/dams/falls
 $PSQL -c "refresh materialized view bcfishpass.observations_vw"
 $PSQL -c "refresh materialized view bcfishpass.dams_vw"
