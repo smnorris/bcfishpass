@@ -14,7 +14,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
     source=$(jq -r '.source' <<< "$item")
     if [ "$schedule" == "M" ] ; then
       echo "Loading $source from cache"
-
+      set -e
       ogr2ogr -f PostgreSQL \
         "PG:$DATABASE_URL" \
         --config OGR_TRUNCATE=YES \
