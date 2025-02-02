@@ -68,8 +68,8 @@ ogr2ogr \
   TRANSPORT_LINE_DIVIDED_CODE
 
 aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/whse_basemapping.transport_line.parquet --acl public-read
-aws s3 cp /tmp/whse_basemapping.transport_line_structure_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv
-aws s3 cp /tmp/whse_basemapping.transport_line_type_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_type_code.csv
-aws s3 cp /tmp/whse_basemapping.transport_line_surface_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv
-aws s3 cp /tmp/whse_basemapping.transport_line_divided_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv
+aws s3 cp /tmp/whse_basemapping.transport_line_structure_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv --acl public-read
+aws s3 cp /tmp/whse_basemapping.transport_line_type_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_type_code.csv --acl public-read
+aws s3 cp /tmp/whse_basemapping.transport_line_surface_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv --acl public-read
+aws s3 cp /tmp/whse_basemapping.transport_line_divided_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv --acl public-read
 
