@@ -54,7 +54,7 @@ ogr2ogr \
   --config OGR_TRUNCATE YES \
   -nln whse_basemapping.transport_line_type_code \
   /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_type_code.csv \
-  transport_line_type_code
+  whse_basemapping.transport_line_type_code
 
 ogr2ogr \
   -f PostgreSQL \
@@ -63,7 +63,7 @@ ogr2ogr \
   --config OGR_TRUNCATE YES \
   -nln whse_basemapping.transport_line_surface_code \
   /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv \
-  transport_line_surface_code
+  whse_basemapping.transport_line_surface_code
 
 ogr2ogr \
   -f PostgreSQL \
@@ -72,7 +72,7 @@ ogr2ogr \
   --config OGR_TRUNCATE YES \
   -nln whse_basemapping.transport_line_divided_code \
   /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv \
-  transport_line_divided_code
+  whse_basemapping.transport_line_divided_code
 
 ogr2ogr \
   -f PostgreSQL \
@@ -81,7 +81,7 @@ ogr2ogr \
   --config OGR_TRUNCATE YES \
   -nln whse_basemapping.transport_line_structure_code \
   /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv \
-  transport_line_structure_code
+  whse_basemapping.transport_line_structure_code
 
 
 
