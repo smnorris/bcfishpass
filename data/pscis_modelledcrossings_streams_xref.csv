@@ -3574,3 +3574,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 199276,22200081,,UFRA,LS,Matched to modelled crossing based on 2023 field assessment.
 17103605,203174,,QUES,MC,Matched to modelled crossing based on 2024 Lhtako Dene field assessment
 17103760,203177,,QUES,MC,Matched to modelled crossing based on 2024 Lhtako Dene field assessment
+51989,10305054,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+51987,10305055,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+51988,10305060,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+52027,10305023,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+196420,6600828,,HOLB,SN,PSCIS datafix review - confirmation takes priority at this location
