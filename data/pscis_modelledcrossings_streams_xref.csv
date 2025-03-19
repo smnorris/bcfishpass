@@ -3580,3 +3580,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 52027,10305023,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
 196420,6600828,,HOLB,SN,PSCIS datafix review - confirmation takes priority at this location
 199255,13903617,,MORK,LS,"Newly assessed PSCIS 203296 overrode the existing linkage of PSCIS 199255 and modelled 13903617, but PSCIS 199255 should remain linked to 13903617."
+199239,13905537,,MORK,LS,Matched to modelled crossing based on 2023 field assessment.
