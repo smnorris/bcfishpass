@@ -12,16 +12,15 @@ WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_wate
 #-------
 # DRA code tables
 #-------
-aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_type_code.csv .
-aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv .
-aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv .
-aws s3 cp s3://bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv .
+curl -o /tmp/whse_basemapping.transport_line_type_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_type_code.csv
+curl -o /tmp/whse_basemapping.transport_line_surface_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv
+curl -o /tmp/whse_basemapping.transport_line_divided_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv
+curl -o /tmp/whse_basemapping.transport_line_structure_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv
 
-$PSQL -c "\copy bcfishpass.parameters_habitat_method FROM parameters/parameters_habitat_method.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_type_code FROM whse_basemapping.transport_line_type_code.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_surface_code FROM whse_basemapping.transport_line_surface_code.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_divided_code FROM whse_basemapping.transport_line_divided_code.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_structure_code FROM whse_basemapping.transport_line_structure_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_type_code FROM /tmp/whse_basemapping.transport_line_type_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_surface_code FROM /tmp/whse_basemapping.transport_line_surface_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_divided_code FROM /tmp/whse_basemapping.transport_line_divided_code.csv delimiter ',' csv header"
+$PSQL -c "\copy whse_basemapping.transport_line_structure_code FROM /tmp/whse_basemapping.transport_line_structure_code.csv delimiter ',' csv header"
 
 #-------
 # Admin areas/tiles/grids/cartographic
