@@ -234,7 +234,7 @@ with nearest as
     distance_to_stream
   from bcfishpass.pscis_streams_150m
   where modelled_crossing_id is not null
-  order by stream_crossing_id, blue_line_key, distance_to_stream
+  order by stream_crossing_id, blue_line_key, modelled_xing_dist_instream
 )
 
 update bcfishpass.pscis_streams_150m a
