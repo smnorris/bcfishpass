@@ -15309,36 +15309,44 @@
 360736668,0,99,BULK,co,rearing,f,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2027,Wiggs Creek
 360884108,1057,1397,BULK,co,rearing,f,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2028,Side channel off Gramophone Creek
 356292307,1813.462804,1820.578709,HORS,CO,rearing,f,MC,2024-12-09,Horsefly wcrp,Mckinley lake dam
-356495597,10.14846191,1551,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,
-356495597,10.14846191,1551,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356541211,375.119542,754,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356479891,142,741,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356536376,178.6166763,623,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356569293,1505.419061,2204.494635,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356532922,95,1222.519048,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356493477,156,950,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356508380,0,573,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356545654,309.4605845,2002.158868,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,"Should be habitat up to switchback, where stream gets quite steep"
-356536400,11.17633046,1092,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356564133,6014.320459,8994,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356565430,25589,26743,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356565430,25589,26743,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,
-356535352,35.09157008,574,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,Decent habitat in flat sections of creek
-356568403,2444.316092,3078.553187,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,
-356568403,2444.316092,3425,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,Parr electrofished upstream
-356559093,9361.14797,10399.11457,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,Very important spawning trib to Elk; spawning surveys exist
-356533003,0,717.8288337,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,Very important spawning trib to Elk; spawning surveys exist
-356440291,0,351.0615479,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,Very important spawning trib to Elk; spawning surveys exist
-356519898,5052,8695,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025,
-356519898,5052,8695,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356538950,86,1890.808065,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356528437,0,1074.858972,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356541848,4215.710712,9112.321697,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356569657,0,2776.008658,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025,
-356558982,166,7952.383659,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025,
-356558982,166,7952.383659,ELKR,WCT,spawning,f,MC,2025-03-24,Elk trib review 2025,
-356553194,0,3855.430288,ELKR,WCT,spawning,f,MC,2025-03-24,Elk trib review 2025,
-356553194,0,3855.430288,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025,
-356538864,0,2950.975087,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025,
-356551910,0,643.8279324,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025,Stream doesn’t exist
-356467725,0,1526,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025,Stream doesn’t exist
+356495597,10.14846191,1551,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356495597,10.14846191,1551,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356541211,375.119542,754,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356479891,142,741,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356536376,178.6166763,623,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356569293,1505.419061,2204.494635,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356532922,95,1222.519048,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356493477,156,950,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356508380,0,573,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356545654,309.4605845,2002.158868,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),"Should be habitat up to switchback, where stream gets quite steep"
+356536400,11.17633046,1092,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356564133,6014.320459,8994,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356565430,25589,26743,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356565430,25589,26743,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356535352,35.09157008,574,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Decent habitat in flat sections of creek
+356568403,2444.316092,3078.553187,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356568403,2444.316092,3425,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Parr electrofished upstream
+356559093,9361.14797,10399.11457,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Very important spawning trib to Elk; spawning surveys exist
+356533003,0,717.8288337,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Very important spawning trib to Elk; spawning surveys exist
+356440291,0,351.0615479,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Very important spawning trib to Elk; spawning surveys exist
+356519898,5052,8695,ELKR,WCT,spawning,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356519898,5052,8695,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356538950,86,1890.808065,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356528437,0,1074.858972,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356541848,4215.710712,9112.321697,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356569657,0,2776.008658,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356558982,166,7952.383659,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356558982,166,7952.383659,ELKR,WCT,spawning,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356553194,0,3855.430288,ELKR,WCT,spawning,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356553194,0,3855.430288,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356538864,0,2950.975087,ELKR,WCT,rearing,t,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
+356551910,0,643.8279324,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Stream doesn’t exist
+356467725,0,1526,ELKR,WCT,rearing,f,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Stream doesn’t exist
+356570562,5665.051448,16492.18362,ELKR,WCT,rearing,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356570562,5665.051448,16492.18362,ELKR,WCT,spawning,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356534319,0,1035,ELKR,WCT,rearing,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356549231,1519.80484,2417.991655,ELKR,WCT,rearing,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356549231,1519.80484,2417.991655,ELKR,WCT,spawning,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356551813,2713,3843,ELKR,WCT,rearing,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356499930,56,425,ELKR,WCT,rearing,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
+356499930,56,425,ELKR,WCT,spawning,t,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
