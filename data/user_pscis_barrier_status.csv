@@ -768,7 +768,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 61498,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 61500,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 61503,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-61504,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
+61504,PASSABLE,ELKR,MC,2025-03-24,2025 Trib review
 61513,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 61519,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 61527,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1351,3 +1351,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 62245,PASSABLE,ELKR,MC,2024-06-27,This crossing has been rehabilitated
 62293,POTENTIAL,ELKR,MC,2024-06-27,"Channel blew out and formed a new channel through road. Not clear if this ""ford"" is passable."
 124249,BARRIER,HORS,MC,2024-09-26,Scores as passable because currently backwatered by impassable beaver dam. Undersized. This is a barrier.
+197834,PASSABLE,ELKR,MC,2025-03-24,2025 Trib review
+197833,PASSABLE,ELKR,MC,2025-03-24,2025 Trib review
+197827,POTENTIAL,ELKR,MC,2025-03-24,2025 Trib review
