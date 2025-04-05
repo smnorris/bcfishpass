@@ -803,7 +803,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 62176,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62177,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62183,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-62184,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62289,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62290,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 62291,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1268,7 +1267,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 197034,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197038,BARRIER,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 197040,PASSABLE,LNIC,LB,2024-04-09,"This is a ford, PSCIS barrier_status = UNKNOWN, edit existing record in fix table to PASSABLE"
-3138,BARRIER,BULK,AI,2021-01-01,"error in crossing_type_description.  Should be ""Closed Bottom Structure"""
 197535,PASSABLE,ELKR,NJO,2021-01-01,Manual review
 197536,PASSABLE,ELKR,NJO,2021-01-01,Manual review
 197727,PASSABLE,ELKR,NJO,2021-01-01,Manual review
