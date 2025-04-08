@@ -65,21 +65,46 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  jobs/model_prep
-  model:
+  model-access-1:
+  runs-on: ubuntu-latest
+  environment: production
+  container: ghcr.io/smnorris/bcfishpass:main
+  needs: prep
+  steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+    - name: Access model 1
+      run:  |
+        cd model/01_access
+        ./model_access_1.sh
+  model-access-2:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: prep
+    needs: model-access-1
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 2
+        run:  |
+          cd model/01_access
+          ./model_access_2.sh
+  model-habitat-linear:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-2
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
             fetch-tags: true
             fetch-depth: 0
-      - name: Run the jobs
+      - name: Linear habitat model
         run:  |
           git config --global --add safe.directory /__w/bcfishpass/bcfishpass
-          jobs/model_run
+          cd model/02_habitat_linear
+          ./habitat_linear.sh
   release:
     runs-on: ubuntu-latest
     environment: production
