@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: model
+    needs: model-habitat-linear
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
