@@ -66,17 +66,17 @@ jobs:
       - name: Run the jobs
         run:  jobs/model_prep
   model-access-1:
-  runs-on: ubuntu-latest
-  environment: production
-  container: ghcr.io/smnorris/bcfishpass:main
-  needs: prep
-  steps:
-    - name: Check out repository code
-      uses: actions/checkout@v4
-    - name: Access model 1
-      run:  |
-        cd model/01_access
-        ./model_access_1.sh
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: prep
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 1
+        run:  |
+          cd model/01_access
+          ./model_access_1.sh
   model-access-2:
     runs-on: ubuntu-latest
     environment: production
