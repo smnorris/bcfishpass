@@ -100,6 +100,7 @@ ogr2ogr \
    -dim XY \
    -lco GEOMETRY_NAME=geom \
    -lco FID=PARCEL_FABRIC_POLY_ID \
+   -nlt CONVERT_TO_LINEAR \
    -nln bcdata.pmbc_parcel_fabric_poly_svw \
    /tmp/pmbc_parcel_fabric_poly_svw.gdb.zip \
    pmbc_parcel_fabric_poly_svw
@@ -111,6 +112,7 @@ $PSQL -c "truncate whse_cadastre.pmbc_parcel_fabric_poly_svw;
             parcel_name           ,
             plan_number           ,
             pin                   ,
+            pid_formatted         ,
             pid_number            ,
             parcel_status         ,
             parcel_class          ,
@@ -126,7 +128,8 @@ $PSQL -c "truncate whse_cadastre.pmbc_parcel_fabric_poly_svw;
             parcel_name           ,
             plan_number           ,
             pin                   ,
-            pid                   ,
+            pid_formatted         ,
+            pid_number            ,
             parcel_status         ,
             parcel_class          ,
             owner_type            ,
