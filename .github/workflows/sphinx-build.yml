@@ -1,14 +1,13 @@
 name: docs-deploy
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main'
     paths:
       - 'docs/**'
-  create:
     tags:
-      - '*'
-  workflow_dispatch:
+      - 'v*'
 jobs:
   docs:
     runs-on: ubuntu-latest
