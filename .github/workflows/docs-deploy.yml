@@ -9,7 +9,7 @@ on:
     tags:
       - 'v*'
 jobs:
-  docs:
+  docs-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
