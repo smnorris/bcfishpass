@@ -1,9 +1,9 @@
 -- access - view of stream data plus downstream barrier info
 -- modified to include "access" columns with codes 0/1/2 (inaccessible/modelled/observed)
-Drop materialized view bcfishpass.streams_access_vw2 cascade;
+Drop materialized view bcfishpass.streams_access_vw cascade;
 
 
-create materialized view bcfishpass.streams_access_vw2 as
+create materialized view bcfishpass.streams_access_vw as
 select
    s.segmented_stream_id,
    b.barriers_anthropogenic_dnstr,
@@ -158,8 +158,8 @@ left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.a
 -- 1 modelled habitat
 -- 2 modelled and observed habitat
 -- 3 observed habitat
-drop materialized view bcfishpass.streams_habitat_linear_vw2;
-create materialized view bcfishpass.streams_habitat_linear_vw2 as
+drop materialized view bcfishpass.streams_habitat_linear_vw;
+create materialized view bcfishpass.streams_habitat_linear_vw as
 select
   s.segmented_stream_id,
   case
@@ -282,7 +282,7 @@ left outer join bcfishpass.streams_habitat_known_vw u on s.segmented_stream_id =
 -- INTERMITTENT
 -- (note - consider adding a non-intermittent code for easier classification?)
 
-create materialized view bcfishpass.streams_mapping_code_vw2 as
+create materialized view bcfishpass.streams_mapping_code_vw as
 
 with mcbi_r as (
   select
@@ -559,15 +559,15 @@ select
 from bcfishpass.streams s
 inner join mcbi_r mr on s.segmented_stream_id = mr.segmented_stream_id
 inner join mcbi_a ma on s.segmented_stream_id = ma.segmented_stream_id
-inner join bcfishpass.streams_access_vw2 a on s.segmented_stream_id = a.segmented_stream_id
-inner join bcfishpass.streams_habitat_linear_vw2 h on s.segmented_stream_id = h.segmented_stream_id;
+inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id;
 
---create unique index on bcfishpass.streams_mapping_code_vw2 (segmented_stream_id);
+--create unique index on bcfishpass.streams_mapping_code_vw (segmented_stream_id);
 
 
 -- final output spatial streams view
-drop view bcfishpass.streams_vw2;
-create view bcfishpass.streams_vw2 as
+drop view bcfishpass.streams_vw;
+create view bcfishpass.streams_vw as
 select
   s.segmented_stream_id,
   s.linear_feature_id,
@@ -642,7 +642,7 @@ select
   m.mapping_code_salmon,
   s.geom
 from bcfishpass.streams s
-left outer join bcfishpass.streams_access_vw2 a on s.segmented_stream_id = a.segmented_stream_id
-left outer join bcfishpass.streams_habitat_linear_vw2 h on s.segmented_stream_id = h.segmented_stream_id
+left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
+left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
 left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
 
