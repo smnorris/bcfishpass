@@ -1,4 +1,5 @@
 -- add assessment watershed summary tables and functions
+BEGIN;
 
 drop table if exists bcfishpass.log_aw_linear_summary;
 
@@ -218,7 +219,7 @@ with accessible as
     sum(st_length(geom)) filter (where s.access_wct = 1) as length_potentiallyaccessible_model_wct,
     sum(st_length(geom)) filter (where s.access_wct = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_potentiallyaccessible_model_wct_access_a,
     sum(st_length(geom)) filter (where s.access_wct = 2 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_model_wct_access_b
-  from bcfishpass.streams_vw2 s
+  from bcfishpass.streams_vw s
   inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
   group by aw.assmnt_watershed_id, s.watershed_group_code
 ),
@@ -427,7 +428,7 @@ spawning_rearing as (
         spawning_st > 1 or
         rearing_st > 1
       ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_salmon_st_access_b
-from bcfishpass.streams_vw2 s
+from bcfishpass.streams_vw s
 inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
 group by aw.assmnt_watershed_id, s.watershed_group_code
 )
@@ -1186,3 +1187,5 @@ select
 from bcfishpass.wsg_linear_summary_current a
 inner join bcfishpass.wsg_linear_summary_previous b on a.watershed_group_code = b.watershed_group_code
 order by a.watershed_group_code;
+
+COMMIT;

@@ -1,4 +1,5 @@
 -- Some of crossings_vw is already documented, document the remainder
+BEGIN;
 
 comment on column bcfishpass.crossings_vw.upstream_area_ha IS 'Cumulative area upstream of the end of the stream (as defined by linear_feature_id)';
 comment on column bcfishpass.crossings_vw.stream_order_parent IS 'Stream order of the stream into which the stream drains';
@@ -172,7 +173,7 @@ comment on column bcfishpass.crossings_vw.wct_rearing_belowupstrbarriers_km IS '
 
 -- document streams_vw
 
-comment on column bcfishpass.streams_vw.segmented_stream_id IS 'Unique id for the stream segment based on existing segmentation. Value is derived as "blue_line_key.downstream_route_measure (km)"';
+comment on column bcfishpass.streams_vw.segmented_stream_id IS 'Unique id for the stream segment based on existing segmentation. Value is concatenation of blue_line_key.downstream_route_measure';
 comment on column bcfishpass.streams_vw.linear_feature_id IS 'FWA stream segment unique identifier';
 comment on column bcfishpass.streams_vw.edge_type IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)'
 comment on column bcfishpass.streams_vw.blue_line_key IS 'From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
@@ -243,3 +244,5 @@ comment on column bcfishpass.streams_vw.mapping_code_sk IS 'Stream mapping code 
 comment on column bcfishpass.streams_vw.mapping_code_st IS 'Stream mapping code for Steelhead, a string indicating: model output/downstream barrier status/stream type';
 comment on column bcfishpass.streams_vw.mapping_code_wct IS 'Stream mapping code for West Slope Cutthroat Trout, a string indicating: model output/downstream barrier status/stream type';
 comment on column bcfishpass.streams_vw.mapping_code_salmon IS 'Stream mapping code for Pacific Salmon (all), a string indicating: model output/downstream barrier status/stream type';
+
+COMMIT;

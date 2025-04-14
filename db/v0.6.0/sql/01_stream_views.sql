@@ -1,6 +1,9 @@
 -- access - view of stream data plus downstream barrier info
 -- modified to include "access" columns with codes 0/1/2 (inaccessible/modelled/observed)
-Drop materialized view bcfishpass.streams_access_vw cascade;
+
+BEGIN;
+
+Drop materialized view IF EXISTS bcfishpass.streams_access_vw cascade;
 
 
 create materialized view bcfishpass.streams_access_vw as
@@ -132,25 +135,7 @@ left outer join bcfishpass.wsg_species_presence wsg_st on s.watershed_group_code
 left outer join bcfishpass.wsg_species_presence wsg_wct on s.watershed_group_code = wsg_wct.watershed_group_code and wsg_wct.wct is true
 left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.aggregated_crossings_id and x.pscis_status = 'REMEDIATED' and x.pscis_status = 'PASSABLE';
 
---create unique index on bcfishpass.streams_access_vw (segmented_stream_id);
-
--- dependencies to alter
--- materialized view bcfishpass.streams_habitat_linear_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- materialized view bcfishpass.streams_mapping_code_vw depends on materialized view bcfishpass.streams_habitat_linear_vw
--- view bcfishpass.wcrp_habitat_connectivity_status_vw depends on materialized view bcfishpass.streams_habitat_linear_vw
--- view bcfishpass.streams_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_bt_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_ch_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_cm_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_co_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_pk_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_salmon_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_sk_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_st_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- view bcfishpass.streams_wct_vw depends on materialized view bcfishpass.streams_habitat_known_vw
--- HINT:  Use DROP ... CASCADE to drop the dependent objects too
--- drop materialized view bcfishpass.streams_habitat_known_vw cascade;
-
+create unique index on bcfishpass.streams_access_vw (segmented_stream_id);
 
 -- combine all modelled habitat tables and observed habitat table into a single spawning/rearing view
 -- habitat columns have values:
@@ -158,7 +143,7 @@ left outer join bcfishpass.crossings x on r.remediations_barriers_dnstr[1] = x.a
 -- 1 modelled habitat
 -- 2 modelled and observed habitat
 -- 3 observed habitat
-drop materialized view bcfishpass.streams_habitat_linear_vw;
+drop materialized view IF EXISTS bcfishpass.streams_habitat_linear_vw;
 create materialized view bcfishpass.streams_habitat_linear_vw as
 select
   s.segmented_stream_id,
@@ -258,7 +243,7 @@ left outer join bcfishpass.habitat_linear_st st on s.segmented_stream_id = st.se
 left outer join bcfishpass.habitat_linear_wct wct on s.segmented_stream_id = wct.segmented_stream_id
 left outer join bcfishpass.streams_habitat_known_vw u on s.segmented_stream_id = u.segmented_stream_id;
 
---create unique index on bcfishpass.streams_habitat_linear_vw (segmented_stream_id);
+create unique index on bcfishpass.streams_habitat_linear_vw (segmented_stream_id);
 
 
 -- generate codes for easy categorical mapping
@@ -281,6 +266,7 @@ left outer join bcfishpass.streams_habitat_known_vw u on s.segmented_stream_id =
 -- Third item of array is only present if the stream is intermittent
 -- INTERMITTENT
 -- (note - consider adding a non-intermittent code for easier classification?)
+DROP materialized view IF EXISTS bcfishpass.streams_mapping_code_vw;
 
 create materialized view bcfishpass.streams_mapping_code_vw as
 
@@ -562,12 +548,12 @@ inner join mcbi_a ma on s.segmented_stream_id = ma.segmented_stream_id
 inner join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id;
 
---create unique index on bcfishpass.streams_mapping_code_vw (segmented_stream_id);
+create unique index on bcfishpass.streams_mapping_code_vw (segmented_stream_id);
 
 
 -- final output spatial streams view
-drop view bcfishpass.streams_vw;
-create view bcfishpass.streams_vw as
+DROP VIEW IF EXISTS bcfishpass.streams_vw;
+CREATE VIEW bcfishpass.streams_vw as
 select
   s.segmented_stream_id,
   s.linear_feature_id,
@@ -644,5 +630,251 @@ select
 from bcfishpass.streams s
 left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
 left outer join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
-left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id
+left outer join bcfishpass.streams_mapping_code_vw m on s.segmented_stream_id = m.segmented_stream_id;
 
+
+
+-- CWF WCRP - summarize spawning/rearing/spawning&rearing habitat lengths per group, by accessibility
+DROP VIEW IF EXISTS bcfishpass.wcrp_habitat_connectivity_status_vw;
+
+create view bcfishpass.wcrp_habitat_connectivity_status_vw as
+with length_totals as
+(
+-- all spawning (ch/co/st/sk/wct) - calculation is simple, just add it up
+-- ---------------
+  SELECT
+    s.watershed_group_code,
+    'SPAWNING' as habitat_type,
+    coalesce(round((SUM(ST_Length(s.geom)) FILTER (
+      WHERE
+      (h.spawning_ch > 0 and w.ch IS TRUE) OR
+      (h.spawning_co > 0 AND w.co IS TRUE) OR
+      (h.spawning_st > 0 AND w.st IS TRUE) OR
+      (h.spawning_sk > 0 AND w.sk IS TRUE) OR
+      (h.spawning_wct > 0 AND w.wct IS TRUE)
+    ) / 1000)::numeric, 2), 0) as total_km,
+
+    -- spawning accessible
+    coalesce(round((SUM(ST_Length(s.geom)) FILTER (
+      WHERE (
+        (h.spawning_ch > 0 and w.ch IS TRUE) OR
+        (h.spawning_co > 0 AND w.co IS TRUE) OR
+        (h.spawning_st > 0 AND w.st IS TRUE) OR
+        (h.spawning_sk > 0 AND w.sk IS TRUE) OR
+        (h.spawning_wct > 0 AND w.wct IS TRUE)
+      )
+      AND a.barriers_anthropogenic_dnstr IS NULL
+    ) / 1000)::numeric, 2), 0) as accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  group by s.watershed_group_code
+
+  UNION ALL
+
+-- REARING length
+-- --------------
+-- rearing is more complex, add an extra .5 for CO/SK rearing in wetlands/lakes respectively
+
+  SELECT
+    s.watershed_group_code,
+    'REARING' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE
+            (h.rearing_ch > 0 AND w.ch IS TRUE) OR
+            (h.rearing_st > 0 AND w.st IS TRUE) OR
+            (h.rearing_sk > 0 AND w.sk IS TRUE) OR
+            (h.rearing_co > 0 AND w.co IS TRUE) OR
+            (h.rearing_wct > 0 AND w.wct IS TRUE)
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(SUM(ST_Length(s.geom) * .5) FILTER (WHERE h.rearing_co > 0 AND w.co IS TRUE AND s.edge_type = 1050), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(SUM(ST_Length(s.geom) * .5) FILTER (WHERE h.spawning_sk > 0 AND w.co IS TRUE), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+    -- rearing accessible
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE (
+              (h.rearing_ch > 0 AND w.ch IS TRUE) OR
+              (h.rearing_co > 0 AND w.co IS TRUE) OR
+              (h.rearing_st > 0 AND w.st IS TRUE) OR
+              (h.rearing_sk > 0 AND w.sk IS TRUE) OR
+              (h.rearing_wct > 0 AND w.wct IS TRUE)
+            )
+            AND a.barriers_anthropogenic_dnstr IS NULL
+          ), 0) +
+          -- add .5 coho rearing in wetlands
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.rearing_co > 0 AND w.co IS TRUE AND edge_type = 1050 AND barriers_anthropogenic_dnstr IS NULL), 0) +
+          -- add .5 sockeye rearing in lakes (all of it)
+          coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.spawning_sk > 0 AND w.sk IS TRUE AND barriers_anthropogenic_dnstr IS NULL), 0)
+        ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  group by s.watershed_group_code
+
+  UNION ALL
+
+  -- spawning or rearing - total km of habitat
+  SELECT
+    s.watershed_group_code,
+    'ALL' as habitat_type,
+    round(
+    (
+      (
+        coalesce(SUM(ST_Length(s.geom)) FILTER (
+          WHERE
+            (h.spawning_ch > 0 AND w.ch IS TRUE) OR
+            (h.spawning_co > 0 AND w.co IS TRUE) OR
+            (h.spawning_st > 0 AND w.st IS TRUE) OR
+            (h.spawning_sk > 0 AND w.sk IS TRUE) OR
+            (h.spawning_wct > 0 AND w.wct IS TRUE) OR
+            (h.rearing_ch > 0 AND w.ch IS TRUE) OR
+            (h.rearing_co > 0 AND w.co IS TRUE) OR
+            (h.rearing_st > 0 AND w.st IS TRUE) OR
+            (h.rearing_sk > 0 AND w.sk IS TRUE) OR
+            (h.rearing_wct > 0 AND w.wct IS TRUE)
+          ), 0) +
+        -- add .5 coho rearing in wetlands
+        coalesce(SUM(ST_Length(s.geom) * .5) FILTER (WHERE h.rearing_co > 0 AND w.co IS TRUE AND s.edge_type = 1050), 0) +
+        -- add .5 sockeye rearing in lakes (all of it)
+        coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.spawning_sk > 0 AND w.sk IS TRUE), 0)
+      ) / 1000)::numeric, 2
+    ) AS total_km,
+
+  -- total acccessible km
+   round(
+    (
+      (
+        coalesce(SUM(ST_Length(geom)) FILTER (
+          WHERE (
+            (h.spawning_ch > 0 AND w.ch IS TRUE) OR
+            (h.spawning_co > 0 AND w.co IS TRUE) OR
+            (h.spawning_st > 0 AND w.st IS TRUE) OR
+            (h.spawning_sk > 0 AND w.sk IS TRUE) OR
+            (h.spawning_wct > 0 AND w.wct IS TRUE) OR
+            (h.rearing_ch > 0 AND w.ch IS TRUE) OR
+            (h.rearing_co > 0 AND w.co IS TRUE) OR
+            (h.rearing_st > 0 AND w.st IS TRUE) OR
+            (h.rearing_sk > 0 AND w.sk IS TRUE) OR
+            (h.rearing_wct > 0 AND w.wct IS TRUE)
+          )
+          AND a.barriers_anthropogenic_dnstr IS NULL), 0) +
+        -- add .5 coho rearing in wetlands
+        coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.rearing_co > 0 AND edge_type = 1050 AND a.barriers_anthropogenic_dnstr IS NULL), 0) +
+        -- add .5 sockeye rearing in lakes (all of it)
+        coalesce(SUM(ST_Length(geom) * .5) FILTER (WHERE h.spawning_sk > 0 AND a.barriers_anthropogenic_dnstr IS NULL), 0)
+      ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  group by s.watershed_group_code
+
+  UNION ALL
+
+  -- Upstream of Elko Dam
+  SELECT
+    s.watershed_group_code,
+    'UPSTREAM_ELKO' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(s.geom)) FILTER (
+            WHERE
+              (h.spawning_wct > 0 AND w.wct IS TRUE) OR
+              (h.rearing_wct > 0 AND w.wct IS TRUE)
+          ), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+  -- total acccessible km
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE (
+              (h.spawning_wct > 0 AND w.wct IS TRUE) OR
+              (h.rearing_wct > 0 AND w.wct IS TRUE)
+            )
+            AND a.barriers_anthropogenic_dnstr = (select barriers_anthropogenic_dnstr
+                from bcfishpass.streams s
+                inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+                inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+                where segmented_stream_id like '356570562.22912000')), 0)
+    ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  where FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree) -- only above Elko Dam
+  group by s.watershed_group_code
+
+UNION ALL
+  -- Downstream of Elko Dam
+  SELECT
+    s.watershed_group_code,
+    'DOWNSTREAM_ELKO' as habitat_type,
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(s.geom)) FILTER (
+            WHERE
+              (h.spawning_wct > 0 AND w.wct IS TRUE) OR
+              (h.rearing_wct > 0 AND w.wct IS TRUE)
+          ), 0)
+        ) / 1000)::numeric, 2
+      ) AS total_km,
+
+  -- total acccessible km
+    round(
+      (
+        (
+          coalesce(SUM(ST_Length(geom)) FILTER (
+            WHERE (
+              (h.spawning_wct > 0 AND w.wct IS TRUE) OR
+              (h.rearing_wct > 0 AND w.wct IS TRUE)
+            )
+      AND a.barriers_anthropogenic_dnstr IS NULL
+      AND a.barriers_wct_dnstr = array[]::text[]
+      OR a.barriers_anthropogenic_dnstr = (select distinct barriers_anthropogenic_dnstr
+                          from bcfishpass.streams s
+                          inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+                          inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+                          where linear_feature_id = 706872063)), 0)
+    ) / 1000)::numeric, 2
+    ) AS accessible_km
+  from bcfishpass.streams s
+  inner join bcfishpass.streams_habitat_linear_vw h using (segmented_stream_id)
+  inner join bcfishpass.streams_access_vw a using (segmented_stream_id)
+  inner join bcfishpass.wcrp_watersheds w on s.watershed_group_code = w.watershed_group_code -- WCRP watersheds only
+  where wscode_ltree <@ '300.625474.584724'::ltree  -- on the elk system and not above elko dam
+  AND NOT FWA_Upstream(356570562, 22910, 22910, '300.625474.584724'::ltree, '300.625474.584724.100997'::ltree, blue_line_key, downstream_route_measure, wscode_ltree, localcode_ltree)
+  group by s.watershed_group_code
+)
+
+select
+  watershed_group_code,
+  habitat_type,
+  total_km,
+  accessible_km,
+  round((accessible_km / (total_km + .0001)) * 100, 2) as pct_accessible  -- add small amt to avoid division by zero
+from length_totals
+order by watershed_group_code, habitat_type desc;
+
+
+
+COMMIT;
