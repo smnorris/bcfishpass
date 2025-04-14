@@ -23,9 +23,20 @@ streams (lines)
 ============================
 BC FWA stream network, with bcfishpass model classifications.
 
+.. csv-table::
+   :file: tables/streams.csv
+   :header-rows: 1
+
+
 crossings (points)
 ============================
 Road-stream crossings (and dams), including tenure information; barrier status; upstream/downstream habitat lengths
+
+
+.. csv-table::
+   :file: tables/crossings.csv
+   :header-rows: 1
+
 
 linear_summary
 ============================
