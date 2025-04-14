@@ -228,12 +228,12 @@ comment on column bcfishpass.streams_vw.spawning_pk IS 'Pink spawning model: -1=
 comment on column bcfishpass.streams_vw.spawning_sk IS 'Sockeye spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
 comment on column bcfishpass.streams_vw.spawning_st IS 'Steelhead spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
 comment on column bcfishpass.streams_vw.spawning_wct IS 'West Slope Cutthroat Trout spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
-comment on column bcfishpass.streams_vw.rearing_bt IS 'Bull Trout rearing model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
-comment on column bcfishpass.streams_vw.rearing_ch IS 'Chinook rearing model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
-comment on column bcfishpass.streams_vw.rearing_co IS 'Coho rearing model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
-comment on column bcfishpass.streams_vw.rearing_sk IS 'Sockeye rearing model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
-comment on column bcfishpass.streams_vw.rearing_st IS 'Steelhead rearing model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
-comment on column bcfishpass.streams_vw.rearing_wct IS 'West Slope Cutthroat rearing model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)';
+comment on column bcfishpass.streams_vw.rearing_bt IS 'Bull Trout rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)';
+comment on column bcfishpass.streams_vw.rearing_ch IS 'Chinook rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)';
+comment on column bcfishpass.streams_vw.rearing_co IS 'Coho rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)';
+comment on column bcfishpass.streams_vw.rearing_sk IS 'Sockeye rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)';
+comment on column bcfishpass.streams_vw.rearing_st IS 'Steelhead rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)';
+comment on column bcfishpass.streams_vw.rearing_wct IS 'West Slope Cutthroat rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)';
 comment on column bcfishpass.streams_vw.mapping_code_bt IS 'Stream mapping code for Bull Trout, a string indicating: model output/downstream barrier status/stream type';
 comment on column bcfishpass.streams_vw.mapping_code_ch IS 'Stream mapping code for Chinook, a string indicating: model output/downstream barrier status/stream type';
 comment on column bcfishpass.streams_vw.mapping_code_cm IS 'Stream mapping code for Chum, a string indicating: model output/downstream barrier status/stream type';
