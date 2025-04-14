@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-     with:
-      ref: main
     - uses: erpcya/sphinx-action@feature/#update-sphinx-base-image
       with:
         pre-build-command: "pip install sphinx_rtd_theme"
