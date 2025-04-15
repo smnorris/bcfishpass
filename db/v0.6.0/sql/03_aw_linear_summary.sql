@@ -95,7 +95,7 @@ create table bcfishpass.log_aw_linear_summary (
  length_spawningrearing_model_salmon_st_access_b          numeric
 );
 
-DROP FUNCTION bcfishpass.aw_linear_summary;
+DROP FUNCTION IF EXISTS bcfishpass.aw_linear_summary;
 CREATE FUNCTION bcfishpass.aw_linear_summary()
 RETURNS table (
  assessment_watershed_id                                  integer,
