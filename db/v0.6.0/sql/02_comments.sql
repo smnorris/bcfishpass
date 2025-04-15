@@ -226,9 +226,9 @@ comment on column bcfishpass.crossings_vw.geom IS 'The point geometry associated
 
 comment on column bcfishpass.streams_vw.segmented_stream_id IS 'Unique id for the stream segment based on existing segmentation. Value is concatenation of blue_line_key.downstream_route_measure';
 comment on column bcfishpass.streams_vw.linear_feature_id IS 'FWA stream segment unique identifier';
-comment on column bcfishpass.streams_vw.edge_type IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)'
+comment on column bcfishpass.streams_vw.edge_type IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)';
 comment on column bcfishpass.streams_vw.blue_line_key IS 'From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
-comment on column bcfishpass.streams_vw.watershed_key IS 'From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.'
+comment on column bcfishpass.streams_vw.watershed_key IS 'From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.';
 comment on column bcfishpass.streams_vw.watershed_group_code IS 'The watershed group code associated with the feature.';
 comment on column bcfishpass.streams_vw.downstream_route_measure IS 'The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature.';
 comment on column bcfishpass.streams_vw.length_metre IS 'The watershed group code associated with the feature.';

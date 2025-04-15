@@ -3,7 +3,7 @@
 
 BEGIN;
 
-drop table if exists bcfishpass.log_aw_linear_summary;
+drop table if exists bcfishpass.log_aw_linear_summary cascade;
 
 create table bcfishpass.log_aw_linear_summary (
  model_run_id                                             integer references bcfishpass.log(model_run_id),
@@ -854,7 +854,11 @@ order by a.assessment_watershed_id;
 
 
 -- summarize by watershed group
-drop view bcfishpass.wsg_linear_summary_current cascade;
+drop view if exists bcfishpass.wsg_linear_summary_diff;
+drop view if exists bcfishpass.wsg_linear_summary_previous;
+drop view if exists bcfishpass.wsg_linear_summary_current;
+
+
 create view bcfishpass.wsg_linear_summary_current as
 with sums as (
   select
@@ -969,7 +973,6 @@ select *,
   round(coalesce((s.length_spawningrearing_obsrvd_salmon_st_access_b + s.length_spawningrearing_model_salmon_st_access_b) / nullif((s.length_spawningrearing_obsrvd_salmon_st + s.length_spawningrearing_model_salmon_st), 0), 0) * 100, 2) as pct_spawningrearing_salmon_st_access_b
 from sums s;
 
-drop view bcfishpass.wsg_linear_summary_previous;
 create view bcfishpass.wsg_linear_summary_previous as
 with sums as (
   select

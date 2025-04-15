@@ -1,12 +1,12 @@
 #!/bin/bash
 set -euxo pipefail
 
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
 # drop and re-create stream views requiring updated habitat columns and dependent objects
-psql $DATABASE_URL -f sql/01_stream_views.sql
+$PSQL -f sql/01_modify_habitat_codes.sql
+$PSQL -f sql/02_comments.sql
+$PSQL -f sql/03_aw_linear_summary.sql
 
 
-psql $DATABASE_URL -f sql/02_comments.sql
-psql $DATABASE_URL -f sql/03_aw_linear_summary.sql
-
-
-psql $DATABASE_URL -c "update bcfishpass.db_version set tag = '${PWD##*/}'"
+$PSQL -c "update bcfishpass.db_version set tag = '${PWD##*/}'"

@@ -269,7 +269,6 @@ create unique index on bcfishpass.streams_habitat_linear_vw (segmented_stream_id
 -- Third item of array is only present if the stream is intermittent
 -- INTERMITTENT
 -- (note - consider adding a non-intermittent code for easier classification?)
-DROP materialized view IF EXISTS bcfishpass.streams_mapping_code_vw;
 
 create materialized view bcfishpass.streams_mapping_code_vw as
 
@@ -555,7 +554,6 @@ create unique index on bcfishpass.streams_mapping_code_vw (segmented_stream_id);
 
 
 -- final output spatial streams view
-DROP VIEW IF EXISTS bcfishpass.streams_vw;
 CREATE VIEW bcfishpass.streams_vw as
 select
   s.segmented_stream_id,
@@ -889,8 +887,8 @@ select
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   access_salmon as access,
-  greatest(h.spawning_ch, h.spawning_cm, h.spawning_co, h.spawning_pk, h.spawning_sk) as spawning,
-  greatest(h.rearing_ch, h.rearing_co, h.rearing_sk) as rearing,
+  greatest(spawning_ch, spawning_cm, spawning_co, spawning_pk, spawning_sk) as spawning,
+  greatest(rearing_ch, rearing_co, rearing_sk) as rearing,
   mapping_code_salmon as mapping_code,
   geom
 from bcfishpass.streams_vw
@@ -968,7 +966,7 @@ select
   barriers_pscis_dnstr,
   barriers_dams_dnstr,
   barriers_dams_hydro_dnstr,
-  barriers_ch_cm_co_pk_st_dnstr,
+  barriers_st_dnstr,
   crossings_dnstr,
   dam_dnstr_ind,
   dam_hydro_dnstr_ind,
@@ -1012,7 +1010,7 @@ select
   barriers_pscis_dnstr,
   barriers_dams_dnstr,
   barriers_dams_hydro_dnstr,
-  barriers_ch_cm_co_pk_wct_dnstr,
+  barriers_wct_dnstr,
   crossings_dnstr,
   dam_dnstr_ind,
   dam_hydro_dnstr_ind,
@@ -1031,7 +1029,6 @@ where access_wct > 0;
 
 
 -- CWF WCRP - summarize spawning/rearing/spawning&rearing habitat lengths per group, by accessibility
-DROP VIEW IF EXISTS bcfishpass.wcrp_habitat_connectivity_status_vw;
 
 create view bcfishpass.wcrp_habitat_connectivity_status_vw as
 with length_totals as
@@ -1615,15 +1612,15 @@ select
   s.localcode_ltree as localcode,
   s.feature_code,
   case
-    when cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0 and a.obsrvtn_upstr_salmon is true then 'OBSERVED'
-    when cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0 and a.obsrvtn_upstr_salmon is false then 'INFERRED'
-    when cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) > 0 then 'NATURAL_BARRIER'
+    when access_salmon = 2 then 'OBSERVED'
+    when access_salmon = 1 then 'INFERRED'
+    when access_salmon = 0 then 'NATURAL_BARRIER'
     else NULL
   end as model_access_salmon,
   case
-    when cardinality(a.barriers_st_dnstr) = 0 and a.obsrvtn_upstr_st is true then 'OBSERVED'
-    when cardinality(a.barriers_st_dnstr) = 0 and a.obsrvtn_upstr_st is false then 'INFERRED'
-    when cardinality(a.barriers_st_dnstr) > 0 then 'NATURAL_BARRIER'
+    when access_st = 2 then 'OBSERVED'
+    when access_st = 1 then 'INFERRED'
+    when access_st = 0 then 'NATURAL_BARRIER'
     else NULL
   end as model_access_steelhead,
   array_to_string(a.barriers_ch_cm_co_pk_sk_dnstr, ';') as barriers_ch_cm_co_pk_sk_dnstr,
