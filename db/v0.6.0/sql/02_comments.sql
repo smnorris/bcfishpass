@@ -1,6 +1,57 @@
--- Some of crossings_vw is already documented, document the remainder
+-- document the primary output products - crossings_vw and streams_vw
+
 BEGIN;
 
+-- crossings_vw
+
+comment on column bcfishpass.crossings_vw.aggregated_crossings_id IS 'unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, user_barrier_anthropogenic_id + 1200000000, cabd_id';
+comment on column bcfishpass.crossings_vw.stream_crossing_id IS 'PSCIS stream crossing unique identifier';
+comment on column bcfishpass.crossings_vw.dam_id IS 'BC Dams unique identifier';
+comment on column bcfishpass.crossings_vw.user_barrier_anthropogenic_id IS 'User added misc anthropogenic barriers unique identifier';
+comment on column bcfishpass.crossings_vw.modelled_crossing_id IS 'Modelled crossing unique identifier';
+comment on column bcfishpass.crossings_vw.crossing_source IS 'Data source for the crossing, one of: {PSCIS,MODELLED CROSSINGS,CABD,MISC BARRIERS}';
+comment on column bcfishpass.crossings_vw.pscis_status IS 'From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED,HABITAT CONFIRMATION,DESIGN,REMEDIATED}';
+comment on column bcfishpass.crossings_vw.crossing_type_code IS 'Defines the type of crossing present at the location of the stream crossing. Acceptable types are: OBS = Open Bottom Structure CBS = Closed Bottom Structure OTHER = Crossing structure does not fit into the above categories. Eg: ford, wier';
+comment on column bcfishpass.crossings_vw.crossing_subtype_code IS 'Further definition of the type of crossing, one of {BRIDGE,CRTBOX,DAM,FORD,OVAL,PIPEARCH,ROUND,WEIR,WOODBOX,NULL}';
+comment on column bcfishpass.crossings_vw.modelled_crossing_type_source IS 'List of sources that indicate if a modelled crossing is open bottom, Acceptable values are: FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order >=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, "MANUAL FIX"=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}';
+comment on column bcfishpass.crossings_vw.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. Acceptable Values are: PASSABLE - Passable, POTENTIAL - Potential or partial barrier, BARRIER - Barrier, UNKNOWN - Other';
+comment on column bcfishpass.crossings_vw.pscis_road_name  IS 'PSCIS road name, taken from the PSCIS assessment data submission';
+comment on column bcfishpass.crossings_vw.pscis_stream_name  IS 'PSCIS stream name, taken from the PSCIS assessment data submission';
+comment on column bcfishpass.crossings_vw.pscis_assessment_comment  IS 'PSCIS assessment_comment, taken from the PSCIS assessment data submission';
+comment on column bcfishpass.crossings_vw.pscis_assessment_date  IS 'PSCIS assessment_date, taken from the PSCIS assessment data submission';
+comment on column bcfishpass.crossings_vw.pscis_final_score IS 'PSCIS final_score, taken from the PSCIS assessment data submission';
+comment on column bcfishpass.crossings_vw.transport_line_structured_name_1 IS 'DRA road name, taken from the nearest DRA road (within 30m)';
+comment on column bcfishpass.crossings_vw.transport_line_type_description IS 'DRA road type, taken from the nearest DRA road (within 30m)';
+comment on column bcfishpass.crossings_vw.transport_line_surface_description IS 'DRA road surface, taken from the nearest DRA road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_forest_file_id IS 'FTEN road forest_file_id value, taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_road_section_id IS 'FTEN road road_section_id value, taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_file_type_description IS 'FTEN road tenure type (Forest Service Road, Road Permit, etc), taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_client_number IS 'FTEN road client number, taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_client_name IS 'FTEN road client name, taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_life_cycle_status_code IS 'FTEN road life_cycle_status_code (active or retired, pending roads are not included), taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.ften_map_label IS 'FTEN road map_label value, taken from the nearest FTEN road (within 30m)';
+comment on column bcfishpass.crossings_vw.rail_track_name IS 'Railway name, taken from nearest railway (within 25m)';
+comment on column bcfishpass.crossings_vw.rail_owner_name IS 'Railway owner name, taken from nearest railway (within 25m)';
+comment on column bcfishpass.crossings_vw.rail_operator_english_name IS 'Railway operator name, taken from nearest railway (within 25m)';;
+comment on column bcfishpass.crossings_vw.ogc_proponent IS 'OGC road tenure proponent (currently modelled crossings only, taken from OGC road that crosses the stream)';
+comment on column bcfishpass.crossings_vw.dam_name IS 'See CABD dams column: dam_name_en';
+comment on column bcfishpass.crossings_vw.dam_height IS 'See CABD dams column: dam_height';
+comment on column bcfishpass.crossings_vw.dam_owner IS 'See CABD dams column: owner';
+comment on column bcfishpass.crossings_vw.dam_use IS 'See CABD table dam_use_codes';
+comment on column bcfishpass.crossings_vw.dam_operating_status IS 'See CABD dams column dam_operating_status';
+comment on column bcfishpass.crossings_vw.utm_zone IS 'UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees.';
+comment on column bcfishpass.crossings_vw.utm_easting IS 'UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698';
+comment on column bcfishpass.crossings_vw.utm_northing IS 'UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826';
+comment on column bcfishpass.crossings_vw.linear_feature_id IS 'From BC FWA, the unique identifier for a stream segment (flow network arc)';
+comment on column bcfishpass.crossings_vw.blue_line_key IS 'From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).';
+comment on column bcfishpass.crossings_vw.watershed_key IS 'From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.';
+comment on column bcfishpass.crossings_vw.downstream_route_measure IS 'The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature.';
+comment on column bcfishpass.crossings_vw.wscode IS 'A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';
+comment on column bcfishpass.crossings_vw.localcode IS 'A truncated version of the BC FWA local_watershed_code (trailing zeros removed and "-" replaced with ".", stored as postgres type ltree for fast tree based queries';;
+comment on column bcfishpass.crossings_vw.watershed_group_code IS 'The watershed group code associated with the feature.';
+comment on column bcfishpass.crossings_vw.gnis_stream_name IS 'The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream';
+comment on column bcfishpass.crossings_vw.stream_order IS 'Order of FWA stream at point';
+comment on column bcfishpass.crossings_vw.stream_magnitude IS 'Magnitude of FWA stream at point';
 comment on column bcfishpass.crossings_vw.upstream_area_ha IS 'Cumulative area upstream of the end of the stream (as defined by linear_feature_id)';
 comment on column bcfishpass.crossings_vw.stream_order_parent IS 'Stream order of the stream into which the stream drains';
 comment on column bcfishpass.crossings_vw.stream_order_max IS 'Maximum stream order associated with the stream (as defined by blue_line_key)';
@@ -169,9 +220,9 @@ comment on column bcfishpass.crossings_vw.wct_spawning_km IS 'Upstream length of
 comment on column bcfishpass.crossings_vw.wct_rearing_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout Rearing';
 comment on column bcfishpass.crossings_vw.wct_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout spawning, downstream of any anthropogenic barriers';
 comment on column bcfishpass.crossings_vw.wct_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout rearing, downstream of any anthropogenic barriers';
+comment on column bcfishpass.crossings_vw.geom IS 'The point geometry associated with the feature';
 
-
--- document streams_vw
+-- streams_vw
 
 comment on column bcfishpass.streams_vw.segmented_stream_id IS 'Unique id for the stream segment based on existing segmentation. Value is concatenation of blue_line_key.downstream_route_measure';
 comment on column bcfishpass.streams_vw.linear_feature_id IS 'FWA stream segment unique identifier';

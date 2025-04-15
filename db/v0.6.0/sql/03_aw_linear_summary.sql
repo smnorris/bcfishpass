@@ -1,4 +1,6 @@
 -- add assessment watershed summary tables and functions
+-- these are similar to fptwg per watershed summary but includes habitat
+
 BEGIN;
 
 drop table if exists bcfishpass.log_aw_linear_summary;
