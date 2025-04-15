@@ -40,7 +40,8 @@ Road-stream crossings (and dams), including tenure information; barrier status; 
 
 linear_summary
 ============================
-Length of stream per watershed for various model classifications.
+A weekly report of `connectivity status per FWA assessment watershed <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_  for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
+The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
 
 .. csv-table::
    :file: tables/linear_summary.csv

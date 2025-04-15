@@ -87,5 +87,5 @@ $PSQL -c "insert into bcfishpass.log_parameters_habitat_thresholds (
         from bcfishpass.parameters_habitat_thresholds;"
 
 # log summaries
-$PSQL -c "insert into bcfishpass.log_wsg_linear_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_linear_summary()"
+$PSQL -c "insert into bcfishpass.log_aw_linear_summary select $model_run_id as model_run_id, * from bcfishpass.aw_linear_summary()"
 $PSQL -c "insert into bcfishpass.log_wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
