@@ -1,4 +1,5 @@
 column,description
+``assessment_watershed_id``,Assessment watershed polygon identifier (watershed_feature_id)
 ``length_total``,"Total length of the stream network in the watershed (includes network connectors within waterbodies)"
 ``length_potentiallyaccessible_obsrvd_bt``,"Stream network observed as accessible to Bull Trout (km)"
 ``length_potentiallyaccessible_obsrvd_bt_access_a``,"Observed accessible Bull Trout stream downstream of known anthropogenic barriers (km)"
