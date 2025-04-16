@@ -52,7 +52,7 @@ A summary of linear habitat for Pacific Salmon (Chinook, Chum, Coho, Pink, Socke
    :header-rows: 1
 
 
-pse_migration_path_(species) (non-spatial)
+pse_migration_paths (non-spatial)
 ============================
 Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
 
@@ -74,7 +74,7 @@ be sure they are from the same model run.
 
 
 ------------------
-Pacific Salmon and Steelhead access model (subset of habitat model)
+Pacific Salmon and Steelhead access model (subset of bcfishpass)
 ------------------
 
 A `weekly provincial data extract <https://bcgov.github.io/bc_freshwater_fish_habitat_accessibility_model/04_data_distribution.html>`_ of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is provided by the Province of BC. See documentation in the bcgov repository for full data definitions.
