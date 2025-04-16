@@ -102,6 +102,450 @@
 <section id="streams-lines">
 <h3>streams (lines)<a class="headerlink" href="#streams-lines" title="Link to this heading"></a></h3>
 <p>BC FWA stream network, with bcfishpass model classifications.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>column</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">segmented_stream_id</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Unique id for the stream segment based on existing segmentation. Value is concatenation of blue_line_key.downstream_route_measure</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">linear_feature_id</span></code></p></td>
+<td><p><cite>bigint</cite></p></td>
+<td><p>FWA stream segment unique identifier</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">edge_type</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>From BC FWA</p></td>
+<td><p>the unique identifier for a stream segment (flow network arc)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>From BC FWA</p></td>
+<td><p>uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_key</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>From BC FWA</p></td>
+<td><p>a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">watershed_group_code</span></code></p></td>
+<td><p><cite>character varying(4)</cite></p></td>
+<td><p>The watershed group code associated with the feature.</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>The distance</p></td>
+<td><p>in meters</p></td>
+<td><p>along the blue_line_key from the mouth of the stream/blue_line_key to the feature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_metre</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>The watershed group code associated with the feature.</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">waterbody_key</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>The waterbody key of the waterbody the edge is contained within.</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wscode</span></code></p></td>
+<td><p><cite>ltree</cite></p></td>
+<td><p>A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">localcode</span></code></p></td>
+<td><p><cite>ltree</cite></p></td>
+<td><p>A truncated version of the BC FWA local_watershed_code (trailing zeros removed and ‘-’ replaced with ‘.’</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gnis_name</span></code></p></td>
+<td><p><cite>character varying(80)</cite></p></td>
+<td><p>The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stream_order</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Order of FWA stream</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stream_magnitude</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Magnitude of FWA stream</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gradient</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>Gradient of the stream segment</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feature_code</span></code></p></td>
+<td><p><cite>character varying(10)</cite></p></td>
+<td><p>A value based on the Canadian Council of Surveys and Mapping’s (CCSM) system for classification of geographic features.</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">upstream_route_measure</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>The distance</p></td>
+<td><p>in meters</p></td>
+<td><p>along the blue_line_key from the mouth of the stream/blue_line_key to the upstream end of the feature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">upstream_area_ha</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>Cumulative area upstream of the end of the stream (as defined by linear_feature_id)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stream_order_parent</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Stream order of the stream into which the stream drains</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stream_order_max</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Maximum stream order associated with the stream (as defined by blue_line_key)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">map_upstream</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Mean annual precipitation for the watershed upstream of the stream segment (as defined by linear_feature_id)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">channel_width</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>Modelled channel width of the stream (m)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mad_m3s</span></code></p></td>
+<td><p><cite>double precision</cite></p></td>
+<td><p>Modelled mean annual discharge of the stream (m3/s)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_anthropogenic_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for all downstream anthropogenic barriers</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_pscis_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for all downstream PSCIS assessed barriers</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for all downstream dams that are barriers</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_dams_hydro_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for all downstream hydroelectricity dam that are barriers</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_bt_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for downstream natural barriers to Bull Trout</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_ch_cm_co_pk_sk_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for downstream natural barriers to Pacific Salmon</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_ct_dv_rb_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for downstream natural barriers to Cutthroat Trout/Dolly Varden/Rainbow Trout</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_st_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for downstream natural barriers to Steelhead</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barriers_wct_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for downstream natural barriers to West Slope Cutthroat Trout</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">crossings_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>aggregated_crossings_id value for all crossings downstream</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dam_dnstr_ind</span></code></p></td>
+<td><p><cite>boolean</cite></p></td>
+<td><p>Indicates if the next anthropogenic barrier downstream is a dam</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dam_hydro_dnstr_ind</span></code></p></td>
+<td><p><cite>boolean</cite></p></td>
+<td><p>Indicates if the next anthropogenic barrier downstream is a hydroelectric dam</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">remediated_dnstr_ind</span></code></p></td>
+<td><p><cite>boolean</cite></p></td>
+<td><p>Indicates if the next crossing downstream is a remediated PSCIS site</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">obsrvtn_event_upstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>id value for all upstream target species fish observations</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">obsrvtn_species_codes_upstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Unique species codes for all upstream target species observations (in watershed group)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">species_codes_dnstr</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Unique species codes for all downstream target species observations</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">access_bt</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Bull Trout accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">access_ch</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Chinook accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">access_cm</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Chum accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">access_co</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Coho accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">access_pk</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Pink accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">access_sk</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Sockeye accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">access_st</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Steelhead accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">access_wct</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>West Slope Cutthroat Trout accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">access_salmon</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Pacific Salmon (all): accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_bt</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Bull Trout spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_ch</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Chinook spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_cm</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Chum spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_co</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Coho spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_pk</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Pink spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_sk</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Sockeye spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_st</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Steelhead spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spawning_wct</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>West Slope Cutthroat Trout spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rearing_bt</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Bull Trout rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rearing_ch</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Chinook rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rearing_co</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Coho rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rearing_sk</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Sockeye rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rearing_st</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>Steelhead rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rearing_wct</span></code></p></td>
+<td><p><cite>integer</cite></p></td>
+<td><p>West Slope Cutthroat rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_bt</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Bull Trout</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_ch</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Chinook</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_cm</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Chum</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_co</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Coho</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_pk</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Pink</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_sk</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Sockeye</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_st</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Steelhead</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_wct</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for West Slope Cutthroat Trout</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mapping_code_salmon</span></code></p></td>
+<td><p><cite>text</cite></p></td>
+<td><p>Stream mapping code for Pacific Salmon (all)</p></td>
+<td><p>a string indicating: model output/downstream barrier status/stream type</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geom</span></code></p></td>
+<td><p><a href="#id1"><span class="problematic" id="id2">`</span></a>geometry(LineStringZM</p></td>
+<td><p>3005)`</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="crossings-points">
 <h3>crossings (points)<a class="headerlink" href="#crossings-points" title="Link to this heading"></a></h3>
@@ -118,301 +562,304 @@ The report summarizes total modelled naturally accessible length per species, an
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_total</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">assessment_watershed_id</span></code></p></td>
+<td><p>Assessment watershed polygon identifier (watershed_feature_id)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_total</span></code></p></td>
 <td><p>Total length of the stream network in the watershed (includes network connectors within waterbodies)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_bt</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_bt</span></code></p></td>
 <td><p>Stream network observed as accessible to Bull Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_bt_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_bt_access_a</span></code></p></td>
 <td><p>Observed accessible Bull Trout stream downstream of known anthropogenic barriers (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_bt_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_bt_access_b</span></code></p></td>
 <td><p>Observed accessible Bull Trout stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_bt</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_bt</span></code></p></td>
 <td><p>Stream network modelled as accessible to Bull Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_bt_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_bt_access_a</span></code></p></td>
 <td><p>Modelled accessible Bull Trout stream downstream of known anthropogenic barriers  (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_bt_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_bt_access_b</span></code></p></td>
 <td><p>Modelled accessible Bull Trout stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_salmon</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_salmon</span></code></p></td>
 <td><p>Stream network observed as accessible to Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_salmon_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_salmon_access_a</span></code></p></td>
 <td><p>Observed accessible Pacific Salmon stream downstream of known anthropogenic barriers (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_salmon_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_salmon_access_b</span></code></p></td>
 <td><p>Observed accessible Pacific Salmon stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_salmon</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_salmon</span></code></p></td>
 <td><p>Stream network modelled as accessible to Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_salmon_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_salmon_access_a</span></code></p></td>
 <td><p>Modelled accessible Pacific Salmon stream downstream of known anthropogenic barriers  (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_salmon_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_salmon_access_b</span></code></p></td>
 <td><p>Modelled accessible Pacific Salmon stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_st</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_st</span></code></p></td>
 <td><p>Stream network observed as accessible to Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_st_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_st_access_a</span></code></p></td>
 <td><p>Observed accessible Steelhead stream downstream of known anthropogenic barriers (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_st_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_st_access_b</span></code></p></td>
 <td><p>Observed accessible Steelhead stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_st</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_st</span></code></p></td>
 <td><p>Stream network modelled as accessible to Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_st_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_st_access_a</span></code></p></td>
 <td><p>Modelled accessible Steelhead stream downstream of known anthropogenic barriers  (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_st_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_st_access_b</span></code></p></td>
 <td><p>Modelled accessible Steelhead stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_wct</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_wct</span></code></p></td>
 <td><p>Stream network observed as accessible to West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_wct_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_wct_access_a</span></code></p></td>
 <td><p>Observed accessible West Slope Cutthroat Trout stream downstream of known anthropogenic barriers (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_wct_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_obsrvd_wct_access_b</span></code></p></td>
 <td><p>Observed accessible West Slope Cutthroat Trout stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_wct</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_wct</span></code></p></td>
 <td><p>Stream network modelled as accessible to West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_wct_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_wct_access_a</span></code></p></td>
 <td><p>Modelled accessible West Slope Cutthroat Trout stream downstream of known anthropogenic barriers  (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_wct_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_potentiallyaccessible_model_wct_access_b</span></code></p></td>
 <td><p>Modelled accessible West Slope Cutthroat Trout stream downstream of known anthropogenic barriers and modelled culverts (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_bt</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_bt</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Bull Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_bt_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_bt_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Bull Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_bt_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_bt_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Bull Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_bt</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_bt</span></code></p></td>
 <td><p>Modelled spawning and rearing, Bull Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_bt_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_bt_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Bull Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_bt_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_bt_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Bull Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_ch</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_ch</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Chinook (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_ch_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_ch_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Chinook (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_ch_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_ch_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Chinook (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_ch</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_ch</span></code></p></td>
 <td><p>Modelled spawning and rearing, Chinook (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_ch_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_ch_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Chinook (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_ch_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_ch_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Chinook (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_cm</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_cm</span></code></p></td>
 <td><p>Known/observed spawning, Chum (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_cm_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_cm_access_a</span></code></p></td>
 <td><p>Known/observed spawning downstream of known anthropogenic barriers, Chum (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_cm_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_cm_access_b</span></code></p></td>
 <td><p>Known/observed spawning downstream of known anthropogenic barriers and modelled culverts, Chum (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_cm</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_cm</span></code></p></td>
 <td><p>Modelled spawning, Chum (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_cm_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_cm_access_a</span></code></p></td>
 <td><p>Modelled spawning downstream of known anthropogenic barriers, Chum (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_cm_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_cm_access_b</span></code></p></td>
 <td><p>Modelled spawning downstream of known anthropogenic barriers and modelled culverts, Chum (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_co</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_co</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Coho (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_co_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_co_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Coho (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_co_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_co_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Coho (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_co</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_co</span></code></p></td>
 <td><p>Modelled spawning and rearing, Coho (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_co_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_co_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Coho (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_co_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_co_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Coho (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_pk</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_pk</span></code></p></td>
 <td><p>Known/observed spawning, Pink (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_pk_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_pk_access_a</span></code></p></td>
 <td><p>Known/observed spawning downstream of known anthropogenic barriers, Pink (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_pk_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_pk_access_b</span></code></p></td>
 <td><p>Known/observed spawning downstream of known anthropogenic barriers and modelled culverts, Pink (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_pk</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_pk</span></code></p></td>
 <td><p>Modelled spawning, Pink (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_pk_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_pk_access_a</span></code></p></td>
 <td><p>Modelled spawning downstream of known anthropogenic barriers, Pink (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_pk_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_pk_access_b</span></code></p></td>
 <td><p>Modelled spawning downstream of known anthropogenic barriers and modelled culverts, Pink (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_sk</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_sk</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Sockeye (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_sk_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_sk_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Sockeye (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_sk_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_sk_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Sockeye (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_sk</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_sk</span></code></p></td>
 <td><p>Modelled spawning and rearing, Sockeye (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_sk_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_sk_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Sockeye (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_sk_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_sk_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Sockeye (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_st</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_st</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_st_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_st_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_st_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_st_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_st</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_st</span></code></p></td>
 <td><p>Modelled spawning and rearing, Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_st_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_st_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_st_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_st_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_wct</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_wct</span></code></p></td>
 <td><p>Known/observed spawning and rearing, West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_wct_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_wct_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_wct_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_wct_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_wct</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_wct</span></code></p></td>
 <td><p>Modelled spawning and rearing, West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_wct_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_wct_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_wct_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_wct_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, West Slope Cutthroat Trout (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon</span></code></p></td>
 <td><p>Modelled spawning and rearing, Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_st</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_st</span></code></p></td>
 <td><p>Known/observed spawning and rearing, Pacific Salmon and Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_st_access_a</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_st_access_a</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers, Pacific Salmon and Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_st_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_obsrvd_salmon_st_access_b</span></code></p></td>
 <td><p>Known/observed spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon and Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_st</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_st</span></code></p></td>
 <td><p>Modelled spawning and rearing, Pacific Salmon and Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_st_access_a</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_st_access_a</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers, Pacific Salmon and Steelhead (km)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_st_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length_spawningrearing_model_salmon_st_access_b</span></code></p></td>
 <td><p>Modelled spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon and Steelhead (km)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_bt_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_bt_access_b</span></code></p></td>
 <td><p>Percentage of total potentially accessible stream network downstream of known anthropogenic barriers and modelled culverts, Bull Trout</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_salmon_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_salmon_access_b</span></code></p></td>
 <td><p>Percentage of total potentially accessible stream network downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_st_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_st_access_b</span></code></p></td>
 <td><p>Percentage of total potentially accessible stream network downstream of known anthropogenic barriers and modelled culverts, Steelhead</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_wct_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_potentiallyaccessible_wct_access_b</span></code></p></td>
 <td><p>Percentage of total potentially accessible stream network downstream of known anthropogenic barriers and modelled culverts, West Slope Cutthroat Trout</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_bt_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_bt_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Bull Trout</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_ch_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_ch_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Chinook</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_cm_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_cm_access_b</span></code></p></td>
 <td><p>Percentage of all spawning downstream of known anthropogenic barriers and modelled culverts, Chum</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_co_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_co_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Coho</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_pk_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_pk_access_b</span></code></p></td>
 <td><p>Percentage of all spawning downstream of known anthropogenic barriers and modelled culverts, Pink</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_sk_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_sk_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Sockeye</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_st_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_st_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Steelhead</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_wct_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_wct_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, West Slope Cutthroat Trout</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_salmon_access_b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_salmon_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_salmon_st_access_b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pct_spawningrearing_salmon_st_access_b</span></code></p></td>
 <td><p>Percentage of all spawning and rearing downstream of known anthropogenic barriers and modelled culverts, Pacific Salmon and Steelhead</p></td>
 </tr>
 </tbody>

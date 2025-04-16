@@ -24,7 +24,7 @@ streams (lines)
 BC FWA stream network, with bcfishpass model classifications.
 
 .. csv-table::
-   :file: tables/streams.csv
+   :file: tables/streams_vw.csv
    :header-rows: 1
 
 
@@ -34,7 +34,7 @@ Road-stream crossings (and dams), including tenure information; barrier status; 
 
 
 .. csv-table::
-   :file: tables/crossings.csv
+   :file: tables/crossings_vw.csv
    :header-rows: 1
 
 
