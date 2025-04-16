@@ -8,7 +8,7 @@ BC Fish Passage model (bcfishpass)
 
 Weekly bcfishpass data extracts are available for download.
 
-Data contained in these extracts are generated as described in the :ref:`model description section <description>`, with the following parameters:
+Data contained in these extracts are generated as described in the preceeding documentation, with the following parameters:
 
 - for salmon, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 15%
 - for steelhead, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
@@ -22,7 +22,7 @@ streams (lines)
 BC FWA stream network, with bcfishpass model classifications.
 
 
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_
 
 
 .. csv-table::
@@ -45,7 +45,7 @@ linear_summary (non-spatial)
 ============================
 A summary of linear habitat for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead, per FWA assessment watershed.
 
-`https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_
 
 .. csv-table::
    :file: tables/linear_summary.csv
@@ -53,7 +53,7 @@ A summary of linear habitat for Pacific Salmon (Chinook, Chum, Coho, Pink, Socke
 
 
 pse_migration_paths (non-spatial)
-============================
+=================================
 Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
 
 | `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz>`_
@@ -73,9 +73,9 @@ When the segmentation by bcfishpass modelling changes, the ``segmented_stream_id
 be sure they are from the same model run.
 
 
-------------------
+----------------------------------------------------------------
 Pacific Salmon and Steelhead access model (subset of bcfishpass)
-------------------
+----------------------------------------------------------------
 
 A `weekly provincial data extract <https://bcgov.github.io/bc_freshwater_fish_habitat_accessibility_model/04_data_distribution.html>`_ of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is provided by the Province of BC. See documentation in the bcgov repository for full data definitions.
 
