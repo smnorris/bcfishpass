@@ -19,8 +19,11 @@ Tables/layers included in the distribution are:
 
 streams (lines)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
 BC FWA stream network, with bcfishpass model classifications.
+
+
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
+
 
 .. csv-table::
    :file: tables/streams_vw.csv
@@ -29,9 +32,9 @@ BC FWA stream network, with bcfishpass model classifications.
 
 crossings (points)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_.
 Road-stream crossings (and dams), including tenure information; barrier status; upstream/downstream habitat lengths
 
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_
 
 .. csv-table::
    :file: tables/crossings_vw.csv
@@ -40,8 +43,9 @@ Road-stream crossings (and dams), including tenure information; barrier status; 
 
 linear_summary (non-spatial)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_.
 A summary of linear habitat for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead, per FWA assessment watershed.
+
+`https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_.
 
 .. csv-table::
    :file: tables/linear_summary.csv
@@ -50,22 +54,23 @@ A summary of linear habitat for Pacific Salmon (Chinook, Chum, Coho, Pink, Socke
 
 pse_migration_path_(species) (non-spatial)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz>`_.
-`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz>`_.
-`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz>`_.
-`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz>`_.
-`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz>`_.
-`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz>`_.
-
 Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
+
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz>`_
+
 
 .. csv-table::
    :file: tables/cu_migration_paths.csv
    :header-rows: 1
 
-Note that `segmented_stream_id` is based on FWA `blue_line_key` and `downstream_route_measure` for a given segment.
-If the segmentation by bcfishpass modelling changes, the `segmented_stream_id` will also change - when joining to the streams geometries,
-always use the streams data that corresponds to the given migration path data.
+Note that ``segmented_stream_id`` is based on FWA ``blue_line_key`` and ``downstream_route_measure`` for a given segment.
+When the segmentation by bcfishpass modelling changes, the ``segmented_stream_id`` will also change. When joining the two datasets,
+be sure they are from the same model run.
 
 
 ------------------
