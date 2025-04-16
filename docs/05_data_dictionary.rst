@@ -6,11 +6,9 @@ Data Distribution
 BC Fish Passage model (bcfishpass)
 --------------------------------------------------------------------------
 
-A weekly bcfishpass data extract is available for download as a zipped geopackage:
+Weekly bcfishpass data extracts are available for download.
 
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip>`_.
-
-The models included in this distribution are generated as described in the :ref:`model description section <description>`, with the following parameters:
+Data contained in these extracts are generated as described in the :ref:`model description section <description>`, with the following parameters:
 
 - for salmon, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 15%
 - for steelhead, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
@@ -21,6 +19,7 @@ Tables/layers included in the distribution are:
 
 streams (lines)
 ============================
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
 BC FWA stream network, with bcfishpass model classifications.
 
 .. csv-table::
@@ -30,6 +29,7 @@ BC FWA stream network, with bcfishpass model classifications.
 
 crossings (points)
 ============================
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_.
 Road-stream crossings (and dams), including tenure information; barrier status; upstream/downstream habitat lengths
 
 
@@ -38,14 +38,34 @@ Road-stream crossings (and dams), including tenure information; barrier status; 
    :header-rows: 1
 
 
-linear_summary
+linear_summary (non-spatial)
 ============================
-A weekly report of `connectivity status per FWA assessment watershed <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_  for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
-The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
+`https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_.
+A summary of linear habitat for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead, per FWA assessment watershed.
 
 .. csv-table::
    :file: tables/linear_summary.csv
    :header-rows: 1
+
+
+pse_migration_path_(species) (non-spatial)
+============================
+`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz>`_.
+
+Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
+
+.. csv-table::
+   :file: tables/cu_migration_paths.csv
+   :header-rows: 1
+
+Note that `segmented_stream_id` is based on FWA `blue_line_key` and `downstream_route_measure` for a given segment.
+If the segmentation by bcfishpass modelling changes, the `segmented_stream_id` will also change - when joining to the streams geometries,
+always use the streams data that corresponds to the given migration path data.
 
 
 ------------------
