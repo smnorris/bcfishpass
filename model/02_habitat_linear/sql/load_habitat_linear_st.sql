@@ -20,8 +20,6 @@ model AS (
     s.gradient,
     av.barriers_st_dnstr,
     CASE
-      WHEN hk.spawning_st is true  -- observed/known habitat
-      THEN true
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= t.spawn_gradient_max AND
@@ -46,7 +44,6 @@ model AS (
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
   INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
-  left outer join bcfishpass.streams_habitat_known_vw hk on s.segmented_stream_id = hk.segmented_stream_id
   WHERE
       p.st is true AND
       s.watershed_group_code = :'wsg' AND
@@ -353,26 +350,5 @@ SELECT
 FROM rearing_clusters a
 INNER JOIN valid_rearing b
 ON a.cid = b.cid
-on conflict (segmented_stream_id)
-do update set rearing = EXCLUDED.rearing;
-
--- finally, add any known/observed rearing
-with observed_rearing as (
-  select
-    hk.segmented_stream_id
-  from bcfishpass.streams_habitat_known_vw hk
-  left outer join bcfishpass.streams s
-  on hk.segmented_stream_id = s.segmented_stream_id
-  where rearing_st is true
-  and s.watershed_group_code = :'wsg'
-)
-INSERT INTO bcfishpass.habitat_linear_st (
-  segmented_stream_id,
-  rearing
-)
-SELECT
-   a.segmented_stream_id,
-   true as rearing
-FROM observed_rearing a
 on conflict (segmented_stream_id)
 do update set rearing = EXCLUDED.rearing;
