@@ -1,5 +1,11 @@
 [
     {
+        "source": "whse_fish.fiss_fish_obsrvtn_pnt_sp",
+        "query": "POINT_TYPE_CODE = 'Observation'",
+        "schedule": "W",
+        "primary_key": ""
+    },
+    {
         "source": "whse_fish.pscis_assessment_svw",
         "query": "",
         "schedule": "W",
