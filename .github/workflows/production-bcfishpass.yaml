@@ -120,7 +120,7 @@ jobs:
             fetch-depth: 0
       - name: Linear habitat model
         run:  |
-          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
+          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
           cd model/02_habitat_linear
           ./habitat_linear.sh
   release:
