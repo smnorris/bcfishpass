@@ -1,13 +1,15 @@
 name: docs-deploy
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - 'main'
     paths:
       - 'docs/**'
-  create:
     tags:
-      - '*'
+      - 'v*'
 jobs:
-  docs:
+  docs-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master

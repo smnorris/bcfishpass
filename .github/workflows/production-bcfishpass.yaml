@@ -2,7 +2,7 @@ name: production-bcfishpass
 run-name: ${{ github.actor }} Run bcfishpass on prod
 on:
   schedule:
-    - cron: '0 23 * * SAT'
+    - cron: '0 16 * * MON'
   workflow_dispatch:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -14,10 +14,38 @@ env:
   AWS_EC2_METADATA_DISABLED: True
   CPL_VSISTDIN_BUFFER_LIMIT: -1
 jobs:
+  data-refresh:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run: cd jobs && ./load_weekly
+  bcfishobs:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: data-refresh
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          repository: smnorris/bcfishobs
+          ref: v0.2.0
+      - name: Process bcfishobs
+        run: |
+          mkdir -p .make
+          make -t .make/setup
+          make -t .make/load_static
+          make -t .make/fiss_fish_obsrvtn_pnt_sp
+          make --debug=basic
   load-csv:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: bcfishobs
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -55,7 +83,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  jobs/model_prep
-  model:
+  model-access-1:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
@@ -63,18 +91,43 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Access model 1
+        run:  |
+          cd model/01_access
+          ./model_access_1.sh
+  model-access-2:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-1
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 2
+        run:  |
+          cd model/01_access
+          ./model_access_2.sh
+  model-habitat-linear:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
         with:
             fetch-tags: true
             fetch-depth: 0
-      - name: Run the jobs
+      - name: Linear habitat model
         run:  |
-          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
-          jobs/model_run
+          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+          cd model/02_habitat_linear
+          ./habitat_linear.sh
   release:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: model
+    needs: model-habitat-linear
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

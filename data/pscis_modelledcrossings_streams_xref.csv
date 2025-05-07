@@ -66,7 +66,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 3143,1800069,,BULK,,
 3144,1802697,,BULK,NJO,Matched to closest stream model (Manual Review)
 3145,1806045,,BULK,,
-3554,18302309,,LNTH,SN,PSCIS crossing coordinates incorrect
 6272,1801771,,BULK,,
 6273,1804823,,BULK,,
 6531,6801574,,HORS,,
@@ -1386,7 +1385,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 61499,4600234,,ELKR,NJO,Matched to closest stream model (Manual Review)
 61500,24706496,,ELKR,,
 61501,4600161,,ELKR,NJO,Matched to closest stream model (Manual Review)
-61502,,,ELKR,SN,Double culvert - discard this record
 61503,24706513,,ELKR,,
 61504,24706507,,ELKR,,
 61505,706843896,,ELKR,SN,automatching fails because PSCIS stream name is incorrect
@@ -1505,7 +1503,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 62181,4606699,,ELKR,,
 62182,4600284,,ELKR,,
 62183,24706656,,ELKR,,
-62184,,,ELKR,,
 62186,,,ELKR,,
 62187,,,ELKR,,
 62220,4606961,,ELKR,,
@@ -3543,7 +3540,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 125000,,165118662,PARS,AI,Matched to closest modelled crossing. Crossing is on direct tributary to Parsnip River vs tributary to tributary. For some reason there is no modelled crossing at road/stream junction
 8530,24600913,,ZYMO,MW,Matched to closest modelled crossing. Closest modelled crossing does not actually exist as associated tributary enters Sandstone Creek upstream of road.
 198016,14000566,,MORR,MW,On direct tributary to Thautil River mainstem vs. trib to trib. Coordinates for incorrect modelled crossing was used in pscis submission.
-198380,,,BULK,SN,PSCIS data entry error. Crossing should be deleted
 125345,16602819,,PARS,MW,"Matched to closest modelled crossing. Crossing is on tributary to Parsnip River, downstream of railroad PSCIS crossing 57687."
 125428,,,PARS,AI,"Noted as NCD in PSCIS assessment comments but stream is large, no modelled crossing present and aerial imagery cooborates no actual structure present"
 198061,14000796,,MORR,MW,PSCIS crossing was linked to wrong modelled crossing. Should be matched to 14000796. 
@@ -3563,4 +3559,25 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197571,4600316,,ELKR,MC,satellite imagery shows stream flowing to north before crossing under road. Matched PSCIS 197571
 198944,24601268,,ZYMO,LS,Matched to modelled crossing 24601268 as per 2023 field assessment. Currenly incorrectly linked to modelled crossing 24742819.
 58264,1800143,,BULK,LS,"Simpson Creek is incorrectly mapped in FWA, and PSCIS crossing 58264 should be linked to modelled crossing 1800143, confirmed during 2024 field assessment. Modelled crossing 1800143 is currenly incorrectly linked to PSCIS crossing 58258."
-58258,,,BULK,SN,"Not on mapped stream. See issues in New Graph repoting - FWA mapping for Simpson Creek is incorrect"
+58258,,,BULK,SN,Not on mapped stream. See issues in New Graph repoting - FWA mapping for Simpson Creek is incorrect
+199171,5400202,,FRAN,LS,Matched to modelled crossing based on 2023 field assessment.
+199173,15600277,,NECR,LS,Matched to modelled crossing based on 2023 field assessment.
+199176,9901826,,LCHL,LS,Matched to modelled crossing based on 2023 field assessment. Currenly incorrectly linked to modelled crossing 9900384
+199306,13900028,,MORK,LS,Matched to modelled crossing based on 2023 field assessment.
+199244,13900305,,MORK,LS,Matched to modelled crossing based on 2023 field assessment.
+199309,13900050,,MORK,LS,Matched to modelled crossing based on 2023 field assessment.
+199277,22201951,,UFRA,LS,Matched to modelled crossing based on 2023 field assessment.
+199276,22200081,,UFRA,LS,Matched to modelled crossing based on 2023 field assessment.
+17103605,203174,,QUES,MC,Matched to modelled crossing based on 2024 Lhtako Dene field assessment
+17103760,203177,,QUES,MC,Matched to modelled crossing based on 2024 Lhtako Dene field assessment
+51989,10305054,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+51987,10305055,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+51988,10305060,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+52027,10305023,,LFRA,SN,PSCIS datafix review shows this assessment has been missed in automated matching due to coordinate error
+196420,6600828,,HOLB,SN,PSCIS datafix review - confirmation takes priority at this location
+199255,13903617,,MORK,LS,"Newly assessed PSCIS 203296 overrode the existing linkage of PSCIS 199255 and modelled 13903617, but PSCIS 199255 should remain linked to 13903617."
+199239,13905537,,MORK,LS,Matched to modelled crossing based on 2023 field assessment.
+62711,19302253,,STUL,SN,Appears to be an issue with the PSCIS to modelled crossing matching at this location - should be matched to closest crossing
+62712,19300866,,STUL,SN,Appears to be an issue with the PSCIS to modelled crossing matching at this location - should be matched to closest crossing
+51972,10305059,,LFRA,SN,Assessment comments indicate assessment is on the railway
+62710,19302251,,STUL,SN,Assessment indicates crossing is on rail line

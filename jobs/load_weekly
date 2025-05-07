@@ -17,7 +17,8 @@ jq -c '.[]' bcgw_sources.json | while read item; do
     if [ "$schedule" == "W" ] ; then
       echo "Loading $source from cache"
 
-      ogr2ogr -f PostgreSQL \
+      # this can fail without an exit 1, capture stderr
+      output=$(ogr2ogr -f PostgreSQL \
         "PG:$DATABASE_URL" \
         --config OGR_TRUNCATE=YES \
         -append \
@@ -25,7 +26,13 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         -nln $source \
         --config PG_USE_COPY=YES \
         /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
-        $source || exit 1
+        $source 2>&1)
+        
+        if [[ "$output" == *"ERROR"* ]]; then
+          echo "Error detected in command output: $output"
+          exit 1
+        fi
+
     fi
 done
 

@@ -11,7 +11,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
 
       echo "Replicating $source to object storage"
 
-      bcdata dump --promote-to-multi -l --query "$query" -v $source |
+      set -e ; bcdata dump --promote-to-multi -l --query "$query" -v $source |
         ogr2ogr -f Parquet \
           -lco FID=$pk \
           /vsis3/bchamp/bcdata/$source.parquet \
