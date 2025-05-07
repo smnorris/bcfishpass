@@ -23,11 +23,29 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run: cd jobs && ./load_weekly
-  load-csv:
+  bcfishobs:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
     needs: data-refresh
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          repository: smnorris/bcfishobs
+          ref: v0.2.0
+      - name: Process bcfishobs
+        run: |
+          mkdir -p .make
+          make -t .make/setup
+          make -t .make/load_static
+          make -t .make/fiss_fish_obsrvtn_pnt_sp
+          make --debug=basic
+  load-csv:
+    runs-on: ubuntu-latest
+    environment: production
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: bcfishobs
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -102,7 +120,7 @@ jobs:
             fetch-depth: 0
       - name: Linear habitat model
         run:  |
-          git config --global --add safe.directory /__w/bcfishpass/bcfishpass
+          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
           cd model/02_habitat_linear
           ./habitat_linear.sh
   release:
