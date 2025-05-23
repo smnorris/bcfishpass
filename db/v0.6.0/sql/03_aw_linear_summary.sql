@@ -220,7 +220,7 @@ with accessible as
     sum(st_length(geom)) filter (where s.access_wct = 2 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_obsrvd_wct_access_b,
     sum(st_length(geom)) filter (where s.access_wct = 1) as length_potentiallyaccessible_model_wct,
     sum(st_length(geom)) filter (where s.access_wct = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_potentiallyaccessible_model_wct_access_a,
-    sum(st_length(geom)) filter (where s.access_wct = 2 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_model_wct_access_b
+    sum(st_length(geom)) filter (where s.access_wct = 1 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_model_wct_access_b
   from bcfishpass.streams_vw s
   inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
   group by aw.assmnt_watershed_id, s.watershed_group_code
