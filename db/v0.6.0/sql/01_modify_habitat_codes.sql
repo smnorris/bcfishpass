@@ -151,88 +151,88 @@ create materialized view bcfishpass.streams_habitat_linear_vw as
 select
   s.segmented_stream_id,
   case
-    when bt.spawning is true and coalesce(u.spawning_bt, false) is false then 1
-    when bt.spawning is true and coalesce(u.spawning_bt, false) is true then 2
-    when bt.spawning is false and coalesce(u.spawning_bt, false) is true then 3
+    when coalesce(bt.spawning, false) is true and coalesce(u.spawning_bt, false) is false then 1
+    when coalesce(bt.spawning, false) is true and coalesce(u.spawning_bt, false) is true then 2
+    when coalesce(bt.spawning, false) is false and coalesce(u.spawning_bt, false) is true then 3
     else 0
   end as spawning_bt,
   case
-    when ch.spawning is true and coalesce(u.spawning_ch, false) is false then 1
-    when ch.spawning is true and coalesce(u.spawning_ch, false) is true then 2
-    when ch.spawning is false and coalesce(u.spawning_ch, false) is true then 3
+    when coalesce(ch.spawning, false) is true and coalesce(u.spawning_ch, false) is false then 1
+    when coalesce(ch.spawning, false) is true and coalesce(u.spawning_ch, false) is true then 2
+    when coalesce(ch.spawning, false) is false and coalesce(u.spawning_ch, false) is true then 3
     else 0
   end as spawning_ch,
   case
-    when cm.spawning is true and coalesce(u.spawning_cm, false) is false then 1
-    when cm.spawning is true and coalesce(u.spawning_cm, false) is true then 2
-    when cm.spawning is false and coalesce(u.spawning_cm, false) is true then 3
+    when coalesce(cm.spawning, false) is true and coalesce(u.spawning_cm, false) is false then 1
+    when coalesce(cm.spawning, false) is true and coalesce(u.spawning_cm, false) is true then 2
+    when coalesce(cm.spawning, false) is false and coalesce(u.spawning_cm, false) is true then 3
     else 0
   end as spawning_cm,
   case
-    when co.spawning is true and coalesce(u.spawning_co, false) is false then 1
-    when co.spawning is true and coalesce(u.spawning_co, false) is true then 2
-    when co.spawning is false and coalesce(u.spawning_co, false) is true then 3
+    when coalesce(co.spawning, false) is true and coalesce(u.spawning_co, false) is false then 1
+    when coalesce(co.spawning, false) is true and coalesce(u.spawning_co, false) is true then 2
+    when coalesce(co.spawning, false) is false and coalesce(u.spawning_co, false) is true then 3
     else 0
   end as spawning_co,
   case
-    when pk.spawning is true and coalesce(u.spawning_pk, false) is false then 1
-    when pk.spawning is true and coalesce(u.spawning_pk, false) is true then 2
-    when pk.spawning is false and coalesce(u.spawning_pk, false) is true then 3
+    when coalesce(pk.spawning, false) is true and coalesce(u.spawning_pk, false) is false then 1
+    when coalesce(pk.spawning, false) is true and coalesce(u.spawning_pk, false) is true then 2
+    when coalesce(pk.spawning, false) is false and coalesce(u.spawning_pk, false) is true then 3
     else 0
   end as spawning_pk,
   case
-    when sk.spawning is true and coalesce(u.spawning_sk, false) is false then 1
-    when sk.spawning is true and coalesce(u.spawning_sk, false) is true then 2
-    when sk.spawning is false and coalesce(u.spawning_sk, false) is true then 3
+    when coalesce(sk.spawning, false) is true and coalesce(u.spawning_sk, false) is false then 1
+    when coalesce(sk.spawning, false) is true and coalesce(u.spawning_sk, false) is true then 2
+    when coalesce(sk.spawning, false) is false and coalesce(u.spawning_sk, false) is true then 3
     else 0
   end as spawning_sk,
   case
-    when st.spawning is true and coalesce(u.spawning_st, false) is false then 1
-    when st.spawning is true and coalesce(u.spawning_st, false) is true then 2
-    when st.spawning is false and coalesce(u.spawning_st, false) is true then 3
+    when coalesce(st.spawning, false) is true and coalesce(u.spawning_st, false) is false then 1
+    when coalesce(st.spawning, false) is true and coalesce(u.spawning_st, false) is true then 2
+    when coalesce(st.spawning, false) is false and coalesce(u.spawning_st, false) is true then 3
     else 0
   end as spawning_st,
   case
-    when wct.spawning is true and coalesce(u.spawning_wct, false) is false then 1
-    when wct.spawning is true and coalesce(u.spawning_wct, false) is true then 2
-    when wct.spawning is false and coalesce(u.spawning_wct, false) is true then 3
+    when coalesce(wct.spawning, false) is true and coalesce(u.spawning_wct, false) is false then 1
+    when coalesce(wct.spawning, false) is true and coalesce(u.spawning_wct, false) is true then 2
+    when coalesce(wct.spawning, false) is false and coalesce(u.spawning_wct, false) is true then 3
     else 0
   end as spawning_wct,
 
   case
-    when bt.rearing is true and coalesce(u.rearing_bt, false) is false then 1
-    when bt.rearing is true and coalesce(u.rearing_bt, false) is true then 2
-    when bt.rearing is false and coalesce(u.rearing_bt, false) is true then 3
+    when coalesce(bt.rearing, false) is true and coalesce(u.rearing_bt, false) is false then 1
+    when coalesce(bt.rearing, false) is true and coalesce(u.rearing_bt, false) is true then 2
+    when coalesce(bt.rearing, false) is false and coalesce(u.rearing_bt, false) is true then 3
     else 0
   end as rearing_bt,
   case
-    when ch.rearing is true and coalesce(u.rearing_ch, false) is false then 1
-    when ch.rearing is true and coalesce(u.rearing_ch, false) is true then 2
-    when ch.rearing is false and coalesce(u.rearing_ch, false) is true then 3
+    when coalesce(ch.rearing, false) is true and coalesce(u.rearing_ch, false) is false then 1
+    when coalesce(ch.rearing, false) is true and coalesce(u.rearing_ch, false) is true then 2
+    when coalesce(ch.rearing, false) is false and coalesce(u.rearing_ch, false) is true then 3
     else 0
   end as rearing_ch,
   case
-    when co.rearing is true and coalesce(u.rearing_co, false) is false then 1
-    when co.rearing is true and coalesce(u.rearing_co, false) is true then 2
-    when co.rearing is false and coalesce(u.rearing_co, false) is true then 3
+    when coalesce(co.rearing, false) is true and coalesce(u.rearing_co, false) is false then 1
+    when coalesce(co.rearing, false) is true and coalesce(u.rearing_co, false) is true then 2
+    when coalesce(co.rearing, false) is false and coalesce(u.rearing_co, false) is true then 3
     else 0
   end as rearing_co,
   case
-    when sk.rearing is true and coalesce(u.rearing_sk, false) is false then 1
-    when sk.rearing is true and coalesce(u.rearing_sk, false) is true then 2
-    when sk.rearing is false and coalesce(u.rearing_sk, false) is true then 3
+    when coalesce(sk.rearing, false) is true and coalesce(u.rearing_sk, false) is false then 1
+    when coalesce(sk.rearing, false) is true and coalesce(u.rearing_sk, false) is true then 2
+    when coalesce(sk.rearing, false) is false and coalesce(u.rearing_sk, false) is true then 3
     else 0
   end as rearing_sk,
   case
-    when st.rearing is true and coalesce(u.rearing_st, false) is false then 1
-    when st.rearing is true and coalesce(u.rearing_st, false) is true then 2
-    when st.rearing is false and coalesce(u.rearing_st, false) is true then 3
+    when coalesce(st.rearing, false) is true and coalesce(u.rearing_st, false) is false then 1
+    when coalesce(st.rearing, false) is true and coalesce(u.rearing_st, false) is true then 2
+    when coalesce(st.rearing, false) is false and coalesce(u.rearing_st, false) is true then 3
     else 0
   end as rearing_st,
   case
-    when wct.rearing is true and coalesce(u.rearing_wct, false) is false then 1
-    when wct.rearing is true and coalesce(u.rearing_wct, false) is true then 2
-    when wct.rearing is false and coalesce(u.rearing_wct, false) is true then 3
+    when coalesce(wct.rearing, false) is true and coalesce(u.rearing_wct, false) is false then 1
+    when coalesce(wct.rearing, false) is true and coalesce(u.rearing_wct, false) is true then 2
+    when coalesce(wct.rearing, false) is false and coalesce(u.rearing_wct, false) is true then 3
     else 0
   end as rearing_wct
 from bcfishpass.streams s

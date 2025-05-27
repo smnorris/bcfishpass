@@ -232,207 +232,135 @@ spawning_rearing as (
     s.watershed_group_code,
 
     -- bt
-    sum(st_length(geom)) filter (where spawning_bt = 1 or rearing_bt = 1) as length_spawningrearing_model_bt,
-    sum(st_length(geom)) filter (where (spawning_bt = 1 or rearing_bt = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_bt_access_a,
-    sum(st_length(geom)) filter (where (spawning_bt = 1 or rearing_bt = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_bt_access_b,
-    sum(st_length(geom)) filter (where spawning_bt > 1 or rearing_bt > 1) as length_spawningrearing_obsrvd_bt,
-    sum(st_length(geom)) filter (where (spawning_bt > 1 or rearing_bt > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_bt_access_a,
-    sum(st_length(geom)) filter (where (spawning_bt > 1 or rearing_bt > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_bt_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 1) as length_spawningrearing_model_bt,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_bt_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_bt_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 2) as length_spawningrearing_obsrvd_bt,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_bt_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_bt_access_b,
 
     -- ch
-    sum(st_length(geom)) filter (where spawning_ch = 1 or rearing_ch = 1) as length_spawningrearing_model_ch,
-    sum(st_length(geom)) filter (where (spawning_ch = 1 or rearing_ch = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_ch_access_a,
-    sum(st_length(geom)) filter (where (spawning_ch = 1 or rearing_ch = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_ch_access_b,
-    sum(st_length(geom)) filter (where spawning_ch > 1 or rearing_ch > 1) as length_spawningrearing_obsrvd_ch,
-    sum(st_length(geom)) filter (where (spawning_ch > 1 or rearing_ch > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_ch_access_a,
-    sum(st_length(geom)) filter (where (spawning_ch > 1 or rearing_ch > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_ch_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 1) as length_spawningrearing_model_ch,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_ch_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_ch_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 2) as length_spawningrearing_obsrvd_ch,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_ch_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_ch_access_b,
 
     -- cm
     sum(st_length(geom)) filter (where spawning_cm = 1) as length_spawningrearing_model_cm,
-    sum(st_length(geom)) filter (where (spawning_cm = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_cm_access_a,
-    sum(st_length(geom)) filter (where (spawning_cm = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_cm_access_b,
-    sum(st_length(geom)) filter (where spawning_cm > 1) as length_spawningrearing_obsrvd_cm,
-    sum(st_length(geom)) filter (where (spawning_cm > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_cm_access_a,
-    sum(st_length(geom)) filter (where (spawning_cm > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_cm_access_b,
+    sum(st_length(geom)) filter (where spawning_cm = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_cm_access_a,
+    sum(st_length(geom)) filter (where spawning_cm = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_cm_access_b,
+    sum(st_length(geom)) filter (where spawning_cm = 2) as length_spawningrearing_obsrvd_cm,
+    sum(st_length(geom)) filter (where spawning_cm = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_cm_access_a,
+    sum(st_length(geom)) filter (where spawning_cm = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_cm_access_b,
 
     -- co
-    sum(st_length(geom)) filter (where spawning_co = 1 or rearing_co = 1) as length_spawningrearing_model_co,
-    sum(st_length(geom)) filter (where (spawning_co = 1 or rearing_co = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_co_access_a,
-    sum(st_length(geom)) filter (where (spawning_co = 1 or rearing_co = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_co_access_b,
-    sum(st_length(geom)) filter (where spawning_co > 1 or rearing_co > 1) as length_spawningrearing_obsrvd_co,
-    sum(st_length(geom)) filter (where (spawning_co > 1 or rearing_co > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_co_access_a,
-    sum(st_length(geom)) filter (where (spawning_co > 1 or rearing_co > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_co_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 1) as length_spawningrearing_model_co,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_co_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_co_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 2) as length_spawningrearing_obsrvd_co,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_co_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_co_access_b,
 
     -- pk
     sum(st_length(geom)) filter (where spawning_pk = 1) as length_spawningrearing_model_pk,
-    sum(st_length(geom)) filter (where (spawning_pk = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_pk_access_a,
-    sum(st_length(geom)) filter (where (spawning_pk = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_pk_access_b,
-    sum(st_length(geom)) filter (where spawning_pk > 1) as length_spawningrearing_obsrvd_pk,
-    sum(st_length(geom)) filter (where (spawning_pk > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_pk_access_a,
-    sum(st_length(geom)) filter (where (spawning_pk > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_pk_access_b,
+    sum(st_length(geom)) filter (where spawning_pk = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_pk_access_a,
+    sum(st_length(geom)) filter (where spawning_pk = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_pk_access_b,
+    sum(st_length(geom)) filter (where spawning_pk = 2) as length_spawningrearing_obsrvd_pk,
+    sum(st_length(geom)) filter (where spawning_pk = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_pk_access_a,
+    sum(st_length(geom)) filter (where spawning_pk = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_pk_access_b,
 
     -- sk
-    sum(st_length(geom)) filter (where spawning_sk = 1 or rearing_sk = 1) as length_spawningrearing_model_sk,
-    sum(st_length(geom)) filter (where (spawning_sk = 1 or rearing_sk = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_sk_access_a,
-    sum(st_length(geom)) filter (where (spawning_sk = 1 or rearing_sk = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_sk_access_b,
-    sum(st_length(geom)) filter (where spawning_sk > 1 or rearing_sk > 1) as length_spawningrearing_obsrvd_sk,
-    sum(st_length(geom)) filter (where (spawning_sk > 1 or rearing_sk > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_sk_access_a,
-    sum(st_length(geom)) filter (where (spawning_sk > 1 or rearing_sk > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_sk_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 1) as length_spawningrearing_model_sk,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_sk_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_sk_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 2) as length_spawningrearing_obsrvd_sk,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_sk_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_sk_access_b,
 
     -- st
-    sum(st_length(geom)) filter (where spawning_st = 1 or rearing_st = 1) as length_spawningrearing_model_st,
-    sum(st_length(geom)) filter (where (spawning_st = 1 or rearing_st = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_st_access_a,
-    sum(st_length(geom)) filter (where (spawning_st = 1 or rearing_st = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_st_access_b,
-    sum(st_length(geom)) filter (where spawning_st > 1 or rearing_st > 1) as length_spawningrearing_obsrvd_st,
-    sum(st_length(geom)) filter (where (spawning_st > 1 or rearing_st > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_st_access_a,
-    sum(st_length(geom)) filter (where (spawning_st > 1 or rearing_st > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_st_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 1) as length_spawningrearing_model_st,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_st_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_st_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 2) as length_spawningrearing_obsrvd_st,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_st_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_st_access_b,
 
     -- wct
-    sum(st_length(geom)) filter (where spawning_wct = 1 or rearing_wct = 1) as length_spawningrearing_model_wct,
-    sum(st_length(geom)) filter (where (spawning_wct = 1 or rearing_wct = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_wct_access_a,
-    sum(st_length(geom)) filter (where (spawning_wct = 1 or rearing_wct = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_wct_access_b,
-    sum(st_length(geom)) filter (where spawning_wct > 1 or rearing_wct > 1) as length_spawningrearing_obsrvd_wct,
-    sum(st_length(geom)) filter (where (spawning_wct > 1 or rearing_wct > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_wct_access_a,
-    sum(st_length(geom)) filter (where (spawning_wct > 1 or rearing_wct > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_wct_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 1) as length_spawningrearing_model_wct,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_wct_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_wct_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 2) as length_spawningrearing_obsrvd_wct,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_wct_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_wct_access_b,
 
     -- all salmon
-    sum(st_length(geom)) filter (where
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1
-        ) as length_spawningrearing_model_salmon,
-    sum(st_length(geom)) filter (where (
-          spawning_ch = 1 or
-          rearing_ch = 1 or
-          spawning_cm = 1 or
-          spawning_co = 1 or
-          rearing_co = 1 or
-          spawning_pk = 1 or
-          spawning_sk = 1 or
-          rearing_sk = 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_salmon_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_salmon_access_b,
-    sum(st_length(geom)) filter (where
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1
-        ) as length_spawningrearing_obsrvd_salmon,
-    sum(st_length(geom)) filter (where (
-          spawning_ch > 1 or
-          rearing_ch > 1 or
-          spawning_cm > 1 or
-          spawning_co > 1 or
-          rearing_co > 1 or
-          spawning_pk > 1 or
-          spawning_sk > 1 or
-          rearing_sk > 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_salmon_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_salmon_access_b,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 1
+    ) as length_spawningrearing_model_salmon,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 1
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_model_salmon_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 1
+        and barriers_anthropogenic_dnstr is null
+    ) as length_spawningrearing_model_salmon_access_b,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 2
+    ) as length_spawningrearing_obsrvd_salmon,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 2
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_obsrvd_salmon_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 2
+        and barriers_anthropogenic_dnstr is null
+      ) as length_spawningrearing_obsrvd_salmon_access_b,
 
     -- all salmon AND steelhead
-    sum(st_length(geom)) filter (where
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1 or
-        spawning_st = 1 or
-        rearing_st = 1
-        ) as length_spawningrearing_model_salmon_st,
-    sum(st_length(geom)) filter (where (
-          spawning_ch = 1 or
-          rearing_ch = 1 or
-          spawning_cm = 1 or
-          spawning_co = 1 or
-          rearing_co = 1 or
-          spawning_pk = 1 or
-          spawning_sk = 1 or
-          rearing_sk = 1 or
-          spawning_st = 1 or
-          rearing_st = 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_salmon_st_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1 or
-        spawning_st = 1 or
-        rearing_st = 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_salmon_st_access_b,
-    sum(st_length(geom)) filter (where
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1 or
-        spawning_st > 1 or
-        rearing_st > 1
-        ) as length_spawningrearing_obsrvd_salmon_st,
-    sum(st_length(geom)) filter (where (
-          spawning_ch > 1 or
-          rearing_ch > 1 or
-          spawning_cm > 1 or
-          spawning_co > 1 or
-          rearing_co > 1 or
-          spawning_pk > 1 or
-          spawning_sk > 1 or
-          rearing_sk > 1 or
-          spawning_st > 1 or
-          rearing_st > 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_salmon_st_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1 or
-        spawning_st > 1 or
-        rearing_st > 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_salmon_st_access_b
-from bcfishpass.streams_vw s
-inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
-group by aw.assmnt_watershed_id, s.watershed_group_code
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 1
+    ) as length_spawningrearing_model_salmon_st,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 1
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_model_salmon_st_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 1
+        and barriers_anthropogenic_dnstr is null
+    ) as length_spawningrearing_model_salmon_st_access_b,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 2
+    ) as length_spawningrearing_obsrvd_salmon_st,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 2
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_obsrvd_salmon_st_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 2
+        and barriers_anthropogenic_dnstr is null
+    ) as length_spawningrearing_obsrvd_salmon_st_access_b
+  from bcfishpass.streams_vw s
+  inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
+  group by aw.assmnt_watershed_id, s.watershed_group_code
 )
 
 -- set to km, round to nearest cm (keep the high precision because this data gets rolled up to watershed group)
