@@ -48,61 +48,61 @@ select
    -- translate downstream barrier presence/absence and upstream observation presence/absence 
    -- into an access model code 0=inaccessible 1=modelled 2=observed
    case
-     when wsg_bt.watershed_group_code is null then -1
+     when wsg_bt.watershed_group_code is null then -9
      when b.barriers_bt_dnstr is null and 'BT' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_bt_dnstr is null and 'BT' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_bt_dnstr is not null and wsg_bt.watershed_group_code is not null then 0
    end as access_bt,
    case
-     when wsg_salmon.watershed_group_code is null then -1
+     when wsg_salmon.watershed_group_code is null then -9
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CH' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CH' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
    end as access_ch,
    case
-     when wsg_salmon.watershed_group_code is null then -1
+     when wsg_salmon.watershed_group_code is null then -9
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CM' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CM' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
    end as access_cm,
    case
-     when wsg_salmon.watershed_group_code is null then -1
+     when wsg_salmon.watershed_group_code is null then -9
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CO' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CO' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
    end as access_co,
    case
-     when wsg_salmon.watershed_group_code is null then -1
+     when wsg_salmon.watershed_group_code is null then -9
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'PK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'PK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
    end as access_pk,
    case
-     when wsg_salmon.watershed_group_code is null then -1
+     when wsg_salmon.watershed_group_code is null then -9
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
    end as access_sk,
    case
-     when wsg_salmon.watershed_group_code is null then -1
+     when wsg_salmon.watershed_group_code is null then -9
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] then 2
      when b.barriers_ch_cm_co_pk_sk_dnstr is null and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] is false then 1
      when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
    end as access_salmon,
    case
-     when wsg_ct_dv_rb.watershed_group_code is null then -1
+     when wsg_ct_dv_rb.watershed_group_code is null then -9
      when b.barriers_ct_dv_rb_dnstr is null and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CT','DV','RB'] then 2
      when b.barriers_ct_dv_rb_dnstr is null and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CT','DV','RB'] is false then 1
      when b.barriers_ct_dv_rb_dnstr is not null and wsg_ct_dv_rb.watershed_group_code is not null then 0
    end as access_ct_dv_rb,
    case
-     when wsg_st.watershed_group_code is null then -1
+     when wsg_st.watershed_group_code is null then -9
      when b.barriers_st_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_st_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_st_dnstr is not null and wsg_st.watershed_group_code is not null then 0
    end as access_st,
    case
-     when wsg_wct.watershed_group_code is null then -1
+     when wsg_wct.watershed_group_code is null then -9
      when b.barriers_wct_dnstr is null and 'WCT' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
      when b.barriers_wct_dnstr is null and 'WCT' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
      when b.barriers_wct_dnstr is not null and wsg_wct.watershed_group_code is not null then 0
@@ -152,56 +152,56 @@ create materialized view bcfishpass.streams_habitat_linear_vw as
 select
   s.segmented_stream_id,
   case
-    when u.spawning_bt is false then 0
+    when u.spawning_bt is false then -1 -- confirmed/observed as non-habitat
     when coalesce(bt.spawning, false) is true and coalesce(u.spawning_bt, false) is false then 1
     when coalesce(bt.spawning, false) is true and coalesce(u.spawning_bt, false) is true then 2
     when coalesce(bt.spawning, false) is false and coalesce(u.spawning_bt, false) is true then 3
     else 0
   end as spawning_bt,
   case
-    when u.spawning_ch is false then 0
+    when u.spawning_ch is false then -1 -- confirmed/observed as non-habitat
     when coalesce(ch.spawning, false) is true and coalesce(u.spawning_ch, false) is false then 1
     when coalesce(ch.spawning, false) is true and coalesce(u.spawning_ch, false) is true then 2
     when coalesce(ch.spawning, false) is false and coalesce(u.spawning_ch, false) is true then 3
     else 0
   end as spawning_ch,
   case
-    when u.spawning_cm is false then 0
+    when u.spawning_cm is false then -1 -- confirmed/observed as non-habitat
     when coalesce(cm.spawning, false) is true and coalesce(u.spawning_cm, false) is false then 1
     when coalesce(cm.spawning, false) is true and coalesce(u.spawning_cm, false) is true then 2
     when coalesce(cm.spawning, false) is false and coalesce(u.spawning_cm, false) is true then 3
     else 0
   end as spawning_cm,
   case
-    when u.spawning_co is false then 0
+    when u.spawning_co is false then -1 -- confirmed/observed as non-habitat
     when coalesce(co.spawning, false) is true and coalesce(u.spawning_co, false) is false then 1
     when coalesce(co.spawning, false) is true and coalesce(u.spawning_co, false) is true then 2
     when coalesce(co.spawning, false) is false and coalesce(u.spawning_co, false) is true then 3
     else 0
   end as spawning_co,
   case
-    when u.spawning_pk is false then 0
+    when u.spawning_pk is false then -1 -- confirmed/observed as non-habitat
     when coalesce(pk.spawning, false) is true and coalesce(u.spawning_pk, false) is false then 1
     when coalesce(pk.spawning, false) is true and coalesce(u.spawning_pk, false) is true then 2
     when coalesce(pk.spawning, false) is false and coalesce(u.spawning_pk, false) is true then 3
     else 0
   end as spawning_pk,
   case
-    when u.spawning_sk is false then 0
+    when u.spawning_sk is false then -1 -- confirmed/observed as non-habitat
     when coalesce(sk.spawning, false) is true and coalesce(u.spawning_sk, false) is false then 1
     when coalesce(sk.spawning, false) is true and coalesce(u.spawning_sk, false) is true then 2
     when coalesce(sk.spawning, false) is false and coalesce(u.spawning_sk, false) is true then 3
     else 0
   end as spawning_sk,
   case
-    when u.spawning_st is false then 0
+    when u.spawning_st is false then -1 -- confirmed/observed as non-habitat
     when coalesce(st.spawning, false) is true and coalesce(u.spawning_st, false) is false then 1
     when coalesce(st.spawning, false) is true and coalesce(u.spawning_st, false) is true then 2
     when coalesce(st.spawning, false) is false and coalesce(u.spawning_st, false) is true then 3
     else 0
   end as spawning_st,
   case
-    when u.spawning_wct is false then 0
+    when u.spawning_wct is false then -1 -- confirmed/observed as non-habitat
     when coalesce(wct.spawning, false) is true and coalesce(u.spawning_wct, false) is false then 1
     when coalesce(wct.spawning, false) is true and coalesce(u.spawning_wct, false) is true then 2
     when coalesce(wct.spawning, false) is false and coalesce(u.spawning_wct, false) is true then 3
@@ -209,42 +209,42 @@ select
   end as spawning_wct,
 
   case
-    when u.rearing_bt is false then 0
+    when u.rearing_bt is false then -1 -- confirmed/observed as non-habitat
     when coalesce(bt.rearing, false) is true and coalesce(u.rearing_bt, false) is false then 1
     when coalesce(bt.rearing, false) is true and coalesce(u.rearing_bt, false) is true then 2
     when coalesce(bt.rearing, false) is false and coalesce(u.rearing_bt, false) is true then 3
     else 0
   end as rearing_bt,
   case
-    when u.rearing_ch is false then 0
+    when u.rearing_ch is false then -1 -- confirmed/observed as non-habitat
     when coalesce(ch.rearing, false) is true and coalesce(u.rearing_ch, false) is false then 1
     when coalesce(ch.rearing, false) is true and coalesce(u.rearing_ch, false) is true then 2
     when coalesce(ch.rearing, false) is false and coalesce(u.rearing_ch, false) is true then 3
     else 0
   end as rearing_ch,
   case
-    when u.rearing_co is false then 0
+    when u.rearing_co is false then -1 -- confirmed/observed as non-habitat
     when coalesce(co.rearing, false) is true and coalesce(u.rearing_co, false) is false then 1
     when coalesce(co.rearing, false) is true and coalesce(u.rearing_co, false) is true then 2
     when coalesce(co.rearing, false) is false and coalesce(u.rearing_co, false) is true then 3
     else 0
   end as rearing_co,
   case
-    when u.rearing_sk is false then 0
+    when u.rearing_sk is false then -1 -- confirmed/observed as non-habitat
     when coalesce(sk.rearing, false) is true and coalesce(u.rearing_sk, false) is false then 1
     when coalesce(sk.rearing, false) is true and coalesce(u.rearing_sk, false) is true then 2
     when coalesce(sk.rearing, false) is false and coalesce(u.rearing_sk, false) is true then 3
     else 0
   end as rearing_sk,
   case
-    when u.rearing_st is false then 0
+    when u.rearing_st is false then -1 -- confirmed/observed as non-habitat
     when coalesce(st.rearing, false) is true and coalesce(u.rearing_st, false) is false then 1
     when coalesce(st.rearing, false) is true and coalesce(u.rearing_st, false) is true then 2
     when coalesce(st.rearing, false) is false and coalesce(u.rearing_st, false) is true then 3
     else 0
   end as rearing_st,
   case
-    when u.rearing_wct is false then 0
+    when u.rearing_wct is false then -1 -- confirmed/observed as non-habitat
     when coalesce(wct.rearing, false) is true and coalesce(u.rearing_wct, false) is false then 1
     when coalesce(wct.rearing, false) is true and coalesce(u.rearing_wct, false) is true then 2
     when coalesce(wct.rearing, false) is false and coalesce(u.rearing_wct, false) is true then 3
@@ -619,20 +619,20 @@ select
   a.access_st,
   a.access_wct,
   a.access_salmon,
-  case when a.access_bt = -1 then -1 else h.spawning_bt end as spawning_bt,
-  case when a.access_ch = -1 then -1 else h.spawning_ch end as spawning_ch,
-  case when a.access_cm = -1 then -1 else h.spawning_cm end as spawning_cm,
-  case when a.access_co = -1 then -1 else h.spawning_co end as spawning_co,
-  case when a.access_pk = -1 then -1 else h.spawning_pk end as spawning_pk,
-  case when a.access_sk = -1 then -1 else h.spawning_sk end as spawning_sk,
-  case when a.access_st = -1 then -1 else h.spawning_st end as spawning_st,
-  case when a.access_wct = -1 then -1 else h.spawning_wct end as spawning_wct,
-  case when a.access_bt = -1 then -1 else h.rearing_bt end as rearing_bt,
-  case when a.access_ch = -1 then -1 else h.rearing_ch end as rearing_ch,
-  case when a.access_co = -1 then -1 else h.rearing_co end as rearing_co,
-  case when a.access_sk = -1 then -1 else h.rearing_sk end as rearing_sk,
-  case when a.access_st = -1 then -1 else h.rearing_st end as rearing_st,
-  case when a.access_wct = -1 then -1 else h.rearing_wct end as rearing_wct,
+  case when a.access_bt = -9 then -9 else h.spawning_bt end as spawning_bt,
+  case when a.access_ch = -9 then -9 else h.spawning_ch end as spawning_ch,
+  case when a.access_cm = -9 then -9 else h.spawning_cm end as spawning_cm,
+  case when a.access_co = -9 then -9 else h.spawning_co end as spawning_co,
+  case when a.access_pk = -9 then -9 else h.spawning_pk end as spawning_pk,
+  case when a.access_sk = -9 then -9 else h.spawning_sk end as spawning_sk,
+  case when a.access_st = -9 then -9 else h.spawning_st end as spawning_st,
+  case when a.access_wct = -9 then -9 else h.spawning_wct end as spawning_wct,
+  case when a.access_bt = -9 then -9 else h.rearing_bt end as rearing_bt,
+  case when a.access_ch = -9 then -9 else h.rearing_ch end as rearing_ch,
+  case when a.access_co = -9 then -9 else h.rearing_co end as rearing_co,
+  case when a.access_sk = -9 then -9 else h.rearing_sk end as rearing_sk,
+  case when a.access_st = -9 then -9 else h.rearing_st end as rearing_st,
+  case when a.access_wct = -9 then -9 else h.rearing_wct end as rearing_wct,
   m.mapping_code_bt,
   m.mapping_code_ch,
   m.mapping_code_cm,

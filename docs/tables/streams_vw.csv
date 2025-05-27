@@ -38,29 +38,29 @@ column,type,description
 ``obsrvtn_event_upstr``,`text`,id value for all upstream target species fish observations
 ``obsrvtn_species_codes_upstr``,`text`,Unique species codes for all upstream target species observations (in watershed group)
 ``species_codes_dnstr``,`text`,Unique species codes for all downstream target species observations
-``access_bt``,`integer`,Bull Trout accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_ch``,`integer`,Chinook accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_cm``,`integer`,Chum accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_co``,`integer`,Coho accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_pk``,`integer`,Pink accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_sk``,`integer`,Sockeye accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_st``,`integer`,Steelhead accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_wct``,`integer`,West Slope Cutthroat Trout accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``access_salmon``,`integer`,Pacific Salmon (all): accessibility model: -1=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
-``spawning_bt``,`integer`,Bull Trout spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_ch``,`integer`,Chinook spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_cm``,`integer`,Chum spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_co``,`integer`,Coho spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_pk``,`integer`,Pink spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_sk``,`integer`,Sockeye spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_st``,`integer`,Steelhead spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``spawning_wct``,`integer`,West Slope Cutthroat Trout spawning model: -1=not modelled; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
-``rearing_bt``,`integer`,Bull Trout rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
-``rearing_ch``,`integer`,Chinook rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
-``rearing_co``,`integer`,Coho rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
-``rearing_sk``,`integer`,Sockeye rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
-``rearing_st``,`integer`,Steelhead rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
-``rearing_wct``,`integer`,West Slope Cutthroat rearing model: -1=not modelled; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``access_bt``,`integer`,Bull Trout accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_ch``,`integer`,Chinook accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_cm``,`integer`,Chum accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_co``,`integer`,Coho accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_pk``,`integer`,Pink accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_sk``,`integer`,Sockeye accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_st``,`integer`,Steelhead accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_wct``,`integer`,West Slope Cutthroat Trout accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_salmon``,`integer`,Pacific Salmon (all): accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``spawning_bt``,`integer`,Bull Trout spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_ch``,`integer`,Chinook spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_cm``,`integer`,Chum spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_co``,`integer`,Coho spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_pk``,`integer`,Pink spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_sk``,`integer`,Sockeye spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_st``,`integer`,Steelhead spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_wct``,`integer`,West Slope Cutthroat Trout spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``rearing_bt``,`integer`,Bull Trout rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_ch``,`integer`,Chinook rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_co``,`integer`,Coho rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_sk``,`integer`,Sockeye rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_st``,`integer`,Steelhead rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_wct``,`integer`,West Slope Cutthroat rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
 ``mapping_code_bt``,`text`,Stream mapping code for Bull Trout, a string indicating: model output/downstream barrier status/stream type
 ``mapping_code_ch``,`text`,Stream mapping code for Chinook, a string indicating: model output/downstream barrier status/stream type
 ``mapping_code_cm``,`text`,Stream mapping code for Chum, a string indicating: model output/downstream barrier status/stream type
