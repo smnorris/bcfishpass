@@ -277,7 +277,7 @@ downstream AS
     case
       when coalesce(h.spawning, false) IS TRUE OR coalesce(hk.spawning_bt, false) IS TRUE then true
       else false
-    end as spawning
+    end as spawning,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
