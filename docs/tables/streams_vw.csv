@@ -1,0 +1,73 @@
+column,type,description
+``segmented_stream_id``,`text`,Unique id for the stream segment based on existing segmentation. Value is concatenation of blue_line_key.downstream_route_measure
+``linear_feature_id``,`bigint`,FWA stream segment unique identifier
+``edge_type``,`integer`,From BC FWA, the unique identifier for a stream segment (flow network arc)
+``blue_line_key``,`integer`,From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).
+``watershed_key``,`integer`,From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.
+``watershed_group_code``,`character varying(4)`,The watershed group code associated with the feature.
+``downstream_route_measure``,`double precision`,The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature.
+``length_metre``,`double precision`,The watershed group code associated with the feature.
+``waterbody_key``,`integer`,The waterbody key of the waterbody the edge is contained within.
+``wscode``,`ltree`,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.'
+``localcode``,`ltree`,A truncated version of the BC FWA local_watershed_code (trailing zeros removed and '-' replaced with '.'
+``gnis_name``,`character varying(80)`,The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream
+``stream_order``,`integer`,Order of FWA stream
+``stream_magnitude``,`integer`,Magnitude of FWA stream
+``gradient``,`double precision`,Gradient of the stream segment
+``feature_code``,`character varying(10)`,A value based on the Canadian Council of Surveys and Mapping's (CCSM) system for classification of geographic features.
+``upstream_route_measure``,`double precision`,The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the upstream end of the feature.
+``upstream_area_ha``,`double precision`,Cumulative area upstream of the end of the stream (as defined by linear_feature_id)
+``stream_order_parent``,`integer`,Stream order of the stream into which the stream drains
+``stream_order_max``,`integer`,Maximum stream order associated with the stream (as defined by blue_line_key)
+``map_upstream``,`integer`,Mean annual precipitation for the watershed upstream of the stream segment (as defined by linear_feature_id)
+``channel_width``,`double precision`,Modelled channel width of the stream (m)
+``mad_m3s``,`double precision`,Modelled mean annual discharge of the stream (m3/s)
+``barriers_anthropogenic_dnstr``,`text`,aggregated_crossings_id value for all downstream anthropogenic barriers
+``barriers_pscis_dnstr``,`text`,aggregated_crossings_id value for all downstream PSCIS assessed barriers
+``barriers_dams_dnstr``,`text`,aggregated_crossings_id value for all downstream dams that are barriers
+``barriers_dams_hydro_dnstr``,`text`,aggregated_crossings_id value for all downstream hydroelectricity dam that are barriers
+``barriers_bt_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Bull Trout
+``barriers_ch_cm_co_pk_sk_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Pacific Salmon
+``barriers_ct_dv_rb_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Cutthroat Trout/Dolly Varden/Rainbow Trout
+``barriers_st_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Steelhead
+``barriers_wct_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to West Slope Cutthroat Trout
+``crossings_dnstr``,`text`,aggregated_crossings_id value for all crossings downstream
+``dam_dnstr_ind``,`boolean`,Indicates if the next anthropogenic barrier downstream is a dam
+``dam_hydro_dnstr_ind``,`boolean`,Indicates if the next anthropogenic barrier downstream is a hydroelectric dam
+``remediated_dnstr_ind``,`boolean`,Indicates if the next crossing downstream is a remediated PSCIS site
+``obsrvtn_event_upstr``,`text`,id value for all upstream target species fish observations
+``obsrvtn_species_codes_upstr``,`text`,Unique species codes for all upstream target species observations (in watershed group)
+``species_codes_dnstr``,`text`,Unique species codes for all downstream target species observations
+``access_bt``,`integer`,Bull Trout accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_ch``,`integer`,Chinook accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_cm``,`integer`,Chum accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_co``,`integer`,Coho accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_pk``,`integer`,Pink accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_sk``,`integer`,Sockeye accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_st``,`integer`,Steelhead accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_wct``,`integer`,West Slope Cutthroat Trout accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``access_salmon``,`integer`,Pacific Salmon (all): accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
+``spawning_bt``,`integer`,Bull Trout spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_ch``,`integer`,Chinook spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_cm``,`integer`,Chum spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_co``,`integer`,Coho spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_pk``,`integer`,Pink spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_sk``,`integer`,Sockeye spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_st``,`integer`,Steelhead spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``spawning_wct``,`integer`,West Slope Cutthroat Trout spawning model: -9=not modelled; -1=known non spawning; 0=non spawning; 1=modelled spawning; 2=modelled and observed spawning; 3=observed spawning (not modelled)
+``rearing_bt``,`integer`,Bull Trout rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_ch``,`integer`,Chinook rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_co``,`integer`,Coho rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_sk``,`integer`,Sockeye rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_st``,`integer`,Steelhead rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``rearing_wct``,`integer`,West Slope Cutthroat rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
+``mapping_code_bt``,`text`,Stream mapping code for Bull Trout, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_ch``,`text`,Stream mapping code for Chinook, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_cm``,`text`,Stream mapping code for Chum, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_co``,`text`,Stream mapping code for Coho, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_pk``,`text`,Stream mapping code for Pink, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_sk``,`text`,Stream mapping code for Sockeye, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_st``,`text`,Stream mapping code for Steelhead, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_wct``,`text`,Stream mapping code for West Slope Cutthroat Trout, a string indicating: model output/downstream barrier status/stream type
+``mapping_code_salmon``,`text`,Stream mapping code for Pacific Salmon (all), a string indicating: model output/downstream barrier status/stream type
+``geom``,`geometry(LineStringZM,3005)`,

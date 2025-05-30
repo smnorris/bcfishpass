@@ -67,8 +67,8 @@ select
   round(
     (
       (
-        coalesce(sum(length_metre) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE), 0) +
-        coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE AND edge_type = 1050), 0)
+        coalesce(sum(length_metre) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE), 0) +
+        coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE AND edge_type = 1050), 0)
       ) / 1000
     )::numeric, 2
   ) AS co_rearing_km,
@@ -77,7 +77,7 @@ select
   round(
     (
       (
-        coalesce(sum(length_metre * 1.5) FILTER (WHERE s.rearing_sk IS TRUE AND s.sk IS TRUE), 0)
+        coalesce(sum(length_metre * 1.5) FILTER (WHERE s.rearing_sk > 0 AND s.sk IS TRUE), 0)
       ) / 1000
     )::numeric, 2
   ) as sk_rearing_km,
@@ -85,11 +85,11 @@ select
   -- all spawning
   coalesce(round(((sum(length_metre) filter (
     where
-    (s.spawning_ch is true and s.ch is true) or
-    (s.spawning_co is true and s.co is true) or
-    (s.spawning_sk is true and s.sk is true) or
-    (s.spawning_st is true and s.st is true) or
-    (s.spawning_wct is true and s.wct is true)
+    (s.spawning_ch > 0 and s.ch is true) or
+    (s.spawning_co > 0 and s.co is true) or
+    (s.spawning_sk > 0 and s.sk is true) or
+    (s.spawning_st > 0 and s.st is true) or
+    (s.spawning_wct > 0 and s.wct is true)
   ) / 1000))::numeric, 2), 0) as all_spawning_km,
 
   -- all rearing
@@ -98,16 +98,16 @@ select
         (
           coalesce(sum(length_metre) FILTER (
             WHERE
-            (s.rearing_ch IS TRUE AND s.ch IS TRUE) OR
-            (s.rearing_st IS TRUE AND s.st IS TRUE) OR
-            (s.rearing_sk IS TRUE AND s.sk IS TRUE) OR
-            (s.rearing_co IS TRUE AND s.co IS TRUE) OR
-            (s.rearing_wct IS TRUE AND s.wct IS TRUE)
+            (s.rearing_ch > 0 AND s.ch IS TRUE) OR
+            (s.rearing_st > 0 AND s.st IS TRUE) OR
+            (s.rearing_sk > 0 AND s.sk IS TRUE) OR
+            (s.rearing_co > 0 AND s.co IS TRUE) OR
+            (s.rearing_wct > 0 AND s.wct IS TRUE)
           ), 0) +
           -- add .5 coho rearing in wetlands
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE AND s.edge_type = 1050), 0) +
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE AND s.edge_type = 1050), 0) +
           -- add .5 sockeye rearing in lakes (all of it)
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE AND s.sk IS TRUE), 0)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk > 0 AND s.sk IS TRUE), 0)
         ) / 1000)::numeric, 2
   ) as all_rearing_km,
 
@@ -117,21 +117,21 @@ select
         (
           coalesce(sum(length_metre) FILTER (
             WHERE
-            (s.spawning_ch is true and s.ch is true) or
-            (s.spawning_co is true and s.co is true) or
-            (s.spawning_sk is true and s.sk is true) or
-            (s.spawning_st is true and s.st is true) or
-            (s.spawning_wct is true and s.wct is true) or
-            (s.rearing_ch is true and s.ch is true) or
-            (s.rearing_st is true and s.st is true) or
-            (s.rearing_sk is true and s.sk is true) or
-            (s.rearing_co is true and s.co is true) or
-            (s.rearing_wct is true and s.wct is true)
+            (s.spawning_ch > 0 and s.ch is true) or
+            (s.spawning_co > 0 and s.co is true) or
+            (s.spawning_sk > 0 and s.sk is true) or
+            (s.spawning_st > 0 and s.st is true) or
+            (s.spawning_wct > 0 and s.wct is true) or
+            (s.rearing_ch > 0 and s.ch is true) or
+            (s.rearing_st > 0 and s.st is true) or
+            (s.rearing_sk > 0 and s.sk is true) or
+            (s.rearing_co > 0 and s.co is true) or
+            (s.rearing_wct > 0 and s.wct is true)
           ), 0) +
           -- add .5 coho rearing in wetlands
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co IS TRUE AND s.co IS TRUE AND s.edge_type = 1050), 0) +
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE AND s.edge_type = 1050), 0) +
           -- add .5 sockeye rearing in lakes (all of it)
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk IS TRUE AND s.sk IS TRUE), 0)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk > 0 AND s.sk IS TRUE), 0)
         ) / 1000)::numeric, 2
   ) as all_spawningrearing_km
 from upstr s
