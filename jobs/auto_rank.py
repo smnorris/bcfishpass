@@ -30,7 +30,8 @@ def makeParser():
             "bessette",
             "bela_atna_necl",
             "bowr_ques_carr",
-            "tuzistol_tah"
+            "tuzistol_tah",
+            "morr"
         ],
         nargs=1,
         type=str,
