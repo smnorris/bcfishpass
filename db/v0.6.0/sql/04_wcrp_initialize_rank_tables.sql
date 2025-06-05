@@ -13,6 +13,7 @@ SELECT bcfishpass.create_rank_table('wcrp_bowr_ques_carr','bowr_ques_carr');
 SELECT bcfishpass.create_rank_table('wcrp_bulk','bulk');
 SELECT bcfishpass.create_rank_table('wcrp_elkr','elkr_dnstr');
 SELECT bcfishpass.create_rank_table('wcrp_elkr','elkr_upstr');
+SELECT bcfishpass.create_rank_table('wcrp_hors','hors');
 SELECT bcfishpass.create_rank_table('wcrp_lnic','lnic');
 SELECT bcfishpass.create_rank_table('wcrp_morr','morr');
 SELECT bcfishpass.create_rank_table('wcrp_tho_shu','bonp');
