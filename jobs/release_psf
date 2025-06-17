@@ -1,0 +1,61 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+psql $DATABASE_URL -c "select
+  assessment_watershed_id,
+  length_potentiallyaccessible_obsrvd_salmon,
+  length_potentiallyaccessible_obsrvd_salmon_access_b,
+  length_potentiallyaccessible_model_salmon,
+  length_potentiallyaccessible_model_salmon_access_b,
+  length_potentiallyaccessible_obsrvd_st,
+  length_potentiallyaccessible_obsrvd_st_access_b,
+  length_potentiallyaccessible_model_st,
+  length_potentiallyaccessible_model_st_access_b,
+  length_spawningrearing_obsrvd_ch,
+  length_spawningrearing_obsrvd_ch_access_b,
+  length_spawningrearing_model_ch,
+  length_spawningrearing_model_ch_access_b,
+  length_spawningrearing_obsrvd_cm,
+  length_spawningrearing_obsrvd_cm_access_b,
+  length_spawningrearing_model_cm,
+  length_spawningrearing_model_cm_access_b,
+  length_spawningrearing_obsrvd_co,
+  length_spawningrearing_obsrvd_co_access_b,
+  length_spawningrearing_model_co,
+  length_spawningrearing_model_co_access_b,
+  length_spawningrearing_obsrvd_pk,
+  length_spawningrearing_obsrvd_pk_access_b,
+  length_spawningrearing_model_pk,
+  length_spawningrearing_model_pk_access_b,
+  length_spawningrearing_obsrvd_sk,
+  length_spawningrearing_obsrvd_sk_access_b,
+  length_spawningrearing_model_sk,
+  length_spawningrearing_model_sk_access_b,
+  length_spawningrearing_obsrvd_st,
+  length_spawningrearing_obsrvd_st_access_b,
+  length_spawningrearing_model_st,
+  length_spawningrearing_model_st_access_b,
+  length_spawningrearing_obsrvd_salmon,
+  length_spawningrearing_obsrvd_salmon_access_b,
+  length_spawningrearing_model_salmon,
+  length_spawningrearing_model_salmon_access_b,
+  length_spawningrearing_obsrvd_salmon_st,
+  length_spawningrearing_obsrvd_salmon_st_access_b,
+  length_spawningrearing_model_salmon_st,
+  length_spawningrearing_model_salmon_st_access_b,
+  pct_potentiallyaccessible_salmon_access_b,
+  pct_potentiallyaccessible_st_access_b,
+  pct_spawningrearing_ch_access_b,
+  pct_spawningrearing_cm_access_b,
+  pct_spawningrearing_co_access_b,
+  pct_spawningrearing_pk_access_b,
+  pct_spawningrearing_sk_access_b,
+  pct_spawningrearing_st_access_b,
+  pct_spawningrearing_salmon_access_b,
+  pct_spawningrearing_salmon_st_access_b
+from bcfishpass.aw_linear_summary_current a" --csv > aw_linear_summary_psf.csv
+
+aws s3 cp aw_linear_summary_psf.csv s3://bchamp --acl public-read

@@ -251,25 +251,3 @@ ON a.cid = b.cid
 WHERE a.wb is true
 on conflict (segmented_stream_id)
 do update set spawning = EXCLUDED.spawning;
-
-
--- finally, add any known/observed spawning
-with observed_spawning as (
-  select
-    hk.segmented_stream_id
-  from bcfishpass.streams_habitat_known_vw hk
-  left outer join bcfishpass.streams s
-  on hk.segmented_stream_id = s.segmented_stream_id
-  where spawning_sk is true
-  and s.watershed_group_code = :'wsg'
-)
-INSERT INTO bcfishpass.habitat_linear_sk (
-  segmented_stream_id,
-  spawning
-)
-SELECT
-   a.segmented_stream_id,
-   true as spawning
-FROM observed_spawning a
-on conflict (segmented_stream_id)
-do update set spawning = EXCLUDED.spawning;

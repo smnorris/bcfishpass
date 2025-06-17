@@ -20,8 +20,6 @@ model AS (
     s.gradient,
     av.barriers_st_dnstr,
     CASE
-      WHEN hk.spawning_st is true  -- observed/known habitat
-      THEN true
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= t.spawn_gradient_max AND
@@ -46,7 +44,6 @@ model AS (
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
   INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
-  left outer join bcfishpass.streams_habitat_known_vw hk on s.segmented_stream_id = hk.segmented_stream_id
   WHERE
       p.st is true AND
       s.watershed_group_code = :'wsg' AND
@@ -77,7 +74,8 @@ SELECT
   true as rearing
 FROM bcfishpass.streams s
 -- ensure stream is modelled as spawning and accessible
-INNER JOIN bcfishpass.habitat_linear_st h on s.segmented_stream_id = h.segmented_stream_id
+left outer join bcfishpass.habitat_linear_st h on s.segmented_stream_id = h.segmented_stream_id
+left outer join bcfishpass.streams_habitat_known_vw kh on s.segmented_stream_id = kh.segmented_stream_id
 left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
 left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -85,6 +83,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.wate
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'ST'
 WHERE
   s.watershed_group_code = :'wsg' AND
+  (h.spawning IS TRUE or kh.spawning_st IS TRUE) AND -- is either modelled or observed spawning
   s.gradient <= t.rear_gradient_max AND         -- gradient check
   ( wb.waterbody_type = 'R' OR                  -- only apply to streams/rivers
     ( wb.waterbody_type IS NULL OR
@@ -288,12 +287,16 @@ downstream AS
     s.localcode_ltree,
     s.downstream_route_measure,
     s.gradient,
-    h.spawning,
+    case
+      when coalesce(h.spawning, false) IS TRUE OR coalesce(hk.spawning_st, false) IS TRUE then true
+      else false
+    end as spawning,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   LEFT OUTER JOIN bcfishpass.habitat_linear_st h ON s.segmented_stream_id = h.segmented_stream_id
+  LEFT OUTER JOIN bcfishpass.streams_habitat_known_vw hk ON s.segmented_stream_id = hk.segmented_stream_id
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
   AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),
@@ -353,26 +356,5 @@ SELECT
 FROM rearing_clusters a
 INNER JOIN valid_rearing b
 ON a.cid = b.cid
-on conflict (segmented_stream_id)
-do update set rearing = EXCLUDED.rearing;
-
--- finally, add any known/observed rearing
-with observed_rearing as (
-  select
-    hk.segmented_stream_id
-  from bcfishpass.streams_habitat_known_vw hk
-  left outer join bcfishpass.streams s
-  on hk.segmented_stream_id = s.segmented_stream_id
-  where rearing_st is true
-  and s.watershed_group_code = :'wsg'
-)
-INSERT INTO bcfishpass.habitat_linear_st (
-  segmented_stream_id,
-  rearing
-)
-SELECT
-   a.segmented_stream_id,
-   true as rearing
-FROM observed_rearing a
 on conflict (segmented_stream_id)
 do update set rearing = EXCLUDED.rearing;

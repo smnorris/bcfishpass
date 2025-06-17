@@ -21,8 +21,6 @@ model AS
     cw.channel_width,
     s.gradient,
     CASE
-      WHEN hk.spawning_pk is true  -- observed/known habitat
-      THEN true
       WHEN
         wsg.model = 'cw' AND
         s.gradient <= t.spawn_gradient_max AND
@@ -47,7 +45,6 @@ model AS
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'PK'
   INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
   LEFT OUTER JOIN rivers r ON s.waterbody_key = r.waterbody_key
-  left outer join bcfishpass.streams_habitat_known_vw hk on s.segmented_stream_id = hk.segmented_stream_id
   WHERE
     p.pk is true AND
     s.watershed_group_code = :'wsg' AND
