@@ -1,0 +1,32 @@
+name: test-dump
+run-name: ${{ github.actor }} Test CWF db access via cabd processing server
+on:
+  workflow_dispatch:
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  dump:
+    name: "Test CWF db access via cabd processing server"
+    runs-on: ubuntu-latest
+    environment: cabd
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/cabd.key
+          chmod 600 ~/.ssh/cabd.key
+          cat >>~/.ssh/config <<END
+          Host cabd
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/cabd.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.CABD_SSH_USER }}
+          SSH_KEY: ${{ secrets.CABD_SSH_KEY }}
+          SSH_HOST: ${{ secrets.CABD_SSH_HOST }}
+
+      - name: Try a query
+        run: ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1'
