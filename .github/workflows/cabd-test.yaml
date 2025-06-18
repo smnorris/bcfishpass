@@ -20,12 +20,12 @@ jobs:
           chmod 600 ~/.ssh/cabd.key
           cat >>~/.ssh/config <<END
           Host cabd
-            HostName $SSH_HOST
-            User $SSH_USER
+            HostName SSH_HOST
+            User SSH_USER
             IdentityFile ~/.ssh/cabd.key
             StrictHostKeyChecking no
           END
-          echo "TEST"
+          cat ~/.ssh/config
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
