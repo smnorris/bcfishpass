@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Distribution &mdash; bcfishpass v0.5.2 documentation</title>
+  <title>Data Dictionary &mdash; bcfishpass v0.5.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=929716b1" />
@@ -49,14 +49,10 @@
 <li class="toctree-l1"><a class="reference internal" href="02_model_access.html">Access model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_model_habitat_linear.html">Linear spawning/rearing habitat model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_model_habitat_lateral.html">Lateral habitat model (DRAFT)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Distribution</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#bc-fish-passage-model-bcfishpass">BC Fish Passage model (bcfishpass)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#streams-lines">streams (lines)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#crossings-points">crossings (points)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#linear-summary">linear_summary</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#pacific-salmon-and-steelhead-access-model-subset-of-habitat-model">Pacific Salmon and Steelhead access model (subset of habitat model)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Dictionary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#streams-lines">streams (lines)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crossings-points">crossings (points)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linear-summary-non-spatial">linear_summary (non-spatial)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="06_credits.html">Credits</a></li>
@@ -76,7 +72,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Data Distribution</li>
+      <li class="breadcrumb-item active">Data Dictionary</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/05_data_dictionary.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,21 +82,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="data-distribution">
-<h1>Data Distribution<a class="headerlink" href="#data-distribution" title="Link to this heading"></a></h1>
-<section id="bc-fish-passage-model-bcfishpass">
-<h2>BC Fish Passage model (bcfishpass)<a class="headerlink" href="#bc-fish-passage-model-bcfishpass" title="Link to this heading"></a></h2>
-<p>A weekly bcfishpass data extract is available for download as a zipped geopackage:</p>
-<p><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip">https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip</a>.</p>
+  <section id="data-dictionary">
+<h1>Data Dictionary<a class="headerlink" href="#data-dictionary" title="Link to this heading"></a></h1>
+<p>Weekly bcfishpass data extracts are available for download as zipped geopackages.</p>
 <p>The models included in this distribution are generated as described in the <span class="xref std std-ref">model description section</span>, with the following parameters:</p>
 <ul class="simple">
 <li><p>for salmon, potential <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barriers</span></a> are considered passable up to 15%</p></li>
 <li><p>for steelhead, potential <a class="reference internal" href="02_model_access.html#gradient-barriers"><span class="std std-ref">gradient barriers</span></a> are considered passable up to 20%</p></li>
 <li><p>for both salmon and steelhead, potential natural barriers with 5 or more upstream observations of any of the target species (<code class="docutils literal notranslate"><span class="pre">CH,</span> <span class="pre">CM,</span> <span class="pre">CO,</span> <span class="pre">PK,</span> <span class="pre">SK,</span> <span class="pre">ST</span></code>) since January 01, 1990 are presumed to be passable</p></li>
 </ul>
-<p>Tables/layers included in the distribution are:</p>
+<p>Files included in the distribution are:</p>
 <section id="streams-lines">
-<h3>streams (lines)<a class="headerlink" href="#streams-lines" title="Link to this heading"></a></h3>
+<h2>streams (lines)<a class="headerlink" href="#streams-lines" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip">https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip</a>.</p>
 <p>BC FWA stream network, with bcfishpass model classifications.</p>
 <table class="docutils align-default">
 <thead>
@@ -548,12 +542,14 @@
 </table>
 </section>
 <section id="crossings-points">
-<h3>crossings (points)<a class="headerlink" href="#crossings-points" title="Link to this heading"></a></h3>
-<p>Road-stream crossings (and dams), including tenure information; barrier status; upstream/downstream habitat lengths</p>
+<h2>crossings (points)<a class="headerlink" href="#crossings-points" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip">https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip</a>.</p>
+<p>Road-stream crossings (and dams), including: tenure information; barrier status; upstream/downstream habitat lengths</p>
 </section>
-<section id="linear-summary">
-<h3>linear_summary<a class="headerlink" href="#linear-summary" title="Link to this heading"></a></h3>
-<p>A weekly report of <a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv">connectivity status per FWA assessment watershed</a>  for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
+<section id="linear-summary-non-spatial">
+<h2>linear_summary (non-spatial)<a class="headerlink" href="#linear-summary-non-spatial" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_aw_linear_summary.csv.zip">https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip</a>.</p>
+<p>FWA Assessment Watershed habitat and connectivity status reporting for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
 The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.</p>
 <table class="docutils align-default">
 <thead>
@@ -864,11 +860,6 @@ The report summarizes total modelled naturally accessible length per species, an
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="pacific-salmon-and-steelhead-access-model-subset-of-habitat-model">
-<h2>Pacific Salmon and Steelhead access model (subset of habitat model)<a class="headerlink" href="#pacific-salmon-and-steelhead-access-model-subset-of-habitat-model" title="Link to this heading"></a></h2>
-<p>A <a class="reference external" href="https://bcgov.github.io/bc_freshwater_fish_habitat_accessibility_model/04_data_distribution.html">weekly provincial data extract</a> of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is provided by the Province of BC. See documentation in the bcgov repository for full data definitions.</p>
 </section>
 </section>
 
