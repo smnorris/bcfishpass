@@ -31,4 +31,4 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
       - name: Try a query
-        run: ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1'
+        run: ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
