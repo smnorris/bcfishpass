@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Configure SSH
         run: |
+          apt-get -qq install -y --no-install-recommends openssh-client
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/cabd.key
           chmod 600 ~/.ssh/cabd.key
