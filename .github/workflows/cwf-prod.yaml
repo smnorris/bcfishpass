@@ -50,4 +50,4 @@ jobs:
         run: |
           nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd &
           sleep 5
-          jobs/release_cwf_full
+          jobs/release_cwf
