@@ -35,5 +35,4 @@ jobs:
           chmod 600 ~/.ssh/known_hosts
       - name: Try a query
         run: |
-          cat ~/.ssh/known_hosts
-          ssh $SSH_HOST 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
+          ssh -o StrictHostKeyChecking=no $SSH_HOST 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
