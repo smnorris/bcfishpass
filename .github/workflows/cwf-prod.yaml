@@ -45,7 +45,8 @@ jobs:
           chmod 600 .ssh/config
           ssh-keyscan -H $SSH_HOST >> .ssh/known_hosts
           chmod 600 .ssh/known_hosts
-
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Release
         run: |
           nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd &
