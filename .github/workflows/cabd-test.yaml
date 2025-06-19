@@ -20,13 +20,12 @@ jobs:
           chmod 600 ~/.ssh/cabd.key
           cat <<EOF > ~/.ssh/config
           Host cabd
-            HostName the_host
-            User the_user
+            HostName $SSH_HOST
+            User $SSH_USER
             IdentityFile ~/.ssh/cabd.key
             StrictHostKeyChecking no
           EOF
           chmod 600 ~/.ssh/config
-          cat ~/.ssh/config
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
@@ -34,5 +33,4 @@ jobs:
 
       - name: Try a query
         run: |
-          cat ~/.ssh/config
           ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
