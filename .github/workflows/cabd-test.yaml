@@ -20,6 +20,7 @@ jobs:
           apt-get update
           apt-get install -y openssh-client
           mkdir -p ~/.ssh/
+          chmod 700 ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/cabd.key
           chmod 600 ~/.ssh/cabd.key
           cat <<EOF > ~/.ssh/config
@@ -33,4 +34,4 @@ jobs:
 
       - name: Try a query
         run: |
-          ssh -o "StrictHostKeyChecking no" -i ~/.ssh/cabd.key $SSH_USER@$SSH_HOST 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
+          ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
