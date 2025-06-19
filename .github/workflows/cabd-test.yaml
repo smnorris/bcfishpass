@@ -37,7 +37,6 @@ jobs:
 
       - name: Run a query
         run: |
-          nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd > cabd.log 2>&1 &
+          nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd &
           sleep 5
-          cat cabd.log
           psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"
