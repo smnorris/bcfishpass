@@ -34,5 +34,5 @@ jobs:
 
       - name: Try a query
         run: |
-        cat ~/.ssh/config
-        ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
+          cat ~/.ssh/config
+          ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
