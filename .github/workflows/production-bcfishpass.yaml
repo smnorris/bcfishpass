@@ -133,5 +133,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  |
-          jobs/release_freshwater_fish_habitat_accessibility_model
-          jobs/release_psf
+          jobs/release_fptwg

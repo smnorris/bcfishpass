@@ -1,0 +1,152 @@
+#!/bin/bash
+set -euxo pipefail
+
+# dump streams and crossings from CWF bcfishpass database to .gpkg on BC object storage
+
+ogr2ogr \
+  -f GPKG \
+  bcfishpass_crossings.gpkg.zip \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -nln crossings \
+  -sql "SELECT * FROM bcfishpass.crossings_vw"
+
+# Note that proprietary discharge is used for select watershed groups in CWF database 
+# Exclude these from dump
+
+ogr2ogr \
+  -f GPKG \
+  bcfishpass_streams.gpkg.zip \
+  PG:$DATABASE_URL \
+  -nln streams \
+  -sql "SELECT
+  segmented_stream_id,
+  linear_feature_id,
+  edge_type,
+  blue_line_key,
+  watershed_key,
+  watershed_group_code,
+  downstream_route_measure,
+  length_metre,
+  waterbody_key,
+  wscode::text as wscode,
+  localcode::text as localcode,
+  gnis_name,
+  stream_order,
+  stream_magnitude,
+  gradient,
+  feature_code,
+  upstream_route_measure,
+  upstream_area_ha,
+  stream_order_parent,
+  stream_order_max,
+  map_upstream,
+  channel_width,
+  CASE 
+    WHEN watershed_group_code IN ('BULK','ELKR', 'HORS') THEN NULL
+    ELSE mad_m3s
+  END as mad_m3s,
+  barriers_anthropogenic_dnstr,
+  barriers_pscis_dnstr,
+  barriers_dams_dnstr,
+  barriers_dams_hydro_dnstr,
+  barriers_ch_cm_co_pk_sk_dnstr,
+  barriers_ct_dv_rb_dnstr,
+  barriers_st_dnstr,
+  barriers_wct_dnstr,
+  crossings_dnstr,
+  dam_dnstr_ind,
+  dam_hydro_dnstr_ind,
+  remediated_dnstr_ind,
+  obsrvtn_event_upstr,
+  obsrvtn_species_codes_upstr,
+  species_codes_dnstr,
+  access_ch,
+  access_cm,
+  access_co,
+  access_pk,
+  access_sk,
+  access_st,
+  access_wct,
+  access_salmon,
+  spawning_ch,
+  spawning_cm,
+  spawning_co,
+  spawning_pk,
+  spawning_sk,
+  spawning_st,
+  spawning_wct,
+  rearing_ch,
+  rearing_co,
+  rearing_sk,
+  rearing_st,
+  rearing_wct,
+  mapping_code_ch,
+  mapping_code_cm,
+  mapping_code_co,
+  mapping_code_pk,
+  mapping_code_sk,
+  mapping_code_st,
+  mapping_code_wct,
+  mapping_code_salmon,
+  st_force2d(geom) as geom
+FROM bcfishpass.streams_vw"
+
+psql $DATABASE_URL -c "select
+  assessment_watershed_id,
+  length_potentiallyaccessible_obsrvd_salmon,
+  length_potentiallyaccessible_obsrvd_salmon_access_b,
+  length_potentiallyaccessible_model_salmon,
+  length_potentiallyaccessible_model_salmon_access_b,
+  length_potentiallyaccessible_obsrvd_st,
+  length_potentiallyaccessible_obsrvd_st_access_b,
+  length_potentiallyaccessible_model_st,
+  length_potentiallyaccessible_model_st_access_b,
+  length_spawningrearing_obsrvd_ch,
+  length_spawningrearing_obsrvd_ch_access_b,
+  length_spawningrearing_model_ch,
+  length_spawningrearing_model_ch_access_b,
+  length_spawningrearing_obsrvd_cm,
+  length_spawningrearing_obsrvd_cm_access_b,
+  length_spawningrearing_model_cm,
+  length_spawningrearing_model_cm_access_b,
+  length_spawningrearing_obsrvd_co,
+  length_spawningrearing_obsrvd_co_access_b,
+  length_spawningrearing_model_co,
+  length_spawningrearing_model_co_access_b,
+  length_spawningrearing_obsrvd_pk,
+  length_spawningrearing_obsrvd_pk_access_b,
+  length_spawningrearing_model_pk,
+  length_spawningrearing_model_pk_access_b,
+  length_spawningrearing_obsrvd_sk,
+  length_spawningrearing_obsrvd_sk_access_b,
+  length_spawningrearing_model_sk,
+  length_spawningrearing_model_sk_access_b,
+  length_spawningrearing_obsrvd_st,
+  length_spawningrearing_obsrvd_st_access_b,
+  length_spawningrearing_model_st,
+  length_spawningrearing_model_st_access_b,
+  length_spawningrearing_obsrvd_salmon,
+  length_spawningrearing_obsrvd_salmon_access_b,
+  length_spawningrearing_model_salmon,
+  length_spawningrearing_model_salmon_access_b,
+  length_spawningrearing_obsrvd_salmon_st,
+  length_spawningrearing_obsrvd_salmon_st_access_b,
+  length_spawningrearing_model_salmon_st,
+  length_spawningrearing_model_salmon_st_access_b,
+  pct_potentiallyaccessible_salmon_access_b,
+  pct_potentiallyaccessible_st_access_b,
+  pct_spawningrearing_ch_access_b,
+  pct_spawningrearing_cm_access_b,
+  pct_spawningrearing_co_access_b,
+  pct_spawningrearing_pk_access_b,
+  pct_spawningrearing_sk_access_b,
+  pct_spawningrearing_st_access_b,
+  pct_spawningrearing_salmon_access_b,
+  pct_spawningrearing_salmon_st_access_b
+from bcfishpass.aw_linear_summary_current a" --csv > bcfishpass_summary_aw_linear.csv
+
+# make public
+aws s3 cp bcfishpass_crossings.gpkg.zip s3://bchamp --acl public-read
+aws s3 cp bcfishpass_streams.gpkg.zip s3://bchamp --acl public-read
+aws s3 cp bcfishpass_summary_aw_linear.csv s3://bchamp --acl public-read
