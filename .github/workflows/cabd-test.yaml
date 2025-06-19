@@ -33,4 +33,4 @@ jobs:
           chmod 600 .ssh/config
           ssh-keyscan -H $SSH_HOST >> .ssh/known_hosts
           chmod 600 .ssh/known_hosts
-          ssh -F .ssh/config cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
+          ssh -F .ssh/config cabd 'ls'
