@@ -13,17 +13,6 @@ The models included in this distribution are generated as described in the :ref:
 Files included in the distribution are:
 
 
-streams (lines)
-============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
-
-BC FWA stream network, with bcfishpass model classifications.
-
-.. csv-table::
-   :file: tables/streams_vw.csv
-   :header-rows: 1
-
-
 crossings (points)
 ============================
 `https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_.
@@ -35,9 +24,20 @@ Road-stream crossings (and dams), including: tenure information; barrier status;
    :header-rows: 1
 
 
-linear_summary (non-spatial)
+streams (lines)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_aw_linear_summary.csv.zip>`_.
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
+
+BC FWA stream network, with bcfishpass model classifications.
+
+.. csv-table::
+   :file: tables/streams_vw.csv
+   :header-rows: 1
+
+
+summary_linear (non-spatial)
+============================
+`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_aw_summary_linear.csv.zip>`_.
 
 FWA Assessment Watershed habitat and connectivity status reporting for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
 The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
