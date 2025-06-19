@@ -18,14 +18,13 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/cabd.key
           chmod 600 ~/.ssh/cabd.key
-          cat >>~/.ssh/config <<END
+          cat <<EOF > ~/.ssh/config
           Host cabd
-            HostName SSH_HOST
-            User SSH_USER
+            HostName $SSH_HOST
+            User $SSH_USER
             IdentityFile ~/.ssh/cabd.key
             StrictHostKeyChecking no
-          END
-          cat ~/.ssh/config
+          EOF
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
