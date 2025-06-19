@@ -33,4 +33,5 @@ jobs:
 
       - name: Try a query
         run: |
-          ssh cabd 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
+          ping -c 4 $SSH_HOST
+          ssh -i ~/.ssh/cabd.key $SSH_USER@$SSH_HOST 'psql $DATABASE_URL -c "SELECT aggregated_crossings_id FROM bcfishpass.crossings_vw LIMIT 1"'
