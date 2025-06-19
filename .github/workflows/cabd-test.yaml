@@ -25,6 +25,7 @@ jobs:
             IdentityFile ~/.ssh/cabd.key
             StrictHostKeyChecking no
           EOF
+          chmod 600 ~/.ssh/config
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
