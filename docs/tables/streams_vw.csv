@@ -1,11 +1,11 @@
 column,type,description
 ``segmented_stream_id``,`text`,Unique id for the stream segment based on existing segmentation. Value is concatenation of blue_line_key.downstream_route_measure
 ``linear_feature_id``,`bigint`,FWA stream segment unique identifier
-``edge_type``,`integer`,From BC FWA, the unique identifier for a stream segment (flow network arc)
-``blue_line_key``,`integer`,From BC FWA, uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).
-``watershed_key``,`integer`,From BC FWA, a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.
+``edge_type``,`integer`,From BC FWA: the unique identifier for a stream segment (flow network arc)
+``blue_line_key``,`integer`,From BC FWA: uniquely identifies a single flow line such that a main channel and a secondary channel with the same watershed code would have different blue line keys (the Fraser River and all side channels have different blue line keys).
+``watershed_key``,`integer`,From BC FWA: a key that identifies a stream system. There is a 1:1 match between a watershed key and watershed code. The watershed key will match the blue line key for the mainstem.
 ``watershed_group_code``,`character varying(4)`,The watershed group code associated with the feature.
-``downstream_route_measure``,`double precision`,The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature.
+``downstream_route_measure``,`double precision`,The distance (meters) along the blue_line_key from the mouth of the stream/blue_line_key to the feature.
 ``length_metre``,`double precision`,The watershed group code associated with the feature.
 ``waterbody_key``,`integer`,The waterbody key of the waterbody the edge is contained within.
 ``wscode``,`ltree`,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.'
@@ -15,7 +15,7 @@ column,type,description
 ``stream_magnitude``,`integer`,Magnitude of FWA stream
 ``gradient``,`double precision`,Gradient of the stream segment
 ``feature_code``,`character varying(10)`,A value based on the Canadian Council of Surveys and Mapping's (CCSM) system for classification of geographic features.
-``upstream_route_measure``,`double precision`,The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the upstream end of the feature.
+``upstream_route_measure``,`double precision`,The distance (meters) along the blue_line_key from the mouth of the stream/blue_line_key to the upstream end of the feature.
 ``upstream_area_ha``,`double precision`,Cumulative area upstream of the end of the stream (as defined by linear_feature_id)
 ``stream_order_parent``,`integer`,Stream order of the stream into which the stream drains
 ``stream_order_max``,`integer`,Maximum stream order associated with the stream (as defined by blue_line_key)
@@ -61,13 +61,13 @@ column,type,description
 ``rearing_sk``,`integer`,Sockeye rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
 ``rearing_st``,`integer`,Steelhead rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
 ``rearing_wct``,`integer`,West Slope Cutthroat rearing model: -9=not modelled; -1=known non rearing; 0=non rearing; 1=modelled rearing; 2=modelled and observed rearing; 3=observed rearing (not modelled)
-``mapping_code_bt``,`text`,Stream mapping code for Bull Trout, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_ch``,`text`,Stream mapping code for Chinook, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_cm``,`text`,Stream mapping code for Chum, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_co``,`text`,Stream mapping code for Coho, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_pk``,`text`,Stream mapping code for Pink, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_sk``,`text`,Stream mapping code for Sockeye, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_st``,`text`,Stream mapping code for Steelhead, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_wct``,`text`,Stream mapping code for West Slope Cutthroat Trout, a string indicating: model output/downstream barrier status/stream type
-``mapping_code_salmon``,`text`,Stream mapping code for Pacific Salmon (all), a string indicating: model output/downstream barrier status/stream type
-``geom``,`geometry(LineStringZM,3005)`,
+``mapping_code_bt``,`text`,Stream mapping code for Bull Trout: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_ch``,`text`,Stream mapping code for Chinook: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_cm``,`text`,Stream mapping code for Chum: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_co``,`text`,Stream mapping code for Coho: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_pk``,`text`,Stream mapping code for Pink: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_sk``,`text`,Stream mapping code for Sockeye: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_st``,`text`,Stream mapping code for Steelhead: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_wct``,`text`,Stream mapping code for West Slope Cutthroat Trout: a string indicating: model output/downstream barrier status/stream type
+``mapping_code_salmon``,`text`,Stream mapping code for Pacific Salmon (all): a string indicating: model output/downstream barrier status/stream type
+``geom``,"`geometry(LineStringZM, 3005)`",Feature geometry
