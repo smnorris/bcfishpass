@@ -54,7 +54,7 @@ BC FWA stream network, with bcfishpass model classifications.
    :header-rows: 1
 
 
-`summary_aw_linear <https://nrs.objectstore.gov.bc.ca/bchamp/summary_aw_linear.csv>`_ (non-spatial)
+`summary_aw_linear <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_ (non-spatial)
 ============================
 
 A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
