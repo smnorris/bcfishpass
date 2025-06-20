@@ -36,11 +36,12 @@ To identify locations where a stream's slope exceeds a given threshold, the mode
 
 The gradient threshold used for a given model is species dependent. Thresholds applied to existing models are:
 
-| Species            | max gradient 
----------------------|-----------
-Pacific salmon (all) | 15%
-Steelhead            | 20%
-Bull trout           | 25%
+| Species                 | max gradient 
+--------------------------|-----------
+Pacific salmon (all)      | 15%
+Steelhead                 | 20%
+Westslope Cutthroat Trout | 20%
+Bull trout                | 25%
 
 ## 3. Filter natural barriers 
 
@@ -181,20 +182,3 @@ Submissions of data fixes to improve the fish passage model are welcome, particu
 - locations of natural barriers to fish passage that are not present in the inventories
 - identification of modelled natural barriers that are not barriers to fish passage
 - identification of modelled potential barriers that do not exist or are known to be passable
-
-
-## 10. Processing and publication / distribution
-
-Model inputs and outputs are refreshed on a scheduled basis, and processed via github actions - the status of these workflows is available here:
-
-- data refresh [monthly](https://github.com/smnorris/bcfishpass/actions/workflows/production-load-monthly.yaml) / [weekly ](https://github.com/smnorris/bcfishpass/actions/workflows/production-load-weekly.yaml)
-- [weekly model refresh](https://github.com/smnorris/bcfishpass/actions/workflows/production-bcfishpass.yaml)
-
-The weekly model processing workflow generates a file based data package (as geopackage), posted to object storage for public distribution:
-
-- download link: [freshwater_fish_habitat_accessibility_MODEL.gpkg.zip](https://nrs.objectstore.gov.bc.ca/bchamp/freshwater_fish_habitat_accessibility_MODEL.gpkg.zip)
-
-- general metadata: [BC Data Catalogue](https://catalogue.data.gov.bc.ca/dataset/freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
-
-- complete [data dictionary](https://smnorris.github.io/bcfishpass/06_data_dictionary.html#freshwater-fish-habitat-accessibility-model-pacific-salmon-and-steelhead)
-

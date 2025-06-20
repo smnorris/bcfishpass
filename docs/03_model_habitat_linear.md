@@ -51,7 +51,6 @@ Channel width is modelled for all of BC:
 	- *streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions*
 
 
-
 ## Feature type and network connectivity
 
 Before a segment can be modelled as spawning or rearing, segments with suitable gradient and discharge/channel width are further filtered by feature type and network connectivity. These criteria vary by species and life stage:
