@@ -16,8 +16,13 @@ Draft Bull Trout and Westslope Cutthroat Trout models are also included:
 - for Westslope Cutthroat Trout, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
 - for both Bull Trout and Westslope Cutthroat Trout, potential natural barriers are presumed to be passable if any observation(s) of the target species are found upstream
 
-Files included in the distribution are:
+Linear habitat parameters/methods are as specified by the Canadian Wildlife Federation:
 
+- `habitat thresholds <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_thresholds.csv>`_.
+- `watersheds and methods <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_method.csv>`_.`
+
+
+Files included in this distribution are:
 
 crossings (points)
 ============================
