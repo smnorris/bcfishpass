@@ -8,8 +8,8 @@ column,type,description
 ``downstream_route_measure``,`double precision`,The distance (meters) along the blue_line_key from the mouth of the stream/blue_line_key to the feature.
 ``length_metre``,`double precision`,The watershed group code associated with the feature.
 ``waterbody_key``,`integer`,The waterbody key of the waterbody the edge is contained within.
-``wscode``,`ltree`,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.'
-``localcode``,`ltree`,A truncated version of the BC FWA local_watershed_code (trailing zeros removed and '-' replaced with '.'
+``wscode``,`ltree/text`,A truncated version of the BC FWA fwa_watershed_code (trailing zeros removed and '-' replaced with '.')
+``localcode``,`ltree/text`,A truncated version of the BC FWA local_watershed_code (trailing zeros removed and '-' replaced with '.')
 ``gnis_name``,`character varying(80)`,The BCGNIS (BC Geographical Names Information System) name associated with the FWA stream
 ``stream_order``,`integer`,Order of FWA stream
 ``stream_magnitude``,`integer`,Magnitude of FWA stream
