@@ -18,8 +18,8 @@ Draft Bull Trout and Westslope Cutthroat Trout models are also included:
 
 Linear spawning/rearing habitat (intrinsic potential) parameters/methods are as specified by the Canadian Wildlife Federation:
 
-- `habitat thresholds <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_thresholds.csv>`_.
-- `watersheds and methods <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_method.csv>`_.`
+- `habitat thresholds <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_thresholds.csv>`_
+- `watersheds and methods <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_method.csv>`_
 
 Note that while stream discharge (m3/s) is used to model habitat in the Bulkley, Horsefly and Elk River watershed groups, proprietary data
 discharge was used. Discharge data is not provided in these files for those watershed groups.
