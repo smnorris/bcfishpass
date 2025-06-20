@@ -10,6 +10,12 @@ The models included in this distribution are generated as described in the :ref:
 - for steelhead, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
 - for both salmon and steelhead, potential natural barriers with 5 or more upstream observations of any of the target species (``CH, CM, CO, PK, SK, ST``) since January 01, 1990 are presumed to be passable
 
+Draft Bull Trout and Westslope Cutthroat Trout models are also included:
+
+- for Bull Trout, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 25%
+- for Westslope Cutthroat Trout, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
+- for both Bull Trout and Westslope Cutthroat Trout, potential natural barriers are presumed to be passable if any observation(s) of the target species are found upstream
+
 Files included in the distribution are:
 
 
@@ -40,7 +46,7 @@ summary_aw_linear (non-spatial)
 `https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_.
 
 A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
-and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
+and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye), Steelhead, Bull Trout and Westslope Cutthroat Trout.
 The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
 
 .. csv-table::
