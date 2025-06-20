@@ -27,9 +27,15 @@ discharge was used. Discharge data is not provided in these files for those wate
 
 Files included in this data distribution are:
 
+- `bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_
+- `bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_
+- `bcfishpass_summary_aw_linear.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_
+
+Note that draft lateral habitat modelling is not included - this is available on request.
+
+
 crossings (points)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_.
 
 Road-stream crossings (and dams), including: tenure information; barrier status; upstream/downstream habitat lengths
 
@@ -40,7 +46,6 @@ Road-stream crossings (and dams), including: tenure information; barrier status;
 
 streams (lines)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_.
 
 BC FWA stream network, with bcfishpass model classifications.
 
@@ -51,7 +56,6 @@ BC FWA stream network, with bcfishpass model classifications.
 
 summary_aw_linear (non-spatial)
 ============================
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_.
 
 A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
 and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye), Steelhead, Bull Trout and Westslope Cutthroat Trout.
