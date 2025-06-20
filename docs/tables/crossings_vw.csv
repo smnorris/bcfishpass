@@ -1,5 +1,5 @@
 column,type,description
-``aggregated_crossings_id``,`text`,"unique identifier for crossing, generated from stream_crossing_id, modelled_crossing_id + 1000000000, user_barrier_anthropogenic_id + 1200000000, cabd_id"
+``aggregated_crossings_id``,`text`,"unique identifier for crossing, taken from one of PSCIS stream_crossing_id / cabd_id / modelled_crossing_id + 1000000000 / user_barrier_anthropogenic_id + 1200000000"
 ``stream_crossing_id``,`integer`,PSCIS stream crossing unique identifier
 ``dam_id``,`text`,BC Dams unique identifier
 ``user_barrier_anthropogenic_id``,`bigint`,User added misc anthropogenic barriers unique identifier
