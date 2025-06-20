@@ -2,7 +2,7 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method where watershed_group_code != 'ELKR'")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 VALLEY_OUTPUTS = $(patsubst %, data/temp/%/valleys.tif, $(WSG)) 
 LATERAL_OUTPUTS = $(patsubst %, data/temp/%/habitat_lateral.tif, $(WSG)) 
