@@ -217,4 +217,4 @@ column,type,description
 ``wct_rearing_km``,`double precision`,"Upstream length of modelled/observed West Slope Cutthroat Trout Rearing"
 ``wct_spawning_belowupstrbarriers_km``,`double precision`,"Upstream length of modelled/observed West Slope Cutthroat Trout spawning, downstream of any anthropogenic barriers"
 ``wct_rearing_belowupstrbarriers_km``,`double precision`,"Upstream length of modelled/observed West Slope Cutthroat Trout rearing, downstream of any anthropogenic barriers"
-``geom``,`geometry(PointZM,3005)`,"The point geometry associated with the feature"
+``geom``,"`geometry(PointZM,3005)`","The point geometry associated with the feature"
