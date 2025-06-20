@@ -6,7 +6,7 @@ column,type,description
 ``modelled_crossing_id``,`integer`,Modelled crossing unique identifier
 ``crossing_source``,`text`,"Data source for the crossing, one of: {PSCIS; MODELLED CROSSINGS; CABD; MISC BARRIERS}"
 ``crossing_feature_type``,`text`,"Type of feature that crosses the stream one of {DAM; RAIL; ROAD, DEMOGRAPHIC; ROAD, RESOURCE/OTHER; TRAIL; WEIR}"
-``pscis_status``,`text`,"From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED; HABITAT CONFIRMATION; DESIGN; REMEDIATED}""
+``pscis_status``,`text`,"From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED; HABITAT CONFIRMATION; DESIGN; REMEDIATED}"
 ``crossing_type_code``,`text`,"Defines the type of crossing present at the location of the stream crossing. One of: OBS=Open Bottom Structure CBS=Closed Bottom Structure OTHER=Crossing structure does not fit into the above categories (ford/wier)"
 ``crossing_subtype_code``,`text`,"Further definition of the type of crossing. One of {BRIDGE; CRTBOX; DAM; FORD; OVAL; PIPEARCH; ROUND; WEIR; WOODBOX; NULL}"
 ``modelled_crossing_type_source``,`text`,"List of sources that indicate if a modelled crossing is open bottom, one of: {FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order>=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, MANUAL FIX=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}"
