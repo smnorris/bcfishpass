@@ -35,7 +35,7 @@ column,type,description
 ``dam_owner``,`text`,"See CABD dams column: owner"
 ``dam_use``,`text`,"See CABD table dam_use_codes"
 ``dam_operating_status``,`text`,"See CABD dams column dam_operating_status"
-``utm_zone``,`integer`,"UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover "British Columbia, e.g., Zone 10 with a central meridian at -123 degrees.
+``utm_zone``,`integer`,"UTM ZONE is a segment of the Earths surface 6 degrees of longitude in width. The zones are numbered eastward starting at the meridian 180 degrees from the prime meridian at Greenwich. There are five zones numbered 7 through 11 that cover British Columbia, e.g., Zone 10 with a central meridian at -123 degrees."
 ``utm_easting``,`integer`,"UTM EASTING is the distance in meters eastward to or from the central meridian of a UTM zone with a false easting of 500000 meters. e.g., 440698"
 ``utm_northing``,`integer`,"UTM NORTHING is the distance in meters northward from the equator. e.g., 6197826"
 ``dbm_mof_50k_grid``,`character varying(32)`,Map index for field pdfs
