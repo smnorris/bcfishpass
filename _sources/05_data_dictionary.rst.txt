@@ -39,7 +39,8 @@ summary_aw_linear (non-spatial)
 ============================
 `https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_.
 
-A FWA Assessment Watershed level summary report of habitat and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
+A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
+and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
 The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
 
 .. csv-table::
