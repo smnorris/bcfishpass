@@ -34,7 +34,7 @@ Files included in this data distribution are:
 Note that draft lateral habitat modelling is not included - this is available on request.
 
 
-crossings (points)
+`crossings <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_ (points)
 ============================
 
 Road-stream crossings (and dams), including: tenure information; barrier status; upstream/downstream habitat lengths
@@ -44,7 +44,7 @@ Road-stream crossings (and dams), including: tenure information; barrier status;
    :header-rows: 1
 
 
-streams (lines)
+`streams <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_ (lines)
 ============================
 
 BC FWA stream network, with bcfishpass model classifications.
@@ -54,7 +54,7 @@ BC FWA stream network, with bcfishpass model classifications.
    :header-rows: 1
 
 
-summary_aw_linear (non-spatial)
+`summary_aw_linear <https://nrs.objectstore.gov.bc.ca/bchamp/summary_aw_linear.csv>`_ (non-spatial)
 ============================
 
 A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
