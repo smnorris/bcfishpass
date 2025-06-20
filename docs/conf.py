@@ -22,7 +22,7 @@ copyright = '2024, bcfishpass contributors'
 author = 'Simon Norris, bcfishpass contributors'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.5.2'
+release = 'v0.6.0'
 
 
 # -- General configuration ---------------------------------------------------
