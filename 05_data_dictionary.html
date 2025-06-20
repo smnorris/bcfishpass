@@ -96,72 +96,6 @@
 <h2>crossings (points)<a class="headerlink" href="#crossings-points" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip">https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip</a>.</p>
 <p>Road-stream crossings (and dams), including: tenure information; barrier status; upstream/downstream habitat lengths</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>column</p></th>
-<th class="head"><p>type</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">aggregated_crossings_id</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>unique identifier for crossing, taken from one of PSCIS stream_crossing_id / cabd_id / modelled_crossing_id + 1000000000 / user_barrier_anthropogenic_id + 1200000000</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stream_crossing_id</span></code></p></td>
-<td><p><cite>integer</cite></p></td>
-<td><p>PSCIS stream crossing unique identifier</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dam_id</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>BC Dams unique identifier</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user_barrier_anthropogenic_id</span></code></p></td>
-<td><p><cite>bigint</cite></p></td>
-<td><p>User added misc anthropogenic barriers unique identifier</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">modelled_crossing_id</span></code></p></td>
-<td><p><cite>integer</cite></p></td>
-<td><p>Modelled crossing unique identifier</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">crossing_source</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>Data source for the crossing, one of: {PSCIS; MODELLED CROSSINGS; CABD; MISC BARRIERS}</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">crossing_feature_type</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>Type of feature that crosses the stream one of {DAM; RAIL; ROAD, DEMOGRAPHIC; ROAD, RESOURCE/OTHER; TRAIL; WEIR}</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pscis_status</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>From PSCIS, the current_pscis_status of the crossing, one of: {ASSESSED; HABITAT CONFIRMATION; DESIGN; REMEDIATED}</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">crossing_type_code</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>Defines the type of crossing present at the location of the stream crossing. One of: OBS=Open Bottom Structure CBS=Closed Bottom Structure OTHER=Crossing structure does not fit into the above categories (ford/wier)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">crossing_subtype_code</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>Further definition of the type of crossing. One of {BRIDGE; CRTBOX; DAM; FORD; OVAL; PIPEARCH; ROUND; WEIR; WOODBOX; NULL}</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">modelled_crossing_type_source</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>List of sources that indicate if a modelled crossing is open bottom, one of: {FWA_EDGE_TYPE=double line river, FWA_STREAM_ORDER=stream order&gt;=6, GBA_RAILWAY_STRUCTURE_LINES_SP=railway structure, MANUAL FIX=manually identified OBS, MOT_ROAD_STRUCTURE_SP=MoT structure, TRANSPORT_LINE_STRUCTURE_CODE=DRA structure}</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_status</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. One of: {PASSABLE - Passable; POTENTIAL - Potential or partial barrier; BARRIER - Barrier; UNKNOWN - Other}</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pscis_road_name</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>PSCIS road name, taken from the PSCIS assessment data submission</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pscis_stream_name</span></code></p></td>
-<td><p><cite>text</cite></p></td>
-<td><p>PSCIS stream name, taken from the PSCIS assessment data submission</p></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="streams-lines">
 <h2>streams (lines)<a class="headerlink" href="#streams-lines" title="Link to this heading"></a></h2>
@@ -485,7 +419,7 @@ The report summarizes total modelled naturally accessible length per species, an
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, bcfishpass contributors.</p>
+    <p>&#169; Copyright 2025, bcfishpass contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
