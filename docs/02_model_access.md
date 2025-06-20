@@ -1,5 +1,5 @@
 (access)=
-# Access model
+# Methods - model access
 
 `bcfishpass` is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration. 
 

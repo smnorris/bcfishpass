@@ -1,5 +1,5 @@
 (linear_habitat)=
-# Linear spawning/rearing habitat model
+# Methods - model linear spawning/rearing habitat
 
 Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of potential spawning or rearing habitat is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, `bcfishpass` can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).
 
