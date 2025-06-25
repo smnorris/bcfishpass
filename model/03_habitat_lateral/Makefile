@@ -109,7 +109,7 @@ $(VALLEY_OUTPUTS): valley_confinement.py
 	python valley_confinement.py -wsg $(WSG) -o $@ -d data/temp/$(WSG)
 
 # run lateral analysis for each watershed group
-$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
+$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
 	$(eval WSG=$(patsubst data/temp/%/habitat_lateral.tif,%,$@))
 	python habitat_lateral.py $(WSG) -o $@ -d data/temp/$(WSG)
 

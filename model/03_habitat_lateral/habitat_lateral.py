@@ -355,6 +355,8 @@ def load_rasters(db, watershed_group_code, data_path="data"):
                 meta["bounds"][3],
                 src.transform,
             ),
+            boundless=True,
+            fill_value=0
         )
     # extract only urban (50) areas
     rasters["urban_esa"] = numpy.where(rasters["urban_esa"] == 50, 1, 0)
