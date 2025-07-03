@@ -101,21 +101,21 @@ LATERAL_SOURCES = {
       or
       (
         (
-        h.spawning_ch is true or
-        h.spawning_co is true or
-        h.spawning_sk is true or
-        h.spawning_st is true or
-        h.spawning_pk is true or
-        h.spawning_cm is true or
-        h.rearing_ch is true or
-        h.rearing_co is true or
-        h.rearing_sk is true or
-        h.rearing_st is true or
+        h.spawning_ch > 0 or
+        h.spawning_co > 0 or
+        h.spawning_sk > 0 or
+        h.spawning_st > 0 or
+        h.spawning_pk > 0 or
+        h.spawning_cm > 0 or
+        h.rearing_ch > 0 or
+        h.rearing_co > 0 or
+        h.rearing_sk > 0 or
+        h.rearing_st > 0 or
         
-        h.spawning_bt is true or
-        h.rearing_bt is true or
-        h.spawning_wct is true or
-        h.rearing_wct is true
+        h.spawning_bt > 0 or
+        h.rearing_bt > 0 or
+        h.spawning_wct > 0 or
+        h.rearing_wct > 0
         )
       )
     );""",
@@ -355,6 +355,8 @@ def load_rasters(db, watershed_group_code, data_path="data"):
                 meta["bounds"][3],
                 src.transform,
             ),
+            boundless=True,
+            fill_value=0
         )
     # extract only urban (50) areas
     rasters["urban_esa"] = numpy.where(rasters["urban_esa"] == 50, 1, 0)
