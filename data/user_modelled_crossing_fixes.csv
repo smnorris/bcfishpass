@@ -21154,3 +21154,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 14000551,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
 14001301,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
 14001376,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream digitized incorrectly, feature doesn't exist"
+14000622,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000614
+14000726,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000725
+14000933,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000949
+14000480,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,streams converge upstream of road
+14000864,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000865
