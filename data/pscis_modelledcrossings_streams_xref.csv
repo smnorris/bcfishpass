@@ -3445,7 +3445,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197642,1805455,,BULK,NJO,Matched to clossest Crossing
 197643,1805183,,BULK,NJO,Matched to clossest Crossing
 197644,1803661,,BULK,NJO,Matched to clossest Crossing
-197645,1800472,,BULK,NJO,Matched to clossest Crossing
 197646,1802520,,BULK,NJO,Matched to clossest Crossing
 197647,1804986,,BULK,NJO,Matched to clossest Crossing
 197648,1804154,,BULK,NJO,Matched to clossest Crossing
@@ -3589,8 +3588,12 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 51655,6303966,,HARR,LB,matched to modelled crossing based on rail barrier / imagery review
 51859,10305165,,LFRA,LB,matched to modelled crossing based on rail barrier / imagery review
 199251,13905581,,MORK,LB,matched to modelled crossing based on rail barrier / imagery review
+<<<<<<< HEAD
 197978,14000935,,MORR,LB,
 197986,14000498,,MORR,LB,
 197990,14000490,,MORR,LB,
 198073,14000322,,MORR,LB,
 198006,14001080,,MORR,LB,
+=======
+197645,1805185,,BULK,LS,Matched to modelled crossing based GIS review.
+>>>>>>> main
