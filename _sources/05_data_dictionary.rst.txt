@@ -83,4 +83,4 @@ Migration paths between modelled spawning/rearing in PSE Conservation Units and 
 
 Note that ``segmented_stream_id`` is based on FWA ``blue_line_key`` and ``downstream_route_measure`` for a given segment.
 When the segmentation by bcfishpass modelling changes, the ``segmented_stream_id`` will also change. When joining the migration paths
-to `streams`, ensure both files were generated from the same model run.
+to ``streams``, ensure both files were generated from the same model run.
