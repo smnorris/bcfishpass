@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# dump CU migration paths to file (this takes some time)
+spp="ch cm co pk sk st"
+
+sql="
+with hab as (
+  select distinct
+    s.segmented_stream_id,
+    s.linear_feature_id,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    cu.cuid::integer
+  from bcfishpass.streams s
+  join dfo.pse_conservation_units_streams cu using (linear_feature_id)
+  join bcfishpass.habitat_linear_:sp h using (segmented_stream_id)
+)
+
+select distinct
+  a.segmented_stream_id,
+  a.linear_feature_id,
+  b.cuid
+from bcfishpass.streams a
+inner join hab b on fwa_upstream(
+  a.blue_line_key, a.downstream_route_measure, a.wscode_ltree, a.localcode_ltree,
+  b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
+  true
+order by 
+  linear_feature_id,
+  segmented_stream_id,
+  cuid;
+"
+
+for sp in $spp; do
+  echo "Dumping migration paths for $sp"
+  $PSQL -c "${sql//:sp/$sp}" --csv | gzip | aws s3 cp - s3://$BUCKET/cu_migrationpaths_$sp.csv.gz --acl public-read
+done
