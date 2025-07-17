@@ -69,12 +69,12 @@ pse_migration_paths (non-spatial)
 =================================
 Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
 
-| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz>`_
-| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz>`_
-| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz>`_
-| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz>`_
-| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz>`_
-| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_ch.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_cm.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_co.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_pk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_sk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_st.csv.gz>`_
 
 
 .. csv-table::
