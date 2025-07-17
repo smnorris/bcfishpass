@@ -64,3 +64,23 @@ The report summarizes total modelled naturally accessible length per species, an
 .. csv-table::
    :file: tables/summary_aw_linear.csv
    :header-rows: 1
+
+pse_migration_paths (non-spatial)
+=================================
+Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
+
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz>`_
+
+
+.. csv-table::
+   :file: tables/cu_migration_paths.csv
+   :header-rows: 1
+
+Note that ``segmented_stream_id`` is based on FWA ``blue_line_key`` and ``downstream_route_measure`` for a given segment.
+When the segmentation by bcfishpass modelling changes, the ``segmented_stream_id`` will also change. When joining the migration paths
+to `streams`, ensure both files were generated from the same model run.
