@@ -53,6 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#crossings-points">crossings (points)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#streams-lines">streams (lines)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#summary-aw-linear-non-spatial">summary_aw_linear (non-spatial)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pse-migration-paths-non-spatial">pse_migration_paths (non-spatial)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="06_credits.html">Credits</a></li>
@@ -1617,6 +1618,21 @@ The report summarizes total modelled naturally accessible length per species, an
 </tr>
 </tbody>
 </table>
+</section>
+<section id="pse-migration-paths-non-spatial">
+<h2>pse_migration_paths (non-spatial)<a class="headerlink" href="#pse-migration-paths-non-spatial" title="Link to this heading"></a></h2>
+<p>Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.</p>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz">https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_ch.csv.gz</a></div>
+<div class="line"><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz">https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_cm.csv.gz</a></div>
+<div class="line"><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz">https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_co.csv.gz</a></div>
+<div class="line"><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz">https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_pk.csv.gz</a></div>
+<div class="line"><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz">https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_sk.csv.gz</a></div>
+<div class="line"><a class="reference external" href="https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz">https://nrs.objectstore.gov.bc.ca/bchamp/cu_migration_paths_st.csv.gz</a></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">segmented_stream_id</span></code> is based on FWA <code class="docutils literal notranslate"><span class="pre">blue_line_key</span></code> and <code class="docutils literal notranslate"><span class="pre">downstream_route_measure</span></code> for a given segment.
+When the segmentation by bcfishpass modelling changes, the <code class="docutils literal notranslate"><span class="pre">segmented_stream_id</span></code> will also change. When joining the migration paths
+to <cite>streams</cite>, ensure both files were generated from the same model run.</p>
 </section>
 </section>
 
