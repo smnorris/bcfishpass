@@ -18,7 +18,7 @@ with hab as (
     s.localcode_ltree,
     cu.cuid::integer
   from bcfishpass.streams s
-  join dfo.pse_conservation_units_streams cu using (linear_feature_id)
+  join psf.pse_conservation_units_streams cu using (linear_feature_id)
   join bcfishpass.habitat_linear_:sp h using (segmented_stream_id)
 )
 
@@ -31,11 +31,11 @@ inner join hab b on fwa_upstream(
   a.blue_line_key, a.downstream_route_measure, a.wscode_ltree, a.localcode_ltree,
   b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
   true
+)
 order by 
   linear_feature_id,
-  segmented_stream_id
-  cuid;
-"
+  segmented_stream_id,
+  cuid"
 
 for sp in $spp; do
   echo "Dumping migration paths for $sp"
