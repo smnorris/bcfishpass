@@ -29,6 +29,16 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Install azcli
+        run:  |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+      - name: Install azcopy
+        run:  |
+          curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+          dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          apt-get update
+          apt-get install azcopy
       - name: Configure SSH
         run: |
           apt-get update
@@ -47,7 +57,7 @@ jobs:
           chmod 600 .ssh/config
           ssh-keyscan -H $SSH_HOST >> .ssh/known_hosts
           chmod 600 .ssh/known_hosts
-      - name: Release
+      - name: Dump CWF crossings/streams to object storage/blob storage
         run: |
           nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd &
           sleep 5
