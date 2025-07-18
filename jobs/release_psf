@@ -33,7 +33,7 @@ inner join hab b on fwa_upstream(
   true
 order by 
   linear_feature_id,
-  segmented_stream_id,
+  segmented_stream_id
   cuid;
 "
 
