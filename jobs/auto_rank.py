@@ -223,9 +223,13 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
             from bcfishpass.crossings_wcrp_vw cv
             join bcfishpass.crossings c 
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
+            left join wcrp_{wcrp_schema}.combined_tracking_table_{wcrp_schema} tt
+		        on tt.barrier_id = cv.aggregated_crossings_id
             where cv.barrier_status != 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND cv.all_spawningrearing_km  != 0
+            AND (tt.structure_list_status not in ('Rehabilitated barrier', 'Excluded structure')
+		        OR tt.structure_list_status is null)
             AND {condition};
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
@@ -490,8 +494,8 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
 
             DELETE 
             FROM bcfishpass.wcrp_ranked_barriers r
-            USING bcfishpass.crossings_wcrp_vw cv, bcfishpass.crossings c
-            WHERE r.aggregated_crossings_id = c.aggregated_crossings_id
+            USING bcfishpass.crossings c
+	        WHERE r.aggregated_crossings_id = c.aggregated_crossings_id
             AND {condition};
 
             INSERT INTO bcfishpass.wcrp_ranked_barriers
