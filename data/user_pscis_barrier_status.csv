@@ -1031,7 +1031,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 123933,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123934,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123935,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-123937,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123938,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123941,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123944,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1277,7 +1276,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50179,PASSABLE,ELKR,NMW,2021-01-01,Manual review
 50186,PASSABLE,ELKR,NMW,2021-01-01,Manual review; deactivated
 50174,PASSABLE,ELKR,NMW,2021-01-01,Manual review; deactivated
-57596,PASSABLE,HORS,NMW,2021-01-01,"Field assessment, no structure"
 57470,PASSABLE,HORS,NMW,2021-01-01,"Actually a PSCIS location issue, but temporary fix for Horsefly workshop updates"
 197763,PASSABLE,HORS,TMK,2022-11-28,ford
 197761,PASSABLE,HORS,TMK,2022-11-28,ford crossing
