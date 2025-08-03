@@ -1353,3 +1353,4 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 6718,PASSABLE,NATR,LS,2025-07-04,"This crossing has been replaced with a bridge, based on aerial imagery review."
 57596,BARRIER,HORS,MC,2025-07-25,Collapsed bridge has created log jam that is barrier to fish passage
 123937,POTENTIAL,HORS,MC,2025-07-25,Collapsed woodbox culvert is classified as a potential barrier
+195476,POTENTIAL,BULK,LB,2025-07-31,PSCIS notes (2014) indicate blockage at outlet
