@@ -183,7 +183,7 @@ with weighted_matches as
       else distance_to_stream
     end as weighted_distance
   from bcfishpass.pscis_streams_150m
- --filter out records that are obvious bad matches
+ -- filter out records that are obvious bad matches
   where 
     name_score != -100 and
     width_order_score != -100 and 

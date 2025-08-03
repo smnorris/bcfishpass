@@ -654,7 +654,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 57473,,,HORS,,
 57474,6802114,,HORS,,
 57475,6801673,,HORS,,
-57476,6801654,,HORS,,
+57476,,701424716,HORS,,
 57477,6801836,,HORS,,
 57478,6801835,,HORS,,
 57479,6800117,,HORS,NJO,Matched to closest stream model (Manual Review)
@@ -2469,7 +2469,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 124266,,,HORS,,
 124267,6800049,,HORS,NJO,Matched to closest stream model (Manual Review)
 124268,6800048,,HORS,,
-124269,6800203,,HORS,,
+124269,,701412287,HORS,,
 124270,6800543,,HORS,,
 124271,,701422177,HORS,MC,matched to nearest stream
 124272,,701420393,HORS,MC,"matched to nearest stream, modelled crossing no longer exists"
