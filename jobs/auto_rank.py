@@ -225,12 +225,14 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
             left join wcrp_{wcrp_schema}.combined_tracking_table_{wcrp_schema} tt
 		        on tt.barrier_id = cv.aggregated_crossings_id
-            where cv.barrier_status != 'PASSABLE'
+            where (cv.barrier_status != 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND cv.all_spawningrearing_km  != 0
-            AND (tt.structure_list_status not in ('Rehabilitated barrier', 'Excluded structure')
+            AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL'))
+            AND (tt.structure_list_status not in ('Excluded structure')
 		        OR tt.structure_list_status is null)
-            AND {condition};
+            AND {condition})
+            OR tt.structure_list_status = 'Rehabilitated barrier';
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;

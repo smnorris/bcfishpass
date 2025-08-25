@@ -53,15 +53,15 @@ SELECT
   p.current_crossing_subtype_code,
   p.current_barrier_result_code
 FROM bcfishpass.pscis_modelledcrossings_streams_xref lut
-INNER JOIN bcfishpass.modelled_stream_crossings m
-ON lut.modelled_crossing_id = m.modelled_crossing_id
+LEFT OUTER JOIN bcfishpass.modelled_stream_crossings m  -- left join because some modelled crossings may disappear
+ON lut.modelled_crossing_id = m.modelled_crossing_id    -- as road mapping changes (but PSCIS should still come through)
 INNER JOIN bcfishpass.pscis_points_all p
 ON lut.stream_crossing_id = p.stream_crossing_id
-INNER JOIN whse_basemapping.fwa_stream_networks_sp s
-ON m.linear_feature_id = s.linear_feature_id
+LEFT OUTER JOIN whse_basemapping.fwa_stream_networks_sp s  -- again, left join just in case the modelled crossing in the
+ON m.linear_feature_id = s.linear_feature_id               -- fix table no longer exists
 LEFT OUTER JOIN whse_fish.pscis_habitat_confirmation_svw hc
 ON lut.stream_crossing_id = hc.stream_crossing_id
-WHERE lut.modelled_crossing_id IS NOT NULL  -- this is implicit with the inner join on modelled_crossing_id, make it explicit here
+WHERE lut.modelled_crossing_id IS NOT NULL
 ),
 
 -- Get PSCIS points linked to streams, finding measure of PSCIS point
@@ -183,7 +183,7 @@ with weighted_matches as
       else distance_to_stream
     end as weighted_distance
   from bcfishpass.pscis_streams_150m
- --filter out records that are obvious bad matches
+ -- filter out records that are obvious bad matches
   where 
     name_score != -100 and
     width_order_score != -100 and 
