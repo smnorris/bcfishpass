@@ -1,4 +1,6 @@
-# Credits
+# Credits and Database License
+
+## Credits
 
 These tools are made possible by the work and funding of the following groups:
 
@@ -16,3 +18,8 @@ With additional funding from:
 - [BC Salmon Restoration and Innovation Fund (BCSRIF)](https://www.dfo-mpo.gc.ca/fisheries-peches/initiatives/fish-fund-bc-fonds-peche-cb/index-eng.html)
 - [Canada Nature Fund for Aquatic Species at Risk (CNFASAR)](https://www.dfo-mpo.gc.ca/species-especes/sara-lep/cnfasar-fnceap/index-eng.html)
 - BC Ministry of Transportation and Infrastructure
+
+## Database license
+
+`bcfishpass` is is made available under the [Open Database License](http://opendatacommons.org/licenses/odbl/1.0/). 
+Any rights in individual contents of the database are licensed under the [Database Contents License](http://opendatacommons.org/licenses/dbcl/1.0/)
