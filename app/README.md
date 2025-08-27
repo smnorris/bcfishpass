@@ -1,6 +1,8 @@
 # Draft bcfishpass web map
 
-Basic mapbox gl style for displaying output `streams` and `crossings`
+A proof of concept mapbox/maplibre gl style for displaying output `streams` and `crossings`.
+
+*Not maintained, requires updates to reflect bcfishpass data model changes.*
 
 Requires MVT served from `tiles.hillcrestge.ca/bcfishpass`
 
