@@ -3599,3 +3599,8 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198795,,,PARS,AI,not on mapped stream
 198819,,,PARS,AI,not on mapped stream
 6828,,,PARS,AI,not on mapped stream
+196251,19700273,,TABR,LS,PSCIS 196251 not tied to a modelled crossed when modelled crossing 19700273 is present. 
+126194,24403174,,WILL,LS,Matched to correct modelled crossing based GIS review.
+126221,24403277,,WILL,LS,Matched to correct modelled crossing based GIS review.
+126247,24403670,,WILL,LS,Matched to correct modelled crossing based GIS review.
+196329,24403425,,WILL,LS,Matched to correct modelled crossing based GIS review.

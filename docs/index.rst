@@ -27,4 +27,4 @@ The ``bcfishpass`` database:
    03_model_habitat_linear
    04_model_habitat_lateral
    05_data_dictionary
-   06_credits
+   06_credits_license
