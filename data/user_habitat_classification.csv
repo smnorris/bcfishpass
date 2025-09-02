@@ -2381,10 +2381,6 @@
 360675895,1543,5419,KUMR,PK,spawning,t,TMK,2022-09-02,spawning_pk_cc(PSF),
 360851089,0,2142,KUMR,PK,spawning,t,TMK,2022-09-02,spawning_pk_cc(PSF),
 360809839,0,796,KUMR,PK,spawning,t,TMK,2022-09-02,spawning_pk_cc(PSF),
-360779258,4147,10249.59828,BULK,CO,spawning,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
-360779258,4147,13721.00598,BULK,CO,rearing,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
-360779258,4147,6225,BULK,CH,rearing,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
-360779258,4147,6225,BULK,ST,rearing,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
 360631149,0,72,BULK,ST,rearing,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
 360850879,0,199,BULK,CO,rearing,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
 360772470,498,4248.804313,BULK,ST,rearing,f,TMK,2022-12-21,New Graph Environment Ltd. Assessment,
@@ -15359,3 +15355,68 @@
 356302756,990,1293.058495,SHUL,CO,rearing,f,LS,2025-03-11,Thompson Shuswap WCRP,Limited habitat values and short habitat gain.
 356361820,499,1215.584356,BONP,CO,rearing,f,LS,2025-03-11,Thompson Shuswap WCRP,Gradient barrier identified downstream
 356292659,822,1472,BONP,CO,rearing,f,LS,2025-03-11,Thompson Shuswap WCRP,No habitat in its current state. Runs through farm. Rainbow Trout records usptream.
+356361158,0,3356,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Channel becomes more steep and confined at 3.8km mark.  Suggestion that sockeye spawning is not suitable beyond this point.
+356361497,3710,5000,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,No barriers identified. Sockeye spawning habitat expected to reach 5km upstream from mouth according to WSP report.  Watercourse described as small.
+356354313,2846,3386,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,"Waterbody described as confined with an increased gradient 1.5km upstream from the mouth.  Sockeye spawning suggested to occur in first 1.5km, but 3.2km is confirmed accessible."
+356309155,703,1200,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye suggested to use only lower 500m of waterbody.
+356363562,831,1930,DRIR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning suggested to extend 1.8km upstream
+356362032,26400,28648,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,WSP report suggests that sockeye spawning is limited to the first 0.5km upstream from Takla Lake. Update waterbody name.
+356353731,81986,102342,DRIR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning expected to reach 91.8km upstream from mouth.
+356356811,45885,52386,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,WSP report suggest sockeye spawning to extend 20km upstream from mout at Takla Lake.
+356352148,3634,4405,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Report suggest sockeye spawning limited to lower 3km of stream.
+356361629,64,164,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Report suggest sockeye spawning limited to lower 3km of stream.
+356348849,5880,23769,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,No barriers or falls identified.  Suggestion states sockeye likely use the lower 24km of stream
+356348849,5880,23769,TAKL,SK,Rearing,t,MC,2025-06-04,WSP report/Workshop,No barriers or falls identified.  Suggestion states sockeye likely use the lower 24km of stream
+356359980,4242,8314,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,"The channel is described as being within a confined gully, and sockeye may not be able to access 8.4km upstream/to falls barrier."
+356348492,3430,4441,DRIR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning only suggested to travel 4.5km upstream from mouth.
+356362330,0,567,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,sockeye spawning expected to be accessible 3.5km upstram from mouth.
+356357829,7673,20029,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye habitat suggested to extended 20km upstream from mouth.
+356343575,23919,27399,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye expected to travel 6km upstream to beaver dams.
+356360623,0,7081,MIDR,SK,Spawning,t,MC,2025-06-04,Workshop,"  Fish historically reached Natazutlo Lake, located further upstream of existing barrier."
+356360623,0,7081,MIDR,CH,Spawning,t,MC,2025-06-04,Workshop,"  Fish historically reached Natazutlo Lake, located further upstream of existing barrier."
+356330991,875,1576,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Numerous falls identified 0.6-0.8km upstream.  Channel in a confined gully and its suggested that sockeye only use first 200m.
+356361369,0,4205,UTRE,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning suggested to extend 4km upstream from confuence with Tildesley Creek.
+356272780,784,1918,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Habitat quality described as low due to steepness.  Lower 50m is likely on suitable for sockeye.
+356234954,1408,1818,LCHL,co,rearing,f,LB,2025-06-04,Cornice Assessment,"Source indicates likely too far from river for CHr, could be up to 8 km ATV access.  Only modeled habitat is in very dry looking wetlands. Unlikely to support salmon"
+356234954,2130,2276,LCHL,co,rearing,f,LB,2025-06-04,Cornice Assessment,"Source indicates likely too far from river for CHr, could be up to 8 km ATV access.  Only modeled habitat is in very dry looking wetlands. Unlikely to support salmon"
+356119629,0,442,LFRA,co,spawning,t,LB,2025-06-04,Cornice Assessment,adding coho spawning habitat based on source from alouette river indicating coho are spawning in the area.
+356076218,0,2079,LFRA,co,rearing,f,LB,2025-06-04,Cornice Assessment,"habitat mapped incorrectly, should be on 356207410"
+356207410,0,369,LFRA,co,rearing,t,LB,2025-06-04,Cornice Assessment,habitat mapped incorrectly on 356076218
+356357913,0,774,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,1311,3713,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,3768,4501,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,4623,4750,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,4853,7169,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,7230,7706,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,7885,8068,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356357913,8300,10197,SAJR,co,rearing,f,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
+356356211,19649,24428,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356356211,24453,29483,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356331242,0,1173,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356319912,272,409,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356319912,495,516,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356336200,0,335,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356348655,0,355,WILL,co,rearing,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356356211,2068,22265,WILL,co,spawning,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356356211,22565,24428,WILL,co,spawning,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+356356211,24453,24686,WILL,co,spawning,f,LB,2025-06-04,Cornice Assessment,No habitat upstream of Dam at outlet of Eaglet Lake
+360814097,1309,1653,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360780473,0,882,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360857931,98,738,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360857931,1002,1664,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360775039,2373,3231,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360824896,0,458,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360775039,0,650,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360885021,23505,25240,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360885021,21889,23405,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360885021,17319,21789,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360880257,0,457,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360880257,1094,2477,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360880257,3033,4132,MORR,co,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360873880,246,747,MORR,ch,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360887063,0,15704,MORR,ch,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360887063,21568,21649,MORR,ch,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360885316,0,36576,MORR,ch,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+360885021,0,9773,MORR,ch,spawning,t,LB,2025-07-02,Pacific Salmon Explorer - Skeena Spawning Lines,
+356343490,11318,12247,HORS,co,rearing,f,MC,2025-08-13,Biologst review,
+356363270,1193,1393,HORS,co,rearing,t,MC,2025-08-13,Biologst review,

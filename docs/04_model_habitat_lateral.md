@@ -1,4 +1,4 @@
-## Lateral habitat model (DRAFT)
+## Model lateral habitat (DRAFT)
 
 A raster based model is used to roughly approximate floodplains and off-channel habitat, quantify the level of potential fragmentation by road-stream crossings, and identify areas for potential field assessment.
 

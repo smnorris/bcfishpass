@@ -2,7 +2,7 @@
 
 PSQL=psql $(DATABASE_URL) -v ON_ERROR_STOP=1
 TMP=/tmp
-WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method where watershed_group_code != 'ELKR'")
+WSG = $(shell $(PSQL) -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 VALLEY_OUTPUTS = $(patsubst %, data/temp/%/valleys.tif, $(WSG)) 
 LATERAL_OUTPUTS = $(patsubst %, data/temp/%/habitat_lateral.tif, $(WSG)) 
@@ -109,7 +109,7 @@ $(VALLEY_OUTPUTS): valley_confinement.py
 	python valley_confinement.py -wsg $(WSG) -o $@ -d data/temp/$(WSG)
 
 # run lateral analysis for each watershed group
-$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) habitat_lateral.py data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
+$(LATERAL_OUTPUTS): $(VALLEY_OUTPUTS) data/esa_bc.tif .make/cwb_floodplains_bc_area_svw
 	$(eval WSG=$(patsubst data/temp/%/habitat_lateral.tif,%,$@))
 	python habitat_lateral.py $(WSG) -o $@ -d data/temp/$(WSG)
 

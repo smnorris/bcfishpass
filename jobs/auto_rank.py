@@ -30,7 +30,8 @@ def makeParser():
             "bessette",
             "bela_atna_necl",
             "bowr_ques_carr",
-            "tuzistol_tah"
+            "tuzistol_tah",
+            "morr"
         ],
         nargs=1,
         type=str,
@@ -222,10 +223,16 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
             from bcfishpass.crossings_wcrp_vw cv
             join bcfishpass.crossings c 
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
-            where cv.barrier_status != 'PASSABLE'
+            left join wcrp_{wcrp_schema}.combined_tracking_table_{wcrp_schema} tt
+		        on tt.barrier_id = cv.aggregated_crossings_id
+            where (cv.barrier_status != 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND cv.all_spawningrearing_km  != 0
-            AND {condition};
+            AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL'))
+            AND (tt.structure_list_status not in ('Excluded structure')
+		        OR tt.structure_list_status is null)
+            AND {condition})
+            OR tt.structure_list_status = 'Rehabilitated barrier';
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;
@@ -489,8 +496,8 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
 
             DELETE 
             FROM bcfishpass.wcrp_ranked_barriers r
-            USING bcfishpass.crossings_wcrp_vw cv, bcfishpass.crossings c
-            WHERE r.aggregated_crossings_id = c.aggregated_crossings_id
+            USING bcfishpass.crossings c
+	        WHERE r.aggregated_crossings_id = c.aggregated_crossings_id
             AND {condition};
 
             INSERT INTO bcfishpass.wcrp_ranked_barriers

@@ -75,7 +75,8 @@ SELECT
   true as rearing
 FROM bcfishpass.streams s
 -- ensure stream is modelled as spawning and accessible
-INNER JOIN bcfishpass.habitat_linear_bt h on s.segmented_stream_id = h.segmented_stream_id
+left outer join bcfishpass.habitat_linear_bt h on s.segmented_stream_id = h.segmented_stream_id
+left outer join bcfishpass.streams_habitat_known_vw kh on s.segmented_stream_id = kh.segmented_stream_id
 left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
 left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -83,6 +84,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.wate
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'BT'
 WHERE
   s.watershed_group_code = :'wsg' AND
+  (h.spawning IS TRUE or kh.spawning_bt IS TRUE) AND -- is either modelled or observed spawning
   s.gradient <= t.rear_gradient_max AND         -- gradient check
   (
     ( -- channel width based model
@@ -174,8 +176,9 @@ rearing_clusters_dnstr_of_spawn AS
   ON FWA_Upstream(s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree, st.blue_line_key, st.downstream_route_measure, st.wscode_ltree, st.localcode_ltree)
   -- OR, if we are at/near a confluence (<10m measure), also consider stream upstream from the confluence
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, st.wscode_ltree, st.localcode_ltree))
-  INNER JOIN bcfishpass.habitat_linear_bt h on st.segmented_stream_id = h.segmented_stream_id
-  WHERE h.spawning IS TRUE
+  left outer join bcfishpass.habitat_linear_bt h on st.segmented_stream_id = h.segmented_stream_id
+  left outer join bcfishpass.streams_habitat_known_vw kh on st.segmented_stream_id = kh.segmented_stream_id
+  WHERE (h.spawning IS TRUE or kh.spawning_bt IS TRUE)
   AND st.watershed_group_code = :'wsg'
 )
 
@@ -271,12 +274,16 @@ downstream AS
     s.localcode_ltree,
     s.downstream_route_measure,
     s.gradient,
-    h.spawning,
+    case
+      when coalesce(h.spawning, false) IS TRUE OR coalesce(hk.spawning_bt, false) IS TRUE then true
+      else false
+    end as spawning,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
   FROM bcfishpass.streams s
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   LEFT OUTER JOIN bcfishpass.habitat_linear_bt h ON s.segmented_stream_id = h.segmented_stream_id
+  LEFT OUTER JOIN bcfishpass.streams_habitat_known_vw hk ON s.segmented_stream_id = hk.segmented_stream_id
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
   AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),

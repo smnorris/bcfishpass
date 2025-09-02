@@ -21115,3 +21115,504 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24739480,FORD,LTRE,LB,2025-04-29,imagery review,
 12600749,OBS,LTRE,LB,2025-04-29,imagery review,
 24200013,FORD,LTRE,LB,2025-04-29,imagery review,
+19300028,NONE,STUL,LB,2025-05-16,rail barrier / imagery review,
+22201986,NONE,UFRA,LB,2025-05-16,rail barrier / imagery review,this is a duplicate of crossing 24740189
+24706519,CBS,ELKR,MC,2025-05-13,EDF planning call,
+24700319,NONE,DRIR,MC,2025-06-04,Workshop,Feature rehabilitated and no longer exists.
+10305085,NONE,LFRA,LB,2025-06-04,Cornice Assessment,duplicate of 10305197
+24750697,NONE,LFRA,LB,2025-06-04,Cornice Assessment,No crossing here - stream rerouted to ditch on upstream side of rail line
+10305120,NONE,LFRA,LB,2025-06-04,Cornice Assessment,No crossing here - stream rerouted to ditch on upstream side of rail line
+24750165,NONE,LFRA,LB,2025-06-04,Cornice Assessment,No crossing here - stream rerouted to ditch on upstream side of rail line
+24750696,NONE,LFRA,LB,2025-06-04,Cornice Assessment,No crossing here - stream rerouted to ditch on upstream side of rail line
+24703316,CBS,TABR,LB,2025-06-04,Cornice Assessment,
+12401289,NONE,LSKE,LB,2025-06-04,Cornice Assessment,Skeena Fisheries Commission decommissioned in 2008. Remove crossing
+24731137,FORD,MORR,LB,2025-07-02,Satellite imagery review,"this appears to be a ford in satellite imagery,"
+24702198,NONE,MORR,LB,2025-07-02,Satellite imagery review,no road or stream visible
+14001377,NONE,MORR,LB,2025-07-02,Satellite imagery review,stream appears to be digitized incorrectly.  Stream flows through feature 14001231.
+14000942,NONE,MORR,LB,2025-07-02,Satellite imagery review,stream appears to be digitized incorrectly.  Stream flows through feature 24731119.
+14000161,NONE,MORR,LB,2025-07-02,Satellite imagery review,"This whole area is a wetland. No road visible, wouldn't block fish even if there was a crossing."
+24715924,NONE,MORR,LB,2025-07-02,Satellite imagery review,No road or crossing visible on satellite imagery. Should be no structure.
+24715927,NONE,MORR,LB,2025-07-02,Satellite imagery review,No road or crossing visible. Should be no structure.
+14001778,NONE,MORR,LB,2025-07-02,Satellite imagery review,Google Earth shows single lane bridge in 2022 but no bridge in 2023. Not clear whether it was deactivated or washed out.
+14001787,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream mapped incorrectly, flows to the northwest of both of these points. There may be a small drainage to the south of 14001446 running from ENE to WSW to meet other drainage to the west. "
+14000944,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
+24731133,NONE,MORR,LB,2025-07-02,Satellite imagery review,duplicate of crossing 14001779
+14000939,NONE,MORR,LB,2025-07-02,Satellite imagery review,stream appears to be digitized incorrectly.  Stream flows through feature 24731119.
+14000940,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream appears to be digitized incorrectly, structure doesn't exist."
+14000945,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream appears to be digitized incorrectly, structure doesn't exist."
+14000955,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream appears to be digitized incorrectly, structure doesn't exist."
+14000952,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream appears to be digitized incorrectly, structure doesn't exist."
+14000947,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream appears to be digitized incorrectly, structure doesn't exist."
+14000950,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream appears to be digitized incorrectly, structure doesn't exist."
+14001123,NONE,MORR,LB,2025-07-02,Satellite imagery review,"road digitized incorrectly, this is a duplicate of crossing 14001493."
+14001638,NONE,MORR,LB,2025-07-02,Satellite imagery review,waterbody digitized incorrectly.
+14001638,NONE,MORR,LB,2025-07-02,Satellite imagery review,waterbody digitized incorrectly.
+24731133,NONE,MORR,LB,2025-07-02,Satellite imagery review,"road digitized incorrectly, this is a duplicate of crossing 14001779."
+14000623,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
+24749001,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
+14000610,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
+14000551,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
+14001301,OBS,MORR,LB,2025-07-02,Satellite imagery review,this is an open bottom structure.
+14001376,NONE,MORR,LB,2025-07-02,Satellite imagery review,"stream digitized incorrectly, feature doesn't exist"
+14000622,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000614
+14000726,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000725
+14000933,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000949
+14000480,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,streams converge upstream of road
+14000864,NONE,MORR,LB,2025-07-04,PSCIS assessment point/satellite imagery,duplicate of 14000865
+1800472,NONE,BULK,LS,2025-06-24,Satellite imagery review,This is a duplicate of modelled crossing 1805185.
+15202078,OBS,NATR,LS,2025-07-03,Satellite imagery review,This is a bridge
+24716556,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201473,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24760160
+15201144,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201395,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201394,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201397,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201140,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202272,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24757833
+24757833,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202271,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24756663
+24758308,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24756832
+24758309,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24756833
+15202276,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24756834
+24758310,NONE,NATR,LS,2025-07-05,Satellite imagery review,This is a duplicate of modelled crossing 24756835
+15201066,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202281,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202658,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15203204,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15203054,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202890,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202659,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15203203,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15201707,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202303,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15200089,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a ford
+24746469,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15200461,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202278,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15203202,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202569,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202572,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202566,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15200344,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15200345,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202196,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201078,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202968,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+24746113,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16402042,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+16401508,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16402000,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+16401859,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+16401524,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24718353,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401266,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401539,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16400985,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16402119,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+16401803,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401567,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401393,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401391,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401784,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401823,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401208,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16402128,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+16401201,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16402127,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+24746115,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24732310,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24732311,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401187,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24718338,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24742771,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401571,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24752653,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24758307,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24718300,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401251,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16401794,NONE,PARA,LS,2025-07-04,Satellite imagery review,no road present
+16400727,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24741656,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+24741657,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16400751,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+16400771,OBS,PARA,LS,2025-07-04,Satellite imagery review,This is a bridge
+23503154,OBS,UPCE,LS,2025-07-04,Satellite imagery review,This is a bridge
+23502898,OBS,UPCE,LS,2025-07-04,Satellite imagery review,This is a bridge
+23504536,OBS,UPCE,LS,2025-07-04,Satellite imagery review,This is a bridge
+23501721,NONE,UPCE,LS,2025-07-04,Satellite imagery review,This is a ford.
+23503072,OBS,UPCE,LS,2025-07-04,Satellite imagery review,This is a bridge
+23503076,OBS,UPCE,LS,2025-07-04,Satellite imagery review,This is a bridge
+23502975,OBS,UPCE,LS,2025-07-04,Satellite imagery review,This is a bridge
+23500822,NONE,UPCE,LS,2025-07-04,Satellite imagery review,no road present
+15203242,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201871,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201346,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202245,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201874,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201109,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+24716546,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202796,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202526,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201398,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202527,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202523,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15203073,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15203352,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202912,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202779,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15202438,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202590,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201230,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201231,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202770,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15203236,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201793,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201791,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201670,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201657,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201666,NONE,NATR,LS,2025-07-04,Satellite imagery review,"This is a decommissioned road, crossing no longer present. "
+15201659,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201660,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202456,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202455,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201750,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15200179,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202469,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+24746496,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15200205,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15200210,NONE,NATR,LS,2025-07-04,Satellite imagery review,no road present
+15200107,NONE,NATR,LS,2025-07-04,Satellite imagery review,No crossing present
+15201345,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201054,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201574,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201208,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15200375,NONE,NATR,LS,2025-07-04,Satellite imagery review,No crossing present
+24742148,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202300,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201077,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15203330,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201861,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201124,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+24742158,NONE,NATR,LS,2025-07-04,Satellite imagery review,No road present
+15202097,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202455,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201154,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201703,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15202280,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201984,NONE,NATR,LS,2025-07-04,Satellite imagery review,"No crossing present, road has been decomissioned. "
+15201339,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201982,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+15201446,OBS,NATR,LS,2025-07-04,Satellite imagery review,This is a bridge
+24718281,NONE,PARA,LS,2025-07-09,Satellite imagery review,No crossing present.
+23503804,NONE,UPCE,LS,2025-07-09,Satellite imagery review,No crossing present.
+23500804,NONE,UPCE,LS,2025-07-09,Satellite imagery review,No crossing present.
+15200302,NONE,NATR,LS,2025-07-09,Satellite imagery review,No crossing present.
+15200230,NONE,NATR,LS,2025-07-09,Satellite imagery review,No crossing present.
+15203236,NONE,NATR,LS,2025-07-09,Satellite imagery review,No crossing present.
+24718635,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700353,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701435,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700049,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700337,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701867,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16702029,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16702093,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16702259,OBS,PCEA,LS,2025-07-09,Satellite imagery review,This is a bridge
+16701528,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700202,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700203,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700205,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701154,OBS,PCEA,LS,2025-07-09,Satellite imagery review,This is a bridge
+16701271,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16702164,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701405,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700586,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16702199,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701958,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701969,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700003,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700002,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701407,OBS,PCEA,LS,2025-07-09,Satellite imagery review,This is a bridge
+16700351,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701316,OBS,PCEA,LS,2025-07-09,Satellite imagery review,This is a bridge
+16700261,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701943,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701951,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16700607,OBS,PCEA,LS,2025-07-09,Satellite imagery review,Likely a ford or no crossing present.
+16700511,NONE,PCEA,LS,2025-07-09,Satellite imagery review,No crossing present.
+16701078,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16701641,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16702037,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701635,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16700795,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16701561,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701727,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701666,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16700233,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701739,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16700320,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16700685,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701255,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16702313,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701700,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16701134,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16700577,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16700347,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701188,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701758,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16701263,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16701260,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701468,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701786,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+16700648,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16700258,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701888,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16700617,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16702112,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701920,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701913,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701918,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+15200558,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+16401282,NONE,PARA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16400129,NONE,PARA,LS,2025-07-10,Satellite imagery review,No crossing present.
+24727360,NONE,PARA,LS,2025-07-10,Satellite imagery review,No crossing present.
+24758469,NONE,PARA,LS,2025-07-10,Satellite imagery review,No crossing present.
+15202823,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+15203119,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a bridge
+15201354,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a bridge
+15201357,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a bridge
+15202716,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a ford.
+15202810,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+24746526,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a bridge
+24746524,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a bridge
+15202137,OBS,NATR,LS,2025-07-10,Satellite imagery review,This is a bridge
+15203100,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+15202768,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+16401532,OBS,PARA,LS,2025-07-10,Satellite imagery review,This is a bridge
+23502992,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701906,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701833,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701038,OBS,PCEA,LS,2025-07-10,Satellite imagery review,This is a bridge
+15200206,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+15200207,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+15200224,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+15200161,NONE,NATR,LS,2025-07-10,Satellite imagery review,No crossing present.
+16400280,NONE,PARA,LS,2025-07-10,Satellite imagery review,No crossing present.
+23503000,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+23500817,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+23501586,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+23502822,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+23502803,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+23502825,NONE,UPCE,LS,2025-07-10,Satellite imagery review,No crossing present.
+16701524,NONE,PCEA,LS,2025-07-10,Satellite imagery review,No crossing present.
+15201984,NONE,PCEA,AI,2025-07-16,Satellite imagery review,No crossing present.
+15200337,NONE,NATR,AI,2025-07-16,Satellite imagery review,No crossing present.
+16604069,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16604057,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16600281,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16601231,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16602349,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+24742709,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16603612,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16602286,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16604154,OBS,PARS,AI,2025-07-16,Satellite imagery review,bridge visible
+16601529,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16601421,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+16600558,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+3703563,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+3703617,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+24759295,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+3703344,OBS,PARS,AI,2025-07-16,Satellite imagery review,bridge visible
+3703446,NONE,PARS,AI,2025-07-16,Satellite imagery review,No crossing present.
+3702962,OBS,PARS,AI,2025-07-16,Satellite imagery review,bridge visible
+24704965,OBS,CARP,AI,2025-07-16,Sekani Forest Products GIS,bridge
+2201281,OBS,CARP,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202156,OBS,CARP,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202160,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+24716551,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201151,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201964,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+2201396,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+2201566,OBS,CARP,AI,2025-07-16,Sekani Forest Products GIS,bridge
+2201564,OBS,CARP,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202542,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201943,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15200978,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201094,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202078,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+24716556,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201552,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202801,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202554,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201793,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201791,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201349,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15203376,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201418,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201423,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201168,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201165,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201153,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201665,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15201497,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15203313,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+15202552,OBS,NATR,AI,2025-07-16,Sekani Forest Products GIS,bridge
+16402135,OBS,PARA,AI,2025-07-16,Sekani Forest Products GIS,bridge
+16401266,OBS,PARA,AI,2025-07-16,Sekani Forest Products GIS,bridge
+4902259,OBS,FINA,AI,2025-07-16,Sekani Forest Products GIS,bridge
+4901133,OBS,FINA,AI,2025-07-16,Sekani Forest Products GIS,bridge
+4903154,OBS,FINA,AI,2025-07-16,Sekani Forest Products GIS,bridge
+4902656,OBS,FINA,AI,2025-07-16,Sekani Forest Products GIS,bridge
+16604128,NONE,PARS,AI,2025-07-23,Satellite imagery review,No crossing present.
+16602582,NONE,PARS,AI,2025-07-23,Satellite imagery review,No crossing present.  Duplicate road. Bridge present linked to another crossing.
+16604042,NONE,PARS,AI,2025-07-23,Satellite imagery review,No crossing present.
+15200605,NONE,NATR,AI,2025-07-25,Satellite imagery review,No crossing present.
+13903628,OBS,MORK,AI,2025-07-28,District of Prince George GIS,bridge
+1024760306,NONE,HORS,MC,2025-08-13,Biologist review,"Is the same crossing as 57476, but 57476  is in the correct location"
+19701001,NONE,TABR,LS,2025-07-22,Satellite imagery review,Duplicate of modelled crossing 19703257
+19702676,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701720,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+24758458,OBS,TABR,LS,2025-07-22,Satellite imagery review,Bridge
+24752023,OBS,TABR,LS,2025-07-22,Satellite imagery review,Ford
+19701782,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19703469,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701464,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19703633,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19702809,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19703184,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700661,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700672,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700660,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700673,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700667,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700745,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701498,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19702205,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700714,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+24751008,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+24751007,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+24751006,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701800,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701231,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19703124,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19703189,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701613,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700761,OBS,TABR,LS,2025-07-22,Satellite imagery review,Bridge
+19703151,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701432,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+24754458,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19702146,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700405,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701571,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701946,OBS,TABR,LS,2025-07-22,Satellite imagery review,Ford
+19702053,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19702136,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19702945,OBS,TABR,LS,2025-07-22,Satellite imagery review,bridge
+19701723,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701726,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19703767,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700399,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19702705,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+24723585,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19701642,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
+19700273,NONE,TABR,LS,2025-07-22,Satellite imagery review,Duplicate of stream crossing 
+19701308,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
+19701604,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
+19700805,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
+19700820,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
+19701260,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
+19701236,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
+24402130,OBS,WILL,LS,2025-07-23,Satellite imagery review,Ford
+24402118,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24402447,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24403168,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400648,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400500,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401450,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24404043,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401993,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401979,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401578,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401584,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24754498,OBS,WILL,LS,2025-07-23,Satellite imagery review,Ford
+24400475,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400301,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400253,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400231,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400261,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24404084,OBS,WILL,LS,2025-07-23,Satellite imagery review,Bridge
+24401572,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24402290,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24402287,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24402586,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400922,OBS,WILL,LS,2025-07-23,Satellite imagery review,Bridge
+24400947,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24403007,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24402320,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24400489,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401647,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24401646,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+24404000,OBS,WILL,LS,2025-07-23,Satellite imagery review,Bridge
+24402212,NONE,WILL,LS,2025-07-23,Satellite imagery review,No crossing present
+13901465,NONE,MORK,LS,2025-07-23,Satellite imagery review,No crossing present
+13901131,NONE,MORK,LS,2025-07-23,Satellite imagery review,No crossing present
+24401653,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401971,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401193,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24750646,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401194,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400243,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401946,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400345,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24746766,OBS,WILL,LS,2025-07-24,Satellite imagery review,Bridge
+24403364,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402944,OBS,WILL,LS,2025-07-24,Satellite imagery review,Bridge
+24403652,OBS,WILL,LS,2025-07-24,Satellite imagery review,Bridge
+24400267,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400746,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24403112,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401501,OBS,WILL,LS,2025-07-24,Satellite imagery review,Bridge
+24401802,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401861,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24404029,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402251,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400961,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400969,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401146,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400951,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400914,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400889,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400258,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400298,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400299,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402019,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402856,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402668,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402749,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402648,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24402647,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24404023,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401622,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401786,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400451,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401031,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24400796,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401560,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+24401287,NONE,WILL,LS,2025-07-24,Satellite imagery review,No crossing present
+12200444,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12200471,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+24751998,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12201465,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12200762,OBS,LSAL,LS,2025-07-24,Satellite imagery review,Bridge
+12200400,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+24752428,OBS,LSAL,LS,2025-07-24,Satellite imagery review,Bridge
+24748886,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12202142,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12200379,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12201047,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12201046,NONE,LSAL,LS,2025-07-24,Satellite imagery review,No crossing present
+12200055,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
+12201147,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
+12201129,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
+12200384,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
+12202025,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present

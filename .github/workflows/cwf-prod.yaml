@@ -1,0 +1,54 @@
+name: cwf-prod
+run-name: ${{ github.actor }} Release streams/crossings/aw summary from CWF database
+on:
+  workflow_dispatch:
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_HOST: ${{ secrets.SSH_HOST }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
+  AWS_S3_ENDPOINT: nrs.objectstore.gov.bc.ca
+  AWS_VIRTUAL_HOSTING: FALSE
+  AWS_EC2_METADATA_DISABLED: True
+  CPL_VSISTDIN_BUFFER_LIMIT: -1
+  AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+  AZCOPY_TENANT_ID: ${{ secrets.AZCOPY_TENANT_ID }}
+  AZCOPY_AUTO_LOGIN_TYPE: SPN
+  AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZCOPY_SPA_APPLICATION_ID }}
+  AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZCOPY_SPA_CLIENT_SECRET }}
+jobs:
+  dump:
+    name: "Dump streams/crossings/aw summary to file and upload to s3"
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Configure SSH
+        run: |
+          apt-get update
+          apt-get install -y openssh-client
+          apt-get install -y autossh
+          mkdir -p .ssh/
+          chmod 700 .ssh/
+          echo "$SSH_KEY" > .ssh/cabd.key
+          chmod 600 .ssh/cabd.key
+          cat <<EOF > .ssh/config
+          Host cabd
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile .ssh/cabd.key
+          EOF
+          chmod 600 .ssh/config
+          ssh-keyscan -H $SSH_HOST >> .ssh/known_hosts
+          chmod 600 .ssh/known_hosts
+      - name: Release
+        run: |
+          nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd &
+          sleep 5
+          jobs/release_cwf

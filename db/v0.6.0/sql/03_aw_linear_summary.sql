@@ -220,7 +220,7 @@ with accessible as
     sum(st_length(geom)) filter (where s.access_wct = 2 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_obsrvd_wct_access_b,
     sum(st_length(geom)) filter (where s.access_wct = 1) as length_potentiallyaccessible_model_wct,
     sum(st_length(geom)) filter (where s.access_wct = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_potentiallyaccessible_model_wct_access_a,
-    sum(st_length(geom)) filter (where s.access_wct = 2 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_model_wct_access_b
+    sum(st_length(geom)) filter (where s.access_wct = 1 and barriers_anthropogenic_dnstr is null) as length_potentiallyaccessible_model_wct_access_b
   from bcfishpass.streams_vw s
   inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
   group by aw.assmnt_watershed_id, s.watershed_group_code
@@ -232,207 +232,135 @@ spawning_rearing as (
     s.watershed_group_code,
 
     -- bt
-    sum(st_length(geom)) filter (where spawning_bt = 1 or rearing_bt = 1) as length_spawningrearing_model_bt,
-    sum(st_length(geom)) filter (where (spawning_bt = 1 or rearing_bt = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_bt_access_a,
-    sum(st_length(geom)) filter (where (spawning_bt = 1 or rearing_bt = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_bt_access_b,
-    sum(st_length(geom)) filter (where spawning_bt > 1 or rearing_bt > 1) as length_spawningrearing_obsrvd_bt,
-    sum(st_length(geom)) filter (where (spawning_bt > 1 or rearing_bt > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_bt_access_a,
-    sum(st_length(geom)) filter (where (spawning_bt > 1 or rearing_bt > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_bt_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 1) as length_spawningrearing_model_bt,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_bt_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_bt_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) >= 2) as length_spawningrearing_obsrvd_bt,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_bt_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_bt, rearing_bt) >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_bt_access_b,
 
     -- ch
-    sum(st_length(geom)) filter (where spawning_ch = 1 or rearing_ch = 1) as length_spawningrearing_model_ch,
-    sum(st_length(geom)) filter (where (spawning_ch = 1 or rearing_ch = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_ch_access_a,
-    sum(st_length(geom)) filter (where (spawning_ch = 1 or rearing_ch = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_ch_access_b,
-    sum(st_length(geom)) filter (where spawning_ch > 1 or rearing_ch > 1) as length_spawningrearing_obsrvd_ch,
-    sum(st_length(geom)) filter (where (spawning_ch > 1 or rearing_ch > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_ch_access_a,
-    sum(st_length(geom)) filter (where (spawning_ch > 1 or rearing_ch > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_ch_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 1) as length_spawningrearing_model_ch,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_ch_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_ch_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) >= 2) as length_spawningrearing_obsrvd_ch,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_ch_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_ch, rearing_ch) >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_ch_access_b,
 
     -- cm
     sum(st_length(geom)) filter (where spawning_cm = 1) as length_spawningrearing_model_cm,
-    sum(st_length(geom)) filter (where (spawning_cm = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_cm_access_a,
-    sum(st_length(geom)) filter (where (spawning_cm = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_cm_access_b,
-    sum(st_length(geom)) filter (where spawning_cm > 1) as length_spawningrearing_obsrvd_cm,
-    sum(st_length(geom)) filter (where (spawning_cm > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_cm_access_a,
-    sum(st_length(geom)) filter (where (spawning_cm > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_cm_access_b,
+    sum(st_length(geom)) filter (where spawning_cm = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_cm_access_a,
+    sum(st_length(geom)) filter (where spawning_cm = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_cm_access_b,
+    sum(st_length(geom)) filter (where spawning_cm >= 2) as length_spawningrearing_obsrvd_cm,
+    sum(st_length(geom)) filter (where spawning_cm >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_cm_access_a,
+    sum(st_length(geom)) filter (where spawning_cm >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_cm_access_b,
 
     -- co
-    sum(st_length(geom)) filter (where spawning_co = 1 or rearing_co = 1) as length_spawningrearing_model_co,
-    sum(st_length(geom)) filter (where (spawning_co = 1 or rearing_co = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_co_access_a,
-    sum(st_length(geom)) filter (where (spawning_co = 1 or rearing_co = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_co_access_b,
-    sum(st_length(geom)) filter (where spawning_co > 1 or rearing_co > 1) as length_spawningrearing_obsrvd_co,
-    sum(st_length(geom)) filter (where (spawning_co > 1 or rearing_co > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_co_access_a,
-    sum(st_length(geom)) filter (where (spawning_co > 1 or rearing_co > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_co_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 1) as length_spawningrearing_model_co,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_co_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_co_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) >= 2) as length_spawningrearing_obsrvd_co,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_co_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_co, rearing_co) >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_co_access_b,
 
     -- pk
     sum(st_length(geom)) filter (where spawning_pk = 1) as length_spawningrearing_model_pk,
-    sum(st_length(geom)) filter (where (spawning_pk = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_pk_access_a,
-    sum(st_length(geom)) filter (where (spawning_pk = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_pk_access_b,
-    sum(st_length(geom)) filter (where spawning_pk > 1) as length_spawningrearing_obsrvd_pk,
-    sum(st_length(geom)) filter (where (spawning_pk > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_pk_access_a,
-    sum(st_length(geom)) filter (where (spawning_pk > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_pk_access_b,
+    sum(st_length(geom)) filter (where spawning_pk = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_pk_access_a,
+    sum(st_length(geom)) filter (where spawning_pk = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_pk_access_b,
+    sum(st_length(geom)) filter (where spawning_pk >= 2) as length_spawningrearing_obsrvd_pk,
+    sum(st_length(geom)) filter (where spawning_pk >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_pk_access_a,
+    sum(st_length(geom)) filter (where spawning_pk >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_pk_access_b,
 
     -- sk
-    sum(st_length(geom)) filter (where spawning_sk = 1 or rearing_sk = 1) as length_spawningrearing_model_sk,
-    sum(st_length(geom)) filter (where (spawning_sk = 1 or rearing_sk = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_sk_access_a,
-    sum(st_length(geom)) filter (where (spawning_sk = 1 or rearing_sk = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_sk_access_b,
-    sum(st_length(geom)) filter (where spawning_sk > 1 or rearing_sk > 1) as length_spawningrearing_obsrvd_sk,
-    sum(st_length(geom)) filter (where (spawning_sk > 1 or rearing_sk > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_sk_access_a,
-    sum(st_length(geom)) filter (where (spawning_sk > 1 or rearing_sk > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_sk_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 1) as length_spawningrearing_model_sk,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_sk_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_sk_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) >= 2) as length_spawningrearing_obsrvd_sk,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_sk_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_sk, rearing_sk) >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_sk_access_b,
 
     -- st
-    sum(st_length(geom)) filter (where spawning_st = 1 or rearing_st = 1) as length_spawningrearing_model_st,
-    sum(st_length(geom)) filter (where (spawning_st = 1 or rearing_st = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_st_access_a,
-    sum(st_length(geom)) filter (where (spawning_st = 1 or rearing_st = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_st_access_b,
-    sum(st_length(geom)) filter (where spawning_st > 1 or rearing_st > 1) as length_spawningrearing_obsrvd_st,
-    sum(st_length(geom)) filter (where (spawning_st > 1 or rearing_st > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_st_access_a,
-    sum(st_length(geom)) filter (where (spawning_st > 1 or rearing_st > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_st_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 1) as length_spawningrearing_model_st,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_st_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_st_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) >= 2) as length_spawningrearing_obsrvd_st,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_st_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_st, rearing_st) >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_st_access_b,
 
     -- wct
-    sum(st_length(geom)) filter (where spawning_wct = 1 or rearing_wct = 1) as length_spawningrearing_model_wct,
-    sum(st_length(geom)) filter (where (spawning_wct = 1 or rearing_wct = 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_wct_access_a,
-    sum(st_length(geom)) filter (where (spawning_wct = 1 or rearing_wct = 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_wct_access_b,
-    sum(st_length(geom)) filter (where spawning_wct > 1 or rearing_wct > 1) as length_spawningrearing_obsrvd_wct,
-    sum(st_length(geom)) filter (where (spawning_wct > 1 or rearing_wct > 1) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_wct_access_a,
-    sum(st_length(geom)) filter (where (spawning_wct > 1 or rearing_wct > 1) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_wct_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 1) as length_spawningrearing_model_wct,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 1 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_wct_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) = 1 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_wct_access_b,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) >= 2) as length_spawningrearing_obsrvd_wct,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) >= 2 and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_wct_access_a,
+    sum(st_length(geom)) filter (where greatest(spawning_wct, rearing_wct) >= 2 and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_wct_access_b,
 
     -- all salmon
-    sum(st_length(geom)) filter (where
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1
-        ) as length_spawningrearing_model_salmon,
-    sum(st_length(geom)) filter (where (
-          spawning_ch = 1 or
-          rearing_ch = 1 or
-          spawning_cm = 1 or
-          spawning_co = 1 or
-          rearing_co = 1 or
-          spawning_pk = 1 or
-          spawning_sk = 1 or
-          rearing_sk = 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_salmon_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_salmon_access_b,
-    sum(st_length(geom)) filter (where
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1
-        ) as length_spawningrearing_obsrvd_salmon,
-    sum(st_length(geom)) filter (where (
-          spawning_ch > 1 or
-          rearing_ch > 1 or
-          spawning_cm > 1 or
-          spawning_co > 1 or
-          rearing_co > 1 or
-          spawning_pk > 1 or
-          spawning_sk > 1 or
-          rearing_sk > 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_salmon_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_salmon_access_b,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 1
+    ) as length_spawningrearing_model_salmon,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 1
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_model_salmon_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) = 1
+        and barriers_anthropogenic_dnstr is null
+    ) as length_spawningrearing_model_salmon_access_b,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) >= 2
+    ) as length_spawningrearing_obsrvd_salmon,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) >= 2
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_obsrvd_salmon_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk) >= 2
+        and barriers_anthropogenic_dnstr is null
+      ) as length_spawningrearing_obsrvd_salmon_access_b,
 
     -- all salmon AND steelhead
-    sum(st_length(geom)) filter (where
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1 or
-        spawning_st = 1 or
-        rearing_st = 1
-        ) as length_spawningrearing_model_salmon_st,
-    sum(st_length(geom)) filter (where (
-          spawning_ch = 1 or
-          rearing_ch = 1 or
-          spawning_cm = 1 or
-          spawning_co = 1 or
-          rearing_co = 1 or
-          spawning_pk = 1 or
-          spawning_sk = 1 or
-          rearing_sk = 1 or
-          spawning_st = 1 or
-          rearing_st = 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_model_salmon_st_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch = 1 or
-        rearing_ch = 1 or
-        spawning_cm = 1 or
-        spawning_co = 1 or
-        rearing_co = 1 or
-        spawning_pk = 1 or
-        spawning_sk = 1 or
-        rearing_sk = 1 or
-        spawning_st = 1 or
-        rearing_st = 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_model_salmon_st_access_b,
-    sum(st_length(geom)) filter (where
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1 or
-        spawning_st > 1 or
-        rearing_st > 1
-        ) as length_spawningrearing_obsrvd_salmon_st,
-    sum(st_length(geom)) filter (where (
-          spawning_ch > 1 or
-          rearing_ch > 1 or
-          spawning_cm > 1 or
-          spawning_co > 1 or
-          rearing_co > 1 or
-          spawning_pk > 1 or
-          spawning_sk > 1 or
-          rearing_sk > 1 or
-          spawning_st > 1 or
-          rearing_st > 1
-        ) and barriers_dams_dnstr is null and barriers_pscis_dnstr is null) as length_spawningrearing_obsrvd_salmon_st_access_a,
-    sum(st_length(geom)) filter (where (
-        spawning_ch > 1 or
-        rearing_ch > 1 or
-        spawning_cm > 1 or
-        spawning_co > 1 or
-        rearing_co > 1 or
-        spawning_pk > 1 or
-        spawning_sk > 1 or
-        rearing_sk > 1 or
-        spawning_st > 1 or
-        rearing_st > 1
-      ) and barriers_anthropogenic_dnstr is null) as length_spawningrearing_obsrvd_salmon_st_access_b
-from bcfishpass.streams_vw s
-inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
-group by aw.assmnt_watershed_id, s.watershed_group_code
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 1
+    ) as length_spawningrearing_model_salmon_st,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 1
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_model_salmon_st_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) = 1
+        and barriers_anthropogenic_dnstr is null
+    ) as length_spawningrearing_model_salmon_st_access_b,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) >= 2
+    ) as length_spawningrearing_obsrvd_salmon_st,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) >= 2
+        and barriers_dams_dnstr is null
+        and barriers_pscis_dnstr is null
+    ) as length_spawningrearing_obsrvd_salmon_st_access_a,
+    sum(st_length(geom)) filter (
+      where
+        greatest(spawning_ch, rearing_ch, spawning_cm, spawning_co, rearing_co, spawning_pk, spawning_sk, rearing_sk, spawning_st, rearing_st) >= 2
+        and barriers_anthropogenic_dnstr is null
+    ) as length_spawningrearing_obsrvd_salmon_st_access_b
+  from bcfishpass.streams_vw s
+  inner join whse_basemapping.fwa_assessment_watersheds_streams_lut aw on s.linear_feature_id = aw.linear_feature_id
+  group by aw.assmnt_watershed_id, s.watershed_group_code
 )
 
 -- set to km, round to nearest cm (keep the high precision because this data gets rolled up to watershed group)
@@ -532,91 +460,91 @@ $$ LANGUAGE SQL;
 create view bcfishpass.aw_linear_summary_current as
 select distinct on (s.assessment_watershed_id)
   s.assessment_watershed_id,
-  round(s.length_total, 2) as length_total,
-  round(s.length_potentiallyaccessible_obsrvd_bt, 2) as length_potentiallyaccessible_obsrvd_bt,
-  round(s.length_potentiallyaccessible_obsrvd_bt_access_a, 2) as length_potentiallyaccessible_obsrvd_bt_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_bt_access_b, 2) as length_potentiallyaccessible_obsrvd_bt_access_b,
-  round(s.length_potentiallyaccessible_model_bt, 2) as length_potentiallyaccessible_model_bt,
-  round(s.length_potentiallyaccessible_model_bt_access_a, 2) as length_potentiallyaccessible_model_bt_access_a,
-  round(s.length_potentiallyaccessible_model_bt_access_b, 2) as length_potentiallyaccessible_model_bt_access_b,
-  round(s.length_potentiallyaccessible_obsrvd_salmon, 2) as length_potentiallyaccessible_obsrvd_salmon,
-  round(s.length_potentiallyaccessible_obsrvd_salmon_access_a, 2) as length_potentiallyaccessible_obsrvd_salmon_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_salmon_access_b, 2) as length_potentiallyaccessible_obsrvd_salmon_access_b,
-  round(s.length_potentiallyaccessible_model_salmon, 2) as length_potentiallyaccessible_model_salmon,
-  round(s.length_potentiallyaccessible_model_salmon_access_a, 2) as length_potentiallyaccessible_model_salmon_access_a,
-  round(s.length_potentiallyaccessible_model_salmon_access_b, 2) as length_potentiallyaccessible_model_salmon_access_b,
-  round(s.length_potentiallyaccessible_obsrvd_st, 2) as length_potentiallyaccessible_obsrvd_st,
-  round(s.length_potentiallyaccessible_obsrvd_st_access_a, 2) as length_potentiallyaccessible_obsrvd_st_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_st_access_b, 2) as length_potentiallyaccessible_obsrvd_st_access_b,
-  round(s.length_potentiallyaccessible_model_st, 2) as length_potentiallyaccessible_model_st,
-  round(s.length_potentiallyaccessible_model_st_access_a, 2) as length_potentiallyaccessible_model_st_access_a,
-  round(s.length_potentiallyaccessible_model_st_access_b, 2) as length_potentiallyaccessible_model_st_access_b,
-  round(s.length_potentiallyaccessible_obsrvd_wct, 2) as length_potentiallyaccessible_obsrvd_wct,
-  round(s.length_potentiallyaccessible_obsrvd_wct_access_a, 2) as length_potentiallyaccessible_obsrvd_wct_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_wct_access_b, 2) as length_potentiallyaccessible_obsrvd_wct_access_b,
-  round(s.length_potentiallyaccessible_model_wct, 2) as length_potentiallyaccessible_model_wct,
-  round(s.length_potentiallyaccessible_model_wct_access_a, 2) as length_potentiallyaccessible_model_wct_access_a,
-  round(s.length_potentiallyaccessible_model_wct_access_b, 2) as length_potentiallyaccessible_model_wct_access_b,
-  round(s.length_spawningrearing_obsrvd_bt, 2) as length_spawningrearing_obsrvd_bt,
-  round(s.length_spawningrearing_obsrvd_bt_access_a, 2) as length_spawningrearing_obsrvd_bt_access_a,
-  round(s.length_spawningrearing_obsrvd_bt_access_b, 2) as length_spawningrearing_obsrvd_bt_access_b,
-  round(s.length_spawningrearing_model_bt, 2) as length_spawningrearing_model_bt,
-  round(s.length_spawningrearing_model_bt_access_a, 2) as length_spawningrearing_model_bt_access_a,
-  round(s.length_spawningrearing_model_bt_access_b, 2) as length_spawningrearing_model_bt_access_b,
-  round(s.length_spawningrearing_obsrvd_ch, 2) as length_spawningrearing_obsrvd_ch,
-  round(s.length_spawningrearing_obsrvd_ch_access_a, 2) as length_spawningrearing_obsrvd_ch_access_a,
-  round(s.length_spawningrearing_obsrvd_ch_access_b, 2) as length_spawningrearing_obsrvd_ch_access_b,
-  round(s.length_spawningrearing_model_ch, 2) as length_spawningrearing_model_ch,
-  round(s.length_spawningrearing_model_ch_access_a, 2) as length_spawningrearing_model_ch_access_a,
-  round(s.length_spawningrearing_model_ch_access_b, 2) as length_spawningrearing_model_ch_access_b,
-  round(s.length_spawningrearing_obsrvd_cm, 2) as length_spawningrearing_obsrvd_cm,
-  round(s.length_spawningrearing_obsrvd_cm_access_a, 2) as length_spawningrearing_obsrvd_cm_access_a,
-  round(s.length_spawningrearing_obsrvd_cm_access_b, 2) as length_spawningrearing_obsrvd_cm_access_b,
-  round(s.length_spawningrearing_model_cm, 2) as length_spawningrearing_model_cm,
-  round(s.length_spawningrearing_model_cm_access_a, 2) as length_spawningrearing_model_cm_access_a,
-  round(s.length_spawningrearing_model_cm_access_b, 2) as length_spawningrearing_model_cm_access_b,
-  round(s.length_spawningrearing_obsrvd_co, 2) as length_spawningrearing_obsrvd_co,
-  round(s.length_spawningrearing_obsrvd_co_access_a, 2) as length_spawningrearing_obsrvd_co_access_a,
-  round(s.length_spawningrearing_obsrvd_co_access_b, 2) as length_spawningrearing_obsrvd_co_access_b,
-  round(s.length_spawningrearing_model_co, 2) as length_spawningrearing_model_co,
-  round(s.length_spawningrearing_model_co_access_a, 2) as length_spawningrearing_model_co_access_a,
-  round(s.length_spawningrearing_model_co_access_b, 2) as length_spawningrearing_model_co_access_b,
-  round(s.length_spawningrearing_obsrvd_pk, 2) as length_spawningrearing_obsrvd_pk,
-  round(s.length_spawningrearing_obsrvd_pk_access_a, 2) as length_spawningrearing_obsrvd_pk_access_a,
-  round(s.length_spawningrearing_obsrvd_pk_access_b, 2) as length_spawningrearing_obsrvd_pk_access_b,
-  round(s.length_spawningrearing_model_pk, 2) as length_spawningrearing_model_pk,
-  round(s.length_spawningrearing_model_pk_access_a, 2) as length_spawningrearing_model_pk_access_a,
-  round(s.length_spawningrearing_model_pk_access_b, 2) as length_spawningrearing_model_pk_access_b,
-  round(s.length_spawningrearing_obsrvd_sk, 2) as length_spawningrearing_obsrvd_sk,
-  round(s.length_spawningrearing_obsrvd_sk_access_a, 2) as length_spawningrearing_obsrvd_sk_access_a,
-  round(s.length_spawningrearing_obsrvd_sk_access_b, 2) as length_spawningrearing_obsrvd_sk_access_b,
-  round(s.length_spawningrearing_model_sk, 2) as length_spawningrearing_model_sk,
-  round(s.length_spawningrearing_model_sk_access_a, 2) as length_spawningrearing_model_sk_access_a,
-  round(s.length_spawningrearing_model_sk_access_b, 2) as length_spawningrearing_model_sk_access_b,
-  round(s.length_spawningrearing_obsrvd_st, 2) as length_spawningrearing_obsrvd_st,
-  round(s.length_spawningrearing_obsrvd_st_access_a, 2) as length_spawningrearing_obsrvd_st_access_a,
-  round(s.length_spawningrearing_obsrvd_st_access_b, 2) as length_spawningrearing_obsrvd_st_access_b,
-  round(s.length_spawningrearing_model_st, 2) as length_spawningrearing_model_st,
-  round(s.length_spawningrearing_model_st_access_a, 2) as length_spawningrearing_model_st_access_a,
-  round(s.length_spawningrearing_model_st_access_b, 2) as length_spawningrearing_model_st_access_b,
-  round(s.length_spawningrearing_obsrvd_wct, 2) as length_spawningrearing_obsrvd_wct,
-  round(s.length_spawningrearing_obsrvd_wct_access_a, 2) as length_spawningrearing_obsrvd_wct_access_a,
-  round(s.length_spawningrearing_obsrvd_wct_access_b, 2) as length_spawningrearing_obsrvd_wct_access_b,
-  round(s.length_spawningrearing_model_wct, 2) as length_spawningrearing_model_wct,
-  round(s.length_spawningrearing_model_wct_access_a, 2) as length_spawningrearing_model_wct_access_a,
-  round(s.length_spawningrearing_model_wct_access_b, 2) as length_spawningrearing_model_wct_access_b,
-  round(s.length_spawningrearing_obsrvd_salmon, 2) as length_spawningrearing_obsrvd_salmon,
-  round(s.length_spawningrearing_obsrvd_salmon_access_a, 2) as length_spawningrearing_obsrvd_salmon_access_a,
-  round(s.length_spawningrearing_obsrvd_salmon_access_b, 2) as length_spawningrearing_obsrvd_salmon_access_b,
-  round(s.length_spawningrearing_model_salmon, 2) as length_spawningrearing_model_salmon,
-  round(s.length_spawningrearing_model_salmon_access_a, 2) as length_spawningrearing_model_salmon_access_a,
-  round(s.length_spawningrearing_model_salmon_access_b, 2) as length_spawningrearing_model_salmon_access_b,
-  round(s.length_spawningrearing_obsrvd_salmon_st, 2) as length_spawningrearing_obsrvd_salmon_st,
-  round(s.length_spawningrearing_obsrvd_salmon_st_access_a, 2) as length_spawningrearing_obsrvd_salmon_st_access_a,
-  round(s.length_spawningrearing_obsrvd_salmon_st_access_b, 2) as length_spawningrearing_obsrvd_salmon_st_access_b,
-  round(s.length_spawningrearing_model_salmon_st, 2) as length_spawningrearing_model_salmon_st,
-  round(s.length_spawningrearing_model_salmon_st_access_a, 2) as length_spawningrearing_model_salmon_st_access_a,
-  round(s.length_spawningrearing_model_salmon_st_access_b, 2) as length_spawningrearing_model_salmon_st_access_b,
+  s.length_total,
+  s.length_potentiallyaccessible_obsrvd_bt,
+  s.length_potentiallyaccessible_obsrvd_bt_access_a,
+  s.length_potentiallyaccessible_obsrvd_bt_access_b,
+  s.length_potentiallyaccessible_model_bt,
+  s.length_potentiallyaccessible_model_bt_access_a,
+  s.length_potentiallyaccessible_model_bt_access_b,
+  s.length_potentiallyaccessible_obsrvd_salmon,
+  s.length_potentiallyaccessible_obsrvd_salmon_access_a,
+  s.length_potentiallyaccessible_obsrvd_salmon_access_b,
+  s.length_potentiallyaccessible_model_salmon,
+  s.length_potentiallyaccessible_model_salmon_access_a,
+  s.length_potentiallyaccessible_model_salmon_access_b,
+  s.length_potentiallyaccessible_obsrvd_st,
+  s.length_potentiallyaccessible_obsrvd_st_access_a,
+  s.length_potentiallyaccessible_obsrvd_st_access_b,
+  s.length_potentiallyaccessible_model_st,
+  s.length_potentiallyaccessible_model_st_access_a,
+  s.length_potentiallyaccessible_model_st_access_b,
+  s.length_potentiallyaccessible_obsrvd_wct,
+  s.length_potentiallyaccessible_obsrvd_wct_access_a,
+  s.length_potentiallyaccessible_obsrvd_wct_access_b,
+  s.length_potentiallyaccessible_model_wct,
+  s.length_potentiallyaccessible_model_wct_access_a,
+  s.length_potentiallyaccessible_model_wct_access_b,
+  s.length_spawningrearing_obsrvd_bt,
+  s.length_spawningrearing_obsrvd_bt_access_a,
+  s.length_spawningrearing_obsrvd_bt_access_b,
+  s.length_spawningrearing_model_bt,
+  s.length_spawningrearing_model_bt_access_a,
+  s.length_spawningrearing_model_bt_access_b,
+  s.length_spawningrearing_obsrvd_ch,
+  s.length_spawningrearing_obsrvd_ch_access_a,
+  s.length_spawningrearing_obsrvd_ch_access_b,
+  s.length_spawningrearing_model_ch,
+  s.length_spawningrearing_model_ch_access_a,
+  s.length_spawningrearing_model_ch_access_b,
+  s.length_spawningrearing_obsrvd_cm,
+  s.length_spawningrearing_obsrvd_cm_access_a,
+  s.length_spawningrearing_obsrvd_cm_access_b,
+  s.length_spawningrearing_model_cm,
+  s.length_spawningrearing_model_cm_access_a,
+  s.length_spawningrearing_model_cm_access_b,
+  s.length_spawningrearing_obsrvd_co,
+  s.length_spawningrearing_obsrvd_co_access_a,
+  s.length_spawningrearing_obsrvd_co_access_b,
+  s.length_spawningrearing_model_co,
+  s.length_spawningrearing_model_co_access_a,
+  s.length_spawningrearing_model_co_access_b,
+  s.length_spawningrearing_obsrvd_pk,
+  s.length_spawningrearing_obsrvd_pk_access_a,
+  s.length_spawningrearing_obsrvd_pk_access_b,
+  s.length_spawningrearing_model_pk,
+  s.length_spawningrearing_model_pk_access_a,
+  s.length_spawningrearing_model_pk_access_b,
+  s.length_spawningrearing_obsrvd_sk,
+  s.length_spawningrearing_obsrvd_sk_access_a,
+  s.length_spawningrearing_obsrvd_sk_access_b,
+  s.length_spawningrearing_model_sk,
+  s.length_spawningrearing_model_sk_access_a,
+  s.length_spawningrearing_model_sk_access_b,
+  s.length_spawningrearing_obsrvd_st,
+  s.length_spawningrearing_obsrvd_st_access_a,
+  s.length_spawningrearing_obsrvd_st_access_b,
+  s.length_spawningrearing_model_st,
+  s.length_spawningrearing_model_st_access_a,
+  s.length_spawningrearing_model_st_access_b,
+  s.length_spawningrearing_obsrvd_wct,
+  s.length_spawningrearing_obsrvd_wct_access_a,
+  s.length_spawningrearing_obsrvd_wct_access_b,
+  s.length_spawningrearing_model_wct,
+  s.length_spawningrearing_model_wct_access_a,
+  s.length_spawningrearing_model_wct_access_b,
+  s.length_spawningrearing_obsrvd_salmon,
+  s.length_spawningrearing_obsrvd_salmon_access_a,
+  s.length_spawningrearing_obsrvd_salmon_access_b,
+  s.length_spawningrearing_model_salmon,
+  s.length_spawningrearing_model_salmon_access_a,
+  s.length_spawningrearing_model_salmon_access_b,
+  s.length_spawningrearing_obsrvd_salmon_st,
+  s.length_spawningrearing_obsrvd_salmon_st_access_a,
+  s.length_spawningrearing_obsrvd_salmon_st_access_b,
+  s.length_spawningrearing_model_salmon_st,
+  s.length_spawningrearing_model_salmon_st_access_a,
+  s.length_spawningrearing_model_salmon_st_access_b,
   -- percentages
   round(coalesce((s.length_potentiallyaccessible_obsrvd_bt_access_b + s.length_potentiallyaccessible_model_bt_access_b) / nullif((s.length_potentiallyaccessible_obsrvd_bt + s.length_potentiallyaccessible_model_bt), 0), 0) * 100, 2) as pct_potentiallyaccessible_bt_access_b,
   round(coalesce((s.length_potentiallyaccessible_obsrvd_salmon_access_b + s.length_potentiallyaccessible_model_salmon_access_b) / nullif((s.length_potentiallyaccessible_obsrvd_salmon + s.length_potentiallyaccessible_model_salmon), 0), 0) * 100, 2) as pct_potentiallyaccessible_salmon_access_b,
@@ -640,91 +568,91 @@ order by s.assessment_watershed_id, l.date_completed desc;
 create view bcfishpass.aw_linear_summary_previous as
 select distinct on (s.assessment_watershed_id)
   s.assessment_watershed_id,
-round(s.length_total, 2) as length_total,
-  round(s.length_potentiallyaccessible_obsrvd_bt, 2) as length_potentiallyaccessible_obsrvd_bt,
-  round(s.length_potentiallyaccessible_obsrvd_bt_access_a, 2) as length_potentiallyaccessible_obsrvd_bt_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_bt_access_b, 2) as length_potentiallyaccessible_obsrvd_bt_access_b,
-  round(s.length_potentiallyaccessible_model_bt, 2) as length_potentiallyaccessible_model_bt,
-  round(s.length_potentiallyaccessible_model_bt_access_a, 2) as length_potentiallyaccessible_model_bt_access_a,
-  round(s.length_potentiallyaccessible_model_bt_access_b, 2) as length_potentiallyaccessible_model_bt_access_b,
-  round(s.length_potentiallyaccessible_obsrvd_salmon, 2) as length_potentiallyaccessible_obsrvd_salmon,
-  round(s.length_potentiallyaccessible_obsrvd_salmon_access_a, 2) as length_potentiallyaccessible_obsrvd_salmon_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_salmon_access_b, 2) as length_potentiallyaccessible_obsrvd_salmon_access_b,
-  round(s.length_potentiallyaccessible_model_salmon, 2) as length_potentiallyaccessible_model_salmon,
-  round(s.length_potentiallyaccessible_model_salmon_access_a, 2) as length_potentiallyaccessible_model_salmon_access_a,
-  round(s.length_potentiallyaccessible_model_salmon_access_b, 2) as length_potentiallyaccessible_model_salmon_access_b,
-  round(s.length_potentiallyaccessible_obsrvd_st, 2) as length_potentiallyaccessible_obsrvd_st,
-  round(s.length_potentiallyaccessible_obsrvd_st_access_a, 2) as length_potentiallyaccessible_obsrvd_st_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_st_access_b, 2) as length_potentiallyaccessible_obsrvd_st_access_b,
-  round(s.length_potentiallyaccessible_model_st, 2) as length_potentiallyaccessible_model_st,
-  round(s.length_potentiallyaccessible_model_st_access_a, 2) as length_potentiallyaccessible_model_st_access_a,
-  round(s.length_potentiallyaccessible_model_st_access_b, 2) as length_potentiallyaccessible_model_st_access_b,
-  round(s.length_potentiallyaccessible_obsrvd_wct, 2) as length_potentiallyaccessible_obsrvd_wct,
-  round(s.length_potentiallyaccessible_obsrvd_wct_access_a, 2) as length_potentiallyaccessible_obsrvd_wct_access_a,
-  round(s.length_potentiallyaccessible_obsrvd_wct_access_b, 2) as length_potentiallyaccessible_obsrvd_wct_access_b,
-  round(s.length_potentiallyaccessible_model_wct, 2) as length_potentiallyaccessible_model_wct,
-  round(s.length_potentiallyaccessible_model_wct_access_a, 2) as length_potentiallyaccessible_model_wct_access_a,
-  round(s.length_potentiallyaccessible_model_wct_access_b, 2) as length_potentiallyaccessible_model_wct_access_b,
-  round(s.length_spawningrearing_obsrvd_bt, 2) as length_spawningrearing_obsrvd_bt,
-  round(s.length_spawningrearing_obsrvd_bt_access_a, 2) as length_spawningrearing_obsrvd_bt_access_a,
-  round(s.length_spawningrearing_obsrvd_bt_access_b, 2) as length_spawningrearing_obsrvd_bt_access_b,
-  round(s.length_spawningrearing_model_bt, 2) as length_spawningrearing_model_bt,
-  round(s.length_spawningrearing_model_bt_access_a, 2) as length_spawningrearing_model_bt_access_a,
-  round(s.length_spawningrearing_model_bt_access_b, 2) as length_spawningrearing_model_bt_access_b,
-  round(s.length_spawningrearing_obsrvd_ch, 2) as length_spawningrearing_obsrvd_ch,
-  round(s.length_spawningrearing_obsrvd_ch_access_a, 2) as length_spawningrearing_obsrvd_ch_access_a,
-  round(s.length_spawningrearing_obsrvd_ch_access_b, 2) as length_spawningrearing_obsrvd_ch_access_b,
-  round(s.length_spawningrearing_model_ch, 2) as length_spawningrearing_model_ch,
-  round(s.length_spawningrearing_model_ch_access_a, 2) as length_spawningrearing_model_ch_access_a,
-  round(s.length_spawningrearing_model_ch_access_b, 2) as length_spawningrearing_model_ch_access_b,
-  round(s.length_spawningrearing_obsrvd_cm, 2) as length_spawningrearing_obsrvd_cm,
-  round(s.length_spawningrearing_obsrvd_cm_access_a, 2) as length_spawningrearing_obsrvd_cm_access_a,
-  round(s.length_spawningrearing_obsrvd_cm_access_b, 2) as length_spawningrearing_obsrvd_cm_access_b,
-  round(s.length_spawningrearing_model_cm, 2) as length_spawningrearing_model_cm,
-  round(s.length_spawningrearing_model_cm_access_a, 2) as length_spawningrearing_model_cm_access_a,
-  round(s.length_spawningrearing_model_cm_access_b, 2) as length_spawningrearing_model_cm_access_b,
-  round(s.length_spawningrearing_obsrvd_co, 2) as length_spawningrearing_obsrvd_co,
-  round(s.length_spawningrearing_obsrvd_co_access_a, 2) as length_spawningrearing_obsrvd_co_access_a,
-  round(s.length_spawningrearing_obsrvd_co_access_b, 2) as length_spawningrearing_obsrvd_co_access_b,
-  round(s.length_spawningrearing_model_co, 2) as length_spawningrearing_model_co,
-  round(s.length_spawningrearing_model_co_access_a, 2) as length_spawningrearing_model_co_access_a,
-  round(s.length_spawningrearing_model_co_access_b, 2) as length_spawningrearing_model_co_access_b,
-  round(s.length_spawningrearing_obsrvd_pk, 2) as length_spawningrearing_obsrvd_pk,
-  round(s.length_spawningrearing_obsrvd_pk_access_a, 2) as length_spawningrearing_obsrvd_pk_access_a,
-  round(s.length_spawningrearing_obsrvd_pk_access_b, 2) as length_spawningrearing_obsrvd_pk_access_b,
-  round(s.length_spawningrearing_model_pk, 2) as length_spawningrearing_model_pk,
-  round(s.length_spawningrearing_model_pk_access_a, 2) as length_spawningrearing_model_pk_access_a,
-  round(s.length_spawningrearing_model_pk_access_b, 2) as length_spawningrearing_model_pk_access_b,
-  round(s.length_spawningrearing_obsrvd_sk, 2) as length_spawningrearing_obsrvd_sk,
-  round(s.length_spawningrearing_obsrvd_sk_access_a, 2) as length_spawningrearing_obsrvd_sk_access_a,
-  round(s.length_spawningrearing_obsrvd_sk_access_b, 2) as length_spawningrearing_obsrvd_sk_access_b,
-  round(s.length_spawningrearing_model_sk, 2) as length_spawningrearing_model_sk,
-  round(s.length_spawningrearing_model_sk_access_a, 2) as length_spawningrearing_model_sk_access_a,
-  round(s.length_spawningrearing_model_sk_access_b, 2) as length_spawningrearing_model_sk_access_b,
-  round(s.length_spawningrearing_obsrvd_st, 2) as length_spawningrearing_obsrvd_st,
-  round(s.length_spawningrearing_obsrvd_st_access_a, 2) as length_spawningrearing_obsrvd_st_access_a,
-  round(s.length_spawningrearing_obsrvd_st_access_b, 2) as length_spawningrearing_obsrvd_st_access_b,
-  round(s.length_spawningrearing_model_st, 2) as length_spawningrearing_model_st,
-  round(s.length_spawningrearing_model_st_access_a, 2) as length_spawningrearing_model_st_access_a,
-  round(s.length_spawningrearing_model_st_access_b, 2) as length_spawningrearing_model_st_access_b,
-  round(s.length_spawningrearing_obsrvd_wct, 2) as length_spawningrearing_obsrvd_wct,
-  round(s.length_spawningrearing_obsrvd_wct_access_a, 2) as length_spawningrearing_obsrvd_wct_access_a,
-  round(s.length_spawningrearing_obsrvd_wct_access_b, 2) as length_spawningrearing_obsrvd_wct_access_b,
-  round(s.length_spawningrearing_model_wct, 2) as length_spawningrearing_model_wct,
-  round(s.length_spawningrearing_model_wct_access_a, 2) as length_spawningrearing_model_wct_access_a,
-  round(s.length_spawningrearing_model_wct_access_b, 2) as length_spawningrearing_model_wct_access_b,
-  round(s.length_spawningrearing_obsrvd_salmon, 2) as length_spawningrearing_obsrvd_salmon,
-  round(s.length_spawningrearing_obsrvd_salmon_access_a, 2) as length_spawningrearing_obsrvd_salmon_access_a,
-  round(s.length_spawningrearing_obsrvd_salmon_access_b, 2) as length_spawningrearing_obsrvd_salmon_access_b,
-  round(s.length_spawningrearing_model_salmon, 2) as length_spawningrearing_model_salmon,
-  round(s.length_spawningrearing_model_salmon_access_a, 2) as length_spawningrearing_model_salmon_access_a,
-  round(s.length_spawningrearing_model_salmon_access_b, 2) as length_spawningrearing_model_salmon_access_b,
-  round(s.length_spawningrearing_obsrvd_salmon_st, 2) as length_spawningrearing_obsrvd_salmon_st,
-  round(s.length_spawningrearing_obsrvd_salmon_st_access_a, 2) as length_spawningrearing_obsrvd_salmon_st_access_a,
-  round(s.length_spawningrearing_obsrvd_salmon_st_access_b, 2) as length_spawningrearing_obsrvd_salmon_st_access_b,
-  round(s.length_spawningrearing_model_salmon_st, 2) as length_spawningrearing_model_salmon_st,
-  round(s.length_spawningrearing_model_salmon_st_access_a, 2) as length_spawningrearing_model_salmon_st_access_a,
-  round(s.length_spawningrearing_model_salmon_st_access_b, 2) as length_spawningrearing_model_salmon_st_access_b,
+  s.length_total,
+  s.length_potentiallyaccessible_obsrvd_bt,
+  s.length_potentiallyaccessible_obsrvd_bt_access_a,
+  s.length_potentiallyaccessible_obsrvd_bt_access_b,
+  s.length_potentiallyaccessible_model_bt,
+  s.length_potentiallyaccessible_model_bt_access_a,
+  s.length_potentiallyaccessible_model_bt_access_b,
+  s.length_potentiallyaccessible_obsrvd_salmon,
+  s.length_potentiallyaccessible_obsrvd_salmon_access_a,
+  s.length_potentiallyaccessible_obsrvd_salmon_access_b,
+  s.length_potentiallyaccessible_model_salmon,
+  s.length_potentiallyaccessible_model_salmon_access_a,
+  s.length_potentiallyaccessible_model_salmon_access_b,
+  s.length_potentiallyaccessible_obsrvd_st,
+  s.length_potentiallyaccessible_obsrvd_st_access_a,
+  s.length_potentiallyaccessible_obsrvd_st_access_b,
+  s.length_potentiallyaccessible_model_st,
+  s.length_potentiallyaccessible_model_st_access_a,
+  s.length_potentiallyaccessible_model_st_access_b,
+  s.length_potentiallyaccessible_obsrvd_wct,
+  s.length_potentiallyaccessible_obsrvd_wct_access_a,
+  s.length_potentiallyaccessible_obsrvd_wct_access_b,
+  s.length_potentiallyaccessible_model_wct,
+  s.length_potentiallyaccessible_model_wct_access_a,
+  s.length_potentiallyaccessible_model_wct_access_b,
+  s.length_spawningrearing_obsrvd_bt,
+  s.length_spawningrearing_obsrvd_bt_access_a,
+  s.length_spawningrearing_obsrvd_bt_access_b,
+  s.length_spawningrearing_model_bt,
+  s.length_spawningrearing_model_bt_access_a,
+  s.length_spawningrearing_model_bt_access_b,
+  s.length_spawningrearing_obsrvd_ch,
+  s.length_spawningrearing_obsrvd_ch_access_a,
+  s.length_spawningrearing_obsrvd_ch_access_b,
+  s.length_spawningrearing_model_ch,
+  s.length_spawningrearing_model_ch_access_a,
+  s.length_spawningrearing_model_ch_access_b,
+  s.length_spawningrearing_obsrvd_cm,
+  s.length_spawningrearing_obsrvd_cm_access_a,
+  s.length_spawningrearing_obsrvd_cm_access_b,
+  s.length_spawningrearing_model_cm,
+  s.length_spawningrearing_model_cm_access_a,
+  s.length_spawningrearing_model_cm_access_b,
+  s.length_spawningrearing_obsrvd_co,
+  s.length_spawningrearing_obsrvd_co_access_a,
+  s.length_spawningrearing_obsrvd_co_access_b,
+  s.length_spawningrearing_model_co,
+  s.length_spawningrearing_model_co_access_a,
+  s.length_spawningrearing_model_co_access_b,
+  s.length_spawningrearing_obsrvd_pk,
+  s.length_spawningrearing_obsrvd_pk_access_a,
+  s.length_spawningrearing_obsrvd_pk_access_b,
+  s.length_spawningrearing_model_pk,
+  s.length_spawningrearing_model_pk_access_a,
+  s.length_spawningrearing_model_pk_access_b,
+  s.length_spawningrearing_obsrvd_sk,
+  s.length_spawningrearing_obsrvd_sk_access_a,
+  s.length_spawningrearing_obsrvd_sk_access_b,
+  s.length_spawningrearing_model_sk,
+  s.length_spawningrearing_model_sk_access_a,
+  s.length_spawningrearing_model_sk_access_b,
+  s.length_spawningrearing_obsrvd_st,
+  s.length_spawningrearing_obsrvd_st_access_a,
+  s.length_spawningrearing_obsrvd_st_access_b,
+  s.length_spawningrearing_model_st,
+  s.length_spawningrearing_model_st_access_a,
+  s.length_spawningrearing_model_st_access_b,
+  s.length_spawningrearing_obsrvd_wct,
+  s.length_spawningrearing_obsrvd_wct_access_a,
+  s.length_spawningrearing_obsrvd_wct_access_b,
+  s.length_spawningrearing_model_wct,
+  s.length_spawningrearing_model_wct_access_a,
+  s.length_spawningrearing_model_wct_access_b,
+  s.length_spawningrearing_obsrvd_salmon,
+  s.length_spawningrearing_obsrvd_salmon_access_a,
+  s.length_spawningrearing_obsrvd_salmon_access_b,
+  s.length_spawningrearing_model_salmon,
+  s.length_spawningrearing_model_salmon_access_a,
+  s.length_spawningrearing_model_salmon_access_b,
+  s.length_spawningrearing_obsrvd_salmon_st,
+  s.length_spawningrearing_obsrvd_salmon_st_access_a,
+  s.length_spawningrearing_obsrvd_salmon_st_access_b,
+  s.length_spawningrearing_model_salmon_st,
+  s.length_spawningrearing_model_salmon_st_access_a,
+  s.length_spawningrearing_model_salmon_st_access_b,
   -- percentages
   round(coalesce((s.length_potentiallyaccessible_obsrvd_bt_access_b + s.length_potentiallyaccessible_model_bt_access_b) / nullif((s.length_potentiallyaccessible_obsrvd_bt + s.length_potentiallyaccessible_model_bt), 0), 0) * 100, 2) as pct_potentiallyaccessible_bt_access_b,
   round(coalesce((s.length_potentiallyaccessible_obsrvd_salmon_access_b + s.length_potentiallyaccessible_model_salmon_access_b) / nullif((s.length_potentiallyaccessible_obsrvd_salmon + s.length_potentiallyaccessible_model_salmon), 0), 0) * 100, 2) as pct_potentiallyaccessible_salmon_access_b,
@@ -863,91 +791,91 @@ create view bcfishpass.wsg_linear_summary_current as
 with sums as (
   select
     aw.watershed_group_code,
-    round(sum(s.length_total), 2) as length_total,
-    round(sum(s.length_potentiallyaccessible_obsrvd_bt), 2) as length_potentiallyaccessible_obsrvd_bt,
-    round(sum(s.length_potentiallyaccessible_obsrvd_bt_access_a), 2) as length_potentiallyaccessible_obsrvd_bt_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_bt_access_b), 2) as length_potentiallyaccessible_obsrvd_bt_access_b,
-    round(sum(s.length_potentiallyaccessible_model_bt), 2) as length_potentiallyaccessible_model_bt,
-    round(sum(s.length_potentiallyaccessible_model_bt_access_a), 2) as length_potentiallyaccessible_model_bt_access_a,
-    round(sum(s.length_potentiallyaccessible_model_bt_access_b), 2) as length_potentiallyaccessible_model_bt_access_b,
-    round(sum(s.length_potentiallyaccessible_obsrvd_salmon), 2) as length_potentiallyaccessible_obsrvd_salmon,
-    round(sum(s.length_potentiallyaccessible_obsrvd_salmon_access_a), 2) as length_potentiallyaccessible_obsrvd_salmon_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_salmon_access_b), 2) as length_potentiallyaccessible_obsrvd_salmon_access_b,
-    round(sum(s.length_potentiallyaccessible_model_salmon), 2) as length_potentiallyaccessible_model_salmon,
-    round(sum(s.length_potentiallyaccessible_model_salmon_access_a), 2) as length_potentiallyaccessible_model_salmon_access_a,
-    round(sum(s.length_potentiallyaccessible_model_salmon_access_b), 2) as length_potentiallyaccessible_model_salmon_access_b,
-    round(sum(s.length_potentiallyaccessible_obsrvd_st), 2) as length_potentiallyaccessible_obsrvd_st,
-    round(sum(s.length_potentiallyaccessible_obsrvd_st_access_a), 2) as length_potentiallyaccessible_obsrvd_st_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_st_access_b), 2) as length_potentiallyaccessible_obsrvd_st_access_b,
-    round(sum(s.length_potentiallyaccessible_model_st), 2) as length_potentiallyaccessible_model_st,
-    round(sum(s.length_potentiallyaccessible_model_st_access_a), 2) as length_potentiallyaccessible_model_st_access_a,
-    round(sum(s.length_potentiallyaccessible_model_st_access_b), 2) as length_potentiallyaccessible_model_st_access_b,
-    round(sum(s.length_potentiallyaccessible_obsrvd_wct), 2) as length_potentiallyaccessible_obsrvd_wct,
-    round(sum(s.length_potentiallyaccessible_obsrvd_wct_access_a), 2) as length_potentiallyaccessible_obsrvd_wct_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_wct_access_b), 2) as length_potentiallyaccessible_obsrvd_wct_access_b,
-    round(sum(s.length_potentiallyaccessible_model_wct), 2) as length_potentiallyaccessible_model_wct,
-    round(sum(s.length_potentiallyaccessible_model_wct_access_a), 2) as length_potentiallyaccessible_model_wct_access_a,
-    round(sum(s.length_potentiallyaccessible_model_wct_access_b), 2) as length_potentiallyaccessible_model_wct_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_bt), 2) as length_spawningrearing_obsrvd_bt,
-    round(sum(s.length_spawningrearing_obsrvd_bt_access_a), 2) as length_spawningrearing_obsrvd_bt_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_bt_access_b), 2) as length_spawningrearing_obsrvd_bt_access_b,
-    round(sum(s.length_spawningrearing_model_bt), 2) as length_spawningrearing_model_bt,
-    round(sum(s.length_spawningrearing_model_bt_access_a), 2) as length_spawningrearing_model_bt_access_a,
-    round(sum(s.length_spawningrearing_model_bt_access_b), 2) as length_spawningrearing_model_bt_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_ch), 2) as length_spawningrearing_obsrvd_ch,
-    round(sum(s.length_spawningrearing_obsrvd_ch_access_a), 2) as length_spawningrearing_obsrvd_ch_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_ch_access_b), 2) as length_spawningrearing_obsrvd_ch_access_b,
-    round(sum(s.length_spawningrearing_model_ch), 2) as length_spawningrearing_model_ch,
-    round(sum(s.length_spawningrearing_model_ch_access_a), 2) as length_spawningrearing_model_ch_access_a,
-    round(sum(s.length_spawningrearing_model_ch_access_b), 2) as length_spawningrearing_model_ch_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_cm), 2) as length_spawningrearing_obsrvd_cm,
-    round(sum(s.length_spawningrearing_obsrvd_cm_access_a), 2) as length_spawningrearing_obsrvd_cm_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_cm_access_b), 2) as length_spawningrearing_obsrvd_cm_access_b,
-    round(sum(s.length_spawningrearing_model_cm), 2) as length_spawningrearing_model_cm,
-    round(sum(s.length_spawningrearing_model_cm_access_a), 2) as length_spawningrearing_model_cm_access_a,
-    round(sum(s.length_spawningrearing_model_cm_access_b), 2) as length_spawningrearing_model_cm_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_co), 2) as length_spawningrearing_obsrvd_co,
-    round(sum(s.length_spawningrearing_obsrvd_co_access_a), 2) as length_spawningrearing_obsrvd_co_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_co_access_b), 2) as length_spawningrearing_obsrvd_co_access_b,
-    round(sum(s.length_spawningrearing_model_co), 2) as length_spawningrearing_model_co,
-    round(sum(s.length_spawningrearing_model_co_access_a), 2) as length_spawningrearing_model_co_access_a,
-    round(sum(s.length_spawningrearing_model_co_access_b), 2) as length_spawningrearing_model_co_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_pk), 2) as length_spawningrearing_obsrvd_pk,
-    round(sum(s.length_spawningrearing_obsrvd_pk_access_a), 2) as length_spawningrearing_obsrvd_pk_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_pk_access_b), 2) as length_spawningrearing_obsrvd_pk_access_b,
-    round(sum(s.length_spawningrearing_model_pk), 2) as length_spawningrearing_model_pk,
-    round(sum(s.length_spawningrearing_model_pk_access_a), 2) as length_spawningrearing_model_pk_access_a,
-    round(sum(s.length_spawningrearing_model_pk_access_b), 2) as length_spawningrearing_model_pk_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_sk), 2) as length_spawningrearing_obsrvd_sk,
-    round(sum(s.length_spawningrearing_obsrvd_sk_access_a), 2) as length_spawningrearing_obsrvd_sk_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_sk_access_b), 2) as length_spawningrearing_obsrvd_sk_access_b,
-    round(sum(s.length_spawningrearing_model_sk), 2) as length_spawningrearing_model_sk,
-    round(sum(s.length_spawningrearing_model_sk_access_a), 2) as length_spawningrearing_model_sk_access_a,
-    round(sum(s.length_spawningrearing_model_sk_access_b), 2) as length_spawningrearing_model_sk_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_st), 2) as length_spawningrearing_obsrvd_st,
-    round(sum(s.length_spawningrearing_obsrvd_st_access_a), 2) as length_spawningrearing_obsrvd_st_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_st_access_b), 2) as length_spawningrearing_obsrvd_st_access_b,
-    round(sum(s.length_spawningrearing_model_st), 2) as length_spawningrearing_model_st,
-    round(sum(s.length_spawningrearing_model_st_access_a), 2) as length_spawningrearing_model_st_access_a,
-    round(sum(s.length_spawningrearing_model_st_access_b), 2) as length_spawningrearing_model_st_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_wct), 2) as length_spawningrearing_obsrvd_wct,
-    round(sum(s.length_spawningrearing_obsrvd_wct_access_a), 2) as length_spawningrearing_obsrvd_wct_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_wct_access_b), 2) as length_spawningrearing_obsrvd_wct_access_b,
-    round(sum(s.length_spawningrearing_model_wct), 2) as length_spawningrearing_model_wct,
-    round(sum(s.length_spawningrearing_model_wct_access_a), 2) as length_spawningrearing_model_wct_access_a,
-    round(sum(s.length_spawningrearing_model_wct_access_b), 2) as length_spawningrearing_model_wct_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_salmon), 2) as length_spawningrearing_obsrvd_salmon,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_access_a), 2) as length_spawningrearing_obsrvd_salmon_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_access_b), 2) as length_spawningrearing_obsrvd_salmon_access_b,
-    round(sum(s.length_spawningrearing_model_salmon), 2) as length_spawningrearing_model_salmon,
-    round(sum(s.length_spawningrearing_model_salmon_access_a), 2) as length_spawningrearing_model_salmon_access_a,
-    round(sum(s.length_spawningrearing_model_salmon_access_b), 2) as length_spawningrearing_model_salmon_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_st), 2) as length_spawningrearing_obsrvd_salmon_st,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_st_access_a), 2) as length_spawningrearing_obsrvd_salmon_st_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_st_access_b), 2) as length_spawningrearing_obsrvd_salmon_st_access_b,
-    round(sum(s.length_spawningrearing_model_salmon_st), 2) as length_spawningrearing_model_salmon_st,
-    round(sum(s.length_spawningrearing_model_salmon_st_access_a), 2) as length_spawningrearing_model_salmon_st_access_a,
-    round(sum(s.length_spawningrearing_model_salmon_st_access_b), 2) as length_spawningrearing_model_salmon_st_access_b
+    sum(s.length_total) as length_total,
+    sum(s.length_potentiallyaccessible_obsrvd_bt) as length_potentiallyaccessible_obsrvd_bt,
+    sum(s.length_potentiallyaccessible_obsrvd_bt_access_a) as length_potentiallyaccessible_obsrvd_bt_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_bt_access_b) as length_potentiallyaccessible_obsrvd_bt_access_b,
+    sum(s.length_potentiallyaccessible_model_bt) as length_potentiallyaccessible_model_bt,
+    sum(s.length_potentiallyaccessible_model_bt_access_a) as length_potentiallyaccessible_model_bt_access_a,
+    sum(s.length_potentiallyaccessible_model_bt_access_b) as length_potentiallyaccessible_model_bt_access_b,
+    sum(s.length_potentiallyaccessible_obsrvd_salmon) as length_potentiallyaccessible_obsrvd_salmon,
+    sum(s.length_potentiallyaccessible_obsrvd_salmon_access_a) as length_potentiallyaccessible_obsrvd_salmon_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_salmon_access_b) as length_potentiallyaccessible_obsrvd_salmon_access_b,
+    sum(s.length_potentiallyaccessible_model_salmon) as length_potentiallyaccessible_model_salmon,
+    sum(s.length_potentiallyaccessible_model_salmon_access_a) as length_potentiallyaccessible_model_salmon_access_a,
+    sum(s.length_potentiallyaccessible_model_salmon_access_b) as length_potentiallyaccessible_model_salmon_access_b,
+    sum(s.length_potentiallyaccessible_obsrvd_st) as length_potentiallyaccessible_obsrvd_st,
+    sum(s.length_potentiallyaccessible_obsrvd_st_access_a) as length_potentiallyaccessible_obsrvd_st_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_st_access_b) as length_potentiallyaccessible_obsrvd_st_access_b,
+    sum(s.length_potentiallyaccessible_model_st) as length_potentiallyaccessible_model_st,
+    sum(s.length_potentiallyaccessible_model_st_access_a) as length_potentiallyaccessible_model_st_access_a,
+    sum(s.length_potentiallyaccessible_model_st_access_b) as length_potentiallyaccessible_model_st_access_b,
+    sum(s.length_potentiallyaccessible_obsrvd_wct) as length_potentiallyaccessible_obsrvd_wct,
+    sum(s.length_potentiallyaccessible_obsrvd_wct_access_a) as length_potentiallyaccessible_obsrvd_wct_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_wct_access_b) as length_potentiallyaccessible_obsrvd_wct_access_b,
+    sum(s.length_potentiallyaccessible_model_wct) as length_potentiallyaccessible_model_wct,
+    sum(s.length_potentiallyaccessible_model_wct_access_a) as length_potentiallyaccessible_model_wct_access_a,
+    sum(s.length_potentiallyaccessible_model_wct_access_b) as length_potentiallyaccessible_model_wct_access_b,
+    sum(s.length_spawningrearing_obsrvd_bt) as length_spawningrearing_obsrvd_bt,
+    sum(s.length_spawningrearing_obsrvd_bt_access_a) as length_spawningrearing_obsrvd_bt_access_a,
+    sum(s.length_spawningrearing_obsrvd_bt_access_b) as length_spawningrearing_obsrvd_bt_access_b,
+    sum(s.length_spawningrearing_model_bt) as length_spawningrearing_model_bt,
+    sum(s.length_spawningrearing_model_bt_access_a) as length_spawningrearing_model_bt_access_a,
+    sum(s.length_spawningrearing_model_bt_access_b) as length_spawningrearing_model_bt_access_b,
+    sum(s.length_spawningrearing_obsrvd_ch) as length_spawningrearing_obsrvd_ch,
+    sum(s.length_spawningrearing_obsrvd_ch_access_a) as length_spawningrearing_obsrvd_ch_access_a,
+    sum(s.length_spawningrearing_obsrvd_ch_access_b) as length_spawningrearing_obsrvd_ch_access_b,
+    sum(s.length_spawningrearing_model_ch) as length_spawningrearing_model_ch,
+    sum(s.length_spawningrearing_model_ch_access_a) as length_spawningrearing_model_ch_access_a,
+    sum(s.length_spawningrearing_model_ch_access_b) as length_spawningrearing_model_ch_access_b,
+    sum(s.length_spawningrearing_obsrvd_cm) as length_spawningrearing_obsrvd_cm,
+    sum(s.length_spawningrearing_obsrvd_cm_access_a) as length_spawningrearing_obsrvd_cm_access_a,
+    sum(s.length_spawningrearing_obsrvd_cm_access_b) as length_spawningrearing_obsrvd_cm_access_b,
+    sum(s.length_spawningrearing_model_cm) as length_spawningrearing_model_cm,
+    sum(s.length_spawningrearing_model_cm_access_a) as length_spawningrearing_model_cm_access_a,
+    sum(s.length_spawningrearing_model_cm_access_b) as length_spawningrearing_model_cm_access_b,
+    sum(s.length_spawningrearing_obsrvd_co) as length_spawningrearing_obsrvd_co,
+    sum(s.length_spawningrearing_obsrvd_co_access_a) as length_spawningrearing_obsrvd_co_access_a,
+    sum(s.length_spawningrearing_obsrvd_co_access_b) as length_spawningrearing_obsrvd_co_access_b,
+    sum(s.length_spawningrearing_model_co) as length_spawningrearing_model_co,
+    sum(s.length_spawningrearing_model_co_access_a) as length_spawningrearing_model_co_access_a,
+    sum(s.length_spawningrearing_model_co_access_b) as length_spawningrearing_model_co_access_b,
+    sum(s.length_spawningrearing_obsrvd_pk) as length_spawningrearing_obsrvd_pk,
+    sum(s.length_spawningrearing_obsrvd_pk_access_a) as length_spawningrearing_obsrvd_pk_access_a,
+    sum(s.length_spawningrearing_obsrvd_pk_access_b) as length_spawningrearing_obsrvd_pk_access_b,
+    sum(s.length_spawningrearing_model_pk) as length_spawningrearing_model_pk,
+    sum(s.length_spawningrearing_model_pk_access_a) as length_spawningrearing_model_pk_access_a,
+    sum(s.length_spawningrearing_model_pk_access_b) as length_spawningrearing_model_pk_access_b,
+    sum(s.length_spawningrearing_obsrvd_sk) as length_spawningrearing_obsrvd_sk,
+    sum(s.length_spawningrearing_obsrvd_sk_access_a) as length_spawningrearing_obsrvd_sk_access_a,
+    sum(s.length_spawningrearing_obsrvd_sk_access_b) as length_spawningrearing_obsrvd_sk_access_b,
+    sum(s.length_spawningrearing_model_sk) as length_spawningrearing_model_sk,
+    sum(s.length_spawningrearing_model_sk_access_a) as length_spawningrearing_model_sk_access_a,
+    sum(s.length_spawningrearing_model_sk_access_b) as length_spawningrearing_model_sk_access_b,
+    sum(s.length_spawningrearing_obsrvd_st) as length_spawningrearing_obsrvd_st,
+    sum(s.length_spawningrearing_obsrvd_st_access_a) as length_spawningrearing_obsrvd_st_access_a,
+    sum(s.length_spawningrearing_obsrvd_st_access_b) as length_spawningrearing_obsrvd_st_access_b,
+    sum(s.length_spawningrearing_model_st) as length_spawningrearing_model_st,
+    sum(s.length_spawningrearing_model_st_access_a) as length_spawningrearing_model_st_access_a,
+    sum(s.length_spawningrearing_model_st_access_b) as length_spawningrearing_model_st_access_b,
+    sum(s.length_spawningrearing_obsrvd_wct) as length_spawningrearing_obsrvd_wct,
+    sum(s.length_spawningrearing_obsrvd_wct_access_a) as length_spawningrearing_obsrvd_wct_access_a,
+    sum(s.length_spawningrearing_obsrvd_wct_access_b) as length_spawningrearing_obsrvd_wct_access_b,
+    sum(s.length_spawningrearing_model_wct) as length_spawningrearing_model_wct,
+    sum(s.length_spawningrearing_model_wct_access_a) as length_spawningrearing_model_wct_access_a,
+    sum(s.length_spawningrearing_model_wct_access_b) as length_spawningrearing_model_wct_access_b,
+    sum(s.length_spawningrearing_obsrvd_salmon) as length_spawningrearing_obsrvd_salmon,
+    sum(s.length_spawningrearing_obsrvd_salmon_access_a) as length_spawningrearing_obsrvd_salmon_access_a,
+    sum(s.length_spawningrearing_obsrvd_salmon_access_b) as length_spawningrearing_obsrvd_salmon_access_b,
+    sum(s.length_spawningrearing_model_salmon) as length_spawningrearing_model_salmon,
+    sum(s.length_spawningrearing_model_salmon_access_a) as length_spawningrearing_model_salmon_access_a,
+    sum(s.length_spawningrearing_model_salmon_access_b) as length_spawningrearing_model_salmon_access_b,
+    sum(s.length_spawningrearing_obsrvd_salmon_st) as length_spawningrearing_obsrvd_salmon_st,
+    sum(s.length_spawningrearing_obsrvd_salmon_st_access_a) as length_spawningrearing_obsrvd_salmon_st_access_a,
+    sum(s.length_spawningrearing_obsrvd_salmon_st_access_b) as length_spawningrearing_obsrvd_salmon_st_access_b,
+    sum(s.length_spawningrearing_model_salmon_st) as length_spawningrearing_model_salmon_st,
+    sum(s.length_spawningrearing_model_salmon_st_access_a) as length_spawningrearing_model_salmon_st_access_a,
+    sum(s.length_spawningrearing_model_salmon_st_access_b) as length_spawningrearing_model_salmon_st_access_b
   from bcfishpass.log_aw_linear_summary s
   inner join bcfishpass.log l on s.model_run_id = l.model_run_id
   inner join whse_basemapping.fwa_assessment_watersheds_poly aw on s.assessment_watershed_id = aw.watershed_feature_id
@@ -977,91 +905,91 @@ create view bcfishpass.wsg_linear_summary_previous as
 with sums as (
   select
     aw.watershed_group_code,
-    round(sum(s.length_total), 2) as length_total,
-    round(sum(s.length_potentiallyaccessible_obsrvd_bt), 2) as length_potentiallyaccessible_obsrvd_bt,
-    round(sum(s.length_potentiallyaccessible_obsrvd_bt_access_a), 2) as length_potentiallyaccessible_obsrvd_bt_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_bt_access_b), 2) as length_potentiallyaccessible_obsrvd_bt_access_b,
-    round(sum(s.length_potentiallyaccessible_model_bt), 2) as length_potentiallyaccessible_model_bt,
-    round(sum(s.length_potentiallyaccessible_model_bt_access_a), 2) as length_potentiallyaccessible_model_bt_access_a,
-    round(sum(s.length_potentiallyaccessible_model_bt_access_b), 2) as length_potentiallyaccessible_model_bt_access_b,
-    round(sum(s.length_potentiallyaccessible_obsrvd_salmon), 2) as length_potentiallyaccessible_obsrvd_salmon,
-    round(sum(s.length_potentiallyaccessible_obsrvd_salmon_access_a), 2) as length_potentiallyaccessible_obsrvd_salmon_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_salmon_access_b), 2) as length_potentiallyaccessible_obsrvd_salmon_access_b,
-    round(sum(s.length_potentiallyaccessible_model_salmon), 2) as length_potentiallyaccessible_model_salmon,
-    round(sum(s.length_potentiallyaccessible_model_salmon_access_a), 2) as length_potentiallyaccessible_model_salmon_access_a,
-    round(sum(s.length_potentiallyaccessible_model_salmon_access_b), 2) as length_potentiallyaccessible_model_salmon_access_b,
-    round(sum(s.length_potentiallyaccessible_obsrvd_st), 2) as length_potentiallyaccessible_obsrvd_st,
-    round(sum(s.length_potentiallyaccessible_obsrvd_st_access_a), 2) as length_potentiallyaccessible_obsrvd_st_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_st_access_b), 2) as length_potentiallyaccessible_obsrvd_st_access_b,
-    round(sum(s.length_potentiallyaccessible_model_st), 2) as length_potentiallyaccessible_model_st,
-    round(sum(s.length_potentiallyaccessible_model_st_access_a), 2) as length_potentiallyaccessible_model_st_access_a,
-    round(sum(s.length_potentiallyaccessible_model_st_access_b), 2) as length_potentiallyaccessible_model_st_access_b,
-    round(sum(s.length_potentiallyaccessible_obsrvd_wct), 2) as length_potentiallyaccessible_obsrvd_wct,
-    round(sum(s.length_potentiallyaccessible_obsrvd_wct_access_a), 2) as length_potentiallyaccessible_obsrvd_wct_access_a,
-    round(sum(s.length_potentiallyaccessible_obsrvd_wct_access_b), 2) as length_potentiallyaccessible_obsrvd_wct_access_b,
-    round(sum(s.length_potentiallyaccessible_model_wct), 2) as length_potentiallyaccessible_model_wct,
-    round(sum(s.length_potentiallyaccessible_model_wct_access_a), 2) as length_potentiallyaccessible_model_wct_access_a,
-    round(sum(s.length_potentiallyaccessible_model_wct_access_b), 2) as length_potentiallyaccessible_model_wct_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_bt), 2) as length_spawningrearing_obsrvd_bt,
-    round(sum(s.length_spawningrearing_obsrvd_bt_access_a), 2) as length_spawningrearing_obsrvd_bt_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_bt_access_b), 2) as length_spawningrearing_obsrvd_bt_access_b,
-    round(sum(s.length_spawningrearing_model_bt), 2) as length_spawningrearing_model_bt,
-    round(sum(s.length_spawningrearing_model_bt_access_a), 2) as length_spawningrearing_model_bt_access_a,
-    round(sum(s.length_spawningrearing_model_bt_access_b), 2) as length_spawningrearing_model_bt_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_ch), 2) as length_spawningrearing_obsrvd_ch,
-    round(sum(s.length_spawningrearing_obsrvd_ch_access_a), 2) as length_spawningrearing_obsrvd_ch_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_ch_access_b), 2) as length_spawningrearing_obsrvd_ch_access_b,
-    round(sum(s.length_spawningrearing_model_ch), 2) as length_spawningrearing_model_ch,
-    round(sum(s.length_spawningrearing_model_ch_access_a), 2) as length_spawningrearing_model_ch_access_a,
-    round(sum(s.length_spawningrearing_model_ch_access_b), 2) as length_spawningrearing_model_ch_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_cm), 2) as length_spawningrearing_obsrvd_cm,
-    round(sum(s.length_spawningrearing_obsrvd_cm_access_a), 2) as length_spawningrearing_obsrvd_cm_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_cm_access_b), 2) as length_spawningrearing_obsrvd_cm_access_b,
-    round(sum(s.length_spawningrearing_model_cm), 2) as length_spawningrearing_model_cm,
-    round(sum(s.length_spawningrearing_model_cm_access_a), 2) as length_spawningrearing_model_cm_access_a,
-    round(sum(s.length_spawningrearing_model_cm_access_b), 2) as length_spawningrearing_model_cm_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_co), 2) as length_spawningrearing_obsrvd_co,
-    round(sum(s.length_spawningrearing_obsrvd_co_access_a), 2) as length_spawningrearing_obsrvd_co_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_co_access_b), 2) as length_spawningrearing_obsrvd_co_access_b,
-    round(sum(s.length_spawningrearing_model_co), 2) as length_spawningrearing_model_co,
-    round(sum(s.length_spawningrearing_model_co_access_a), 2) as length_spawningrearing_model_co_access_a,
-    round(sum(s.length_spawningrearing_model_co_access_b), 2) as length_spawningrearing_model_co_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_pk), 2) as length_spawningrearing_obsrvd_pk,
-    round(sum(s.length_spawningrearing_obsrvd_pk_access_a), 2) as length_spawningrearing_obsrvd_pk_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_pk_access_b), 2) as length_spawningrearing_obsrvd_pk_access_b,
-    round(sum(s.length_spawningrearing_model_pk), 2) as length_spawningrearing_model_pk,
-    round(sum(s.length_spawningrearing_model_pk_access_a), 2) as length_spawningrearing_model_pk_access_a,
-    round(sum(s.length_spawningrearing_model_pk_access_b), 2) as length_spawningrearing_model_pk_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_sk), 2) as length_spawningrearing_obsrvd_sk,
-    round(sum(s.length_spawningrearing_obsrvd_sk_access_a), 2) as length_spawningrearing_obsrvd_sk_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_sk_access_b), 2) as length_spawningrearing_obsrvd_sk_access_b,
-    round(sum(s.length_spawningrearing_model_sk), 2) as length_spawningrearing_model_sk,
-    round(sum(s.length_spawningrearing_model_sk_access_a), 2) as length_spawningrearing_model_sk_access_a,
-    round(sum(s.length_spawningrearing_model_sk_access_b), 2) as length_spawningrearing_model_sk_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_st), 2) as length_spawningrearing_obsrvd_st,
-    round(sum(s.length_spawningrearing_obsrvd_st_access_a), 2) as length_spawningrearing_obsrvd_st_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_st_access_b), 2) as length_spawningrearing_obsrvd_st_access_b,
-    round(sum(s.length_spawningrearing_model_st), 2) as length_spawningrearing_model_st,
-    round(sum(s.length_spawningrearing_model_st_access_a), 2) as length_spawningrearing_model_st_access_a,
-    round(sum(s.length_spawningrearing_model_st_access_b), 2) as length_spawningrearing_model_st_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_wct), 2) as length_spawningrearing_obsrvd_wct,
-    round(sum(s.length_spawningrearing_obsrvd_wct_access_a), 2) as length_spawningrearing_obsrvd_wct_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_wct_access_b), 2) as length_spawningrearing_obsrvd_wct_access_b,
-    round(sum(s.length_spawningrearing_model_wct), 2) as length_spawningrearing_model_wct,
-    round(sum(s.length_spawningrearing_model_wct_access_a), 2) as length_spawningrearing_model_wct_access_a,
-    round(sum(s.length_spawningrearing_model_wct_access_b), 2) as length_spawningrearing_model_wct_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_salmon), 2) as length_spawningrearing_obsrvd_salmon,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_access_a), 2) as length_spawningrearing_obsrvd_salmon_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_access_b), 2) as length_spawningrearing_obsrvd_salmon_access_b,
-    round(sum(s.length_spawningrearing_model_salmon), 2) as length_spawningrearing_model_salmon,
-    round(sum(s.length_spawningrearing_model_salmon_access_a), 2) as length_spawningrearing_model_salmon_access_a,
-    round(sum(s.length_spawningrearing_model_salmon_access_b), 2) as length_spawningrearing_model_salmon_access_b,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_st), 2) as length_spawningrearing_obsrvd_salmon_st,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_st_access_a), 2) as length_spawningrearing_obsrvd_salmon_st_access_a,
-    round(sum(s.length_spawningrearing_obsrvd_salmon_st_access_b), 2) as length_spawningrearing_obsrvd_salmon_st_access_b,
-    round(sum(s.length_spawningrearing_model_salmon_st), 2) as length_spawningrearing_model_salmon_st,
-    round(sum(s.length_spawningrearing_model_salmon_st_access_a), 2) as length_spawningrearing_model_salmon_st_access_a,
-    round(sum(s.length_spawningrearing_model_salmon_st_access_b), 2) as length_spawningrearing_model_salmon_st_access_b
+    sum(s.length_total) as length_total,
+    sum(s.length_potentiallyaccessible_obsrvd_bt) as length_potentiallyaccessible_obsrvd_bt,
+    sum(s.length_potentiallyaccessible_obsrvd_bt_access_a) as length_potentiallyaccessible_obsrvd_bt_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_bt_access_b) as length_potentiallyaccessible_obsrvd_bt_access_b,
+    sum(s.length_potentiallyaccessible_model_bt) as length_potentiallyaccessible_model_bt,
+    sum(s.length_potentiallyaccessible_model_bt_access_a) as length_potentiallyaccessible_model_bt_access_a,
+    sum(s.length_potentiallyaccessible_model_bt_access_b) as length_potentiallyaccessible_model_bt_access_b,
+    sum(s.length_potentiallyaccessible_obsrvd_salmon) as length_potentiallyaccessible_obsrvd_salmon,
+    sum(s.length_potentiallyaccessible_obsrvd_salmon_access_a) as length_potentiallyaccessible_obsrvd_salmon_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_salmon_access_b) as length_potentiallyaccessible_obsrvd_salmon_access_b,
+    sum(s.length_potentiallyaccessible_model_salmon) as length_potentiallyaccessible_model_salmon,
+    sum(s.length_potentiallyaccessible_model_salmon_access_a) as length_potentiallyaccessible_model_salmon_access_a,
+    sum(s.length_potentiallyaccessible_model_salmon_access_b) as length_potentiallyaccessible_model_salmon_access_b,
+    sum(s.length_potentiallyaccessible_obsrvd_st) as length_potentiallyaccessible_obsrvd_st,
+    sum(s.length_potentiallyaccessible_obsrvd_st_access_a) as length_potentiallyaccessible_obsrvd_st_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_st_access_b) as length_potentiallyaccessible_obsrvd_st_access_b,
+    sum(s.length_potentiallyaccessible_model_st) as length_potentiallyaccessible_model_st,
+    sum(s.length_potentiallyaccessible_model_st_access_a) as length_potentiallyaccessible_model_st_access_a,
+    sum(s.length_potentiallyaccessible_model_st_access_b) as length_potentiallyaccessible_model_st_access_b,
+    sum(s.length_potentiallyaccessible_obsrvd_wct) as length_potentiallyaccessible_obsrvd_wct,
+    sum(s.length_potentiallyaccessible_obsrvd_wct_access_a) as length_potentiallyaccessible_obsrvd_wct_access_a,
+    sum(s.length_potentiallyaccessible_obsrvd_wct_access_b) as length_potentiallyaccessible_obsrvd_wct_access_b,
+    sum(s.length_potentiallyaccessible_model_wct) as length_potentiallyaccessible_model_wct,
+    sum(s.length_potentiallyaccessible_model_wct_access_a) as length_potentiallyaccessible_model_wct_access_a,
+    sum(s.length_potentiallyaccessible_model_wct_access_b) as length_potentiallyaccessible_model_wct_access_b,
+    sum(s.length_spawningrearing_obsrvd_bt) as length_spawningrearing_obsrvd_bt,
+    sum(s.length_spawningrearing_obsrvd_bt_access_a) as length_spawningrearing_obsrvd_bt_access_a,
+    sum(s.length_spawningrearing_obsrvd_bt_access_b) as length_spawningrearing_obsrvd_bt_access_b,
+    sum(s.length_spawningrearing_model_bt) as length_spawningrearing_model_bt,
+    sum(s.length_spawningrearing_model_bt_access_a) as length_spawningrearing_model_bt_access_a,
+    sum(s.length_spawningrearing_model_bt_access_b) as length_spawningrearing_model_bt_access_b,
+    sum(s.length_spawningrearing_obsrvd_ch) as length_spawningrearing_obsrvd_ch,
+    sum(s.length_spawningrearing_obsrvd_ch_access_a) as length_spawningrearing_obsrvd_ch_access_a,
+    sum(s.length_spawningrearing_obsrvd_ch_access_b) as length_spawningrearing_obsrvd_ch_access_b,
+    sum(s.length_spawningrearing_model_ch) as length_spawningrearing_model_ch,
+    sum(s.length_spawningrearing_model_ch_access_a) as length_spawningrearing_model_ch_access_a,
+    sum(s.length_spawningrearing_model_ch_access_b) as length_spawningrearing_model_ch_access_b,
+    sum(s.length_spawningrearing_obsrvd_cm) as length_spawningrearing_obsrvd_cm,
+    sum(s.length_spawningrearing_obsrvd_cm_access_a) as length_spawningrearing_obsrvd_cm_access_a,
+    sum(s.length_spawningrearing_obsrvd_cm_access_b) as length_spawningrearing_obsrvd_cm_access_b,
+    sum(s.length_spawningrearing_model_cm) as length_spawningrearing_model_cm,
+    sum(s.length_spawningrearing_model_cm_access_a) as length_spawningrearing_model_cm_access_a,
+    sum(s.length_spawningrearing_model_cm_access_b) as length_spawningrearing_model_cm_access_b,
+    sum(s.length_spawningrearing_obsrvd_co) as length_spawningrearing_obsrvd_co,
+    sum(s.length_spawningrearing_obsrvd_co_access_a) as length_spawningrearing_obsrvd_co_access_a,
+    sum(s.length_spawningrearing_obsrvd_co_access_b) as length_spawningrearing_obsrvd_co_access_b,
+    sum(s.length_spawningrearing_model_co) as length_spawningrearing_model_co,
+    sum(s.length_spawningrearing_model_co_access_a) as length_spawningrearing_model_co_access_a,
+    sum(s.length_spawningrearing_model_co_access_b) as length_spawningrearing_model_co_access_b,
+    sum(s.length_spawningrearing_obsrvd_pk) as length_spawningrearing_obsrvd_pk,
+    sum(s.length_spawningrearing_obsrvd_pk_access_a) as length_spawningrearing_obsrvd_pk_access_a,
+    sum(s.length_spawningrearing_obsrvd_pk_access_b) as length_spawningrearing_obsrvd_pk_access_b,
+    sum(s.length_spawningrearing_model_pk) as length_spawningrearing_model_pk,
+    sum(s.length_spawningrearing_model_pk_access_a) as length_spawningrearing_model_pk_access_a,
+    sum(s.length_spawningrearing_model_pk_access_b) as length_spawningrearing_model_pk_access_b,
+    sum(s.length_spawningrearing_obsrvd_sk) as length_spawningrearing_obsrvd_sk,
+    sum(s.length_spawningrearing_obsrvd_sk_access_a) as length_spawningrearing_obsrvd_sk_access_a,
+    sum(s.length_spawningrearing_obsrvd_sk_access_b) as length_spawningrearing_obsrvd_sk_access_b,
+    sum(s.length_spawningrearing_model_sk) as length_spawningrearing_model_sk,
+    sum(s.length_spawningrearing_model_sk_access_a) as length_spawningrearing_model_sk_access_a,
+    sum(s.length_spawningrearing_model_sk_access_b) as length_spawningrearing_model_sk_access_b,
+    sum(s.length_spawningrearing_obsrvd_st) as length_spawningrearing_obsrvd_st,
+    sum(s.length_spawningrearing_obsrvd_st_access_a) as length_spawningrearing_obsrvd_st_access_a,
+    sum(s.length_spawningrearing_obsrvd_st_access_b) as length_spawningrearing_obsrvd_st_access_b,
+    sum(s.length_spawningrearing_model_st) as length_spawningrearing_model_st,
+    sum(s.length_spawningrearing_model_st_access_a) as length_spawningrearing_model_st_access_a,
+    sum(s.length_spawningrearing_model_st_access_b) as length_spawningrearing_model_st_access_b,
+    sum(s.length_spawningrearing_obsrvd_wct) as length_spawningrearing_obsrvd_wct,
+    sum(s.length_spawningrearing_obsrvd_wct_access_a) as length_spawningrearing_obsrvd_wct_access_a,
+    sum(s.length_spawningrearing_obsrvd_wct_access_b) as length_spawningrearing_obsrvd_wct_access_b,
+    sum(s.length_spawningrearing_model_wct) as length_spawningrearing_model_wct,
+    sum(s.length_spawningrearing_model_wct_access_a) as length_spawningrearing_model_wct_access_a,
+    sum(s.length_spawningrearing_model_wct_access_b) as length_spawningrearing_model_wct_access_b,
+    sum(s.length_spawningrearing_obsrvd_salmon) as length_spawningrearing_obsrvd_salmon,
+    sum(s.length_spawningrearing_obsrvd_salmon_access_a) as length_spawningrearing_obsrvd_salmon_access_a,
+    sum(s.length_spawningrearing_obsrvd_salmon_access_b) as length_spawningrearing_obsrvd_salmon_access_b,
+    sum(s.length_spawningrearing_model_salmon) as length_spawningrearing_model_salmon,
+    sum(s.length_spawningrearing_model_salmon_access_a) as length_spawningrearing_model_salmon_access_a,
+    sum(s.length_spawningrearing_model_salmon_access_b) as length_spawningrearing_model_salmon_access_b,
+    sum(s.length_spawningrearing_obsrvd_salmon_st) as length_spawningrearing_obsrvd_salmon_st,
+    sum(s.length_spawningrearing_obsrvd_salmon_st_access_a) as length_spawningrearing_obsrvd_salmon_st_access_a,
+    sum(s.length_spawningrearing_obsrvd_salmon_st_access_b) as length_spawningrearing_obsrvd_salmon_st_access_b,
+    sum(s.length_spawningrearing_model_salmon_st) as length_spawningrearing_model_salmon_st,
+    sum(s.length_spawningrearing_model_salmon_st_access_a) as length_spawningrearing_model_salmon_st_access_a,
+    sum(s.length_spawningrearing_model_salmon_st_access_b) as length_spawningrearing_model_salmon_st_access_b
   from bcfishpass.log_aw_linear_summary s
   inner join bcfishpass.log l on s.model_run_id = l.model_run_id
   inner join whse_basemapping.fwa_assessment_watersheds_poly aw on s.assessment_watershed_id = aw.watershed_feature_id

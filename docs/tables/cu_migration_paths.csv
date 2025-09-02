@@ -1,0 +1,4 @@
+column,description
+``linear_feature_id``,BC FWA unique identifier for a stream segment (flow network arc)
+``segmented_stream_id``,bcfishpass stream segment unique identifier (bcfishpass splits FWA streams at locations of features on stream network)
+``cuid``,Pacific Salmon Explorer polygon identifier

@@ -1,26 +1,52 @@
 ============================
-Data Distribution
+Data Dictionary
 ============================
 
---------------------------------------------------------------------------
-BC Fish Passage model (bcfishpass)
---------------------------------------------------------------------------
+Weekly bcfishpass data extracts are available for download as zipped geopackages.
 
-A weekly bcfishpass data extract is available for download as a zipped geopackage:
-
-`https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.gpkg.zip>`_.
-
-The models included in this distribution are generated as described in the :ref:`model description section <description>`, with the following parameters:
+Access and linear habitat models included in this distribution are generated as described in the previous sections, with the following parameters:
 
 - for salmon, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 15%
 - for steelhead, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
 - for both salmon and steelhead, potential natural barriers with 5 or more upstream observations of any of the target species (``CH, CM, CO, PK, SK, ST``) since January 01, 1990 are presumed to be passable
 
-Tables/layers included in the distribution are:
+Draft Bull Trout and Westslope Cutthroat Trout models are also included:
+
+- for Bull Trout, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 25%
+- for Westslope Cutthroat Trout, potential :ref:`gradient barriers <gradient_barriers>` are considered passable up to 20%
+- for both Bull Trout and Westslope Cutthroat Trout, potential natural barriers are presumed to be passable if any observation(s) of the target species are found upstream
+
+Linear spawning/rearing habitat (intrinsic potential) parameters/methods are as specified by the Canadian Wildlife Federation:
+
+- `habitat thresholds <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_thresholds.csv>`_
+- `watersheds and methods <https://github.com/smnorris/bcfishpass/blob/main/parameters/example_cwf/parameters_habitat_method.csv>`_
+
+Note that while stream discharge (m3/s) is used to model habitat in the Bulkley, Horsefly and Elk River watershed groups, proprietary data
+discharge was used. Discharge data is not provided in these files for those watershed groups.
 
 
-streams (lines)
+Files included in this data distribution are:
+
+- `bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_
+- `bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_
+- `bcfishpass_summary_aw_linear.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_
+
+Note that draft lateral habitat modelling is not included - this is available on request.
+
+
+`crossings <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_ (points)
 ============================
+
+Road-stream crossings (and dams), including: tenure information; barrier status; upstream/downstream habitat lengths
+
+.. csv-table::
+   :file: tables/crossings_vw.csv
+   :header-rows: 1
+
+
+`streams <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_ (lines)
+============================
+
 BC FWA stream network, with bcfishpass model classifications.
 
 .. csv-table::
@@ -28,29 +54,33 @@ BC FWA stream network, with bcfishpass model classifications.
    :header-rows: 1
 
 
-crossings (points)
+`summary_aw_linear <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_ (non-spatial)
 ============================
-Road-stream crossings (and dams), including tenure information; barrier status; upstream/downstream habitat lengths
 
-
-.. csv-table::
-   :file: tables/crossings_vw.csv
-   :header-rows: 1
-
-
-linear_summary
-============================
-A weekly report of `connectivity status per FWA assessment watershed <https://nrs.objectstore.gov.bc.ca/bchamp/aw_linear_summary_psf.csv>`_  for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead.
+A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
+and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye), Steelhead, Bull Trout and Westslope Cutthroat Trout.
 The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
 
 .. csv-table::
-   :file: tables/linear_summary.csv
+   :file: tables/summary_aw_linear.csv
    :header-rows: 1
 
+pse_migration_paths (non-spatial)
+=================================
+Migration paths between modelled spawning/rearing in PSE Conservation Units and the ocean, represented by FWA stream network identifiers.
 
-------------------
-Pacific Salmon and Steelhead access model (subset of habitat model)
-------------------
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_ch.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_ch.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_cm.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_cm.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_co.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_co.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_pk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_pk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_sk.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_sk.csv.gz>`_
+| `https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_st.csv.gz <https://nrs.objectstore.gov.bc.ca/bchamp/cu_migrationpaths_st.csv.gz>`_
 
-A `weekly provincial data extract <https://bcgov.github.io/bc_freshwater_fish_habitat_accessibility_model/04_data_distribution.html>`_ of Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye) and Steelhead access models (and associated data) is provided by the Province of BC. See documentation in the bcgov repository for full data definitions.
 
+.. csv-table::
+   :file: tables/cu_migration_paths.csv
+   :header-rows: 1
+
+Note that ``segmented_stream_id`` is based on FWA ``blue_line_key`` and ``downstream_route_measure`` for a given segment.
+When the segmentation by bcfishpass modelling changes, the ``segmented_stream_id`` will also change. When joining the migration paths
+to ``streams``, ensure both files were generated from the same model run.

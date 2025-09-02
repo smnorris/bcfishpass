@@ -1,5 +1,5 @@
 (linear_habitat)=
-# Linear spawning/rearing habitat model
+# Model linear spawning/rearing habitat
 
 Streams accessible to fish may be suitable for spawning or rearing, or may only be used as movement corridors to reach such habitats. When estimating fragmentation and prioritizing further work, the amount of potential spawning or rearing habitat is of greater interest than the raw amount of corridor habitat. In addition to modelling barriers to fish passage, `bcfishpass` can model the intrinsic potential (IP) of streams to support spawning or rearing activities for several species (Pacific Salmon, Steelhead, Bull Trout, Westslope Cutthroat Trout).
 
@@ -49,7 +49,6 @@ Channel width is modelled for all of BC:
 2. Contributing area (FWA watersheds) and precipitiation (ClimateBC) datasets used to model discharge / channel width are both cut off at the BC border:
 	- *all results from the above models are only valid for streams with 100% of their contributing area with BC*
 	- *streams with contributing area outside of BC (and thus with invalid spawning/rearing models) ARE NOT CURRENTLY NOTED in model outputs/file distributions*
-
 
 
 ## Feature type and network connectivity

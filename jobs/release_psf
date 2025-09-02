@@ -4,58 +4,40 @@ set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-psql $DATABASE_URL -c "select
-  assessment_watershed_id,
-  length_potentiallyaccessible_obsrvd_salmon,
-  length_potentiallyaccessible_obsrvd_salmon_access_b,
-  length_potentiallyaccessible_model_salmon,
-  length_potentiallyaccessible_model_salmon_access_b,
-  length_potentiallyaccessible_obsrvd_st,
-  length_potentiallyaccessible_obsrvd_st_access_b,
-  length_potentiallyaccessible_model_st,
-  length_potentiallyaccessible_model_st_access_b,
-  length_spawningrearing_obsrvd_ch,
-  length_spawningrearing_obsrvd_ch_access_b,
-  length_spawningrearing_model_ch,
-  length_spawningrearing_model_ch_access_b,
-  length_spawningrearing_obsrvd_cm,
-  length_spawningrearing_obsrvd_cm_access_b,
-  length_spawningrearing_model_cm,
-  length_spawningrearing_model_cm_access_b,
-  length_spawningrearing_obsrvd_co,
-  length_spawningrearing_obsrvd_co_access_b,
-  length_spawningrearing_model_co,
-  length_spawningrearing_model_co_access_b,
-  length_spawningrearing_obsrvd_pk,
-  length_spawningrearing_obsrvd_pk_access_b,
-  length_spawningrearing_model_pk,
-  length_spawningrearing_model_pk_access_b,
-  length_spawningrearing_obsrvd_sk,
-  length_spawningrearing_obsrvd_sk_access_b,
-  length_spawningrearing_model_sk,
-  length_spawningrearing_model_sk_access_b,
-  length_spawningrearing_obsrvd_st,
-  length_spawningrearing_obsrvd_st_access_b,
-  length_spawningrearing_model_st,
-  length_spawningrearing_model_st_access_b,
-  length_spawningrearing_obsrvd_salmon,
-  length_spawningrearing_obsrvd_salmon_access_b,
-  length_spawningrearing_model_salmon,
-  length_spawningrearing_model_salmon_access_b,
-  length_spawningrearing_obsrvd_salmon_st,
-  length_spawningrearing_obsrvd_salmon_st_access_b,
-  length_spawningrearing_model_salmon_st,
-  length_spawningrearing_model_salmon_st_access_b,
-  pct_potentiallyaccessible_salmon_access_b,
-  pct_potentiallyaccessible_st_access_b,
-  pct_spawningrearing_ch_access_b,
-  pct_spawningrearing_cm_access_b,
-  pct_spawningrearing_co_access_b,
-  pct_spawningrearing_pk_access_b,
-  pct_spawningrearing_sk_access_b,
-  pct_spawningrearing_st_access_b,
-  pct_spawningrearing_salmon_access_b,
-  pct_spawningrearing_salmon_st_access_b
-from bcfishpass.aw_linear_summary_current a" --csv > aw_linear_summary_psf.csv
+# dump CU migration paths to file (this takes some time)
+spp="ch cm co pk sk st"
 
-aws s3 cp aw_linear_summary_psf.csv s3://bchamp --acl public-read
+sql="
+with hab as (
+  select distinct
+    s.segmented_stream_id,
+    s.linear_feature_id,
+    s.blue_line_key,
+    s.downstream_route_measure,
+    s.wscode_ltree,
+    s.localcode_ltree,
+    cu.cuid::integer
+  from bcfishpass.streams s
+  join psf.pse_conservation_units_streams cu using (linear_feature_id)
+  join bcfishpass.habitat_linear_:sp h using (segmented_stream_id)
+)
+
+select distinct
+  a.segmented_stream_id,
+  a.linear_feature_id,
+  b.cuid
+from bcfishpass.streams a
+inner join hab b on fwa_upstream(
+  a.blue_line_key, a.downstream_route_measure, a.wscode_ltree, a.localcode_ltree,
+  b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
+  true
+)
+order by
+  linear_feature_id,
+  segmented_stream_id,
+  cuid"
+
+for sp in $spp; do
+  echo "Dumping migration paths for $sp"
+  $PSQL -c "${sql//:sp/$sp}" --csv | gzip | aws s3 cp - s3://$BUCKET/cu_migrationpaths_$sp.csv.gz --acl public-read
+done

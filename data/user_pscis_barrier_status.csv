@@ -613,7 +613,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50115,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50116,PASSABLE,ELKR,CWF,2021-01-01,NJObased on assessment comments (and imagery review where required)
 50117,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
-50118,POTENTIAL,ELKR,CWF,2021-01-01,NJO - Step pools present - natural barrier? (based on assessment comments (and imagery review where required)
 50119,BARRIER,ELKR,CWF,2021-01-01,NJO - large culvert - flag for review (based on assessment comments (and imagery review where required)
 50120,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50121,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
@@ -639,11 +638,9 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50142,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50143,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50144,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
-50145,POTENTIAL,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50146,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50147,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50148,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-50149,POTENTIAL,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50150,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50151,PASSABLE,ELKR,CWF,2021-01-01,NJO - based on assessment comments (and imagery review where required)
 50152,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -663,7 +660,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50170,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50171,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50172,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-50173,POTENTIAL,ELKR,CWF,2021-01-01,NJO - Flag for review - based on assessment comments (and imagery review where required)
 50175,BARRIER,ELKR,CWF,2021-01-01,NJO - Flag for review - based on assessment comments (and imagery review where required)
 50176,PASSABLE,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 50177,BARRIER,ELKR,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1031,7 +1027,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 123933,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123934,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123935,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-123937,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123938,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123941,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 123944,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1277,7 +1272,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 50179,PASSABLE,ELKR,NMW,2021-01-01,Manual review
 50186,PASSABLE,ELKR,NMW,2021-01-01,Manual review; deactivated
 50174,PASSABLE,ELKR,NMW,2021-01-01,Manual review; deactivated
-57596,PASSABLE,HORS,NMW,2021-01-01,"Field assessment, no structure"
 57470,PASSABLE,HORS,NMW,2021-01-01,"Actually a PSCIS location issue, but temporary fix for Horsefly workshop updates"
 197763,PASSABLE,HORS,TMK,2022-11-28,ford
 197761,PASSABLE,HORS,TMK,2022-11-28,ford crossing
@@ -1352,3 +1346,10 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 197834,PASSABLE,ELKR,MC,2025-03-24,2025 Trib review
 197833,PASSABLE,ELKR,MC,2025-03-24,2025 Trib review
 197827,POTENTIAL,ELKR,MC,2025-03-24,2025 Trib review
+6718,PASSABLE,NATR,LS,2025-07-04,"This crossing has been replaced with a bridge, based on aerial imagery review."
+57596,BARRIER,HORS,MC,2025-07-25,Collapsed bridge has created log jam that is barrier to fish passage
+123937,POTENTIAL,HORS,MC,2025-07-25,Collapsed woodbox culvert is classified as a potential barrier
+195476,POTENTIAL,BULK,LB,2025-07-31,PSCIS notes (2014) indicate blockage at outlet
+197762,BARRIER,HORS,MC,2025-08-13,Biologist review
+198300,BARRIER,HORS,MC,2025-08-13,Biologist review
+196195,PASSABLE,TABR,LS,2025-07-22,"This crossing has been replaced with a bridge, based on aerial imagery review."

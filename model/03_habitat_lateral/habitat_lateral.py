@@ -68,7 +68,10 @@ LATERAL_SOURCES = {
       s.edge_type in (1000,1100,2000,2300) and
       (
          cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
-         cardinality(a.barriers_st_dnstr) = 0
+         cardinality(a.barriers_st_dnstr) = 0 or
+         cardinality(a.barriers_bt_dnstr) = 0 or
+         cardinality(a.barriers_wct_dnstr) = 0
+
       ) and
       s.stream_order_parent > 5 and
       s.gradient <= .01 and
@@ -89,23 +92,30 @@ LATERAL_SOURCES = {
       (
         (
          cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
-         cardinality(a.barriers_st_dnstr) = 0
+         cardinality(a.barriers_st_dnstr) = 0 or
+         cardinality(a.barriers_bt_dnstr) = 0 or
+         cardinality(a.barriers_wct_dnstr) = 0
         )
         and stream_order >= 7
       )
       or
       (
         (
-        h.spawning_ch is true or
-        h.spawning_co is true or
-        h.spawning_sk is true or
-        h.spawning_st is true or
-        h.spawning_pk is true or
-        h.spawning_cm is true or
-        h.rearing_ch is true or
-        h.rearing_co is true or
-        h.rearing_sk is true or
-        h.rearing_st is true
+        h.spawning_ch > 0 or
+        h.spawning_co > 0 or
+        h.spawning_sk > 0 or
+        h.spawning_st > 0 or
+        h.spawning_pk > 0 or
+        h.spawning_cm > 0 or
+        h.rearing_ch > 0 or
+        h.rearing_co > 0 or
+        h.rearing_sk > 0 or
+        h.rearing_st > 0 or
+        
+        h.spawning_bt > 0 or
+        h.rearing_bt > 0 or
+        h.spawning_wct > 0 or
+        h.rearing_wct > 0
         )
       )
     );""",
@@ -129,21 +139,66 @@ where
   edge_type in (1000,1100,2000,2300) and
   (
     cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or
-    cardinality(a.barriers_st_dnstr) = 0
+    cardinality(a.barriers_st_dnstr) = 0 or
+    cardinality(a.barriers_bt_dnstr) = 0 or
+    cardinality(a.barriers_wct_dnstr) = 0
   );""",
     # -----------------------
     # rail
-    # rail lines buffered by 25m
+    # rail lines buffered by 25m / roads buffered by 15m
     # -----------------------
     "rail": """select
       st_multi(st_buffer(r.geom, 25)) as geom
     from whse_basemapping.gba_railway_tracks_sp r
     inner join whse_basemapping.fwa_watershed_groups_poly wsg
     on st_intersects(r.geom, wsg.geom)
-    where wsg.watershed_group_code = %(wsg)s""",
+    where wsg.watershed_group_code = %(wsg)s
+    
+    UNION ALL
+    
+    select
+      st_multi(st_buffer(r.geom, 15)) as geom
+    from whse_basemapping.transport_line r
+    inner join whse_basemapping.fwa_watershed_groups_poly wsg
+    on st_intersects(r.geom, wsg.geom)
+    where wsg.watershed_group_code = %(wsg)s
+    AND r.transport_line_type_code NOT IN ('F','FP','FR','T','TR','TS','RP','RWA')      
+    AND r.transport_line_surface_code != 'D'                                            
+    AND COALESCE(r.transport_line_structure_code, '') != 'T'    
+    
+    UNION ALL                        
+
+    select
+      st_multi(st_buffer(r.geom, 15)) as geom
+    FROM whse_forest_tenure.ften_road_section_lines_svw r
+    inner join whse_basemapping.fwa_watershed_groups_poly wsg
+    on st_intersects(r.geom, wsg.geom)
+    where wsg.watershed_group_code = %(wsg)s
+    and r.life_cycle_status_code not in ('RETIRED', 'PENDING')
+
+    UNION ALL
+
+    select
+      st_multi(st_buffer(r.geom, 15)) as geom
+    FROM whse_mineral_tenure.og_road_segment_permit_sp r
+    inner join whse_basemapping.fwa_watershed_groups_poly wsg
+    on st_intersects(r.geom, wsg.geom)
+    where wsg.watershed_group_code = %(wsg)s
+    and status = 'Approved' AND road_type_desc != 'Snow Ice Road'
+    
+    UNION ALL
+
+    select
+      st_multi(st_buffer(r.geom, 15)) as geom
+    FROM whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp r
+    inner join whse_basemapping.fwa_watershed_groups_poly wsg
+    on st_intersects(r.geom, wsg.geom)
+    where wsg.watershed_group_code = %(wsg)s
+    and petrlm_development_road_type != 'WINT'
+    """,
     # -----------------------
     # rail_bridges
-    # buffered by 30m for breaching rail raster
+    # buffered by 30m for breaching rail raster / 20m for roads
     # -----------------------
     "rail_bridges": """select
       st_multi(st_buffer(geom, 30)) as geom
@@ -151,7 +206,18 @@ where
     where crossing_feature_type = 'RAIL'
     and barrier_status NOT IN ('POTENTIAL','BARRIER')
     and crossing_type_code != 'CBS'
-    and watershed_group_code = %(wsg)s""",
+    and watershed_group_code = %(wsg)s
+
+    UNION ALL
+    
+    select
+      st_multi(st_buffer(geom, 20)) as geom
+    from bcfishpass.crossings_vw
+    where crossing_feature_type != 'RAIL'
+    and barrier_status NOT IN ('POTENTIAL','BARRIER')
+    and crossing_type_code != 'CBS'
+    and watershed_group_code = %(wsg)s
+    """,
     # -----------------------
     # accessible_below_rail
     # accessible streams below railways
@@ -168,8 +234,13 @@ where
       AND c.watershed_group_code = s.watershed_group_code
     left outer join bcfishpass.streams_access_vw a on s.segmented_stream_id = a.segmented_stream_id
     where
-      c.crossing_feature_type = 'RAIL' and
-      ( cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or cardinality(a.barriers_st_dnstr) = 0) and
+      (c.crossing_feature_type = 'RAIL' or c.crossing_feature_type = 'ROAD, RESOURCE/OTHER') and
+      ( cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or 
+        cardinality(a.barriers_st_dnstr) = 0 or
+        cardinality(a.barriers_bt_dnstr) = 0 or
+        cardinality(a.barriers_wct_dnstr) = 0
+      ) 
+      and
       (
         c.barrier_status in ('BARRIER', 'POTENTIAL') -- typical barriers
         or c.crossing_type_code = 'CBS'              -- for floodplain connectivity, any CBS can be a barrier
@@ -198,23 +269,11 @@ where
         )
     where
     s.watershed_group_code = %(wsg)s and
-    ( cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or cardinality(a.barriers_st_dnstr) = 0)
-    --and
-    --(
-    --  (
-    --    s.model_spawning_ch is true or
-    --    s.model_spawning_co is true or
-    --    s.model_spawning_sk is true or
-    --    s.model_spawning_st is true or
-    --    s.model_spawning_pk is true or
-    --    s.model_spawning_cm is true or
-    --    s.model_rearing_ch is true or
-    --    s.model_rearing_co is true or
-    --    s.model_rearing_sk is true or
-    --    s.model_rearing_st is true
-    --  )
-    --  or s.stream_order >= 7
-    --)
+    ( cardinality(a.barriers_ch_cm_co_pk_sk_dnstr) = 0  or 
+      cardinality(a.barriers_st_dnstr) = 0 or
+      cardinality(a.barriers_bt_dnstr) = 0 or
+      cardinality(a.barriers_wct_dnstr) = 0
+    )
     and b.aggregated_crossings_id is null
 
     -- Do not include streams above barriers in side channels
@@ -296,6 +355,8 @@ def load_rasters(db, watershed_group_code, data_path="data"):
                 meta["bounds"][3],
                 src.transform,
             ),
+            boundless=True,
+            fill_value=0
         )
     # extract only urban (50) areas
     rasters["urban_esa"] = numpy.where(rasters["urban_esa"] == 50, 1, 0)
@@ -406,9 +467,9 @@ def lateral(watershed_group_code, out_file, data_path, write_tempfiles):
     ).astype(numpy.uint8)
 
     # --------------------------
-    # find areas isolated by rail
+    # find areas isolated by road/rail
     # --------------------------
-    LOG.info("Finding potential lateral habitat disconnected by railways")
+    LOG.info("Finding potential lateral habitat disconnected by roads/railways")
     # remove bridges from rail raster
     rasters["rail_breached"] = numpy.where(
         rasters["rail_bridges"] == 1, 0, rasters["rail"]
@@ -471,7 +532,7 @@ def lateral(watershed_group_code, out_file, data_path, write_tempfiles):
         dumps = [
             d
             for d in rasters.keys()
-            if type(rasters[d]) == numpy.ndarray
+            if type(rasters[d]) is numpy.ndarray
             and rasters[d].shape == meta["shape"]
             and d not in ["lateral", "slope", "vca"]
         ]

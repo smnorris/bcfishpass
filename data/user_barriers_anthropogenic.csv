@@ -10,3 +10,10 @@ user_barrier_anthropogenic_id,blue_line_key,downstream_route_measure,barrier_typ
 9,356546366,10971,DAM,Grand Coulee Dam,LARL,SN,2023-07-24,,placeholder for Grand Coulee/Chief Joseph
 10,356570000,196792,DAM,Ross Dam,SKGT,SN,2023-07-24,,placeholder for Ross Dam
 11,356354716,611,SEDIMENT PLUG,,QUES,MC,2025-01-09,,"Sediment plug is located on Cedar Creek, 430 m upstream from Quesnel Lake"
+12,356327433,2535,BEAVER DAM,,UTRE,MC,2025-06-04,WSP report/Workshop,Impassable beaver dam
+13,356353424,3367,BEAVER DAM,,UTRE,MC,2025-06-04,WSP report/Workshop,Impassable beaver dam
+14,356328051,2550,LOG JAM,,MIDR,MC,2025-06-04,WSP report/Workshop,Impassable log jam
+15,356362032,25248,LOG JAM,,TAKL,MC,2025-06-04,DFO personal correspondence,Impassable log jam
+16,356293242,449,BEAVER DAM,,MIDR,MC,2025-06-04,DFO personal correspondence,Impassable beaver dam
+17,356327433,3400,BEAVER DAM,,UTRE,MC,2025-06-04,DFO personal correspondence,Impassable beaver dam
+18,356338407,450,BEAVER DAM,,MIDR,MC,2025-06-04,DFO personal correspondence,Impassable beaver dam
