@@ -54,7 +54,7 @@ with all_barriers as
 obs as
 (
   select *
-  from bcfishpass.observations_vw
+  from bcfishpass.observations
   -- include bt as equivalent to dv for this model
   where species_code in ('BT','DV','CT','RB')
 ),
@@ -121,8 +121,8 @@ barriers as
         b.localcode_ltree,
         o.blue_line_key,
         o.downstream_route_measure,
-        o.wscode_ltree,
-        o.localcode_ltree,
+        o.wscode,
+        o.localcode,
         False,
         1
       )
