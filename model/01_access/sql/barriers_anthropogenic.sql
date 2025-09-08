@@ -18,7 +18,7 @@ INSERT INTO bcfishpass.barriers_anthropogenic
 )
 SELECT
     c.aggregated_crossings_id,
-    cft.crossing_feature_type as barrier_type,
+    crossing_feature_type as barrier_type,
     NULL as barrier_name,
     c.linear_feature_id,
     c.blue_line_key,
@@ -29,7 +29,6 @@ SELECT
     c.watershed_group_code,
     st_force2d(c.geom) as geom
 FROM bcfishpass.crossings c
-INNER JOIN bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
 WHERE
   barrier_status IN ('BARRIER', 'POTENTIAL') AND
   blue_line_key = watershed_key AND  -- do not include side channel features as barriers
