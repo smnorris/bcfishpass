@@ -15,7 +15,7 @@ $PSQL -c "truncate bcfishpass.streams_dnstr_species"
 $PARALLEL $PSQL -f sql/load_streams_dnstr_species.sql -v wsg={1} ::: $WSGS
 
 # refresh materialized view
-$PSQL -c "refresh materialized view bcfishpass.streams_access_vw"
+$PSQL -f sql/load_streams_access.sql
 
 # generate crossings access report
 $PSQL -c "truncate bcfishpass.crossings_upstream_access"
@@ -23,5 +23,5 @@ parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossing
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_02.sql -v wsg={1} ::: $WSGS
 
 # qa reporting of salmon/steelhead observations upstream of natural barriers (and barriers downstream of observations)
-$PSQL -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk_st.sql
+$PSQL -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk.sql
 
