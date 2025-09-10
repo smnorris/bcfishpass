@@ -45,7 +45,7 @@ with upstr as materialized
       true,
       1
      )
-  inner join bcfishpass.streams_habitat_linear_vw h on s.segmented_stream_id = h.segmented_stream_id
+  inner join bcfishpass.streams_habitat_linear h on s.segmented_stream_id = h.segmented_stream_id
   inner join bcfishpass.wcrp_watersheds w on a.watershed_group_code = w.watershed_group_code
   where a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
 )
