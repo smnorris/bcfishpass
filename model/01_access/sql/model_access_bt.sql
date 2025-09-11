@@ -59,10 +59,10 @@ obs_upstr as
     b.downstream_route_measure,
     b.watershed_group_code,
     o.species_code as spp,
-    o.fish_observation_point_id as obs,
+    o.observation_key as obs,
     o.observation_date as obs_dt
   from barriers b
-  inner join bcfishpass.observations_vw o
+  inner join bcfishpass.observations o
   on fwa_upstream(
         b.blue_line_key,
         b.downstream_route_measure,
@@ -70,8 +70,8 @@ obs_upstr as
         b.localcode_ltree,
         o.blue_line_key,
         o.downstream_route_measure,
-        o.wscode_ltree,
-        o.localcode_ltree,
+        o.wscode,
+        o.localcode,
         false,
         20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )

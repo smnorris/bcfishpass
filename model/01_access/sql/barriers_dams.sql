@@ -15,7 +15,7 @@ INSERT INTO bcfishpass.barriers_dams
 
 SELECT
     c.aggregated_crossings_id,
-    cft.crossing_feature_type,
+    c.crossing_feature_type,
     c.dam_name as barrier_name,
     c.linear_feature_id,
     c.blue_line_key,
@@ -26,7 +26,6 @@ SELECT
     c.watershed_group_code,
     st_force2d(c.geom) as geom
 FROM bcfishpass.crossings c
-INNER JOIN bcfishpass.crossings_feature_type_vw cft on c.aggregated_crossings_id = cft.aggregated_crossings_id
 WHERE
   dam_id IS NOT NULL AND
   barrier_status IN ('BARRIER', 'POTENTIAL') AND

@@ -8,10 +8,9 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
 # refresh observations/dams/falls
-$PSQL -c "refresh materialized view bcfishpass.observations_vw"
-$PSQL -c "refresh materialized view bcfishpass.dams_vw"
-$PSQL -c "refresh materialized view bcfishpass.falls_vw"
-$PSQL -c "refresh materialized view bcfishpass.falls_upstr_anadromous_vw"
+$PSQL -f model/01_access/sql/load_dams.sql
+$PSQL -f model/01_access/sql/load_falls.sql
+$PSQL -f model/01_access/sql/load_observations.sql
 
 # load pscis
 cd model/01_access/pscis; ./pscis.sh; cd ..

@@ -1,25 +1,25 @@
 INSERT INTO bcfishpass.streams_upstr_observations
 (
   segmented_stream_id,
-  obsrvtn_event_upstr,
+  observation_key_upstr,
   obsrvtn_species_codes_upstr
 )
 SELECT
     segmented_stream_id,
-    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS obsrvtn_event_upstr,
+    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS observation_key_upstr,
     array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as obsrvtn_species_codes_upstr
   FROM (
     SELECT DISTINCT
       a.segmented_stream_id,
       b.watershed_group_code,
-      b.wscode_ltree,
-      b.localcode_ltree,
+      b.wscode,
+      b.localcode,
       b.downstream_route_measure as meas_b,
-      b.fish_obsrvtn_event_id as upstr_id,
+      b.observation_key as upstr_id,
       b.species_code
     FROM
       bcfishpass.streams a
-    INNER JOIN bcfishpass.observations_vw b ON
+    INNER JOIN bcfishpass.observations b ON
       FWA_Upstream(
         a.blue_line_key,
         a.downstream_route_measure,
@@ -27,8 +27,8 @@ SELECT
         a.localcode_ltree,
         b.blue_line_key,
         b.downstream_route_measure,
-        b.wscode_ltree,
-        b.localcode_ltree,
+        b.wscode,
+        b.localcode,
         False,
         1
       )
