@@ -65,6 +65,7 @@ DROP VIEW bcfishpass.wcrp_habitat_connectivity_status_vw;
 DROP MATERIALIZED VIEW bcfishpass.crossings_wcrp_vw;
 DROP VIEW bcfishpass.wcrp_barrier_count_vw;
 DROP MATERIALIZED VIEW bcfishpass.fptwg_summary_crossings_vw;
+DROP VIEW IF EXISTS bcfishpass.freshwater_fish_habitat_accessibility_model_observations_vw; -- not recreated, now in dump script
 DROP VIEW bcfishpass.freshwater_fish_habitat_accessibility_model_crossings_vw; -- not recreated, now lives in dump script
 DROP VIEW bcfishpass.freshwater_fish_habitat_accessibility_model_vw;
 
