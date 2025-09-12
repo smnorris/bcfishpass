@@ -1,7 +1,12 @@
-name: testing-bcfishpass
+name: test-model
 run-name: ${{ github.actor }} Run bcfishpass on test
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    paths-ignore:
+      - 'data/**'
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
