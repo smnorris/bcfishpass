@@ -1,4 +1,4 @@
-name: Replicate 
+name: replicate
 run-name: ${{ github.actor }} Replicate data from BC WFS to S3
 on:
   schedule:
@@ -25,7 +25,7 @@ jobs:
           DAY_OF_MONTH=$(date +'%d')
           DAY_OF_WEEK=$(date +'%u') # Monday = 1
 
-          if [ "$DAY_OF_MONTH" = "01" ]; then
+          if [ "$DAY_OF_MONTH" = "15" ]; then
             echo "Running monthly replication"
             cd jobs && ./replicate_bcgw M
           fi
