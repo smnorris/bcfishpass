@@ -4,24 +4,62 @@ on:
   schedule:
     - cron: '0 18 15 * *'
   workflow_dispatch:
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  DRAPWD: ${{ secrets.DRAPWD }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
-  AWS_S3_ENDPOINT: nrs.objectstore.gov.bc.ca
-  AWS_VIRTUAL_HOSTING: FALSE
-  AWS_EC2_METADATA_DISABLED: True
-  CPL_VSISTDIN_BUFFER_LIMIT: -1
 jobs:
-  data-refresh:
+  cwf-test:
     runs-on: ubuntu-latest
-    environment: production
+    environment: cwf-test
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load data
+        run: |
+          cd jobs && ./connect_cwf && ./load_monthly
+  cwf-prod:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: cwf-test
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Load data
+        run: |
+          cd jobs && ./connect_cwf && ./load_monthly
+  ng-test:
+    runs-on: ubuntu-latest
+    environment: ng-test
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Load data
+        run: |
+          cd jobs && ./load_monthly
+  ng-prod:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: ng-test
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Load data
         run: |
           cd jobs && ./load_monthly
