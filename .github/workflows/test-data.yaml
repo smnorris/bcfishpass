@@ -12,7 +12,7 @@ env:
 jobs:
   load-csv:
     runs-on: ubuntu-latest
-    environment: testing
+    environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
