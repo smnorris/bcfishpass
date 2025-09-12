@@ -2,16 +2,36 @@ name: testing-bcfishpass
 run-name: ${{ github.actor }} Run bcfishpass on test
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - 'main'
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
+  data-refresh:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run: cd jobs && ./load_weekly
+  bcfishobs:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: data-refresh
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          repository: smnorris/bcfishobs
+          ref: v0.3.0
+      - name: Process bcfishobs
+        run: process.sh
   load-csv:
     runs-on: ubuntu-latest
     environment: testing
     container: ghcr.io/smnorris/bcfishpass:main
+    needs: bcfishobs
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

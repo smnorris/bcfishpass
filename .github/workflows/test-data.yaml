@@ -1,0 +1,23 @@
+name: test-data
+run-name: ${{ github.actor }} Test loading data files on test db
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'data/**'
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  load-csv:
+    runs-on: ubuntu-latest
+    environment: testing
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_newgraph/*csv parameters/
+          jobs/load_csv
