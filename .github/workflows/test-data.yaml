@@ -10,7 +10,7 @@ on:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
-  ng-test:
+  ng-test-data:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
@@ -21,7 +21,7 @@ jobs:
         run:  |
           cp parameters/example_newgraph/*csv parameters/
           jobs/load_csv
-  cwf-test:
+  cwf-test-data:
     runs-on: ubuntu-latest
     environment: cwf-test
     env:
