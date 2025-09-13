@@ -1,4 +1,4 @@
-name: test-data
+name: ng-test-data
 run-name: ${{ github.actor }} Test loading data files on test db
 on:
   workflow_dispatch:

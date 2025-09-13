@@ -1,4 +1,4 @@
-name: test-model
+name: ng-test-model
 run-name: ${{ github.actor }} Run bcfishpass on test
 on:
   workflow_dispatch:
