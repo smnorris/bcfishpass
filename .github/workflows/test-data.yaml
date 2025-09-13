@@ -1,0 +1,40 @@
+name: test-data
+run-name: ${{ github.actor }} Load data files to test databases
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'data/**'
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+jobs:
+  ng-test:
+    runs-on: ubuntu-latest
+    environment: ng-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_newgraph/*csv parameters/
+          jobs/load_csv
+  cwf-test:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_cwf/*csv parameters/
+          jobs/connect_cwf && jobs/load_csv
