@@ -29,10 +29,8 @@ jobs:
           DAY_OF_MONTH=$(date +'%d')
           DAY_OF_WEEK=$(date +'%u') # Monday = 1
 
-          if [ "$DAY_OF_MONTH" = "15" ]; then
-            echo "Running monthly replication"
-            cd jobs && ./replicate_bcgw M && ./replicate_dra
-          fi
+          echo $DAY_OF_MONTH
+          echo $DAY_OF_WEEK
 
           if [ "$DAY_OF_WEEK" = "1" ]; then
             echo "Running Weekly script"
