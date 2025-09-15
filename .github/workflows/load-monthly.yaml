@@ -4,8 +4,6 @@ on:
   schedule:
     - cron: '0 18 15 * *'
   workflow_dispatch:
-concurrency:
-  group: replicate
 jobs:
   cwf-test:
     runs-on: ubuntu-latest

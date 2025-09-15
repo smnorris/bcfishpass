@@ -27,7 +27,7 @@ jobs:
         run:  |
           cp parameters/example_cwf/*csv parameters/
           jobs/connect_cwf && jobs/load_csv
-  load-xings:
+  load-xings-observations:
     runs-on: ubuntu-latest
     environment: cwf-test
     container: ghcr.io/smnorris/bcfishpass:main
@@ -36,12 +36,15 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/connect_cwf && jobs/load_modelled_stream_crossings
+        run:  |
+          jobs/connect_cwf
+          jobs/load_modelled_stream_crossings
+          jobs/load_observations
   prep:
     runs-on: ubuntu-latest
     environment: cwf-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: load-xings
+    needs: load-xings-observations
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

@@ -1,11 +1,98 @@
 #!/bin/bash
 set -euxo pipefail
 
-# Dump crossings, streams, and assessment watershed level reporting
-# from CWF bcfishpass database to .gpkg/csv on BC object storage
+# For each WCRP, rank barriers and dump to file
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
+for wcrp in $WCRPS
+do
+  python jobs/auto_rank.py $wcrp
 
-# Note that proprietary discharge is used for select watershed groups, exclude it from dumps
-# (mad_m3s will be null for BULK/HORS/ELKR)
+  # Note that proprietary discharge is used for select watershed groups, exclude it from dumps
+  # (mad_m3s will be null for BULK/HORS/ELKR)
+  ogr2ogr \
+    -f GPKG \
+    streams_$wcrp.gpkg.zip \
+    PG:$DATABASE_URL \
+    --debug ON \
+    -nln streams \
+    -sql "SELECT
+    s.segmented_stream_id,
+    s.linear_feature_id,
+    s.edge_type,
+    s.blue_line_key,
+    s.watershed_key,
+    s.watershed_group_code,
+    s.downstream_route_measure,
+    s.length_metre,
+    s.waterbody_key,
+    s.wscode::text as wscode,
+    s.localcode::text as localcode,
+    s.gnis_name,
+    s.stream_order,
+    s.stream_magnitude,
+    s.gradient,
+    s.feature_code,
+    s.upstream_route_measure,
+    s.upstream_area_ha,
+    s.stream_order_parent,
+    s.stream_order_max,
+    s.map_upstream,
+    s.channel_width,
+    CASE
+      WHEN s.watershed_group_code IN ('BULK','ELKR', 'HORS') THEN NULL
+      ELSE s.mad_m3s
+    END as mad_m3s,
+    s.barriers_anthropogenic_dnstr,
+    s.barriers_pscis_dnstr,
+    s.barriers_dams_dnstr,
+    s.barriers_dams_hydro_dnstr,
+    s.barriers_ch_cm_co_pk_sk_dnstr,
+    s.barriers_ct_dv_rb_dnstr,
+    s.barriers_st_dnstr,
+    s.barriers_wct_dnstr,
+    s.crossings_dnstr,
+    s.dam_dnstr_ind,
+    s.dam_hydro_dnstr_ind,
+    s.remediated_dnstr_ind,
+    s.obsrvtn_event_upstr,
+    s.obsrvtn_species_codes_upstr,
+    s.species_codes_dnstr,
+    s.access_ch,
+    s.access_cm,
+    s.access_co,
+    s.access_pk,
+    s.access_sk,
+    s.access_st,
+    s.access_wct,
+    s.access_salmon,
+    s.spawning_ch,
+    s.spawning_cm,
+    s.spawning_co,
+    s.spawning_pk,
+    s.spawning_sk,
+    s.spawning_st,
+    s.spawning_wct,
+    s.rearing_ch,
+    s.rearing_co,
+    s.rearing_sk,
+    s.rearing_st,
+    s.rearing_wct,
+    s.geom
+  FROM bcfishpass.streams_vw s
+  INNER JOIN bcfishpass.wcrp_watersheds w
+  ON s.watershed_group_code = w.watershed_group_code
+  WHERE w.wcrp = '$wcrp'"
+
+  # add crossings_wcrp_vw
+
+done
+
+
+
+# Dump *provincial* crossings, streams, and assessment watershed level reporting
+# to .gpkg/csv on BC object storage - for general use and as per PSF spec
+# As above, mad_m3s is null for BULK/HORS/ELKR
 
 ogr2ogr \
   -f GPKG \

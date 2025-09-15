@@ -23,7 +23,7 @@ jobs:
         run:  |
           cp parameters/example_newgraph/*csv parameters/
           jobs/load_csv
-  load-xings:
+  load-xings-observations:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
@@ -32,12 +32,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/load_modelled_stream_crossings
+        run:  |
+          jobs/load_modelled_stream_crossings
+          jobs/load_observations
   prep:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: load-xings
+    needs: load-xings-observations
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
