@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 18 15 * *'
   workflow_dispatch:
+concurrency:
+  group: replicate
 jobs:
   cwf-test:
     runs-on: ubuntu-latest
@@ -15,6 +17,8 @@ jobs:
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
     container: ghcr.io/smnorris/bcfishpass:main
+    concurrency:
+      group: cwf-test
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -31,6 +35,8 @@ jobs:
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
     container: ghcr.io/smnorris/bcfishpass:main
+    concurrency:
+      group: cwf-prod
     needs: cwf-test
     steps:
       - name: Check out repository code
@@ -44,6 +50,8 @@ jobs:
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
     container: ghcr.io/smnorris/bcfishpass:main
+    concurrency:
+      group: ng-test
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -56,6 +64,8 @@ jobs:
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
     container: ghcr.io/smnorris/bcfishpass:main
+    concurrency:
+      group: ng-prod
     needs: ng-test
     steps:
       - name: Check out repository code

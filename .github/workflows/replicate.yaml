@@ -13,6 +13,8 @@ env:
   AWS_VIRTUAL_HOSTING: FALSE
   AWS_EC2_METADATA_DISABLED: True
   CPL_VSISTDIN_BUFFER_LIMIT: -1
+concurrency:
+  group: replicate
 jobs:
   replicate:
     runs-on: ubuntu-latest

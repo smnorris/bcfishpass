@@ -13,11 +13,15 @@ env:
   AWS_VIRTUAL_HOSTING: FALSE
   AWS_EC2_METADATA_DISABLED: True
   CPL_VSISTDIN_BUFFER_LIMIT: -1
+concurrency:
+  group: ng-prod
 jobs:
   data-refresh:
     runs-on: ubuntu-latest
     environment: production
     container: ghcr.io/smnorris/bcfishpass:main
+    concurrency:
+      group: replicate
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

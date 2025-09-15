@@ -7,23 +7,15 @@ on:
       - 'main'
     paths-ignore:
       - 'data/**'
+concurrency:
+  group: ng-test
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
-  data-refresh:
-    runs-on: ubuntu-latest
-    environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Run the jobs
-        run: cd jobs && ./load_weekly
   load-csv:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: data-refresh
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4

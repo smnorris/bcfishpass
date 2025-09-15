@@ -2,6 +2,8 @@ name: cwf-prod
 run-name: ${{ github.actor }} Release streams/crossings/aw summary from CWF database
 on:
   workflow_dispatch:
+concurrency:
+  group: cwf-prod
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
