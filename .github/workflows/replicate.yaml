@@ -30,12 +30,12 @@ jobs:
           DAY_OF_WEEK=$(date +'%u') # Monday = 1
 
           if [ "$DAY_OF_MONTH" = "15" ]; then
-            echo "Running monthly replication"
+            echo "It is the 1st of the month, running monthly replication"
             cd jobs && ./replicate_bcgw M && ./replicate_dra
           fi
 
           if [ "$DAY_OF_WEEK" = "1" ]; then
-            echo "Running Weekly script"
+            echo "It is Monday, running weekly replication and bcfishobs"
             cd jobs && ./replicate_bcgw W
             git clone https://github.com/smnorris/bcfishobs.git
             cd bcfishobs && git checkout v0.3.1
