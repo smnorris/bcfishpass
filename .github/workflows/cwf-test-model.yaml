@@ -8,7 +8,7 @@ on:
     paths-ignore:
       - 'data/**'
 concurrency:
-  group: cwf-test
+  group: cwf
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}

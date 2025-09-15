@@ -16,7 +16,7 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
     container: ghcr.io/smnorris/bcfishpass:main
     concurrency:
-      group: cwf-test
+      group: cwf
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
     container: ghcr.io/smnorris/bcfishpass:main
     concurrency:
-      group: cwf-prod
+      group: cwf
     needs: cwf-test
     steps:
       - name: Check out repository code

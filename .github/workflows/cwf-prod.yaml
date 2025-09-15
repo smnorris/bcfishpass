@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} Run bcfishpass on cwf-prod, release WCRP data file
 on:
   workflow_dispatch:
 concurrency:
-  group: cwf-prod
+  group: cwf
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -27,8 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: cwf-prod
     container: ghcr.io/smnorris/bcfishpass:main
-    concurrency:
-      group: replicate
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
