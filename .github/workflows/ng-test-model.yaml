@@ -19,24 +19,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run: cd jobs && ./load_weekly
-  bcfishobs:
-    runs-on: ubuntu-latest
-    environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
-    needs: data-refresh
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-        with:
-          repository: smnorris/bcfishobs
-          ref: v0.3.0
-      - name: Process bcfishobs
-        run: process.sh
   load-csv:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: bcfishobs
+    needs: data-refresh
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
