@@ -2,7 +2,7 @@ name: ng-prod
 run-name: ${{ github.actor }} Run bcfishpass on prod
 on:
   schedule:
-    - cron: '0 16 * * MON'
+    - cron: '0 20 * * MON'
   workflow_dispatch:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
