@@ -1,0 +1,100 @@
+name: cwf-test-model
+run-name: ${{ github.actor }} Run bcfishpass on CWF test db
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    paths-ignore:
+      - 'data/**'
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_HOST: ${{ secrets.SSH_HOST }}
+jobs:
+  data-refresh:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run: cd jobs && ./connect_cwf && ./load_weekly
+  load-csv:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: data-refresh
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          cp parameters/example_cwf/*csv parameters/
+          jobs/connect_cwf && jobs/load_csv
+  load-xings:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-csv
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/connect_cwf && jobs/load_modelled_stream_crossings
+  prep:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-xings
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/connect_cwf && jobs/model_prep
+  model-access-1:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: prep
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 1
+        run:  |
+          jobs/connect_cwf
+          cd model/01_access
+          ./model_access_1.sh
+  model-access-2:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-1
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 2
+        run:  |
+          jobs/connect_cwf
+          cd model/01_access
+          ./model_access_2.sh
+  model-habitat-linear:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+            fetch-tags: true
+            fetch-depth: 0
+      - name: Linear habitat model
+        run:  |
+          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+          jobs/connect_cwf
+          cd model/02_habitat_linear
+          ./habitat_linear.sh
