@@ -4,10 +4,15 @@ set -euxo pipefail
 # For each WCRP, rank barriers and dump to file
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
+
+
 for wcrp in $WCRPS
 do
+
+  # do the ranking
   python jobs/auto_rank.py $wcrp
 
+  # dump
   # Note that proprietary discharge is used for select watershed groups, exclude it from dumps
   # (mad_m3s will be null for BULK/HORS/ELKR)
   ogr2ogr \
@@ -17,74 +22,169 @@ do
     --debug ON \
     -nln streams \
     -sql "SELECT
-    s.segmented_stream_id,
-    s.linear_feature_id,
-    s.edge_type,
-    s.blue_line_key,
-    s.watershed_key,
-    s.watershed_group_code,
-    s.downstream_route_measure,
-    s.length_metre,
-    s.waterbody_key,
-    s.wscode::text as wscode,
-    s.localcode::text as localcode,
-    s.gnis_name,
-    s.stream_order,
-    s.stream_magnitude,
-    s.gradient,
-    s.feature_code,
-    s.upstream_route_measure,
-    s.upstream_area_ha,
-    s.stream_order_parent,
-    s.stream_order_max,
-    s.map_upstream,
-    s.channel_width,
-    CASE
-      WHEN s.watershed_group_code IN ('BULK','ELKR', 'HORS') THEN NULL
-      ELSE s.mad_m3s
-    END as mad_m3s,
-    s.barriers_anthropogenic_dnstr,
-    s.barriers_pscis_dnstr,
-    s.barriers_dams_dnstr,
-    s.barriers_dams_hydro_dnstr,
-    s.barriers_ch_cm_co_pk_sk_dnstr,
-    s.barriers_ct_dv_rb_dnstr,
-    s.barriers_st_dnstr,
-    s.barriers_wct_dnstr,
-    s.crossings_dnstr,
-    s.dam_dnstr_ind,
-    s.dam_hydro_dnstr_ind,
-    s.remediated_dnstr_ind,
-    s.obsrvtn_event_upstr,
-    s.obsrvtn_species_codes_upstr,
-    s.species_codes_dnstr,
-    s.access_ch,
-    s.access_cm,
-    s.access_co,
-    s.access_pk,
-    s.access_sk,
-    s.access_st,
-    s.access_wct,
-    s.access_salmon,
-    s.spawning_ch,
-    s.spawning_cm,
-    s.spawning_co,
-    s.spawning_pk,
-    s.spawning_sk,
-    s.spawning_st,
-    s.spawning_wct,
-    s.rearing_ch,
-    s.rearing_co,
-    s.rearing_sk,
-    s.rearing_st,
-    s.rearing_wct,
-    s.geom
-  FROM bcfishpass.streams_vw s
-  INNER JOIN bcfishpass.wcrp_watersheds w
-  ON s.watershed_group_code = w.watershed_group_code
-  WHERE w.wcrp = '$wcrp'"
+      s.segmented_stream_id,
+      s.linear_feature_id,
+      s.edge_type,
+      s.blue_line_key,
+      s.watershed_key,
+      s.watershed_group_code,
+      s.downstream_route_measure,
+      s.length_metre,
+      s.waterbody_key,
+      s.wscode::text as wscode,
+      s.localcode::text as localcode,
+      s.gnis_name,
+      s.stream_order,
+      s.stream_magnitude,
+      s.gradient,
+      s.feature_code,
+      s.upstream_route_measure,
+      s.upstream_area_ha,
+      s.stream_order_parent,
+      s.stream_order_max,
+      s.map_upstream,
+      s.channel_width,
+      CASE
+        WHEN s.watershed_group_code IN ('BULK','ELKR', 'HORS') THEN NULL
+        ELSE s.mad_m3s
+      END as mad_m3s,
+      s.barriers_anthropogenic_dnstr,
+      s.barriers_pscis_dnstr,
+      s.barriers_dams_dnstr,
+      s.barriers_dams_hydro_dnstr,
+      s.barriers_ch_cm_co_pk_sk_dnstr,
+      s.barriers_ct_dv_rb_dnstr,
+      s.barriers_st_dnstr,
+      s.barriers_wct_dnstr,
+      s.crossings_dnstr,
+      s.dam_dnstr_ind,
+      s.dam_hydro_dnstr_ind,
+      s.remediated_dnstr_ind,
+      s.obsrvtn_event_upstr,
+      s.obsrvtn_species_codes_upstr,
+      s.species_codes_dnstr,
+      s.access_ch,
+      s.access_cm,
+      s.access_co,
+      s.access_pk,
+      s.access_sk,
+      s.access_st,
+      s.access_wct,
+      s.access_salmon,
+      s.spawning_ch,
+      s.spawning_cm,
+      s.spawning_co,
+      s.spawning_pk,
+      s.spawning_sk,
+      s.spawning_st,
+      s.spawning_wct,
+      s.rearing_ch,
+      s.rearing_co,
+      s.rearing_sk,
+      s.rearing_st,
+      s.rearing_wct,
+      s.geom
+    FROM bcfishpass.streams_vw s
+    INNER JOIN bcfishpass.wcrp_watersheds w
+    ON s.watershed_group_code = w.watershed_group_code
+    WHERE w.wcrp = '$wcrp'"
 
-  # add crossings_wcrp_vw
+  ogr2ogr \
+    -f FlatGeobuf \
+    -lco SPATIAL_INDEX=NO \
+    crossings_$wcrp.gpkg.zip \
+    PG:$DATABASE_URL \
+    --debug ON \
+    -nln crossings \
+    -sql "SELECT
+      aggregated_crossings_id,
+      modelled_crossing_id,
+      crossing_source,
+      crossing_feature_type,
+      pscis_status,
+      crossing_type_code,
+      crossing_subtype_code,
+      barrier_status,
+      pscis_road_name,
+      pscis_stream_name,
+      pscis_assessment_comment,
+      pscis_assessment_date,
+      transport_line_structured_name_1,
+      rail_track_name,
+      dam_name,
+      dam_height,
+      dam_owner,
+      dam_use,
+      dam_operating_status,
+      utm_zone,
+      utm_easting,
+      utm_northing,
+      blue_line_key,
+      downstream_route_measure,
+      wscode::text as wscode,
+      localcode::text as localcode,
+      watershed_group_code,
+      gnis_stream_name,
+      barriers_anthropogenic_dnstr,
+      barriers_anthropogenic_dnstr_count,
+      barriers_anthropogenic_habitat_wcrp_upstr,
+      barriers_anthropogenic_habitat_wcrp_upstr_count,
+      barriers_ch_cm_co_pk_sk_dnstr,
+      barriers_st_dnstr,
+      barriers_wct_dnstr,
+      ch_spawning_km,
+      ch_rearing_km,
+      ch_spawning_belowupstrbarriers_km,
+      ch_rearing_belowupstrbarriers_km,
+      cm_spawning_km,
+      cm_spawning_belowupstrbarriers_km,
+      co_spawning_km,
+      co_rearing_km,
+      co_rearing_ha,
+      co_spawning_belowupstrbarriers_km,
+      co_rearing_belowupstrbarriers_km,
+      co_rearing_belowupstrbarriers_ha,
+      pk_spawning_km,
+      pk_spawning_belowupstrbarriers_km,
+      sk_spawning_km,
+      sk_rearing_km,
+      sk_rearing_ha,
+      sk_spawning_belowupstrbarriers_km,
+      sk_rearing_belowupstrbarriers_km,
+      sk_rearing_belowupstrbarriers_ha,
+      st_spawning_km,
+      st_rearing_km,
+      st_spawning_belowupstrbarriers_km,
+      st_rearing_belowupstrbarriers_km,
+      wct_spawning_km,
+      wct_rearing_km,
+      wct_spawning_belowupstrbarriers_km,
+      wct_rearing_belowupstrbarriers_km,
+      all_spawning_km,
+      all_spawning_belowupstrbarriers_km,
+      all_rearing_km,
+      all_rearing_belowupstrbarriers_km,
+      all_spawningrearing_km,
+      all_spawningrearing_belowupstrbarriers_km,
+      set_id,
+      total_hab_gain_set,
+      num_barriers_set,
+      avg_gain_per_barrier,
+      array_to_string(dnstr_set_ids, ';') as dnstr_set_ids,
+      rank_avg_gain_per_barrier,
+      rank_avg_gain_tiered,
+      rank_total_upstr_hab,
+      rank_combined,
+      tier_combined,
+      geom as geom
+      FROM bcfishpass.crossings_wcrp_vw
+      WHERE w.wcrp = '$wcrp'"
+
+  # upload
+  azcopy copy crossings_$wcrp.gpkg.zip \
+    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/crossings_$wcrp.gpkg.zip
+  azcopy copy streams_$wcrp.gpkg.zip \
+    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/streams_$wcrp.gpkg.zip
 
 done
 
