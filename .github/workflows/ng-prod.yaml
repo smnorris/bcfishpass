@@ -1,5 +1,5 @@
 name: ng-prod
-run-name: ${{ github.actor }} Run bcfishpass on prod
+run-name: ${{ github.actor }} Run bcfishpass on ng-prod and release fptwg distribution
 on:
   schedule:
     - cron: '0 20 * * MON'
