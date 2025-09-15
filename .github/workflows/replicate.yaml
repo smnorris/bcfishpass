@@ -37,6 +37,6 @@ jobs:
             echo "Running Weekly script"
             cd jobs && ./replicate_bcgw W && cd ..
             git clone https://github.com/smnorris/bcfishobs.git
-            cd bcfishobs
+            cd bcfishobs && git checkout tag v0.3.1
             ./process.sh
           fi
