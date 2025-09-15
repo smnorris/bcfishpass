@@ -35,8 +35,8 @@ jobs:
 
           if [ "$DAY_OF_WEEK" = "1" ]; then
             echo "Running Weekly script"
-            cd jobs && ./replicate_bcgw W && cd ..
+            cd jobs && ./replicate_bcgw W
             git clone https://github.com/smnorris/bcfishobs.git
-            cd bcfishobs && git checkout tag v0.3.1
+            cd bcfishobs && git checkout v0.3.1
             ./process.sh
           fi
