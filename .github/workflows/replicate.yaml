@@ -13,6 +13,8 @@ env:
   AWS_VIRTUAL_HOSTING: FALSE
   AWS_EC2_METADATA_DISABLED: True
   CPL_VSISTDIN_BUFFER_LIMIT: -1
+concurrency:
+  group: ng-prod
 jobs:
   replicate:
     runs-on: ubuntu-latest
@@ -33,5 +35,8 @@ jobs:
 
           if [ "$DAY_OF_WEEK" = "1" ]; then
             echo "Running Weekly script"
-            cd jobs && ./replicate_bcgw W
+            cd jobs && ./replicate_bcgw W && cd ..
+            git clone https://github.com/smnorris/bcfishobs.git
+            cd bcfishobs && git checkout tag v0.3.1
+            ./process.sh
           fi
