@@ -48,7 +48,7 @@ with all_barriers as
 obs as
 (
   select *
-  from bcfishpass.observations_vw
+  from bcfishpass.observations
   where species_code = 'WCT'
 ),
 
