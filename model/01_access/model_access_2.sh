@@ -23,5 +23,5 @@ parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossing
 parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_02.sql -v wsg={1} ::: $WSGS
 
 # qa reporting of salmon/steelhead observations upstream of natural barriers (and barriers downstream of observations)
-$PSQL -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk.sql
+# $PSQL -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk.sql
 
