@@ -48,7 +48,7 @@ with all_barriers as
 obs as
 (
   select *
-  from bcfishpass.observations_vw
+  from bcfishpass.observations
   where species_code = 'WCT'
 ),
 
@@ -73,8 +73,8 @@ barriers as
         b.localcode_ltree,
         o.blue_line_key,
         o.downstream_route_measure,
-        o.wscode_ltree,
-        o.localcode_ltree,
+        o.wscode,
+        o.localcode,
         False,
         20   -- a large tolerance to discard observations at more or less the same location as the barrier (within 20m)
       )

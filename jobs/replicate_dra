@@ -47,24 +47,28 @@ ogr2ogr \
   -f CSV \
   /tmp/whse_basemapping.transport_line_structure_code.csv \
   /tmp/transport_line.gdb \
+  -select transport_line_structure_code,description,create_integration_session_id,create_integration_date,modify_integration_session_id,modify_integration_date \
   TRANSPORT_LINE_STRUCTURE_CODE
 
 ogr2ogr \
   -f CSV \
   /tmp/whse_basemapping.transport_line_type_code.csv \
   /tmp/transport_line.gdb \
+  -select transport_line_type_code,description,demographic_ind,create_integration_session_id,create_integration_date,modify_integration_session_id,modify_integration_date,road_class \
   TRANSPORT_LINE_TYPE_CODE
 
 ogr2ogr \
   -f CSV \
   /tmp/whse_basemapping.transport_line_surface_code.csv \
   /tmp/transport_line.gdb \
+  -select transport_line_surface_code,description,create_integration_session_id,create_integration_date,modify_integration_session_id,modify_integration_date \
   TRANSPORT_LINE_SURFACE_CODE
 
 ogr2ogr \
   -f CSV \
   /tmp/whse_basemapping.transport_line_divided_code.csv \
   /tmp/transport_line.gdb \
+  -select transport_line_divided_code,description,create_integration_session_id,create_integration_date,modify_integration_session_id,modify_integration_date \
   TRANSPORT_LINE_DIVIDED_CODE
 
 aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/whse_basemapping.transport_line.parquet --acl public-read

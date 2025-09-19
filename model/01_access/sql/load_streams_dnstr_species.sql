@@ -2,13 +2,13 @@ with obsrvtn as (
   select distinct
     a.segmented_stream_id,
     b.watershed_group_code,
-    b.wscode_ltree,
-    b.localcode_ltree,
+    b.wscode,
+    b.localcode,
     b.downstream_route_measure as meas_b,
     b.species_code
   from
     bcfishpass.streams a
-  inner join bcfishpass.observations_vw b on
+  inner join bcfishpass.observations b on
     fwa_downstream(
       a.blue_line_key,
       a.downstream_route_measure,
@@ -16,8 +16,8 @@ with obsrvtn as (
       a.localcode_ltree,
       b.blue_line_key,
       b.downstream_route_measure,
-      b.wscode_ltree,
-      b.localcode_ltree,
+      b.wscode,
+      b.localcode,
       true,
       1
     )

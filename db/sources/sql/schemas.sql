@@ -1,4 +1,5 @@
 -- create schemas not created by fwapg/bcfishobs scripts
+create schema bcdata;
 create schema cabd;
 create schema whse_admin_boundaries;
 create schema whse_cadastre;

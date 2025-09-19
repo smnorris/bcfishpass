@@ -37,7 +37,7 @@ model AS
       THEN true
     END AS spawning
   FROM bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access av on s.segmented_stream_id = av.segmented_stream_id
   left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
   left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   inner join bcfishpass.parameters_habitat_method wsg on s.watershed_group_code = wsg.watershed_group_code
@@ -75,7 +75,7 @@ SELECT
   true as rearing
 FROM bcfishpass.streams s
 left outer join bcfishpass.habitat_linear_ch h on s.segmented_stream_id = h.segmented_stream_id
-left outer join bcfishpass.streams_habitat_known_vw kh on s.segmented_stream_id = kh.segmented_stream_id
+left outer join bcfishpass.streams_habitat_known kh on s.segmented_stream_id = kh.segmented_stream_id
 left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
 left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
 INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -128,7 +128,7 @@ WITH rearing AS
     s.blue_line_key,
     s.downstream_route_measure
   FROM bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access av on s.segmented_stream_id = av.segmented_stream_id
   left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
   left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -218,7 +218,7 @@ WITH rearing AS
     s.segmented_stream_id,
     s.geom
   FROM bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access av on s.segmented_stream_id = av.segmented_stream_id
   left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
   left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
@@ -298,7 +298,7 @@ downstream AS
   INNER JOIN rearing_minimums r
   ON FWA_Downstream(r.blue_line_key, r.downstream_route_measure, r.wscode_ltree, r.localcode_ltree, s.blue_line_key, s.downstream_route_measure, s.wscode_ltree, s.localcode_ltree)
   LEFT OUTER JOIN bcfishpass.habitat_linear_ch h ON s.segmented_stream_id = h.segmented_stream_id
-  LEFT OUTER JOIN bcfishpass.streams_habitat_known_vw hk ON s.segmented_stream_id = hk.segmented_stream_id
+  LEFT OUTER JOIN bcfishpass.streams_habitat_known hk ON s.segmented_stream_id = hk.segmented_stream_id
   WHERE s.blue_line_key = s.watershed_key  -- note that to keep the instream distance correct we do not include side channels in this query
   AND s.watershed_group_code = :'wsg'      -- restrict downstream trace to within watershed group
 ),

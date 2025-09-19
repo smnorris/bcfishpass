@@ -32,7 +32,7 @@ inner join hab b on fwa_upstream(
   b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
   true
 )
-order by 
+order by
   linear_feature_id,
   segmented_stream_id,
   cuid"

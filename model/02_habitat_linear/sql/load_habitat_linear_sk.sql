@@ -14,7 +14,7 @@ SELECT DISTINCT
   s.segmented_stream_id,
   true as rearing
 FROM bcfishpass.streams s
-inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+inner join bcfishpass.streams_access av on s.segmented_stream_id = av.segmented_stream_id
 INNER JOIN bcfishpass.wsg_species_presence p ON s.watershed_group_code = p.watershed_group_code
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
 LEFT OUTER JOIN whse_basemapping.fwa_lakes_poly lk ON s.waterbody_key = lk.waterbody_key
@@ -115,7 +115,7 @@ dnstr_spawning AS
   FROM downstream_within_3k a
   LEFT OUTER JOIN too_steep b ON a.waterbody_key = b.waterbody_key
   INNER JOIN bcfishpass.streams s ON a.segmented_stream_id = s.segmented_stream_id
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access av on s.segmented_stream_id = av.segmented_stream_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code
   LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'SK'
   left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
@@ -147,7 +147,7 @@ WITH spawn AS
     s.localcode_ltree,
     s.geom
   FROM bcfishpass.streams s
-  inner join bcfishpass.streams_access_vw av on s.segmented_stream_id = av.segmented_stream_id
+  inner join bcfishpass.streams_access av on s.segmented_stream_id = av.segmented_stream_id
   left outer join whse_basemapping.fwa_stream_networks_channel_width cw on s.linear_feature_id = cw.linear_feature_id
   left outer join whse_basemapping.fwa_stream_networks_discharge mad on s.linear_feature_id = mad.linear_feature_id
   INNER JOIN bcfishpass.parameters_habitat_method wsg ON s.watershed_group_code = wsg.watershed_group_code

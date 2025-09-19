@@ -1,11 +1,19 @@
 #!/bin/bash
 set -euxo pipefail
 
-# connect to cabd processing server, create tunnel for bcfishpass database connection
+# install required tools (azcli/azcopy/openssh/autossh)
 
+curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
 apt-get update
+apt-get install azcopy
 apt-get install -y openssh-client
 apt-get install -y autossh
+
+# connect to cabd processing server, create tunnel for bcfishpass database connection
+
 mkdir -p .ssh/
 chmod 700 .ssh/
 echo "$SSH_KEY" > .ssh/cabd.key

@@ -33,7 +33,7 @@ ON FWA_Upstream(
     True,
     1
    )
-left outer join bcfishpass.streams_access_vw ac on s.segmented_stream_id = ac.segmented_stream_id
+left outer join bcfishpass.streams_access ac on s.segmented_stream_id = ac.segmented_stream_id
 where a.blue_line_key = a.watershed_key  -- do not compute for points on side channels
 and a.watershed_group_code = :'wsg'
 order by a.aggregated_crossings_id;
@@ -64,7 +64,7 @@ ON FWA_Upstream(
     True,
     1
    )
-left outer join bcfishpass.streams_access_vw ac on s.segmented_stream_id = ac.segmented_stream_id
+left outer join bcfishpass.streams_access ac on s.segmented_stream_id = ac.segmented_stream_id
 left outer join whse_basemapping.fwa_lakes_poly lake ON s.waterbody_key = lake.waterbody_key
 left outer join whse_basemapping.fwa_manmade_waterbodies_poly manmade ON s.waterbody_key = manmade.waterbody_key
 left outer join whse_basemapping.fwa_wetlands_poly wetland ON s.waterbody_key = wetland.waterbody_key
@@ -100,7 +100,7 @@ WITH at_point AS
   --AND round(s2.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
   --AND round(s2.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s2.watershed_group_code
-  left outer join bcfishpass.streams_access_vw ac on s.segmented_stream_id = ac.segmented_stream_id
+  left outer join bcfishpass.streams_access ac on s.segmented_stream_id = ac.segmented_stream_id
   WHERE a.watershed_group_code = :'wsg'
   order by aggregated_crossings_id
 ),
