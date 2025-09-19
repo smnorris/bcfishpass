@@ -1,12 +1,12 @@
 INSERT INTO bcfishpass.streams_upstr_observations
 (
   segmented_stream_id,
-  observation_key_upstr,
+  -- observation_key_upstr,
   obsrvtn_species_codes_upstr
 )
 SELECT
     segmented_stream_id,
-    array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS observation_key_upstr,
+    -- array_agg(DISTINCT (upstr_id)) FILTER (WHERE upstr_id IS NOT NULL) AS observation_key_upstr,
     array_agg(DISTINCT (species_code)) FILTER (WHERE species_code IS NOT NULL) as obsrvtn_species_codes_upstr
   FROM (
     SELECT DISTINCT
@@ -28,7 +28,6 @@ SELECT
         False,
         1
       )
-      AND a.watershed_group_code = b.watershed_group_code
       WHERE a.watershed_group_code = :'wsg'
   ) as f
   GROUP BY segmented_stream_id
