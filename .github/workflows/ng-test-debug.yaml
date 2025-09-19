@@ -22,7 +22,7 @@ jobs:
       - name: Run the jobs
         run:  |
           export PGCONNECT_TIMEOUT=10
-          PSQL="psql $DATABASE_URL-v ON_ERROR_STOP=1"
+          PSQL="psql $DATABASE_URL ON_ERROR_STOP=1"
           WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
           cd model/01_access
           $PSQL -c "truncate bcfishpass.streams_upstr_observations"
