@@ -11,10 +11,6 @@ SELECT
   FROM (
     SELECT DISTINCT
       a.segmented_stream_id,
-      b.watershed_group_code,
-      b.wscode,
-      b.localcode,
-      b.downstream_route_measure as meas_b,
       b.observation_key as upstr_id,
       b.species_code
     FROM
@@ -32,6 +28,7 @@ SELECT
         False,
         1
       )
+      AND a.watershed_group_code = b.watershed_group_code
       WHERE a.watershed_group_code = :'wsg'
   ) as f
   GROUP BY segmented_stream_id
