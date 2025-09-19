@@ -24,5 +24,6 @@ jobs:
           PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
           WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
           PARALLEL="parallel --halt now,fail=1 --jobs 4 --no-run-if-empty"
+          cd model/01_access
           $PSQL -c "truncate bcfishpass.streams_upstr_observations"
           $PARALLEL $PSQL -f sql/load_streams_upstr_observations.sql -v wsg={1} ::: $WSGS
