@@ -35,8 +35,8 @@ column,type,description
 ``dam_dnstr_ind``,`boolean`,Indicates if the next anthropogenic barrier downstream is a dam
 ``dam_hydro_dnstr_ind``,`boolean`,Indicates if the next anthropogenic barrier downstream is a hydroelectric dam
 ``remediated_dnstr_ind``,`boolean`,Indicates if the next crossing downstream is a remediated PSCIS site
-``obsrvtn_event_upstr``,`text`,id value for all upstream target species fish observations
-``obsrvtn_species_codes_upstr``,`text`,Unique species codes for all upstream target species observations (in watershed group)
+``observation_key_upstr``,`text`,observation_key of upstream target species fish observations (in the same watershed group)
+``obsrvtn_species_codes_upstr``,`text`,Unique species codes for all upstream target species observations
 ``species_codes_dnstr``,`text`,Unique species codes for all downstream target species observations
 ``access_bt``,`integer`,Bull Trout accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
 ``access_ch``,`integer`,Chinook accessibility model: -9=not modelled; 0=natural barrier downstream; 1=modelled accessible; 2=observed accessible
