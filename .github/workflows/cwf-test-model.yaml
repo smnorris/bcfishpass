@@ -94,3 +94,10 @@ jobs:
           jobs/connect_cwf
           cd model/02_habitat_linear
           ./habitat_linear.sh
+      - name: Rank crossings
+        run:  |
+          WCRPS=$(psql $DATABASE_URL -v ON_ERROR_STOP=1 -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
+          for wcrp in $WCRPS
+          do
+            python jobs/auto_rank.py $wcrp
+          done
