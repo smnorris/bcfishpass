@@ -96,7 +96,7 @@ jobs:
           ./habitat_linear.sh
       - name: Rank crossings
         run:  |
-          for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah
+          for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic tuzistol_tah
           do
             python jobs/auto_rank.py $wcrp
           done

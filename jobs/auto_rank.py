@@ -30,7 +30,7 @@ def makeParser():
             "elkr_upstr",
             "hors",
             "lnic",
-            "morr"
+            "morr",
             "tuzistol_tah",
         ],
         nargs=1,
