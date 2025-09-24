@@ -23,6 +23,7 @@ jobs:
         run:  |
           cp parameters/example_newgraph/*csv parameters/
           jobs/load_csv
+          cd jobs && ./load_weekly
   load-xings-observations:
     runs-on: ubuntu-latest
     environment: ng-test
@@ -85,3 +86,13 @@ jobs:
           git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
           cd model/02_habitat_linear
           ./habitat_linear.sh
+      - name: Summarize
+        run: |
+          psql $DATABASE_URL -c "select * from bcfishpass.wsg_crossing_summary_current" --csv > wsg_crossing_summary_current.csv
+          psql $DATABASE_URL -c "select * from bcfishpass.wsg_linear_summary_current" --csv > wsg_linear_summary_current.csv
+          aws s3 cp wsg_crossing_summary_current.csv s3://bchamp/test/wsg_crossing_summary_current.csv --acl public-read
+          aws s3 cp wsg_linear_summary_current.csv s3://bchamp/test/wsg_linear_summary_current.csv --acl public-read
+          python jobs/compare_test_prod.py
+          aws s3 cp wsg_crossings_diff.csv s3://bchamp/test/wsg_crossings_diff.csv --acl public-read
+          aws s3 cp wsg_linear_diff.csv s3://bchamp/test/wsg_linear_diff.csv --acl public-read
+          aws s3 cp wsg_linear_diff.csv s3://bchamp/test/wsg_linear_pctdiff.csv --acl public-read

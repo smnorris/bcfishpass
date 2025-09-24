@@ -134,6 +134,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Summarize and release
         run:  |
+          psql $DATABASE_URL -c "select * from bcfishpass.wsg_crossing_summary_current" --csv > wsg_crossing_summary_current.csv
+          psql $DATABASE_URL -c "select * from bcfishpass.wsg_linear_summary_current" --csv > wsg_linear_summary_current.csv
+          aws s3 cp wsg_crossing_summary_current.csv s3://bchamp/wsg_crossing_summary_current.csv --acl public-read
+          aws s3 cp wsg_linear_summary_current.csv s3://bchamp/wsg_linear_summary_current.csv --acl public-read
           jobs/release_fptwg
