@@ -74,7 +74,7 @@ begin;
       order by str.geom <-> pt.geom
       limit 1
     ) as str
-    order by dam_id, distance_to_stream
+    order by dam_id, distance_to_stream, linear_feature_id -- order by linear_feature_id so results are consistent in cases of equidistant features
   ),
 
     -- ensure only one feature returned, and interpolate the geom on the stream
