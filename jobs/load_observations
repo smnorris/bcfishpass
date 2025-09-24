@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# load Observations (matched to FWA)
+# Held in a separate script (rather than load_weekly) as this is not run in BC/NG production env
+# (the data is generated there)
+#-------
+
+ogr2ogr -f PostgreSQL \
+  "PG:$DATABASE_URL" \
+  --config OGR_TRUNCATE=YES \
+  -append \
+  -nln bcfishobs.observations \
+  --config PG_USE_COPY=YES \
+  /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcfishobs/observations.parquet \
+  observations

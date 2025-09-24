@@ -1,3 +1,9 @@
+-- ============
+-- deprecated - we cannot effectivley create materialized views that use fwapg functions for postgres >= 17
+-- (unless fwapg functions are moved into an extension, which is not a priority)
+-- Instead, see db/v0.7.0/sql/qa_observations_naturalbarriers_dnst.sql
+-- ============
+
 -- report on all potential barriers below salmon/steelhead observations
 
 -- NOTE - all potential gradient barriers are reported, but only falls tagged as a barrier are included

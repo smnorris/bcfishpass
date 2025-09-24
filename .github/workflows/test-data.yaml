@@ -37,4 +37,4 @@ jobs:
       - name: Run the jobs
         run:  |
           cp parameters/example_cwf/*csv parameters/
-          jobs/connect_cwf && jobs/load_csv
+          jobs/connect && jobs/load_csv

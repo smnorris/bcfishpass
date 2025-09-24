@@ -1,4 +1,16 @@
+<<<<<<< HEAD
+CREATE SCHEMA IF NOT EXISTS wcrp_bela_atna_necl;
+CREATE SCHEMA IF NOT EXISTS wcrp_bowr_ques_carr;
+CREATE SCHEMA IF NOT EXISTS wcrp_bulk;
+CREATE SCHEMA IF NOT EXISTS wcrp_elkr;
+CREATE SCHEMA IF NOT EXISTS wcrp_hors;
+CREATE SCHEMA IF NOT EXISTS wcrp_lnic;
+CREATE SCHEMA IF NOT EXISTS wcrp_morr;
+CREATE SCHEMA IF NOT EXISTS wcrp_tho_shu;
+CREATE SCHEMA IF NOT EXISTS wcrp_tuzistol_tah;
+=======
 begin;
+>>>>>>> main
 
   CREATE SCHEMA IF NOT EXISTS wcrp_bela_atna_necl;
   CREATE SCHEMA IF NOT EXISTS wcrp_bowr_ques_carr;

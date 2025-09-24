@@ -68,10 +68,8 @@ Delete the containers:
 
 To build/load/dump a small database for development/testing:
 
-    docker compose build
     docker compose up -d
-    cd test
-    docker compose run --rm runner build_db.sh
+    docker compose run --rm runner test/build_db.sh
 
 Note that `build_db.sh` dumps all required inputs to a postgresql dump file - once it has been run once, a testing database can be quickly restored from the dump rather than loading from scratch:
 

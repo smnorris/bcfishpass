@@ -1,5 +1,5 @@
 name: ng-prod
-run-name: ${{ github.actor }} Run bcfishpass on prod
+run-name: ${{ github.actor }} Run bcfishpass on ng-prod and release fptwg distribution
 on:
   schedule:
     - cron: '0 20 * * MON'
@@ -13,6 +13,8 @@ env:
   AWS_VIRTUAL_HOSTING: FALSE
   AWS_EC2_METADATA_DISABLED: True
   CPL_VSISTDIN_BUFFER_LIMIT: -1
+concurrency:
+  group: ng-prod
 jobs:
   data-refresh:
     runs-on: ubuntu-latest
@@ -107,6 +109,7 @@ jobs:
         run:  |
           cd model/01_access
           ./model_access_2.sh
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk.sql
   model-habitat-linear:
     runs-on: ubuntu-latest
     environment: production
@@ -131,6 +134,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Summarize and release
         run:  |
+          psql $DATABASE_URL -c "select * from bcfishpass.wsg_crossing_summary_current" --csv > wsg_crossing_summary_current.csv
+          psql $DATABASE_URL -c "select * from bcfishpass.wsg_linear_summary_current" --csv > wsg_linear_summary_current.csv
+          aws s3 cp wsg_crossing_summary_current.csv s3://bchamp/wsg_crossing_summary_current.csv --acl public-read
+          aws s3 cp wsg_linear_summary_current.csv s3://bchamp/wsg_linear_summary_current.csv --acl public-read
           jobs/release_fptwg

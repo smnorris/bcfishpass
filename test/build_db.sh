@@ -49,13 +49,16 @@ $PSQL -c "delete from whse_basemapping.fwa_waterbodies_upstream_area where linea
 cd .. ; rm -rf fwapg
 
 # run bcfishobs
-git clone git@github.com:smnorris/bcfishobs.git
+bcdata bc2pg -e -c 1 whse_fish.fiss_fish_obsrvtn_pnt_sp
+git clone https://github.com/smnorris/bcfishobs.git
 cd bcfishobs
-make --debug=basic
+$PSQL -f db/v0.2.0.sql
+$PSQL -f db/v0.3.0.sql
+./process.sh
 cd .. ; rm -rf bcfishobs
 
 # set up the source data schema
-cd ../db/sources; ./migrate.sh; cd ..
+cd db/sources; ./migrate.sh; cd ..
 
 # run all migration scripts present in /db
 for tag in v* ;do

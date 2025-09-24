@@ -1,7 +1,9 @@
 name: cwf-prod
-run-name: ${{ github.actor }} Release streams/crossings/aw summary from CWF database
+run-name: ${{ github.actor }} Run bcfishpass on cwf-prod, release WCRP data files and a Provincial extract
 on:
   workflow_dispatch:
+concurrency:
+  group: cwf
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -21,34 +23,102 @@ env:
   AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZCOPY_SPA_APPLICATION_ID }}
   AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZCOPY_SPA_CLIENT_SECRET }}
 jobs:
-  dump:
-    name: "Dump streams/crossings/aw summary to file and upload to s3"
+  data-refresh:
     runs-on: ubuntu-latest
     environment: cwf-prod
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Configure SSH
-        run: |
-          apt-get update
-          apt-get install -y openssh-client
-          apt-get install -y autossh
-          mkdir -p .ssh/
-          chmod 700 .ssh/
-          echo "$SSH_KEY" > .ssh/cabd.key
-          chmod 600 .ssh/cabd.key
-          cat <<EOF > .ssh/config
-          Host cabd
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile .ssh/cabd.key
-          EOF
-          chmod 600 .ssh/config
-          ssh-keyscan -H $SSH_HOST >> .ssh/known_hosts
-          chmod 600 .ssh/known_hosts
-      - name: Release
-        run: |
-          nohup autossh -M 0 -N -L 63333:$DATABASE_HOST:5432 -F .ssh/config -o UserKnownHostsFile=.ssh/known_hosts cabd &
-          sleep 5
+      - name: Run the jobs
+        run: jobs/connect && cd jobs && ./load_weekly
+  load-csv:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: data-refresh
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Load csv data, parameters
+        run:  |
+          cp parameters/example_cwf/*csv parameters/
+          jobs/connect && jobs/load_csv
+  load-xings-observations:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-csv
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Load modelled crossings from archive
+        run:  |
+          jobs/connect
+          jobs/load_modelled_stream_crossings
+          jobs/load_observations
+  prep:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: load-xings-observations
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  jobs/connect && jobs/model_prep
+  model-access-1:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: prep
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 1
+        run:  |
+          jobs/connect
+          cd model/01_access
+          ./model_access_1.sh
+  model-access-2:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-1
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Access model 2
+        run:  |
+          jobs/connect
+          cd model/01_access
+          ./model_access_2.sh
+  model-habitat-linear:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-access-2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+            fetch-tags: true
+            fetch-depth: 0
+      - name: Linear habitat model
+        run:  |
+          jobs/connect
+          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+          cd model/02_habitat_linear
+          ./habitat_linear.sh
+  release:
+    runs-on: ubuntu-latest
+    environment: cwf-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    needs: model-habitat-linear
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run the jobs
+        run:  |
+          jobs/connect
           jobs/release_cwf

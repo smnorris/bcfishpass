@@ -24,7 +24,7 @@ $PSQL -c "VACUUM ANALYZE bcfishpass.streams"
 # break at observations
 $PARALLEL \
   "echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-  $PSQL -v wsg={1} -v point_table=observations_vw" ::: $WSGS
+  $PSQL -v wsg={1} -v point_table=observations" ::: $WSGS
 
 # break at crossings 
 $PARALLEL \
