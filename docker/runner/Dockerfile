@@ -30,7 +30,6 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && apt-get install azcopy \
     && rm -rf /var/lib/apt/lists/*
 
-
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.22.21.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
     && ./aws/install

@@ -26,7 +26,7 @@ jobs:
       - name: Run the jobs
         run:  |
           cp parameters/example_cwf/*csv parameters/
-          jobs/connect_cwf && jobs/load_csv
+          jobs/connect && jobs/load_csv
           psql -v ON_ERROR_STOP=1 $DATABASE_URL -c "DELETE FROM bcfishpass.parameters_habitat_method WHERE watershed_group_code NOT IN (SELECT watershed_group_code FROM bcfishpass.wcrp_watersheds)"
           cd jobs && ./load_weekly
   load-xings-observations:
@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  |
-          jobs/connect_cwf
+          jobs/connect
           jobs/load_modelled_stream_crossings
           jobs/load_observations
   prep:
@@ -51,7 +51,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/connect_cwf && jobs/model_prep
+        run:  jobs/connect && jobs/model_prep
   model-access-1:
     runs-on: ubuntu-latest
     environment: cwf-test
@@ -62,7 +62,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Access model 1
         run:  |
-          jobs/connect_cwf
+          jobs/connect
           cd model/01_access
           ./model_access_1.sh
   model-access-2:
@@ -75,7 +75,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Access model 2
         run:  |
-          jobs/connect_cwf
+          jobs/connect
           cd model/01_access
           ./model_access_2.sh
   model-habitat-linear:
@@ -92,7 +92,7 @@ jobs:
       - name: Linear habitat model
         run:  |
           git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
-          jobs/connect_cwf
+          jobs/connect
           cd model/02_habitat_linear
           ./habitat_linear.sh
       - name: Rank crossings

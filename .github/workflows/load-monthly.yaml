@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Load data
         run: |
-          cd jobs && ./connect_cwf && ./load_monthly
+          cd jobs && ./connect && ./load_monthly
   cwf-prod:
     runs-on: ubuntu-latest
     environment: cwf-prod
@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Load data
         run: |
-          cd jobs && ./connect_cwf && ./load_monthly
+          cd jobs && ./connect && ./load_monthly
   ng-test:
     runs-on: ubuntu-latest
     environment: ng-test
