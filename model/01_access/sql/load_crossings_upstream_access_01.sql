@@ -85,7 +85,7 @@ WITH at_point AS
     ac.barriers_wct_dnstr
   FROM bcfishpass.crossings a
   left outer join bcfishpass.streams s
-  ON a.blue_line_key = s.blue_line_key  -- use blkey in case crossing match to stream feature is inconsistent
+  ON a.linear_feature_id = s.linear_feature_id
   AND a.downstream_route_measure > s.downstream_route_measure - .001
   AND a.downstream_route_measure + .001 < s.upstream_route_measure
   -- ON a.blue_line_key = s.blue_line_key
@@ -93,7 +93,7 @@ WITH at_point AS
   -- AND round(s.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
   AND a.watershed_group_code = s.watershed_group_code
   left outer join whse_basemapping.fwa_stream_networks_sp s2
-  ON a.blue_line_key = s2.blue_line_key -- use blkey in case crossing match to stream feature is inconsistent
+  ON a.linear_feature_id = s2.linear_feature_id
   AND a.downstream_route_measure > s2.downstream_route_measure - .001
   AND a.downstream_route_measure + .001 < s2.upstream_route_measure
   -- ON a.blue_line_key = s.blue_line_key
