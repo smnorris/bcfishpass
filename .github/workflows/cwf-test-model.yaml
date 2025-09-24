@@ -28,6 +28,7 @@ jobs:
           cp parameters/example_cwf/*csv parameters/
           jobs/connect_cwf && jobs/load_csv
           psql -v ON_ERROR_STOP=1 $DATABASE_URL -c "DELETE FROM bcfishpass.parameters_habitat_method WHERE watershed_group_code NOT IN (SELECT watershed_group_code FROM bcfishpass.wcrp_watersheds)"
+          cd jobs && ./load_weekly
   load-xings-observations:
     runs-on: ubuntu-latest
     environment: cwf-test
