@@ -6,6 +6,10 @@ on:
   workflow_dispatch:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_HOST: ${{ secrets.SSH_HOST }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
@@ -18,76 +22,65 @@ concurrency:
 jobs:
   data-refresh:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run: cd jobs && ./load_weekly
-  bcfishobs:
+        run: cd jobs && ./connect && ./load_weekly
+  load-csv:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: data-refresh
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-        with:
-          repository: smnorris/bcfishobs
-          ref: v0.2.0
-      - name: Process bcfishobs
-        run: |
-          mkdir -p .make
-          make -t .make/setup
-          make -t .make/load_static
-          make -t .make/fiss_fish_obsrvtn_pnt_sp
-          make --debug=basic
-  load-csv:
-    runs-on: ubuntu-latest
-    environment: production
-    container: ghcr.io/smnorris/bcfishpass:main
-    needs: bcfishobs
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
       - name: Load csv data, parameters
         run:  |
+          jobs/connect
           cp parameters/example_newgraph/*csv parameters/
           jobs/load_csv
   load-xings:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: load-csv
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Load modelled crossings from archive
-        run:  jobs/load_modelled_stream_crossings
+        run:  |
+          jobs/connect
+          jobs/load_modelled_stream_crossings
   model-xings:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: load-xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Build modelled crossings
-        run:  jobs/model_stream_crossings
+        run:  |
+          jobs/connect
+          jobs/model_stream_crossings
   prep:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: model-xings
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/model_prep
+        run:  |
+          jobs/connect
+          jobs/model_prep
   model-access-1:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: prep
     steps:
@@ -95,11 +88,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Access model 1
         run:  |
+          jobs/connect
           cd model/01_access
           ./model_access_1.sh
   model-access-2:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: model-access-1
     steps:
@@ -107,12 +101,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Access model 2
         run:  |
+          jobs/connect
           cd model/01_access
           ./model_access_2.sh
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk.sql
   model-habitat-linear:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: model-access-2
     steps:
@@ -123,12 +118,13 @@ jobs:
             fetch-depth: 0
       - name: Linear habitat model
         run:  |
+          jobs/connect
           git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
           cd model/02_habitat_linear
           ./habitat_linear.sh
   release:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     needs: model-habitat-linear
     steps:
@@ -136,6 +132,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Summarize and release
         run:  |
+          jobs/connect
           psql $DATABASE_URL -c "select * from bcfishpass.wsg_crossing_summary_current" --csv > wsg_crossing_summary_current.csv
           psql $DATABASE_URL -c "select * from bcfishpass.wsg_linear_summary_current" --csv > wsg_linear_summary_current.csv
           aws s3 cp wsg_crossing_summary_current.csv s3://bchamp/wsg_crossing_summary_current.csv --acl public-read
