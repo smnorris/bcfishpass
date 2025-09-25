@@ -11,6 +11,10 @@ concurrency:
   group: ng-test
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_HOST: ${{ secrets.SSH_HOST }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
@@ -29,6 +33,7 @@ jobs:
       - name: Run the jobs
         run:  |
           cp parameters/example_newgraph/*csv parameters/
+          jobs/connect
           jobs/load_csv
           cd jobs && ./load_weekly
   load-xings-observations:
@@ -41,6 +46,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the jobs
         run:  |
+          jobs/connect
           jobs/load_modelled_stream_crossings
           jobs/load_observations
   prep:
@@ -52,7 +58,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Run the jobs
-        run:  jobs/model_prep
+        run:  |
+          jobs/connect
+          jobs/model_prep
   model-access-1:
     runs-on: ubuntu-latest
     environment: ng-test
@@ -63,6 +71,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Access model 1
         run:  |
+          jobs/connect
           cd model/01_access
           ./model_access_1.sh
   model-access-2:
@@ -75,6 +84,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Access model 2
         run:  |
+          jobs/connect
           cd model/01_access
           ./model_access_2.sh
   model-habitat-linear:
@@ -90,11 +100,13 @@ jobs:
             fetch-depth: 0
       - name: Linear habitat model
         run:  |
+          jobs/connect
           git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
           cd model/02_habitat_linear
           ./habitat_linear.sh
       - name: Summarize
         run: |
+          jobs/connect
           psql $DATABASE_URL -c "select * from bcfishpass.wsg_crossing_summary_current" --csv > wsg_crossing_summary_current.csv
           psql $DATABASE_URL -c "select * from bcfishpass.wsg_linear_summary_current" --csv > wsg_linear_summary_current.csv
           aws s3 cp wsg_crossing_summary_current.csv s3://bchamp/test/wsg_crossing_summary_current.csv --acl public-read
