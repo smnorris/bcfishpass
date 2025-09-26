@@ -60,7 +60,7 @@ do
       s.dam_dnstr_ind,
       s.dam_hydro_dnstr_ind,
       s.remediated_dnstr_ind,
-      s.obsrvtn_event_upstr,
+      s.observation_key_upstr,
       s.obsrvtn_species_codes_upstr,
       s.species_codes_dnstr,
       s.access_ch,

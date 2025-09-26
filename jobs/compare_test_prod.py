@@ -23,10 +23,12 @@ crossings_test.compare(crossings_prod, result_names=('test', 'prod')).to_csv("ws
 linear_prod = (
     pd.read_csv("https://nrs.objectstore.gov.bc.ca/bchamp/wsg_linear_summary_current.csv")
     .set_index(["watershed_group_code"])
+    .round()
 )
 linear_test = (
     pd.read_csv("https://nrs.objectstore.gov.bc.ca/bchamp/test/wsg_linear_summary_current.csv")
     .set_index(["watershed_group_code"])
+    .round()
 )
 # linear absolute diff
 linear_test.compare(linear_prod, result_names=('test', 'prod')).to_csv("wsg_linear_diff.csv")
