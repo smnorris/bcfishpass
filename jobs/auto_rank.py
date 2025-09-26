@@ -231,8 +231,7 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
             AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL'))
             AND (tt.structure_list_status not in ('Excluded structure')
 		        OR tt.structure_list_status is null)
-            AND {condition})
-            OR tt.structure_list_status = 'Rehabilitated barrier';
+            AND {condition});
 
             ALTER TABLE IF EXISTS bcfishpass.ranked_barriers
                 RENAME COLUMN aggregated_crossings_id TO id;
