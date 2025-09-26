@@ -11,6 +11,7 @@ cat <<EOF > .ssh/config
 Host bcfishpass
   HostName $SSH_HOST
   User $SSH_USER
+  ServerAliveInterval 60
   IdentityFile .ssh/bcfishpass.key
 EOF
 chmod 600 .ssh/config
