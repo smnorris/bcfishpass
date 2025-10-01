@@ -474,7 +474,7 @@ ogr2ogr \
   dam_dnstr_ind,
   dam_hydro_dnstr_ind,
   remediated_dnstr_ind,
-  obsrvtn_event_upstr,
+  observation_key_upstr,
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   access_bt,
