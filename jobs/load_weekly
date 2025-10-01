@@ -7,8 +7,6 @@ set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 
-# *note*
-# weekly bcfishobs processing is scheduled via workflow bcfishobs repository
 
 # bcdata loads
 jq -c '.[]' bcgw_sources.json | while read item; do
