@@ -232,8 +232,8 @@ ogr2ogr \
        linear_feature_id,
        blue_line_key,
        downstream_route_measure,
-       wscode_ltree as wscode,
-       localcode_ltree as localcode,
+       wscode,
+       localcode,
        watershed_group_code,
        geom
      from bcfishpass.observations
