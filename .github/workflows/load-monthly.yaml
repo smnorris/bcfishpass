@@ -39,8 +39,6 @@ jobs:
   ng-test:
     runs-on: ubuntu-latest
     environment: ng-test
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     container: ghcr.io/smnorris/bcfishpass:main
     concurrency:
       group: ng-test
@@ -53,8 +51,6 @@ jobs:
   ng-prod:
     runs-on: ubuntu-latest
     environment: production
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     container: ghcr.io/smnorris/bcfishpass:main
     concurrency:
       group: ng-prod
