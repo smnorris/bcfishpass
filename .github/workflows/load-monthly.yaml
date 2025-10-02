@@ -50,7 +50,7 @@ jobs:
           cd jobs && ./connect && ./load_monthly
   ng-prod:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     concurrency:
       group: ng-prod
