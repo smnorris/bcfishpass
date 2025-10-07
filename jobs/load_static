@@ -2,29 +2,9 @@
 set -euxo pipefail
 
 #-------
-# one time data loads/processing
+# one time data loads/processing (Admin areas/tiles/grids/cartographic)
 #-------
 
-PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM whse_basemapping.fwa_watershed_groups_poly")
-
-
-#-------
-# DRA code tables
-#-------
-curl -o /tmp/whse_basemapping.transport_line_type_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_type_code.csv
-curl -o /tmp/whse_basemapping.transport_line_surface_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_surface_code.csv
-curl -o /tmp/whse_basemapping.transport_line_divided_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_divided_code.csv
-curl -o /tmp/whse_basemapping.transport_line_structure_code.csv https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv
-
-$PSQL -c "\copy whse_basemapping.transport_line_type_code FROM /tmp/whse_basemapping.transport_line_type_code.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_surface_code FROM /tmp/whse_basemapping.transport_line_surface_code.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_divided_code FROM /tmp/whse_basemapping.transport_line_divided_code.csv delimiter ',' csv header"
-$PSQL -c "\copy whse_basemapping.transport_line_structure_code FROM /tmp/whse_basemapping.transport_line_structure_code.csv delimiter ',' csv header"
-
-#-------
-# Admin areas/tiles/grids/cartographic
-#-------
 bcdata bc2pg -r whse_admin_boundaries.adm_indian_reserves_bands_sp
 bcdata bc2pg -r whse_admin_boundaries.adm_nr_districts_spg
 bcdata bc2pg -r whse_basemapping.bcgs_20k_grid
