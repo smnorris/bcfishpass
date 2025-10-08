@@ -222,7 +222,6 @@ ogr2ogr \
     -nlt PointZM \
     -sql "select
        observation_key,
-       fish_obsrvtn_event_id,
        species_code,
        observation_date,
        activity_code,
@@ -233,8 +232,8 @@ ogr2ogr \
        linear_feature_id,
        blue_line_key,
        downstream_route_measure,
-       wscode_ltree as wscode,
-       localcode_ltree as localcode,
+       wscode,
+       localcode,
        watershed_group_code,
        geom
      from bcfishpass.observations

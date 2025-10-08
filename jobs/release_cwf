@@ -5,6 +5,19 @@ set -euxo pipefail
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
 
+# generate token for azcopy
+expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
+az login --service-principal -u $AZCOPY_SPA_APPLICATION_ID -p $AZCOPY_SPA_CLIENT_SECRET --tenant $AZCOPY_TENANT_ID
+export AZURE_STORAGE_SAS_TOKEN=$(\
+    az storage container generate-sas \
+        --account-name cabdbcfishpassstorage \
+        --as-user \
+        --auth-mode login \
+        --expiry $expiry \
+        --name bcfishpass \
+        --permissions dlrw | \
+    jq -r)
+
 # do the ranking
 for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah
 do
@@ -474,7 +487,7 @@ ogr2ogr \
   dam_dnstr_ind,
   dam_hydro_dnstr_ind,
   remediated_dnstr_ind,
-  obsrvtn_event_upstr,
+  observation_key_upstr,
   obsrvtn_species_codes_upstr,
   species_codes_dnstr,
   access_bt,

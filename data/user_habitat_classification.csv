@@ -6196,15 +6196,9 @@
 356362330,3815,3915,MIDR,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356362330,3815,3915,MIDR,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356362363,46.81,5213.5,HARR,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,0,100,LNIC,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-356362373,0,100,LNIC,ST,spawning,t,SN,2023-08-17,FISS spawning points,
-356362373,63.41,201.49,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,66,166,LNIC,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356362373,228.82,20769.54,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,327.61,9183.29,LNIC,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,9398.21,20763.46,LNIC,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,20752,20852,LNIC,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356362373,20752,20852,LNIC,CO,spawning,t,SN,2023-08-17,FISS spawning points,
+356362373,0,8944,LNIC,CO,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
+356362373,0,100,LNIC,ST,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
+356362373,0,8944,LNIC,CH,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
 356362384,339,439,LFRA,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356362384,3361,3461,LFRA,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 356362393,2234,2334,CHIR,SK,spawning,t,SN,2023-08-17,FISS spawning points,
