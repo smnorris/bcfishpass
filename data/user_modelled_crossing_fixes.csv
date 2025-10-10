@@ -21468,7 +21468,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 16604042,NONE,PARS,AI,2025-07-23,Satellite imagery review,No crossing present.
 15200605,NONE,NATR,AI,2025-07-25,Satellite imagery review,No crossing present.
 13903628,OBS,MORK,AI,2025-07-28,District of Prince George GIS,bridge
-1024760306,NONE,HORS,MC,2025-08-13,Biologist review,"Is the same crossing as 57476, but 57476  is in the correct location"
+24760306,NONE,HORS,MC,2025-08-13,Biologist review,"Is the same crossing as 57476, but 57476  is in the correct location"
 19701001,NONE,TABR,LS,2025-07-22,Satellite imagery review,Duplicate of modelled crossing 19703257
 19702676,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
 19701720,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
@@ -21515,7 +21515,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19702705,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
 24723585,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
 19701642,NONE,TABR,LS,2025-07-22,Satellite imagery review,No crossing present
-19700273,NONE,TABR,LS,2025-07-22,Satellite imagery review,Duplicate of stream crossing 
+19700273,NONE,TABR,LS,2025-07-22,Satellite imagery review,Duplicate of stream crossing
 19701308,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
 19701604,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
 19700805,NONE,TABR,LS,2025-07-23,Satellite imagery review,No crossing present
