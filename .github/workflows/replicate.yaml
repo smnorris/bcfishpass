@@ -44,6 +44,6 @@ jobs:
             echo "It is Monday, running weekly replication and bcfishobs"
             cd jobs && ./replicate_bcgw W
             git clone https://github.com/smnorris/bcfishobs.git
-            cd bcfishobs && git checkout v0.3.1
+            cd bcfishobs && git checkout v0.3.2
             ./process.sh
           fi
