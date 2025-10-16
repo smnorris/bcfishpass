@@ -63,68 +63,68 @@ column,description
 ``total_stream_km``,Total length of streams and rivers upstream of point (does not include network connectors in lakes etc)
 ``total_lakereservoir_ha``,Total area lakes and reservoirs upstream of point
 ``total_wetland_ha``,Total area wetlands upstream of point
-``total_slopeclass03_waterbodies_km``,Total length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%
-``total_slopeclass03_km``,Total length of stream potentially accessible upstream of point with slope 0-3%
-``total_slopeclass05_km``,Total length of stream potentially accessible upstream of point with slope 3-5%
-``total_slopeclass08_km``,Total length of stream potentially accessible upstream of point with slope 5-8%
-``total_slopeclass15_km``,Total length of stream potentially accessible upstream of point with slope 8-15%
-``total_slopeclass22_km``,Total length of stream potentially accessible upstream of point with slope 15-22%
-``total_slopeclass30_km``,Total length of stream potentially accessible upstream of point with slope 22-30%
-``total_belowupstrbarriers_network_km``,Total length of stream network potentially accessible upstream of point and below any additional upstream barriers
-``total_belowupstrbarriers_stream_km``,Total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)
-``total_belowupstrbarriers_lakereservoir_ha``,Total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers
-``total_belowupstrbarriers_wetland_ha``,Total area wetlands potentially accessible upstream of point and below any additional upstream barriers
-``total_belowupstrbarriers_slopeclass03_waterbodies_km``,"Total length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
-``total_belowupstrbarriers_slopeclass03_km``,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
-``total_belowupstrbarriers_slopeclass05_km``,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
-``total_belowupstrbarriers_slopeclass08_km``,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
-``total_belowupstrbarriers_slopeclass15_km``,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
-``total_belowupstrbarriers_slopeclass22_km``,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
-``total_belowupstrbarriers_slopeclass30_km``,"Total length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+``total_slopeclass03_waterbodies_km``,Total length of stream connectors (in waterbodies) naturally accessible upstream of point with slope 0-3%
+``total_slopeclass03_km``,Total length of stream naturally accessible upstream of point with slope 0-3%
+``total_slopeclass05_km``,Total length of stream naturally accessible upstream of point with slope 3-5%
+``total_slopeclass08_km``,Total length of stream naturally accessible upstream of point with slope 5-8%
+``total_slopeclass15_km``,Total length of stream naturally accessible upstream of point with slope 8-15%
+``total_slopeclass22_km``,Total length of stream naturally accessible upstream of point with slope 15-22%
+``total_slopeclass30_km``,Total length of stream naturally accessible upstream of point with slope 22-30%
+``total_belowupstrbarriers_network_km``,Total length of stream network naturally accessible upstream of point and below any additional upstream barriers
+``total_belowupstrbarriers_stream_km``,Total length of streams and rivers naturally accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)
+``total_belowupstrbarriers_lakereservoir_ha``,Total area lakes and reservoirs naturally accessible upstream of point and below any additional upstream barriers
+``total_belowupstrbarriers_wetland_ha``,Total area wetlands naturally accessible upstream of point and below any additional upstream barriers
+``total_belowupstrbarriers_slopeclass03_waterbodies_km``,"Total length of stream connectors (in waterbodies) naturally accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+``total_belowupstrbarriers_slopeclass03_km``,"Total length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+``total_belowupstrbarriers_slopeclass05_km``,"Total length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+``total_belowupstrbarriers_slopeclass08_km``,"Total length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+``total_belowupstrbarriers_slopeclass15_km``,"Total length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+``total_belowupstrbarriers_slopeclass22_km``,"Total length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+``total_belowupstrbarriers_slopeclass30_km``,"Total length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
 ``barriers_ch_cm_co_pk_sk_dnstr``,"Modelled accessibility to Pacific Salmon (CH/CM/CO/PK/SK, 15% max)"
-``ch_cm_co_pk_sk_network_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of stream network potentially accessible upstream of point"
-``ch_cm_co_pk_sk_stream_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)"
-``ch_cm_co_pk_sk_lakereservoir_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area lakes and reservoirs potentially accessible upstream of point "
-``ch_cm_co_pk_sk_wetland_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area wetlands potentially accessible upstream of point "
-``ch_cm_co_pk_sk_slopeclass03_waterbodies_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%"
-``ch_cm_co_pk_sk_slopeclass03_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point with slope 0-3%"
-``ch_cm_co_pk_sk_slopeclass05_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point with slope 3-5%"
-``ch_cm_co_pk_sk_slopeclass08_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point with slope 5-8%"
-``ch_cm_co_pk_sk_slopeclass15_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point with slope 8-15%"
-``ch_cm_co_pk_sk_slopeclass22_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point with slope 15-22%"
-``ch_cm_co_pk_sk_slopeclass30_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point with slope 22-30%"
-``ch_cm_co_pk_sk_belowupstrbarriers_network_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of stream network potentially accessible upstream of point and below any additional upstream barriers"
-``ch_cm_co_pk_sk_belowupstrbarriers_stream_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
-``ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers"
-``ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area wetlands potentially accessible upstream of point and below any additional upstream barriers"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
-``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+``ch_cm_co_pk_sk_network_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of stream network naturally accessible upstream of point"
+``ch_cm_co_pk_sk_stream_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of streams and rivers naturally accessible upstream of point  (does not include network connectors in lakes etc)"
+``ch_cm_co_pk_sk_lakereservoir_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area lakes and reservoirs naturally accessible upstream of point "
+``ch_cm_co_pk_sk_wetland_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area wetlands naturally accessible upstream of point "
+``ch_cm_co_pk_sk_slopeclass03_waterbodies_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream connectors (in waterbodies) naturally accessible upstream of point with slope 0-3%"
+``ch_cm_co_pk_sk_slopeclass03_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point with slope 0-3%"
+``ch_cm_co_pk_sk_slopeclass05_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point with slope 3-5%"
+``ch_cm_co_pk_sk_slopeclass08_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point with slope 5-8%"
+``ch_cm_co_pk_sk_slopeclass15_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point with slope 8-15%"
+``ch_cm_co_pk_sk_slopeclass22_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point with slope 15-22%"
+``ch_cm_co_pk_sk_slopeclass30_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point with slope 22-30%"
+``ch_cm_co_pk_sk_belowupstrbarriers_network_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of stream network naturally accessible upstream of point and below any additional upstream barriers"
+``ch_cm_co_pk_sk_belowupstrbarriers_stream_km``,"Pacific salmon model (CH/CM/CO/PK/SK), total length of streams and rivers naturally accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
+``ch_cm_co_pk_sk_belowupstrbarriers_lakereservoir_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area lakes and reservoirs naturally accessible upstream of point and below any additional upstream barriers"
+``ch_cm_co_pk_sk_belowupstrbarriers_wetland_ha``,"Pacific salmon model (CH/CM/CO/PK/SK), total area wetlands naturally accessible upstream of point and below any additional upstream barriers"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_waterbodies_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream connectors (in waterbodies) naturally accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass03_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass05_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass08_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass15_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass22_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+``ch_cm_co_pk_sk_belowupstrbarriers_slopeclass30_km``,"Pacific salmon model (CH/CM/CO/PK/SK), length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
 ``barriers_st_dnstr``,Modelled accessibility to Steelhead (20% max)
-``st_network_km``,"Steelhead model, total length of stream network potentially accessible upstream of point"
-``st_stream_km``,"Steelhead model, total length of streams and rivers potentially accessible upstream of point  (does not include network connectors in lakes etc)"
-``st_lakereservoir_ha``,"Steelhead model, total area lakes and reservoirs potentially accessible upstream of point "
-``st_wetland_ha``,"Steelhead model, total area wetlands potentially accessible upstream of point "
-``st_slopeclass03_waterbodies_km``,"Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point with slope 0-3%"
-``st_slopeclass03_km``,"Steelhead model, length of stream potentially accessible upstream of point with slope 0-3%"
-``st_slopeclass05_km``,"Steelhead model, length of stream potentially accessible upstream of point with slope 3-5%"
-``st_slopeclass08_km``,"Steelhead model, length of stream potentially accessible upstream of point with slope 5-8%"
-``st_slopeclass15_km``,"Steelhead model, length of stream potentially accessible upstream of point with slope 8-15%"
-``st_slopeclass22_km``,"Steelhead model, length of stream potentially accessible upstream of point with slope 15-22%"
-``st_slopeclass30_km``,"Steelhead model, length of stream potentially accessible upstream of point with slope 22-30%"
-``st_belowupstrbarriers_network_km``,"Steelhead model, total length of stream network potentially accessible upstream of point and below any additional upstream barriers"
-``st_belowupstrbarriers_stream_km``,"Steelhead model, total length of streams and rivers potentially accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
-``st_belowupstrbarriers_lakereservoir_ha``,"Steelhead model, total area lakes and reservoirs potentially accessible upstream of point and below any additional upstream barriers"
-``st_belowupstrbarriers_wetland_ha``,"Steelhead model, total area wetlands potentially accessible upstream of point and below any additional upstream barriers"
-``st_belowupstrbarriers_slopeclass03_waterbodies_km``,"Steelhead model, length of stream connectors (in waterbodies) potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
-``st_belowupstrbarriers_slopeclass03_km``,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
-``st_belowupstrbarriers_slopeclass05_km``,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
-``st_belowupstrbarriers_slopeclass08_km``,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
-``st_belowupstrbarriers_slopeclass15_km``,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
-``st_belowupstrbarriers_slopeclass22_km``,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
-``st_belowupstrbarriers_slopeclass30_km``,"Steelhead model, length of stream potentially accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
+``st_network_km``,"Steelhead model, total length of stream network naturally accessible upstream of point"
+``st_stream_km``,"Steelhead model, total length of streams and rivers naturally accessible upstream of point  (does not include network connectors in lakes etc)"
+``st_lakereservoir_ha``,"Steelhead model, total area lakes and reservoirs naturally accessible upstream of point "
+``st_wetland_ha``,"Steelhead model, total area wetlands naturally accessible upstream of point "
+``st_slopeclass03_waterbodies_km``,"Steelhead model, length of stream connectors (in waterbodies) naturally accessible upstream of point with slope 0-3%"
+``st_slopeclass03_km``,"Steelhead model, length of stream naturally accessible upstream of point with slope 0-3%"
+``st_slopeclass05_km``,"Steelhead model, length of stream naturally accessible upstream of point with slope 3-5%"
+``st_slopeclass08_km``,"Steelhead model, length of stream naturally accessible upstream of point with slope 5-8%"
+``st_slopeclass15_km``,"Steelhead model, length of stream naturally accessible upstream of point with slope 8-15%"
+``st_slopeclass22_km``,"Steelhead model, length of stream naturally accessible upstream of point with slope 15-22%"
+``st_slopeclass30_km``,"Steelhead model, length of stream naturally accessible upstream of point with slope 22-30%"
+``st_belowupstrbarriers_network_km``,"Steelhead model, total length of stream network naturally accessible upstream of point and below any additional upstream barriers"
+``st_belowupstrbarriers_stream_km``,"Steelhead model, total length of streams and rivers naturally accessible upstream of point and below any additional upstream barriers (does not include network connectors in lakes etc)"
+``st_belowupstrbarriers_lakereservoir_ha``,"Steelhead model, total area lakes and reservoirs naturally accessible upstream of point and below any additional upstream barriers"
+``st_belowupstrbarriers_wetland_ha``,"Steelhead model, total area wetlands naturally accessible upstream of point and below any additional upstream barriers"
+``st_belowupstrbarriers_slopeclass03_waterbodies_km``,"Steelhead model, length of stream connectors (in waterbodies) naturally accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+``st_belowupstrbarriers_slopeclass03_km``,"Steelhead model, length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 0-3%"
+``st_belowupstrbarriers_slopeclass05_km``,"Steelhead model, length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 3-5%"
+``st_belowupstrbarriers_slopeclass08_km``,"Steelhead model, length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 5-8%"
+``st_belowupstrbarriers_slopeclass15_km``,"Steelhead model, length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 8-15%"
+``st_belowupstrbarriers_slopeclass22_km``,"Steelhead model, length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 15-22%"
+``st_belowupstrbarriers_slopeclass30_km``,"Steelhead model, length of stream naturally accessible upstream of point and below any additional upstream barriers, with slope 22-30%"
 ``geom``,The point geometry associated with the feature
