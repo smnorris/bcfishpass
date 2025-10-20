@@ -1022,10 +1022,6 @@ order by a.assessment_watershed_id;
 
 
 -- summarize by watershed group
-drop view if exists bcfishpass.wsg_linear_summary_diff;
-drop view if exists bcfishpass.wsg_linear_summary_previous;
-drop view if exists bcfishpass.wsg_linear_summary_current;
-
 
 create view bcfishpass.wsg_linear_summary_current as
 with sums as (
