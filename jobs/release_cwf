@@ -602,9 +602,9 @@ psql $DATABASE_URL -c "select
   pct_spawningrearing_st_access_b,
   pct_spawningrearing_salmon_access_b,
   pct_spawningrearing_salmon_st_access_b
-from bcfishpass.aw_linear_summary_current a" --csv > bcfishpass_summary_aw_linear.csv
+from bcfishpass.aw_linear_summary_current a" --csv > bcfishpass_streams_summary.csv
 
 # upload/make public
 aws s3 cp bcfishpass_crossings.gpkg.zip s3://bchamp --acl public-read
 aws s3 cp bcfishpass_streams.gpkg.zip s3://bchamp --acl public-read
-aws s3 cp bcfishpass_summary_aw_linear.csv s3://bchamp --acl public-read
+aws s3 cp bcfishpass_streams_summary.csv s3://bchamp --acl public-read
