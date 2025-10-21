@@ -121,7 +121,7 @@ LATERAL_SOURCES = {
     );""",
     # -----------------------
     # accessible
-    # all accessible/potentially accessible streams buffered by 20m plus channel width
+    # all naturally accessible streams buffered by 20m plus channel width
     # -----------------------
     "accessible": """select
   st_multi(
@@ -455,7 +455,7 @@ def lateral(watershed_group_code, out_file, data_path, write_tempfiles):
         rasters["lateral6"],
     )
 
-    #LOG.info("Removing areas not connected to potentially accessible streams")
+    #LOG.info("Removing areas not connected to naturally accessible streams")
     #rasters["lateral8"] = filter_connected(rasters["lateral7"], rasters["accessible"])
 
     LOG.info("Removing areas not connected to stream modelled as potentially spawning/rearing")

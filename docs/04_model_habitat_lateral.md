@@ -15,11 +15,11 @@ The valley confinement algorithm (VCA) extracts unconfined valleys from an analy
 Streams are selected and buffered using this criteria:
 
 
-60m: side channels (first order tributaries to rivers of order >=5, with gradient <= 0.01 and modelled as potentially accessible to Pacific salmon and Steelhead)
+60m: side channels (first order tributaries to rivers of order >=5, with gradient <= 0.01 and modelled as naturally accessible to Pacific salmon and Steelhead)
 
 30m: stream modelled as spawning/rearing for Pacific salmon and Steelhead
 
-20m (plus modelled channel width): stream modelled as potentially accessible for Pacific salmon and Steelhead
+20m (plus modelled channel width): stream modelled as naturally accessible for Pacific salmon and Steelhead
 
 These stream buffers are combined with lakes, wetlands, rivers, reservoirs and merged into a single layer
 

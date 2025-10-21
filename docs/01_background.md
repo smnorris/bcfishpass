@@ -6,7 +6,7 @@ With more than half a million mapped road-stream crossings and dams across BC, f
 
 1. Natural barriers to fish passage (waterfalls, subsurface flow, steep gradients, other)
 
-2. The potential range of accessible streams for various fish species, based on swimming ability (ie, identify all stream downstream of natural barriers), referred to in this document as '*potentially accessible habitat*'
+2. The potential range of accessible streams for various fish species, based on swimming ability (ie, identify all stream downstream of natural barriers), referred to in this document as '*naturally accessible habitat*'
 
 3. Streams with the potential to support spawning and rearing stages of various species life cycles (based on stream slope and modelled discharge / channel width intrinsic potential (IP) models), referred to in this document as '*spawning/rearing habitat*'
 
