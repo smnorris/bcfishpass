@@ -29,7 +29,7 @@ Files included in this data distribution are:
 
 - `bcfishpass_crossings.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_crossings.gpkg.zip>`_
 - `bcfishpass_streams.gpkg.zip <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams.gpkg.zip>`_
-- `bcfishpass_summary_aw_linear.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_
+- `bcfishpass_streams_summary.csv <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams_summary.csv>`_
 
 Note that draft lateral habitat modelling is not included - this is available on request.
 
@@ -54,7 +54,7 @@ BC FWA stream network, with bcfishpass model classifications.
    :header-rows: 1
 
 
-`summary_aw_linear <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_summary_aw_linear.csv>`_ (non-spatial)
+`streams_summary <https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass_streams_summary.csv>`_ (non-spatial)
 ============================
 
 A `FWA Assessment Watershed <https://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-assessment-watersheds>`_ level summary report of habitat
@@ -62,7 +62,7 @@ and connectivity status for Pacific Salmon (Chinook, Chum, Coho, Pink, Sockeye),
 The report summarizes total modelled naturally accessible length per species, and total modelled spawning/rearing accessible length per species.
 
 .. csv-table::
-   :file: tables/summary_aw_linear.csv
+   :file: tables/streams_summary.csv
    :header-rows: 1
 
 pse_migration_paths (non-spatial)
