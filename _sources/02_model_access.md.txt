@@ -1,7 +1,7 @@
 (access)=
 # Model access
 
-`bcfishpass` is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'potentially accessible' to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration. 
+`bcfishpass` is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using [BC Freshwater Atlas](https://github.com/smnorris/fwapg) (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered 'naturally accessible' to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration. 
 
 The processing steps involved are:
 
@@ -51,7 +51,7 @@ For potamodromous (freshwater migration only) species such as Bull Trout and Wes
 
 ## 4. Identify stream downstream of all natural barriers
 
-Watercourses downstream of all natural barriers to a given species can be considered "potentially accessible" to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present (presuming all else is equal and adequate flow is present in the stream).
+Watercourses downstream of all natural barriers to a given species can be considered "naturally accessible" to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present (presuming all else is equal and adequate flow is present in the stream).
 
 ## 5. Collect known anthropogenic barriers 
 
@@ -120,15 +120,15 @@ Note that manual QA/QC of the potential barriers dataset has been project based 
 
 For a given area of interest, modelling reports on:
 
-- total length of stream potentially accessible to species of interest
-- length of potentially accessible stream with no known or potential anthropogenic barriers downstream
-- amount of potentially accessible stream upstream of each known/potential barrier
-- amount of potentially accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier
+- total length of stream naturally accessible to species of interest
+- length of naturally accessible stream with no known or potential anthropogenic barriers downstream
+- amount of naturally accessible stream upstream of each known/potential barrier
+- amount of naturally accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier
 
 
 ## 8. Known limitations
 
-The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.
+The model represents streams naturally passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.
 
 Field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  To date, peer review of the methodology has been limited.
 

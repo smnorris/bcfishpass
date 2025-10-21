@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Model access &mdash; bcfishpass v0.7.0 documentation</title>
+  <title>Model access &mdash; bcfishpass v0.7.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=929716b1" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=05c9169f"></script>
+      <script src="_static/documentation_options.js?v=964918ec"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -101,7 +101,7 @@
              
   <section id="model-access">
 <span id="access"></span><h1>Model access<a class="headerlink" href="#model-access" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘potentially accessible’ to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bcfishpass</span></code> is based on previous BC Fish Passage Technical Working Group (FPTWG) Fish Passage models - the basic logic for evaluating connectivity is much the same as in previous versions. Using <a class="reference external" href="https://github.com/smnorris/fwapg">BC Freshwater Atlas</a> (FWA) streams as the mapping base, barriers to a given species are identified and any watercourse downstream of all barriers to that species is considered ‘naturally accessible’ to the species in the absence of anthropogenic (dams, road-stream crossings) or transient natural barriers (debris flows, log jams, etc) - with an assumption that all mapped streams have sufficient flow for migration.</p>
 <p>The processing steps involved are:</p>
 <section id="collect-known-natural-barriers">
 <h2>1. Collect known natural barriers<a class="headerlink" href="#collect-known-natural-barriers" title="Link to this heading"></a></h2>
@@ -171,7 +171,7 @@
 </section>
 <section id="identify-stream-downstream-of-all-natural-barriers">
 <h2>4. Identify stream downstream of all natural barriers<a class="headerlink" href="#identify-stream-downstream-of-all-natural-barriers" title="Link to this heading"></a></h2>
-<p>Watercourses downstream of all natural barriers to a given species can be considered “potentially accessible” to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present (presuming all else is equal and adequate flow is present in the stream).</p>
+<p>Watercourses downstream of all natural barriers to a given species can be considered “naturally accessible” to that species. In other words, a migratory fish of the given swimming ability could potentially access all these streams if no anthropogenic barriers are present (presuming all else is equal and adequate flow is present in the stream).</p>
 </section>
 <section id="collect-known-anthropogenic-barriers">
 <h2>5. Collect known anthropogenic barriers<a class="headerlink" href="#collect-known-anthropogenic-barriers" title="Link to this heading"></a></h2>
@@ -281,15 +281,15 @@
 <h2>7. Report<a class="headerlink" href="#report" title="Link to this heading"></a></h2>
 <p>For a given area of interest, modelling reports on:</p>
 <ul class="simple">
-<li><p>total length of stream potentially accessible to species of interest</p></li>
-<li><p>length of potentially accessible stream with no known or potential anthropogenic barriers downstream</p></li>
-<li><p>amount of potentially accessible stream upstream of each known/potential barrier</p></li>
-<li><p>amount of potentially accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier</p></li>
+<li><p>total length of stream naturally accessible to species of interest</p></li>
+<li><p>length of naturally accessible stream with no known or potential anthropogenic barriers downstream</p></li>
+<li><p>amount of naturally accessible stream upstream of each known/potential barrier</p></li>
+<li><p>amount of naturally accessible stream upstream of each known/potential barrier, and downstream of any other known/potential barrier</p></li>
 </ul>
 </section>
 <section id="known-limitations">
 <h2>8. Known limitations<a class="headerlink" href="#known-limitations" title="Link to this heading"></a></h2>
-<p>The model represents streams potentially passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.</p>
+<p>The model represents streams naturally passable/accessible to fish based only on known barriers, modelled gradient barriers, the species theoretical swimming ability, and known fish observations. Fish inventories are incomplete, the modelled swimming ability of various species is an approximation, and the model does not account for partial barriers.</p>
 <p>Field testing / validation / ground truthing of this model and the assumptions that went into creating it have not been carried out.  To date, peer review of the methodology has been limited.</p>
 <p>There are also many limitations associated with the source inventories used to create the model. Source errors and omissions from model inputs are present in model outputs, and source errors may be compounded when combined with other inputs.</p>
 <section id="fwa-stream-network">
