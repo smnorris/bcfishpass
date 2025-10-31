@@ -16423,7 +16423,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 18300465,,SHUL,KK,2022-03-03,Bing/Google/ESRI imagery,
 18301036,,SHUL,KK,2022-03-08,Bing/Google/ESRI imagery,
 18301045,,SHUL,KK,2022-03-03,Bing/Google/ESRI imagery,
-18300816,,SHUL,KK,2022-03-08,Bing/Google/ESRI imagery,
 18300524,,SHUL,KK,2022-03-03,Bing/Google/ESRI imagery,
 19000062,,SQAM,KK,2022-03-17,Bing/Google/ESRI imagery,
 18300590,,SHUL,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -16500,7 +16499,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 18303502,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
 18303503,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
 18303504,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
-18303506,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
+18303506,CBS,SHUL,LB,2025-10-31,confirmed as closed bottom rail structure,
 18303507,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
 18303509,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
 18303510,,SHUL,KK,2021-12-17,Bing/Google/ESRI imagery,
@@ -21024,7 +21023,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11302218,FORD,LNIC,LB,2024-06-12,Bing/Google/ESRI imagery,
 11302231,FORD,LNIC,LB,2024-06-13,Bing/Google/ESRI imagery,
 1400002,NONE,BONP,MC,2024-06-27,Local Knowledge,Local Knowledge - Road no longer exists
-18303506,OBS,SHUL,MC,2024-06-27,Local Knowledge,Local Knowledge - Fish getting past this structure  (Bridge)
 4603156,NONE,ELKR,MC,2024-06-27,imagery,South Line Creek runs parallel to road in satellite imagery. Crossing does not exist. Remove.
 4603391,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Site of a landslide. Remove?
 4603392,NONE,ELKR,MC,2024-06-27,imagery,no sign of crossing on satellite imagery. Remove?
@@ -21616,3 +21614,14 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12201129,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
 12200384,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
 12202025,NONE,LSAL,LS,2025-07-25,Satellite imagery review,No crossing present
+1401935,NONE,BONP,LB,2025-10-31,cwf,No crossing present
+23801552,OBS,BONP,LB,2025-10-31,cwf,confirmed as bridge
+1401957,OBS,BONP,LB,2025-10-31,cwf,confirmed as bridge
+1401958,OBS,BONP,LB,2025-10-31,cwf,confirmed as bridge
+1403638,NONE,BONP,LB,2025-10-31,cwf,No crossing present
+24743298,NONE,BONP,LB,2025-10-31,cwf,No crossing present
+1403639,NONE,BONP,LB,2025-10-31,cwf,No crossing present
+1401998,NONE,BONP,LB,2025-10-31,cwf,No crossing present
+18300856,NONE,SHUL,LB,2025-10-31,cwf,No crossing present
+18300816,NONE,SHUL,LB,2025-10-31,cwf,No crossing present
+23801624,OBS,USHU,LB,2025-10-31,cwf,Confirmed as bridge
