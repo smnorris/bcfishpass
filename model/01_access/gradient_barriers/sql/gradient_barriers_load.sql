@@ -38,8 +38,23 @@ gradeclass AS
     blue_line_key,
     downstream_route_measure,
     downstream_route_measure + 25 as upstream_route_measure,
-    round(gradient * 100)::integer as grade_class
-  FROM grade
+    -- create breaks at various intervals from 15-30pct
+    -- (fish access models do not have to use all of these,
+    -- but we might as well create them all to have on hand)
+    CASE
+      WHEN gradient >= .05 AND gradient < .10 THEN 5
+      WHEN gradient >= .10 AND gradient < .15 THEN 10
+      WHEN gradient >= .15 AND gradient < .20 THEN 15
+      WHEN gradient >= .20 AND gradient < .25 THEN 20
+      WHEN gradient >= .25 AND gradient < .30 THEN 25
+      WHEN gradient >= .30 AND gradient < .35 THEN 30
+      WHEN gradient >= .35 AND gradient < .40 THEN 35
+      WHEN gradient >= .40 AND gradient < .45 THEN 40
+      WHEN gradient >= .45 AND gradient < .50 THEN 45
+      WHEN gradient >= .50 THEN 50
+      ELSE 0
+    END as grade_class
+  FROM grade100m
   ORDER BY blue_line_key, downstream_route_measure
 ),
 
