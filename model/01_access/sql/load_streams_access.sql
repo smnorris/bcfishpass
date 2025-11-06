@@ -45,10 +45,30 @@ begin;
        when b.barriers_bt_dnstr is null and wsg_bt.watershed_group_code is null then null
      end as barriers_bt_dnstr,
      case
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null then b.barriers_ch_cm_co_pk_sk_dnstr
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and wsg_salmon.watershed_group_code is not null then array[]::text[]
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and wsg_salmon.watershed_group_code is null then null
-     end as barriers_ch_cm_co_pk_sk_dnstr,
+       when b.barriers_ch_dnstr is not null then b.barriers_ch_dnstr
+       when b.barriers_ch_dnstr is null and wsg_ch.watershed_group_code is not null then array[]::text[]
+       when b.barriers_ch_dnstr is null and wsg_ch.watershed_group_code is null then null
+     end as barriers_ch_dnstr,
+     case
+       when b.barriers_cm_dnstr is not null then b.barriers_cm_dnstr
+       when b.barriers_cm_dnstr is null and wsg_cm.watershed_group_code is not null then array[]::text[]
+       when b.barriers_cm_dnstr is null and wsg_cm.watershed_group_code is null then null
+     end as barriers_cm_dnstr,
+     case
+       when b.barriers_co_dnstr is not null then b.barriers_co_dnstr
+       when b.barriers_co_dnstr is null and wsg_co.watershed_group_code is not null then array[]::text[]
+       when b.barriers_co_dnstr is null and wsg_co.watershed_group_code is null then null
+     end as barriers_co_dnstr,
+     case
+       when b.barriers_pk_dnstr is not null then b.barriers_pk_dnstr
+       when b.barriers_pk_dnstr is null and wsg_pk.watershed_group_code is not null then array[]::text[]
+       when b.barriers_pk_dnstr is null and wsg_pk.watershed_group_code is null then null
+     end as barriers_pk_dnstr,
+     case
+       when b.barriers_sk_dnstr is not null then b.barriers_sk_dnstr
+       when b.barriers_sk_dnstr is null and wsg_sk.watershed_group_code is not null then array[]::text[]
+       when b.barriers_sk_dnstr is null and wsg_sk.watershed_group_code is null then null
+     end as barriers_sk_dnstr,
      case
        when b.barriers_ct_dv_rb_dnstr is not null then b.barriers_ct_dv_rb_dnstr
        when b.barriers_ct_dv_rb_dnstr is null and wsg_ct_dv_rb.watershed_group_code is not null then array[]::text[]
@@ -74,40 +94,72 @@ begin;
        when b.barriers_bt_dnstr is not null and wsg_bt.watershed_group_code is not null then 0
      end as access_bt,
      case
-       when wsg_salmon.watershed_group_code is null then -9
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CH' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CH' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
+       when wsg_ch.watershed_group_code is null then -9
+       when b.barriers_ch_dnstr is null and 'CH' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
+       when b.barriers_ch_dnstr is null and 'CH' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
+       when b.barriers_ch_dnstr is not null and wsg_ch.watershed_group_code is not null then 0
      end as access_ch,
      case
-       when wsg_salmon.watershed_group_code is null then -9
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CM' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CM' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
+       when wsg_cm.watershed_group_code is null then -9
+       when b.barriers_cm_dnstr is null and 'CM' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
+       when b.barriers_cm_dnstr is null and 'CM' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
+       when b.barriers_cm_dnstr is not null and wsg_cm.watershed_group_code is not null then 0
      end as access_cm,
      case
-       when wsg_salmon.watershed_group_code is null then -9
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CO' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'CO' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
+       when wsg_co.watershed_group_code is null then -9
+       when b.barriers_co_dnstr is null and 'CO' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
+       when b.barriers_co_dnstr is null and 'CO' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
+       when b.barriers_co_dnstr is not null and wsg_co.watershed_group_code is not null then 0
      end as access_co,
      case
-       when wsg_salmon.watershed_group_code is null then -9
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'PK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'PK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
+       when wsg_pk.watershed_group_code is null then -9
+       when b.barriers_pk_dnstr is null and 'PK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
+       when b.barriers_pk_dnstr is null and 'PK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
+       when b.barriers_pk_dnstr is not null and wsg_pk.watershed_group_code is not null then 0
      end as access_pk,
      case
-       when wsg_salmon.watershed_group_code is null then -9
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
+       when wsg_sk.watershed_group_code is null then -9
+       when b.barriers_sk_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
+       when b.barriers_sk_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
+       when b.barriers_sk_dnstr is not null and wsg_sk.watershed_group_code is not null then 0
      end as access_sk,
      case
-       when wsg_salmon.watershed_group_code is null then -9
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] then 2
-       when b.barriers_ch_cm_co_pk_sk_dnstr is null and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] is false then 1
-       when b.barriers_ch_cm_co_pk_sk_dnstr is not null and wsg_salmon.watershed_group_code is not null then 0
+       when (
+       wsg_ch.watershed_group_code is null AND
+       wsg_cm.watershed_group_code is null AND
+       wsg_co.watershed_group_code is null AND
+       wsg_pk.watershed_group_code is null AND
+       wsg_sk.watershed_group_code is null
+       ) then -9
+       when (
+        b.barriers_ch_dnstr is null OR
+        b.barriers_cm_dnstr is null OR
+        b.barriers_co_dnstr is null OR
+        b.barriers_pk_dnstr is null OR
+        b.barriers_sk_dnstr is null
+       )
+        and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] then 2
+       when (
+        b.barriers_ch_dnstr is null OR
+        b.barriers_cm_dnstr is null OR
+        b.barriers_co_dnstr is null OR
+        b.barriers_pk_dnstr is null OR
+        b.barriers_sk_dnstr is null
+       ) and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] is false then 1
+       when (
+        b.barriers_ch_dnstr is null OR
+        b.barriers_cm_dnstr is null OR
+        b.barriers_co_dnstr is null OR
+        b.barriers_pk_dnstr is null OR
+        b.barriers_sk_dnstr is null
+       ) and (
+       wsg_ch.watershed_group_code is not null OR
+       wsg_cm.watershed_group_code is not null OR
+       wsg_co.watershed_group_code is not null OR
+       wsg_pk.watershed_group_code is not null OR
+       wsg_sk.watershed_group_code is not null
+       )
+       then 0
      end as access_salmon,
      case
        when wsg_ct_dv_rb.watershed_group_code is null then -9
@@ -152,7 +204,11 @@ begin;
   left outer join bcfishpass.streams_dnstr_crossings cd on s.segmented_stream_id = cd.segmented_stream_id
   left outer join bcfishpass.streams_dnstr_barriers_remediations r on s.segmented_stream_id = r.segmented_stream_id
   left outer join bcfishpass.wsg_species_presence wsg_bt on s.watershed_group_code = wsg_bt.watershed_group_code and wsg_bt.bt is true
-  left outer join bcfishpass.wsg_species_presence wsg_salmon on s.watershed_group_code = wsg_salmon.watershed_group_code and (wsg_salmon.ch is true or wsg_salmon.cm is true or wsg_salmon.co is true or wsg_salmon.pk is true or wsg_salmon.sk is true)
+  left outer join bcfishpass.wsg_species_presence wsg_ch on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.ch is true
+  left outer join bcfishpass.wsg_species_presence wsg_cm on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.cm is true
+  left outer join bcfishpass.wsg_species_presence wsg_co on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.co is true
+  left outer join bcfishpass.wsg_species_presence wsg_pk on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.pk is true
+  left outer join bcfishpass.wsg_species_presence wsg_sk on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.sk is true
   left outer join bcfishpass.wsg_species_presence wsg_ct_dv_rb on s.watershed_group_code = wsg_ct_dv_rb.watershed_group_code and (wsg_ct_dv_rb.ct is true or wsg_ct_dv_rb.dv is true or wsg_ct_dv_rb.rb is true)
   left outer join bcfishpass.wsg_species_presence wsg_st on s.watershed_group_code = wsg_st.watershed_group_code and wsg_st.st is true
   left outer join bcfishpass.wsg_species_presence wsg_wct on s.watershed_group_code = wsg_wct.watershed_group_code and wsg_wct.wct is true
