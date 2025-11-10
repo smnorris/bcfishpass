@@ -4,8 +4,9 @@
 UPDATE bcfishpass.user_habitat_classification 
 SET species_code = UPPER(species_code);
 
-ALTER TABLE whse_fish.species_cd
-ADD CONSTRAINT uq_species_code UNIQUE (code);
+-- apply this with bcfishobs patch
+-- ALTER TABLE whse_fish.species_cd
+-- ADD CONSTRAINT uq_species_code UNIQUE (code);
 
 ALTER TABLE bcfishpass.user_habitat_classification
 ADD CONSTRAINT fk_species_code
