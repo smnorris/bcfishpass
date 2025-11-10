@@ -15,6 +15,20 @@ ADD COLUMN barriers_pk_dnstr text[];
 ALTER TABLE bcfishpass.streams_dnstr_barriers
 ADD COLUMN barriers_sk_dnstr text[];
 
+ALTER TABLE bcfishpass.streams_access
+ADD COLUMN barriers_ch_dnstr text[];
+
+ALTER TABLE bcfishpass.streams_access
+ADD COLUMN barriers_cm_dnstr text[];
+
+ALTER TABLE bcfishpass.streams_access
+ADD COLUMN barriers_co_dnstr text[];
+
+ALTER TABLE bcfishpass.streams_access
+ADD COLUMN barriers_pk_dnstr text[];
+
+ALTER TABLE bcfishpass.streams_access
+ADD COLUMN barriers_sk_dnstr text[];
 
 -- enable constraining access to below set elevation by creating
 -- elevation barriers

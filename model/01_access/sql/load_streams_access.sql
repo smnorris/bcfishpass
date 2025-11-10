@@ -8,7 +8,11 @@ begin;
     barriers_dams_dnstr,
     barriers_dams_hydro_dnstr,
     barriers_bt_dnstr,
-    barriers_ch_cm_co_pk_sk_dnstr,
+    barriers_ch_dnstr,
+    barriers_cm_dnstr,
+    barriers_co_dnstr,
+    barriers_pk_dnstr,
+    barriers_sk_dnstr,
     barriers_ct_dv_rb_dnstr,
     barriers_st_dnstr,
     barriers_wct_dnstr,
@@ -204,11 +208,11 @@ begin;
   left outer join bcfishpass.streams_dnstr_crossings cd on s.segmented_stream_id = cd.segmented_stream_id
   left outer join bcfishpass.streams_dnstr_barriers_remediations r on s.segmented_stream_id = r.segmented_stream_id
   left outer join bcfishpass.wsg_species_presence wsg_bt on s.watershed_group_code = wsg_bt.watershed_group_code and wsg_bt.bt is true
-  left outer join bcfishpass.wsg_species_presence wsg_ch on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.ch is true
-  left outer join bcfishpass.wsg_species_presence wsg_cm on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.cm is true
-  left outer join bcfishpass.wsg_species_presence wsg_co on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.co is true
-  left outer join bcfishpass.wsg_species_presence wsg_pk on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.pk is true
-  left outer join bcfishpass.wsg_species_presence wsg_sk on s.watershed_group_code = wsg_salmon.watershed_group_code and wsg_salmon.sk is true
+  left outer join bcfishpass.wsg_species_presence wsg_ch on s.watershed_group_code = wsg_ch.watershed_group_code and wsg_ch.ch is true
+  left outer join bcfishpass.wsg_species_presence wsg_cm on s.watershed_group_code = wsg_cm.watershed_group_code and wsg_cm.cm is true
+  left outer join bcfishpass.wsg_species_presence wsg_co on s.watershed_group_code = wsg_co.watershed_group_code and wsg_co.co is true
+  left outer join bcfishpass.wsg_species_presence wsg_pk on s.watershed_group_code = wsg_pk.watershed_group_code and wsg_pk.pk is true
+  left outer join bcfishpass.wsg_species_presence wsg_sk on s.watershed_group_code = wsg_sk.watershed_group_code and wsg_sk.sk is true
   left outer join bcfishpass.wsg_species_presence wsg_ct_dv_rb on s.watershed_group_code = wsg_ct_dv_rb.watershed_group_code and (wsg_ct_dv_rb.ct is true or wsg_ct_dv_rb.dv is true or wsg_ct_dv_rb.rb is true)
   left outer join bcfishpass.wsg_species_presence wsg_st on s.watershed_group_code = wsg_st.watershed_group_code and wsg_st.st is true
   left outer join bcfishpass.wsg_species_presence wsg_wct on s.watershed_group_code = wsg_wct.watershed_group_code and wsg_wct.wct is true

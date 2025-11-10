@@ -37,7 +37,7 @@ LEFT OUTER JOIN bcfishpass.user_barriers_definite_control p
   AND abs(b.downstream_route_measure - p.downstream_route_measure) < 1
 WHERE
   (p.barrier_ind IS NULL or p.barrier_ind is true) AND -- do not include records forced to be passable in control table
-  b.gradient_class > 0                                 -- do not include negative slopes or zero slopes
+  b.gradient_class > 0 AND                             -- do not include negative slopes or zero slopes
   b.watershed_group_code = :'wsg'
 ORDER BY b.blue_line_key, b.downstream_route_measure
 ON CONFLICT DO NOTHING;
