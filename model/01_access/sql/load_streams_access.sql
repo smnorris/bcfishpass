@@ -136,26 +136,27 @@ begin;
        wsg_sk.watershed_group_code is null
        ) then -9
        when (
-        b.barriers_ch_dnstr is null OR
-        b.barriers_cm_dnstr is null OR
-        b.barriers_co_dnstr is null OR
-        b.barriers_pk_dnstr is null OR
-        b.barriers_sk_dnstr is null
+        (b.barriers_ch_dnstr is null AND wsg_ch.watershed_group_code is not null) OR
+        (b.barriers_cm_dnstr is null AND wsg_cm.watershed_group_code is not null) OR
+        (b.barriers_co_dnstr is null AND wsg_co.watershed_group_code is not null) OR
+        (b.barriers_pk_dnstr is null AND wsg_pk.watershed_group_code is not null) OR
+        (b.barriers_sk_dnstr is null AND wsg_sk.watershed_group_code is not null)
        )
         and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] then 2
        when (
-        b.barriers_ch_dnstr is null OR
-        b.barriers_cm_dnstr is null OR
-        b.barriers_co_dnstr is null OR
-        b.barriers_pk_dnstr is null OR
-        b.barriers_sk_dnstr is null
+        (b.barriers_ch_dnstr is null AND wsg_ch.watershed_group_code is not null) OR
+        (b.barriers_cm_dnstr is null AND wsg_cm.watershed_group_code is not null) OR
+        (b.barriers_co_dnstr is null AND wsg_co.watershed_group_code is not null) OR
+        (b.barriers_pk_dnstr is null AND wsg_pk.watershed_group_code is not null) OR
+        (b.barriers_sk_dnstr is null AND wsg_sk.watershed_group_code is not null)
        ) and coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[]) && array['CH','CM','CO','PK','SK'] is false then 1
        when (
-        b.barriers_ch_dnstr is null OR
-        b.barriers_cm_dnstr is null OR
-        b.barriers_co_dnstr is null OR
-        b.barriers_pk_dnstr is null OR
-        b.barriers_sk_dnstr is null
+        coalesce(
+          b.barriers_ch_dnstr,
+          b.barriers_cm_dnstr,
+          b.barriers_co_dnstr,
+          b.barriers_pk_dnstr,
+          b.barriers_sk_dnstr) is not null
        ) and (
        wsg_ch.watershed_group_code is not null OR
        wsg_cm.watershed_group_code is not null OR

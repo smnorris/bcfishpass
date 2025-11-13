@@ -15,7 +15,7 @@ INSERT INTO bcfishpass.barriers_gradient
 SELECT
     gradient_barrier_id as barriers_gradient_id,
     CASE
-      WHEN gradient_class <= 50 then 'GRADIENT_'||gradient_class::text
+      WHEN gradient_class <= 50 then 'GRADIENT_'||LPAD(gradient_class::text, 2, '0')
       WHEN gradient_class >= 50 then 'GRADIENT_50'
     END as barrier_type,
     NULL as barrier_name,
