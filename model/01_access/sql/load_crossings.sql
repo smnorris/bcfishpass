@@ -772,6 +772,7 @@ with cft as (
       else 'ROAD, RESOURCE/OTHER'
     end as crossing_feature_type
   from bcfishpass.crossings
+  where watershed_group_code = :'wsg'
 )
 UPDATE bcfishpass.crossings c
 SET crossing_feature_type = cft.crossing_feature_type
