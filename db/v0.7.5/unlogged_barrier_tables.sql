@@ -26,6 +26,7 @@ BEGIN
             UNIQUE (blue_line_key, downstream_route_measure)
         );',
         'barriers_' || barriertype,
+        'barriers_' || barriertype,
         'barriers_' || barriertype || '_id'
     );
 
