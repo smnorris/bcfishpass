@@ -95,6 +95,7 @@ $(ACCESS_MODELS): .make/model_access_%: sql/model_access_%.sql \
 		  using bcfishpass.:table2 b \
 		  where a.:id = b.:id;" | \
 		$(PSQL) -v id=barriers_$(BARRIERTYPE)_id -v table1=barriers_$(BARRIERTYPE) -v table2=barriers_$(BARRIERTYPE)_dnstr
+	$(PSQL) -c "alter table bcfishpass.barriers_$(BARRIERTYPE) set logged"
 	# drop the temp _dnstr table
 	$(PSQL) -c "drop table bcfishpass.barriers_$(BARRIERTYPE)_dnstr"
 	# note how much stream is upstream of the barriers
