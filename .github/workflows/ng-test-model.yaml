@@ -49,7 +49,7 @@ jobs:
           jobs/connect
           jobs/load_modelled_stream_crossings
           jobs/load_observations
-  prep:
+  model-access-natural:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
@@ -57,41 +57,27 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Access model - natural
         run:  |
           jobs/connect
-          jobs/model_prep
-  model-access-1:
+          cd model/01_access && ./01_model_access_natural.sh
+  model-access-anthropogenic:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: prep
+    needs: model-access-anthropogenic
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Access model 1
+      - name: Access model - anthropogenic
         run:  |
           jobs/connect
-          cd model/01_access
-          ./model_access_1.sh
-  model-access-2:
-    runs-on: ubuntu-latest
-    environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
-    needs: model-access-1
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Access model 2
-        run:  |
-          jobs/connect
-          cd model/01_access
-          ./model_access_2.sh
+          cd model/01_access && ./02_model_access_anthropogenic.sh
   model-habitat-linear:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: model-access-2
+    needs: model-access-anthropogenic
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
