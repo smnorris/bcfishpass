@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
-    needs: model-access-anthropogenic
+    needs: model-access-natural
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
