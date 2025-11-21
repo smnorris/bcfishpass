@@ -121,10 +121,8 @@ parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
 # -----
 # load table listing barriers that are downstream of individual stream segments
 $PSQL -c "truncate bcfishpass.streams_dnstr_barriers";
-LOGFILE=log.txt
 parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
   $PSQL -c \"
-  SET log_statement = 'all';
 SELECT bcfishpass.load_dnstr(
   'bcfishpass.streams',
   'segmented_stream_id',
