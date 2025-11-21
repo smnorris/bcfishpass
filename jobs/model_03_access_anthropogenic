@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euxo pipefail
+
+#-------
+# Run the anthropogenic barrier access model
+#-------
+cd model/01_access && ./02_model_access_anthropogenic.sh
