@@ -2,19 +2,7 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
-
-# --
-# refresh anthropogenic barrier data (dams, pscis) and load to crossings table
-# --
-$PSQL -f sql/load_dams.sql
-cd pscis; ./pscis.sh; cd ..
-
-$PSQL -c "truncate bcfishpass.crossings"
-for wsg in $($PSQL -AXt -c "select watershed_group_code from whse_basemapping.fwa_watershed_groups_poly");
-do
-	set -e ; $PSQL -f sql/load_crossings.sql -v wsg=$wsg ;
-done
+WSGS=($(psql "$DATABASE_URL" -t -A -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method LIMIT 10;"))
 
 
 # --
@@ -28,7 +16,7 @@ for BARRIERTYPE in "${BARRIERS[@]}"; do
     
     # load data to barrier table in parallel
     parallel --halt soon,fail=1 \
-      $PSQL -f sql/barriers_"$BARRIERTYPE".sql -v wsg={1} ::: $WSGS
+      $PSQL -f sql/barriers_"$BARRIERTYPE".sql -v wsg={1} ::: "${WSGS[@]}"
 
 done
 
@@ -46,7 +34,7 @@ parallel --no-run-if-empty \
     'bcfishpass.crossings_dnstr_crossings', \
     'features_dnstr', \
     'false', \
-    :'wsg');\" | $PSQL -v wsg={1}" ::: $WSGS
+    :'wsg');\" | $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
 # note all anthropogenic barriers downstream of a crossing
 $PSQL -c "truncate bcfishpass.crossings_dnstr_barriers_anthropogenic"
@@ -59,7 +47,7 @@ parallel --no-run-if-empty \
     'bcfishpass.crossings_dnstr_barriers_anthropogenic', \
     'features_dnstr', \
     'false', \
-    :'wsg');\" | $PSQL -v wsg={1}" ::: $WSGS
+    :'wsg');\" | $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
 # note all anthropogenic barriers upstream of a crossing
 $PSQL -c "truncate bcfishpass.crossings_upstr_barriers_anthropogenic"
@@ -72,7 +60,7 @@ parallel --no-run-if-empty \
     'bcfishpass.crossings_upstr_barriers_anthropogenic', \
     'features_upstr', \
     'false', \
-    :'wsg');\" | $PSQL -v wsg={1}" ::: $WSGS
+    :'wsg');\" | $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
 # note all anthropogenic barriers downstream of an anthropogenic barrier
 $PSQL -c "truncate bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic"
@@ -85,39 +73,34 @@ parallel --no-run-if-empty \
     'bcfishpass.barriers_anthropogenic_dnstr_barriers_anthropogenic', \
     'features_dnstr', \
     'false', \
-    :'wsg');\" | $PSQL -v wsg={1}" ::: $WSGS
+    :'wsg');\" | $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
 
 # use max 4 concurrent jobs for subsequent steps
 PARALLEL="parallel --halt now,fail=1 --jobs 4 --no-run-if-empty"
 
 # -----
-# BREAK STREAMS
-# -----
-# break streams at crossings 
-$PARALLEL \
-  "echo \"SELECT bcfishpass.break_streams(:'point_table', :'wsg');\" | \
-  $PSQL -v wsg={1} -v point_table=crossings" ::: $WSGS
-
-# -----
 # INDEX 
 # -----
-# create tables holding lists of features that are downstream of individual stream segments
-$PSQL -c "truncate bcfishpass.streams_dnstr_barriers";
-for BARRIERTYPE in anthropogenic pscis dams dams_hydro
-do
-  $PARALLEL \
-  "echo \"SELECT bcfishpass.load_dnstr(
+# load to existing table listing features that are downstream of individual stream segments
+ANTH_BARRIERS=("anthropogenic" "pscis" "dams" "dams_hydro")
+run_query() {
+    local barriertype=$1
+    local group=$2
+    psql "$DATABASE_URL" -c "
+    SELECT bcfishpass.load_dnstr(
       'bcfishpass.streams',
       'segmented_stream_id',
-      'bcfishpass.barriers_\"$BARRIERTYPE\"',
-      'barriers_\"$BARRIERTYPE\"_id',
+      'bcfishpass.barriers_${barriertype}',
+      'barriers_${barriertype}_id',
       'bcfishpass.streams_dnstr_barriers',
-      'barriers_\"$BARRIERTYPE\"_dnstr',
+      'barriers_${barriertype}_dnstr',
       'true',
-      :'wsg');\" | \
-  $PSQL -v wsg={1}" ::: $WSGS
-done  
+      '${group}'
+    );"
+}
+export -f run_query
+parallel run_query {1} {2} ::: "${ANTH_BARRIERS[@]}" ::: "${WSGS[@]}"
 
 # also record all crossings downstream
 $PSQL -c "truncate bcfishpass.streams_dnstr_crossings";
@@ -131,7 +114,7 @@ $PARALLEL \
     'crossings_dnstr',
     'true',
     :'wsg');\" | \
-    $PSQL -v wsg={1}" ::: $WSGS
+    $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
 # record remediations/barriers downstream (for mapping remediated stream)
 $PSQL -f sql/remediations_barriers.sql    # create required table
@@ -146,7 +129,7 @@ $PARALLEL \
     'remediations_barriers_dnstr',
     'true',
     :'wsg');\" | \
-    $PSQL -v wsg={1}" ::: $WSGS
+    $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
 
 # -----
@@ -157,5 +140,5 @@ $PSQL -f sql/load_streams_access.sql
 
 # generate crossings access report
 $PSQL -c "truncate bcfishpass.crossings_upstream_access"
-parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_01.sql -v wsg={1} ::: $WSGS
-parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_02.sql -v wsg={1} ::: $WSGS    
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_01.sql -v wsg={1} ::: "${WSGS[@]}"
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty $PSQL -f sql/load_crossings_upstream_access_02.sql -v wsg={1} ::: "${WSGS[@]}"    
