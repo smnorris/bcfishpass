@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=($(psql "$DATABASE_URL" -t -A -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method LIMIT 10;"))
+WSGS=($(psql "$DATABASE_URL" -t -A -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method;"))
 
 
 # --

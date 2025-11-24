@@ -13,7 +13,7 @@ echo "Processing models: ${MODELS[@]}"
 NATURAL_BARRIERS=("falls" "user_definite")
 
 # groups to process comes from the db
-WSGS=($(psql "$DATABASE_URL" -t -A -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method LIMIT 10;"))
+WSGS=($(psql "$DATABASE_URL" -t -A -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method"))
 
 # shortcut to psql
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
@@ -21,8 +21,8 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # --
 # -- refresh observations and falls
 # --
-#$PSQL -f sql/load_observations.sql
-#$PSQL -f sql/load_falls.sql
+$PSQL -f sql/load_observations.sql
+$PSQL -f sql/load_falls.sql
 
 # --
 # -- collect natural barrier sources that tend to change into to bcfishpass.barriers_<source>
