@@ -127,7 +127,7 @@ parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
 parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
   $PSQL -c \"
   SELECT bcfishpass.break_streams('barriers_{1}', '{2}');\"
-" ::: $MODELS ::: "${WSGS[@]}"
+" ::: ${MODELS[@]} ::: "${WSGS[@]}"
 
 # break streams at user habitat definition endpoints
 $PSQL -f sql/user_habitat_classification_endpoints.sql
@@ -164,7 +164,7 @@ run_query() {
     );"
 }
 export -f run_query
-parallel run_query {1} {2} ::: "${MODELS[@]}" ::: "${WSGS[@]}"
+parallel --halt now,fail=1 --no-run-if-empty run_query {1} {2} ::: "${MODELS[@]}" ::: "${WSGS[@]}"
 
 # record observations downstream
 # (for convenience for field investigation and reporting, not as input into the individual models)
