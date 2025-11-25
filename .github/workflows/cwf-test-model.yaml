@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load weekly refresh
         run:  |
           cp parameters/example_cwf/*csv parameters/
           jobs/connect && jobs/load_csv
@@ -37,7 +37,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load pre-processed data
         run:  |
           jobs/connect
           jobs/load_modelled_stream_crossings
@@ -50,9 +50,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
-        run:  jobs/connect 
-              cd model/01_access && ./01_model_access_natural.sh ch_cm_co_pk_sk st wct
+      - name: Access model - natural
+        run:  |
+          jobs/connect
+          cd model/01_access && ./01_model_access_natural.sh ch_cm_co_pk_sk st wct
   model-access-anthropogenic:
     runs-on: ubuntu-latest
     environment: cwf-test
@@ -61,7 +62,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Access model 1
+      - name: Access model - anthropogenic
         run:  |
           jobs/connect
           cd model/01_access && ./02_model_access_anthropogenic.sh
