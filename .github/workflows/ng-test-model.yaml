@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load weekly refresh
         run:  |
           cp parameters/example_newgraph/*csv parameters/
           jobs/connect
@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Load pre-processed data
         run:  |
           jobs/connect
           jobs/load_modelled_stream_crossings
