@@ -162,7 +162,7 @@ barriers_filtered as (
       array(
         select watershed_group_code
         from bcfishpass.wsg_species_presence
-        where pk is true
+        where ch is true or cm is true or co is true or pk is true or sk is true
       )
   )
   -- do not include gradient / falls / subsurface barriers with
