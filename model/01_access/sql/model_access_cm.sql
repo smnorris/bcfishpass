@@ -56,7 +56,7 @@ with barriers as
       geom
   from bcfishpass.barriers_elevation
   where watershed_group_code = :'wsg'
-  and barrier_type >= 'ELEVATION_1000'
+  and barrier_type >= 'ELEVATION_700'
 ),
 
 obs_upstr as
