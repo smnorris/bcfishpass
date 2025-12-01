@@ -25,7 +25,7 @@ BEGIN;
       watershed_group_code,
       (st_dump(st_locatebetweenelevations(geom, 700, 701))).geom as geom
     FROM whse_basemapping.fwa_streams
-  )
+  ),
 
   z1000 as
   (
