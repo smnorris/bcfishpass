@@ -13,7 +13,7 @@ with barriers as
       geom
   from bcfishpass.barriers_gradient
   where watershed_group_code = :'wsg'
-  and barrier_type >= 'GRADIENT_40'
+  and barrier_type >= 'GRADIENT_24'
   union all
   select
       barriers_falls_id as barrier_id,
