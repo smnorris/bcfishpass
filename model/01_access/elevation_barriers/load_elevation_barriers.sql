@@ -16,7 +16,18 @@ BEGIN;
     watershed_group_code,
     elevation
   )
-  WITH z1000 as
+  WITH z700 as
+  (
+    SELECT
+      blue_line_key,
+      wscode,
+      localcode,
+      watershed_group_code,
+      (st_dump(st_locatebetweenelevations(geom, 700, 701))).geom as geom
+    FROM whse_basemapping.fwa_streams
+  )
+
+  z1000 as
   (
     SELECT
       blue_line_key,
@@ -36,6 +47,17 @@ BEGIN;
       watershed_group_code,
       (st_dump(st_locatebetweenelevations(geom, 1500, 1501))).geom as geom
     FROM whse_basemapping.fwa_streams
+  ),
+
+  z1600 as
+  (
+    SELECT
+      blue_line_key,
+      wscode,
+      localcode,
+      watershed_group_code,
+      (st_dump(st_locatebetweenelevations(geom, 1600, 1601))).geom as geom
+    FROM whse_basemapping.fwa_streams
   )
 
   SELECT DISTINCT ON (blue_line_key, downstream_route_measure)
@@ -46,6 +68,16 @@ BEGIN;
     watershed_group_code,
     elevation
   FROM (
+  SELECT
+    blue_line_key,
+    round(st_m(st_startpoint(geom))::numeric)::integer as downstream_route_measure,
+    wscode as wscode_ltree,
+    localcode as localcode_ltree,
+    watershed_group_code,
+    1000 as elevation
+  FROM z1000
+  WHERE st_z(st_startpoint(geom)) = 700
+  UNION ALL
   SELECT
     blue_line_key,
     round(st_m(st_startpoint(geom))::numeric)::integer as downstream_route_measure,
@@ -65,6 +97,16 @@ BEGIN;
     1500 as elevation
   FROM z1500
   WHERE st_z(st_startpoint(geom)) = 1500
+  UNION ALL
+  SELECT
+    blue_line_key,
+    round(st_m(st_startpoint(geom))::numeric)::integer as downstream_route_measure,
+    wscode as wscode_ltree,
+    localcode as localcode_ltree,
+    watershed_group_code,
+    1500 as elevation
+  FROM z1500
+  WHERE st_z(st_startpoint(geom)) = 1600
   ) as f
   ORDER BY blue_line_key, downstream_route_measure;
 
