@@ -90,7 +90,7 @@ jobs:
         run:  |
           jobs/connect
           cd model/01_access
-          ./02_model_access_anthropogenic
+          ./02_model_access_anthropogenic.sh
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/load_qa_observations_naturalbarriers_ch_cm_co_pk_sk.sql
   model-habitat-linear:
     runs-on: ubuntu-latest
