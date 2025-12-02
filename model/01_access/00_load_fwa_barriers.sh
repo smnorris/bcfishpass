@@ -16,4 +16,7 @@ for BARRIERTYPE in "${NATURAL_BARRIERS[@]}"; do
     
     # load data to barrier table in parallel
     parallel --halt soon,fail=1 $PSQL -f sql/barriers_"$BARRIERTYPE".sql -v wsg={1} ::: $WSGS
+
+    # set to logged (doing this after load may actually be slower for massive gradient barriers table)
+    $PSQL -c "alter table bcfishpass.barriers_${BARRIERTYPE} set logged"
 done
