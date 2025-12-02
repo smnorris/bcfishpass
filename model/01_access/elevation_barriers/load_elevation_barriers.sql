@@ -74,8 +74,8 @@ BEGIN;
     wscode as wscode_ltree,
     localcode as localcode_ltree,
     watershed_group_code,
-    1000 as elevation
-  FROM z1000
+    700 as elevation
+  FROM z700
   WHERE st_z(st_startpoint(geom)) = 700
   UNION ALL
   SELECT
@@ -104,8 +104,8 @@ BEGIN;
     wscode as wscode_ltree,
     localcode as localcode_ltree,
     watershed_group_code,
-    1500 as elevation
-  FROM z1500
+    1600 as elevation
+  FROM z1600
   WHERE st_z(st_startpoint(geom)) = 1600
   ) as f
   ORDER BY blue_line_key, downstream_route_measure;
