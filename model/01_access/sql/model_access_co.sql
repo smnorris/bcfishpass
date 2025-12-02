@@ -168,11 +168,13 @@ barriers_filtered as (
   -- do not include gradient / falls / subsurface barriers with
   --    - > 5 observations upstream
   --    - confirmed habitat upstream
-  and
-        (
-          -- (o.n_obs is null or o.n_obs < 5) and -- ** excluded for testing of different gradients
-          h.species_codes is null
-        )
+
+  -- ** excluded for testing of different gradients
+  --  and
+  --        (
+  --          -- (o.n_obs is null or o.n_obs < 5) and 
+  --          h.species_codes is null
+  --        )
 )
 
 insert into bcfishpass.barriers_co
