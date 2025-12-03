@@ -131,6 +131,9 @@ $PARALLEL \
     :'wsg');\" | \
     $PSQL -v wsg={1}" ::: "${WSGS[@]}"
 
+# record observations upstream/downstream of crossings (for crossings_vw)
+$PSQL -f sql/load_crossings_dnstr_observations.sql
+$PSQL -f sql/load_crossings_upstr_observations.sql
 
 # -----
 # GENERATE OUTPUT 
