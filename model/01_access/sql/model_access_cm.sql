@@ -1,18 +1,21 @@
 with barriers as
 (
-  select
-      barriers_gradient_id as barrier_id,
-      barrier_type,
-      barrier_name,
-      linear_feature_id,
-      blue_line_key,
-      downstream_route_measure,
-      wscode_ltree,
-      localcode_ltree,
-      watershed_group_code,
-      geom
-  from bcfishpass.barriers_gradient
-  where watershed_group_code = :'wsg'
+  select distinct
+      g.barriers_gradient_id as barrier_id,
+      g.barrier_type,
+      g.barrier_name,
+      g.linear_feature_id,
+      g.blue_line_key,
+      g.downstream_route_measure,
+      g.wscode_ltree,
+      g.localcode_ltree,
+      g.watershed_group_code,
+      g.geom
+  from bcfishpass.barriers_gradient g
+  left outer join whse_basemapping.fwa_coastlines_sp c  -- join gradient barriers to coastline and ignore any with measure zero within 1m of coastline.
+  on st_dwithin(g.geom, c.geom, 1)                      -- Gradient at the ocean can be unreliable due to FWA data artifacts. 
+  where g.watershed_group_code = :'wsg'                 -- Fixing this in the gradient caculation (ignore only vertex at ocean) may give slightly 
+  and not (g.downstream_route_measure = 0 and c.linear_feature_id is not null)  -- better results, but this should work ok.
   and barrier_type >= 'GRADIENT_30'
   union all
   select
@@ -42,6 +45,21 @@ with barriers as
       geom
   from bcfishpass.barriers_subsurfaceflow
   where watershed_group_code = :'wsg'
+  union all
+  select
+      barriers_elevation_id as barrier_id,
+      barrier_type,
+      barrier_name,
+      linear_feature_id,
+      blue_line_key,
+      downstream_route_measure,
+      wscode_ltree,
+      localcode_ltree,
+      watershed_group_code,
+      geom
+  from bcfishpass.barriers_elevation
+  where watershed_group_code = :'wsg'
+  and barrier_type >= 'ELEVATION_0700'
 ),
 
 obs_upstr as

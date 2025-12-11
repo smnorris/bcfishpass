@@ -42,6 +42,21 @@ with barriers as
       geom
   from bcfishpass.barriers_subsurfaceflow
   where watershed_group_code = :'wsg'
+  union all
+  select
+      barriers_elevation_id as barrier_id,
+      barrier_type,
+      barrier_name,
+      linear_feature_id,
+      blue_line_key,
+      downstream_route_measure,
+      wscode_ltree,
+      localcode_ltree,
+      watershed_group_code,
+      geom
+  from bcfishpass.barriers_elevation
+  where watershed_group_code = :'wsg'
+  and barrier_type >= 'ELEVATION_1600'
 ),
 
 obs_upstr as
