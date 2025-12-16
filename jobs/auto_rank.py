@@ -32,6 +32,7 @@ def makeParser():
             "lnic",
             "morr",
             "tuzistol_tah",
+            "ulkatcho",
         ],
         nargs=1,
         type=str,
