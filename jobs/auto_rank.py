@@ -19,23 +19,9 @@ def makeParser():
     p = argparse.ArgumentParser(description="Rank barriers in a WCRP")
     p.add_argument(
         "wcrp",
-        choices=[
-            "bela_atna_necl",
-            "bessette",
-            "bonp",
-            "bowr_ques_carr",
-            "bulk",
-            "eagle",
-            "elkr_dnstr",
-            "elkr_upstr",
-            "hors",
-            "lnic",
-            "morr",
-            "tuzistol_tah",
-            "ulkatcho",
-        ],
-        nargs=1,
+        nargs='*',
         type=str,
+        help="WCRP that will be processed. Can be any in list form but, default is set to all."
     )
     return p
 
@@ -155,7 +141,7 @@ def buildCondition(wcrp):
         wcrp_schema = "elkr"
     elif wcrp == "bowr_ques_carr":
         condition = """
-            c."watershed_group_code" IN ('BOWR', 'QUES', 'CARR')
+            c."watershed_group_code" IN ('BOWR', 'QUES', 'CARR', 'COTR')
             """
         wcrp_schema = "bowr_ques_carr"
     elif wcrp == "tuzistol_tah":
@@ -163,6 +149,12 @@ def buildCondition(wcrp):
             c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'STUR')
         """
         wcrp_schema = "tuzistol_tah"
+
+    elif wcrp == "ulkatcho":
+        condition = """
+            c."watershed_group_code" IN ('UDEN', 'LDEN')
+            """
+        wcrp_schema = "ulkatcho"
     else:
         # In all other cases, just the watershed group code
         condition = f"""
@@ -585,8 +577,23 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
 def main():
     parser = makeParser()
     args = parser.parse_args()
-    wcrp = args.wcrp[0]
-    condition, wcrp_schema = buildCondition(wcrp)
+    wcrp_list = [
+        "bela_atna_necl",
+        "bessette",
+        "bonp",
+        "bowr_ques_carr",
+        "bulk",
+        "eagle",
+        "elkr_dnstr",
+        "elkr_upstr",
+        "hors",
+        "lnic",
+        "morr",
+        "tuzistol_tah",
+        "ulkatcho",
+    ]
+    wcrp_process = args.wcrp if args.wcrp else wcrp_list #define wcrps to process whether specific or all
+
     p = urlparse(os.environ["DATABASE_URL"])
     pg_conn_dict = {
         'dbname': p.path[1:],
@@ -596,8 +603,12 @@ def main():
         'host': p.hostname
     }
     conn = pg2.connect(**pg_conn_dict)
-    runQuery(condition, wcrp, wcrp_schema, conn)
-    print("Done!")
+
+    for wcrp in wcrp_process:
+        print(f"Ranking barriers for WCRP: {wcrp}...")
+        condition, wcrp_schema = buildCondition(wcrp)
+        runQuery(condition, wcrp, wcrp_schema, conn)
+        print("Done!")
 
 
 if __name__ == "__main__":
