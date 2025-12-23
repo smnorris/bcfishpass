@@ -94,11 +94,11 @@ begin;
       cabd.owner,
       cabd.dam_use,
       cabd.operating_status,
-      cabd.passability_status_code,
-
+      coalesce(u.passability_status_code, cabd.passability_status_code) as passability_status_code,
       ((st_dump(ST_Force2D(st_locatealong(n.geom, n.downstream_route_measure)))).geom)::geometry(Point, 3005) AS geom
     FROM matched n
     inner join cabd.dams cabd on n.dam_id = cabd.cabd_id
+    left outer join bcfishpass.cabd_passability_status_updates u on n.dam_id = u.cabd_id
     order by dam_id, distance_to_stream
   ),
 

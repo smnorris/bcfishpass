@@ -90,12 +90,13 @@ begin;
       cabd.fall_name_en as falls_name,
       cabd.fall_height_m as height_m,
       case
-        when cabd.passability_status = 'Barrier' then true
+        when coalesce(u.passability_status_code, cabd.passability_status_code) = 1 then true
         else false
       end as barrier_ind,
       ((st_dump(ST_Force2D(st_locatealong(n.geom, n.downstream_route_measure)))).geom)::geometry(Point, 3005) AS geom
     FROM matched n
     inner join cabd.waterfalls cabd on n.falls_id = cabd.cabd_id
+    left outer join bcfishpass.cabd_passability_status_updates u on n.falls_id = u.cabd_id
     order by falls_id, distance_to_stream
   )
 

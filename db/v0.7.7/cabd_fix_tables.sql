@@ -30,7 +30,7 @@ BEGIN;
 
 
   -- ALLOW CABD BARRIER STATUS UPDATES/CUSTOMIZATIONS
-  CREATE TABLE bcfishpass.cabd_barrier_status_updates (
+  CREATE TABLE bcfishpass.cabd_passability_status_updates (
     cabd_id       text ,
     passability_status_code integer CHECK (passability_status_code > 0 AND passability_status_code < 7),
     reviewer_name text ,
