@@ -125,3 +125,7 @@ jobs:
           aws s3 cp wsg_crossing_summary_current.csv s3://bchamp/wsg_crossing_summary_current.csv --acl public-read
           aws s3 cp wsg_linear_summary_current.csv s3://bchamp/wsg_linear_summary_current.csv --acl public-read
           jobs/release_fptwg
+          psql $DATABASE_URL -c "select * from bcfishpass.qa_observations_ch_cm_co_pk_sk" --csv > qa_observations_ch_cm_co_pk_sk.csv
+          psql $DATABASE_URL -c "select * from bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk" --csv > qa_naturalbarriers_ch_cm_co_pk_sk.csv
+          aws s3 cp qa_observations_ch_cm_co_pk_sk.csv s3://bchamp/qa_observations_ch_cm_co_pk_sk.csv --acl public-read
+          aws s3 cp qa_naturalbarriers_ch_cm_co_pk_sk.csv s3://bchamp/qa_naturalbarriers_ch_cm_co_pk_sk.csv --acl public-read
