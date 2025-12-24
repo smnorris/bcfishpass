@@ -173,7 +173,7 @@ select
   watershed_group_code,
   geom
 from barriers b
--- include only ccira watershed groups
+-- include only ccira watershed groups, plus LDEN/UDEN for Ulkatcho demo
 where watershed_group_code in
-('ATNA','BELA','KHTZ','KITL','KLIN','KTSU','LDEN','LRDO','NASC','NECL','NIEL','OWIK')
+('ATNA','BELA','KHTZ','KITL','KLIN','KTSU','LDEN','LRDO','NASC','NECL','NIEL','OWIK','UDEN','LDEN')
 on conflict do nothing;

@@ -123,7 +123,7 @@ parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
   SELECT bcfishpass.break_streams('observations', '{1}');\"
 " ::: "${WSGS[@]}"
 
- # break at natural barriers for all given species scenarios
+# break at natural barriers for all given species scenarios
 # (do not process models in parallel, breaking streams cannot be done concurrently in the same watershed)
 for model in "${MODELS[@]}"; do
   printf '%s\n' "${WSGS[@]}" | parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
