@@ -17,6 +17,8 @@ jobs:
   ng-test-data:
     runs-on: ubuntu-latest
     environment: ng-test
+    concurrency:
+      group: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
