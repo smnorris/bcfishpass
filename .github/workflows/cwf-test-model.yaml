@@ -53,7 +53,7 @@ jobs:
       - name: Access model - natural
         run:  |
           jobs/connect
-          cd model/01_access && ./01_model_access_natural.sh ch_cm_co_pk_sk st wct
+          cd model/01_access && ./01_model_access_natural.sh bt ch_cm_co_pk_sk ct_dv_rb st wct
   model-access-anthropogenic:
     runs-on: ubuntu-latest
     environment: cwf-test
