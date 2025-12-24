@@ -123,11 +123,14 @@ parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
   SELECT bcfishpass.break_streams('observations', '{1}');\"
 " ::: "${WSGS[@]}"
 
-# break at natural barriers for all given species scenarios
-parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
-  $PSQL -c \"
-  SELECT bcfishpass.break_streams('barriers_{1}', '{2}');\"
-" ::: ${MODELS[@]} ::: "${WSGS[@]}"
+ # break at natural barriers for all given species scenarios
+# (do not process models in parallel, breaking streams cannot be done concurrently in the same watershed)
+for model in "${MODELS[@]}"; do
+  printf '%s\n' "${WSGS[@]}" | parallel --halt now,fail=1 --jobs 4 --no-run-if-empty "
+    psql $DATABASE_URL -c \"
+    SELECT bcfishpass.break_streams('barriers_${model}', '{}');\"
+  "
+done
 
 # break streams at user habitat definition endpoints
 $PSQL -f sql/user_habitat_classification_endpoints.sql
