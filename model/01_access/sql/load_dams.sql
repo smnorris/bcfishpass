@@ -10,8 +10,8 @@ begin;
       st_transform(d.geom, 3005) as geom
     from cabd.dams d
     -- exclude any dam noted in user exclusion table
-    left outer join bcfishpass.user_cabd_dams_exclusions x on d.cabd_id = x.cabd_id
-    left outer join bcfishpass.user_cabd_blkey_xref blk on d.cabd_id = blk.cabd_id
+    left outer join bcfishpass.cabd_exclusions x on d.cabd_id = x.cabd_id
+    left outer join bcfishpass.cabd_blkey_xref blk on d.cabd_id = blk.cabd_id
     where x.cabd_id is null
   ),
 
@@ -94,34 +94,39 @@ begin;
       cabd.owner,
       cabd.dam_use,
       cabd.operating_status,
-      cabd.passability_status_code,
-
+      coalesce(u.passability_status_code, cabd.passability_status_code) as passability_status_code,
       ((st_dump(ST_Force2D(st_locatealong(n.geom, n.downstream_route_measure)))).geom)::geometry(Point, 3005) AS geom
     FROM matched n
     inner join cabd.dams cabd on n.dam_id = cabd.cabd_id
+    left outer join bcfishpass.cabd_passability_status_updates u on n.dam_id = u.cabd_id
     order by dam_id, distance_to_stream
   ),
 
-  -- placeholders for major USA dams not present in CABD are stored in user_barriers_anthropogenic
+  -- dams downstream of BC are in CABD - but cannot be linked to FWA (most stream outside of BC is not included)
+  -- create placeholders on BC streams by adding records to cabd_additions.csv where affected river/stream exists BC, 
+  -- and add those to bcfishpass.dams here
   usa as 
   (
     select
-      (a.user_barrier_anthropogenic_id + 1200000000)::text as dam_id,
-      s.linear_feature_id,
-      a.blue_line_key,
-      a.downstream_route_measure,
-      s.wscode_ltree,
-      s.localcode_ltree,
-      0 as distance_to_stream,
-      s.watershed_group_code,
-      a.barrier_name,
-      st_force2d((st_dump(st_locatealong(s.geom, a.downstream_route_measure))).geom) as geom
-    from bcfishpass.user_barriers_anthropogenic a
-    inner join whse_basemapping.fwa_stream_networks_sp s
-    on a.blue_line_key = s.blue_line_key
-    AND ROUND(a.downstream_route_measure::numeric) >= ROUND(s.downstream_route_measure::numeric)
-    AND ROUND(a.downstream_route_measure::numeric) < ROUND(s.upstream_route_measure::numeric)
-    where a.barrier_type = 'DAM'
+      (row_number() over() + 1200000000)::text as dam_id, * 
+      from (
+        select
+          s.linear_feature_id,
+          a.blue_line_key,
+          a.downstream_route_measure,
+          s.wscode_ltree,
+          s.localcode_ltree,
+          0 as distance_to_stream,
+          s.watershed_group_code,
+          a.name as barrier_name,
+          st_force2d((st_dump(st_locatealong(s.geom, a.downstream_route_measure))).geom) as geom
+        from bcfishpass.cabd_additions a
+        inner join whse_basemapping.fwa_stream_networks_sp s
+        on a.blue_line_key = s.blue_line_key
+        AND ROUND(a.downstream_route_measure::numeric) >= ROUND(s.downstream_route_measure::numeric)
+        AND ROUND(a.downstream_route_measure::numeric) < ROUND(s.upstream_route_measure::numeric)
+        where a.feature_type = 'dams'
+      ) as f
   )
 
   insert into bcfishpass.dams (

@@ -1,4 +1,4 @@
--- load CABD falls and any misc (temporary) additions from bcfishpass table
+-- load CABD falls
 begin; 
 
   truncate bcfishpass.falls;
@@ -6,10 +6,12 @@ begin;
   with cabd as (
     select
       w.cabd_id as falls_id,
-      x.blue_line_key,
+      blk.blue_line_key,
       st_transform(w.geom, 3005) as geom
     from cabd.waterfalls w
-    left outer join bcfishpass.user_cabd_blkey_xref x on w.cabd_id = x.cabd_id
+    left outer join bcfishpass.cabd_exclusions x on w.cabd_id = x.cabd_id  -- exlude any falls noted in exclusion table
+    left outer join bcfishpass.cabd_blkey_xref blk on w.cabd_id = blk.cabd_id  -- get blkey from xref if present
+    where x.cabd_id is null
   ),
 
   matched AS
@@ -88,12 +90,13 @@ begin;
       cabd.fall_name_en as falls_name,
       cabd.fall_height_m as height_m,
       case
-        when cabd.passability_status = 'Barrier' then true
+        when coalesce(u.passability_status_code, cabd.passability_status_code) = 1 then true
         else false
       end as barrier_ind,
       ((st_dump(ST_Force2D(st_locatealong(n.geom, n.downstream_route_measure)))).geom)::geometry(Point, 3005) AS geom
     FROM matched n
     inner join cabd.waterfalls cabd on n.falls_id = cabd.cabd_id
+    left outer join bcfishpass.cabd_passability_status_updates u on n.falls_id = u.cabd_id
     order by falls_id, distance_to_stream
   )
 
@@ -125,15 +128,16 @@ begin;
     s.wscode_ltree,
     s.localcode_ltree,
     0 as distance_to_stream,
-    p.watershed_group_code,
-    p.falls_name as falls_name,
+    s.watershed_group_code,
+    p.name as falls_name,
     p.height as height_m,
     p.barrier_ind,
     (ST_Dump(ST_Force2D(ST_locateAlong(s.geom, p.downstream_route_measure)))).geom as geom
-  from bcfishpass.user_falls p
+  from bcfishpass.cabd_additions p
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s
   ON p.blue_line_key = s.blue_line_key AND
   p.downstream_route_measure > s.downstream_route_measure - .001 AND
-  p.downstream_route_measure + .001 < s.upstream_route_measure;
+  p.downstream_route_measure + .001 < s.upstream_route_measure
+  WHERE p.feature_type = 'waterfalls';
 
 commit;
