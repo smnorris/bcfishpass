@@ -41,6 +41,7 @@ begin;
   -- filter on species code and watershed group
   insert into bcfishpass.observations (
    observation_key,
+   release,
    fish_observation_point_id,
    species_code,
    agency_id,
@@ -76,6 +77,7 @@ begin;
 )
   select
    o.observation_key,
+   x.release,
    o.fish_observation_point_id,
    r.species_code_remap as species_code,
    o.agency_id,
