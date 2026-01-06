@@ -111,6 +111,10 @@ begin;
   from bcfishobs.observations o
   inner join wsg_spp on o.watershed_group_code = wsg_spp.watershed_group_code
   inner join species_code_remap r on o.species_code = r.species_code
-  and array[o.species_code]::text[] && wsg_spp.species_codes;
+  and array[o.species_code]::text[] && wsg_spp.species_codes
+  -- exclude observations identified by QA as invalid (for fish passage modelling purposes)
+  -- *note* - records at locations of ongoing releases are retained
+  left outer join bcfishpass.observation_exclusions x on o.observation_key = x.observation_key
+  and coalesce(x.exclude, false) is false;
 
 commit;  
