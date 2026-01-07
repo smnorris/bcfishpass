@@ -2,6 +2,14 @@
 
 User editable data inputs - mostly fix tables. 
 
+## cabd_additions
+
+## cabd_blkey_xref
+
+## cabd_exclusions
+
+## cabd_passability_status_updates
+
 ## dfo_known_sockeye_lakes.csv
 
 `waterbody_poly_id` of FWA lakes known to potentially support Sockeye
@@ -34,18 +42,6 @@ NOTE -  this table will only be used to identify modelled barriers known to be p
 (gradient, subsurface flow) once bcfishpass incorporates CABD falls
 
 
-## user_cabd_dams_exclusions.csv
-
-List of CABD dams to exclude from analysis (generally due to incorrect location or incorrect passability status).
-To be used as temporary fix only - submit any location or passability status to CWF [here](https://forms.office.com/Pages/ResponsePage.aspx?id=A8N2i-wB1UCNmmwvbXjc15ERVmcC4dFPn5j4q5-aulRURE1TSjBJNEtDNlY0WTlXVFY5MkFOMzRVUS4u)
-
-
-## user_falls.csv
-
-Falls not present in FWA/FISS. Both barriers and non-barriers may be included.
-NOTE - to be removed after bcfishpass incorporates CABD falls, submit CABD falls fixes to CABD.
-
-
 ## user_habitat_classification.csv
 
 Manually specify known segments of rearing/spawning habitat for target species.
@@ -64,7 +60,7 @@ Update the barrier status of PSCIS crossings (for bcfishpass modelling only). PS
 support planning by adding barrier status of a crossing before a submission is made.
 
 
-## wcrp.csv
+## wcrp_watersheds.csv
 
 A list of watershed groups and target species for CWF WCRP reporting.
 
