@@ -1,2 +1,8 @@
 cabd_id,passability_status_code,reviewer_name,review_date,source,notes
 f4f9982f-9190-4252-9906-cc678ec72de9,4,SN,2025-12-23,imagery/observations,"1341 salmon observations upstream, fish passage structure noted in many sources eg https://www.comoxvalleyrd.ca/parks-recreation/comox-valley-parks-trails/nymph-falls-nature-park"
+063ce6a3-2bf3-497a-accf-993cd1bbdd0a,4,SN,2025-12-23,https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/water-planning/water_allocation_comox_blackcreek.pdf,"refrence implies that the dam is at least seasonally passable - map shows anad habitat well upstream and there are several observations upstream"
+0d588042-49a2-4de5-b1da-be2fc5b813ec,1,SN,2025-12-23,https://a100.gov.bc.ca/pub/acat/documents/r16334/Sooke2004BMP_1244653132327_2a1f98bb3b1108b72f55d60b03d140fc0b2285c22a9a145f04285c4f4f35cf5e.pdf,confirmed as anad. barrier in reference
+80637aca-9cbf-4666-9f60-2b4d28ce7e49,3,SN,2025-12-23,https://a100.gov.bc.ca/pub/acat/documents/r40929/05.AS.04_Passage_1389359897936_9359222675.pdf,report p iii indicates conflicting reports of passability status
+4fd2f839-9742-46c3-8002-b6dc3a0b3c3e,1,SN,2025-12-23,https://publications.gc.ca/collections/collection_2014/mpo-dfo/Fs97-4-2115-eng.pdf,noted as anad. barrier in ref (p3)
+39ecac85-1e59-4171-ac31-16793d8a82fb,4,SN,2025-12-23,imagery (only minor rapids visible, side channels available for passage), 191 salmon observations upstream,clearly not a barrier, not sure if it qualifies as a waterfall
+ce90af3f-fdf9-4bdc-8535-9412825726c9,3,SN,2025-12-23,https://a100.gov.bc.ca/pub/acat/documents/r40929/05.AS.04_Passage_1389359897936_9359222675.pdf,report indicates passability is species/flow dependent

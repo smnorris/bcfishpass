@@ -1,3 +1,11 @@
 cabd_id,feature_type,reviewer_name,review_date,source,notes
 ae10a5fe-483d-463e-b973-08453dd66701,dams,LS,2025-01-21,"imagery, FISS obs","No dam here, can't see anything on satellite imagery and known CH stream with major restoration work done upstream."
 6a792d8f-b9c5-44a4-a260-0f06c3b20821,dams,LS,2025-07-24,satellite imagery review,"No dam present here, It is likely an old beaver dam that was submitted incorrectly."
+25695246-2a75-4d83-ae33-51be3dd847a8,dams,SN,2025-12-23,"imagery,no dam is visible at this location","dams on South Nanaimo are located farther upstream (South Fork, Jump Lake)"
+2a0079c6-4712-4e8d-9c5d-710c11af20b3,falls,SN,2025-12-23,"imagery, 12 salmon observations upstream",no falls exists at this location on the Squamish River
+cd22179e-c65c-4061-93bc-da912f96e0b4,falls,SN,2025-12-23,"imagery, 471 salmon observations upstream",no falls exists at this location on the Quesnel River
+256dec75-e5f5-44c4-9d69-196ae4b96f10,falls,SN,2025-12-23,"imagery, 181 salmon observations upstream",no falls exists at this location
+5b99d219-126e-4676-a708-2068f4710e29,falls,SN,2025-12-23,"imagery, 181 salmon observations upstream",no falls exists at this location
+1af0ba5a-ee76-4591-8432-89f49d7e9bf7,falls,SN,2025-12-23,"imagery, 112 salmon observations upstream","no falls exists on the Bulkley River at this location - based on point location, falls is likely on Aitken Creek"
+5eec30ac-ccd8-4516-9047-d66c000a62ab,falls,SN,2025-12-23,https://a100.gov.bc.ca/pub/acat/documents/r40929/05.AS.04_Passage_1389359897936_9359222675.pdf,not visible in imagery or mentioned in report
+84be48c8-930d-4208-b45a-338e8ac82ba7,falls,SN,2025-12-23,https://a100.gov.bc.ca/pub/acat/documents/r40929/05.AS.04_Passage_1389359897936_9359222675.pdf,not visible in imagery or mentioned in report
