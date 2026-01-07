@@ -1,14 +1,68 @@
-# Data files
+# Data and fix tables 
 
-User editable data inputs - mostly fix tables. 
+User editable data inputs and fixes - mostly fix tables.
+
+To make a fix to bcfishpass inputs via these tables:
+
+- clone the repository
+- edit the file of interest, making the required fix/addition
+- create a pull request
 
 ## cabd_additions
 
+Insert falls or dams required for bcfishpass but not present in CABD. Includes placeholders for dams outside of BC
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `feature_type` | `text` | Feature type, either waterfalls or dams |
+| `name` | `text` | Name of waterfalls or dam |
+| `height` | `numeric` | Height (m) of waterfalls or dam |
+| `barrier_ind` | `boolean` | Barrier status of waterfalls or dam (true/false) |
+| `blue_line_key` | `integer` | FWA blue_line_key (flow line) on which the feature lies |
+| `downstream_route_measure` | `integer` | The distance, in meters, along the blue_line_key from the mouth of the stream/blue_line_key to the feature. |
+| `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
+| `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
+| `source` | `text` | Description or link to the source(s) documenting the feature |
+| `notes` | `text` | Reviewer notes on rationale for addition of the feature and/or how the source were interpreted |
+
 ## cabd_blkey_xref
+
+Cross reference CABD features to FWA flow lines (blue_line_key), used when CABD feature location is closest to an inapproprate flow line
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `cabd_id` | `text` | CABD unique identifier |
+| `blue_line_key` | `integer` | FWA blue_line_key (flow line) to which the CABD feature should be linked |
+| `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
+| `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
+| `notes` | `text` | Reviewer notes on rationale for fix and/or how the source(s) were interpreted |
 
 ## cabd_exclusions
 
+Exclude CABD records (waterfalls and dams) from bcfishpass usage
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `cabd_id` | `text` | CABD unique identifier |
+| `feature_type` | `text` | Feature type, either waterfalls or dams |
+| `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
+| `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
+| `source` | `text` | Description or link to the source(s) indicating why the feature should be excluded |
+| `notes` | `text` | Reviewer notes on rationale for exclusion and/or how the source were interpreted |
+
 ## cabd_passability_status_updates
+
+Update the passability_status_code (within bcfishpass) of existing CABD features (dams or waterfalls)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `cabd_id` | `text` | CABD unique identifier |
+| `passability_status_code` | `integer` | Code referencing the degree to which the feature acts as a barrier to fish in the upstream direction. (1=Barrier, 2=Partial barrier, 3=Passable, 4=Unknown, 5=NA-No Structure, 6=NA-Decommissioned/Removed) |
+| `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
+| `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
+| `source` | `text` | Description or link to the source(s) documenting the passability status of the feature |
+| `notes` | `text` | Reviewer notes on rationale for fix and/or how the source(s) were interpreted |
+
 
 ## dfo_known_sockeye_lakes.csv
 
