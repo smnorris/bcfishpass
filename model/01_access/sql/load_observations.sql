@@ -41,6 +41,7 @@ begin;
   -- filter on species code and watershed group
   insert into bcfishpass.observations (
    observation_key,
+   release,
    fish_observation_point_id,
    species_code,
    agency_id,
@@ -76,6 +77,7 @@ begin;
 )
   select
    o.observation_key,
+   x.release, -- note records at locations of ongoing/documented release programs
    o.fish_observation_point_id,
    r.species_code_remap as species_code,
    o.agency_id,
@@ -111,6 +113,24 @@ begin;
   from bcfishobs.observations o
   inner join wsg_spp on o.watershed_group_code = wsg_spp.watershed_group_code
   inner join species_code_remap r on o.species_code = r.species_code
-  and array[o.species_code]::text[] && wsg_spp.species_codes;
+  and array[o.species_code]::text[] && wsg_spp.species_codes
+  -- exclude observations identified by QA as invalid (for fish passage modelling purposes)
+  left outer join bcfishpass.observation_exclusions x on o.observation_key = x.observation_key
+  where coalesce(x.exclude, false) is false;
+
+  -- use source_ref to find and tag records related to stocking/releases
+  
+  -- note that this source seems to be obsolete - was present nov 2025 but is absent from table as of jan 05 2026
+  UPDATE bcfishpass.observations
+  SET release = true
+  WHERE substring(source from 1 for position(':' in source)) = 'Releases Database:';  
+
+  UPDATE bcfishpass.observations
+  SET release = true
+  WHERE source_ref ilike '%BC RELEASE RECORDS DATABASE%';
+
+  UPDATE bcfishpass.observations
+  SET release = true
+  WHERE source_ref ilike '%STOCKING%';
 
 commit;  
