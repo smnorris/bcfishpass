@@ -1,6 +1,4 @@
 feature_type,name,height,barrier_ind,blue_line_key,downstream_route_measure,reviewer_name,review_date,source,notes
-waterfalls,Bonnington Falls,,t,356570348,22292,SN,2023-08-11,Wikipedia/CABD,Historic falls restricting salmon from Kootenay Lake and upstream
-waterfalls,Buck Falls,4,t,360886221,45009,LS,2025-02-19,2024 field assessment,"Three separate vertical and cascade sections over an approximately 200m section of stream, with no salmon documented upstream. See https://www.newgraphenvironment.com/fish_passage_skeena_2024_reporting/results-and-discussion.html#buck-creek-falls for detailed description."
 dams,Grand Coulee Dam,,t,356570045,53510,SN,2023-07-24,,placeholder for Grand Coulee/Chief Joseph
 dams,Grand Coulee Dam,,t,356570372,1175649,SN,2023-07-24,,placeholder for Grand Coulee/Chief Joseph
 dams,Grand Coulee Dam,,t,356566717,303,SN,2023-07-24,,placeholder for Grand Coulee/Chief Joseph
