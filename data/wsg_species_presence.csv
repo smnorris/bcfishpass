@@ -218,7 +218,7 @@ UARL,t,,,,t,t,,,t,,,t,
 UBIR,t,t,,t,,t,,,t,,,,
 UBTN,t,,,,,,t,,t,,,,Mackenzie basin
 UCHR,t,t,,,,,,,t,,t,,
-UDEN,t,,,,,t,,,t,,,,No target species observations
+UDEN,t,t,t,t,,t,,t,t,t,t,,salmon/steelhead added as test for Ulkatcho
 UEUT,t,,,,t,t,,,t,,,,
 UFRA,t,t,,,,t,,,t,,,,
 UFRT,,,,,,,t,,,,,,Mackenzie basin
