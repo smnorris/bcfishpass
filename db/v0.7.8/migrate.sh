@@ -10,6 +10,6 @@ $PSQL -f observation_exclusions.sql
 $PSQL -f barrier_observation_qa.sql
 
 # document cabd fix tables
-$PSQL -f cabd_fix_table_comments.sql
+$PSQL -f fix_table_comments.sql
 
 $PSQL -c "update bcfishpass.db_version set tag = '${PWD##*/}'"

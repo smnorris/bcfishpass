@@ -10,6 +10,7 @@ for table in cabd_additions \
   cabd_blkey_xref \
   cabd_exclusions \
   cabd_passability_status_updates \
+  observation_exclusions \
 
 do
     echo "## $table"

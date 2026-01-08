@@ -35,4 +35,14 @@ BEGIN;
   comment on column bcfishpass.cabd_blkey_xref.review_date IS 'Date of review, in form YYYY-MM-DD eg 2025-01-07';
   comment on column bcfishpass.cabd_blkey_xref.notes IS 'Reviewer notes on rationale for fix and/or how the source(s) were interpreted';
 
+  comment on table bcfishpass.observation_exclusions IS 'Flag FISS observation points for exclusion (temporary/one time releases or data errors) or as ongoing releases (ongoing release programs create valid habitat, but are inapproprate for natural barrier QA).';
+  comment on column bcfishpass.observation_exclusions.observation_key IS 'bcfishobs created stable unique id, a hash of columns [source, species_code, observation_date, utm_zone, utm_easting, utm_northing, life_stage_code, activity_code]';
+  comment on column bcfishpass.observation_exclusions.exclude IS 'Set as true to exclude the observation from bcfishpass - either the observation is a data error or related to a limited/one time release/stocking event.';
+  comment on column bcfishpass.observation_exclusions.release IS 'Set as true to flag the observation as part of an ongoing release program (for general info and to exclude from QA of natural barriers)';
+  comment on column bcfishpass.observation_exclusions.reviewer_name IS 'Initials of user submitting the review, eg SN';
+  comment on column bcfishpass.observation_exclusions.review_date IS 'Date of review, in form YYYY-MM-DD eg 2025-01-07';
+  comment on column bcfishpass.observation_exclusions.source_1 IS 'Description or link to the primary source(s) documenting the observation or related information';
+  comment on column bcfishpass.observation_exclusions.source_2 IS 'Description or link to the secondary source(s) documenting the observation or related information';
+  comment on column bcfishpass.observation_exclusions.notes IS 'Reviewer notes on rationale for fix and/or how the source(s) were interpreted';
+
 COMMIT;
