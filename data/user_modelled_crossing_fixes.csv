@@ -21553,3 +21553,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 23801552,OBS,BONP,LB,2025-10-31,cwf,confirmed as bridge
 1403638,NONE,BONP,LB,2025-10-31,cwf,No crossing present
 24404170,OBS,WILL,LS,2025-11-28,Satellite imagery review,confirmed as bridge
+24731115,NONE,LNIC,LB,2026-01-13,cwf,Duplicate of stream crossing
+11304083,NONE,LNIC,LB,2026-01-13,cwf,No crossing present
+11300058,NONE,LNIC,LB,2026-01-13,cwf,No crossing present
+24731112,NONE,LNIC,LB,2026-01-13,cwf,Duplicate of stream crossing that doesn't exist 11300058
+11300291,NONE,LNIC,LB,2026-01-13,cwf,Duplicate of stream crossing that doesn't exist 11300058
+11300002,NONE,LNIC,LB,2026-01-13,cwf,Duplicate of stream crossing 11300510
