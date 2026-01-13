@@ -4246,7 +4246,7 @@
 356092472,0.41,265.18,LFRA,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356092959,0.38,26,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356093092,0.03,80.96,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356093266,0,215.68,LNIC,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356093266,0,215.68,LNIC,ST,spawning,f,LB,2026-01-13,waterbody confirmed as not existing in field. Assosciated crossing also removed.,
 356094164,0,9.55,BONP,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356097967,655,755,SHUL,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356097975,0.12,115.64,CARR,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -15423,3 +15423,4 @@
 356292659,0,822,BONP,CO,rearing,f,LB,2025-10-31,noted as being a dry drainage channel,
 356240232,1445,2603,SHUL,CO,rearing,f,LB,2025-10-31,,
 356240232,1445,2603,SHUL,CO,spawning,f,LB,2025-10-31,,
+356348366,0,1010,LNIC,CO,rearing,f,LB,2026-01-13,Meant to be an excluded stream due to yellow perch AIS,
