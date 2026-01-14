@@ -127,5 +127,5 @@ jobs:
           jobs/release_fptwg
           psql $DATABASE_URL -c "select * from bcfishpass.qa_observations_ch_cm_co_pk_sk_st" --csv > qa_observations_ch_cm_co_pk_sk_st.csv
           psql $DATABASE_URL -c "select * from bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st" --csv > qa_naturalbarriers_ch_cm_co_pk_sk_st.csv
-          aws s3 cp qa_observations_ch_cm_co_pk_sk.csv s3://bchamp/qa_observations_ch_cm_co_pk_sk_st.csv --acl public-read
-          aws s3 cp qa_naturalbarriers_ch_cm_co_pk_sk.csv s3://bchamp/qa_naturalbarriers_ch_cm_co_pk_sk_st.csv --acl public-read
+          aws s3 cp qa_observations_ch_cm_co_pk_sk_st.csv s3://bchamp/qa_observations_ch_cm_co_pk_sk_st.csv --acl public-read
+          aws s3 cp qa_naturalbarriers_ch_cm_co_pk_sk_st s3://bchamp/qa_naturalbarriers_ch_cm_co_pk_sk_st.csv --acl public-read
