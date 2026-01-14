@@ -77,7 +77,7 @@ begin;
 )
   select
    o.observation_key,
-   x.release, -- note records at locations of ongoing/documented release programs
+   x.release_include as release, -- note records at locations of ongoing/documented release programs
    o.fish_observation_point_id,
    r.species_code_remap as species_code,
    o.agency_id,
@@ -116,7 +116,7 @@ begin;
   and array[o.species_code]::text[] && wsg_spp.species_codes
   -- exclude observations identified by QA as invalid (for fish passage modelling purposes)
   left outer join bcfishpass.observation_exclusions x on o.observation_key = x.observation_key
-  where coalesce(x.exclude, false) is false;
+  where coalesce(x.data_error, false) is false AND coalesce(x.release_exclude, false) is false;
 
   -- use source_ref to find and tag records related to stocking/releases
   
