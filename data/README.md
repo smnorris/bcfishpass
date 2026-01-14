@@ -73,13 +73,14 @@ Data were provided by PSF as 50k lakes shapefile then referenced to FWA.
 
 ## observation_exclusions
 
-Flag FISS observation points for exclusion (temporary/one time releases or data errors) or as ongoing releases (ongoing release programs create valid habitat, but are inapproprate for natural barrier QA).
+Flag FISS observation points as data error; temporary/one time release/stocking/enhancement; ongoing release/stocking/enhancement
 
 | Column | Type | Description |
 |--------|------|-------------|
 | `observation_key` | `text` | bcfishobs created stable unique id, a hash of columns [source, species_code, observation_date, utm_zone, utm_easting, utm_northing, life_stage_code, activity_code] |
-| `exclude` | `boolean` | Set as true to exclude the observation from bcfishpass - either the observation is a data error or related to a limited/one time release/stocking event. |
-| `release` | `boolean` | Set as true to flag the observation as part of an ongoing release program (for general info and to exclude from QA of natural barriers) |
+| `data_error` | `boolean` | True if record contains a confirmed/conclusive data error, exclude it from bcfishpass (most commonly, point is in the wrong location) |
+| `release_exclude` | `boolean` | True if record is related to a limited/one time release/stocking/enhancement event, exclude from bcfishpass habitat modelling |
+| `release_include` | `boolean` | True if record is related to an ongoing release/stocking/enhancement program, include in bcfishpass habitat modelling but exclude from QA of barriers |
 | `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
 | `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
 | `source_1` | `text` | Description or link to the primary source(s) documenting the observation or related information |

@@ -1,10 +1,12 @@
 -- ADD FISH OBSERVATION EXCLUSIONS
 BEGIN;
 
+  DROP TABLE IF EXISTS bcfishpass.observation_exclusions;
   CREATE TABLE bcfishpass.observation_exclusions (
     observation_key       text ,
-    exclude               boolean,
-    release               boolean,
+    data_error            boolean,
+    release_exclude       boolean,
+    release_include       boolean,
     reviewer_name         text,
     review_date           date,
     source_1              text,
@@ -12,7 +14,5 @@ BEGIN;
     notes                 text,
     primary key (observation_key)         
   );
-
-  ALTER TABLE bcfishpass.observations ADD COLUMN release boolean;
 
 COMMIT;
