@@ -1,8 +1,9 @@
 -- count barriers downstream of observations (salmon/steelhead)
+-- note that this will include observations that are likely releases
 BEGIN;
-  truncate bcfishpass.qa_observations_ch_cm_co_pk_sk;
+  truncate bcfishpass.qa_observations_ch_cm_co_pk_sk_st;
 
-  insert into bcfishpass.qa_observations_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_observations_ch_cm_co_pk_sk_st (
     observation_key,
     species_code,
     observation_date,
@@ -14,6 +15,7 @@ BEGIN;
     agency_name,
     source,
     source_ref,
+    release,
     watershed_group_code,
     gradient_15_dnstr,
     gradient_20_dnstr,
@@ -41,6 +43,7 @@ BEGIN;
     a.agency_name,
     a.source,
     a.source_ref,
+    a.release,
     a.watershed_group_code,
     array_to_string(array_agg(DISTINCT g15.gradient_barrier_id), ';') as gradient_15_dnstr,
     array_to_string(array_agg(DISTINCT g20.gradient_barrier_id), ';') as gradient_20_dnstr,
@@ -54,7 +57,7 @@ BEGIN;
     count(DISTINCT g30.gradient_barrier_id) as gradient_30_dnstr_count,
     count(DISTINCT f.barriers_falls_id) as falls_dnstr_count,
     count(DISTINCT s.barriers_subsurfaceflow_id) as subsurfaceflow_dnstr_count
-  FROM bcfishobs.observations a
+  FROM bcfishpass.observations a
   LEFT OUTER JOIN bcfishpass.gradient_barriers g15
   ON FWA_Downstream(
       a.blue_line_key,
@@ -127,7 +130,7 @@ BEGIN;
       s.localcode_ltree,
       False
   )
-  WHERE a.species_code in ('CH','CM','CO','PK','SK')
+  WHERE a.species_code in ('CH','CM','CO','PK','SK','ST')
   GROUP BY
     a.observation_key,
     a.species_code,
@@ -140,6 +143,7 @@ BEGIN;
     a.agency_name,
     a.source,
     a.source_ref,
+    a.release,
     a.watershed_group_code,
     a.geom
   ) as f
@@ -156,32 +160,44 @@ COMMIT;
 
 
 -- count observations upstream of natural barriers (salmon/steelhead)
--- natural barriers to steelhead (having <5 salmon or steelhead observations upstream since 1990)
 BEGIN;
 
-  truncate bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk;
+  truncate bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st;
 
-  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st (
     barrier_id,
     barrier_type,
     watershed_group_code,
     observations_upstr,
-    n_observations_upstr
+    n_observations_upstr,
+    n_ch_upstr,
+    n_cm_upstr,
+    n_co_upstr,
+    n_pk_upstr,
+    n_sk_upstr,
+    n_st_upstr
   )
   SELECT
     b.barriers_falls_id as barrier_id,
     b.barrier_type,
     b.watershed_group_code,
     array_to_string(array_agg(DISTINCT o.observation_key), ';') as observations_upstr,
-    count(DISTINCT o.observation_key) as n_observations_upstr
+    count(DISTINCT o.observation_key) as n_observations_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CH') as n_ch_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CM') as n_cm_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CO') as n_co_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'PK') as n_pk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'SK') as n_sk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'ST') as n_st_upstr
   from bcfishpass.barriers_falls b
-  inner join bcfishobs.observations o on
+  inner join bcfishpass.observations o on
    fwa_upstream(
      b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
      o.blue_line_key, o.downstream_route_measure, o.wscode, o.localcode,
      False,
      20)  -- same tolerance as in the model, don't count observations < 20m upstream from the barrier
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code in ('CH','CM','CO','PK','SK','ST') 
+  and coalesce(o.release, false) is false
   group by
     b.barriers_falls_id,
     b.barrier_type,
@@ -189,27 +205,40 @@ BEGIN;
   order by barrier_id;
 
 
-  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st (
     barrier_id,
     barrier_type,
     watershed_group_code,
     observations_upstr,
-    n_observations_upstr
+    n_observations_upstr,
+    n_ch_upstr,
+    n_cm_upstr,
+    n_co_upstr,
+    n_pk_upstr,
+    n_sk_upstr,
+    n_st_upstr
   )
   SELECT
     b.gradient_barrier_id as barrier_id,
     'GRADIENT_15' as barrier_type,
     b.watershed_group_code,
     array_to_string(array_agg(DISTINCT o.observation_key), ';') as observations_upstr,
-    count(DISTINCT o.observation_key) as n_observations_upstr
+    count(DISTINCT o.observation_key) as n_observations_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CH') as n_ch_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CM') as n_cm_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CO') as n_co_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'PK') as n_pk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'SK') as n_sk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'ST') as n_st_upstr
   from bcfishpass.gradient_barriers b
-  inner join bcfishobs.observations o on
+  inner join bcfishpass.observations o on
    fwa_upstream(
      b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
      o.blue_line_key, o.downstream_route_measure, o.wscode, o.localcode,
      False,
      20)  -- same tolerance as in the model, don't count observations < 20m upstream from the barrier
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code in ('CH','CM','CO','PK','SK','ST') 
+  and coalesce(o.release, false) is false
   and b.gradient_class = 15
   group by
     b.gradient_barrier_id,
@@ -218,27 +247,40 @@ BEGIN;
   order by barrier_id;
 
 
-  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st (
     barrier_id,
     barrier_type,
     watershed_group_code,
     observations_upstr,
-    n_observations_upstr
+    n_observations_upstr,
+    n_ch_upstr,
+    n_cm_upstr,
+    n_co_upstr,
+    n_pk_upstr,
+    n_sk_upstr,
+    n_st_upstr
   )
   SELECT
     b.gradient_barrier_id as barrier_id,
     'GRADIENT_20' as barrier_type,
     b.watershed_group_code,
     array_to_string(array_agg(DISTINCT o.observation_key), ';') as observations_upstr,
-    count(DISTINCT o.observation_key) as n_observations_upstr
+    count(DISTINCT o.observation_key) as n_observations_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CH') as n_ch_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CM') as n_cm_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CO') as n_co_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'PK') as n_pk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'SK') as n_sk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'ST') as n_st_upstr
   from bcfishpass.gradient_barriers b
-  inner join bcfishobs.observations o on
+  inner join bcfishpass.observations o on
    fwa_upstream(
      b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
      o.blue_line_key, o.downstream_route_measure, o.wscode, o.localcode,
      False,
      20)  -- same tolerance as in the model, don't count observations < 20m upstream from the barrier
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code in ('CH','CM','CO','PK','SK','ST')
+  and coalesce(o.release, false) is false
   and b.gradient_class = 20
   group by
     b.gradient_barrier_id,
@@ -247,27 +289,40 @@ BEGIN;
   order by barrier_id;
 
 
-  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st (
     barrier_id,
     barrier_type,
     watershed_group_code,
     observations_upstr,
-    n_observations_upstr
+    n_observations_upstr,
+    n_ch_upstr,
+    n_cm_upstr,
+    n_co_upstr,
+    n_pk_upstr,
+    n_sk_upstr,
+    n_st_upstr
   )
   SELECT
     b.gradient_barrier_id as barrier_id,
     'GRADIENT_25' as barrier_type,
     b.watershed_group_code,
     array_to_string(array_agg(DISTINCT o.observation_key), ';') as observations_upstr,
-    count(DISTINCT o.observation_key) as n_observations_upstr
+    count(DISTINCT o.observation_key) as n_observations_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CH') as n_ch_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CM') as n_cm_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CO') as n_co_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'PK') as n_pk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'SK') as n_sk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'ST') as n_st_upstr
   from bcfishpass.gradient_barriers b
-  inner join bcfishobs.observations o on
+  inner join bcfishpass.observations o on
    fwa_upstream(
      b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
      o.blue_line_key, o.downstream_route_measure, o.wscode, o.localcode,
      False,
      20)  -- same tolerance as in the model, don't count observations < 20m upstream from the barrier
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code in ('CH','CM','CO','PK','SK','ST')
+  and coalesce(o.release, false) is false
   and b.gradient_class = 25
   group by
     b.gradient_barrier_id,
@@ -276,27 +331,40 @@ BEGIN;
   order by barrier_id;
 
 
-  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st (
     barrier_id,
     barrier_type,
     watershed_group_code,
     observations_upstr,
-    n_observations_upstr
+    n_observations_upstr,
+    n_ch_upstr,
+    n_cm_upstr,
+    n_co_upstr,
+    n_pk_upstr,
+    n_sk_upstr,
+    n_st_upstr
   )
   SELECT
     b.gradient_barrier_id as barrier_id,
     'GRADIENT_30' as barrier_type,
     b.watershed_group_code,
     array_to_string(array_agg(DISTINCT o.observation_key), ';') as observations_upstr,
-    count(DISTINCT o.observation_key) as n_observations_upstr
+    count(DISTINCT o.observation_key) as n_observations_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CH') as n_ch_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CM') as n_cm_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CO') as n_co_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'PK') as n_pk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'SK') as n_sk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'ST') as n_st_upstr
   from bcfishpass.gradient_barriers b
-  inner join bcfishobs.observations o on
+  inner join bcfishpass.observations o on
    fwa_upstream(
      b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
      o.blue_line_key, o.downstream_route_measure, o.wscode, o.localcode,
      False,
      20)  -- same tolerance as in the model, don't count observations < 20m upstream from the barrier
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code in ('CH','CM','CO','PK','SK','ST')
+  and coalesce(o.release, false) is false
   and b.gradient_class = 30
   group by
     b.gradient_barrier_id,
@@ -305,27 +373,40 @@ BEGIN;
   order by barrier_id;
 
 
-  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk (
+  insert into bcfishpass.qa_naturalbarriers_ch_cm_co_pk_sk_st (
     barrier_id,
     barrier_type,
     watershed_group_code,
     observations_upstr,
-    n_observations_upstr
+    n_observations_upstr,
+    n_ch_upstr,
+    n_cm_upstr,
+    n_co_upstr,
+    n_pk_upstr,
+    n_sk_upstr,
+    n_st_upstr
   )
   SELECT
     b.barriers_subsurfaceflow_id as barrier_id,
     b.barrier_type,
     b.watershed_group_code,
     array_to_string(array_agg(DISTINCT o.observation_key), ';') as observations_upstr,
-    count(DISTINCT o.observation_key) as n_observations_upstr
+    count(DISTINCT o.observation_key) as n_observations_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CH') as n_ch_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CM') as n_cm_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'CO') as n_co_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'PK') as n_pk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'SK') as n_sk_upstr,
+    count(DISTINCT o.observation_key) filter (where o.species_code = 'ST') as n_st_upstr
   from bcfishpass.barriers_subsurfaceflow b
-  inner join bcfishobs.observations o on
+  inner join bcfishpass.observations o on
    fwa_upstream(
      b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree,
      o.blue_line_key, o.downstream_route_measure, o.wscode, o.localcode,
      False,
      20)  -- same tolerance as in the model, don't count observations < 20m upstream from the barrier
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code in ('CH','CM','CO','PK','SK','ST')
+  and coalesce(o.release, false) is false
   group by
     barrier_id,
     barrier_type,

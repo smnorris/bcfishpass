@@ -19,10 +19,8 @@ export AZURE_STORAGE_SAS_TOKEN=$(\
     jq -r)
 
 # do the ranking
-for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah
-do
-  python jobs/auto_rank.py $wcrp
-done
+python jobs/auto_rank.py 
+
 
 # dump the data
 for wcrp in $WCRPS
