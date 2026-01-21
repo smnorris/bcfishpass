@@ -21561,3 +21561,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11300002,NONE,LNIC,LB,2026-01-13,cwf,Duplicate of stream crossing 11300510
 11304002,NONE,LNIC,LB,2026-01-13,cwf,"No crossing present, this is a trail."
 11300810,NONE,LNIC,LB,2026-01-14,cwf,No crossing present
+11300000,NONE,LNIC,LB,2026-01-21,cwf,Duplicate of 203627
+24758912,NONE,LNIC,LB,2026-01-21,cwf,Crossing does not exist
+24761935,OBS,LNIC,LB,2026-01-21,cwf,
