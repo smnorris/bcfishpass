@@ -2,7 +2,8 @@
 set -euxo pipefail
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
+WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method WHERE watershed_group_code IN
+ ('VICT','COWN','SANJ')")
 
 # load
 parallel $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS

@@ -6,9 +6,9 @@ WITH grade AS
     -- elevation at vertex (from subquery below)
     ROUND(sv.elevation::numeric, 2) as elevation_a,
     -- interpolation of elevation 100m upstream of the vertex
-    ROUND((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 25)))).geom))::numeric, 2) as elevation_b,
+    ROUND((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 50)))).geom))::numeric, 2) as elevation_b,
     -- gradient between the two points on the stream
-    ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 25)))).geom) - sv.elevation) / 25)::numeric, 4) as gradient
+    ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 50)))).geom) - sv.elevation) / 50)::numeric, 4) as gradient
   FROM (
     -- get elevation of every vertex on the given stream
     SELECT
@@ -25,8 +25,8 @@ WITH grade AS
   ) as sv
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
   ON sv.blue_line_key = s2.blue_line_key AND
-     sv.downstream_route_measure + 25 >= s2.downstream_route_measure AND -- find stream segment 25m upstream of given segment
-     sv.downstream_route_measure + 25 < s2.upstream_route_measure
+     sv.downstream_route_measure + 50 >= s2.downstream_route_measure AND -- find stream segment 50m upstream of given segment
+     sv.downstream_route_measure + 50 < s2.upstream_route_measure
   WHERE sv.edge_type IN (1000,1050,1100,1150,1250,1350,1410,2000,2300)
   AND s2.edge_type != 6010
 ),
@@ -37,7 +37,7 @@ gradeclass AS
   SELECT
     blue_line_key,
     downstream_route_measure,
-    downstream_route_measure + 25 as upstream_route_measure,
+    downstream_route_measure + 50 as upstream_route_measure,
     round(gradient * 100)::integer as grade_class
   FROM grade
   ORDER BY blue_line_key, downstream_route_measure
