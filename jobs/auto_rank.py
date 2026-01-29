@@ -146,7 +146,8 @@ def buildCondition(wcrp):
         wcrp_schema = "bowr_ques_carr"
     elif wcrp == "tuzistol_tah":
         condition = """
-            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'STUR')
+            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'STUR','CHUK','DRIR','FINA','FIRE','INGR','LOMI','MESO','MSKE',
+'NATR','PARA','SUST','TOOD','UOMI','USKE')
         """
         wcrp_schema = "tuzistol_tah"
 
