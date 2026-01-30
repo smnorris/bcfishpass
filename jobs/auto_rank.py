@@ -146,8 +146,7 @@ def buildCondition(wcrp):
         wcrp_schema = "bowr_ques_carr"
     elif wcrp == "tuzistol_tah":
         condition = """
-            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'STUR','CHUK','DRIR','FINA','FIRE','INGR','LOMI','MESO','MSKE',
-'NATR','PARA','SUST','TOOD','UOMI','USKE')
+            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL','DRIR')
         """
         wcrp_schema = "tuzistol_tah"
 
@@ -156,6 +155,13 @@ def buildCondition(wcrp):
             c."watershed_group_code" IN ('UDEN', 'LDEN')
             """
         wcrp_schema = "ulkatcho"
+    
+    elif wcrp == "takla":
+        condition = """
+            c."watershed_group_code" IN ('CHUK','DRIR','FINA','FIRE','INGR','LOMI','LTRE','MESO','MIDR','MSKE', 'NATR','PARA','SUST','TAKL','TOOD','UOMI','USKE','UTRE')
+            """
+        wcrp_schema = "takla"
+
     else:
         # In all other cases, just the watershed group code
         condition = f"""
@@ -592,6 +598,7 @@ def main():
         "morr",
         "tuzistol_tah",
         "ulkatcho",
+        "takla"
     ]
     wcrp_process = args.wcrp if args.wcrp else wcrp_list #define wcrps to process whether specific or all
 
