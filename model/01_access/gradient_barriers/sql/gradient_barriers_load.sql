@@ -1,4 +1,4 @@
-WITH grade100m AS
+WITH grade AS
 (
   SELECT
     sv.blue_line_key,
@@ -6,9 +6,9 @@ WITH grade100m AS
     -- elevation at vertex (from subquery below)
     ROUND(sv.elevation::numeric, 2) as elevation_a,
     -- interpolation of elevation 100m upstream of the vertex
-    ROUND((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 100)))).geom))::numeric, 2) as elevation_b,
+    ROUND((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + :'grade_dist'::int )))).geom))::numeric, 2) as elevation_b,
     -- gradient between the two points on the stream
-    ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + 100)))).geom) - sv.elevation) / 100)::numeric, 4) as gradient
+    ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + :'grade_dist'::int )))).geom) - sv.elevation) / 100)::numeric, 4) as gradient
   FROM (
     -- get elevation of every vertex on the given stream
     SELECT
@@ -25,8 +25,8 @@ WITH grade100m AS
   ) as sv
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
   ON sv.blue_line_key = s2.blue_line_key AND
-     sv.downstream_route_measure + 100 >= s2.downstream_route_measure AND -- find stream segment 100m upstream of given segment
-     sv.downstream_route_measure + 100 < s2.upstream_route_measure
+     sv.downstream_route_measure + :'grade_dist'::int >= s2.downstream_route_measure AND -- find stream segment <length>m upstream of given segment
+     sv.downstream_route_measure + :'grade_dist'::int < s2.upstream_route_measure
   WHERE sv.edge_type IN (1000,1050,1100,1150,1250,1350,1410,2000,2300)
   AND s2.edge_type != 6010
 ),
@@ -37,7 +37,7 @@ gradeclass AS
   SELECT
     blue_line_key,
     downstream_route_measure,
-    downstream_route_measure + 100 as upstream_route_measure,
+    downstream_route_measure + :'grade_dist'::int as upstream_route_measure,
     -- create breaks at various intervals from 5-30pct
     -- (fish access models do not have to use all of these,
     -- but we might as well create them all to have on hand)
@@ -52,7 +52,7 @@ gradeclass AS
       WHEN gradient >= .30 THEN 30
       ELSE 0
     END as grade_class
-  FROM grade100m
+  FROM grade
   ORDER BY blue_line_key, downstream_route_measure
 ),
 
