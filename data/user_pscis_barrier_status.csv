@@ -1350,7 +1350,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 57596,BARRIER,HORS,MC,2025-07-25,Collapsed bridge has created log jam that is barrier to fish passage
 123937,POTENTIAL,HORS,MC,2025-07-25,Collapsed woodbox culvert is classified as a potential barrier
 195476,POTENTIAL,BULK,LB,2025-07-31,PSCIS notes (2014) indicate blockage at outlet
-198873,BARRIER,HORS,MC,2025-08-13,Biologist review. Has a duplicate PSCIS point 197762 
 198300,BARRIER,HORS,MC,2025-08-13,Biologist review
 196195,PASSABLE,TABR,LS,2025-07-22,"This crossing has been replaced with a bridge, based on aerial imagery review."
 196969,PASSABLE,LNIC,LB,2024-09-12,This crossing has been rehabilitated.
@@ -1358,3 +1357,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 124421,PASSABLE,BULK,LS,2025-11-20,This crossing has been removed and the road deactivated
 197882,BARRIER,LNIC,LB,2026-01-13,This crossing is considered a confirmed barrier by the working group.
 197884,BARRIER,LNIC,LB,2026-01-13,This crossing is considered a confirmed barrier by the working group.
+198873,BARRIER,HORS,MC,2026-01-29,Biologist review. Has a duplicate PSCIS point 197762 
+197762,BARRIER,HORS,MC,2026-01-29,Biologist review. Has a duplicate PSCIS point 198873 
+197883,PASSABLE,LNIC,LB,2026-01-30,this crossing is passable.
