@@ -8,7 +8,7 @@ WITH grade AS
     -- interpolation of elevation 100m upstream of the vertex
     ROUND((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + :'grade_dist'::int )))).geom))::numeric, 2) as elevation_b,
     -- gradient between the two points on the stream
-    ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + :'grade_dist'::int )))).geom) - sv.elevation) / 100)::numeric, 4) as gradient
+    ROUND(((ST_Z((ST_Dump((ST_LocateAlong(s2.geom, sv.downstream_route_measure + :'grade_dist'::int )))).geom) - sv.elevation) / :'grade_dist'::int )::numeric, 4) as gradient
   FROM (
     -- get elevation of every vertex on the given stream
     SELECT
@@ -25,33 +25,20 @@ WITH grade AS
   ) as sv
   INNER JOIN whse_basemapping.fwa_stream_networks_sp s2
   ON sv.blue_line_key = s2.blue_line_key AND
-     sv.downstream_route_measure + :'grade_dist'::int >= s2.downstream_route_measure AND -- find stream segment <length>m upstream of given segment
+     sv.downstream_route_measure + :'grade_dist'::int >= s2.downstream_route_measure AND -- find stream segment <grade_dist> upstream of given segment
      sv.downstream_route_measure + :'grade_dist'::int < s2.upstream_route_measure
   WHERE sv.edge_type IN (1000,1050,1100,1150,1250,1350,1410,2000,2300)
   AND s2.edge_type != 6010
 ),
 
--- note the slope classes of the vertices
+-- gradients are not binned, they are rounded to the nearest percentage integer and written to grade_class
 gradeclass AS
 (
   SELECT
     blue_line_key,
     downstream_route_measure,
     downstream_route_measure + :'grade_dist'::int as upstream_route_measure,
-    -- create breaks at various intervals from 5-30pct
-    -- (fish access models do not have to use all of these,
-    -- but we might as well create them all to have on hand)
-    CASE
-      WHEN gradient >= .05 AND gradient < .07 THEN 5
-      WHEN gradient >= .07 AND gradient < .10 THEN 7
-      WHEN gradient >= .10 AND gradient < .12 THEN 10
-      WHEN gradient >= .12 AND gradient < .15 THEN 12
-      WHEN gradient >= .15 AND gradient < .20 THEN 15
-      WHEN gradient >= .20 AND gradient < .25 THEN 20
-      WHEN gradient >= .25 AND gradient < .30 THEN 25
-      WHEN gradient >= .30 THEN 30
-      ELSE 0
-    END as grade_class
+    round(gradient * 100)::integer as grade_class
   FROM grade
   ORDER BY blue_line_key, downstream_route_measure
 ),
