@@ -24,3 +24,18 @@ Note that the /sources folder is only separate from the tagged scripts to make s
 
 Currently, no migration tooling is used and only one way migrations are supported.
 Note that tools like `squitch`, `flyway` or `alembic` could be used to make migrations safer.
+
+
+## dump schema
+
+Rather than applying all migrations, restoring from a dump works well. To create the dump:
+
+	pg_dump -Osx --schema bcfishpass -d bcfishpass -p 5432 -U <user> > bcfishpass_v<version>.sql
+
+And restore:
+
+    cat bcfishpass_v<version>.sql | psql $DATABASE_URL
+
+Ensure that a record is added that notes the version:
+
+	psql $DATABASE_URL -c "insert into bcfishpass.db_version (tab) values ("<version");"

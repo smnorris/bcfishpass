@@ -13,7 +13,7 @@ with barriers as
       geom
   from bcfishpass.barriers_gradient
   where watershed_group_code = :'wsg'
-  and barrier_type in ('GRADIENT_15', 'GRADIENT_20', 'GRADIENT_25', 'GRADIENT_30')
+  and barrier_type >= 'GRADIENT_30'
   union all
   select
       barriers_falls_id as barrier_id,
@@ -42,6 +42,21 @@ with barriers as
       geom
   from bcfishpass.barriers_subsurfaceflow
   where watershed_group_code = :'wsg'
+  union all
+  select
+      barriers_elevation_id as barrier_id,
+      barrier_type,
+      barrier_name,
+      linear_feature_id,
+      blue_line_key,
+      downstream_route_measure,
+      wscode_ltree,
+      localcode_ltree,
+      watershed_group_code,
+      geom
+  from bcfishpass.barriers_elevation
+  where watershed_group_code = :'wsg'
+  and barrier_type >= 'ELEVATION_1000'
 ),
 
 obs_upstr as
@@ -72,7 +87,7 @@ obs_upstr as
   -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
   left outer join bcfishpass.user_barriers_definite_control bc
   on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
-  where o.species_code in ('CH','CM','CO','PK','SK')
+  where o.species_code = 'CM'
   and bc.barrier_ind is null
 ),
 
@@ -82,7 +97,7 @@ obs_upstr_n as
     o.barrier_id,
     count(o.obs) as n_obs
   from obs_upstr o
-  where o.spp in ('CH','CM','CO','PK','SK')
+  where o.spp = 'CM'
   and o.obs_dt > date('1990-01-01')         -- only observations since 1990
   group by o.barrier_id
 ),
@@ -102,7 +117,7 @@ habitat as (
   and round(h.upstream_route_measure::numeric) >= round(s.downstream_route_measure::numeric)
   and round(h.upstream_route_measure::numeric) <= round(s.upstream_route_measure::numeric)
   where h.habitat_ind is true
-  and h.species_code in ('CH','CM','CO','PK','SK')
+  and h.species_code = 'CM'
   and s.watershed_group_code = :'wsg'
 ),
 
@@ -147,7 +162,7 @@ barriers_filtered as (
       array(
         select watershed_group_code
         from bcfishpass.wsg_species_presence
-        where ch is true or cm is true or co is true or pk is true or sk is true
+        where cm is true
       )
   )
   -- do not include gradient / falls / subsurface barriers with
@@ -155,14 +170,14 @@ barriers_filtered as (
   --    - confirmed habitat upstream
   and
         (
-          (o.n_obs is null or o.n_obs < 5) and
+          -- (o.n_obs is null or o.n_obs < 5) and -- ** excluded for testing of different gradients
           h.species_codes is null
         )
 )
 
-insert into bcfishpass.barriers_ch_cm_co_pk_sk
+insert into bcfishpass.barriers_cm
 (
-    barriers_ch_cm_co_pk_sk_id,
+    barriers_cm_id,
     barrier_type,
     barrier_name,
     linear_feature_id,
