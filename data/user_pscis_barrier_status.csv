@@ -1360,3 +1360,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 198873,BARRIER,HORS,MC,2026-01-29,Biologist review. Has a duplicate PSCIS point 197762 
 197762,BARRIER,HORS,MC,2026-01-29,Biologist review. Has a duplicate PSCIS point 198873 
 197883,PASSABLE,LNIC,LB,2026-01-30,this crossing is passable.
+126511,PASSABLE,HORS,MC,2026-02-06,Rehabilitated Structure
+57298,PASSABLE,HORS,MC,2026-02-06,Rehabilitated Structure
+126594,PASSABLE,HORS,MC,2026-02-06,Rehabilitated Structure
