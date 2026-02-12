@@ -5,37 +5,20 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WSGS=$($PSQL -AXt -c "SELECT watershed_group_code FROM bcfishpass.parameters_habitat_method")
 
 cd ..
-# load/report on 100m
+
+# load gradients to various bcfishpass.gradient_barriers_<length> tables
 psql $DATABASE_URL -c "truncate bcfishpass.gradient_barriers"
 parallel $PSQL -f sql/gradient_barriers_load.sql -v grade_dist=100 -v wsg={1} ::: $WSGS
-cd analysis
-psql $DATABASE_URL -f sql/01_obs_max_grade_dnstr.sql
-psql $DATABASE_URL -f sql/02_obs_grade_upstr.sql
-psql $DATABASE_URL -f sql/03_obs_max_grade_dnstr_dist_to_ocean.sql
-psql $DATABASE_URL -f sql/04_obs_dist_to_ocean.sql
-psql $DATABASE_URL -f sql/05_obs_grades_dnst.sql
-psql $DATABASE_URL -f sql/report_obs.sql --csv > fiss_observations_gradients_100m.csv
+psql $DATABASE_URL -c "create table bcfishpass.gradient_barriers_100 as select * from bcfishpass.gradient_barriers"
 
-# load/report on 50m
-cd ..
 psql $DATABASE_URL -c "truncate bcfishpass.gradient_barriers"
 parallel $PSQL -f sql/gradient_barriers_load.sql -v grade_dist=50 -v wsg={1} ::: $WSGS
-cd analysis
-psql $DATABASE_URL -f sql/01_obs_max_grade_dnstr.sql
-psql $DATABASE_URL -f sql/02_obs_grade_upstr.sql
-psql $DATABASE_URL -f sql/03_obs_max_grade_dnstr_dist_to_ocean.sql
-psql $DATABASE_URL -f sql/04_obs_dist_to_ocean.sql
-psql $DATABASE_URL -f sql/05_obs_grades_dnst.sql
-psql $DATABASE_URL -f sql/report_obs.sql --csv > fiss_observations_gradients_50m.csv
+psql $DATABASE_URL -c "create table bcfishpass.gradient_barriers_50 as select * from bcfishpass.gradient_barriers"
 
-# load/report on 25m
-cd ..
 psql $DATABASE_URL -c "truncate bcfishpass.gradient_barriers"
 parallel $PSQL -f sql/gradient_barriers_load.sql -v grade_dist=25 -v wsg={1} ::: $WSGS
+psql $DATABASE_URL -c "create table bcfishpass.gradient_barriers_25 as select * from bcfishpass.gradient_barriers"
+
+# report
 cd analysis
-psql $DATABASE_URL -f sql/01_obs_max_grade_dnstr.sql
-psql $DATABASE_URL -f sql/02_obs_grade_upstr.sql
-psql $DATABASE_URL -f sql/03_obs_max_grade_dnstr_dist_to_ocean.sql
-psql $DATABASE_URL -f sql/04_obs_dist_to_ocean.sql
-psql $DATABASE_URL -f sql/05_obs_grades_dnst.sql
-psql $DATABASE_URL -f sql/report_obs.sql --csv > fiss_observations_gradients_25m.csv
+psql $DATABASE_URL -f sql/compare_gradients_25_50_100m.sql --csv > fiss_observations_gradients_25_50_100.csv

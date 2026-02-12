@@ -15,4 +15,5 @@ BEGIN;
     primary key (observation_key)         
   );
 
+
 COMMIT;
