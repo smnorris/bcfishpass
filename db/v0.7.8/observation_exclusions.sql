@@ -15,5 +15,6 @@ BEGIN;
     primary key (observation_key)         
   );
 
-
+  ALTER TABLE bcfishpass.observations add column release boolean;
+  
 COMMIT;

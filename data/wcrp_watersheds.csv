@@ -18,8 +18,11 @@ MIDR,t,,,,t,,,,tuzistol_tah
 UTRE,t,,,,t,,,,tuzistol_tah
 LTRE,t,,,,t,,,,tuzistol_tah
 STUL,t,,,,t,,,,tuzistol_tah
-STUR,t,,,,t,,,,tuzistol_tah
 DRIR,t,,,,t,,,,tuzistol_tah
+STUR,t,,t,,t,t,,,takla
+MSKE,t,,t,,t,t,,,takla
+SUST,t,,t,,t,t,,,takla
+USKE,t,,t,,t,t,,,takla
 NICL,t,,t,,,t,,,
 GUIC,t,,t,,,t,,,
 COTR,t,,t,,t,,,,bowr_ques_carr

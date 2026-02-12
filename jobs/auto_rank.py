@@ -146,7 +146,7 @@ def buildCondition(wcrp):
         wcrp_schema = "bowr_ques_carr"
     elif wcrp == "tuzistol_tah":
         condition = """
-            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'STUR')
+            c."watershed_group_code" IN ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL','DRIR')
         """
         wcrp_schema = "tuzistol_tah"
 
@@ -155,6 +155,13 @@ def buildCondition(wcrp):
             c."watershed_group_code" IN ('UDEN', 'LDEN')
             """
         wcrp_schema = "ulkatcho"
+    
+    elif wcrp == "takla":
+        condition = """
+            c."watershed_group_code" IN ('MSKE','SUST','USKE', 'STUR')
+            """
+        wcrp_schema = "takla"
+
     else:
         # In all other cases, just the watershed group code
         condition = f"""
@@ -221,14 +228,14 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
             where (cv.barrier_status != 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND cv.all_spawningrearing_km  != 0
-            AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL'))
+            AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL', 'UNKWOWN'))
             AND (tt.structure_list_status not in ('Excluded structure')
 		        OR tt.structure_list_status is null)
             AND {condition})
             OR (tt.structure_list_status = 'Rehabilitated barrier' AND cv.barrier_status = 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL
             AND cv.all_spawningrearing_km  != 0
-            AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL'))
+            AND NOT (cv.crossing_subtype_code IS NOT NULL AND cv.crossing_subtype_code = 'FORD' AND cv.barrier_status NOT IN ('BARRIER', 'POTENTIAL', 'UNKWOWN'))
             AND (tt.structure_list_status not in ('Excluded structure')
 		        OR tt.structure_list_status is null)
             AND {condition});
@@ -591,6 +598,7 @@ def main():
         "morr",
         "tuzistol_tah",
         "ulkatcho",
+        "takla"
     ]
     wcrp_process = args.wcrp if args.wcrp else wcrp_list #define wcrps to process whether specific or all
 
