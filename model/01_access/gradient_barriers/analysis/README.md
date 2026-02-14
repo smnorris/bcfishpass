@@ -16,17 +16,9 @@ On a bcfishpass db at tag `v0.8.0`:
 	
 ## outputs
 
-Three .csv files are generated, with one row per salmon/steelhead observation:
+Three .csv files are generated:
 
-| column                            | description                   |
-|-----------------------------------| ----------------------------- |
-| observation_key                   | observation unique identifier |
-| species_code                      | observation species code |
-| watershed_group_code              | watershed group code at observation |
-| stream_order                      | stream order at observation |
-| elevation                         | elevation at observation |
-| obs_dist_to_ocean                 | distance from observation downstream to ocean |
-| upstr100m_grade                   | maximum gradient within 100m upstream of observation |
-| dnstr_max_grade                   | maximum gradient (>5%) downstream of observation |
-| dnstr_max_grade_dist_to_ocean_km  | distance from start (downstream end) of max gradient downstream of observation, downstream to the ocean |
-  
+observations_max_gradients_downstream - all salmon/steelhead observations (non releases) and max downstream gradient
+salmon_uniqueobslocation_max_gradients_downstream - distinct species/location for salmon and max dnstr gradient
+steelhead_uniqueobslocation_max_gradients_downstream - distinct location/adult flag for steelhead and max dnstr gradient
+
