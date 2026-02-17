@@ -31,6 +31,14 @@ jq -c '.[]' bcgw_sources.json | while read item; do
           exit 1
         fi
 
+      # if successful, update the version/etag of the source in bcfishpass.log_replication
+      # eg INSERT INTO bcfishpass.log_replication (object_name, version_id, etag, replication_timestamp)
+      #    VALUES (%s, %s, %s, NOW())
+      #    ON CONFLICT (source_name) 
+      #    DO UPDATE SET version_id = %s, etag = %s, replication_timestamp = NOW()
+
+      # this is probably better implemented / more maintainable in a python script?
+
     fi
 done
 
