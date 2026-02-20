@@ -15281,7 +15281,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17100897,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100896,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100895,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
-17100009,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100011,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100012,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100014,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
@@ -21578,9 +21577,9 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12600263,NONE,LTRE,MC,2026-02-19,Tracking table review,No structure
 19301201,NONE,STUL,MC,2026-02-19,Tracking table review,Deactivated road
 1501683,NONE,BOWR,MC,2026-02-19,Tracking table review,"Water flowing well with large stream, no barrier in sight. Could not reach due to extremely steep bank and deep valley but no crossing visible from main road."
-17100009,NONE,QUES,MC,2026-02-19,Tracking table review,No modeled habitat on this stream
+17100009,NONE,QUES,MC,2026-02-19,Tracking table review,Stream appears to end at highway - no crossing
 17100874,NONE,QUES,MC,2026-02-19,Tracking table review,No structure
-17100882,NONE,QUES,MC,2026-02-19,Tracking table review,crossing located on old trail. No barrier.
+17100882,NONE,QUES,MC,2026-02-19,Tracking table review,crossing located on old trail. No crossing.
 17102109,NONE,QUES,MC,2026-02-19,Tracking table review,Tiny trail where road is supposed to be. May just be a game trail at this point. Small amount of water crosses trail but no structure present
 17102110,NONE,QUES,MC,2026-02-19,Tracking table review,Tiny trail where road is supposed to be. May just be a game trail at this point. Small amount of water crosses trail but no structure present
 17102456,NONE,QUES,MC,2026-02-19,Tracking table review,No structure seen at this point
