@@ -29,9 +29,11 @@ do
   # dump
   # Note that proprietary discharge is used for select watershed groups, exclude it from dumps
   # (mad_m3s will be null for BULK/HORS/ELKR)
+  mkdir -p $wcrp
+
   ogr2ogr \
     -f GPKG \
-    streams_$wcrp.gpkg.zip \
+    $wcrp/streams.gpkg.zip \
     PG:$DATABASE_URL \
     -nln streams \
     -sql "SELECT
@@ -104,7 +106,7 @@ do
 
   ogr2ogr \
     -f GPKG \
-    crossings_$wcrp.gpkg.zip \
+    $wcrp/crossings.gpkg.zip \
     PG:$DATABASE_URL \
     --debug ON \
     -nln crossings \
@@ -195,10 +197,10 @@ do
       WHERE w.wcrp = '$wcrp'"
 
   # upload
-  azcopy copy crossings_$wcrp.gpkg.zip \
-    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/crossings_$wcrp.gpkg.zip
-  azcopy copy streams_$wcrp.gpkg.zip \
-    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/streams_$wcrp.gpkg.zip
+  azcopy copy $wcrp/crossings.gpkg.zip \
+    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/$wcrp/crossings.gpkg.zip
+  azcopy copy $wcrp/streams.gpkg.zip \
+    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/$wcrp/streams.gpkg.zip
 
 done
 
