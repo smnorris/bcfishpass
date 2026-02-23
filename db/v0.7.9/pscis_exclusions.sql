@@ -138,4 +138,5 @@ BEGIN;
   where c.stream_crossing_id NOT IN (199427,197789,197838,197861,197805)
   order by c.aggregated_crossings_id, s.downstream_route_measure;
 
+  -- recreate dependent views
 COMMIT;  
