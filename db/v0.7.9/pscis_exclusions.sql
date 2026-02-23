@@ -1,11 +1,8 @@
 -- wcrp crossings
 BEGIN;
 
-  -- drop dependent views first
-
-
-  -- drop wcrp crossings view
-  DROP MATERIALIZED VIEW bcfishpass.crossings_wcrp_vw;
+  -- drop wcrp crossings view and any dependent objects (these are managed separately by CWF)
+  DROP MATERIALIZED VIEW bcfishpass.crossings_wcrp_vw CASCADE;
 
   CREATE MATERIALIZED VIEW bcfishpass.crossings_wcrp_vw as
 
@@ -138,5 +135,4 @@ BEGIN;
   where c.stream_crossing_id NOT IN (199427,197789,197838,197861,197805)  -- PSCIS crossings to exclude from CWF reporting/mapping
   order by c.aggregated_crossings_id, s.downstream_route_measure;
 
-  -- recreate dependent views
 COMMIT;  
