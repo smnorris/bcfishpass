@@ -15281,7 +15281,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17100897,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100896,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100895,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
-17100009,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100011,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100012,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100014,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
@@ -15952,7 +15951,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3502323,,COTR,KK,2022-03-11,Bing/Google/ESRI imagery,
 17102387,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17102388,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
-17102456,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17101288,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17101284,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17101283,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
@@ -16013,12 +16011,10 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17100890,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100886,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100885,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
-17100882,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100880,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100879,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17104363,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100876,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
-17100874,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100873,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 3501106,,COTR,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100868,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
@@ -21048,7 +21044,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17102191,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen. "
 1501277,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No culvert, Low marshy ground on either side of road. No Channel. Small lake to south, wetland to north. Depression in road possibly from culvert removal."
 1501282,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No crossing, no passage issues. Fish in stream."
-17104186,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
 17100487,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
 1406051,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line
 1406095,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line. Leaving most downstream structure 1406093
@@ -21564,5 +21559,24 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11300000,NONE,LNIC,LB,2026-01-21,cwf,Duplicate of 203627
 24758912,NONE,LNIC,LB,2026-01-21,cwf,Crossing does not exist
 24761935,OBS,LNIC,LB,2026-01-21,cwf,
-1020000018,NONE,TAKL,MC,2026-01-22,Satellite imagery review,No crossing present
-1200000002,NONE,HORS,MC,2026-02-05,cwf,Structure does not exist
+20000018,NONE,TAKL,MC,2026-01-22,Satellite imagery review,No crossing present
+24735443,NONE,ELKR,MC,2026-02-19,Tracking table review,No crossing
+4605216,NONE,ELKR,MC,2026-02-19,Tracking table review,Crossing does not exist
+13500985,NONE,MIDR,MC,2026-02-19,Tracking table review,
+20000195,NONE,TAKL,MC,2026-02-19,Tracking table review,Some log jams present but do not impede flow
+24200092,NONE,UTRE,MC,2026-02-19,Tracking table review,"Old, deactivated road, grown in. No structure."
+20001718,NONE,TAKL,MC,2026-02-19,Tracking table review,No structure or evidence of past structure
+20000192,NONE,TAKL,MC,2026-02-19,Tracking table review,Deactivated bridge
+13500137,NONE,MIDR,MC,2026-02-19,Tracking table review,Deactivated road
+20001291,NONE,TAKL,MC,2026-02-19,Tracking table review,Deactivated bridge
+20001828,NONE,TAKL,MC,2026-02-19,Tracking table review,Deactivated bridge
+13500133,NONE,MIDR,MC,2026-02-19,Tracking table review,Deactivated road
+12600263,NONE,LTRE,MC,2026-02-19,Tracking table review,No structure
+19301201,NONE,STUL,MC,2026-02-19,Tracking table review,Deactivated road
+1501683,NONE,BOWR,MC,2026-02-19,Tracking table review,"Water flowing well with large stream, no barrier in sight. Could not reach due to extremely steep bank and deep valley but no crossing visible from main road."
+17100009,NONE,QUES,MC,2026-02-19,Tracking table review,Stream appears to end at highway - no crossing
+17100874,NONE,QUES,MC,2026-02-19,Tracking table review,No structure
+17100882,NONE,QUES,MC,2026-02-19,Tracking table review,crossing located on old trail. No crossing.
+17102109,NONE,QUES,MC,2026-02-19,Tracking table review,Tiny trail where road is supposed to be. May just be a game trail at this point. Small amount of water crosses trail but no structure present
+17102110,NONE,QUES,MC,2026-02-19,Tracking table review,Tiny trail where road is supposed to be. May just be a game trail at this point. Small amount of water crosses trail but no structure present
+17102456,NONE,QUES,MC,2026-02-19,Tracking table review,PSCIS crossing 203152 can be considered the crossing of interest at this location - this nearby road/structure do not really exist
