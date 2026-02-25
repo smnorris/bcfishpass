@@ -132,7 +132,7 @@ BEGIN;
   left outer join bcfishpass.streams s on c.linear_feature_id = s.linear_feature_id
   left outer join whse_basemapping.dbm_mof_50k_grid t ON ST_Intersects(c.geom, t.geom)
   left outer join bcfishpass.wcrp_ranked_barriers r ON c.aggregated_crossings_id = r.aggregated_crossings_id
-  where coalesce(c.stream_crossing_id, 0) NOT IN (199427,197789,197838,197861,197805) -- PSCIS crossings to exclude from CWF reporting/mapping
+  where coalesce(c.stream_crossing_id, 0) NOT IN (199427,197789,197838,197861,197805,125961,199428) -- PSCIS crossings to exclude from CWF reporting/mapping
   order by c.aggregated_crossings_id, s.downstream_route_measure;
 
 COMMIT;  
