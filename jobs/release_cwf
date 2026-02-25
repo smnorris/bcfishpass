@@ -631,7 +631,7 @@ for object_name in bcfishpass_crossings.gpkg.zip bcfishpass_streams.gpkg.zip bcf
   version_id=$(echo "$upload_result" | jq -r '.VersionId')
 
   $PSQL -c "INSERT INTO bcfishpass.log_objectstorage (model_run_id, object_name, version_id, etag)
-    SELECT 
+    SELECT
       model_run_id,
       '${object_name}' as object_name, 
       '${version_id}' as version_id, 

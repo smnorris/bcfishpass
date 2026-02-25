@@ -26,22 +26,18 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
         $source 2>&1)
         
-        if [[ "$output" == *"ERROR"* ]]; then
-          echo "Error detected in command output: $output"
-          exit 1
-        fi
+      if [[ "$output" == *"ERROR"* ]]; then
+        echo "Error detected in command output: $output"
+        exit 1
+      fi
 
-      # after successful ogr2ogr load (only reached if no ERROR in output)
+      # after successful ogr2ogr load, get metadata (only reached if no ERROR in output)
       object_key="bcdata/${source}.parquet"
-      metadata=$(aws s3api head-object \
-        --bucket bchamp \
-        --key "$object_key" \
-        --endpoint-url https://nrs.objectstore.gov.bc.ca \
-        --output json 2>&1)
+      response=$(curl -sI "https://nrs.objectstore.gov.bc.ca/bchamp/${object_key}")
+      etag=$(echo "$response" | grep -i '^etag:' | tr -d '"' | awk '{print $2}' | tr -d '\r')
+      version_id=$(echo "$response" | grep -i '^x-amz-version-id:' | awk '{print $2}' | tr -d '\r')
 
-      version_id=$(echo "$metadata" | jq -r '.VersionId // "null"')
-      etag=$(echo "$metadata" | jq -r '.ETag | gsub("\""; "")')  # strip surrounding quotes
-
+      # log version id / etag to db
       $PSQL -c "INSERT INTO bcfishpass.log_replication (object_name, version_id, etag, replication_timestamp)
         VALUES ('${source}', ${version_id}, '${etag}', NOW())
         ON CONFLICT (object_name)
