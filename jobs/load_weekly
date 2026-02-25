@@ -27,7 +27,7 @@ jq -c '.[]' bcgw_sources.json | while read item; do
 
       if [ "$stored_etag" == "$etag" ]; then
         echo "Data in cache for $source is equivalent to data in database - skipping load"
-        continue
+        continue # jumps to next item in the while loop, skipping the load/log below
       fi
 
       # load data - this can fail without an exit 1, capture stderr
