@@ -215,10 +215,35 @@ do
       '${etag}' as etag
     FROM bcfishpass.log
     ORDER BY model_run_id desc
-    LIMIT 1"
+    LIMIT 1
+    ON CONFLICT (model_run_id, object_name) DO UPDATE 
+    SET version_id = EXCLUDED.version_id, etag = EXCLUDED.etag;"
 
 done
 
+# also dump/archive the habitat summary, and log what model_run_id the summary is associated with
+$PSQL -c "select * from bcfishpass.wcrp_habitat_connectivity_status_vw" --csv > wcrp_habitat_connectivity_status_vw.csv
+object_name=wcrp_habitat_connectivity_status_vw.csv
+upload_result=$(az storage blob upload \
+--container-name bcfishpass \
+--name $object_name \
+--file $object_name \
+--overwrite \
+--output json)
+etag=$(echo "$upload_result" | jq -r '.etag | gsub("\""; "")')
+version_id=$(echo "$upload_result" | jq -r '.version_id // empty')
+
+$PSQL -c "INSERT INTO bcfishpass.log_objectstorage (model_run_id, object_name, version_id, etag)
+  SELECT 
+    model_run_id,
+    '${object_name}' as object_name, 
+    '${version_id}' as version_id, 
+    '${etag}' as etag
+  FROM bcfishpass.log
+  ORDER BY model_run_id desc
+  LIMIT 1
+  ON CONFLICT (model_run_id, object_name) DO UPDATE 
+  SET version_id = EXCLUDED.version_id, etag = EXCLUDED.etag;"
 
 
 # Dump *provincial* crossings, streams, and assessment watershed level reporting
