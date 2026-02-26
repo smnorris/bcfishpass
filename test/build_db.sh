@@ -41,6 +41,7 @@ cd jobs
 ./load_monthly
 ./load_weekly
 ./load_observations
+cd ../test
 
 # vaccum/analyze
 $PSQL -c "vacuum full analyze"

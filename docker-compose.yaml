@@ -15,8 +15,8 @@ services:
       retries: 5
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=bcfishpass_test
+      - POSTGRES_HOST_AUTH_METHOD=trust
   runner:
     build: docker/runner
     container_name: bcfishpass-runner
