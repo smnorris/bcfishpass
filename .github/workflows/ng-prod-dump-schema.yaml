@@ -1,4 +1,4 @@
-name: dump_schema
+name: ng-prod-dump-schema
 on:
   workflow_dispatch:
   push:
