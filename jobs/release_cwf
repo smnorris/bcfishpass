@@ -195,13 +195,55 @@ do
       WHERE w.wcrp = '$wcrp'"
 
   # upload
-  azcopy copy crossings_$wcrp.gpkg.zip \
-    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/crossings_$wcrp.gpkg.zip
-  azcopy copy streams_$wcrp.gpkg.zip \
-    https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/streams_$wcrp.gpkg.zip
+  #azcopy copy crossings_$wcrp.gpkg.zip https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/crossings_$wcrp.gpkg.zip
+  #azcopy copy streams_$wcrp.gpkg.zip https://cabdbcfishpassstorage.blob.core.windows.net/bcfishpass/streams_$wcrp.gpkg.zip
+  object_name=crossings_$wcrp.gpkg.zip
+  upload_result=$(az storage blob upload \
+  --container-name bcfishpass \
+  --name $object_name \
+  --file $object_name \
+  --overwrite \
+  --output json)
+  etag=$(echo "$upload_result" | jq -r '.etag | gsub("\""; "")')
+  version_id=$(echo "$upload_result" | jq -r '.version_id // empty')
+  
+  $PSQL -c "INSERT INTO bcfishpass.log_objectstorage (model_run_id, object_name, version_id, etag)
+    SELECT 
+      model_run_id,
+      '${object_name}' as object_name, 
+      '${version_id}' as version_id, 
+      '${etag}' as etag
+    FROM bcfishpass.log
+    ORDER BY model_run_id desc
+    LIMIT 1
+    ON CONFLICT (model_run_id, object_name) DO UPDATE 
+    SET version_id = EXCLUDED.version_id, etag = EXCLUDED.etag;"
 
 done
 
+# also dump/archive the habitat summary, and log what model_run_id the summary is associated with
+$PSQL -c "select * from bcfishpass.wcrp_habitat_connectivity_status_vw" --csv > wcrp_habitat_connectivity_status_vw.csv
+object_name=wcrp_habitat_connectivity_status_vw.csv
+upload_result=$(az storage blob upload \
+--container-name bcfishpass \
+--name $object_name \
+--file $object_name \
+--overwrite \
+--output json)
+etag=$(echo "$upload_result" | jq -r '.etag | gsub("\""; "")')
+version_id=$(echo "$upload_result" | jq -r '.version_id // empty')
+
+$PSQL -c "INSERT INTO bcfishpass.log_objectstorage (model_run_id, object_name, version_id, etag)
+  SELECT 
+    model_run_id,
+    '${object_name}' as object_name, 
+    '${version_id}' as version_id, 
+    '${etag}' as etag
+  FROM bcfishpass.log
+  ORDER BY model_run_id desc
+  LIMIT 1
+  ON CONFLICT (model_run_id, object_name) DO UPDATE 
+  SET version_id = EXCLUDED.version_id, etag = EXCLUDED.etag;"
 
 
 # Dump *provincial* crossings, streams, and assessment watershed level reporting
@@ -602,7 +644,26 @@ psql $DATABASE_URL -c "select
   pct_spawningrearing_salmon_st_access_b
 from bcfishpass.aw_linear_summary_current a" --csv > bcfishpass_streams_summary.csv
 
-# upload/make public
-aws s3 cp bcfishpass_crossings.gpkg.zip s3://bchamp --acl public-read
-aws s3 cp bcfishpass_streams.gpkg.zip s3://bchamp --acl public-read
-aws s3 cp bcfishpass_streams_summary.csv s3://bchamp --acl public-read
+# upload/make public/log
+for object_name in bcfishpass_crossings.gpkg.zip bcfishpass_streams.gpkg.zip bcfishpass_streams_summary.csv; do
+  upload_result=$(aws s3api put-object \
+    --bucket bchamp \
+    --key test/$object_name \
+    --body $object_name \
+    --acl public-read \
+    --output json)
+  etag=$(echo "$upload_result" | jq -r '.ETag | gsub("\""; "")')
+  version_id=$(echo "$upload_result" | jq -r '.VersionId')
+
+  $PSQL -c "INSERT INTO bcfishpass.log_objectstorage (model_run_id, object_name, version_id, etag)
+    SELECT
+      model_run_id,
+      '${object_name}' as object_name, 
+      '${version_id}' as version_id, 
+      '${etag}' as etag
+    FROM bcfishpass.log
+    ORDER BY model_run_id desc
+    LIMIT 1
+    ON CONFLICT DO NOTHING"  # should not be pk (model_run_id,object_name) conflicts, but do not load if there are 
+
+done
