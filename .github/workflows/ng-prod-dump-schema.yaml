@@ -1,0 +1,41 @@
+name: ng-prod-dump-schema
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_HOST: ${{ secrets.SSH_HOST }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ENDPOINT_URL: https://nrs.objectstore.gov.bc.ca
+  AWS_S3_ENDPOINT: nrs.objectstore.gov.bc.ca
+  AWS_VIRTUAL_HOSTING: FALSE
+  AWS_EC2_METADATA_DISABLED: True
+  CPL_VSISTDIN_BUFFER_LIMIT: -1
+concurrency:
+  group: ng-prod
+jobs:
+  dump-schema:
+    runs-on: ubuntu-latest
+    environment: ng-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Dump schema
+        run: |
+          jobs/connect
+          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+          pg_dump $DATABASE_URL -n bcfishpass -sxO > bcfishpass.sql
+          aws s3api put-object \
+            --bucket bchamp \
+            --key bcfishpass.sql \
+            --body bcfishpass.sql \
+            --acl public-read \
+            --tagging "version=$(git describe)" 
+            

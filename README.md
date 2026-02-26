@@ -54,9 +54,9 @@ If you have shut down Docker or the container, start it up again with this comma
 
     docker-compose up -d
 
-Connect to the db from your host OS via the port specified in `docker-compose.yml`:
+Connect to the db from your host OS (the port used can be modified in `docker-compose.yml`):
 
-    psql -p 8001 -U postgres bcfishpass
+    psql -p 8000 -U postgres bcfishpass_test  # (password is postgres)
 
 Stop the containers (without deleting):
 
@@ -66,7 +66,7 @@ Delete the containers:
 
     docker compose down
 
-To build/load/dump a small database for development/testing:
+To build/load/dump a database for development/testing:
 
     docker compose up -d
     docker compose run --rm runner test/build_db.sh
