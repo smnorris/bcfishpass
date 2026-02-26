@@ -27,8 +27,10 @@ cd db/sources; ./migrate.sh; cd ..
 # ------
 # load latest bcfishpass schema
 # ------
-# todo - curl the latest sql
-psql $DATABASE_URL -f bcfishpass.sql # don't stop on errors, they will be minor
+# show version of the bcfishpass schema
+aws s3api get-object-tagging --bucket bchamp --key bcfishpass.sql --no-sign-request 
+# load the schema
+curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql $DATABASE_URL
 
 # ------
 # load species codes, required for bcfishpass table constraints
