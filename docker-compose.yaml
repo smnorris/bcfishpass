@@ -24,6 +24,11 @@ services:
       - "./:/home/bcfishpass"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/bcfishpass_test
+      - AWS_ENDPOINT_URL=https://nrs.objectstore.gov.bc.ca
+      - AWS_S3_ENDPOINT=nrs.objectstore.gov.bc.ca
+      - AWS_VIRTUAL_HOSTING=FALSE
+      - AWS_EC2_METADATA_DISABLED=true
+      - CPL_VSISTDIN_BUFFER_LIMIT=-1
     depends_on:
       db:
         condition: service_healthy
