@@ -6196,9 +6196,7 @@
 356362330,3815,3915,MIDR,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356362330,3815,3915,MIDR,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356362363,46.81,5213.5,HARR,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,0,8944,LNIC,CO,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
 356362373,0,100,LNIC,ST,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
-356362373,0,8944,LNIC,CH,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
 356362384,339,439,LFRA,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356362384,3361,3461,LFRA,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 356362393,2234,2334,CHIR,SK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -15431,6 +15429,9 @@
 356336173,363,1921,LNIC,CO,rearing,f,LB,2026-01-30,,
 356122539,139,1041,SHUL,CO,rearing,f,LB,2026-02-20,,
 356240232,1427,1445,SHUL,CO,rearing,f,LB,2026-02-20,,
+356362373,0,8935,LNIC,CO,spawning,t,LB,2026-02-24,cwf,
+356362373,4281,8463,LNIC,CO,rearing,t,LB,2025-02-24,cwf,
+356362373,0,8271,LNIC,CH,spawning,t,LB,2026-02-24,cwf,
 356240232,1427,1445,SHUL,CO,spawning,f,LB,2026-02-24,"low quality habitat, excluded from model",
 356302405,525,2618,HORS,CO,rearing,f,MC,2026-02-25,No habitat,
 356208196,417,849,HORS,CO,rearing,f,MC,2026-02-25,No habitat,
