@@ -46,6 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#modelling-workflow-for-connectivity-remediation">Modelling workflow for connectivity remediation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_model_access.html">Model access</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_model_habitat_linear.html">Model linear spawning/rearing habitat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_model_habitat_lateral.html">Model lateral habitat (DRAFT)</a></li>
@@ -108,6 +109,29 @@
 <li><p><a class="reference external" href="https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage">Fish Passage Technical Working Group (FPTWG)</a> and the “Strategic Approach” to barrier assessment and remediation</p></li>
 <li><p><a class="reference external" href="https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf">Effects of rail infrastructure on Pacific salmon and steelhead habitat connectivity in British Columbia</a>, Rebellato et al (2024)</p></li>
 </ul>
+</section>
+<section id="modelling-workflow-for-connectivity-remediation">
+<h1>Modelling workflow for connectivity remediation<a class="headerlink" href="#modelling-workflow-for-connectivity-remediation" title="Link to this heading"></a></h1>
+<p>Using bcfishpass is best as an iterative process - field data and local knowledge improve and update the model over time.</p>
+<p>A workflow for planning remediation of stream connectivity within a watershed would look like this:</p>
+<ol class="arabic simple">
+<li><p>Select the spatial scope and species</p></li>
+<li><p>Run initial models in bcfishpass to model habitat for focal species and identify which structures disconnect habitat</p></li>
+<li><p>Refine models by:</p>
+<ul class="simple">
+<li><p>manually incorporating any available local datasets or reports</p></li>
+<li><p>completing satellite imagery QA/QC of structures that are downstream of habitat to exclude any that are clearly bridges or do not exist</p></li>
+<li><p>complete QA/QC of PSCIS assessment data on the remaining structures (e.g., to remove duplicates, and ensure that they are ‘snapped’ to the correct streams)</p></li>
+</ul>
+</li>
+<li><p>Re-run the models after applying the corrections above</p></li>
+<li><p>Review updated model outputs with local knowledge holders (trib-by-trib reviews) and make any corrections to habitat and structure data that they apply</p></li>
+<li><p>Re-run the models after applying corrections from local knowledge holders, and complete QA/QC of model outputs</p></li>
+<li><p>Summarize the updated model outputs and use them to plan and prioritize actions</p></li>
+<li><p>Complete barrier assessments, habitat confirmations, and barrier rehabilitation projects (and load results to PSCIS)</p></li>
+<li><p>Incorporate field results (including through PSCIS) and update the models</p></li>
+</ol>
+<p>Repeat steps 7 - 9 as required.</p>
 </section>
 
 
