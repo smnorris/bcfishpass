@@ -37,3 +37,25 @@ For more background and references, see:
 
 - [Fish Passage Technical Working Group (FPTWG)](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/fish-passage) and the "Strategic Approach" to barrier assessment and remediation  
 - [Effects of rail infrastructure on Pacific salmon and steelhead habitat connectivity in British Columbia](https://cwf-fcf.org/en/resources/research-papers/BC_report_formatted_final.pdf), Rebellato et al (2024)
+
+
+# Modelling workflow for connectivity remediation
+
+Using bcfishpass is best as an iterative process - field data and local knowledge improve and update the model over time.
+
+A workflow for planning remediation of stream connectivity within a watershed would look like this:
+
+1. Select the spatial scope and species
+2. Run initial models in bcfishpass to model habitat for focal species and identify which structures disconnect habitat
+3. Refine models by:
+	- manually incorporating any available local datasets or reports
+	- completing satellite imagery QA/QC of structures that are downstream of habitat to exclude any that are clearly bridges or do not exist
+	- complete QA/QC of PSCIS assessment data on the remaining structures (e.g., to remove duplicates, and ensure that they are ‘snapped’ to the correct streams)
+4. Re-run the models after applying the corrections above
+5. Review updated model outputs with local knowledge holders (trib-by-trib reviews) and make any corrections to habitat and structure data that they apply
+6. Re-run the models after applying corrections from local knowledge holders, and complete QA/QC of model outputs
+7. Summarize the updated model outputs and use them to plan and prioritize actions
+8. Complete barrier assessments, habitat confirmations, and barrier rehabilitation projects (and load results to PSCIS)
+9. Incorporate field results (including through PSCIS) and update the models
+
+Repeat steps 7 - 9 as required.
