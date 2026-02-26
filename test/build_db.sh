@@ -49,4 +49,4 @@ $PSQL -c "vacuum full analyze"
 $PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
 
 # optionally, dump to local file for quicker re-creation of db as needed (vs reload of FWA)
-pg_dump -Fc $DATABASE_URL > bcfishpass_test.dump
+# pg_dump -Fc $DATABASE_URL > bcfishpass_test.dump

@@ -1,14 +1,13 @@
 #!/bin/bash
 set -euxo pipefail
 
-# restore from dump as required
+# if test db is dumped to file, restore from dump as required
 # pg_restore -Cd $DATABASE_URL bcfishpass_test.dump
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-$PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
+# $PSQL -c "ALTER DATABASE bcfishpass_test SET search_path TO public,whse_basemapping,usgs,hydrosheds"
 
 # load parameters/data
-cd ..
 cp parameters/example_testing/*csv parameters
 jobs/load_csv
 jobs/load_modelled_stream_crossings
@@ -23,5 +22,3 @@ jobs/model_01_prep
 jobs/model_02_access_natural
 jobs/model_03_access_anthropgenic
 jobs/model_04_habitat_linear
-
-cd test
