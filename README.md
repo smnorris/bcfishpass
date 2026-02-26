@@ -66,7 +66,7 @@ Delete the containers:
 
     docker compose down
 
-To build/load/dump a small database for development/testing:
+To build/load/dump a database for development/testing:
 
     docker compose up -d
     docker compose run --rm runner test/build_db.sh

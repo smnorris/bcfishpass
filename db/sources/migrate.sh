@@ -7,6 +7,9 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 # create required schemas
 $PSQL -f sql/schemas.sql
 
+# define bcfishobs
+$PSQL -f sql/bcfishobs.sql
+
 # define cabd
 $PSQL -f sql/cabd.sql
 
