@@ -14,16 +14,21 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import datetime
+import os
+import subprocess
 
 # -- Project information -----------------------------------------------------
-
+year = datetime.date.today().year
 project = 'bcfishpass'
-copyright = '2025, bcfishpass contributors'
+copyright = f'{year}, bcfishpass contributors'
 author = 'Simon Norris, bcfishpass contributors'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.7.2'
-
+release = subprocess.check_output(
+    ["git", "describe", "--tags"],
+    cwd=os.path.dirname(__file__)
+).decode().strip()
 
 # -- General configuration ---------------------------------------------------
 
