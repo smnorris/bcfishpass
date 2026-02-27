@@ -31,5 +31,3 @@ Any rights in individual contents of the database are licensed under the [Databa
 - [Canadian Aquatic Barriers Database](https://cabd-docs.netlify.app/docs_user/docs_user_data_sources)
 - [Gridded Hydrologic Model Output (PCIC)](https://www.uvic.ca/pcic/data-analysis-tools/data-portal/hydrology-gridded/index.php)
 - [Climate BC](https://climatebc.ca/)
-
-t
