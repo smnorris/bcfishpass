@@ -16,7 +16,6 @@
 
 import datetime
 import os
-import subprocess
 
 # -- Project information -----------------------------------------------------
 year = datetime.date.today().year
@@ -25,11 +24,8 @@ copyright = f'{year}, bcfishpass contributors'
 author = 'Simon Norris, bcfishpass contributors'
 
 # The full version, including alpha/beta/rc tags
-release = subprocess.check_output(
-    ["git", "describe", "--tags"],
-    cwd=os.path.dirname(__file__)
-).decode().strip()
-
+release = os.environ.get("VERSION", "unknown")
+version = release
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

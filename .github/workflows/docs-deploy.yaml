@@ -4,25 +4,23 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'docs/**'
     tags:
       - 'v*'
 jobs:
   docs-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: erpcya/sphinx-action@feature/#update-sphinx-base-image
+    - uses: actions/checkout@v4
       with:
-        pre-build-command: "pip install sphinx_rtd_theme"
-        docs-folder: "docs/"
-        build-command: "sphinx-build -b html . _build/html"
-    - uses: erpcya/sphinx-action@feature/#update-sphinx-base-image
-      with:
-        pre-build-command: "pip install sphinx_rtd_theme"
-        docs-folder: "docs/"
-        build-command: "sphinx-build -b epub . _build/epub"
+        fetch-depth: 0
+    - name: Set version
+      run: echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+    - name: Install dependencies
+      run: pip install sphinx sphinx_rtd_theme
+    - name: Build HTML
+      run: sphinx-build -b html docs/ docs/_build/html
+    - name: Build EPUB
+      run: sphinx-build -b epub docs/ docs/_build/epub
     - name: Commit documentation changes
       run: |
         git clone https://github.com/${{ github.repository }}.git --branch gh-pages --single-branch gh-pages
