@@ -13,9 +13,24 @@ jq -c '.[]' bcgw_sources.json | while read item; do
     schedule=$(jq -r '.schedule' <<< "$item")
     source=$(jq -r '.source' <<< "$item")
     if [ "$schedule" == "W" ] ; then
+      
       echo "Loading $source from cache"
 
-      # this can fail without an exit 1, capture stderr
+      # get metadata first
+      object_key="bcdata/${source}.parquet"
+      response=$(curl -sI "https://nrs.objectstore.gov.bc.ca/bchamp/${object_key}")
+      etag=$(echo "$response" | grep -i '^etag:' | tr -d '"' | awk '{print $2}' | tr -d '\r')
+      version_id=$(echo "$response" | grep -i '^x-amz-version-id:' | awk '{print $2}' | tr -d '\r')
+
+      # query log to find current etag of source data in db, do not reload if it matches etag on s3
+      stored_etag=$($PSQL -t -c "SELECT etag FROM bcfishpass.log_replication WHERE object_name = '${source}'" | tr -d ' ')
+
+      if [ "$stored_etag" == "$etag" ]; then
+        echo "Data in cache for $source is equivalent to data in database - skipping load"
+        continue # jumps to next item in the while loop, skipping the load/log below
+      fi
+
+      # load data - this can fail without an exit 1, capture stderr
       output=$(ogr2ogr -f PostgreSQL \
         "PG:$DATABASE_URL" \
         --config OGR_TRUNCATE=YES \
@@ -26,10 +41,16 @@ jq -c '.[]' bcgw_sources.json | while read item; do
         /vsicurl/https://nrs.objectstore.gov.bc.ca/bchamp/bcdata/$source.parquet \
         $source 2>&1)
         
-        if [[ "$output" == *"ERROR"* ]]; then
-          echo "Error detected in command output: $output"
-          exit 1
-        fi
+      if [[ "$output" == *"ERROR"* ]]; then
+        echo "Error detected in command output: $output"
+        exit 1
+      fi
+
+      # after successful ogr2ogr load, log etag/version_id to db 
+      $PSQL -c "INSERT INTO bcfishpass.log_replication (object_name, version_id, etag, replication_timestamp)
+        VALUES ('${source}', '${version_id}', '${etag}', NOW())
+        ON CONFLICT (object_name)
+        DO UPDATE SET version_id = EXCLUDED.version_id, etag = EXCLUDED.etag, replication_timestamp = NOW();"
 
     fi
 done

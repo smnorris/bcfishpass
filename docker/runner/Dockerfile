@@ -24,11 +24,14 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && apt-get -qq install -y --no-install-recommends python3-psycopg2 \
     && apt-get -qq install -y --no-install-recommends openssh-client \
     && apt-get -qq install -y --no-install-recommends autossh \
+    && apt-get -qq install -y --no-install-recommends less \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.22.21.zip" -o "awscliv2.zip" \
+RUN ARCH=$(uname -m) \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}-2.22.21.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
-    && ./aws/install
+    && ./aws/install \
+    && rm -rf awscliv2.zip aws
 
 WORKDIR /home/bcfishpass
 
