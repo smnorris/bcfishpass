@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS obs_max_grade_dnstr_100;
+DROP TABLE IF EXISTS obs_max_grade_dnstr_100 cascade;
 
 CREATE TABLE obs_max_grade_dnstr_100 AS
   SELECT DISTINCT ON (a.observation_key)
@@ -35,7 +35,7 @@ CREATE TABLE obs_max_grade_dnstr_100 AS
 ALTER TABLE obs_max_grade_dnstr_100 ADD primary key (observation_key);
 
 
-DROP TABLE IF EXISTS obs_max_grade_dnstr_50;
+DROP TABLE IF EXISTS obs_max_grade_dnstr_50 cascade;
 
 CREATE TABLE obs_max_grade_dnstr_50 AS
   SELECT DISTINCT ON (a.observation_key)
@@ -72,7 +72,7 @@ CREATE TABLE obs_max_grade_dnstr_50 AS
 ALTER TABLE obs_max_grade_dnstr_50 ADD primary key (observation_key);
 
 
-DROP TABLE IF EXISTS obs_max_grade_dnstr_25;
+DROP TABLE IF EXISTS obs_max_grade_dnstr_25 cascade;
 
 
 CREATE TABLE obs_max_grade_dnstr_25 AS
@@ -112,7 +112,7 @@ ALTER TABLE obs_max_grade_dnstr_25 ADD primary key (observation_key);
 
 
 
-DROP TABLE IF EXISTS obs_max_grade_dnstr_dist_to_ocean_100;
+DROP TABLE IF EXISTS obs_max_grade_dnstr_dist_to_ocean_100 cascade;
 
 CREATE table obs_max_grade_dnstr_dist_to_ocean_100 AS
 with max_dnstr_gradient_locations as (
@@ -142,7 +142,7 @@ ALTER TABLE obs_max_grade_dnstr_dist_to_ocean_100 ADD primary key (max_gradient_
 
 
 
-DROP TABLE IF EXISTS obs_max_grade_dnstr_dist_to_ocean_50;
+DROP TABLE IF EXISTS obs_max_grade_dnstr_dist_to_ocean_50 cascade;
 
 CREATE table obs_max_grade_dnstr_dist_to_ocean_50 AS
 with max_dnstr_gradient_locations as (
@@ -171,7 +171,7 @@ LEFT JOIN LATERAL
 ALTER TABLE obs_max_grade_dnstr_dist_to_ocean_50 ADD primary key (max_gradient_id);
 
 
-DROP TABLE IF EXISTS obs_max_grade_dnstr_dist_to_ocean_25;
+DROP TABLE IF EXISTS obs_max_grade_dnstr_dist_to_ocean_25 cascade;
 
 CREATE table obs_max_grade_dnstr_dist_to_ocean_25 AS
 with max_dnstr_gradient_locations as (

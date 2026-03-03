@@ -46,7 +46,7 @@ create index on bcfishpass.gradient_barriers_100 using btree (localcode_ltree);
 create index on bcfishpass.gradient_barriers_100 using gist (localcode_ltree);
 create index on bcfishpass.gradient_barriers_100 using btree (watershed_group_code);
 create index on bcfishpass.gradient_barriers_100 using btree (wscode_ltree);
-create index on bcfishpass.gradient_barriers_100 using gist (wscode_ltree)
+create index on bcfishpass.gradient_barriers_100 using gist (wscode_ltree);
 create index on bcfishpass.gradient_barriers_100 using gist (geom);"
 
 $PSQL -c "alter table bcfishpass.gradient_barriers_50 add PRIMARY KEY (gradient_barrier_id);
@@ -55,7 +55,7 @@ create index on bcfishpass.gradient_barriers_50 using btree (localcode_ltree);
 create index on bcfishpass.gradient_barriers_50 using gist (localcode_ltree);
 create index on bcfishpass.gradient_barriers_50 using btree (watershed_group_code);
 create index on bcfishpass.gradient_barriers_50 using btree (wscode_ltree);
-create index on bcfishpass.gradient_barriers_50 using gist (wscode_ltree)
+create index on bcfishpass.gradient_barriers_50 using gist (wscode_ltree);
 create index on bcfishpass.gradient_barriers_50 using gist (geom);"
 
 $PSQL -c "alter table bcfishpass.gradient_barriers_25 add PRIMARY KEY (gradient_barrier_id);
@@ -71,7 +71,7 @@ create index on bcfishpass.gradient_barriers_25 using gist (geom);"
 # report
 cd analysis
 $PSQL -f sql/observations_max_gradients_downstream.sql
-$PSQL -c "select * from observations_max_gradients_downstream_vw" > observations_max_gradients_downstream.csv
+$PSQL -c "select * from bcfishpass.observations_max_gradients_downstream_vw" --csv > observations_max_gradients_downstream.csv
 
 
 # also report on distinct locations
