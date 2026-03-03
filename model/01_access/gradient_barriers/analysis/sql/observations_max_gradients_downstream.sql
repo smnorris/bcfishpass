@@ -204,15 +204,12 @@ ALTER TABLE obs_max_grade_dnstr_dist_to_ocean_25 ADD primary key (max_gradient_i
 drop view if exists bcfishpass.observations_max_gradients_downstream_vw;
 create view bcfishpass.observations_max_gradients_downstream_vw as
 select
-    o.observation_key,
-    o.species_code,
-    o.life_stage,
+    o.*,
     CASE
       WHEN o.life_stage ilike '%ADULT%' then true
       WHEN o.life_stage ilike '%ADULT%' is false then false
       WHEN o.life_stage is null then NULL
     END AS adult,
-    o.watershed_group_code,
     mg100.stream_order,
     mg100.elevation,
     mg100.max_gradient_id as dnstr_max_grade_100_id,

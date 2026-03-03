@@ -71,7 +71,31 @@ create index on bcfishpass.gradient_barriers_25 using gist (geom);"
 # report
 cd analysis
 $PSQL -f sql/observations_max_gradients_downstream.sql
-$PSQL -c "select * from bcfishpass.observations_max_gradients_downstream_vw" --csv > observations_max_gradients_downstream.csv
+
+$PSQL -c "SELECT
+     observation_key,
+     species_code,
+     life_stage,
+     adult,
+    watershed_group_code,
+    stream_order,
+    elevation,
+    dnstr_max_grade_100_id,
+    dnstr_max_grade_100,
+    dnstr_max_grade_100_dist_to_ocean_km,
+    dnstr_max_grade_50_id,
+    dnstr_max_grade_50,
+    dnstr_max_grade_50_dist_to_ocean_km,
+    dnstr_max_grade_id,
+    dnstr_max_grade_25,
+    dnstr_max_grade_25_dist_to_ocean_km
+  FROM bcfishpass.observations_max_gradients_downstream_vw" --csv > observations_max_gradients_downstream.csv
+
+ogr2ogr -f GPKG \
+  observations_max_gradients_downstream.gpkg.zip \
+  PG:$DATABASE_URL \
+  -nln observations \
+  -sql "select * from bcfishpass.observations_max_gradients_downstream_vw"
 
 
 # also report on distinct locations
