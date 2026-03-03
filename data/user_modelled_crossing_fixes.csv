@@ -21585,3 +21585,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17101005,NONE,QUES,MC,2026-02-25,Tracking table review,"No road present, no channel farther upstream"
 17101308,NONE,QUES,MC,2026-02-25,Tracking table review,No structure or channel present
 20001125,NONE,TAKL,MC,2026-02-25,Tracking table review,Deactivated culvert in ditch holding water. No barrier/stream crossing.
+20001208,OBS,TAKL,LB,2026-03-03,Satellite imagery review,
+24723775,NONE,TAKL,LB,2026-03-03,Tributary review,this structure has been removed
+20001251,NONE,TAKL,LB,2026-03-03,Tributary review,this structure has been removed
+19500003,OBS,SUST,LB,2026-03-03,Tributary review,
