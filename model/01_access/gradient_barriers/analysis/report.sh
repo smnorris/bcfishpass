@@ -1,5 +1,10 @@
-# report
-cd analysis
+#!/bin/bash
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# report on gradients downstream of salmon/steelhead observations
+
 $PSQL -f sql/observations_max_gradients_downstream.sql
 
 $PSQL -c "SELECT
