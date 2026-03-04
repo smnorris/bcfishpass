@@ -1139,3 +1139,14 @@ a1db8fa8db,,,t,SN,2026-03-03,https://www.bchydro.com/energy-in-bc/projects/aloue
 5049aca136,,,t,SN,2026-03-03,https://www.bchydro.com/energy-in-bc/projects/alouette-projects.html,,all observations above Ruskin/Stave dams are releases
 44b028799e,,,t,SN,2026-03-03,source_ref indicates point is a fry release,,
 4fd499e8c4,,,t,SN,2026-03-03,source_ref indicates point is a fry release,,
+056266487d,t,,,SL/SN,2026-03-04,terrain and downstream feature review,,"ecocat spreadsheet confirms location matches provided coordinates but this location is at 1580m, 85km from the Nicola and modelled as ~1m wide, and above a dam -  it is not a salmon stream"
+087d1cb359,t,,,SL/SN,2026-03-04,,,Hard to tell from maps in the report cited if the elevations are correct. FDIS not available. Suspect the location was selected arbitrarily from the location of the report so would not trust this
+096428bc4d,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r58709/COA_F20_F_3030_1593619367240_3618982198.pdf,,Too far upstream
+195838d496,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r50179/Skeena_River_1458335292632_8335105206.pdf,,Likely too far upstream
+34fc42c923,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r50179/Skeena_River_1458335292632_8335105206.pdf,,Too far upstream
+57b65eee15,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r58709/COA_F20_F_3030_1593619367240_3618982198.pdf,,Too far upstream
+5f23d7b51e,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r58709/COA_F20_F_3030_1593619367240_3618982198.pdf,,Too far upstream
+d3ad24fdb6,t,,,SL/SN,2026-03-04,https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/333629.pdf,,Fish confirmed here but possibly too far upstream. Very steep gradients below lake make access impossible
+d559766302,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r58709/COA_F20_F_3030_1593619367240_3618982198.pdf,,Too far upstream. Passage barrier at 32 km
+f69113e0f4,t,,,SL/SN,2026-03-04,https://a100.gov.bc.ca/pub/acat/documents/r50179/Skeena_River_1458335292632_8335105206.pdf,,Placed in wrong waterbody. Should be in Solo Creek upstream of spawning lake.
+fe27978e2b,t,,,SL/SN,2026-03-04,https://waves-vagues.dfo-mpo.gc.ca/Library/208648.pdf https://thescca.ca/current-campaigns/fisheries-sensitive-watersheds/deserted-river/,,Point should be < 6 km upstream of mouth. Falls at 6 km.
