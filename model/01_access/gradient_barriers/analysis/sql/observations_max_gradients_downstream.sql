@@ -44,6 +44,7 @@ CREATE TABLE obs_max_grade_dnstr_100 AS
   )
   WHERE 
     a.species_code in ('CH','CM','CO','PK','SK','ST')
+    AND round(st_z(a.geom)) < 1500 -- exclude all observations > 1500m
     and a.release is null
     -- exclude gradients at cleveland dam / alouette dam / stave dam so those releases can be retained
     and g.gradient_barrier_id not in (select gradient_barrier_id from dam_exclusions)
@@ -83,6 +84,7 @@ CREATE TABLE obs_max_grade_dnstr_50 AS
   )
   WHERE 
     a.species_code in ('CH','CM','CO','PK','SK','ST')
+    AND round(st_z(a.geom)) < 1500 -- exclude all observations > 1500m
     and a.release is null
     and g.gradient_barrier_id not in (select gradient_barrier_id from dam_exclusions)
   ORDER BY
@@ -122,6 +124,7 @@ CREATE TABLE obs_max_grade_dnstr_25 AS
   )
     WHERE 
     a.species_code in ('CH','CM','CO','PK','SK','ST')
+    AND round(st_z(a.geom)) < 1500 -- exclude all observations > 1500m
     and a.release is null
     and g.gradient_barrier_id not in (select gradient_barrier_id from dam_exclusions)
   ORDER BY
