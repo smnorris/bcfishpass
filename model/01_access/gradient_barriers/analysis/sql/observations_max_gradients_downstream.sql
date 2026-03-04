@@ -1,3 +1,22 @@
+DROP TABLE IF EXISTS dam_exclusions;
+CREATE TABLE dam_exclusions AS
+select 
+  gradient_barrier_id,
+  gradient_class,
+  blue_line_key,
+  downstream_route_measure
+from bcfishpass.gradient_barriers_100
+where 
+ (blue_line_key = 360875983 and downstream_route_measure > 5650 and downstream_route_measure < 6070) -- cleveland dam
+ OR
+ (blue_line_key = 356356440 and downstream_route_measure > 24642 and downstream_route_measure < 24853) -- alouette dam 
+ OR
+ (blue_line_key = 356362384 and downstream_route_measure > 3360 and downstream_route_measure < 3485) -- ruskin dam
+ OR
+ (blue_line_key = 356362384 and downstream_route_measure > 9245 and downstream_route_measure < 9392); -- stave dam
+
+
+
 DROP TABLE IF EXISTS obs_max_grade_dnstr_100 cascade;
 
 CREATE TABLE obs_max_grade_dnstr_100 AS
@@ -26,6 +45,8 @@ CREATE TABLE obs_max_grade_dnstr_100 AS
   WHERE 
     a.species_code in ('CH','CM','CO','PK','SK','ST')
     and a.release is null
+    -- exclude gradients at cleveland dam / alouette dam / stave dam so those releases can be retained
+    and g.gradient_barrier_id not in (select gradient_barrier_id from dam_exclusions)
   ORDER BY
     a.observation_key,
     g.gradient_class desc,
@@ -63,6 +84,7 @@ CREATE TABLE obs_max_grade_dnstr_50 AS
   WHERE 
     a.species_code in ('CH','CM','CO','PK','SK','ST')
     and a.release is null
+    and g.gradient_barrier_id not in (select gradient_barrier_id from dam_exclusions)
   ORDER BY
     a.observation_key,
     g.gradient_class desc,
@@ -101,6 +123,7 @@ CREATE TABLE obs_max_grade_dnstr_25 AS
     WHERE 
     a.species_code in ('CH','CM','CO','PK','SK','ST')
     and a.release is null
+    and g.gradient_barrier_id not in (select gradient_barrier_id from dam_exclusions)
   ORDER BY
     a.observation_key,
     g.gradient_class desc,
