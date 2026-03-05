@@ -170,7 +170,7 @@ barriers_filtered as (
   --    - confirmed habitat upstream
   and
         (
-          -- (o.n_obs is null or o.n_obs < 5) and -- ** excluded for testing of different gradients
+          (o.n_obs is null or o.n_obs < 5) and 
           h.species_codes is null
         )
 )
