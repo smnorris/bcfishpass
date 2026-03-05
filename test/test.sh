@@ -20,5 +20,5 @@ jobs/load_modelled_stream_crossings
 jobs/load_gradient_barriers
 jobs/model_01_prep
 jobs/model_02_access_natural
-jobs/model_03_access_anthropgenic
+jobs/model_03_access_anthropogenic
 jobs/model_04_habitat_linear
