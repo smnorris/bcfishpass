@@ -9,49 +9,49 @@ begin;
       downstream_route_measure,
       upstream_route_measure,
       CASE
-        WHEN h.species_code = 'BT' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'BT' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_bt,
       CASE
-        WHEN h.species_code = 'CH' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'CH' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_ch,
       CASE
-        WHEN h.species_code = 'CM' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'CM' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_cm,
       CASE
-        WHEN h.species_code = 'CO' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'CO' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_co,
       CASE
-        WHEN h.species_code = 'PK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'PK' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_pk,
       CASE
-        WHEN h.species_code = 'SK' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'SK' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_sk,
       CASE
-        WHEN h.species_code = 'ST' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'ST' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_st,
       CASE
-        WHEN h.species_code = 'WCT' AND h.habitat_type = 'spawning' THEN h.habitat_ind
+        WHEN h.species_code = 'WCT' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
       END AS spawning_wct,
       CASE
-        WHEN h.species_code = 'BT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'BT' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_bt,
       CASE
-        WHEN h.species_code = 'CH' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'CH' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_ch,
       CASE
-        WHEN h.species_code = 'CM' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'CM' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_cm,
       CASE
-        WHEN h.species_code = 'CO' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'CO' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_co,
       CASE
-        WHEN h.species_code = 'SK' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'SK' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_sk,
       CASE
-        WHEN h.species_code = 'ST' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'ST' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_st,
       CASE
-        WHEN h.species_code = 'WCT' AND h.habitat_type = 'rearing' THEN h.habitat_ind
+        WHEN h.species_code = 'WCT' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
       END AS rearing_wct,
       h.reviewer_name,
       h.source,

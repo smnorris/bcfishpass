@@ -3607,5 +3607,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 199407,18300020,,SHUL,LB,matched to PSCIS assessment point
 199663,16602610,,PARS,LS,Matched to correct modelled crossing based 2025 field assessments.
 203634,11303636,,LNIC,LB,matched to PSCIS assessment point
-125788,,702151543,MIDR,SN,re-assessment contains incorrect coordinates - linking to stream is a temp fix
+125788,13500161,,MIDR,MC,Linking PSCIS to crossing instead of stream 
 199463,,17027328,BULK,LB,"two features connected to same transport line, 199463 needs to be manually snapped"
+8914,,,UTRE,MC,Linking this point to nothing to remove it from model
+204000,20000196,,TAKL,MC,Linking PSCIS point to correct crossing
