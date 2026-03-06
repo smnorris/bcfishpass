@@ -1151,7 +1151,7 @@
 356297463,3723,5051,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356337903,3234,10293,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356166976,0,1137,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
-356356440,18157,24904,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
+356356440,18157,24790,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356352191,3364,6796,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356292529,0,1025,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356294262,741,4929,LFRA,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
@@ -1224,7 +1224,7 @@
 356307931,68,392,LFRA,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356352191,5612,6310,LFRA,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356166976,0,1137,LFRA,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
-356356440,18156,24904,LFRA,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
+356356440,18156,24790,LFRA,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356307410,61,337,FRCN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356343358,638,3265,FRCN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356359663,0,7433,FRCN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
@@ -5159,14 +5159,9 @@
 356344024,0,100,LNIC,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,ST,spawning,t,SN,2023-08-17,FISS spawning points,
 356344024,0.5,4300.05,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356344024,7460.58,21913.09,LNIC,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356344024,7460.58,21913.09,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356344024,7460.58,21913.09,LNIC,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356344024,20446,20546,LNIC,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356344024,21113,21213,LNIC,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356344024,21862,21962,LNIC,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356344024,21862,21962,LNIC,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-356344024,21862,21962,LNIC,ST,spawning,t,SN,2023-08-17,FISS spawning points,
+356344024,7460.58,20967,LNIC,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356344024,7460.58,20967,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356344024,7460.58,20967,LNIC,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356344289,504,604,SHUL,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356344370,0.01,2850.48,UNTH,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356344370,313.21,855.5,UNTH,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -5566,12 +5561,8 @@
 356356440,357,457,LFRA,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356356440,5980,6080,LFRA,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 356356440,9038,9138,LFRA,CM,spawning,t,SN,2023-08-17,FISS spawning points,
-356356440,18708.62,24903.27,LFRA,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356356440,18708.62,24903.27,LFRA,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356356440,24853,24953,LFRA,CM,spawning,t,SN,2023-08-17,FISS spawning points,
-356356440,24853,24953,LFRA,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-356356440,24853,24953,LFRA,PK,spawning,t,SN,2023-08-17,FISS spawning points,
-356356440,24853,24953,LFRA,ST,spawning,t,SN,2023-08-17,FISS spawning points,
+356356440,18708.62,24790,LFRA,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356356440,18708.62,24790,LFRA,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356356462,3377.44,10026,TAKL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
 356356462,3842.83,10116.3,TAKL,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356356462,9975,10075,TAKL,SK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -5767,9 +5758,6 @@
 356359074,25512,25612,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356359074,25512,25612,SETN,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356359074,25512,25612,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
-356359074,50945,51045,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356359074,51541,51641,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356359074,51541,51641,SETN,ST,spawning,t,SN,2023-08-17,FISS spawning points,
 356359084,111,211,FRCN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356359202,27,127,SHUL,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356359202,76.81,10794.06,SHUL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
@@ -6079,7 +6067,6 @@
 356361516,3763.75,3770.72,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356361560,20.86,1460.56,HORS,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
 356361560,1391,1491,HORS,SK,spawning,t,SN,2023-08-17,FISS spawning points,
-356361629,64,164,TAKL,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356361699,3287,3387,STHM,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356361699,3287,3387,STHM,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356361699,21111.72,66621.87,STHM,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -6196,9 +6183,6 @@
 356362330,3815,3915,MIDR,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356362330,3815,3915,MIDR,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356362363,46.81,5213.5,HARR,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356362373,0,8944,LNIC,CO,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
-356362373,0,100,LNIC,ST,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
-356362373,0,8944,LNIC,CH,spawning,t,LB,2025-10-06,cwf,spawning habitat does not go beyond falls with ID 155d09fe-9e10-4baf-b6fb-718d1b975506
 356362384,339,439,LFRA,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356362384,3361,3461,LFRA,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 356362393,2234,2334,CHIR,SK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -12257,7 +12241,6 @@
 360875983,0,6053.31,SQAM,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 360875983,992,1092,SQAM,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 360875983,992,1092,SQAM,PK,spawning,t,SN,2023-08-17,FISS spawning points,
-360875983,6003,6103,SQAM,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 360875983,15831,15931,SQAM,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 360875985,275.11,504.33,KHTZ,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 360876000,913,1013,KNIG,CO,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -15349,28 +15332,28 @@
 356302756,990,1293.058495,SHUL,CO,rearing,f,LS,2025-03-11,Thompson Shuswap WCRP,Limited habitat values and short habitat gain.
 356361820,499,1215.584356,BONP,CO,rearing,f,LS,2025-03-11,Thompson Shuswap WCRP,Gradient barrier identified downstream
 356292659,822,1472,BONP,CO,rearing,f,LS,2025-03-11,Thompson Shuswap WCRP,No habitat in its current state. Runs through farm. Rainbow Trout records usptream.
-356361158,0,3356,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Channel becomes more steep and confined at 3.8km mark.  Suggestion that sockeye spawning is not suitable beyond this point.
-356361497,3710,5000,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,No barriers identified. Sockeye spawning habitat expected to reach 5km upstream from mouth according to WSP report.  Watercourse described as small.
-356354313,2846,3386,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,"Waterbody described as confined with an increased gradient 1.5km upstream from the mouth.  Sockeye spawning suggested to occur in first 1.5km, but 3.2km is confirmed accessible."
-356309155,703,1200,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye suggested to use only lower 500m of waterbody.
-356363562,831,1930,DRIR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning suggested to extend 1.8km upstream
-356362032,26400,28648,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,WSP report suggests that sockeye spawning is limited to the first 0.5km upstream from Takla Lake. Update waterbody name.
-356353731,81986,102342,DRIR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning expected to reach 91.8km upstream from mouth.
-356356811,45885,52386,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,WSP report suggest sockeye spawning to extend 20km upstream from mout at Takla Lake.
-356352148,3634,4405,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Report suggest sockeye spawning limited to lower 3km of stream.
-356361629,64,164,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Report suggest sockeye spawning limited to lower 3km of stream.
-356348849,5880,23769,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,No barriers or falls identified.  Suggestion states sockeye likely use the lower 24km of stream
+356361158,0,3356,MIDR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Channel becomes more steep and confined at 3.8km mark.  Suggestion that sockeye spawning is not suitable beyond this point.
+356361497,3710,5000,TAKL,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,No barriers identified. Sockeye spawning habitat expected to reach 5km upstream from mouth according to WSP report.  Watercourse described as small.
+356354313,2846,3386,MIDR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,"Waterbody described as confined with an increased gradient 1.5km upstream from the mouth.  Sockeye spawning suggested to occur in first 1.5km, but 3.2km is confirmed accessible."
+356309155,703,1200,MIDR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye suggested to use only lower 500m of waterbody.
+356363562,831,1930,DRIR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning suggested to extend 1.8km upstream
+356362032,26400,28648,TAKL,SK,spawning,f,MC,2025-06-04,WSP report/Workshop,WSP report suggests that sockeye spawning is limited to the first 0.5km upstream from Takla Lake. Update waterbody name.
+356353731,81986,102342,DRIR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning expected to reach 91.8km upstream from mouth.
+356356811,45885,52386,TAKL,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,WSP report suggest sockeye spawning to extend 20km upstream from mout at Takla Lake.
+356352148,3634,4405,TAKL,SK,spawning,f,MC,2025-06-04,WSP report/Workshop,Report suggest sockeye spawning limited to lower 3km of stream.
+356361629,64,164,TAKL,SK,spawning,f,MC,2025-06-04,WSP report/Workshop,Report suggest sockeye spawning limited to lower 3km of stream.
+356348849,5880,23769,TAKL,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,No barriers or falls identified.  Suggestion states sockeye likely use the lower 24km of stream
 356348849,5880,23769,TAKL,SK,Rearing,t,MC,2025-06-04,WSP report/Workshop,No barriers or falls identified.  Suggestion states sockeye likely use the lower 24km of stream
-356359980,4242,8314,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,"The channel is described as being within a confined gully, and sockeye may not be able to access 8.4km upstream/to falls barrier."
-356348492,3430,4441,DRIR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning only suggested to travel 4.5km upstream from mouth.
-356362330,0,567,MIDR,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,sockeye spawning expected to be accessible 3.5km upstram from mouth.
-356357829,7673,20029,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye habitat suggested to extended 20km upstream from mouth.
-356343575,23919,27399,TAKL,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye expected to travel 6km upstream to beaver dams.
-356360623,0,7081,MIDR,SK,Spawning,t,MC,2025-06-04,Workshop,"  Fish historically reached Natazutlo Lake, located further upstream of existing barrier."
-356360623,0,7081,MIDR,CH,Spawning,t,MC,2025-06-04,Workshop,"  Fish historically reached Natazutlo Lake, located further upstream of existing barrier."
-356330991,875,1576,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Numerous falls identified 0.6-0.8km upstream.  Channel in a confined gully and its suggested that sockeye only use first 200m.
-356361369,0,4205,UTRE,SK,Spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning suggested to extend 4km upstream from confuence with Tildesley Creek.
-356272780,784,1918,TAKL,SK,Spawning,f,MC,2025-06-04,WSP report/Workshop,Habitat quality described as low due to steepness.  Lower 50m is likely on suitable for sockeye.
+356359980,4242,8314,TAKL,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,"The channel is described as being within a confined gully, and sockeye may not be able to access 8.4km upstream/to falls barrier."
+356348492,3430,4441,DRIR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning only suggested to travel 4.5km upstream from mouth.
+356362330,0,567,MIDR,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,sockeye spawning expected to be accessible 3.5km upstram from mouth.
+356357829,7673,20029,TAKL,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye habitat suggested to extended 20km upstream from mouth.
+356343575,23919,27399,TAKL,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye expected to travel 6km upstream to beaver dams.
+356360623,0,7081,MIDR,SK,spawning,t,MC,2025-06-04,Workshop,"  Fish historically reached Natazutlo Lake, located further upstream of existing barrier."
+356360623,0,7081,MIDR,CH,spawning,t,MC,2025-06-04,Workshop,"  Fish historically reached Natazutlo Lake, located further upstream of existing barrier."
+356330991,875,1576,TAKL,SK,spawning,f,MC,2025-06-04,WSP report/Workshop,Numerous falls identified 0.6-0.8km upstream.  Channel in a confined gully and its suggested that sockeye only use first 200m.
+356361369,0,4205,UTRE,SK,spawning,t,MC,2025-06-04,WSP report/Workshop,Sockeye spawning suggested to extend 4km upstream from confuence with Tildesley Creek.
+356272780,784,1918,TAKL,SK,spawning,f,MC,2025-06-04,WSP report/Workshop,Habitat quality described as low due to steepness.  Lower 50m is likely on suitable for sockeye.
 356234954,1408,1818,LCHL,CO,rearing,f,LB,2025-06-04,Cornice Assessment,"Source indicates likely too far from river for CHr, could be up to 8 km ATV access.  Only modeled habitat is in very dry looking wetlands. Unlikely to support salmon"
 356234954,2130,2276,LCHL,CO,rearing,f,LB,2025-06-04,Cornice Assessment,"Source indicates likely too far from river for CHr, could be up to 8 km ATV access.  Only modeled habitat is in very dry looking wetlands. Unlikely to support salmon"
 356119629,0,442,LFRA,CO,spawning,t,LB,2025-06-04,Cornice Assessment,adding coho spawning habitat based on source from alouette river indicating coho are spawning in the area.
@@ -15424,3 +15407,16 @@
 356240232,1445,2603,SHUL,CO,rearing,f,LB,2025-10-31,,
 356240232,1445,2603,SHUL,CO,spawning,f,LB,2025-10-31,,
 356348366,0,1010,LNIC,CO,rearing,f,LB,2026-01-13,Meant to be an excluded stream due to yellow perch AIS,
+356330403,0,930,LNIC,ST,rearing,f,LB,2026-01-30,"low quality habitat, excluded from model",
+356293235,0,535,LNIC,ST,rearing,f,LB,2026-01-30,stream no longer exists according to locals,
+356263421,0,141,LNIC,ST,spawning,f,LB,2026-01-30,stream no longer exists according to locals,
+356336173,363,2697,LNIC,ST,rearing,f,LB,2026-01-30,,
+356336173,363,1921,LNIC,CO,rearing,f,LB,2026-01-30,,
+356122539,139,1041,SHUL,CO,rearing,f,LB,2026-02-20,,
+356240232,1427,1445,SHUL,CO,rearing,f,LB,2026-02-20,,
+356240232,1427,1445,SHUL,CO,spawning,f,LB,2026-02-24,"low quality habitat, excluded from model",
+356302405,525,2618,HORS,CO,rearing,f,MC,2026-02-25,No habitat,
+356208196,417,849,HORS,CO,rearing,f,MC,2026-02-25,No habitat,
+356362373,0,4061,LNIC,CO,spawning,t,SN,2026-03-05,CWF,Coho cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
+356362373,0,4061,LNIC,CH,spawning,t,SN,2025-03-05,CWF,Chinook cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
+356362373,0,100,LNIC,ST,spawning,t,SN,2025-03-05,CWF,
