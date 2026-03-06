@@ -2,7 +2,7 @@ name: replicate
 run-name: ${{ github.actor }} Replicate data from BC WFS / DRA to S3
 on:
   schedule:
-    - cron: '10 16 * * *'
+    - cron: '10 05 * * *'
   workflow_dispatch:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -40,8 +40,8 @@ jobs:
             cd jobs && ./replicate_bcgw M && ./replicate_dra
           fi
 
-          if [ "$DAY_OF_WEEK" = "1" ]; then
-            echo "It is Monday, running weekly replication and bcfishobs"
+          if [ "$DAY_OF_WEEK" = "2" ]; then
+            echo "It is Tuesday (UTC, Monday evening Pacific), running weekly replication and bcfishobs"
             cd jobs && ./replicate_bcgw W
             git clone https://github.com/smnorris/bcfishobs.git
             cd bcfishobs && git checkout v0.3.2
