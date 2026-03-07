@@ -1,4 +1,5 @@
 species_code,spawn_gradient_max,spawn_channel_width_min,spawn_channel_width_max,spawn_mad_min,spawn_mad_max,rear_gradient_max,rear_channel_width_min,rear_channel_width_max,rear_mad_min,rear_mad_max,rear_lake_ha_min
+BT,0.0549,2,9999,,,0.1049,1.5,9999,,,
 CH,0.03,4,9999,0.46,9999,0.05,1.5,9999,0.28,100,
 CM,0.06,2.1,9999,0.02312,9999,,,,,,
 CO,0.05,2,9999,0.164,9999,0.05,1.5,9999,0.03,40,
