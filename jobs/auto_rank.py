@@ -158,7 +158,7 @@ def buildCondition(wcrp):
     
     elif wcrp == "takla":
         condition = """
-            c."watershed_group_code" IN ('MSKE','SUST','USKE', 'STUR')
+            c."watershed_group_code" IN ('MSKE','SUST','USKE', 'DRIR', 'MIDR', 'TAKL')
             """
         wcrp_schema = "takla"
 
