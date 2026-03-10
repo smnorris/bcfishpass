@@ -21589,3 +21589,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 20001251,NONE,TAKL,LB,2026-03-03,Tributary review,this structure has been removed
 19500003,OBS,SUST,LB,2026-03-03,Tributary review,
 24727615,NONE,TAKL,LB,2026-03-09,Tributary review,
+20001309,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,This FSR was never built. Remove structure from model
+20001391,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,This FSR was never built. Remove structure from model
+20001700,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,This FSR was never built. Remove structure from model
+12600461,NONE,LTRE,MC,2026-03-09,Tuzistol Meeting,Adding as Beaver dam in Anthropogenic barriers fix table
+20000182,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,Adding as Beaver dam in Anthropogenic barriers fix table
