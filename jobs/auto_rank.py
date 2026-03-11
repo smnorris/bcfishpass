@@ -158,7 +158,36 @@ def buildCondition(wcrp):
     
     elif wcrp == "takla":
         condition = """
-            c."watershed_group_code" IN ('MSKE','SUST','USKE', 'DRIR', 'MIDR', 'TAKL')
+            (c."watershed_group_code" IN ('SUST','USKE', 'DRIR', 'MIDR', 'TAKL')
+            OR  FWA_Upstream(
+                    360887278, 
+                    464069.527166015,
+                    '400'::ltree, 
+                    '400.741661'::ltree,
+                    blue_line_key, 
+                    downstream_route_measure, 
+                    wscode, 
+                    localcode
+                    ) OR FWA_Upstream(
+                    360843418, 
+                    0,
+                    '400.740946'::ltree, 
+                    '400.740946'::ltree,
+                    blue_line_key, 
+                    downstream_route_measure, 
+                    wscode, 
+                    localcode
+                    ) OR FWA_Upstream(
+                    360815498, 
+                    0,
+                    '400.741661'::ltree, 
+                    '400.741661'::ltree,
+                    blue_line_key, 
+                    downstream_route_measure, 
+                    wscode, 
+                    localcode
+                    ) OR "blue_line_key" = '360781053'
+            )
             """
         wcrp_schema = "takla"
 
