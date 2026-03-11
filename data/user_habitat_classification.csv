@@ -6891,9 +6891,9 @@
 356364387,0,100,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364387,0,100,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364387,1043,1143,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
-356364387,1450.95,1622.76,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356364387,1572,1672,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356364387,1572,1672,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
+356364387,1450.95,1580,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356364387,1550,1580,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
+356364387,1550,1580,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364397,199,299,TASR,CH,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; expert,source point snapped to closest stream within 250m
 356364423,89.86,7571.73,QUES,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356364423,1560,1660,QUES,PK,spawning,t,SN,2023-08-17,FISS spawning points,
