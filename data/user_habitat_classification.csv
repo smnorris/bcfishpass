@@ -1054,7 +1054,6 @@
 360869836,0,2310,KHTZ,CM,spawning,t,TMK,2022-08-25,spawning_cm_cc (PSF),
 356364114,329096,329127,SETN,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356364426,40,67,SETN,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
-356364426,16313,16514,SETN,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356360441,98,28502,LILL,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356359224,62380,62428,LILL,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
 356361451,664,4699,LILL,CM,spawning,t,TMK,2022-08-26,fraser_spawning (PSF),
@@ -1243,7 +1242,6 @@
 356361451,664,4699,LILL,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356360441,0,28502,LILL,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356360610,0,12298,SETN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
-356364426,16099,16313,SETN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356364426,40,67,SETN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356355483,0,4334,SETN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
 356364387,0,1094,SETN,PK,spawning,t,TMK,2022-08-29,fraser_spawning (PSF),
@@ -6558,7 +6556,7 @@
 356363618,37,137,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,37,137,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,37,137,SETN,ST,spawning,t,SN,2023-08-17,FISS spawning points,
-356363618,86.35,40340.88,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356363618,86.35,40069,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356363618,7252,7352,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,7252,7352,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,7252,7352,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -6569,7 +6567,6 @@
 356363618,33804,33904,SETN,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,33804,33904,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,33804,33904,SETN,ST,spawning,t,SN,2023-08-17,FISS spawning points,
-356363618,40290,40390,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356363618,124365,124465,SETN,ST,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 356363629,0.16,66902.33,MORK,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356363629,16080,16180,MORK,CH,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -6892,9 +6889,9 @@
 356364387,0,100,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364387,0,100,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364387,1043,1143,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
-356364387,1450.95,1622.76,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356364387,1572,1672,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356364387,1572,1672,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
+356364387,1450.95,1580,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
+356364387,1550,1580,SETN,CH,spawning,t,SN,2023-08-17,FISS spawning points,
+356364387,1550,1580,SETN,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364397,199,299,TASR,CH,spawning,t,SN,2023-08-17,Pacific Salmon Foundation; expert,source point snapped to closest stream within 250m
 356364423,89.86,7571.73,QUES,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356364423,1560,1660,QUES,PK,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -6902,9 +6899,6 @@
 356364423,7521,7621,QUES,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364426,16,116,SETN,CM,spawning,t,SN,2023-08-17,FISS spawning points,
 356364426,16,116,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
-356364426,170.9,19517.56,SETN,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356364426,16262,16362,SETN,CM,spawning,t,SN,2023-08-17,FISS spawning points,
-356364426,16262,16362,SETN,PK,spawning,t,SN,2023-08-17,FISS spawning points,
 356364464,0,100,LNTH,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356364464,144.82,1126.82,CLWR,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356364464,1077,1177,CLWR,CH,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -15420,3 +15414,4 @@
 356362373,0,4061,LNIC,CO,spawning,t,SN,2026-03-05,CWF,Coho cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
 356362373,0,4061,LNIC,CH,spawning,t,SN,2025-03-05,CWF,Chinook cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
 356362373,0,100,LNIC,ST,spawning,t,SN,2025-03-05,CWF,
+356343575,27399,32941,TAKL,SK,spawning,t,MC,2026-03-10,Tuzistol Meeting,Habitat should extend all the way to furthest fish observation point

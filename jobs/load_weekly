@@ -6,10 +6,10 @@ set -euxo pipefail
 #-------
 
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
-
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # bcdata loads
-jq -c '.[]' bcgw_sources.json | while read item; do
+jq -c '.[]' $SCRIPT_DIR/bcgw_sources.json | while read item; do
     schedule=$(jq -r '.schedule' <<< "$item")
     source=$(jq -r '.source' <<< "$item")
     if [ "$schedule" == "W" ] ; then
