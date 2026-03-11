@@ -14,7 +14,7 @@ INSERT INTO bcfishpass.barriers_elevation
 )
 SELECT
     elevation_barrier_id as barriers_elevation_id,
-    'ELEVATION_'||elevation::text as barrier_type,
+    'ELEVATION_'||lpad(elevation::text, 4, '0') as barrier_type,
     NULL as barrier_name,
     s.linear_feature_id,
     b.blue_line_key,
