@@ -40,12 +40,9 @@ curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql $DATABASE_UR
 # ------
 $PSQL -c "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/master/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
 
-(
-	cd jobs
-	./load_monthly
-	./load_weekly
-	./load_observations
-)
+jobs/load_monthly
+jobs/load_weekly
+jobs/load_observations
 
 
 # vaccum/analyze
