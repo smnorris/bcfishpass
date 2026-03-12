@@ -89,6 +89,7 @@ obs_upstr as
   on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
   where o.species_code = 'CH'
   and bc.barrier_ind is null
+  and b.barrier_type not like 'ELEVATION%' -- elevations are hard caps, ignore any observations upstream
 ),
 
 obs_upstr_n as
@@ -140,6 +141,7 @@ hab_upstr as
         false,
         200       -- a v large tolerance to discard habitat that ends at more or less the same location as the barrier
       )
+  where b.barrier_type not like 'ELEVATION%' -- elevations are hard caps, ignore any observations upstream
   group by b.barrier_id
 ),
 
