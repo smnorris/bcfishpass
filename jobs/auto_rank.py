@@ -164,29 +164,29 @@ def buildCondition(wcrp):
                     464069.527166015,
                     '400'::ltree, 
                     '400.741661'::ltree,
-                    blue_line_key, 
-                    downstream_route_measure, 
-                    wscode, 
-                    localcode
+                    c.blue_line_key, 
+                    c.downstream_route_measure, 
+                    c.wscode, 
+                    c.localcode
                     ) OR FWA_Upstream(
                     360843418, 
                     0,
                     '400.740946'::ltree, 
                     '400.740946'::ltree,
-                    blue_line_key, 
-                    downstream_route_measure, 
-                    wscode, 
-                    localcode
+                    c.blue_line_key, 
+                    c.downstream_route_measure, 
+                    c.wscode, 
+                    c.localcode
                     ) OR FWA_Upstream(
                     360815498, 
                     0,
                     '400.741661'::ltree, 
                     '400.741661'::ltree,
-                    blue_line_key, 
-                    downstream_route_measure, 
-                    wscode, 
-                    localcode
-                    ) OR "blue_line_key" = '360781053'
+                    c.blue_line_key, 
+                    c.downstream_route_measure, 
+                    c.wscode, 
+                    c.localcode
+                    ) OR c."blue_line_key" = '360781053'
             )
             """
         wcrp_schema = "takla"
