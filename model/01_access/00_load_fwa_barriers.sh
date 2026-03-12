@@ -8,7 +8,7 @@ WSGS=$($PSQL -AtX -c "SELECT watershed_group_code FROM bcfishpass.parameters_hab
 # -- collect FWA natural barrier sources into to bcfishpass.barriers_<source>
 # -- this is done in a separate job because they will rarely change - it doesn't need to be re-run on a scheduled basis
 # --
-NATURAL_BARRIERS=("gradient" "subsurfaceflow")
+NATURAL_BARRIERS=("gradient" "subsurfaceflow" "elevation")
 for BARRIERTYPE in "${NATURAL_BARRIERS[@]}"; do
     echo $BARRIERTYPE
     # drop/create the table
