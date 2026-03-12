@@ -16,7 +16,7 @@ WSGS="BELA\nBULK\nCOWN\nELKR\nHORS\nLNIC\nPARS\nSANJ\nVICT"       # edit here to
 git clone https://github.com/smnorris/fwapg
 (
 	cd fwapg/db && ./create.sh
-	# cd .. && ./load.sh
+	cd .. && ./load.sh
 )
 rm -rf fwapg
 
