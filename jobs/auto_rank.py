@@ -186,7 +186,7 @@ def buildCondition(wcrp):
                     downstream_route_measure, 
                     wscode, 
                     localcode
-                    ) OR "blue_line_key" = '360781053'
+                    )
             )
             """
         wcrp_schema = "takla"
