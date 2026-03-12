@@ -141,7 +141,7 @@ hab_upstr as
         false,
         200  -- a v large tolerance to discard habitat that ends at more or less the same location as the barrier
       )
-  where b.barrier_type not like 'ELEVATION%' -- elevations are hard caps, ignore any observations upstream
+  where b.barrier_type not like 'ELEVATION%' -- elevations are hard caps, ignore any known habitat upstream
   group by b.barrier_id
 ),
 
