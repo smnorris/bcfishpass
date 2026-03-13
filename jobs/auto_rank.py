@@ -166,8 +166,8 @@ def buildCondition(wcrp):
                     '400.741661'::ltree,
                     c.blue_line_key, 
                     c.downstream_route_measure, 
-                    c.wscode, 
-                    c.localcode
+                    c.wscode_ltree, 
+                    c.localcode_ltree
                     ) OR FWA_Upstream(
                     360843418, 
                     0,
@@ -175,8 +175,8 @@ def buildCondition(wcrp):
                     '400.740946'::ltree,
                     c.blue_line_key, 
                     c.downstream_route_measure, 
-                    c.wscode, 
-                    c.localcode
+                    c.wscode_ltree, 
+                    c.localcode_ltree
                     ) OR FWA_Upstream(
                     360815498, 
                     0,
@@ -184,8 +184,8 @@ def buildCondition(wcrp):
                     '400.741661'::ltree,
                     c.blue_line_key, 
                     c.downstream_route_measure, 
-                    c.wscode, 
-                    c.localcode
+                    c.wscode_ltree, 
+                    c.localcode_ltree
                     ) OR c."blue_line_key" = '360781053'
             )
             """
