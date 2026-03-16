@@ -47,7 +47,8 @@ $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 # Finished processing!
 # Now add model run to log, returning the id
 # note that below logging could be done in db with triggers/functions but this works fine for now
-model_version=$(git describe)
+# model_version=$(git describe)
+model_version=$(git describe --tags --dirty --always)
 model_run_id=$($PSQL -qtAX -c "insert into bcfishpass.log (model_type, model_version) VALUES ('LINEAR', '$model_version') returning model_run_id")
 
 # log parameters
