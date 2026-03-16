@@ -8,4 +8,5 @@ WSGS=$($PSQL -AXt -c "select watershed_group_code from whse_basemapping.fwa_wate
 
 cd model/01_access/gradient_barriers
 $PSQL -c "truncate bcfishpass.gradient_barriers"  # just in case a previous job failed
-parallel $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS
+# parallel $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS
+parallel -j 4 $PSQL -f sql/gradient_barriers_load.sql -v wsg={1} ::: $WSGS

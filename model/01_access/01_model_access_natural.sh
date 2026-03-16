@@ -167,7 +167,7 @@ run_query() {
     );"
 }
 export -f run_query
-parallel --halt now,fail=1 --no-run-if-empty run_query {1} {2} ::: "${MODELS[@]}" ::: "${WSGS[@]}"
+parallel --halt now,fail=1 --jobs 2 --no-run-if-empty run_query {1} {2} ::: "${MODELS[@]}" ::: "${WSGS[@]}"
 
 # record observations downstream
 # (for convenience for field investigation and reporting, not as input into the individual models)

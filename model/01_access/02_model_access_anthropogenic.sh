@@ -100,7 +100,7 @@ run_query() {
     );"
 }
 export -f run_query
-parallel run_query {1} {2} ::: "${ANTH_BARRIERS[@]}" ::: "${WSGS[@]}"
+parallel --jobs ${PARALLEL} run_query {1} {2} ::: "${ANTH_BARRIERS[@]}" ::: "${WSGS[@]}"
 
 # also record all crossings downstream
 $PSQL -c "truncate bcfishpass.streams_dnstr_crossings";
