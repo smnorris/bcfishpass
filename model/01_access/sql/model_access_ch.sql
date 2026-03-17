@@ -87,7 +87,7 @@ obs_upstr as
   -- do not bother counting observations upstream of barriers that have been noted as barriers in the user control table
   left outer join bcfishpass.user_barriers_definite_control bc
   on b.blue_line_key = bc.blue_line_key and abs(b.downstream_route_measure - bc.downstream_route_measure) < 1
-  where o.species_code = 'CH'
+  where o.species_code in ('CH','CM','CO','PK','SK')
   and bc.barrier_ind is null
   and b.barrier_type not like 'ELEVATION%' -- elevations are hard caps, ignore any observations upstream
 
@@ -99,7 +99,7 @@ obs_upstr_n as
     o.barrier_id,
     count(o.obs) as n_obs
   from obs_upstr o
-  where o.spp = 'CH'
+  where o.spp in ('CH','CM','CO','PK','SK')
   and o.obs_dt > date('1990-01-01')         -- only observations since 1990
   group by o.barrier_id
 ),
@@ -119,7 +119,7 @@ habitat as (
   and round(h.upstream_route_measure::numeric) >= round(s.downstream_route_measure::numeric)
   and round(h.upstream_route_measure::numeric) <= round(s.upstream_route_measure::numeric)
   where h.habitat_ind is true
-  and h.species_code = 'CH'
+  and h.species_code in ('CH','CM','CO','PK','SK')
   and s.watershed_group_code = :'wsg'
 ),
 
