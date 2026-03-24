@@ -305,4 +305,13 @@ ogr2ogr \
   geom
 FROM bcfishpass.streams_bt_vw"
 
+ogr2ogr \
+    -f GPKG \
+    bcfishpass_crossings.gpkg.zip \
+    PG:$DATABASE_URL \
+    -nln crossings \
+    -nlt PointZM \
+    -sql "select * FROM bcfishpass.crossings_vw"
+
 aws s3 cp bcfishpass_streams_bt.gpkg.zip s3://bchamp --acl public-read
+aws s3 cp bcfishpass_crossings.gpkg.zip s3://bchamp --acl public-read
