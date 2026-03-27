@@ -5836,7 +5836,6 @@
 356359965,77,177,UNTH,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356359965,11132.41,24358.21,UNTH,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356359965,24308,24408,UNTH,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-356359980,768.31,4192.12,TAKL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,
 356359985,81.41,36128.72,MORK,CH,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356359985,8175,8275,MORK,CH,spawning,t,SN,2023-08-17,FISS spawning points,
 356359985,19912,20012,MORK,CH,spawning,t,SN,2023-08-17,FISS spawning points,
@@ -15412,3 +15411,5 @@
 356362373,0,4061,LNIC,CH,spawning,t,SN,2025-03-05,CWF,Chinook cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
 356362373,0,100,LNIC,ST,spawning,t,SN,2025-03-05,CWF,
 356343575,27399,32941,TAKL,SK,spawning,t,MC,2026-03-10,Tuzistol Meeting,Habitat should extend all the way to furthest fish observation point
+356359980,768,4142,TAKL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,Adjusted as per LB CWF Takla WCRP update
+356359980,4142,8314,TAKL,SK,spawning,f,LB,2026-03-27,Takla WCRP,"The channel is described as being within a confined gully, and sockeye may not be able to access 8.4km upstream/to falls barrier."
