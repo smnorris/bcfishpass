@@ -8,6 +8,8 @@ WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHER
 # generate token for azcopy
 expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
 az login --service-principal -u $AZCOPY_SPA_APPLICATION_ID -p $AZCOPY_SPA_CLIENT_SECRET --tenant $AZCOPY_TENANT_ID
+
+set +x  # do not echo this command before executing (so token is not written to logs)
 export AZURE_STORAGE_SAS_TOKEN=$(\
     az storage container generate-sas \
         --account-name cabdbcfishpassstorage \
@@ -17,6 +19,8 @@ export AZURE_STORAGE_SAS_TOKEN=$(\
         --name bcfishpass \
         --permissions dlrw | \
     jq -r)
+echo "::add-mask::$AZURE_STORAGE_SAS_TOKEN"  # also, just in case of subsequent token usage
+set -x # restore debug friendly output
 
 # do the ranking
 python jobs/auto_rank.py 
