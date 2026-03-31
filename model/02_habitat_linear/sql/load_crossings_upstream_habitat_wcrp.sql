@@ -46,7 +46,15 @@ with upstr as materialized
       1
      )
   inner join bcfishpass.streams_habitat_linear h on s.segmented_stream_id = h.segmented_stream_id
-  inner join bcfishpass.wcrp_watersheds w on a.watershed_group_code = w.watershed_group_code
+  inner join
+    -- get distinct watershed codes to prevent double counting when the same
+    -- watershed is included in multiple WCRPs. Note that this is a bit fragile,
+    -- it presumes that each WCRP will target the same species within a given watershed group.
+    (
+      select distinct
+        watershed_group_code, ch, co, sk, st, wct
+      from bcfishpass.wcrp_watersheds
+    ) as w on a.watershed_group_code = w.watershed_group_code
   where a.blue_line_key = a.watershed_key  -- do not report on crossings on side channels
 )
 
