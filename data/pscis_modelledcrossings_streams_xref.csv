@@ -3611,3 +3611,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 199463,,17027328,BULK,LB,"two features connected to same transport line, 199463 needs to be manually snapped"
 8914,,,UTRE,MC,Linking this point to nothing to remove it from model
 204000,20000196,,TAKL,MC,Linking PSCIS point to correct crossing
+203996,20001201,356356910,TAKL,LB,"PSCIS point added in wrong location, match to modelled crossing"
