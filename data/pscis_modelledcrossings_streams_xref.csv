@@ -198,11 +198,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50174,4605344,,ELKR,,
 50175,4605348,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50176,,,ELKR,,
-50177,,,ELKR,,
 50178,4605208,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50179,24706541,,ELKR,,
 50180,4606387,,ELKR,,
-50181,4606365,,ELKR,,
 50182,4602338,,ELKR,,
 50183,24734169,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50184,4601733,,ELKR,NJO, Best guess match
@@ -266,7 +264,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50251,4601056,,ELKR,,
 50252,4600355,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50253,24706515,,ELKR,,
-50254,,706839455,ELKR,,
 50255,4606744,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50256,24706516,,ELKR,,
 50257,4600122,,ELKR,,
@@ -1695,7 +1692,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 103022,4606191,,ELKR,,
 103025,24706694,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 103032,4606361,,ELKR,,
-103033,4602340,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 103035,4600781,,ELKR,,
 103037,4605195,,ELKR,,
 103038,4606232,,ELKR,,
