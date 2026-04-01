@@ -115,7 +115,7 @@ select
           -- add .5 coho rearing in wetlands
           coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE AND s.edge_type = 1050), 0) +
           -- add .5 sockeye rearing in lakes (all of it)
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk > 0 AND s.sk IS TRUE), 0)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_sk > 0 AND s.sk IS TRUE), 0)
         ) / 1000)::numeric, 2
   ) as all_rearing_km,
 
@@ -139,7 +139,7 @@ select
           -- add .5 coho rearing in wetlands
           coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE AND s.edge_type = 1050), 0) +
           -- add .5 sockeye rearing in lakes (all of it)
-          coalesce(sum(length_metre * .5) FILTER (WHERE s.spawning_sk > 0 AND s.sk IS TRUE), 0)
+          coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_sk > 0 AND s.sk IS TRUE), 0)
         ) / 1000)::numeric, 2
   ) as all_spawningrearing_km
 from upstr s
