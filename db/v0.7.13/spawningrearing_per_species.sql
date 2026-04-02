@@ -1,28 +1,5 @@
 BEGIN;
 
-  -- rename user_barriers_anthropogenic to user_crossings_misc, 
-  -- adding barrier_status and standard crossing crossing type/subtype codes
-
-  drop table bcfishpass.user_barriers_anthropogenic;
-
-  create table bcfishpass.user_crossings_misc (
-      user_crossing_misc_id        integer PRIMARY KEY, 
-      blue_line_key                 integer NOT NULL,
-      downstream_route_measure      double precision NOT NULL,
-      crossing_type_code            text NOT NULL CHECK (crossing_type_code  IN ('CBS','OBS','OTHER')),
-      crossing_subtype_code         text NOT NULL CHECK (crossing_subtype_code ~ '^[A-Z0-9_]+$' AND char_length(crossing_subtype_code) <= 20),
-      barrier_status                text NOT NULL CHECK (barrier_status IN ('BARRIER','PASSABLE','POTENTIAL','UNKNOWN')),
-      watershed_group_code          character varying(4) NOT NULL,
-      reviewer_name                 text NOT NULL,
-      review_date                   date NOT NULL,
-      source                        text NOT NULL,
-      notes                         text                
-  );
-
-  -- update fk in crossings table
-  alter table bcfishpass.crossings rename column user_barrier_anthropogenic_id to user_crossing_misc_id;
-
-  
   -- before rebuilding the crossings view with the new fk, also add per species combined spawning rearing
   -- columns to crossings_upstream_habitat tables (primary, plus wcrp adjusted values)
   alter table bcfishpass.crossings_upstream_habitat add column bt_spawningrearing_km double precision DEFAULT 0;
@@ -303,7 +280,7 @@ BEGIN;
     h.salmon_spawningrearing_km,
     h.salmon_spawningrearing_belowupstrbarriers_km,
     h.salmonsteelhead_spawningrearing_km,
-    h.salmonsteelhead_spawningrearing_belowupstrbarriers_km
+    h.salmonsteelhead_spawningrearing_belowupstrbarriers_km,
     h.wct_spawning_km,
     h.wct_rearing_km,
     h.wct_spawningrearing_km,
