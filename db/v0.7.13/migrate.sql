@@ -4,7 +4,7 @@ BEGIN;
   -- adding barrier_status and standard crossing crossing type/subtype codes
 
   drop table bcfishpass.user_barriers_anthropogenic;
-  drop table bcfishpass.user_crossings_misc;
+  
   create table bcfishpass.user_crossings_misc (
       user_crossing_misc_id        integer PRIMARY KEY, 
       blue_line_key                 integer NOT NULL,
