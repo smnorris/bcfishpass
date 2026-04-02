@@ -1,9 +1,9 @@
 BEGIN; 
 
-  -- drop table bcfishpass.user_barriers_anthropogenic;
+  drop table bcfishpass.user_barriers_anthropogenic;
 	
-  drop table bcfishpass.user_crossings_misc;
-    create table bcfishpass.user_crossings_misc (
+  
+  create table bcfishpass.user_crossings_misc (
       user_crossing_misc_id        integer PRIMARY KEY, 
       blue_line_key                 integer             ,
       downstream_route_measure      double precision    ,
@@ -15,7 +15,7 @@ BEGIN;
       review_date                   date                ,
       source                        text                ,
       notes                         text                
-     );
+  );
 
   alter table bcfishpass.crossings rename column user_barrier_anthropogenic_id to user_crossing_misc_id;
 
