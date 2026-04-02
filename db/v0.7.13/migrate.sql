@@ -4,7 +4,7 @@ BEGIN;
   -- adding barrier_status and standard crossing crossing type/subtype codes
 
   drop table bcfishpass.user_barriers_anthropogenic;
-  
+
   create table bcfishpass.user_crossings_misc (
       user_crossing_misc_id        integer PRIMARY KEY, 
       blue_line_key                 integer NOT NULL,
@@ -40,7 +40,12 @@ BEGIN;
   alter table bcfishpass.crossings_upstream_habitat add column st_spawningrearing_km double precision DEFAULT 0;
   alter table bcfishpass.crossings_upstream_habitat add column st_spawningrearing_belowupstrbarriers_km double precision DEFAULT 0;
 
-  -- also add an all
+  -- also add an all salmon and all salmon/steelhead
+  alter table bcfishpass.crossings_upstream_habitat add column salmon_spawningrearing_km double precision DEFAULT 0;
+  alter table bcfishpass.crossings_upstream_habitat add column salmon_spawningrearing_belowupstrbarriers_km double precision DEFAULT 0;
+
+  alter table bcfishpass.crossings_upstream_habitat add column salmonsteelhead_spawningrearing_km double precision DEFAULT 0;
+  alter table bcfishpass.crossings_upstream_habitat add column salmonsteelhead_spawningrearing_belowupstrbarriers_km double precision DEFAULT 0;
 
   -- wcrp specific spawningrearing for co/sk (with .5x multiplier for rearing in lakes/wetleands)
   alter table bcfishpass.crossings_upstream_habitat_wcrp add column co_spawningrearing_km double precision DEFAULT 0;
@@ -259,36 +264,52 @@ BEGIN;
     -- habitat models
     h.bt_spawning_km,
     h.bt_rearing_km,
+    h.bt_spawningrearing_km,
     h.bt_spawning_belowupstrbarriers_km,
     h.bt_rearing_belowupstrbarriers_km,
+    h.bt_spawningrearing_belowupstrbarriers_km,
     h.ch_spawning_km,
     h.ch_rearing_km,
+    h.ch_spawningrearing_km,
     h.ch_spawning_belowupstrbarriers_km,
     h.ch_rearing_belowupstrbarriers_km,
+    h.ch_spawningrearing_belowupstrbarriers_km,
     h.cm_spawning_km,
     h.cm_spawning_belowupstrbarriers_km,
     h.co_spawning_km,
     h.co_rearing_km,
     h.co_rearing_ha,
+    h.co_spawningrearing_km,
     h.co_spawning_belowupstrbarriers_km,
     h.co_rearing_belowupstrbarriers_km,
     h.co_rearing_belowupstrbarriers_ha,
+    h.co_spawningrearing_belowupstrbarriers_km,
     h.pk_spawning_km,
     h.pk_spawning_belowupstrbarriers_km,
     h.sk_spawning_km,
     h.sk_rearing_km,
     h.sk_rearing_ha,
+    h.sk_spawningrearing_km,
     h.sk_spawning_belowupstrbarriers_km,
     h.sk_rearing_belowupstrbarriers_km,
     h.sk_rearing_belowupstrbarriers_ha,
+    h.sk_spawningrearing_belowupstrbarriers_km,
     h.st_spawning_km,
     h.st_rearing_km,
+    h.st_spawningrearing_km,
     h.st_spawning_belowupstrbarriers_km,
     h.st_rearing_belowupstrbarriers_km,
+    h.st_spawningrearing_belowupstrbarriers_km,
+    h.salmon_spawningrearing_km,
+    h.salmon_spawningrearing_belowupstrbarriers_km,
+    h.salmonsteelhead_spawningrearing_km,
+    h.salmonsteelhead_spawningrearing_belowupstrbarriers_km
     h.wct_spawning_km,
     h.wct_rearing_km,
+    h.wct_spawningrearing_km,
     h.wct_spawning_belowupstrbarriers_km,
     h.wct_rearing_belowupstrbarriers_km,
+    h.wct_spawningrearing_belowupstrbarriers_km,
     c.geom
   from bcfishpass.crossings c
   left outer join bcfishpass.crossings_dnstr_observations cdo on c.aggregated_crossings_id = cdo.aggregated_crossings_id
@@ -491,37 +512,52 @@ BEGIN;
   comment on column bcfishpass.crossings_vw.wct_belowupstrbarriers_slopeclass22_km IS 'Total upstream length of stream < 22% gradient accessible to West Slope Cutthroat Trout, downstream of any anthropogenic barrier (km)';
   comment on column bcfishpass.crossings_vw.wct_belowupstrbarriers_slopeclass30_km IS 'Total upstream length of stream < 30% gradient accessible to West Slope Cutthroat Trout, downstream of any anthropogenic barrier (km)';
   comment on column bcfishpass.crossings_vw.bt_spawning_km IS 'Upstream length of modelled/observed Bull Trout spawning';
-  comment on column bcfishpass.crossings_vw.bt_rearing_km IS 'Upstream length of modelled/observed Bull Trout Rearing';
+  comment on column bcfishpass.crossings_vw.bt_rearing_km IS 'Upstream length of modelled/observed Bull Trout rearing';
+  comment on column bcfishpass.crossings_vw.bt_spawningrearing_km IS 'Upstream length of modelled/observed Bull Trout spawning and/or rearing';
   comment on column bcfishpass.crossings_vw.bt_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Bull Trout spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.bt_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Bull Trout rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.bt_spawningrearing_km IS 'Upstream length of modelled/observed Bull Trout spawning and/or rearing, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.ch_spawning_km IS 'Upstream length of modelled/observed Chinook spawning';
-  comment on column bcfishpass.crossings_vw.ch_rearing_km IS 'Upstream length of modelled/observed Chinook Rearing';
+  comment on column bcfishpass.crossings_vw.ch_rearing_km IS 'Upstream length of modelled/observed Chinook rearing';
+  comment on column bcfishpass.crossings_vw.ch_spawningrearing_km IS 'Upstream length of modelled/observed Chinook spawning and/or rearing';
   comment on column bcfishpass.crossings_vw.ch_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Chinook spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.ch_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Chinook rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.ch_spawningrearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Chinook spawning and/or rearing, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.cm_spawning_km IS 'Upstream length of modelled/observed Chum spawning';
   comment on column bcfishpass.crossings_vw.cm_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Chum spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.co_spawning_km IS 'Upstream length of modelled/observed Coho spawning';
   comment on column bcfishpass.crossings_vw.co_rearing_km IS 'Upstream length of modelled/observed Coho rearing';
+  comment on column bcfishpass.crossings_vw.co_spawningrearing_km IS 'Upstream length of modelled/observed Coho spawning and/or rearing';
   comment on column bcfishpass.crossings_vw.co_rearing_ha IS 'Upstream area (wetlands) of modelled/observed Coho rearing';
   comment on column bcfishpass.crossings_vw.co_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Coho spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.co_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Coho rearing, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.co_rearing_belowupstrbarriers_ha IS 'Upstream area (wetlands) of modelled/observed Coho rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.co_spawningrearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Coho spawning and/or rearing, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.pk_spawning_km IS 'Upstream length of modelled/observed Pink spawning';
   comment on column bcfishpass.crossings_vw.pk_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Pink spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.sk_spawning_km IS 'Upstream length of modelled/observed Sockeye spawning';
   comment on column bcfishpass.crossings_vw.sk_rearing_km IS 'Upstream length of modelled/observed Sockeye rearing';
   comment on column bcfishpass.crossings_vw.sk_rearing_ha IS 'Upstream area (lakes) of modelled/observed Sockeye rearing';
+  comment on column bcfishpass.crossings_vw.sk_spawningrearing_km IS 'Upstream length of modelled/observed Sockeye spawning and/or rearing';
   comment on column bcfishpass.crossings_vw.sk_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Sockeye spawning';
   comment on column bcfishpass.crossings_vw.sk_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Sockeye rearing';
   comment on column bcfishpass.crossings_vw.sk_rearing_belowupstrbarriers_ha IS 'Upstream area (lakes) of modelled/observed Sockeye rearing';
   comment on column bcfishpass.crossings_vw.st_spawning_km IS 'Upstream length of modelled/observed Steelhead spawning';
-  comment on column bcfishpass.crossings_vw.st_rearing_km IS 'Upstream length of modelled/observed Steelhead Rearing';
+  comment on column bcfishpass.crossings_vw.st_rearing_km IS 'Upstream length of modelled/observed Steelhead rearing';
+  comment on column bcfishpass.crossings_vw.st_spawningrearing_km IS 'Upstream length of modelled/observed Steelhead spawning and/or rearing';
   comment on column bcfishpass.crossings_vw.st_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed Steelhead spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.st_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Steelhead rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.st_spawningrearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Steelhead spawning and/or rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.salmon_spawningrearing_km IS 'Upstream length of modelled/observed Salmon spawning and/or rearing';
+  comment on column bcfishpass.crossings_vw.salmon_spawningrearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Salmon spawning and/or rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.salmonsteelhead_spawningrearing_km IS 'Upstream length of modelled/observed Salmon and/or Steelhead spawning and/or rearing';
+  comment on column bcfishpass.crossings_vw.salmonsteelhead_spawningrearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed Salmon and/or Steelhead spawning and/or rearing, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.wct_spawning_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout spawning';
-  comment on column bcfishpass.crossings_vw.wct_rearing_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout Rearing';
+  comment on column bcfishpass.crossings_vw.wct_rearing_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout rearing';
+  comment on column bcfishpass.crossings_vw.wct_spawningrearing_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout spawning and/or rearing';
   comment on column bcfishpass.crossings_vw.wct_spawning_belowupstrbarriers_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout spawning, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.wct_rearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout rearing, downstream of any anthropogenic barriers';
+  comment on column bcfishpass.crossings_vw.wct_spawningrearing_belowupstrbarriers_km IS 'Upstream length of modelled/observed West Slope Cutthroat Trout spawning and/or rearing, downstream of any anthropogenic barriers';
   comment on column bcfishpass.crossings_vw.geom IS 'The point geometry associated with the feature';
 
 
@@ -599,32 +635,42 @@ BEGIN;
     -- habitat models
     h.ch_spawning_km,
     h.ch_rearing_km,
+    h.ch_spawningrearing_km,
     h.ch_spawning_belowupstrbarriers_km,
     h.ch_rearing_belowupstrbarriers_km,
+    h.ch_spawningrearing_belowupstrbarriers_km,
     h.cm_spawning_km,
     h.cm_spawning_belowupstrbarriers_km,
     h.co_spawning_km,
     h_wcrp.co_rearing_km,
+    h_wcrp.co_spawningrearing_km,
     h.co_rearing_ha,
     h.co_spawning_belowupstrbarriers_km,
     h_wcrp.co_rearing_belowupstrbarriers_km,
+    h_wcrp.co_spawningrearing_belowupstrbarriers_km,
     h.co_rearing_belowupstrbarriers_ha,
     h.pk_spawning_km,
     h.pk_spawning_belowupstrbarriers_km,
     h.sk_spawning_km,
     h_wcrp.sk_rearing_km,
+    h_wcrp.sk_spawningrearing_km,
     h.sk_rearing_ha,
     h.sk_spawning_belowupstrbarriers_km,
     h_wcrp.sk_rearing_belowupstrbarriers_km,
+    h_wcrp.sk_spawningrearing_belowupstrbarriers_km,
     h.sk_rearing_belowupstrbarriers_ha,
     h.st_spawning_km,
     h.st_rearing_km,
+    h.st_spawningrearing_km,
     h.st_spawning_belowupstrbarriers_km,
     h.st_rearing_belowupstrbarriers_km,
+    h.st_spawningrearing_belowupstrbarriers_km,
     h.wct_spawning_km,
     h.wct_rearing_km,
+    h.wct_spawningrearing_km,
     h.wct_spawning_belowupstrbarriers_km,
     h.wct_rearing_belowupstrbarriers_km,
+    h.wct_spawningrearing_belowupstrbarriers_km,
     h_wcrp.all_spawning_km,
     h_wcrp.all_spawning_belowupstrbarriers_km,
     h_wcrp.all_rearing_km,
