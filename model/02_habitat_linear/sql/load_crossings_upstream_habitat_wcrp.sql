@@ -16,19 +16,14 @@ with upstr as materialized
     a.watershed_group_code,
     h.spawning_ch,
     h.rearing_ch,
-    h.spawningrearing_ch,
     h.spawning_co,
     h.rearing_co,
-    h.spawningrearing_co,
     h.spawning_sk,
     h.rearing_sk,
-    h.spawningrearing_sk,
     h.spawning_st,
     h.rearing_st,
-    h.spawningrearing_st,
     h.spawning_wct,
     h.rearing_wct,
-    h.spawningrearing_wct,
     w.ch,
     w.co,
     w.sk,
@@ -93,7 +88,7 @@ select
   round(
     (
       (
-        coalesce(sum(length_metre) FILTER (WHERE s.spawinging_co > 0 s.rearing_co > 0 AND s.co IS TRUE), 0) + 
+        coalesce(sum(length_metre) FILTER (WHERE s.spawning_co > 0  OR s.rearing_co > 0 AND s.co IS TRUE), 0) + 
         coalesce(sum(length_metre * .5) FILTER (WHERE s.rearing_co > 0 AND s.co IS TRUE AND edge_type = 1050), 0)
       ) / 1000
     )::numeric, 2
@@ -112,7 +107,7 @@ select
   round(
     (
       (
-        coalesce(sum(length_metre) FILTER (WHERE s.spawning > 0 OR s.rearing_sk > 0 AND s.sk IS TRUE), 0) +
+        coalesce(sum(length_metre) FILTER (WHERE s.spawning_sk > 0 OR s.rearing_sk > 0 AND s.sk IS TRUE), 0) +
         coalesce(sum(length_metre * 0.5) FILTER (WHERE s.rearing_sk > 0 AND s.sk IS TRUE), 0)
       ) / 1000
     )::numeric, 2
@@ -181,7 +176,7 @@ SET
   co_rearing_belowupstrbarriers_km = co_rearing_km,
   co_spawningrearing_belowupstrbarriers_km = co_spawningrearing_km,
   sk_rearing_belowupstrbarriers_km = sk_rearing_km,
-  sk_spawningrearing_belowupstrbarriers_km = sk_spawingingrearing_km,
+  sk_spawningrearing_belowupstrbarriers_km = sk_spawningrearing_km,
   all_spawning_belowupstrbarriers_km = all_spawning_km,
   all_rearing_belowupstrbarriers_km = all_rearing_km,
   all_spawningrearing_belowupstrbarriers_km = all_spawningrearing_km;
