@@ -70,7 +70,7 @@ above_upstream_barriers as
     sum(b.cm_spawning_km) as cm_spawning_km,
     sum(b.co_spawning_km) as co_spawning_km,
     sum(b.co_rearing_km) as co_rearing_km,
-    sum(b.co_spawingrearing_km) as co_spawningrearing_km,
+    sum(b.co_spawningrearing_km) as co_spawningrearing_km,
     sum(b.pk_spawning_km) as pk_spawning_km,
     sum(b.sk_spawning_km) as sk_spawning_km,
     sum(b.sk_rearing_km) as sk_rearing_km,
