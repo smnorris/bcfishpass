@@ -93,12 +93,6 @@ Flag FISS observation points as data error; temporary/one time release/stocking/
 Correct/force linkage of PSCIS crossings to FWA streams and/or modelled crossings.
 
 
-## user_barriers_anthropogenic.csv
-
-Anthropogenic barriers not present in inventories or modelling (eg weirs, flood control structures, 
-crossings on unmapped roads/railways, other). Do not add dams/weirs, these should be submitted to CABD.
-
-
 ## user_barriers_definite.csv
 
 Locations of additional known natural barriers to fish passage not present in other sources, plus 
@@ -111,6 +105,12 @@ Includes interpretation of PSCIS assessment comments where stream is not accessi
 Currently, controls the barrier status of natural barriers (gradient, falls, subsurface flow). 
 NOTE -  this table will only be used to identify modelled barriers known to be passable 
 (gradient, subsurface flow) once bcfishpass incorporates CABD falls
+
+
+## user_crossings_misc.csv
+
+Crossings not present in inventories or modelling (eg flood control structures, unassessed culverts on
+crossings on unmapped roads/railways, other). Do not add dams, these should be submitted to CABD.
 
 
 ## user_habitat_classification.csv
