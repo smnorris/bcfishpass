@@ -20,5 +20,17 @@ BEGIN;
 
   -- update fk in crossings table
   alter table bcfishpass.crossings rename column user_barrier_anthropogenic_id to user_crossing_misc_id;
+  
+  comment on column bcfishpass.user_crossings_misc.user_crossing_misc_id IS 'User defined primary key - ensure this is unique';
+  comment on column bcfishpass.user_crossings_misc.blue_line_key IS 'See FWA documentation';
+  comment on column bcfishpass.user_crossings_misc.downstream_route_measure IS 'See FWA documentation';
+  comment on column bcfishpass.user_crossings_misc.crossing_type_code IS 'Defines the type of crossing present at the location of the stream crossing. One of: {OBS=Open Bottom Structure CBS=Closed Bottom Structure OTHER=Crossing structure does not fit into the above categories (ford/wier)}';
+  comment on column bcfishpass.user_crossings_misc.crossing_subtype_code IS 'Further definition of the type of crossing. One of {BRIDGE; CRTBOX; DAM; FORD; OVAL; PIPEARCH; ROUND; WEIR; WOODBOX; NULL}';
+  comment on column bcfishpass.user_crossings_misc.barrier_status IS 'The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. One of: {PASSABLE - Passable; POTENTIAL - Potential or partial barrier; BARRIER - Barrier; UNKNOWN - Other}';
+  comment on column bcfishpass.user_crossings_misc.watershed_group_code IS 'See FWA documentation';
+  comment on column bcfishpass.user_crossings_misc.reviewer_name IS 'Initials of user submitting the review, eg SN';
+  comment on column bcfishpass.user_crossings_misc.review_date IS 'Date of review, in form YYYY-MM-DD eg 2025-01-07';
+  comment on column bcfishpass.user_crossings_misc.source IS 'Description or link to the source(s) documenting the feature';
+  comment on column bcfishpass.user_crossings_misc.notes IS 'Reviewer notes on rationale for addition of the feature and/or how the source were interpreted';
 
 COMMIT;

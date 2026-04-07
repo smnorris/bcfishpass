@@ -11,6 +11,7 @@ for table in cabd_additions \
   cabd_exclusions \
   cabd_passability_status_updates \
   observation_exclusions \
+  user_crossings_misc
 
 do
     echo "## $table"
