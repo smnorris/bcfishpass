@@ -141,7 +141,6 @@ above_upstr_barriers as
     sum(h.bt_spawningrearing_km) as bt_spawningrearing_km,
     sum(h.ch_spawning_km) as ch_spawning_km,
     sum(h.ch_rearing_km) as ch_rearing_km,
-    sum(h.ch_rearing_km) as ch_rearing_km,
     sum(h.ch_spawningrearing_km) as ch_spawningrearing_km,
     sum(h.cm_spawning_km) as cm_spawning_km,
     sum(h.co_spawning_km) as co_spawning_km,
