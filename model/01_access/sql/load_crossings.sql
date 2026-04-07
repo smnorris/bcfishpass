@@ -436,79 +436,23 @@ where d.watershed_group_code = :'wsg'
 order by dam_id
 on conflict do nothing;
 
--- --------------------------------
--- non-cabd dams (placeholders for USA dams, from user_barriers_anthropogenic)
------------------------------------
-insert into bcfishpass.crossings
-(
-    aggregated_crossings_id,
-    dam_id,
-    crossing_source,
-    crossing_type_code,
-    crossing_subtype_code,
-    barrier_status,
-    dam_name,
-    utm_zone,
-    utm_easting,
-    utm_northing,
-    linear_feature_id,
-    blue_line_key,
-    watershed_key,
-    downstream_route_measure,
-    wscode_ltree,
-    localcode_ltree,
-    watershed_group_code,
-    gnis_stream_name,
-    stream_order,
-    stream_magnitude,
-    geom
-)
-select
-    d.dam_id as aggregated_crossings_id,
-    d.dam_id,
-    'MISC BARRIERS' as crossing_source,
-    'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
-    'DAM' AS crossing_subtype_code,
-    'BARRIER' AS barrier_status,
-    'USA DAM PLACEHOLDER' as dam_name,
-    substring(to_char(bcfishpass.utmzone(d.geom),'999999') from 6 for 2)::int as utm_zone,
-    st_x(ST_transform(d.geom, bcfishpass.utmzone(d.geom)))::int as utm_easting,
-    st_y(st_transform(d.geom, bcfishpass.utmzone(d.geom)))::int as utm_northing,
-    d.linear_feature_id,
-    d.blue_line_key,
-    s.watershed_key,
-    d.downstream_route_measure,
-    d.wscode_ltree,
-    d.localcode_ltree,
-    d.watershed_group_code,
-    s.gnis_name as gnis_stream_name,
-    s.stream_order,
-    s.stream_magnitude,
-    (st_dump(st_locatealong(s.geom, d.downstream_route_measure))).geom as geom
-from bcfishpass.dams_vw d
-inner join whse_basemapping.fwa_stream_networks_sp s on d.linear_feature_id = s.linear_feature_id
-inner join bcfishpass.user_barriers_anthropogenic ba
-  on d.blue_line_key = ba.blue_line_key
-  and d.downstream_route_measure = ba.downstream_route_measure
-where d.watershed_group_code = :'wsg'
-order by dam_id
-on conflict do nothing;
-
 
 -- --------------------------------
--- other misc anthropogenic barriers
+-- other misc structures
 -- --------------------------------
 
--- misc barriers are blue_line_key/measure only - generate geom & get wscodes etc
-WITH misc_barriers AS
+-- derive geoms and wscodes from route/measure
+WITH user_crossings_misc AS
 (
   select
-    (b.user_barrier_anthropogenic_id + 1200000000)::text as aggregated_crossings_id,
-    b.user_barrier_anthropogenic_id,
+    (b.user_crossing_misc_id + 1200000000)::text as aggregated_crossings_id, 
+    b.user_crossing_misc_id,
     b.blue_line_key,
     s.watershed_key,
     b.downstream_route_measure,
-    b.barrier_type,
+    b.crossing_type_code,
+    b.crossing_subtype_code,
+    b.barrier_status,
     s.linear_feature_id,
     s.wscode_ltree,
     s.localcode_ltree,
@@ -517,18 +461,17 @@ WITH misc_barriers AS
     s.stream_order,
     s.stream_magnitude,
     st_force2d((st_dump(st_locatealong(s.geom, b.downstream_route_measure))).geom) as geom
-  from bcfishpass.user_barriers_anthropogenic b
+  from bcfishpass.user_crossings_misc b
   inner join whse_basemapping.fwa_stream_networks_sp s
   ON b.blue_line_key = s.blue_line_key
   and b.downstream_route_measure > s.downstream_route_measure - .001
   and b.downstream_route_measure + .001 < s.upstream_route_measure
-  where b.barrier_type != 'DAM'
 )
 
 insert into bcfishpass.crossings
 (
     aggregated_crossings_id,
-    user_barrier_anthropogenic_id,
+    user_crossing_misc_id,
     crossing_source,
     crossing_type_code,
     crossing_subtype_code,
@@ -550,11 +493,11 @@ insert into bcfishpass.crossings
 )
 select
     b.aggregated_crossings_id,
-    b.user_barrier_anthropogenic_id,
-    'MISC BARRIERS' as crossing_source,
-    'OTHER' AS crossing_type_code, -- to match up with PSCIS crossing_type_code
-    b.barrier_type AS crossing_subtype_code,
-    'BARRIER' AS barrier_status,
+    b.user_crossing_misc_id,
+    'USER_CROSSINGS_MISC' as crossing_source,
+    b.crossing_type_code,
+    b.crossing_subtype_code,
+    b.barrier_status,
     substring(to_char(bcfishpass.utmzone(b.geom),'999999') from 6 for 2)::int as utm_zone,
     st_x(st_transform(b.geom, bcfishpass.utmzone(b.geom)))::int as utm_easting,
     st_y(st_transform(b.geom, bcfishpass.utmzone(b.geom)))::int as utm_northing,
@@ -569,10 +512,10 @@ select
     b.stream_order,
     b.stream_magnitude,
     (st_dump(st_locatealong(s.geom, b.downstream_route_measure))).geom as geom
-from misc_barriers b
+from user_crossings_misc b
 inner join whse_basemapping.fwa_stream_networks_sp s on b.linear_feature_id = s.linear_feature_id
 where b.watershed_group_code = :'wsg'
-order by user_barrier_anthropogenic_id
+order by user_crossing_misc_id
 on conflict do nothing;
 
 
