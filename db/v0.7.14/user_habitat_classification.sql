@@ -180,5 +180,5 @@ BEGIN;
   comment on column bcfishpass.user_habitat_classification.notes IS 'Reviewer notes on rationale for addition of the feature and/or how the source were interpreted';
 
 
-ROLLBACK;
+COMMIT;
 
