@@ -84,7 +84,7 @@ LEFT OUTER JOIN whse_basemapping.fwa_waterbodies wb ON s.waterbody_key = wb.wate
 LEFT OUTER JOIN bcfishpass.parameters_habitat_thresholds t ON t.species_code = 'BT'
 WHERE
   s.watershed_group_code = :'wsg' AND
-  (h.spawning IS TRUE or kh.spawning_bt IS TRUE) AND -- is either modelled or observed spawning
+  (h.spawning IS TRUE or coalesce(kh.spawning_bt, 0) = 1) AND -- is either modelled or observed spawning
   s.gradient <= t.rear_gradient_max AND         -- gradient check
   (
     ( -- channel width based model
@@ -178,7 +178,7 @@ rearing_clusters_dnstr_of_spawn AS
   OR (s.downstream_route_measure < 10 AND FWA_Upstream(subpath(s.wscode_ltree, 0, -1), s.wscode_ltree, st.wscode_ltree, st.localcode_ltree))
   left outer join bcfishpass.habitat_linear_bt h on st.segmented_stream_id = h.segmented_stream_id
   left outer join bcfishpass.streams_habitat_known kh on st.segmented_stream_id = kh.segmented_stream_id
-  WHERE (h.spawning IS TRUE or kh.spawning_bt IS TRUE)
+  WHERE (h.spawning IS TRUE or coalesce(kh.spawning_bt, 0) = 1)
   AND st.watershed_group_code = :'wsg'
 )
 
@@ -275,7 +275,7 @@ downstream AS
     s.downstream_route_measure,
     s.gradient,
     case
-      when coalesce(h.spawning, false) IS TRUE OR coalesce(hk.spawning_bt, false) IS TRUE then true
+      when coalesce(h.spawning, false) IS TRUE OR coalesce(hk.spawning_bt, 0) = 1 then true
       else false
     end as spawning,
     -length_metre + sum(length_metre) OVER (PARTITION BY r.cid ORDER BY s.wscode_ltree desc, s.downstream_route_measure desc) as dist_to_rear
