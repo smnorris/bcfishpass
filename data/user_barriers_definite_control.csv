@@ -235,3 +235,5 @@ blue_line_key,downstream_route_measure,barrier_type,barrier_ind,watershed_group_
 360886269,6218,FALLS,t,BABL,CWF - BR,2021-12-31,,Reference document for Sockeye point makes only reference to Rainbow for this lake. Point is an error.
 356360939,2047,FALLS,f,BIGC,SN,2023-09-17,Ecocat report notes that anad barrier is at 11km,https://www.env.gov.bc.ca/cariboo/env_stewardship/wrp/reports/fhap/big_churn_gaspard/overview/big_over.html
 356318872,1821,GRADIENT,f,HORS,MC,2025-07-11,,Gradient barrier does not exist
+356363618,40158,SUBSURFACEFLOW,f,SETN,SN,2026-03-10,https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/231726_Main_report.pdf,Bridge River is historic salmon habitat - the subsurface flow is the dam spillway
+356363618,40068,SUBSURFACEFLOW,f,SETN,SN,2026-03-10,https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/231726_Main_report.pdf,Bridge River is historic salmon habitat - the subsurface flow is the dam spillway

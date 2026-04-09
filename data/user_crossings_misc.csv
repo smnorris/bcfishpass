@@ -1,0 +1,27 @@
+user_crossing_misc_id,blue_line_key,downstream_route_measure,crossing_type,crossing_subtype,barrier_status,watershed_group_code,reviewer_name,review_date,source,notes
+1,356334818,3697,OTHER,WEIR,BARRIER,LNIC,FINS CONSULTING,2021-01-01,field assessment,0.8m high and 5m wide concrete weir with a concrete foot is impassable to fish. Located 25m u/s of culvert
+3,356348405,211,CBS,CULVERT,BARRIER,QUES,AL,2023-05-15,local knowledge,Long culvert based on information provided by Bo and Jake at LDN workshop.
+4,356348405,3235,CBS,CULVERT,BARRIER,QUES,AL,2023-05-15,local knowledge,"Culvert based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
+5,356136908,163,CBS,CULVERT,BARRIER,BOWR,AL,2023-05-15,local knowledge,"Ditch line crossing based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
+11,356354716,611,OTHER,SEDIMENT_PLUG,BARRIER,QUES,MC,2025-01-09,CWF,"Sediment plug is located on Cedar Creek, 430 m upstream from Quesnel Lake"
+12,356327433,2535,OTHER,BEAVER_DAM,BARRIER,UTRE,MC,2025-06-04,WSP report/Workshop,Impassable beaver dam
+13,356353424,3367,OTHER,BEAVER_DAM,BARRIER,UTRE,MC,2025-06-04,WSP report/Workshop,Impassable beaver dam
+14,356328051,2550,OTHER,LOG_JAM,BARRIER,MIDR,MC,2025-06-04,WSP report/Workshop,Impassable log jam
+15,356362032,26650,OTHER,LOG_JAM,BARRIER,TAKL,MC,2025-06-04,DFO personal correspondence,Impassable log jam
+16,356293242,449,OTHER,BEAVER_DAM,BARRIER,MIDR,MC,2025-06-04,DFO personal correspondence,Impassable beaver dam
+17,356327433,3400,OTHER,BEAVER_DAM,BARRIER,UTRE,MC,2025-06-04,DFO personal correspondence,Impassable beaver dam
+18,356338407,450,OTHER,BEAVER_DAM,BARRIER,MIDR,MC,2025-06-04,DFO personal correspondence,Impassable beaver dam
+19,356299548,194,CBS,CULVERT,BARRIER,SHUL,LB,2025-11-10,field assessment,culvert barrier located 50 m downstream of 198905
+20,356349907,2713,CBS,CULVERT,BARRIER,BONP,LB,2026-02-20,CWF,"Unmapped road crossing (appears to be a driveway), no modelled culvert present"
+21,356362681,111,CBS,CULVERT,BARRIER,BONP,LB,2026-02-26,CWF,unmapped cbs
+23,360823294,280,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+24,360857405,1515,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+25,360611980,1090,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+26,360848440,134,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+27,360817565,525,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+28,360744263,289,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+29,360569481,332,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+30,360844732,118,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+34,356360979,74145,OTHER,BEAVER_DAM,BARRIER,LTRE,MC,2026-03-10,Tuzistol meeting,
+35,356359054,8246,OTHER,BEAVER_DAM,BARRIER,TAKL,MC,2026-03-10,Tuzistol meeting,
+36,356535716,435,CBS,CULVERT,BARRIER,ELKR,MC,2026-04-01,imagery review,unmapped road with clearly visible culvert

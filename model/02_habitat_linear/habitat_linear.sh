@@ -89,3 +89,32 @@ $PSQL -c "insert into bcfishpass.log_parameters_habitat_thresholds (
 # log summaries
 $PSQL -c "insert into bcfishpass.log_aw_linear_summary select $model_run_id as model_run_id, * from bcfishpass.aw_linear_summary()"
 $PSQL -c "insert into bcfishpass.log_wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
+
+# log primary data sources associated with the model run
+# todo - add FWA and bcfishobs file versions
+$PSQL -c "insert into bcfishpass.log_objectstorage (
+    model_run_id,
+    object_name,
+    version_id,
+    etag
+  )
+  select
+    $model_run_id as model_run_id,
+    object_name,
+    version_id,
+    etag
+  from bcfishpass.log_replication
+  where object_name in (
+   'whse_basemapping.gba_railway_structure_lines_sp',
+   'whse_basemapping.gba_railway_tracks_sp',
+   'whse_basemapping.transport_line',
+   'whse_fish.fiss_fish_obsrvtn_pnt_sp',
+   'whse_fish.pscis_assessment_svw',
+   'whse_fish.pscis_design_proposal_svw',
+   'whse_fish.pscis_habitat_confirmation_svw',
+   'whse_fish.pscis_remediation_svw',
+   'whse_forest_tenure.ften_road_section_lines_svw',
+   'whse_imagery_and_base_maps.mot_road_structure_sp',
+   'whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp',
+   'whse_mineral_tenure.og_road_segment_permit_sp'
+)"

@@ -1080,7 +1080,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3504729,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
 3504549,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
 3504485,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
-3504354,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
 3504348,OBS,COTR,NMW,2021-01-01,Bing/Google/ESRI imagery,
 3503936,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
 3503935,OBS,COTR,AL,2021-01-01,Bing/Google/ESRI imagery,
@@ -12315,7 +12314,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17102370,NONE,QUES,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
 24732850,NONE,MORK,KK,2022-03-02,Bing/Google/ESRI imagery,no visible crossing
 19500000,,SUST,KK,2022-03-02,Bing/Google/ESRI imagery,
-19500003,,SUST,KK,2022-03-02,Bing/Google/ESRI imagery,
 19500004,,SUST,KK,2022-03-02,Bing/Google/ESRI imagery,
 19500015,,SUST,KK,2022-03-02,Bing/Google/ESRI imagery,
 17102368,NONE,QUES,KK,2022-03-02,Bing/Google/ESRI imagery,no visible stream
@@ -13386,14 +13384,12 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500220,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500217,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500216,NONE,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,no visible stream
-19500188,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500187,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500117,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500109,OBS,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,to check - possible bridge
 19500100,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500098,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19500097,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
-19500083,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 19107269,,STHM,KK,2022-03-07,Bing/Google/ESRI imagery,
 10700029,,LILL,KK,2022-03-07,Bing/Google/ESRI imagery,
 19107033,,STHM,KK,2022-03-07,Bing/Google/ESRI imagery,
@@ -13424,7 +13420,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24732712,,PARK,KK,2022-03-07,Bing/Google/ESRI imagery,
 24732713,,PARK,KK,2022-03-07,Bing/Google/ESRI imagery,
 24733775,,LNTH,KK,2022-03-07,Bing/Google/ESRI imagery,
-24734605,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 24734606,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
 24734607,NONE,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,no visible stream
 24734608,,SUST,KK,2022-03-07,Bing/Google/ESRI imagery,
@@ -14075,7 +14070,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 14200033,,MSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 14200034,,MSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 14200140,,MSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-14200149,,MSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 14200272,,MSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 14200293,,MSKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24734548,,SHUL,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -14211,8 +14205,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500101,OBS,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,to check - possible bridge
 19500102,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500105,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19500110,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19500114,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500115,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500116,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500118,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -14247,7 +14239,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 19500190,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500193,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500194,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
-19500195,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500196,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500198,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
 19500199,,SUST,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -14452,7 +14443,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24000035,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000038,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000041,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-24000042,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000043,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000044,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000045,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -14478,7 +14468,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24000075,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000078,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000081,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-24000090,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000101,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000104,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000105,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -14497,10 +14486,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24000128,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000131,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000133,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-24000134,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-24000136,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-24000137,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
-24000138,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
 24000140,NONE,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,no visible road
 24000141,FORD,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,no visible structure
 24000142,,USKE,KK,2022-03-08,Bing/Google/ESRI imagery,
@@ -15281,8 +15266,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17100897,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100896,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100895,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
-17100009,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
-17100011,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
+17100011,NONE,QUES,MC,2026-02-25,Tracking Table Review,No road
 17100012,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100014,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
 17100015,,QUES,KK,2022-03-10,Bing/Google/ESRI imagery,
@@ -15952,7 +15936,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3502323,,COTR,KK,2022-03-11,Bing/Google/ESRI imagery,
 17102387,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17102388,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
-17102456,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17101288,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17101284,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17101283,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
@@ -16013,12 +15996,10 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17100890,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100886,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100885,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
-17100882,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100880,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100879,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17104363,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100876,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
-17100874,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100873,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
 3501106,,COTR,KK,2022-03-11,Bing/Google/ESRI imagery,
 17100868,,QUES,KK,2022-03-11,Bing/Google/ESRI imagery,
@@ -21048,7 +21029,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 17102191,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No water or wetland. Possible culvert removed at old road, shallow overgrown ditch. No culvert seen. "
 1501277,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No culvert, Low marshy ground on either side of road. No Channel. Small lake to south, wetland to north. Depression in road possibly from culvert removal."
 1501282,NONE,BOWR,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"No crossing, no passage issues. Fish in stream."
-17104186,NONE,QUES,MC,2024-07-08,WCRP partner field assessments,No channel or water. Culvert on side road connecting manmade ditch line along road.
 17100487,NONE,QUES,MC,2024-07-08,Lhtako Dene WCRP Field Assessment 2023,"In bush off Horsefly/Likely FSR. Very old road, overgrown. No water or channel seen, slightly wet corridor."
 1406051,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line
 1406095,NONE,BONP,LB,2024-07-11,imagery,Misinterpretation of tranportation line/stream line. Leaving most downstream structure 1406093
@@ -21564,4 +21544,110 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11300000,NONE,LNIC,LB,2026-01-21,cwf,Duplicate of 203627
 24758912,NONE,LNIC,LB,2026-01-21,cwf,Crossing does not exist
 24761935,OBS,LNIC,LB,2026-01-21,cwf,
-1020000018,NONE,TAKL,MC,2026-01-22,Satellite imagery review,No crossing present
+20000018,NONE,TAKL,MC,2026-01-22,Satellite imagery review,No crossing present
+24735443,NONE,ELKR,MC,2026-02-19,Tracking table review,No crossing
+4605216,NONE,ELKR,MC,2026-02-19,Tracking table review,Crossing does not exist
+13500985,NONE,MIDR,MC,2026-02-19,Tracking table review,
+20000195,NONE,TAKL,MC,2026-02-19,Tracking table review,Some log jams present but do not impede flow
+24200092,NONE,UTRE,MC,2026-02-19,Tracking table review,"Old, deactivated road, grown in. No structure."
+20001718,NONE,TAKL,MC,2026-02-19,Tracking table review,No structure or evidence of past structure
+20000192,NONE,TAKL,MC,2026-02-19,Tracking table review,Deactivated bridge
+13500137,NONE,MIDR,MC,2026-02-19,Tracking table review,Deactivated road
+20001291,NONE,TAKL,MC,2026-02-19,Tracking table review,Deactivated bridge
+20001828,NONE,TAKL,MC,2026-02-19,Tracking table review,Deactivated bridge
+13500133,NONE,MIDR,MC,2026-02-19,Tracking table review,Deactivated road
+12600263,NONE,LTRE,MC,2026-02-19,Tracking table review,No structure
+19301201,NONE,STUL,MC,2026-02-19,Tracking table review,Deactivated road
+1501683,NONE,BOWR,MC,2026-02-19,Tracking table review,"Water flowing well with large stream, no barrier in sight. Could not reach due to extremely steep bank and deep valley but no crossing visible from main road."
+17100009,NONE,QUES,MC,2026-02-19,Tracking table review,Stream appears to end at highway - no crossing
+17100874,NONE,QUES,MC,2026-02-19,Tracking table review,No structure
+17100882,NONE,QUES,MC,2026-02-19,Tracking table review,crossing located on old trail. No crossing.
+17102109,NONE,QUES,MC,2026-02-19,Tracking table review,Tiny trail where road is supposed to be. May just be a game trail at this point. Small amount of water crosses trail but no structure present
+17102110,NONE,QUES,MC,2026-02-19,Tracking table review,Tiny trail where road is supposed to be. May just be a game trail at this point. Small amount of water crosses trail but no structure present
+17102456,NONE,QUES,MC,2026-02-19,Tracking table review,PSCIS crossing 203152 can be considered the crossing of interest at this location - this nearby road/structure do not really exist
+17100828,NONE,QUES,MC,2026-02-25,Tracking table review,
+17100140,NONE,QUES,MC,2026-02-25,Tracking table review,No channel or structure
+17101005,NONE,QUES,MC,2026-02-25,Tracking table review,"No road present, no channel farther upstream"
+17101308,NONE,QUES,MC,2026-02-25,Tracking table review,No structure or channel present
+20001125,NONE,TAKL,MC,2026-02-25,Tracking table review,Deactivated culvert in ditch holding water. No barrier/stream crossing.
+20001208,OBS,TAKL,LB,2026-03-03,Satellite imagery review,
+24723775,NONE,TAKL,LB,2026-03-03,Tributary review,this structure has been removed
+20001251,NONE,TAKL,LB,2026-03-03,Tributary review,this structure has been removed
+19500003,OBS,SUST,LB,2026-03-03,Tributary review,
+24727615,NONE,TAKL,LB,2026-03-09,Tributary review,
+20001309,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,This FSR was never built. Remove structure from model
+20001391,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,This FSR was never built. Remove structure from model
+20001700,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,This FSR was never built. Remove structure from model
+12600461,NONE,LTRE,MC,2026-03-09,Tuzistol Meeting,Adding as Beaver dam in Anthropogenic barriers fix table
+20000182,NONE,TAKL,MC,2026-03-09,Tuzistol Meeting,Adding as Beaver dam in Anthropogenic barriers fix table
+19500188,FORD,SUST,LB,2026-03-13,imagery review,
+24000090,FORD,USKE,LB,2026-03-13,imagery review,
+24000134,FORD,USKE,LB,2026-03-13,imagery review,
+24000136,FORD,USKE,LB,2026-03-13,imagery review,
+24000137,FORD,USKE,LB,2026-03-13,imagery review,
+24000138,FORD,USKE,LB,2026-03-13,imagery review,
+24734605,FORD,SUST,LB,2026-03-13,imagery review,
+19500110,NONE,SUST,LB,2026-03-13,imagery review,
+19500114,FORD,SUST,LB,2026-03-13,imagery review,
+24703304,NONE,SUST,LB,2026-03-13,imagery review,
+24716024,NONE,MSKE,LB,2026-03-13,imagery review,
+24000042,FORD,USKE,LB,2026-03-13,imagery review,
+24726949,NONE,USKE,LB,2026-03-13,imagery review,
+19500083,FORD,SUST,LB,2026-03-13,imagery review,
+24723455,FORD,SUST,LB,2026-03-13,imagery review,
+19500195,FORD,SUST,LB,2026-03-13,imagery review,
+14200149,NONE,MSKE,LB,2026-03-13,imagery review,
+24742716,OBS,STUR,LB,2026-03-30,imagery review,CWF WCRP QA/QC
+20001201,OBS,TAKL,LB,2026-03-30,imagery review,CWF WCRP QA/QC
+19401338,NONE,STUR,LB,2026-03-31,Barrier assessment,"deactivated road, no structure"
+19400335,NONE,STUR,LB,2026-03-31,Barrier assessment,Likely was a culvert when road active. No structure - flooded out on both sides and large wetland. 
+4603285,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4602197,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4600378,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4600380,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4600381,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+24734179,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4603413,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4600054,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4604003,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4603948,OBS,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4602958,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+24734830,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4606581,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4607470,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4600433,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600435,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600436,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600438,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600440,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600441,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600442,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600451,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600452,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4600457,FORD,ELKR,MC,2026-04-01,imagery review,Old mine road with fords visible on satellite imagery and in this Youtube video https://www.youtube.com/watch?v=IFENXVkQn4Q
+4602161,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4600945,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4603263,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4603242,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4604105,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4605941,OBS,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+24747002,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+4607172,NONE,ELKR,MC,2026-04-01,field assessment,CWF WCRP QA/QC
+4606929,NONE,ELKR,MC,2026-04-01,field assessment,CWF WCRP QA/QC
+4602340,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
+3506021,OBS,COTR,MC,2026-04-07,imagery review,
+3505559,OBS,COTR,MC,2026-04-07,imagery review,
+3505548,OBS,COTR,MC,2026-04-07,imagery review,
+3505497,OBS,COTR,MC,2026-04-07,imagery review,
+3505007,OBS,COTR,MC,2026-04-07,imagery review,
+3504908,OBS,COTR,MC,2026-04-07,imagery review,
+3504727,OBS,COTR,MC,2026-04-07,imagery review,
+3504563,OBS,COTR,MC,2026-04-07,imagery review,
+3504108,OBS,COTR,MC,2026-04-07,imagery review,
+3504029,OBS,COTR,MC,2026-04-07,imagery review,
+3503120,OBS,COTR,MC,2026-04-07,imagery review,
+3500172,OBS,COTR,MC,2026-04-07,imagery review,
+20000931,OBS,TAKL,LB,2026-04-07,Imagery review ,This feature is a bridge.
+3504354,NONE,COTR,MC,2026-04-08,imagery review,Washed out/removed bridge
+3502457,NONE,COTR,MC,2026-04-08,imagery review,
+24000091,NONE,USKE,LB,2026-04-08,Satellite imagery,this feature does not exist.

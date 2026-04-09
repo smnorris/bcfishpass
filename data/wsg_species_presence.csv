@@ -66,7 +66,7 @@ HAYR,,,,,,,,,,,,,Mackenzie basin
 HERR,t,t,,,,t,,,t,,,,
 HOLB,,,t,t,t,t,,t,t,,t,,
 HOMA,t,t,t,t,t,t,,,t,,t,,
-HORS,t,t,,t,,t,,,t,,,,
+HORS,t,t,,t,,t,,,t,t,,,
 INGR,t,,,,,t,t,,t,,,,Mackenzie basin
 INKR,t,t,,t,t,t,t,,t,t,t,,
 ISKR,t,,,,,t,,,t,,,,No target species observations
@@ -238,7 +238,7 @@ UPET,,,,,,,t,,t,,,,Mackenzie basin
 UPRO,t,,,,,,t,,t,,,,Mackenzie basin
 USHU,t,t,,t,t,t,,t,t,t,,t,
 USIK,t,,,,,,t,,t,,,,Mackenzie basin
-USKE,,t,,t,,t,,,t,t,t,,
+USKE,t,t,,t,,t,,,t,t,t,,
 USTK,,,,,t,t,t,,t,,t,,
 UTRE,t,,,,,t,,,t,t,,,
 VICT,,t,t,t,t,t,,,t,,t,,

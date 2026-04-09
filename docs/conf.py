@@ -14,17 +14,18 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import datetime
+import os
 
 # -- Project information -----------------------------------------------------
-
+year = datetime.date.today().year
 project = 'bcfishpass'
-copyright = '2025, bcfishpass contributors'
+copyright = f'{year}, bcfishpass contributors'
 author = 'Simon Norris, bcfishpass contributors'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.7.2'
-
-
+release = os.environ.get("VERSION", "unknown")
+version = release
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

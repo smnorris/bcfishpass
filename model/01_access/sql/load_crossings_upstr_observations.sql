@@ -10,14 +10,14 @@ BEGIN;
 
   select
     aggregated_crossings_id,
-    array_agg(species_code) as observedspp_upstr
+    array_agg(DISTINCT species_code ORDER BY species_code) as observedspp_upstr
   FROM
     (
       select distinct
         a.aggregated_crossings_id,
-        unnest(species_codes) as species_code
+        fo.species_code
       from bcfishpass.crossings a
-      left outer join bcfishobs.fiss_fish_obsrvtn_events fo
+      left outer join bcfishpass.observations fo
       on FWA_Upstream(
         a.blue_line_key,
         a.downstream_route_measure,
@@ -25,10 +25,11 @@ BEGIN;
         a.localcode_ltree,
         fo.blue_line_key,
         fo.downstream_route_measure,
-        fo.wscode_ltree,
-        fo.localcode_ltree
+        fo.wscode,
+        fo.localcode
        )
       and a.watershed_group_code = fo.watershed_group_code
+      where fo.species_code is not null
       order by a.aggregated_crossings_id, species_code
     ) AS f
   group by aggregated_crossings_id;

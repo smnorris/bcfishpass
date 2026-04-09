@@ -7,6 +7,7 @@ on:
       - 'main'
     paths-ignore:
       - 'data/**'
+      - 'db/**'
 concurrency:
   group: cwf
 env:
@@ -53,7 +54,7 @@ jobs:
       - name: Access model - natural
         run:  |
           jobs/connect
-          cd model/01_access && ./01_model_access_natural.sh ch_cm_co_pk_sk st wct
+          cd model/01_access && ./01_model_access_natural.sh bt ch_cm_co_pk_sk st wct
   model-access-anthropogenic:
     runs-on: ubuntu-latest
     environment: cwf-test
@@ -85,7 +86,7 @@ jobs:
           ./habitat_linear.sh
       - name: Rank crossings
         run:  |
-          for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah ulkatcho
+          for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah ulkatcho takla
           do
             python jobs/auto_rank.py $wcrp
           done

@@ -22,16 +22,16 @@ column,type,description
 ``map_upstream``,`integer`,Mean annual precipitation for the watershed upstream of the stream segment (as defined by linear_feature_id)
 ``channel_width``,`double precision`,Modelled channel width of the stream (m)
 ``mad_m3s``,`double precision`,Modelled mean annual discharge of the stream (m3/s)
-``barriers_anthropogenic_dnstr``,`text`,aggregated_crossings_id value for all downstream anthropogenic barriers
-``barriers_pscis_dnstr``,`text`,aggregated_crossings_id value for all downstream PSCIS assessed barriers
-``barriers_dams_dnstr``,`text`,aggregated_crossings_id value for all downstream dams that are barriers
-``barriers_dams_hydro_dnstr``,`text`,aggregated_crossings_id value for all downstream hydroelectricity dam that are barriers
-``barriers_bt_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Bull Trout
-``barriers_ch_cm_co_pk_sk_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Pacific Salmon
-``barriers_ct_dv_rb_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Cutthroat Trout/Dolly Varden/Rainbow Trout
-``barriers_st_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to Steelhead
-``barriers_wct_dnstr``,`text`,aggregated_crossings_id value for downstream natural barriers to West Slope Cutthroat Trout
-``crossings_dnstr``,`text`,aggregated_crossings_id value for all crossings downstream
+``barriers_anthropogenic_dnstr``,`text`,aggregated_crossings_id values for all downstream anthropogenic barriers
+``barriers_pscis_dnstr``,`text`,aggregated_crossings_id values for all downstream PSCIS assessed barriers
+``barriers_dams_dnstr``,`text`,aggregated_crossings_id values for all downstream dams that are barriers
+``barriers_dams_hydro_dnstr``,`text`,aggregated_crossings_id values for all downstream hydroelectricity dam that are barriers
+``barriers_bt_dnstr``,`text`,barrier id values for downstream natural barriers to Bull Trout
+``barriers_ch_cm_co_pk_sk_dnstr``,`text`,barrier id values for downstream natural barriers to Pacific Salmon
+``barriers_ct_dv_rb_dnstr``,`text`,barriers id values for downstream natural barriers to Cutthroat Trout/Dolly Varden/Rainbow Trout
+``barriers_st_dnstr``,`text`,barrier id values for downstream natural barriers to Steelhead
+``barriers_wct_dnstr``,`text`,barrier id values for downstream natural barriers to West Slope Cutthroat Trout
+``crossings_dnstr``,`text`,aggregated_crossings_id values for all crossings downstream
 ``dam_dnstr_ind``,`boolean`,Indicates if the next anthropogenic barrier downstream is a dam
 ``dam_hydro_dnstr_ind``,`boolean`,Indicates if the next anthropogenic barrier downstream is a hydroelectric dam
 ``remediated_dnstr_ind``,`boolean`,Indicates if the next crossing downstream is a remediated PSCIS site

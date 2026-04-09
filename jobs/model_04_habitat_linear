@@ -4,4 +4,4 @@ set -euxo pipefail
 #-------
 # Run the linear habitat model
 #-------
-cd ../02_habitat_linear && ./habitat_linear.sh
+cd model/02_habitat_linear && ./habitat_linear.sh
