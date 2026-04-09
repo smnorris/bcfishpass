@@ -185,5 +185,25 @@ BEGIN;
   comment on column bcfishpass.user_habitat_classification.notes IS 'Reviewer notes on rationale for addition of the feature and/or how the source were interpreted';
 
 
-COMMIT;
+  -- update the resulting known habitat table to use integers
+  DROP TABLE bcfishpass.streams_habitat_known;
 
+  CREATE TABLE bcfishpass.streams_habitat_known (
+    segmented_stream_id text primary key,
+    spawning_bt         integer ,
+    spawning_ch         integer ,
+    spawning_cm         integer ,
+    spawning_co         integer ,
+    spawning_pk         integer ,
+    spawning_sk         integer ,
+    spawning_st         integer ,
+    spawning_wct        integer ,
+    rearing_bt          integer ,
+    rearing_ch          integer ,
+    rearing_co          integer ,
+    rearing_sk          integer ,
+    rearing_st          integer ,
+    rearing_wct         integer
+  );
+
+COMMIT;
