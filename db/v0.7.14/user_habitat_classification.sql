@@ -47,7 +47,12 @@ BEGIN;
   );
   INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');
 
-  
+  -- **
+  -- data is loaded from csv, but we can define the transformation and find bad records here in the db.
+  -- Note that some records are excluded (see WHERE below) as they do not meet the new constraints and require manual checking.
+  -- These are temporarily archived to file outside of version control and will be loaded to csv when ready
+  -- (most issues are in CHWK due to changes to FWA base)
+  -- **
   CREATE TABLE bcfishpass.user_habitat_classification_temp
   (
     blue_line_key integer,
