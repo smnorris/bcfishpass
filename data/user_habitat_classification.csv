@@ -15269,8 +15269,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356330403,0,930,LNIC,ST,,-1,LB,2026-01-30,"low quality habitat, excluded from model",
 356336173,363,1921,LNIC,CO,,-1,LB,2026-01-30,,
 356336173,363,2697,LNIC,ST,,-1,LB,2026-01-30,,
-356122539,139,1041,SHUL,CO,,-1,LB,2026-02-20,,
-356240232,1427,1445,SHUL,CO,,-1,LB,2026-02-20,,
 356208196,417,849,HORS,CO,,-1,MC,2026-02-25,No habitat,
 356302405,525,2618,HORS,CO,,-1,MC,2026-02-25,No habitat,
 356362373,0,4061,LNIC,CO,1,,SN,2026-03-05,CWF,Coho cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
