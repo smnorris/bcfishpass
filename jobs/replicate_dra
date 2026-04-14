@@ -23,6 +23,9 @@ ogr2ogr \
   /tmp/transport_line.parquet \
   /tmp/transport_line.gdb \
   -lco FID=transport_line_id \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
   -sql "select
      TRANSPORT_LINE_ID as transport_line_id,
      CUSTODIAN_PARTNER_ORG as custodian_partner_org,
@@ -42,7 +45,7 @@ ogr2ogr \
      GEOMETRY as geometry
   from TRANSPORT_LINE"
 
-# dump dra code tables to csv and send to s3 vis awscli
+# dump dra code tables to csv 
 ogr2ogr \
   -f CSV \
   /tmp/whse_basemapping.transport_line_structure_code.csv \
@@ -71,6 +74,7 @@ ogr2ogr \
   -select transport_line_divided_code,description,create_integration_session_id,create_integration_date,modify_integration_session_id,modify_integration_date \
   TRANSPORT_LINE_DIVIDED_CODE
 
+# upload
 aws s3 cp /tmp/transport_line.parquet s3://bchamp/bcdata/whse_basemapping.transport_line.parquet --acl public-read
 aws s3 cp /tmp/whse_basemapping.transport_line_structure_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_structure_code.csv --acl public-read
 aws s3 cp /tmp/whse_basemapping.transport_line_type_code.csv s3://bchamp/bcdata/whse_basemapping.transport_line_type_code.csv --acl public-read
