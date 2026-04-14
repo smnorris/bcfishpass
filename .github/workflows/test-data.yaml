@@ -6,7 +6,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'data/**'
+      - 'data/*.csv'
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}

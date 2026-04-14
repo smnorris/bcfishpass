@@ -198,11 +198,9 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50174,4605344,,ELKR,,
 50175,4605348,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50176,,,ELKR,,
-50177,,,ELKR,,
 50178,4605208,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50179,24706541,,ELKR,,
 50180,4606387,,ELKR,,
-50181,4606365,,ELKR,,
 50182,4602338,,ELKR,,
 50183,24734169,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50184,4601733,,ELKR,NJO, Best guess match
@@ -266,7 +264,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 50251,4601056,,ELKR,,
 50252,4600355,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50253,24706515,,ELKR,,
-50254,,706839455,ELKR,,
 50255,4606744,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 50256,24706516,,ELKR,,
 50257,4600122,,ELKR,,
@@ -1695,7 +1692,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 103022,4606191,,ELKR,,
 103025,24706694,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 103032,4606361,,ELKR,,
-103033,4602340,,ELKR,SN,matched to nearest modelled crossing within 15m (instream)
 103035,4600781,,ELKR,,
 103037,4605195,,ELKR,,
 103038,4606232,,ELKR,,
@@ -3439,7 +3435,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197544,,,ELKR,SN,not on mapped stream
 197580,4600026,,ELKR,SN,
 197582,4600157,,ELKR,SN,
-197583,4600158,,ELKR,SN,
+197583,4600158,,ELKR,MC,"PSCIS is input in incorrect location, the crossing point is located ~625m upstream of the correct location"
 197640,1800092,,BULK,NJO,Matched to clossest Crossing
 197641,1805182,,BULK,NJO,Matched to clossest Crossing
 197642,1805455,,BULK,NJO,Matched to clossest Crossing
@@ -3611,3 +3607,13 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 199463,,17027328,BULK,LB,"two features connected to same transport line, 199463 needs to be manually snapped"
 8914,,,UTRE,MC,Linking this point to nothing to remove it from model
 204000,20000196,,TAKL,MC,Linking PSCIS point to correct crossing
+50181,4606365,,ELKR,MC,Linking to correct point
+103033,,,ELKR,MC,Linking this point to nothing to remove it from model
+197816,4602949,,ELKR,MC,Linking to nearby modelled crossing point
+50254,4600357,,ELKR,MC,Linking newer PSCIS to modelled crossing point
+102967,,,ELKR,MC,Linking this point to nothing to remove it from model
+50177,4605211,,ELKR,MC,Linking PSCIS to nearby modelled crossing point
+197784,4605218,,ELKR,MC,Linking PSCIS to nearby modelled crossing point
+197833,4600129,,ELKR,MC,Linking to nearby modelled crossing point
+203996,20000645,,TAKL,LB,"PSCIS point added in wrong location, matching to correct modelled crossing"
+203989,20001201,,TAKL,LB,"PSCIS point added in wrong location, matching to correct modelled crossing"

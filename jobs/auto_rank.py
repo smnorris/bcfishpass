@@ -252,7 +252,7 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
             from bcfishpass.crossings_wcrp_vw cv
             join bcfishpass.crossings c 
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
-            left join wcrp_{wcrp_schema}.combined_tracking_table_{wcrp_schema} tt
+            left join wcrp_{wcrp_schema}.tracking_table_{wcrp_schema} tt
 		        on tt.barrier_id = cv.aggregated_crossings_id
             where (cv.barrier_status != 'PASSABLE'
             AND cv.all_spawningrearing_belowupstrbarriers_km  IS NOT NULL

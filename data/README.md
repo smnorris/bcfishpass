@@ -93,12 +93,6 @@ Flag FISS observation points as data error; temporary/one time release/stocking/
 Correct/force linkage of PSCIS crossings to FWA streams and/or modelled crossings.
 
 
-## user_barriers_anthropogenic.csv
-
-Anthropogenic barriers not present in inventories or modelling (eg weirs, flood control structures, 
-crossings on unmapped roads/railways, other). Do not add dams/weirs, these should be submitted to CABD.
-
-
 ## user_barriers_definite.csv
 
 Locations of additional known natural barriers to fish passage not present in other sources, plus 
@@ -111,6 +105,26 @@ Includes interpretation of PSCIS assessment comments where stream is not accessi
 Currently, controls the barrier status of natural barriers (gradient, falls, subsurface flow). 
 NOTE -  this table will only be used to identify modelled barriers known to be passable 
 (gradient, subsurface flow) once bcfishpass incorporates CABD falls
+
+
+## user_crossings_misc.csv
+
+Crossings not present in inventories or modelling (eg flood control structures, unassessed culverts on
+crossings on unmapped roads/railways, other). Do not add dams, these should be submitted to CABD.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `user_crossing_misc_id` | `integer` | User defined primary key - ensure this is unique |
+| `blue_line_key` | `integer` | See FWA documentation |
+| `downstream_route_measure` | `double precision` | See FWA documentation |
+| `crossing_type_code` | `text` | Defines the type of crossing present at the location of the stream crossing. One of: {OBS=Open Bottom Structure CBS=Closed Bottom Structure OTHER=Crossing structure does not fit into the above categories (ford/wier)} |
+| `crossing_subtype_code` | `text` | Further definition of the type of crossing. One of {BRIDGE; CRTBOX; DAM; FORD; OVAL; PIPEARCH; ROUND; WEIR; WOODBOX; NULL} |
+| `barrier_status` | `text` | The evaluation of the crossing as a barrier to the fish passage. From PSCIS, this is based on the FINAL SCORE value. For other data sources this varies. One of: {PASSABLE - Passable; POTENTIAL - Potential or partial barrier; BARRIER - Barrier; UNKNOWN - Other} |
+| `watershed_group_code` | `character varying(4)` | See FWA documentation |
+| `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
+| `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
+| `source` | `text` | Description or link to the source(s) documenting the feature |
+| `notes` | `text` | Reviewer notes on rationale for addition of the feature and/or how the source were interpreted |
 
 
 ## user_habitat_classification.csv
