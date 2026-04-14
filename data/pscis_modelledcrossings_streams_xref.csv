@@ -3617,3 +3617,7 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197833,4600129,,ELKR,MC,Linking to nearby modelled crossing point
 203996,20000645,,TAKL,LB,"PSCIS point added in wrong location, matching to correct modelled crossing"
 203989,20001201,,TAKL,LB,"PSCIS point added in wrong location, matching to correct modelled crossing"
+199626,,,BONP,MC,Linking this point to nothing to remove it from model
+199622,,,BONP,MC,Linking this point to nothing to remove it from model
+199148,1402054,,BONP,MC,Linking to correct point
+199627,,,BONP,MC,Linking this point to nothing to remove it from model

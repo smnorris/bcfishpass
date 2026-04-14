@@ -4501,9 +4501,6 @@
 356239129,5395,5495,LFRA,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356239250,0,279.88,HORS,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356239765,0,52.16,LNIC,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
-356239785,1062,1162,SHUL,CH,spawning,t,SN,2023-08-17,FISS spawning points,
-356239785,1062,1162,SHUL,CO,spawning,t,SN,2023-08-17,FISS spawning points,
-356239785,1062,1162,SHUL,SK,spawning,t,SN,2023-08-17,FISS spawning points,
 356240266,0.03,294.73,CHWK,CO,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
 356240266,180,280,CHWK,CO,spawning,t,SN,2023-08-17,FISS spawning points,
 356241210,4.42,25.79,BONP,ST,spawning,t,SN,2023-08-11,Pacific Salmon Foundation,
@@ -15411,3 +15408,5 @@
 356343575,27399,32941,TAKL,SK,spawning,t,MC,2026-03-10,Tuzistol Meeting,Habitat should extend all the way to furthest fish observation point
 356359980,768,4142,TAKL,SK,spawning,t,SN,2023-08-17,Pacific Salmon Foundation,Adjusted as per LB CWF Takla WCRP update
 356359980,4142,8314,TAKL,SK,spawning,f,LB,2026-03-27,Takla WCRP,"The channel is described as being within a confined gully, and sockeye may not be able to access 8.4km upstream/to falls barrier."
+356299109,3923,10592,USHU,CO,rearing,f,MC,2026-04-14,Tracking table QA/QC,No key upstream habitat from 199643
+356234357,0,358,USHU,CO,rearing,f,MC,2026-04-14,Tracking table QA/QC,No key upstream habitat from 199643
