@@ -65,7 +65,7 @@ insert into bcfishpass.crossings_upstream_habitat
   wct_rearing_km,
   wct_spawningrearing_km,
   salmon_spawningrearing_km,
-  salmonsteelhead_spawningrearing_km,
+  salmonsteelhead_spawningrearing_km
 )
 select
   s.aggregated_crossings_id,
@@ -113,6 +113,6 @@ select
       s.rearing_co > 0 OR 
       s.rearing_sk > 0 OR
       s.rearing_st > 0
-  ) / 1000))::numeric, 0) as salmonsteelhead_spawningrearing_km,
+  ) / 1000))::numeric, 0) as salmonsteelhead_spawningrearing_km
 from upstr s
 group by s.aggregated_crossings_id, s.watershed_group_code;
