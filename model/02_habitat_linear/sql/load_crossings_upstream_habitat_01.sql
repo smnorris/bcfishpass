@@ -63,7 +63,9 @@ insert into bcfishpass.crossings_upstream_habitat
   st_spawningrearing_km,
   wct_spawning_km,
   wct_rearing_km,
-  wct_spawningrearing_km
+  wct_spawningrearing_km,
+  salmon_spawningrearing_km,
+  salmonsteelhead_spawningrearing_km,
 )
 select
   s.aggregated_crossings_id,
@@ -87,6 +89,30 @@ select
   coalesce(((sum(length_metre) filter (where s.spawning_st > 0 OR s.rearing_st > 0) / 1000))::numeric, 0) as st_spawningrearing_km,
   coalesce(((sum(length_metre) filter (where s.spawning_wct > 0) / 1000))::numeric, 0) as wct_spawning_km,
   coalesce(((sum(length_metre) filter (where s.rearing_wct > 0) / 1000))::numeric, 0) as wct_rearing_km,
-  coalesce(((sum(length_metre) filter (where s.spawning_wct > 0 OR s.rearing_wct > 0) / 1000))::numeric, 0) as wct_spawningrearing_km
+  coalesce(((sum(length_metre) filter (where s.spawning_wct > 0 OR s.rearing_wct > 0) / 1000))::numeric, 0) as wct_spawningrearing_km,
+  coalesce(((sum(length_metre) filter (
+    where 
+      s.spawning_ch > 0 OR 
+      s.spawning_cm > 0 OR 
+      s.spawning_co > 0 OR 
+      s.spawning_pk > 0 OR 
+      s.spawning_sk > 0 OR
+      s.rearing_ch > 0 OR 
+      s.rearing_co > 0 OR 
+      s.rearing_sk > 0
+  ) / 1000))::numeric, 0) as salmon_spawningrearing_km,
+  coalesce(((sum(length_metre) filter (
+    where 
+      s.spawning_ch > 0 OR 
+      s.spawning_cm > 0 OR 
+      s.spawning_co > 0 OR 
+      s.spawning_pk > 0 OR 
+      s.spawning_sk > 0 OR
+      s.spawning_st > 0 OR
+      s.rearing_ch > 0 OR 
+      s.rearing_co > 0 OR 
+      s.rearing_sk > 0 OR
+      s.rearing_st > 0
+  ) / 1000))::numeric, 0) as salmonsteelhead_spawningrearing_km,
 from upstr s
 group by s.aggregated_crossings_id, s.watershed_group_code;
