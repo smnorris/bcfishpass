@@ -102,7 +102,7 @@ habitat as (
   ON s.blue_line_key = h.blue_line_key
   and round(h.upstream_route_measure::numeric) >= round(s.downstream_route_measure::numeric)
   and round(h.upstream_route_measure::numeric) <= round(s.upstream_route_measure::numeric)
-  where h.habitat_ind is true
+  where (h.spawning = 1 or h.rearing = 1)
   and h.species_code in ('BT','CH','CM','CO','PK','SK','ST')
   and s.watershed_group_code = :'wsg'
 ),
