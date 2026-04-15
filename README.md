@@ -66,3 +66,4 @@ To run the habitat models on watershed groups specified in `parameters/example_t
 Drop in to the docker container to interactively run scripts as needed:
 
     docker compose run -it --rm runner bash
+    
