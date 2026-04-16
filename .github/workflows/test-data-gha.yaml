@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4  
       - name: Create bcfishpass schema
         run:  |
-          cd db/sources && 
+          cd db/sources
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/schemas.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/bcfishobs.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/cabd.sql
