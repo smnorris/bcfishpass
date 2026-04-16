@@ -32,6 +32,8 @@ jobs:
         with:
             fetch-tags: true
             fetch-depth: 0
+      - name: Fetch tags
+        run: git fetch --tags --force
       - name: Dump schema
         run: |
           jobs/connect
