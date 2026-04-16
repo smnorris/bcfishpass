@@ -3,42 +3,6 @@ BEGIN;
   -- create temp user habitat classification for holding translated data
   DROP TABLE IF EXISTS bcfishpass.user_habitat_classification_temp;
   
-  -- make ws code a unique index so it can be used as fk
-  DROP index fwa_watershed_groups_watershed_group_code_idx;
-  CREATE UNIQUE INDEX fwa_watershed_groups_watershed_group_code_idx on whse_basemapping.fwa_watershed_groups_poly (watershed_group_code);
-  
-  -- add a function checking measure validity (are the measures actually present on the stream)
-  -- note that this only checks against min/max - transboundary stream measures are not validated
-  CREATE OR REPLACE FUNCTION check_line_measures()
-  RETURNS trigger AS $$
-  DECLARE
-    r record;
-  BEGIN
-    SELECT round(min(downstream_route_measure)) as downstream_route_measure, round(max(upstream_route_measure)) as upstream_route_measure INTO r
-    FROM whse_basemapping.fwa_stream_networks_sp
-    WHERE blue_line_key = NEW.blue_line_key;
-
-    IF NOT FOUND THEN
-      RAISE EXCEPTION 'blue_line_key % does not exist', NEW.blue_line_key;
-    END IF;
-
-    IF NEW.downstream_route_measure < r.downstream_route_measure OR NEW.upstream_route_measure > r.upstream_route_measure THEN
-      RAISE EXCEPTION
-        'measures [%, %] are outside route % range [%, %]',
-        NEW.downstream_route_measure, NEW.upstream_route_measure,
-        NEW.blue_line_key,
-        r.downstream_route_measure, r.upstream_route_measure;
-    END IF;
-
-    IF NEW.downstream_route_measure > NEW.upstream_route_measure THEN
-      RAISE EXCEPTION 'downstream_route_measure % must be <= upstream_route_measure %',
-        NEW.downstream_route_measure, NEW.upstream_route_measure;
-    END IF;
-
-    RETURN NEW;
-  END;
-  $$ LANGUAGE plpgsql;
-
   -- list valid habitat codes to be used in user_habitat_classification
   DROP TABLE IF EXISTS bcfishpass.user_habitat_codes;
   CREATE TABLE bcfishpass.user_habitat_codes (
@@ -58,7 +22,7 @@ BEGIN;
     blue_line_key integer,
     downstream_route_measure double precision,
     upstream_route_measure double precision,
-    watershed_group_code varchar(4) references whse_basemapping.fwa_watershed_groups_poly(watershed_group_code),
+    watershed_group_code varchar(4),
     species_code text references whse_fish.species_cd(code),
     spawning integer references bcfishpass.user_habitat_codes(habitat_code),
     rearing integer references bcfishpass.user_habitat_codes(habitat_code),
@@ -68,10 +32,6 @@ BEGIN;
     notes text,
     PRIMARY KEY (blue_line_key, downstream_route_measure, upstream_route_measure, species_code)
   );
-
-  CREATE TRIGGER trg_check_user_habitat_measures
-  BEFORE INSERT OR UPDATE ON bcfishpass.user_habitat_classification_temp
-  FOR EACH ROW EXECUTE FUNCTION check_line_measures();
 
   with hab1 as (
     select distinct
