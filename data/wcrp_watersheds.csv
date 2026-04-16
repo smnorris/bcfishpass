@@ -1,7 +1,7 @@
 watershed_group_code,bt,ch,cm,co,pk,sk,st,wct,notes,wcrp
 ATNA,,t,,t,,t,,,,bela_atna_necl
 BELA,,t,,t,,t,,,,bela_atna_necl
-BONP,,t,,t,,t,,,,tho_shu
+BONP,,t,,t,,t,t,,,tho_shu
 BOWR,,t,,t,,t,,,,bowr_ques_carr
 BULK,,t,,t,,t,t,,,bulk
 MORR,,t,,t,,t,t,,,morr
@@ -11,8 +11,8 @@ HORS,,t,,t,,t,,,,hors
 LNIC,,t,,t,,,t,,,lnic
 NECL,,t,,t,,t,,,,bela_atna_necl
 QUES,,t,,t,,t,,,,bowr_ques_carr
-SHUL,,t,,t,,t,,,,tho_shu
-USHU,,t,,t,,t,,,,tho_shu
+SHUL,,t,,t,,t,t,,,tho_shu
+USHU,,t,,t,,t,t,,,tho_shu
 TAKL,,t,,,,t,,,,tuzistol_tah
 MIDR,,t,,,,t,,,,tuzistol_tah
 UTRE,,t,,,,t,,,,tuzistol_tah
