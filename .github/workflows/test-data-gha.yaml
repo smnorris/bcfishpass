@@ -9,19 +9,9 @@ on:
       - 'data/*.csv'
 env:
   DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
-  AWS_ENDPOINT_URL: "https://nrs.objectstore.gov.bc.ca"
-  AWS_S3_ENDPOINT: "nrs.objectstore.gov.bc.ca"
-  AWS_VIRTUAL_HOSTING: "FALSE"
-  AWS_EC2_METADATA_DISABLED: "true"
-  CPL_VSISTDIN_BUFFER_LIMIT: -1
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REQUEST_CHECKSUM_CALCULATION: when_required
-  AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
 jobs:
   test-data:
     runs-on: ubuntu-latest
-    environment: cwf-test
     container: ghcr.io/smnorris/bcfishpass:main
     services:
       postgres:
@@ -53,7 +43,9 @@ jobs:
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/bcfishobs.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/cabd.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/whse_basemapping.transport_line.sql
-          curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql $DATABASE_URL
+          bcdata bc2pg -e -c 1 whse_legal_admin_boundaries.abms_regional_districts_sp \
+          bcdata bc2pg -e -c 1 whse_basemapping.dbm_mof_50k_grid \
+          curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql -v ON_ERROR_STOP $DATABASE_URL
           psql $DATABASE_URL -v ON_ERROR_STOP -c \
           "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/master/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
       - name: Test data
