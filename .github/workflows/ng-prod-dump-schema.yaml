@@ -33,7 +33,7 @@ jobs:
       - name: Dump schema
         run: |
           jobs/connect
-          git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+          echo git describe
           pg_dump $DATABASE_URL -n bcfishpass -sxO > bcfishpass.sql
           aws s3api put-object \
             --bucket bchamp \
