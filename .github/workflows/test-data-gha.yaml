@@ -44,6 +44,7 @@ jobs:
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/cabd.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/whse_basemapping.transport_line.sql
           bcdata bc2pg -e -c 1 whse_admin_boundaries.clab_indian_reserves
+          bcdata bc2pg -e -c 1 whse_admin_boundaries.adm_indian_reserves_bands_sp
           bcdata bc2pg -e -c 1 whse_legal_admin_boundaries.abms_regional_districts_sp
           bcdata bc2pg -e -c 1 whse_basemapping.dbm_mof_50k_grid
           bcdata bc2pg -e -c 1 whse_basemapping.gba_railway_tracks_sp
