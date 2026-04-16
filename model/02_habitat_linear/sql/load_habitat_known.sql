@@ -9,49 +9,49 @@ begin;
       downstream_route_measure,
       upstream_route_measure,
       CASE
-        WHEN h.species_code = 'BT' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'BT' THEN h.spawning
       END AS spawning_bt,
       CASE
-        WHEN h.species_code = 'CH' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'CH' THEN h.spawning
       END AS spawning_ch,
       CASE
-        WHEN h.species_code = 'CM' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'CM' THEN h.spawning
       END AS spawning_cm,
       CASE
-        WHEN h.species_code = 'CO' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'CO' THEN h.spawning
       END AS spawning_co,
       CASE
-        WHEN h.species_code = 'PK' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'PK' THEN h.spawning
       END AS spawning_pk,
       CASE
-        WHEN h.species_code = 'SK' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'SK' THEN h.spawning
       END AS spawning_sk,
       CASE
-        WHEN h.species_code = 'ST' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'ST' THEN h.spawning
       END AS spawning_st,
       CASE
-        WHEN h.species_code = 'WCT' AND upper(h.habitat_type) = 'SPAWNING' THEN h.habitat_ind
+        WHEN h.species_code = 'WCT' THEN h.spawning
       END AS spawning_wct,
       CASE
-        WHEN h.species_code = 'BT' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'BT' THEN h.rearing
       END AS rearing_bt,
       CASE
-        WHEN h.species_code = 'CH' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'CH' THEN h.rearing
       END AS rearing_ch,
       CASE
-        WHEN h.species_code = 'CM' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'CM' THEN h.rearing
       END AS rearing_cm,
       CASE
-        WHEN h.species_code = 'CO' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'CO' THEN h.rearing
       END AS rearing_co,
       CASE
-        WHEN h.species_code = 'SK' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'SK' THEN h.rearing
       END AS rearing_sk,
       CASE
-        WHEN h.species_code = 'ST' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'ST' THEN h.rearing
       END AS rearing_st,
       CASE
-        WHEN h.species_code = 'WCT' AND upper(h.habitat_type) = 'REARING' THEN h.habitat_ind
+        WHEN h.species_code = 'WCT' THEN h.rearing
       END AS rearing_wct,
       h.reviewer_name,
       h.source,
@@ -79,21 +79,23 @@ begin;
 
   SELECT
     s.segmented_stream_id,
-    -- use bool_or to collapse separate spawning/rearing records for one stream segment into a single row
-    bool_or(h.spawning_bt) as spawning_bt,
-    bool_or(h.spawning_ch) as spawning_ch,
-    bool_or(h.spawning_cm) as spawning_cm,
-    bool_or(h.spawning_co) as spawning_co,
-    bool_or(h.spawning_pk) as spawning_pk,
-    bool_or(h.spawning_sk) as spawning_sk,
-    bool_or(h.spawning_st) as spawning_st,
-    bool_or(h.spawning_wct) as spawning_wct,
-    bool_or(h.rearing_bt) as rearing_bt,
-    bool_or(h.rearing_ch) as rearing_ch,
-    bool_or(h.rearing_co) as rearing_co,
-    bool_or(h.rearing_sk) as rearing_sk,
-    bool_or(h.rearing_st) as rearing_st,
-    bool_or(h.rearing_wct) as rearing_wct
+    -- use min() to collapse separate spawning/rearing records for one stream segment into a single row.
+    -- Retaining the lowest value ensures -4 takes precedence in event of duplicate values.
+    -- (this is not robust - a check should be added to ensure overlapping and conflicting records are not added)
+    min(h.spawning_bt) as spawning_bt,
+    min(h.spawning_ch) as spawning_ch,
+    min(h.spawning_cm) as spawning_cm,
+    min(h.spawning_co) as spawning_co,
+    min(h.spawning_pk) as spawning_pk,
+    min(h.spawning_sk) as spawning_sk,
+    min(h.spawning_st) as spawning_st,
+    min(h.spawning_wct) as spawning_wct,
+    min(h.rearing_bt) as rearing_bt,
+    min(h.rearing_ch) as rearing_ch,
+    min(h.rearing_co) as rearing_co,
+    min(h.rearing_sk) as rearing_sk,
+    min(h.rearing_st) as rearing_st,
+    min(h.rearing_wct) as rearing_wct
   FROM bcfishpass.streams s
   INNER JOIN manual_habitat_class h
   ON s.blue_line_key = h.blue_line_key
