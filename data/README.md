@@ -129,7 +129,21 @@ crossings on unmapped roads/railways, other). Do not add dams, these should be s
 
 ## user_habitat_classification.csv
 
-Manually specify known segments of rearing/spawning habitat for target species.
+Manually identify known segments of spawning or rearing habitat for target species.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `blue_line_key` | `integer` | See FWA documentation |
+| `downstream_route_measure` | `double precision` | Measure of stream at point where user habitat classification begins |
+| `upstream_route_measure` | `double precision` | Measure of stream at point where user habitat classification ends |
+| `watershed_group_code` | `character varying(4)` | See FWA documentation |
+| `species_code` | `text` | Habitat classification applies to this species - see whse_fish.species_cd for values |
+| `spawning` | `integer` | Spawning classification (-1: known non-spawning; 1: known spawning, -4: mining altered stream) |
+| `rearing` | `integer` | Rearing classification (-1: known non-rearing; 1: known rearing, -4: mining altered stream) |
+| `reviewer_name` | `text` | Initials of user submitting the review, eg SN |
+| `review_date` | `date` | Date of review, in form YYYY-MM-DD eg 2025-01-07 |
+| `source` | `text` | Description or link to the source(s) documenting the feature |
+| `notes` | `text` | Reviewer notes on rationale for addition of the feature and/or how the source were interpreted |
 
 
 ## user_modelled_crossing_fixes.csv

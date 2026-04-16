@@ -34,6 +34,7 @@ RUN ARCH=$(uname -m) \
     && rm -rf awscliv2.zip aws
 
 WORKDIR /home/bcfishpass
+RUN git config --global --add safe.directory /home/bcfishpass
 
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/python -m pip install -U pip && \
