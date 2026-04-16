@@ -1,4 +1,4 @@
-name: test-data-gha
+name: test-data
 run-name: ${{ github.actor }} Load data files to test databases
 on:
   workflow_dispatch:
@@ -60,5 +60,3 @@ jobs:
         run:  |
           cp parameters/example_cwf/*csv parameters/
           jobs/load_csv
-
-
