@@ -25,15 +25,19 @@ jobs:
     environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
             fetch-tags: true
             fetch-depth: 0
+      - name: Fetch tags
+        run: git fetch --tags --force
       - name: Dump schema
         run: |
           jobs/connect
-          echo git describe
+          echo $(git describe)
           pg_dump $DATABASE_URL -n bcfishpass -sxO > bcfishpass.sql
           aws s3api put-object \
             --bucket bchamp \
