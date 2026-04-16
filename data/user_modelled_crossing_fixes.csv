@@ -21651,3 +21651,16 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 3504354,NONE,COTR,MC,2026-04-08,imagery review,Washed out/removed bridge
 3502457,NONE,COTR,MC,2026-04-08,imagery review,
 24000091,NONE,USKE,LB,2026-04-08,Satellite imagery,this feature does not exist.
+1000387,NONE,BELA,LB,2026-04-16,Biologist Review,Verified to not exist in field
+1000140,NONE,BELA,LB,2026-04-16,Biologist Review,Verified to not exist in field
+1000216,NONE,BELA,LB,2026-04-16,Biologist Review,Duplicate of 203333/1001000187 (confirmed in field to be a single structure)
+1000024,NONE,BELA,LB,2026-04-16,Biologist Review,No stream or structure found in field
+1000027,NONE,BELA,LB,2026-04-16,Biologist Review,No stream or structure found in field
+1000302,NONE,BELA,LB,2026-04-16,Biologist Review,No stream or structure found in field
+1000175,NONE,BELA,LB,2026-04-16,Biologist Review,No stream or structure found in field
+1000027,NONE,BELA,LB,2026-04-16,Biologist Review,No stream or structure found in field
+24742407,NONE,BELA,LB,2026-04-16,Biologist Review,Stream has rerouted past all historic structures and is passable
+1000479,NONE,BELA,LB,2026-04-16,Biologist Review,Stream has rerouted past all historic structures and is passable
+1000475,NONE,BELA,LB,2026-04-16,Biologist Review,Stream has rerouted past all historic structures and is passable
+400065,NONE,ATNA,LB,2026-04-16,Biologist Review,Road and structure visibly do not exist on Bing maps
+4606284,FORD,ELKR,MC,2026-04-16,Imagery Review,Passable Ford

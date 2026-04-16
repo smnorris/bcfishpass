@@ -3621,3 +3621,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 199622,,,BONP,MC,Linking this point to nothing to remove it from model
 199148,1402054,,BONP,MC,Linking to correct point
 199627,,,BONP,MC,Linking this point to nothing to remove it from model
+197522,4605705,,ELKR,MC,"Stream is mapped incorecctly, linking PSCIS to modelled crossing "
+62516,4602147,,ELKR,MC,Linking newer PSCIS assessment to modelled crossing
+203330,1000387,,BELA,LB,"stream mapped incorrectly, flows to this structure"
+203320,1000176,,BELA,LB,PSCIS coordinates entered incorrectly. 
+203327,1000016,,BELA,LB,
+203333,1000187,,BELA,LB,
+203332,1000593,,BELA,LB,
+203328,1000041,,BELA,LB,
+203322,,3016872,BELA,LB,
+203324,,3016659,ATNA,LB,
+203334,24727681,,BELA,LB,
+203323,24727680,,BELA,LB,

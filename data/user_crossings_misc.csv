@@ -14,14 +14,14 @@ user_crossing_misc_id,blue_line_key,downstream_route_measure,crossing_type,cross
 19,356299548,194,CBS,CULVERT,BARRIER,SHUL,LB,2025-11-10,field assessment,culvert barrier located 50 m downstream of 198905
 20,356349907,2713,CBS,CULVERT,BARRIER,BONP,LB,2026-02-20,CWF,"Unmapped road crossing (appears to be a driveway), no modelled culvert present"
 21,356362681,111,CBS,CULVERT,BARRIER,BONP,LB,2026-02-26,CWF,unmapped cbs
-23,360823294,280,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-24,360857405,1515,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-25,360611980,1090,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-26,360848440,134,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-27,360817565,525,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-28,360744263,289,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-29,360569481,332,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
-30,360844732,118,CBS,CULVERT,BARRIER,USKE,LB,2026-03-03,satellite imagery,unmapped railline
+23,360823294,280,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+24,360857405,1515,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+25,360611980,1090,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+26,360848440,134,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+27,360817565,525,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+28,360744263,289,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+29,360569481,332,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
+30,360844732,118,CBS,CULVERT,POTENTIAL,USKE,LB,2026-04-16,satellite imagery,unmapped railline
 34,356360979,74145,OTHER,BEAVER_DAM,BARRIER,LTRE,MC,2026-03-10,Tuzistol meeting,
 35,356359054,8246,OTHER,BEAVER_DAM,BARRIER,TAKL,MC,2026-03-10,Tuzistol meeting,
 36,356535716,435,CBS,CULVERT,POTENTIAL,ELKR,MC,2026-04-01,imagery review,unmapped road with clearly visible culvert
