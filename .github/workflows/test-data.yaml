@@ -8,39 +8,56 @@ on:
     paths:
       - 'data/*.csv'
 env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-  SSH_USER: ${{ secrets.SSH_USER }}
-  SSH_KEY: ${{ secrets.SSH_KEY }}
-  SSH_HOST: ${{ secrets.SSH_HOST }}
+  DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
 jobs:
-  ng-test-data:
+  test-data:
     runs-on: ubuntu-latest
-    environment: ng-test
-    concurrency:
-      group: ng-test
     container: ghcr.io/smnorris/bcfishpass:main
+    services:
+      postgres:
+        image: postgis/postgis:16-3.5
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-      - name: Check out repository code
+      - name: Check out fwapg
         uses: actions/checkout@v4
-      - name: Run the jobs
+        with: 
+          repository: smnorris/fwapg
+          path: fwapg
+      - name: Create fwapg schema
         run:  |
-          cp parameters/example_newgraph/*csv parameters/
-          jobs/connect && jobs/load_csv
-  cwf-test-data:
-    runs-on: ubuntu-latest
-    environment: cwf-test
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-      SSH_USER: ${{ secrets.SSH_USER }}
-      SSH_KEY: ${{ secrets.SSH_KEY }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-    container: ghcr.io/smnorris/bcfishpass:main
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Run the jobs
+          cd db && ./create.sh
+        working-directory: fwapg
+      - name: Check out bcfishpass
+        uses: actions/checkout@v4  
+      - name: Create bcfishpass schema
+        run:  |
+          cd db/sources
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/schemas.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/bcfishobs.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/cabd.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/whse_basemapping.transport_line.sql
+          bcdata bc2pg -e -c 1 whse_admin_boundaries.clab_indian_reserves
+          bcdata bc2pg -e -c 1 whse_admin_boundaries.adm_indian_reserves_bands_sp
+          bcdata bc2pg -e -c 1 whse_legal_admin_boundaries.abms_regional_districts_sp
+          bcdata bc2pg -e -c 1 whse_basemapping.dbm_mof_50k_grid
+          bcdata bc2pg -e -c 1 whse_basemapping.gba_railway_tracks_sp
+          bcdata bc2pg -e -c 1 whse_legal_admin_boundaries.abms_municipalities_sp
+          bcdata bc2pg -e -c 1 whse_admin_boundaries.adm_nr_districts_spg
+          bcdata bc2pg -e -c 1 whse_admin_boundaries.clab_national_parks
+          bcdata bc2pg -e -c 1 whse_cadastre.pmbc_parcel_fabric_poly_svw
+          bcdata bc2pg -e -c 1 whse_tantalis.ta_park_ecores_pa_svw
+          curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql -v ON_ERROR_STOP=1 $DATABASE_URL
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');"
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -c \
+          "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/master/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
+      - name: Test data
         run:  |
           cp parameters/example_cwf/*csv parameters/
-          jobs/connect && jobs/load_csv
+          jobs/load_csv
