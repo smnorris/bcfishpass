@@ -15,7 +15,7 @@ jobs:
     container: ghcr.io/smnorris/bcfishpass:main
     services:
       postgres:
-        image: smnorris/fwapg-db:main
+        image: ghcr.io/smnorris/fwapg-db:main
         env:
           POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
