@@ -15,7 +15,7 @@ jobs:
     container: ghcr.io/smnorris/bcfishpass:main
     services:
       postgres:
-        image: postgis/postgis:16-3.5
+        image: ghcr.io/smnorris/fwapg-db:v0.7.2
         env:
           POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
@@ -25,15 +25,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - name: Check out fwapg
-        uses: actions/checkout@v4
-        with: 
-          repository: smnorris/fwapg
-          path: fwapg
-      - name: Create fwapg schema
-        run:  |
-          cd db && ./create.sh
-        working-directory: fwapg
       - name: Check out bcfishpass
         uses: actions/checkout@v4  
       - name: Create bcfishpass schema

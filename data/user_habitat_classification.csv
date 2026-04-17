@@ -15187,7 +15187,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356565430,25589,26743,ELKR,WCT,1,1,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
 356568403,2444,3079,ELKR,WCT,1,,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
 356568403,2444,3425,ELKR,WCT,,1,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),Parr electrofished upstream
-356569293,1505,2204,ELKR,WCT,,1,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
 356569657,0,2776,ELKR,WCT,,-1,MC,2025-03-24,Elk trib review 2025 (Jon Bisset),
 356499930,56,425,ELKR,WCT,1,1,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
 356534319,0,1035,ELKR,WCT,,1,MC,2025-04-02,Elk trib review 2025 (Jon Bisset),
@@ -15570,3 +15569,50 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356569352,0,3247,ELKR,WCT,-4,-4,SN,2026-04-08,CWF WCRP,extracted from CWF defined wcrp_elkr.mining_altered_streams_geom
 356569477,0,977,ELKR,WCT,-4,-4,SN,2026-04-08,CWF WCRP,extracted from CWF defined wcrp_elkr.mining_altered_streams_geom
 356570343,0,347,ELKR,WCT,-4,-4,SN,2026-04-08,CWF WCRP,extracted from CWF defined wcrp_elkr.mining_altered_streams_geom
+360744549,189,358,BELA,CH,,-1,LB,2026-04-17,PBio,"From field notes: Ephemeral stream, poor habitat value, and high gradient. Culvert provides seasonal runoff drainage with no established stram course."
+360744549,189,358,BELA,CO,-1,-1,LB,2026-04-17,PBio,"From field notes: Ephemeral stream, poor habitat value, and high gradient. Culvert provides seasonal runoff drainage with no established stram course."
+360744549,189,358,BELA,ST,-1,,LB,2026-04-17,PBio,"From field notes: Ephemeral stream, poor habitat value, and high gradient. Culvert provides seasonal runoff drainage with no established stram course."
+360832741,110,150,BELA,CH,,-1,LB,2026-04-17,PBio,No stream or structure found in field
+360832741,110,150,BELA,CO,,-1,LB,2026-04-17,PBio,No stream or structure found in field
+360663774,462,504,BELA,CH,,-1,LB,2026-04-17,PBio,"Run-off manangement structure, no fish habitat value above or below, no established stream course "
+360663774,462,504,BELA,CO,-1,-1,LB,2026-04-17,PBio,"Run-off manangement structure, no fish habitat value above or below, no established stream course "
+360576438,1458,1556,BELA,CH,,-1,LB,2026-04-17,PBio,No stream or structure found in field
+360576438,1458,1556,BELA,CO,-1,,LB,2026-04-17,PBio,No stream or structure found in field
+360788896,574,621,BELA,CH,,-1,LB,2026-04-17,PBio,No stream or structure found in field
+360788896,574,621,BELA,CO,,-1,LB,2026-04-17,PBio,No stream or structure found in field
+360752206,288,310,BELA,CO,,-1,LB,2026-04-17,PBio,No stream or structure found in field
+356563442,0,1100,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356509654,0,484,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356560765,2213,6262,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356554085,0,1440,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356552062,0,358,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356538096,0,876,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356501562,0,1020,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356461667,0,798,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356524979,0,841,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356557637,0,487,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356451283,0,462,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356568801,0,600,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356394819,0,325,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356382265,0,407,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356425071,0,598,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356541936,300,605,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356481397,1980,2505,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356516105,1140,1479,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356445059,1090,1214,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
+356557682,124,5817,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,"Low quality habitat, confirmed with Working Group. Dry channel at time of assessment, transitions into grass flats 60 m downstream of crossing."
+356565601,2440,4252,ELKR,WCT,-1,-1,MC,2026-04-17,Tracking table QA/QC,Low quality habitat. Winter habitat assessments revealed low habitat values. Dewatered in summer and winter. No sutiable habitat to support most life stages.
+356437959,362,1155,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,"Low quality habitat, Dry with poorly defined channel downstream"
+356569293,1505,2204,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,Snowshoe Lake drains to basin upstream with no visible channel between lake and road
+356477369,0,361,ELKR,WCT,1,1,MC,2026-04-17,Tracking table QA/QC,No modeled habitat but WCT points upstream and downstream. Noted as med quality habitat.
+356528119,9965,10704,ELKR,WCT,1,1,MC,2026-04-17,Tracking table QA/QC,No modeled habitat but WCT observations upstream and downstream
+356491611,0,323,ELKR,WCT,1,1,MC,2026-04-17,Tracking table QA/QC,"Was modeled as having .25 km of habitat upstream when we added it to the priority barriers list, not showing up anymore. Adding habitat back"
+356239785,1062,1157,SHUL,SK,-1,-1,LB,2026-04-17,field assessment,field review indicates no habitat upstream 
+356239785,1062,1157,SHUL,CO,,-1,LB,2026-04-17,field assessment,field review indicates no habitat upstream 
+356239785,1062,1157,SHUL,CH,,-1,LB,2026-04-17,field assessment,field review indicates no habitat upstream 
+356292659,822,1472,BONP,ST,,-1,LB,2026-04-17,field assessment,"Dry, looks like drainage channel."
+356240232,1427,1445,SHUL,CO,-1,,LB,2026-04-17,field assessment,confirmation from SFC that habitat can be removed. There is a small amount on the west trib upstream of this point that can also be removed.
+356122539,139,1041,SHUL,CO,,-1,LB,2026-04-17,field assessment,
+356299109,3923,7240,USHU,CO,-1,,LB,2026-04-17,field assessment,low quality habitat
+356299109,3923,10592,USHU,CO,,-1,LB,2026-04-17,field assessment,low quality habitat
+356234357,0,357,USHU,CO,,-1,LB,2026-04-17,field assessment,low quality habitat
