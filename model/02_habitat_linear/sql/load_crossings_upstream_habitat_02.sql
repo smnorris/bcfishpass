@@ -20,7 +20,9 @@ SET
   st_spawningrearing_belowupstrbarriers_km = st_spawningrearing_km,
   wct_spawning_belowupstrbarriers_km = wct_spawning_km,
   wct_rearing_belowupstrbarriers_km = wct_rearing_km,
-  wct_spawningrearing_belowupstrbarriers_km = wct_spawningrearing_km
+  wct_spawningrearing_belowupstrbarriers_km = wct_spawningrearing_km,
+  salmon_spawningrearing_belowupstrbarriers_km = salmon_spawningrearing_km,
+  salmonsteelhead_spawningrearing_belowupstrbarriers_km = salmonsteelhead_spawningrearing_km
 WHERE watershed_group_code = :'wsg';
 
 
@@ -49,6 +51,8 @@ with barriers as
     h.wct_spawning_km,
     h.wct_rearing_km,
     h.wct_spawningrearing_km,
+    h.salmon_spawningrearing_km,
+    h.salmonsteelhead_spawningrearing_km,
     ad.features_dnstr as barriers_anthropogenic_dnstr
   from bcfishpass.crossings_upstream_habitat h
   -- barriers only
@@ -80,7 +84,9 @@ above_upstream_barriers as
     sum(b.st_spawningrearing_km) as st_spawningrearing_km,
     sum(b.wct_spawning_km) as wct_spawning_km,
     sum(b.wct_rearing_km) as wct_rearing_km,
-    sum(b.wct_spawningrearing_km) as wct_spawningrearing_km
+    sum(b.wct_spawningrearing_km) as wct_spawningrearing_km,
+    sum(b.salmon_spawningrearing_km) as salmon_spawningrearing_km,
+    sum(b.salmonsteelhead_spawningrearing_km) as salmonsteelhead_spawningrearing_km
   from bcfishpass.crossings_upstream_habitat a
   inner join barriers b on a.aggregated_crossings_id = b.barriers_anthropogenic_dnstr[1]
   inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id
@@ -110,7 +116,9 @@ SET
   st_spawningrearing_belowupstrbarriers_km = round((a.st_spawningrearing_km - b.st_spawningrearing_km)::numeric, 2),
   wct_spawning_belowupstrbarriers_km = round((a.wct_spawning_km - b.wct_spawning_km)::numeric, 2),
   wct_rearing_belowupstrbarriers_km = round((a.wct_rearing_km - b.wct_rearing_km)::numeric, 2),
-  wct_spawningrearing_belowupstrbarriers_km = round((a.wct_spawningrearing_km - b.wct_spawningrearing_km)::numeric, 2)
+  wct_spawningrearing_belowupstrbarriers_km = round((a.wct_spawningrearing_km - b.wct_spawningrearing_km)::numeric, 2),
+  salmon_spawningrearing_belowupstrbarriers_km = round((a.salmon_spawningrearing_km - b.salmon_spawningrearing_km)::numeric, 2),
+  salmonsteelhead_spawningrearing_belowupstrbarriers_km = round((a.salmonsteelhead_spawningrearing_km - b.salmonsteelhead_spawningrearing_km)::numeric, 2)
 from above_upstream_barriers b
 where a.aggregated_crossings_id = b.aggregated_crossings_id;
 
@@ -155,8 +163,9 @@ above_upstr_barriers as
     sum(h.st_spawningrearing_km) as st_spawningrearing_km,
     sum(h.wct_spawning_km) as wct_spawning_km,
     sum(h.wct_rearing_km) as wct_rearing_km,
-    sum(h.wct_spawningrearing_km) as wct_spawningrearing_km
-  
+    sum(h.wct_spawningrearing_km) as wct_spawningrearing_km,
+    sum(h.salmon_spawningrearing_km) as salmon_spawningrearing_km,
+    sum(h.salmonsteelhead_spawningrearing_km) as salmonsteelhead_spawningrearing_km
   from crossings c
   -- join to upstream barriers
   inner join bcfishpass.barriers_anthropogenic b on
@@ -189,6 +198,8 @@ set
   st_spawningrearing_belowupstrbarriers_km = round((a.st_spawningrearing_km - b.st_spawningrearing_km)::numeric, 2),
   wct_spawning_belowupstrbarriers_km = round((a.wct_spawning_km - b.wct_spawning_km)::numeric, 2),
   wct_rearing_belowupstrbarriers_km = round((a.wct_rearing_km - b.wct_rearing_km)::numeric, 2),
-  wct_spawningrearing_belowupstrbarriers_km = round((a.wct_spawningrearing_km - b.wct_spawningrearing_km)::numeric, 2)
+  wct_spawningrearing_belowupstrbarriers_km = round((a.wct_spawningrearing_km - b.wct_spawningrearing_km)::numeric, 2),
+  salmon_spawningrearing_belowupstrbarriers_km = round((a.salmon_spawningrearing_km - b.salmon_spawningrearing_km)::numeric, 2),
+  salmonsteelhead_spawningrearing_belowupstrbarriers_km = round((a.salmonsteelhead_spawningrearing_km - b.salmonsteelhead_spawningrearing_km)::numeric, 2)
 from above_upstr_barriers b
 where a.aggregated_crossings_id = b.aggregated_crossings_id;
