@@ -13497,9 +13497,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356219933,976,1076,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
 356221682,716,816,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
 356231555,683,783,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
-356239785,1062,1162,SHUL,CH,1,,SN,2023-08-17,FISS spawning points,
-356239785,1062,1162,SHUL,CO,1,,SN,2023-08-17,FISS spawning points,
-356239785,1062,1162,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
 356255323,607,707,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
 356265170,1326,1426,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
 356273801,679,779,SHUL,SK,1,,SN,2023-08-17,FISS spawning points,
@@ -15616,3 +15613,9 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356299109,3923,7240,USHU,CO,-1,,LB,2026-04-17,field assessment,low quality habitat
 356299109,3923,10592,USHU,CO,,-1,LB,2026-04-17,field assessment,low quality habitat
 356234357,0,357,USHU,CO,,-1,LB,2026-04-17,field assessment,low quality habitat
+356239785,1157,1162,SHUL,SK,-1,,LB,2026-04-20,field assessment,channel was dry.
+356239785,1157,1062,SHUL,CH,-1,,LB,2026-04-20,field assessment,channel was dry.
+356239785,1157,1062,SHUL,CO,-1,,LB,2026-04-20,field assessment,channel was dry.
+356347377,557,5102,BONP,ST,,-1,LB,2026-04-20,field assessment,no habitat upstream of crossing located on Caribou Hwy.
+356240232,1427,1445,SHUL,CO,,-1,LB,2026-04-20,field assessment,confirmation from SFC that habitat can be removed. There is a small amount on the west trib upstream of this point that can also be removed.
+356299109,6364,7240,USHU,CO,-1,,LB,2026-04-20,field assessment,no habitat upstream of crossing 199643
