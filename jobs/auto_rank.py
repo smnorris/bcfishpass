@@ -109,8 +109,8 @@ def buildCondition(wcrp):
             AND 
             FWA_Upstream(
                 356570562, 
-                22910, 
-                22910, 
+                22912, 
+                22912, 
                 '300.625474.584724'::ltree, 
                 '300.625474.584724.100997'::ltree, 
                 c.blue_line_key, 
