@@ -15598,8 +15598,8 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356516105,1140,1479,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
 356445059,1090,1214,ELKR,WCT,-4,-4,MC,2026-04-17,PBio Review,Mining altered stream
 356557682,124,5817,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,"Low quality habitat, confirmed with Working Group. Dry channel at time of assessment, transitions into grass flats 60 m downstream of crossing."
-356565601,2440,4252,ELKR,WCT,-1,-1,MC,2026-04-17,Tracking table QA/QC,Low quality habitat. Winter habitat assessments revealed low habitat values. Dewatered in summer and winter. No sutiable habitat to support most life stages.
-356437959,362,1155,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,"Low quality habitat, Dry with poorly defined channel downstream"
+356565601,2440,4253,ELKR,WCT,-1,-1,MC,2026-04-17,Tracking table QA/QC,Low quality habitat. Winter habitat assessments revealed low habitat values. Dewatered in summer and winter. No sutiable habitat to support most life stages.
+356437959,362,1156,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,"Low quality habitat, Dry with poorly defined channel downstream"
 356569293,1505,2204,ELKR,WCT,,-1,MC,2026-04-17,Tracking table QA/QC,Snowshoe Lake drains to basin upstream with no visible channel between lake and road
 356477369,0,361,ELKR,WCT,1,1,MC,2026-04-17,Tracking table QA/QC,No modeled habitat but WCT points upstream and downstream. Noted as med quality habitat.
 356528119,9965,10704,ELKR,WCT,1,1,MC,2026-04-17,Tracking table QA/QC,No modeled habitat but WCT observations upstream and downstream
@@ -15618,3 +15618,4 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356347377,557,5102,BONP,ST,,-1,LB,2026-04-20,field assessment,no habitat upstream of crossing located on Caribou Hwy.
 356240232,1427,1445,SHUL,CO,,-1,LB,2026-04-20,field assessment,confirmation from SFC that habitat can be removed. There is a small amount on the west trib upstream of this point that can also be removed.
 356299109,6364,7240,USHU,CO,-1,,LB,2026-04-20,field assessment,no habitat upstream of crossing 199643
+356568928,328,341,ELKR,WCT,,-1,MC,2026-04-20,Tracking table QA/QC,"Low quality habitat, confirmed with Working Group. Dry channel at time of assessment, transitions into grass flats 60 m downstream of crossing."
