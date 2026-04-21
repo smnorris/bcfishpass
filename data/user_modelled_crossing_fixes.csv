@@ -21600,7 +21600,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24742716,OBS,STUR,LB,2026-03-30,imagery review,CWF WCRP QA/QC
 20001201,OBS,TAKL,LB,2026-03-30,imagery review,CWF WCRP QA/QC
 19401338,NONE,STUR,LB,2026-03-31,Barrier assessment,"deactivated road, no structure"
-19400335,NONE,STUR,LB,2026-03-31,Barrier assessment,Likely was a culvert when road active. No structure - flooded out on both sides and large wetland. 
+19400335,NONE,STUR,LB,2026-03-31,Barrier assessment,Likely was a culvert when road active. No structure - flooded out on both sides and large wetland.
 4603285,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
 4602197,NONE,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
 4600378,FORD,ELKR,MC,2026-04-01,imagery review,CWF WCRP QA/QC
@@ -21664,3 +21664,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 400065,NONE,ATNA,LB,2026-04-16,Biologist Review,Road and structure visibly do not exist on Bing maps
 4606284,FORD,ELKR,MC,2026-04-16,Imagery Review,Passable Ford
 4601915,NONE,ELKR,MC,2026-04-16,Assessment comment,
+11304291,NONE,LNIC,LB,2026-04-21,PSCIS assessment,Burned out bridge collapsed but not causing fish passage issues
+11303791,NONE,LNIC,LB,2026-04-21,PSCIS assessment,Crossing does not exist
+11304154,NONE,LNIC,LB,2026-04-21,PSCIS assessment,"No structure, washed out in 2021 flood"
