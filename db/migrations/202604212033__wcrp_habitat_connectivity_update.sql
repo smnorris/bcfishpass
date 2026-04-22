@@ -3,7 +3,7 @@
 BEGIN;
 
   drop table if exists bcfishpass.log_wcrp_habitat_connectivity cascade;
-  
+
   create table bcfishpass.log_wcrp_habitat_connectivity (
    model_run_id                                             integer references bcfishpass.log(model_run_id),
    wcrp                                                     text,
@@ -56,7 +56,9 @@ BEGIN;
 
 
   -- view of current habitat connecitvity status, plus percentages
-  create view bcfishpass.wcrp_habitat_connectivity as
+  drop view if exists bcfishpass.wcrp_habitat_connectivity_status_vw;
+
+  create view bcfishpass.wcrp_habitat_connectivity_status_vw as
   select distinct on (wcrp)
     wcrp,
     total_spawning_ch,
@@ -119,6 +121,131 @@ BEGIN;
   from bcfishpass.log_wcrp_habitat_connectivity s
   inner join bcfishpass.log l on s.model_run_id = l.model_run_id
   order by s.wcrp, l.date_completed desc;
+
+
+
+-- report on total modelled habitat vs accessible modelled habitat
+DROP FUNCTION IF EXISTS postgisftw.wcrp_habitat_connectivity_status;
+
+CREATE OR REPLACE FUNCTION postgisftw.wcrp_habitat_connectivity_status(
+  wcrp TEXT
+)
+
+  RETURNS TABLE(
+   total_spawning_ch                                       numeric,
+   total_spawning_co                                       numeric,
+   total_spawning_sk                                       numeric,
+   total_spawning_st                                       numeric,
+   total_spawning_wct                                      numeric,
+   
+   total_rearing_ch                                        numeric,
+   total_rearing_co                                        numeric,
+   total_rearing_sk                                        numeric,
+   total_rearing_st                                        numeric,
+   total_rearing_wct                                       numeric,
+
+   total_spawningrearing_ch                                numeric,
+   total_spawningrearing_co                                numeric,
+   total_spawningrearing_sk                                numeric,
+   total_spawningrearing_st                                numeric,
+   total_spawningrearing_wct                               numeric,
+
+   total_spawning_all                                      numeric,
+   total_rearing_all                                       numeric,
+   total_spawningrearing_all                               numeric,
+
+   accessible_spawning_ch                                       numeric,
+   accessible_spawning_co                                       numeric,
+   accessible_spawning_sk                                       numeric,
+   accessible_spawning_st                                       numeric,
+   accessible_spawning_wct                                      numeric,
+   
+   accessible_rearing_ch                                        numeric,
+   accessible_rearing_co                                        numeric,
+   accessible_rearing_sk                                        numeric,
+   accessible_rearing_st                                        numeric,
+   accessible_rearing_wct                                       numeric,
+
+   accessible_spawningrearing_ch                                numeric,
+   accessible_spawningrearing_co                                numeric,
+   accessible_spawningrearing_sk                                numeric,
+   accessible_spawningrearing_st                                numeric,
+   accessible_spawningrearing_wct                               numeric,
+
+   accessible_spawning_all                                      numeric,
+   accessible_rearing_all                                       numeric,
+   accessible_spawningrearing_all                               numeric
+  )
+
+  LANGUAGE 'plpgsql'
+  IMMUTABLE PARALLEL SAFE
+
+AS $$
+
+DECLARE
+   v_wcrp  text := wcrp;
+
+BEGIN
+RETURN QUERY
+select
+   v.total_spawning_ch                                       numeric,
+   v.total_spawning_co                                       numeric,
+   v.total_spawning_sk                                       numeric,
+   v.total_spawning_st                                       numeric,
+   v.total_spawning_wct                                      numeric,
+
+   v.total_rearing_ch                                        numeric,
+   v.total_rearing_co                                        numeric,
+   v.total_rearing_sk                                        numeric,
+   v.total_rearing_st                                        numeric,
+   v.total_rearing_wct                                       numeric,
+
+   v.total_spawningrearing_ch                                numeric,
+   v.total_spawningrearing_co                                numeric,
+   v.total_spawningrearing_sk                                numeric,
+   v.total_spawningrearing_st                                numeric,
+   v.total_spawningrearing_wct                               numeric,
+
+   v.total_spawning_all                                      numeric,
+   v.total_rearing_all                                       numeric,
+   v.total_spawningrearing_all                               numeric,
+
+   v.accessible_spawning_ch                                       numeric,
+   v.accessible_spawning_co                                       numeric,
+   v.accessible_spawning_sk                                       numeric,
+   v.accessible_spawning_st                                       numeric,
+   v.accessible_spawning_wct                                      numeric,
+
+   v.accessible_rearing_ch                                        numeric,
+   v.accessible_rearing_co                                        numeric,
+   v.accessible_rearing_sk                                        numeric,
+   v.accessible_rearing_st                                        numeric,
+   v.accessible_rearing_wct                                       numeric,
+
+   v.accessible_spawningrearing_ch                                numeric,
+   v.accessible_spawningrearing_co                                numeric,
+   v.accessible_spawningrearing_sk                                numeric,
+   v.accessible_spawningrearing_st                                numeric,
+   v.accessible_spawningrearing_wct                               numeric,
+
+   v.accessible_spawning_all                                      numeric,
+   v.accessible_rearing_all                                       numeric,
+   v.accessible_spawningrearing_all                               numeric
+from bcfishpass.wcrp_habitat_connectivity_status_vw v
+where v.wcrp = v_wcrp;
+
+END
+$$;
+
+COMMENT ON FUNCTION postgisftw.wcrp_habitat_connectivity_status IS
+'For WCRP specified, return total/accessible lengths and percentage accessible for habitat types spawning; rearing; spawning and/or rearing 
+per target species and for all target species.';
+
+REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_habitat_connectivity_status FROM public;
+
+-- select * from postgisftw.wcrp_habitat_connectivity_status('takla')
+-- select * from postgisftw.wcrp_habitat_connectivity_status('hors')
+-- select * from postgisftw.wcrp_habitat_connectivity_status('bowr_ques_carr')
 
 
 COMMIT;
