@@ -5297,9 +5297,9 @@ CREATE VIEW bcfishpass.dams_vw AS
 -- Name: db_version; Type: TABLE; Schema: bcfishpass; Owner: -
 --
 
-CREATE TABLE bcfishpass.db_version (
-    tag text
-);
+-- CREATE TABLE bcfishpass.db_version (
+--     tag text
+-- );
 
 
 --
