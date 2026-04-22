@@ -39,3 +39,7 @@ parameters/parameters_habitat*.csv
 
 # postgres dump files
 *.dump
+
+# misc data archives
+*.zip
+*.parquet
