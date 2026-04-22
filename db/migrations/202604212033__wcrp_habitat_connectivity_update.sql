@@ -249,3 +249,4 @@ REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_habitat_connectivity_status FROM publ
 
 
 COMMIT;
+
