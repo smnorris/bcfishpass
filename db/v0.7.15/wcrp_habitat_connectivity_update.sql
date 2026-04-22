@@ -2,8 +2,6 @@
 
 BEGIN;
 
-drop table if exists bcfishpass.log_aw_linear_summary cascade;
-
 create table bcfishpass.log_wcrp_habitat_connectivity (
  model_run_id                                             integer references bcfishpass.log(model_run_id),
  wcrp                                                     text,
