@@ -79,6 +79,7 @@ BEGIN;
     total_spawning_all,
     total_rearing_all,
     total_spawningrearing_all,
+    
     accessible_spawning_ch,
     accessible_spawning_co,
     accessible_spawning_sk,
@@ -97,6 +98,25 @@ BEGIN;
     accessible_spawning_all,
     accessible_rearing_all,
     accessible_spawningrearing_all,
+
+    total_spawning_ch - accessible_spawning_ch as disconnected_spawning_ch,
+    total_spawning_co - accessible_spawning_co as disconnected_spawning_co,
+    total_spawning_sk - accessible_spawning_sk as disconnected_spawning_sk,
+    total_spawning_st - accessible_spawning_st as disconnected_spawning_st,
+    total_spawning_wct - accessible_spawning_wct as disconnected_spawning_wct,
+    total_rearing_ch - accessible_rearing_ch as disconnected_rearing_ch,
+    total_rearing_co - accessible_rearing_co as disconnected_rearing_co,
+    total_rearing_sk - accessible_rearing_sk as disconnected_rearing_sk,
+    total_rearing_st - accessible_rearing_st as disconnected_rearing_st,
+    total_rearing_wct - accessible_rearing_wct as disconnected_rearing_wct,
+    total_spawningrearing_ch - accessible_spawningrearing_ch as disconnected_spawningrearing_ch,
+    total_spawningrearing_co - accessible_spawningrearing_co as disconnected_spawningrearing_co,
+    total_spawningrearing_sk - accessible_spawningrearing_sk as disconnected_spawningrearing_sk,
+    total_spawningrearing_st - accessible_spawningrearing_st as disconnected_spawningrearing_st,
+    total_spawningrearing_wct - accessible_spawningrearing_wct as disconnected_spawningrearing_wct,
+    total_spawning_all - accessible_spawning_all as disconnected_spawning_all,
+    total_rearing_all - accessible_rearing_all as disconnected_rearing_all,
+    total_spawningrearing_all - accessible_spawningrearing_all as disconnected_spawningrearing_all,
 
     -- percentage accessible
     round(coalesce(accessible_spawning_ch / nullif(total_spawning_ch, 0),0) * 100, 2) as pct_accessible_spawning_ch,
