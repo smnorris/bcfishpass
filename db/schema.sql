@@ -5299,7 +5299,7 @@ CREATE VIEW bcfishpass.dams_vw AS
 
 CREATE TABLE bcfishpass.db_version (
     tag text NOT NULL,
-    applied_at timestamp without time zone NOT NULL
+    applied_at timestamp without time zone NOT NULL DEFAULT now()
 );
 
 
