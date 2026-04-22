@@ -49,7 +49,7 @@ jobs:
           psql $DATABASE_URL -v ON_ERROR_STOP=1 < db/schema.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');"
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c \
-          "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://github.com/smnorris/fishbc/blob/4862117774c5c256ffd7b2293eecf2b45922414c/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
+          "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/4862117774c5c256ffd7b2293eecf2b45922414c/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
       - name: Test migration
         run:  |
           cd db && ./migrate.sh
