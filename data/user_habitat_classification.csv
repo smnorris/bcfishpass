@@ -15621,3 +15621,5 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356568928,328,341,ELKR,WCT,,-1,MC,2026-04-20,Tracking table QA/QC,"Low quality habitat, confirmed with Working Group. Dry channel at time of assessment, transitions into grass flats 60 m downstream of crossing."
 356348664,503,2685,LNIC,ST,,-1,LB,2026-04-21,model qa/qc,No upstream habitat. Too steep to access from Coldwater River
 356330403,1118,1321,LNIC,ST,,-1,LB,2026-04-21,model qa/qc,no habitat upstream of crossing
+360604866,0,249,BELA,CO,,1,LB,2026-04-22,model qa/qc,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
+360692499,0,70,BELA,CO,,1,LB,2026-04-22,model qa/qc,"stream mapped incorrectly, coho habitat rearing exists from mouth to end of accessible habitat."
