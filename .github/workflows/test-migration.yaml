@@ -1,16 +1,16 @@
-name: test-data
-run-name: ${{ github.actor }} Load data files to test databases
+name: test-migration
+run-name: ${{ github.actor }} Test db migrations
 on:
   workflow_dispatch:
   pull_request:
     branches:
       - 'main'
     paths:
-      - 'data/*.csv'
+      - 'db/migrations/*.sql'
 env:
   DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
 jobs:
-  test-data:
+  test-migration:
     runs-on: ubuntu-latest
     container: ghcr.io/smnorris/bcfishpass:main
     services:
@@ -27,9 +27,9 @@ jobs:
     steps:
       - name: Check out bcfishpass
         uses: actions/checkout@v4  
-      - name: Create bcfishpass schema
+      - name: Create schemas and releations required by bcfishpass
         run:  |
-          cd db/sources
+          cd db/migrations/archive/sources
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/schemas.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/bcfishobs.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/cabd.sql
@@ -44,11 +44,12 @@ jobs:
           bcdata bc2pg -e -c 1 whse_admin_boundaries.clab_national_parks
           bcdata bc2pg -e -c 1 whse_cadastre.pmbc_parcel_fabric_poly_svw
           bcdata bc2pg -e -c 1 whse_tantalis.ta_park_ecores_pa_svw
-          curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql -v ON_ERROR_STOP=1 $DATABASE_URL
+      - name: Create bcfishpass schema
+        run:  |
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 < db/schema.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');"
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c \
           "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/4862117774c5c256ffd7b2293eecf2b45922414c/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
-      - name: Test data
+      - name: Test migration
         run:  |
-          cp parameters/example_cwf/*csv parameters/
-          jobs/load_csv
+          cd db && ./migrate.sh
