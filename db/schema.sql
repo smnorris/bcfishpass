@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
--- Dumped by pg_dump version 16.13 (Ubuntu 16.13-1.pgdg24.04+1)
+-- Dumped by pg_dump version 17.7 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -5297,9 +5297,10 @@ CREATE VIEW bcfishpass.dams_vw AS
 -- Name: db_version; Type: TABLE; Schema: bcfishpass; Owner: -
 --
 
--- CREATE TABLE bcfishpass.db_version (
---     tag text
--- );
+CREATE TABLE bcfishpass.db_version (
+    tag text NOT NULL,
+    applied_at timestamp without time zone NOT NULL
+);
 
 
 --

@@ -35,7 +35,7 @@ psql_cmd <<-SQL > /dev/null
   CREATE SCHEMA IF NOT EXISTS bcfishpass;
   CREATE TABLE IF NOT EXISTS bcfishpass.db_version (
     tag        TEXT        NOT NULL,
-    applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    applied_at TIMESTAMP NOT NULL DEFAULT now()
   );
   INSERT INTO bcfishpass.db_version (tag)
   SELECT '0'
