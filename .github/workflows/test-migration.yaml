@@ -10,7 +10,7 @@ on:
 env:
   DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
 jobs:
-  test-data:
+  test-migration:
     runs-on: ubuntu-latest
     container: ghcr.io/smnorris/bcfishpass:main
     services:
@@ -46,7 +46,7 @@ jobs:
             bcdata bc2pg -e -c 1 whse_cadastre.pmbc_parcel_fabric_poly_svw
             bcdata bc2pg -e -c 1 whse_tantalis.ta_park_ecores_pa_svw
           )
-          psql -v ON_ERROR_STOP=1 $DATABASE_URL db/schema.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 db/schema.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');"
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c \
           "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://github.com/smnorris/fishbc/blob/4862117774c5c256ffd7b2293eecf2b45922414c/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
