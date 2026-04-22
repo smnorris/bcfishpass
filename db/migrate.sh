@@ -47,11 +47,10 @@ SQL
 # ----------------------------------------------------------------
 current_version=$(psql_cmd -t -A -c "
   SELECT tag FROM bcfishpass.db_version ORDER BY applied_at DESC LIMIT 1;
-" 2>&1) || {
+") || {
   echo "ERROR: Could not read bcfishpass.db_version"
   exit 1
 }
-current_version="${current_version:-0}"
 echo "Current database version: ${current_version}"
 
 # ----------------------------------------------------------------
