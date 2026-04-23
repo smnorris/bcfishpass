@@ -11,3 +11,9 @@ repos:
         entry: python wcrp/scripts/validate_config.py
         files: wcrp/plan_config\.yaml$
         additional_dependencies: [jsonschema, pyyaml]
+
+      - id: validate-plan-filter-clauses
+        name: Validate plan filter clauses against database
+        language: system
+        entry: bash -c '$VIRTUAL_ENV/bin/python wcrp/scripts/validate_filter_clauses.py'
+        files: wcrp/plan_config\.yaml$        
