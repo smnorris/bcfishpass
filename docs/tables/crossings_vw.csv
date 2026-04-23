@@ -2,7 +2,7 @@ column,type,description
 ``aggregated_crossings_id``,`text`,"unique identifier for crossing, taken from one of PSCIS stream_crossing_id / cabd_id / modelled_crossing_id + 1000000000 / user_barrier_anthropogenic_id + 1200000000"
 ``stream_crossing_id``,`integer`,"PSCIS stream crossing unique identifier"
 ``dam_id``,`text`,BC Dams unique identifier
-``user_barrier_anthropogenic_id``,`bigint`,User added misc anthropogenic barriers unique identifier
+``user_crossing_misc_id``,`bigint`,Misc user added crossings unique identifier
 ``modelled_crossing_id``,`integer`,"Modelled crossing unique identifier"
 ``crossing_source``,`text`,"Data source for the crossing, one of: {PSCIS; MODELLED CROSSINGS; CABD; MISC BARRIERS}"
 ``crossing_feature_type``,`text`,"Type of feature that crosses the stream one of {DAM; RAIL; ROAD, DEMOGRAPHIC; ROAD, RESOURCE/OTHER; TRAIL; WEIR}"

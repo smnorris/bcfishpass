@@ -28,7 +28,7 @@ ogr2ogr \
             aggregated_crossings_id,
             stream_crossing_id,
             dam_id,
-            user_barrier_anthropogenic_id,
+            user_crossing_misc_id,
             modelled_crossing_id,
             crossing_source,
             crossing_feature_type,
