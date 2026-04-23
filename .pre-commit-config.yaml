@@ -10,3 +10,4 @@ repos:
         language: system
         entry: bash -c '$VIRTUAL_ENV/bin/python wcrp/scripts/validate_config.py'
         files: wcrp/plan_config\.yaml$
+        verbose: true
