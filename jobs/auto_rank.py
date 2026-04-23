@@ -106,6 +106,16 @@ def buildCondition(wcrp):
     elif wcrp == "elkr_upstr":
         condition = """
             c."watershed_group_code" IN ('ELKR')
+            AND c.aggregated_crossings_id not in (
+                '1004604098',
+                '1004604117',
+                '1004604461',
+                '1004604469',
+                '1004604566',
+                '1004605000',
+                '1004605053',
+                '1004606108',
+                '1024734942')
             AND 
             FWA_Upstream(
                 356570562, 
