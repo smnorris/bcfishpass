@@ -1,0 +1,7 @@
+click
+numpy
+bcdata==0.16.0
+scikit-image
+jsonschema
+psycopg2-binary
+pyyaml
