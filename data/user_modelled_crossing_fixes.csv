@@ -20282,8 +20282,8 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1804442,NONE,BULK,KK,2022-03-24,Bing/Google/ESRI imagery,no visible road
 1804441,NONE,BULK,KK,2022-03-24,Bing/Google/ESRI imagery,no visible road
 1803940,OBS,BULK,KK,2022-03-24,Bing/Google/ESRI imagery,to check - probable bridge
-1803835,OBS,BULK,KK,2022-03-24,Bing/Google/ESRI imagery,to check - probable bridge
-1803834,OBS,BULK,KK,2022-03-24,Bing/Google/ESRI imagery,to check - possible bridge
+1803835,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
+1803834,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
 1803795,OBS,BULK,KK,2022-03-24,Bing/Google/ESRI imagery,to check - probable bridge
 24744153,NONE,KISP,KK,2022-03-24,Bing/Google/ESRI imagery,no visible road
 24744152,NONE,KISP,KK,2022-03-24,Bing/Google/ESRI imagery,no visible road
@@ -20335,7 +20335,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 14000258,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14001634,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14000257,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
-1802044,NONE,BULK,KK,2022-03-28,Bing/Google/ESRI imagery,
+1802044,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC,
 14001738,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14000178,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14001681,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
@@ -21668,3 +21668,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 11303791,NONE,LNIC,LB,2026-04-21,PSCIS assessment,Crossing does not exist
 11304154,NONE,LNIC,LB,2026-04-21,PSCIS assessment,"No structure, washed out in 2021 flood"
 24734942,NONE,ELKR,MC,2026-04-22,imagery review,
+1802859,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
+1804239,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
+1806259,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
+1801813,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
