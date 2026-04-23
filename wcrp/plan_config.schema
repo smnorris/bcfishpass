@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Watershed Connectivity Restoration Plan (WCRP) Configuration",
+  "description": "Schema for WCRP configuration files",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "plan_name",
+      "plan_code",
+      "target_species",
+      "filter_clause",
+      "connectivity_status_types"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "plan_name": {
+        "type": "string",
+        "description": "Human-readable name for the plan",
+        "minLength": 1
+      },
+      "plan_code": {
+        "type": "string",
+        "description": "Short unique identifier for the plan",
+        "minLength": 1
+      },
+      "target_species": {
+        "type": "array",
+        "description": "List of species codes targeted by this plan",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minItems": 1,
+        "uniqueItems": true
+      },
+      "filter_clause": {
+        "type": "string",
+        "description": "SQL WHERE clause for filtering streams for this plan",
+        "minLength": 1
+      },
+      "connectivity_status_types": {
+        "type": "array",
+        "description": "Habitat connectivity columns to include in plan reporting",
+        "items": {
+          "type": "string",
+          "enum": [
+            "spawning_ch",
+            "spawning_co",
+            "spawning_sk",
+            "spawning_st",
+            "spawning_wct",
+            "rearing_ch",
+            "rearing_co",
+            "rearing_sk",
+            "rearing_st",
+            "rearing_wct",
+            "spawningrearing_ch",
+            "spawningrearing_co",
+            "spawningrearing_sk",
+            "spawningrearing_st",
+            "spawningrearing_wct",
+            "spawning_all",
+            "rearing_all",
+            "spawningrearing_all"
+          ]
+        },
+        "minItems": 1,
+        "uniqueItems": true
+      }
+    }
+  }
+}

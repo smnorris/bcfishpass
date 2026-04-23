@@ -1,0 +1,103 @@
+[
+  {
+    "plan_name": "Bulkley",
+    "plan_code": "bulk",
+    "target_species": ["CH", "CO", "SK", "ST"],
+    "connectivity_status_types": ["spawning_all", "rearing_all", "spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'BULK'"
+  },
+  {
+    "plan_name": "Morice",
+    "plan_code": "morr",
+    "target_species": ["CH", "CO", "SK", "ST"],
+    "connectivity_status_types": ["spawning_all", "rearing_all", "spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'MORR'"
+  },
+  {
+    "plan_name": "Elk - upstream of Elko Dam",
+    "plan_code": "elkr_upstr",
+    "target_species": ["WCT"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'ELKR' and <>"
+  },
+  {
+    "plan_name": "Elk - downstream of Elko Dam",
+    "plan_code": "elkr_dnstr",
+    "target_species": ["WCT"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'ELKR' and <>"
+  },
+  {
+    "plan_name": "Horsefly",
+    "plan_code": "hors",
+    "target_species": ["CH", "CO", "SK"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'HORS'"
+  },
+  {
+    "plan_name": "Lower Nicola",
+    "plan_code": "lnic",
+    "target_species": ["CH", "CO", "ST"],
+    "connectivity_status_types": ["spawningrearing_all", "spawning_all", "rearing_all"],
+    "filter_clause": "watershed_group_code = 'LNIC'"
+  },
+  {
+    "plan_name": "Thompson-Shuswap - Bonaparte",
+    "plan_code": "tho_sho_bonp",
+    "target_species": ["CH", "CO", "SK", "ST"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'BONP'"
+  },
+  {
+    "plan_name": "Thompson-Shuswap - Eagle",
+    "plan_code": "tho_sho_eagle",
+    "target_species": ["CH", "CO", "SK", "ST"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'SHUL' and <>"
+  },
+  {
+    "plan_name": "Thompson-Shuswap - Bessette",
+    "plan_code": "tho_sho_bessette",
+    "target_species": ["CH", "CO", "SK", "ST"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code = 'USHU' and <>"
+  },
+  {
+    "plan_name": "Lhtako Dene Nation",
+    "plan_code": "bowr_ques_carr",
+    "target_species": ["CH", "CO", "SK"],
+    "connectivity_status_types": ["spawningrearing_all", "spawning_all", "rearing_all"],
+    "filter_clause": "watershed_group_code in ('BOWR', 'QUES', 'CARR', 'COTR')"
+  },
+  {
+    "plan_name": "Nuxalk",
+    "plan_code": "bela_atna_necl",
+    "target_species": ["CH", "CO", "SK"],
+    "connectivity_status_types": ["spawningrearing_all"],
+    "filter_clause": "watershed_group_code in ('ATNA', 'BELA', 'NECL') and <>"
+  },
+  {
+    "plan_name": "Tuzist-ol T'ah",
+    "plan_code": "tuzistol_tah",
+    "target_species": ["CH", "SK"],
+    "connectivity_status_types": ["spawningrearing_all", "spawningrearing_ch", "spawningrearing_sk"],
+    "filter_clause": "watershed_group_code in ('TAKL', 'MIDR', 'UTRE', 'LTRE', 'STUL', 'DRIR')"
+  },
+  {
+    "plan_name": "Takla",
+    "plan_code": "takla",
+    "target_species": ["CH", "CO", "SK", "ST"],
+    "connectivity_status_types": [
+      "spawningrearing_all",
+      "spawning_ch", 
+      "rearing_ch",
+      "spawning_co", 
+      "rearing_co",
+      "spawning_sk", 
+      "rearing_sk",
+      "spawning_st", 
+      "rearing_st"
+    ],
+    "filter_clause": "watershed_group_code in ('TAKL', 'MIDR', 'DRIR', 'MSKE', 'SUST', 'USKE') and <>"
+  }
+]
