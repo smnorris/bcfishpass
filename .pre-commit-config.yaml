@@ -6,14 +6,7 @@ repos:
   - repo: local
     hooks:
       - id: validate-plan-config
-        name: Validate plan_config.yaml against schema
-        language: python
-        entry: python wcrp/scripts/validate_config.py
-        files: wcrp/plan_config\.yaml$
-        additional_dependencies: [jsonschema, pyyaml]
-
-      - id: validate-plan-filter-clauses
-        name: Validate plan filter clauses against database
+        name: Validate plan_config.yaml
         language: system
-        entry: bash -c '$VIRTUAL_ENV/bin/python wcrp/scripts/validate_filter_clauses.py'
-        files: wcrp/plan_config\.yaml$        
+        entry: bash -c '$VIRTUAL_ENV/bin/python wcrp/scripts/validate_config.py'
+        files: wcrp/plan_config\.yaml$
