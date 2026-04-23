@@ -8,6 +8,11 @@ import yaml
 import psycopg2
 
 
+def load_config():
+    base = Path(__file__).parent.parent
+    return yaml.safe_load(open(base / "plan_config.yaml"))
+
+
 def get_species_columns(prefix, target_species):
     """Return list of column expressions for given prefix and target species."""
     return [f"h.{prefix}_{s.lower()}" for s in target_species]
@@ -116,21 +121,17 @@ def process_plan(cur, plan):
     print(f"Inserted {cur.rowcount} row(s) for plan '{plan['plan_code']}'")
 
 
-@click.command()
-@click.argument("wcrp", required=False)
-@click.option("--dry-run", is_flag=True, help="Print SQL to stdout instead of executing.")
-@click.option("--dump-json", is_flag=True, help="Run query and print results as JSON to stdout after inserting.")
-def main(wcrp, dry_run, dump_json):
-    """Load WCRP habitat connectivity data. Optionally specify a PLAN_CODE to process a single plan."""
-    base = Path(__file__).parent.parent
-    config = yaml.safe_load(open(base / "plan_config.yaml"))
+@click.group()
+def cli():
+    """WCRP habitat connectivity loader/dumper"""
+    pass
 
-    if wcrp is not None:
-        plans = [p for p in config if p["plan_code"] == wcrp]
-        if not plans:
-            raise click.BadParameter(f"No plan found with plan_code '{wcrp}'", param_hint="WCRP")
-    else:
-        plans = config
+
+@cli.command()
+@click.option("--dry-run", is_flag=True, help="Print SQL to stdout instead of executing.")
+def load(dry_run):
+    """Load all plans to the habitat connectivity log table."""
+    plans = load_config()
 
     if dry_run:
         for plan in plans:
@@ -144,28 +145,47 @@ def main(wcrp, dry_run, dump_json):
         process_plan(cur, plan)
 
     conn.commit()
+    cur.close()
+    conn.close()
 
-    if dump_json:
-        results = []
-        for plan in plans:
-            cols = ", ".join(
-                ["wcrp", "watershed_group_code"]
-                + [f"total_{c}" for c in plan["connectivity_status_types"]]
-                + [f"accessible_{c}" for c in plan["connectivity_status_types"]]
-                + [f"disconnected_{c}" for c in plan["connectivity_status_types"]]
-                + [f"pct_accessible_{c}" for c in plan["connectivity_status_types"]]
-            )
-            cur.execute(textwrap.dedent(f"""
-                SELECT {cols}
-                FROM bcfishpass.wcrp_habitat_connectivity_status_vw
-                WHERE wcrp = '{plan["plan_code"]}'
-            """))
-            results.extend([dict(row) for row in cur.fetchall()])
-        click.echo(json.dumps(results, indent=2, default=str))
+
+@cli.command()
+@click.argument("wcrp", required=False)
+def dump(wcrp):
+    """Dump habitat connectivity results for most recent model run as JSON. Optionally filter by PLAN_CODE."""
+    config = load_config()
+
+    if wcrp is not None:
+        plans = [p for p in config if p["plan_code"] == wcrp]
+        if not plans:
+            raise click.BadParameter(f"No plan found with plan_code '{wcrp}'", param_hint="WCRP")
+    else:
+        plans = config
+
+    conn = psycopg2.connect(os.environ["DATABASE_URL"])
+    cur = psycopg2.extras.RealDictCursor(conn)
+
+    results = []
+    for plan in plans:
+        cols = ", ".join(
+            ["wcrp", "watershed_group_code"]
+            + [f"total_{c}" for c in plan["connectivity_status_types"]]
+            + [f"accessible_{c}" for c in plan["connectivity_status_types"]]
+            + [f"disconnected_{c}" for c in plan["connectivity_status_types"]]
+            + [f"pct_accessible_{c}" for c in plan["connectivity_status_types"]]
+        )
+        cur.execute(textwrap.dedent(f"""
+            SELECT {cols}
+            FROM bcfishpass.wcrp_habitat_connectivity_status_vw
+            WHERE wcrp = '{plan["plan_code"]}'
+        """))
+        results.extend([dict(row) for row in cur.fetchall()])
+
+    click.echo(json.dumps(results, indent=2, default=str))
 
     cur.close()
     conn.close()
 
 
 if __name__ == "__main__":
-    main()
+    cli()
