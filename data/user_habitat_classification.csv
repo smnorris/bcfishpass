@@ -15609,8 +15609,7 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356239785,1062,1157,SHUL,CH,,-1,LB,2026-04-17,field assessment,field review indicates no habitat upstream 
 356292659,822,1472,BONP,ST,,-1,LB,2026-04-17,field assessment,"Dry, looks like drainage channel."
 356122539,139,1041,SHUL,CO,,-1,LB,2026-04-17,field assessment,
-356299109,3923,10592,USHU,CO,-1,,LB,2026-04-17,field assessment,no habitat upstream of crossing 199643
-356299109,3923,10592,USHU,CO,,-1,LB,2026-04-17,field assessment,low quality habitat
+356299109,3923,10592,USHU,CO,-1,-1,LB,2026-04-17,field assessment,no habitat upstream of crossing 199643
 356234357,0,357,USHU,CO,,-1,LB,2026-04-17,field assessment,low quality habitat
 356347377,557,5102,BONP,ST,,-1,LB,2026-04-20,field assessment,no habitat upstream of crossing located on Caribou Hwy.
 356240232,1427,1445,SHUL,CO,-1,-1,LB,2026-04-20,field assessment,confirmation from SFC that habitat can be removed. There is a small amount on the west trib upstream of this point that can also be removed.
@@ -15618,7 +15617,5 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356348664,503,2685,LNIC,ST,,-1,LB,2026-04-21,model qa/qc,No upstream habitat. Too steep to access from Coldwater River
 356330403,1118,1321,LNIC,ST,,-1,LB,2026-04-21,model qa/qc,no habitat upstream of crossing
 356292659,0,822,BONP,ST,,-1,LB,2026-04-22,field assessment,No habitat in its current state
-360604866,0,249,BELA,CO,,1,LB,2026-04-22,model qa/qc,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
-360692499,0,70,BELA,CO,,1,LB,2026-04-22,model qa/qc,"stream mapped incorrectly, coho habitat rearing exists from mouth to end of accessible habitat."
 360604866,0,249,BELA,CO,,1,LB,2026-04-22,model qa/qc,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
 360692499,0,70,BELA,CO,,1,LB,2026-04-22,model qa/qc,"stream mapped incorrectly, coho habitat rearing exists from mouth to end of accessible habitat."
