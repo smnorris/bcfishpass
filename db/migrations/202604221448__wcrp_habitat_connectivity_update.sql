@@ -7,6 +7,7 @@ BEGIN;
   create table bcfishpass.log_wcrp_habitat_connectivity (
    model_run_id                                             integer references bcfishpass.log(model_run_id),
    wcrp                                                     text,
+   watershed_group_code                                     text,
    
    total_spawning_ch                                       numeric,
    total_spawning_co                                       numeric,
@@ -59,8 +60,10 @@ BEGIN;
   drop view if exists bcfishpass.wcrp_habitat_connectivity_status_vw;
 
   create view bcfishpass.wcrp_habitat_connectivity_status_vw as
-  select distinct on (wcrp)
+  select distinct on (wcrp, watershed_group_code)
     wcrp,
+    watershed_group_code,
+
     total_spawning_ch,
     total_spawning_co,
     total_spawning_sk,
@@ -140,7 +143,7 @@ BEGIN;
     
   from bcfishpass.log_wcrp_habitat_connectivity s
   inner join bcfishpass.log l on s.model_run_id = l.model_run_id
-  order by s.wcrp, l.date_completed desc;
+  order by s.wcrp, s.watershed_group_code, l.date_completed desc;
 
 
 
