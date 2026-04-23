@@ -1,5 +1,6 @@
 - plan_name: Bulkley
   plan_code: bulk
+  plan_schema: bulk
   target_species: [CH, CO, SK, ST]
   connectivity_status_types: [spawning_all, rearing_all, spawningrearing_all]
   filter_clause: >-
@@ -7,6 +8,7 @@
 
 - plan_name: Morice
   plan_code: morr
+  plan_schema: morr
   target_species: [CH, CO, SK, ST]
   connectivity_status_types: [spawning_all, rearing_all, spawningrearing_all]
   filter_clause: >-
@@ -14,22 +16,46 @@
 
 - plan_name: Elk - upstream of Elko Dam
   plan_code: elkr_upstr
+  plan_schema: elkr
   target_species: [WCT]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
-    watershed_group_code = 'ELKR'
-    and <>
+    watershed_group_code = 'ELKR' AND
+    FWA_Upstream(
+      356570562, 
+      22912, 
+      22912, 
+      '300.625474.584724'::ltree, 
+      '300.625474.584724.100997'::ltree, 
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    )
 
 - plan_name: Elk - downstream of Elko Dam
   plan_code: elkr_dnstr
+  plan_schema: elkr
   target_species: [WCT]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
-    watershed_group_code = 'ELKR'
-    and <>
-
+    watershed_group_code = 'ELKR' AND
+    wscode_ltree <@ '300.625474.584724'::ltree AND NOT 
+    FWA_Upstream(
+      356570562, 
+      22910, 
+      22910, 
+      '300.625474.584724'::ltree, 
+      '300.625474.584724.100997'::ltree, 
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    )
+    
 - plan_name: Horsefly
   plan_code: hors
+  plan_schema: hors
   target_species: [CH, CO, SK]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
@@ -37,13 +63,15 @@
 
 - plan_name: Lower Nicola
   plan_code: lnic
+  plan_schema: lnic
   target_species: [CH, CO, ST]
   connectivity_status_types: [spawningrearing_all, spawning_all, rearing_all]
   filter_clause: >-
     watershed_group_code = 'LNIC'
 
 - plan_name: Thompson-Shuswap - Bonaparte
-  plan_code: tho_sho_bonp
+  plan_code: tho_shu_bonp
+  plan_schema: tho_shu
   target_species: [CH, CO, SK, ST]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
@@ -51,22 +79,45 @@
 
 - plan_name: Thompson-Shuswap - Eagle
   plan_code: tho_sho_eagle
+  plan_schema: tho_shu
   target_species: [CH, CO, SK, ST]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
-    watershed_group_code = 'SHUL'
-    and <>
+    watershed_group_code = 'SHUL' AND
+    FWA_Upstream(
+      356364536,
+      2901,
+      2901,
+      '100.190442.999098.995997.725308'::ltree,
+      '100.190442.999098.995997.725308'::ltree,
+      blue_line_key,
+      downstream_route_measure,
+      wscode_ltree,
+      localcode_ltree
+    )
 
 - plan_name: Thompson-Shuswap - Bessette
-  plan_code: tho_sho_bessette
+  plan_code: tho_shu_bessette
+  plan_schema: tho_shu
   target_species: [CH, CO, SK, ST]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
-    watershed_group_code = 'USHU'
-    and <>
+    watershed_group_code = 'USHU' AND
+    FWA_Upstream(
+      356349528,
+      0,
+      0,
+      '100.190442.999098.995997.730848.543292'::ltree,
+      '100.190442.999098.995997.730848.543292'::ltree,
+      blue_line_key,
+      downstream_route_measure,
+      wscode_ltree,
+      localcode_ltree
+    )
 
 - plan_name: Lhtako Dene Nation
   plan_code: bowr_ques_carr
+  plan_schema: bowr_ques_carr
   target_species: [CH, CO, SK]
   connectivity_status_types: [spawningrearing_all, spawning_all, rearing_all]
   filter_clause: >-
@@ -74,14 +125,37 @@
 
 - plan_name: Nuxalk
   plan_code: bela_atna_necl
+  plan_schema: bela_atna_necl
   target_species: [CH, CO, SK]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
-    watershed_group_code in ('ATNA', 'BELA', 'NECL')
-    and <>
+    watershed_group_code in ('ATNA', 'BELA') OR            
+    FWA_Upstream(
+      360884575, 
+      63,
+      63, 
+      '910.275583.004276'::ltree, 
+      '910.275583.004276'::ltree,
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    ) OR
+    FWA_Upstream(
+      360215254, 
+      58,
+      58, 
+      '910.275583.004276'::ltree, 
+      '910.275583.004276.020918'::ltree,
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    )
 
 - plan_name: "Tuzist-ol T'ah"
   plan_code: tuzistol_tah
+  plan_schema: tuzistol_tah
   target_species: [CH, SK]
   connectivity_status_types: [spawningrearing_all, spawningrearing_ch, spawningrearing_sk]
   filter_clause: >-
@@ -89,6 +163,7 @@
 
 - plan_name: Takla
   plan_code: takla
+  plan_schema: takla
   target_species: [CH, CO, SK, ST]
   connectivity_status_types:
     - spawningrearing_all
@@ -101,5 +176,35 @@
     - spawning_st
     - rearing_st
   filter_clause: >-
-    watershed_group_code in ('TAKL', 'MIDR', 'DRIR', 'MSKE', 'SUST', 'USKE')
-    and <>
+    watershed_group_code in ('TAKL', 'MIDR', 'DRIR', 'MSKE', 'SUST', 'USKE') OR
+    FWA_Upstream(
+      360887278, 
+      464069.527166015,
+      '400'::ltree, 
+      '400.741661'::ltree,
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    ) OR 
+    FWA_Upstream(
+      360843418, 
+      0,
+      '400.740946'::ltree, 
+      '400.740946'::ltree,
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    ) OR 
+    FWA_Upstream(
+      360815498, 
+      0,
+      '400.741661'::ltree, 
+      '400.741661'::ltree,
+      blue_line_key, 
+      downstream_route_measure, 
+      wscode_ltree, 
+      localcode_ltree
+    ) OR 
+    blue_line_key = '360781053'
