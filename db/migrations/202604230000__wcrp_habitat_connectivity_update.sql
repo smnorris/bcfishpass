@@ -330,7 +330,7 @@ COMMENT ON FUNCTION postgisftw.wcrp_habitat_connectivity_status_v2 IS
 'For WCRP specified, return total/accessible lengths and percentage accessible for habitat types spawning; rearing; spawning and/or rearing 
 per target species and for all target species. Optionally filter by watershed_group_code.';
 
-REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_habitat_connectivity_status FROM public;
+REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_habitat_connectivity_status_v2 FROM public;
 
 -- select * from postgisftw.wcrp_habitat_connectivity_status_v2('takla')
 -- select * from postgisftw.wcrp_habitat_connectivity_status_v2('takla','DRIR')
