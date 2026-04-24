@@ -524,6 +524,6 @@ BEGIN;
   -- select * from postgisftw.wcrp_habitat_connectivity_status_v2('bowr_ques_carr')
 
   -- v1 still working?
-  -- select * from postgisftw.wcrp_habitat_connectivity_status('hors')
+  -- select * from postgisftw.wcrp_habitat_connectivity_status('HORS')
 
 COMMIT;
