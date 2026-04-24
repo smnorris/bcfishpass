@@ -352,7 +352,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 124218,BARRIER,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 124219,BARRIER,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 124220,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-124221,BARRIER,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 124222,BARRIER,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 124224,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 124225,PASSABLE,BULK,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1352,7 +1351,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 196195,PASSABLE,TABR,LS,2025-07-22,"This crossing has been replaced with a bridge, based on aerial imagery review."
 196969,PASSABLE,LNIC,LB,2024-09-12,This crossing has been rehabilitated.
 197889,PASSABLE,LNIC,LB,2024-09-12,This crossing has been rehabilitated.
-124421,PASSABLE,BULK,LS,2025-11-20,This crossing has been removed and the road deactivated
 197882,BARRIER,LNIC,LB,2026-01-13,This crossing is considered a confirmed barrier by the working group.
 197884,BARRIER,LNIC,LB,2026-01-13,This crossing is considered a confirmed barrier by the working group.
 198873,BARRIER,HORS,MC,2026-01-29,Biologist review. Has a duplicate PSCIS point 197762 
@@ -1374,3 +1372,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 197532,PASSABLE,ELKR,MC,2024-04-16,Tracking table QA/QC
 197867,PASSABLE,ELKR,MC,2024-04-16,Tracking table QA/QC
 197880,PASSABLE,LNIC,LB,2026-04-21,Passable to adult fish at all flows and to juvenile coho at low flows; 87.5% of juvenile coho at higher flows.
+199409,PASSABLE,SHUL,LB,2026-04-23,This feature is passable according to field assessment.
+198100,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC
+197967,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC
+124221,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC

@@ -12,10 +12,10 @@ env:
 jobs:
   test-data:
     runs-on: ubuntu-latest
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     services:
       postgres:
-        image: ghcr.io/smnorris/fwapg-db:v0.7.2
+        image: ghcr.io/smnorris/bcfishpass-db:main
         env:
           POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
@@ -27,28 +27,12 @@ jobs:
     steps:
       - name: Check out bcfishpass
         uses: actions/checkout@v4  
-      - name: Create bcfishpass schema
+      - name: Load required code tables
         run:  |
-          cd db/migrations/archive/sources
-          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/schemas.sql
-          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/bcfishobs.sql
-          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/cabd.sql
-          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f sql/whse_basemapping.transport_line.sql
-          bcdata bc2pg -e -c 1 whse_admin_boundaries.clab_indian_reserves
-          bcdata bc2pg -e -c 1 whse_admin_boundaries.adm_indian_reserves_bands_sp
-          bcdata bc2pg -e -c 1 whse_legal_admin_boundaries.abms_regional_districts_sp
-          bcdata bc2pg -e -c 1 whse_basemapping.dbm_mof_50k_grid
-          bcdata bc2pg -e -c 1 whse_basemapping.gba_railway_tracks_sp
-          bcdata bc2pg -e -c 1 whse_legal_admin_boundaries.abms_municipalities_sp
-          bcdata bc2pg -e -c 1 whse_admin_boundaries.adm_nr_districts_spg
-          bcdata bc2pg -e -c 1 whse_admin_boundaries.clab_national_parks
-          bcdata bc2pg -e -c 1 whse_cadastre.pmbc_parcel_fabric_poly_svw
-          bcdata bc2pg -e -c 1 whse_tantalis.ta_park_ecores_pa_svw
-          curl https://nrs.objectstore.gov.bc.ca/bchamp/bcfishpass.sql | psql -v ON_ERROR_STOP=1 $DATABASE_URL
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');"
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -c \
           "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/4862117774c5c256ffd7b2293eecf2b45922414c/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
-      - name: Run any pending migrations
+      - name: Apply any pending migrations
         run:  |
           cd db && ./migrate.sh
       - name: Test data

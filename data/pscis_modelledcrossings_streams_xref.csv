@@ -3521,7 +3521,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198109,1801071,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
 198110,,17089148,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
 198111,1802798,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
-198112,1805507,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
 198113,1802069,,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
 198114,,17089148,BULK,SN,Match crossing manually to force this crossing to be retained rather than duplicate
 198115,,,BULK,SN,Not on mapped stream but note here to force this crossing to be retained rather than duplicate
@@ -3632,3 +3631,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 203323,24727680,,BELA,LB,
 50153,,,ELKR,MC,Linking this point to nothing to remove it from model
 50263,,,ELKR,MC,Linking this point to nothing to remove it from model
+199443,,,BULK,MC,Linking this point to nothing to remove it from model. Crossing does not exist
+199462,,,BULK,MC,Linking this point to nothing to remove it from model. Crossing does not exist
+198112,,,BULK,MC,Linking this point to nothing to remove it from model.Removing duplicate

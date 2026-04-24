@@ -5,9 +5,8 @@ on:
   pull_request:
     branches:
       - 'main'
-    paths-ignore:
-      - 'data/**'
-      - 'db/**'
+    paths:
+      - 'model/**'
 concurrency:
   group: ng-test
 env:
@@ -27,7 +26,7 @@ jobs:
   load-csv:
     runs-on: ubuntu-latest
     environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -40,7 +39,7 @@ jobs:
   load-xings-observations:
     runs-on: ubuntu-latest
     environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     needs: load-csv
     steps:
       - name: Check out repository code
@@ -53,7 +52,7 @@ jobs:
   model-access-natural:
     runs-on: ubuntu-latest
     environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     needs: load-xings-observations
     steps:
       - name: Check out repository code
@@ -65,7 +64,7 @@ jobs:
   model-access-anthropogenic:
     runs-on: ubuntu-latest
     environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     needs: model-access-natural
     steps:
       - name: Check out repository code
@@ -77,7 +76,7 @@ jobs:
   model-habitat-linear:
     runs-on: ubuntu-latest
     environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     needs: model-access-anthropogenic
     steps:
       - name: Check out repository code
