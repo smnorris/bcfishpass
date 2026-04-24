@@ -15618,7 +15618,7 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356330403,1118,1321,LNIC,ST,,-1,LB,2026-04-21,model qa/qc,no habitat upstream of crossing
 356292659,0,822,BONP,ST,,-1,LB,2026-04-22,field assessment,No habitat in its current state
 360604866,0,249,BELA,CO,,1,LB,2026-04-22,model qa/qc,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
-360692499,0,70,BELA,CO,,1,LB,2026-04-22,model qa/qc,"stream mapped incorrectly, coho habitat rearing exists from mouth to end of accessible habitat."
+360692499,0,1193,BELA,CO,,1,LB,2026-04-22,model qa/qc,"stream mapped incorrectly, coho habitat rearing exists from mouth to end of accessible habitat."
 360584661,0,2409,BULK,CO,,1,MC,2026-04-23,Tracking table QA/QC,Assessment states medium quality habitat
 360764860,178,320,BULK,CO,,-1,MC,2026-04-23,Tracking table QA/QC,
 360775491,463,794,BULK,CO,,-1,MC,2026-04-23,Tracking table QA/QC,
@@ -15627,3 +15627,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360829165,1669,2437,BULK,ST,,-1,MC,2026-04-23,Tracking table QA/QC,
 360829165,1669,2437,BULK,CO,,-1,MC,2026-04-23,Tracking table QA/QC,
 360846037,1852,2001,BULK,CO,,-1,MC,2026-04-24,Tracking table QA/QC,
+360604866,249,614,BELA,CO,,-1,LB,2026-04-24,Tracking table QA/QC,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
+356352213,19283,19527,LNIC,ST,,-1,LB,2026-04-24,Tracking table QA/QC,steelhead rearing confirmed to exist up to chattaway lake
+356334818,0,9030,LNIC,ST,,-1,LB,2026-04-24,Tracking table QA/QC,steelhead rearing confirmed to exist up to chattaway lake
