@@ -25,6 +25,8 @@ set -x # restore debug friendly output
 # do the ranking
 python jobs/auto_rank.py 
 
+# log connectivity
+python wcrp/scripts/habitat_connectivity.py load
 
 # dump the data
 for wcrp in $WCRPS
