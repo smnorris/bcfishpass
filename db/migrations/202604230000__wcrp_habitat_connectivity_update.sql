@@ -148,9 +148,9 @@ BEGIN;
 
 
 
-DROP FUNCTION IF EXISTS postgisftw.wcrp_habitat_connectivity_status;
+DROP FUNCTION IF EXISTS postgisftw.wcrp_habitat_connectivity_status_v2;
 
-CREATE OR REPLACE FUNCTION postgisftw.wcrp_habitat_connectivity_status(
+CREATE OR REPLACE FUNCTION postgisftw.wcrp_habitat_connectivity_status_v2(
     wcrp                      TEXT,
     p_watershed_group_code    TEXT DEFAULT NULL
 )
@@ -326,16 +326,16 @@ AND (v_watershed_group_code IS NULL OR v.watershed_group_code = v_watershed_grou
 END
 $$;
 
-COMMENT ON FUNCTION postgisftw.wcrp_habitat_connectivity_status IS
+COMMENT ON FUNCTION postgisftw.wcrp_habitat_connectivity_status_v2 IS
 'For WCRP specified, return total/accessible lengths and percentage accessible for habitat types spawning; rearing; spawning and/or rearing 
 per target species and for all target species. Optionally filter by watershed_group_code.';
 
 REVOKE EXECUTE ON FUNCTION postgisftw.wcrp_habitat_connectivity_status FROM public;
 
--- select * from postgisftw.wcrp_habitat_connectivity_status('takla')
--- select * from postgisftw.wcrp_habitat_connectivity_status('takla','DRIR')
--- select * from postgisftw.wcrp_habitat_connectivity_status('hors')
--- select * from postgisftw.wcrp_habitat_connectivity_status('bowr_ques_carr')
+-- select * from postgisftw.wcrp_habitat_connectivity_status_v2('takla')
+-- select * from postgisftw.wcrp_habitat_connectivity_status_v2('takla','DRIR')
+-- select * from postgisftw.wcrp_habitat_connectivity_status_v2('hors')
+-- select * from postgisftw.wcrp_habitat_connectivity_status_v2('bowr_ques_carr')
 
 
 COMMIT;
