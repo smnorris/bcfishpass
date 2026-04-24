@@ -27,7 +27,7 @@ BEGIN;
       t.wcrp,
       t.watershed_group_code,
       col.habitat_connectivity_type,
-      col.value
+      round((col.value / 1000), 2)
     FROM bcfishpass.wcrp_habitat_connectivity_status_vw_v2 t
     CROSS JOIN LATERAL (
       VALUES
@@ -83,3 +83,4 @@ BEGIN;
 
  
 COMMIT;
+

@@ -29,30 +29,68 @@ def build_query(plan):
     rearing_expr = ", ".join(rearing_cols)
     spawning_rearing_expr = ", ".join(spawning_cols + rearing_cols)
 
+    co_rearing_multiplier = "case when s.edge_type = 1050 then 1.5 else 1.0 end"
+    co_spawningrearing_multiplier = "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 else 1.0 end"
+
     def total_species_sums(accessible=False):
         condition = "and a.barriers_anthropogenic_dnstr IS NULL" if accessible else ""
         prefix = "accessible" if accessible else "total"
         indent = "            "
         lines = []
         all_species = ["ch", "co", "sk", "st", "wct"]
+
+        # spawning
         for sp in all_species:
             if sp.upper() in target_species:
                 lines.append(f"{indent}sum(st_length(s.geom)) filter (where h.spawning_{sp} > 0 {condition}) as {prefix}_spawning_{sp}")
             else:
                 lines.append(f"{indent}null as {prefix}_spawning_{sp}")
+
+        # rearing
         for sp in all_species:
             if sp.upper() in target_species:
-                lines.append(f"{indent}sum(st_length(s.geom)) filter (where h.rearing_{sp} > 0 {condition}) as {prefix}_rearing_{sp}")
+                if sp == "co":
+                    lines.append(f"{indent}sum(st_length(s.geom) * {co_rearing_multiplier}) filter (where h.rearing_co > 0 {condition}) as {prefix}_rearing_co")
+                elif sp == "sk":
+                    lines.append(f"{indent}sum(st_length(s.geom) * 1.5) filter (where h.rearing_sk > 0 {condition}) as {prefix}_rearing_sk")
+                else:
+                    lines.append(f"{indent}sum(st_length(s.geom)) filter (where h.rearing_{sp} > 0 {condition}) as {prefix}_rearing_{sp}")
             else:
                 lines.append(f"{indent}null as {prefix}_rearing_{sp}")
+
+        # spawningrearing
         for sp in all_species:
             if sp.upper() in target_species:
-                lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest(h.spawning_{sp}, h.rearing_{sp}) > 0 {condition}) as {prefix}_spawningrearing_{sp}")
+                if sp == "co":
+                    lines.append(f"{indent}sum(st_length(s.geom) * {co_spawningrearing_multiplier}) filter (where greatest(h.spawning_co, h.rearing_co) > 0 {condition}) as {prefix}_spawningrearing_co")
+                elif sp == "sk":
+                    lines.append(f"{indent}sum(st_length(s.geom) * case when h.rearing_sk > 0 then 1.5 else 1.0 end) filter (where greatest(h.spawning_sk, h.rearing_sk) > 0 {condition}) as {prefix}_spawningrearing_sk")
+                else:
+                    lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest(h.spawning_{sp}, h.rearing_{sp}) > 0 {condition}) as {prefix}_spawningrearing_{sp}")
             else:
                 lines.append(f"{indent}null as {prefix}_spawningrearing_{sp}")
-        lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
-        lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({rearing_expr}) > 0 {condition}) as {prefix}_rearing_all")
-        lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_rearing_expr}) > 0 {condition}) as {prefix}_spawningrearing_all")
+
+        # _all aggregates
+        co_all_multiplier = f"case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 else 1.0 end" if "CO" in target_species else "1.0"
+        sk_rearing_multiplier = "1.5" if "SK" in target_species else "1.0"
+
+        if "CO" in target_species or "SK" in target_species:
+            lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
+            lines.append(
+                f"{indent}sum(st_length(s.geom) * {co_all_multiplier}) filter (where greatest({rearing_expr}) > 0 {condition})"
+                + (f" + coalesce(sum(st_length(s.geom) * 0.5) filter (where h.rearing_sk > 0 {condition}), 0)" if "SK" in target_species else "")
+                + f" as {prefix}_rearing_all"
+            )
+            lines.append(
+                f"{indent}sum(st_length(s.geom) * {co_spawningrearing_multiplier if 'CO' in target_species else '1.0'}) filter (where greatest({spawning_rearing_expr}) > 0 {condition})"
+                + (f" + coalesce(sum(st_length(s.geom) * 0.5) filter (where h.rearing_sk > 0 {condition}), 0)" if "SK" in target_species else "")
+                + f" as {prefix}_spawningrearing_all"
+            )
+        else:
+            lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
+            lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({rearing_expr}) > 0 {condition}) as {prefix}_rearing_all")
+            lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_rearing_expr}) > 0 {condition}) as {prefix}_spawningrearing_all")
+
         return ",\n".join(lines)
 
     query = textwrap.dedent(f"""
