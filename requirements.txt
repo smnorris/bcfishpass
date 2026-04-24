@@ -5,3 +5,4 @@ scikit-image
 jsonschema
 psycopg2-binary
 pyyaml
+pytest
