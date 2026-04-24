@@ -1,4 +1,4 @@
-FROM ghcr.io/osgeo/gdal:ubuntu-full-3.10.3
+FROM ghcr.io/osgeo/gdal:ubuntu-full-3.12.3
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb \
@@ -21,7 +21,6 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && apt-get -qq install -y --no-install-recommends python3-pip \
     && apt-get -qq install -y --no-install-recommends python3-dev \
     && apt-get -qq install -y --no-install-recommends python3-venv \
-    && apt-get -qq install -y --no-install-recommends python3-psycopg2 \
     && apt-get -qq install -y --no-install-recommends openssh-client \
     && apt-get -qq install -y --no-install-recommends autossh \
     && apt-get -qq install -y --no-install-recommends less \
@@ -36,10 +35,10 @@ RUN ARCH=$(uname -m) \
 WORKDIR /home/bcfishpass
 RUN git config --global --add safe.directory /home/bcfishpass
 
+COPY requirements.txt .
+
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/python -m pip install -U pip && \
-    /opt/venv/bin/python -m pip install --no-cache-dir --upgrade numpy && \
-    /opt/venv/bin/python -m pip install --no-cache-dir bcdata==0.16.0 && \
-    /opt/venv/bin/python -m pip install --no-cache-dir scikit-image
+    /opt/venv/bin/python -m pip install --no-cache-dir -r requirements.txt
 
 ENV PATH="/opt/venv/bin:$PATH"
