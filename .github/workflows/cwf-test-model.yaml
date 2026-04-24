@@ -5,9 +5,8 @@ on:
   pull_request:
     branches:
       - 'main'
-    paths-ignore:
-      - 'data/**'
-      - 'db/**'
+    paths:
+      - 'model/**'
 concurrency:
   group: cwf
 env:
