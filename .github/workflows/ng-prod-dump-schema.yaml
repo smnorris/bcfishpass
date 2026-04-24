@@ -1,9 +1,6 @@
 name: ng-prod-dump-schema
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -38,11 +35,22 @@ jobs:
         run: |
           jobs/connect
           echo $(git describe)
-          pg_dump $DATABASE_URL -n bcfishpass -sxO > bcfishpass.sql
-          aws s3api put-object \
-            --bucket bchamp \
-            --key bcfishpass.sql \
-            --body bcfishpass.sql \
-            --acl public-read \
-            --tagging "version=$(git describe)" 
-            
+          pg_dump $DATABASE_URL \
+              --schema-only \
+              --no-privileges \
+              --no-owner \
+              --table=whse_admin_boundaries.clab_indian_reserves \
+              --table=whse_admin_boundaries.adm_indian_reserves_bands_sp \
+              --table=whse_legal_admin_boundaries.abms_regional_districts_sp \
+              --table=whse_basemapping.dbm_mof_50k_grid \
+              --table=whse_basemapping.gba_railway_tracks_sp \
+              --table=whse_legal_admin_boundaries.abms_municipalities_sp \
+              --table=whse_admin_boundaries.adm_nr_districts_spg \
+              --table=whse_admin_boundaries.clab_national_parks \
+              --table=whse_cadastre.pmbc_parcel_fabric_poly_svw \
+              --table=whse_tantalis.ta_park_ecores_pa_svw > bcfishpass.sql
+          pg_dump $DATABASE_URL \
+              --schema-only \
+              --no-privileges \
+              --no-owner \
+              --schema=bcfishpass >> bcfishpass.sql
