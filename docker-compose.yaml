@@ -18,7 +18,9 @@ services:
       - POSTGRES_DB=bcfishpass_test
       - POSTGRES_HOST_AUTH_METHOD=trust
   runner:
-    build: docker/runner
+    build:
+      context: .
+      dockerfile: docker/runner/Dockerfile
     container_name: bcfishpass-runner
     volumes:
       - "./:/home/bcfishpass"
