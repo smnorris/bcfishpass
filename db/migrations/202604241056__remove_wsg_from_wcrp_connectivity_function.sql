@@ -94,11 +94,7 @@ BEGIN;
   STABLE PARALLEL SAFE
 
   AS $$
-
-  DECLARE
-      v_wcrp                 text := wcrp;
-      v_watershed_group_code text := p_watershed_group_code;
-
+  
   BEGIN
   RETURN QUERY
   
