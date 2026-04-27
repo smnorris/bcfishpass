@@ -16,13 +16,13 @@ yq -o=json --indent 0 '.[]' wcrp/plan_config.yaml | while read -r plan; do
   mkdir -p /tmp/$plan_schema
 
   # dump structures to file
-  #ogr2ogr \
-  #  -f GPKG \
-  #  /tmp/$plan_schema/structures.gpkg.zip \
-  #  PG:$DATABASE_URL \
-  #  --debug ON \
-  #  -nln structures \
-  #  -sql "SELECT * FROM  wcrp_$plan_schema.combined_output_table_vw"
+  ogr2ogr \
+    -f GPKG \
+    /tmp/$plan_schema/structures.gpkg.zip \
+    PG:$DATABASE_URL \
+    --debug ON \
+    -nln structures \
+    -sql "SELECT * FROM  wcrp_$plan_schema.combined_output_table_vw"
 
   # dump streams to file
   ogr2ogr \
