@@ -5,9 +5,14 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
 
 
-# load wcrp crossings, calculate upstream habitat, rank the barriers
-$PSQL -f wcrp/scripts/sql/load_crossings_wcrp.sql
+# load habitat upstream of crossings in form required by WCRP reporting
 $PSQL -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
+
+# with habitat loaded, custom wcrp crossings table can be loaded
+# (only crossings with wcrp habitat upstream are included)
+$PSQL -f wcrp/scripts/sql/load_crossings_wcrp.sql
+
+# rank the crossings
 python wcrp/scripts/auto_rank.py 
 
 # summarize and log connectivity
