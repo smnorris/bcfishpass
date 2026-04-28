@@ -1,9 +1,18 @@
 #!/bin/bash
 set -euxo pipefail
 
-# For each WCRP, rank barriers and dump to file
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
+
+
+# load wcrp crossings, calculate upstream habitat, rank the barriers
+$PSQL -f wcrp/scripts/sql/load_crossings_wcrp.sql
+$PSQL -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
+python wcrp/scripts/auto_rank.py 
+
+# summarize and log connectivity
+python wcrp/scripts/habitat_connectivity.py load
+
 
 # generate token for azcopy
 expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
@@ -22,13 +31,8 @@ export AZURE_STORAGE_SAS_TOKEN=$(\
 echo "::add-mask::$AZURE_STORAGE_SAS_TOKEN"  # also, just in case of subsequent token usage
 set -x # restore debug friendly output
 
-# do the ranking
-python jobs/auto_rank.py 
 
-# log connectivity
-python wcrp/scripts/habitat_connectivity.py load
-
-# dump the data
+# loop through plans, dumping crossings/streams to file and uploading to blob storage
 for wcrp in $WCRPS
 do
 

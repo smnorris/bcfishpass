@@ -609,7 +609,7 @@ def runQuery(condition, wcrp, wcrp_schema, conn):
             ,r.tier_combined
             ,cv.geom
             from bcfishpass.wcrp_ranked_barriers r
-            join bcfishpass.crossings_wcrp_vw cv
+            join bcfishpass.crossings_wcrp cv
                 on r.aggregated_crossings_id = cv.aggregated_crossings_id
             join bcfishpass.crossings c
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
