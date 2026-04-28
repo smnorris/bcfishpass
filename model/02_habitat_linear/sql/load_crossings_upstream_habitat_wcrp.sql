@@ -8,7 +8,7 @@
 -- ---------------------------------
 -- first, special handling for a few high impact crossings on side channels
 -- ---------------------------------
-CREATE TABLE side_channels_streams_upstr AS
+CREATE TEMPORARY TABLE side_channels_streams_upstr AS
 
 -- **adding crossings**
 -- For each crossing on side channel, add crossing id, blue line key and starting measure for any network position to be considered 
