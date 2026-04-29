@@ -1376,3 +1376,4 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 198100,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC
 197967,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC
 124221,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC
+203629,POTENTIAL,LNIC,LB,2026-04-29,"Feature is noted to not exist within 50m radious of point, however, previous assessment indicates a structure should be in this location and that habitat is being blocked."
