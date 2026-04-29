@@ -1,0 +1,51 @@
+name: test-data
+run-name: ${{ github.actor }} Load data files to test databases
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'data/*.csv'
+env:
+  DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
+jobs:
+  test-data:
+    runs-on: ubuntu-latest
+    container: ghcr.io/smnorris/bcfishpass-runner:main
+    services:
+      postgres:
+        image: ghcr.io/smnorris/bcfishpass-db:main
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Check out fwapg
+        uses: actions/checkout@v6
+        with:
+          repository: smnorris/fwapg
+          path: fwapg
+      - name: Load fwa data
+        run:  |
+          fwapg/load_bcfishpass.sh
+      - name: Check out bcfishpass
+        uses: actions/checkout@v6
+        with:
+          path: bcfishpass
+      - name: Load required code tables
+        run:  |
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -c "INSERT INTO bcfishpass.user_habitat_codes VALUES (-1, 'KNOWN NON HABITAT'), (1, 'KNOWN HABITAT'), (-4, 'KNOWN NON HABITAT - MINING ALTERED STREAM');"
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -c \
+          "\copy whse_fish.species_cd FROM PROGRAM 'curl -s https://raw.githubusercontent.com/smnorris/fishbc/4862117774c5c256ffd7b2293eecf2b45922414c/data-raw/whse_fish_species_cd/whse_fish_species_cd.csv' delimiter ',' csv header"
+      - name: Apply any pending migrations
+        run:  |
+          cd bcfishpass/db && ./migrate.sh
+      - name: Test data
+        run:  |
+          cp bcfishpass/parameters/example_cwf/*csv bcfishpass/parameters/
+          bcfishpass/jobs/load_csv
