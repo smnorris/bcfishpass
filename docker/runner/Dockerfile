@@ -32,6 +32,8 @@ RUN ARCH=$(uname -m) \
     && ./aws/install \
     && rm -rf awscliv2.zip aws
 
+RUN curl -L https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64 -o /usr/bin/yq && chmod +x /usr/bin/yq
+
 WORKDIR /home/bcfishpass
 RUN git config --global --add safe.directory /home/bcfishpass
 
