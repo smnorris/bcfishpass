@@ -2,19 +2,38 @@ BEGIN;
   
   TRUNCATE bcfishpass.crossings_wcrp;
 
-  WITH upstr_wcrp_barriers AS MATERIALIZED (
-  
-    -- find upstream crossings with wcrp 'all spawning rearing habitat' upstream   
+  -- update crossings_upstr_barriers_anthropogenic with fixed upstream barriers for side channels (vs entire upstr watershed)
+  WITH adjusted_upstr_barriers_anthropogenic AS (
+
+    SELECT
+      aggregated_crossings_id,
+      array_agg(features_upstr) as features_upstr
+    FROM bcfishpass.barriers_sidechannel_upstr_barriers_anthropogenic AS b
+    GROUP BY aggregated_crossings_id
+
+    UNION ALL
+
+    SELECT 
+      aggregated_crossings_id, 
+      features_upstr
+    FROM bcfishpass.crossings_upstr_barriers_anthropogenic  AS a
+    WHERE NOT EXISTS (
+      SELECT 1 FROM bcfishpass.barriers_sidechannel_upstr_barriers_anthropogenic AS b
+      WHERE b.aggregated_crossings_id = a.aggregated_crossings_id
+    )
+  ),
+
+  -- find upstream crossings with wcrp 'all spawning rearing habitat' upstream   
+  upstr_wcrp_barriers AS (    
     SELECT DISTINCT 
-      ba.aggregated_crossings_id,
-      h_1.aggregated_crossings_id AS upstr_barriers
-     FROM (bcfishpass.crossings_upstr_barriers_anthropogenic ba
-       JOIN bcfishpass.crossings_upstream_habitat_wcrp h_1 ON ((h_1.aggregated_crossings_id = ANY (ba.features_upstr))))
-    WHERE (h_1.all_spawningrearing_km > (0)::double precision)
-    ORDER BY ba.aggregated_crossings_id, h_1.aggregated_crossings_id
+      b.aggregated_crossings_id,
+      h.aggregated_crossings_id AS upstr_barriers
+     FROM adjusted_upstr_barriers_anthropogenic b
+     JOIN bcfishpass.crossings_upstream_habitat_wcrp h ON h.aggregated_crossings_id = ANY (b.features_upstr)
+    WHERE h.all_spawningrearing_km > (0)::double precision
+    ORDER BY b.aggregated_crossings_id, h.aggregated_crossings_id
   ), 
   
-
   -- aggregate the upstream wcrp crossings into a list and count
   upstr_wcrp_barriers_list AS (
   
@@ -25,6 +44,7 @@ BEGIN;
       GROUP BY aggregated_crossings_id
       ORDER BY aggregated_crossings_id
   )
+
 
   INSERT INTO bcfishpass.crossings_wcrp (
     aggregated_crossings_id,
@@ -192,13 +212,12 @@ BEGIN;
    h_wcrp.all_spawningrearing_km,
    h_wcrp.all_spawningrearing_belowupstrbarriers_km,
    c.geom
-     FROM (((((((((((((bcfishpass.crossings c
+     FROM ((((((((((((bcfishpass.crossings c
        JOIN bcfishpass.wcrp_watersheds w ON ((c.watershed_group_code = (w.watershed_group_code)::text)))
        LEFT JOIN bcfishpass.crossings_dnstr_observations cdo ON ((c.aggregated_crossings_id = cdo.aggregated_crossings_id)))
        LEFT JOIN bcfishpass.crossings_upstr_observations cuo ON ((c.aggregated_crossings_id = cuo.aggregated_crossings_id)))
        LEFT JOIN bcfishpass.crossings_dnstr_crossings cd ON ((c.aggregated_crossings_id = cd.aggregated_crossings_id)))
        LEFT JOIN bcfishpass.crossings_dnstr_barriers_anthropogenic ad ON ((c.aggregated_crossings_id = ad.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_upstr_barriers_anthropogenic au ON ((c.aggregated_crossings_id = au.aggregated_crossings_id)))
        LEFT JOIN upstr_wcrp_barriers_list uwbl ON ((c.aggregated_crossings_id = uwbl.aggregated_crossings_id)))
        LEFT JOIN bcfishpass.crossings_upstream_access a ON ((c.aggregated_crossings_id = a.aggregated_crossings_id)))
        LEFT JOIN bcfishpass.crossings_upstream_habitat h ON ((c.aggregated_crossings_id = h.aggregated_crossings_id)))
@@ -208,36 +227,5 @@ BEGIN;
   -- remove these PSCIS crossings from ranking/reporting
   WHERE (COALESCE(c.stream_crossing_id, 0) <> ALL (ARRAY[199427, 197789, 197838, 197861, 197805, 125961, 199428, 197891, 203633, 198883 ]))
   ORDER BY c.aggregated_crossings_id, s.downstream_route_measure;
-
-  
-  -- rather than manipulate watershed codes... 
-  -- just apply updates for side channel barriers of interest
-  -- ** note that these will have to be updated if barrier status changes upstream or downstream ** 
-  
-  UPDATE bcfishpass.crossings_wcrp
-  SET 
-    barriers_anthropogenic_dnstr_count = 0,
-    barriers_anthropogenic_habitat_wcrp_upstr_count = 0
-  WHERE aggregated_crossings_id = '203323';
-  
-  UPDATE bcfishpass.crossings_wcrp
-  SET 
-    barriers_anthropogenic_dnstr = '203323',
-    barriers_anthropogenic_dnstr_count = 1,
-    barriers_anthropogenic_habitat_wcrp_upstr = '1001000013',
-    barriers_anthropogenic_habitat_wcrp_upstr_count = 1
-  WHERE aggregated_crossings_id = '203334';
-  
-  UPDATE bcfishpass.crossings_wcrp
-  SET 
-    barriers_anthropogenic_habitat_wcrp_upstr = 197664,
-    barriers_anthropogenic_habitat_wcrp_upstr_count = 1
-  WHERE aggregated_crossings_id = '197665';
-
-UPDATE bcfishpass.crossings_wcrp
-  SET 
-    barriers_anthropogenic_habitat_wcrp_upstr = '198048;198049;1024752831',
-    barriers_anthropogenic_habitat_wcrp_upstr_count = 3
-  WHERE aggregated_crossings_id = '198090';
 
 COMMIT;  

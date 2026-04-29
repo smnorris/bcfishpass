@@ -49,7 +49,8 @@ BEGIN;
       st_spawningrearing_km double precision DEFAULT 0,
       st_spawningrearing_belowupstrbarriers_km double precision DEFAULT 0,
       wct_spawningrearing_km double precision DEFAULT 0,
-      wct_spawningrearing_belowupstrbarriers_km double precision DEFAULT 0
+      wct_spawningrearing_belowupstrbarriers_km double precision DEFAULT 0,
+      PRIMARY KEY (aggregated_crossings_id)
   );
 
   -- re-create crossings_wcrp, but as a table not a materialized view 

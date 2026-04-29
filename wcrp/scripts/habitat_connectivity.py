@@ -33,7 +33,7 @@ def build_query(plan):
     co_spawningrearing_multiplier = "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 else 1.0 end"
 
     def total_species_sums(accessible=False):
-        condition = "and a.barriers_anthropogenic_dnstr IS NULL" if accessible else ""
+        condition = "and a.barriers_anthropogenic_dnstr IS NULL and sc.barriers_anthropogenic_dnstr IS NULL" if accessible else ""
         prefix = "accessible" if accessible else "total"
         indent = "            "
         lines = []
@@ -103,6 +103,7 @@ def build_query(plan):
         FROM bcfishpass.streams s
         INNER JOIN bcfishpass.streams_habitat_linear h USING (segmented_stream_id)
         INNER JOIN bcfishpass.streams_access a USING (segmented_stream_id)
+        LEFT OUTER JOIN bcfishpass.streams_dnstr_barriers_sidechannel sc ON s.segmented_stream_id = sc.segmented_stream_id
         WHERE {filter_clause.replace(chr(10), chr(10) + "        ")}
         GROUP BY s.watershed_group_code
     """)

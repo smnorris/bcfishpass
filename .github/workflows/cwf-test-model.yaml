@@ -85,10 +85,8 @@ jobs:
           ./habitat_linear.sh
       - name: Rank crossings
         run:  |
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/barriers_sidechannel.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_wcrp.sql
-          for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah ulkatcho takla
-          do
-            python wcrp/scripts/auto_rank.py $wcrp
-          done
+          python wcrp/scripts/auto_rank.py
           python wcrp/scripts/habitat_connectivity.py load

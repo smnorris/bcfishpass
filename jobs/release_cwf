@@ -5,6 +5,9 @@ PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
 WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
 
 
+# pre-process side channel barriers and note streams/barriers upstream of the side channel barriers
+$PSQL -f wcrp/scripts/sql/barriers_sidechannel.sql
+
 # load habitat upstream of crossings in form required by WCRP reporting
 $PSQL -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
 
