@@ -3638,3 +3638,4 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197967,1800050,,BULK,MC,Matching to correct modelled crossing
 203621,,,LNIC,LB,Linking this point to nothing to remove it from model.Removing duplicate
 203624,,,LNIC,LB,Linking this point to nothing to remove it from model.Removing duplicate
+203640,,,LNIC,LB,"Linking this point to nothing to remove it from model.  Feature does not exist, confirmed in PSCIS assessment comment."
