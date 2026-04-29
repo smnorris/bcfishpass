@@ -90,3 +90,18 @@ jobs:
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_wcrp.sql
           python wcrp/scripts/auto_rank.py
           python wcrp/scripts/habitat_connectivity.py load
+  wcrp-reporting:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass-runner:main
+    needs: model-habitat-linear
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Rank crossings
+        run:  |
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/barriers_sidechannel.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_wcrp.sql
+          python wcrp/scripts/auto_rank.py
+          python wcrp/scripts/habitat_connectivity.py load        
