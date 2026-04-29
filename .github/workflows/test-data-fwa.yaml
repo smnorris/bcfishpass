@@ -1,4 +1,4 @@
-name: test-data
+name: test-data-fwa
 run-name: ${{ github.actor }} Load data files to test databases
 on:
   workflow_dispatch:
