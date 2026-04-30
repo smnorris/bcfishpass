@@ -46,9 +46,9 @@ def test_targeted_species_are_not_null():
     assert "null as total_rearing_co" not in sql
 
 
-def test_sk_rearing_all_uses_additive_bonus():
+def test_sk_rearing_all_uses_case_statement():
     sql = build_query(make_plan(["SK"]))
-    assert "coalesce(sum(st_length(s.geom) * 0.5) filter (where h.rearing_sk > 0" in sql
+    assert "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 when h.rearing_sk > 0 then 1.5 else 1.0 end" in sql
 
 
 def test_accessible_versions_include_barrier_condition():
