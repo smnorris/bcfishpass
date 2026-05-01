@@ -1,8 +1,20 @@
 #!/bin/bash
 set -euxo pipefail
 
-# For each WCRP, rank barriers and dump to file
 PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+# apply grants to re-generated natural barrier tables
+$PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_ch_cm_co_pk_sk TO cwf_user;"
+$PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_st TO cwf_user;"
+$PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_wct TO cwf_user;"
+
+# rank barriers
+python jobs/auto_rank.py 
+
+# log connectivity
+python wcrp/scripts/habitat_connectivity.py load
+
+# For each WCRP, rank barriers and dump to file
 WCRPS=$($PSQL -AXt -c "SELECT DISTINCT wcrp FROM bcfishpass.wcrp_watersheds WHERE wcrp is not null")
 
 # generate token for azcopy
@@ -22,11 +34,6 @@ export AZURE_STORAGE_SAS_TOKEN=$(\
 echo "::add-mask::$AZURE_STORAGE_SAS_TOKEN"  # also, just in case of subsequent token usage
 set -x # restore debug friendly output
 
-# do the ranking
-python jobs/auto_rank.py 
-
-# log connectivity
-python wcrp/scripts/habitat_connectivity.py load
 
 # dump the data
 for wcrp in $WCRPS
