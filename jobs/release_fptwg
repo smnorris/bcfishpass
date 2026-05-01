@@ -518,10 +518,10 @@ ogr2ogr \
 
 
 # upload to nrs objectstore with test prefix
-aws s3 cp naturalbarriers_bt.parquet s3://bchamp/test --acl public-read
-aws s3 cp naturalbarriers_ch_cm_co_pk_sk.parquet/test s3://bchamp --acl public-read
-aws s3 cp naturalbarriers_st.parquet s3://bchamp/test --acl public-read
-aws s3 cp falls.parquet s3://bchamp/test --acl public-read
-aws s3 cp observations.parquet s3://bchamp/test --acl public-read
+aws s3 cp naturalbarriers_bt.parquet s3://bchamp/test/naturalbarriers_bt.parquet --acl public-read
+aws s3 cp naturalbarriers_ch_cm_co_pk_sk.parquet s3://bchamp/test/naturalbarriers_ch_cm_co_pk_sk.parquet --acl public-read
+aws s3 cp naturalbarriers_st.parquet s3://bchamp/test/naturalbarriers_st.parquet --acl public-read
+aws s3 cp falls.parquet s3://bchamp/test/falls.parquet --acl public-read
+aws s3 cp observations.parquet s3://bchamp/test/observations.parquet --acl public-read
 
 
