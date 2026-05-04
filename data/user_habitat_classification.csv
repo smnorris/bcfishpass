@@ -15628,5 +15628,41 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360604866,249,614,BELA,CO,,-1,LB,2026-04-24,Tracking table QA/QC,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
 356352213,19283,19527,LNIC,ST,,1,LB,2026-04-24,Tracking table QA/QC,steelhead rearing confirmed to exist up to chattaway lake
 356334818,0,9030,LNIC,ST,,1,LB,2026-04-24,Tracking table QA/QC,steelhead rearing confirmed to exist up to chattaway lake
+360582427,513,800,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360553627,237,832,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360572049,132,1171,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,400,900,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
 360781260,484,4776,MORR,ST,,-1,MC,2026-05-01,Tracking table QA/QC,
 360398644,884,1683,MORR,ST,,-1,MC,2026-05-01,Tracking table QA/QC,

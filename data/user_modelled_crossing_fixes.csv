@@ -3615,7 +3615,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 12401291,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401292,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401293,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
-12401294,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401296,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401297,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
 12401298,,LSKE,KK,2021-12-16,Bing/Google/ESRI imagery,
@@ -21673,3 +21672,4 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1806259,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
 1801813,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
 20001379,NONE,TAKL,LB,2026-04-30,Satellite imagery,this feature does not exist in satellite imagery 
+12401294,NONE,LSKE,SN,2026-05-03,BR rail crossing review,outlets to adjacent stream upstream of CN Rail bridge
