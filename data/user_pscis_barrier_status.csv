@@ -1225,10 +1225,8 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 126589,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 126591,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 126592,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-126597,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 126598,BARRIER,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 126599,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
-126602,PASSABLE,HORS,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196941,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196944,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
 196945,PASSABLE,LNIC,CWF,2021-01-01,based on assessment comments (and imagery review where required)
@@ -1379,3 +1377,6 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 203629,POTENTIAL,LNIC,LB,2026-04-29,"Feature is noted to not exist within 50m radious of point, however, previous assessment indicates a structure should be in this location and that habitat is being blocked."
 197655,PASSABLE,BULK,MC,2026-05-01,Tracking table QA/QC
 198066,PASSABLE,BULK,MC,2026-05-01,Tracking table QA/QC
+199424,BARRIER,HORS,MC,2026-05-06,Tracking table QA/QC
+126602,BARRIER,HORS,MC,2026-05-06,Tracking table QA/QC
+126597,PASSABLE,HORS,MC,2026-05-06,Tracking table QA/QC
