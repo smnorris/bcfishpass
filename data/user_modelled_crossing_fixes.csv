@@ -21850,3 +21850,5 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 22000905,NONE,UDEN,LB,2026-05-05,Satellite imagery review,
 24725596,NONE,UDEN,LB,2026-05-05,Satellite imagery review,
 1800752,FORD,BULK,MC,2026-05-08,Tracking table QA/QC,
+8800088,OBS,KLUM,SN,2026-05-11,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
+8800044,OBS,KLUM,SN,2026-05-11,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
