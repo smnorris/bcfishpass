@@ -253,7 +253,10 @@ sozip \
 aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bchamp --acl public-read
 
 
-# release a draft/undocumented full dump of salmon/steelhead/bull trout/wct
+
+# -- 
+# -- release a test/draft/undocumented full dump of salmon/steelhead/bull trout/wct
+# -- 
 ogr2ogr \
   -f Parquet \
   bcfishpass_streams.parquet \
@@ -335,16 +338,18 @@ WHERE
   access_wct > 0"
 
 ogr2ogr \
-    -f GPKG \
-    bcfishpass_crossings.gpkg.zip \
-    PG:$DATABASE_URL \
-    -nln bcfishpass_crossings \
-    -nlt PointZM \
-    -sql "select * FROM bcfishpass.crossings_vw"
+  -f Parquet \
+  bcfishpass_crossings.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln bcfishpass_crossings \
+  -nlt PointZ \
+  -sql "SELECT * FROM bcfishpass.crossings_vw"
 
-# dump also a basic top crossings report
-# this is just a draft for now, aggregated spawn/rear columns
-# should be added to crossings_vw for better ranking
+# plus a spreadsheet
 psql $DATABASE_URL -c "SELECT 
  aggregated_crossings_id,
  stream_crossing_id,
@@ -451,11 +456,11 @@ FROM bcfishpass.crossings_vw
 WHERE barrier_status in ('BARRIER','POTENTIAL')
 AND salmonsteelhead_spawningrearing_belowupstrbarriers_km > 0
 order by salmonsteelhead_spawningrearing_belowupstrbarriers_km desc
-limit 500" --csv > barriers_salmonsteelhead.csv    
+limit 5000" --csv > bcfishpass_barriers_salmonsteelhead.csv    
 
-aws s3 cp bcfishpass_streams.parquet s3://bchamp --acl public-read
-aws s3 cp bcfishpass_crossings.parquet s3://bchamp --acl public-read
-
+aws s3 cp bcfishpass_streams.parquet s3://bchamp/test/bcfishpass_streams.parquet --acl public-read
+aws s3 cp bcfishpass_crossings.parquet s3://bchamp/test/bcfishpass_crossings.parquet --acl public-read
+aws s3 cp bcfishpass_barriers_salmonsteelhead.csv s3://bchamp/test/bcfishpass_barriers_salmonsteelhead.csv --acl public-read
 
 # also dump natural barriers to salmon/steelhead/bt as parquet
 ogr2ogr \
@@ -492,7 +497,6 @@ ogr2ogr \
   -sql "SELECT * from bcfishpass.barriers_bt"
 
 # and for testing completeness, dump CABD falls as linked to FWA (temp spot for this, it should be dumped and logged as per other sources)
-
 ogr2ogr \
   -f Parquet \
   falls.parquet \
