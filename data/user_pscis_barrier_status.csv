@@ -1384,3 +1384,5 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 123392,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
 123426,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
 195498,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
+203151,PASSABLE,BULK,MC,2026-05-12,Tracking table QA/QC
+203142,BARRIER,BULK,MC,2026-05-12,Tracking table QA/QC
