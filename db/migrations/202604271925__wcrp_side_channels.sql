@@ -1,5 +1,13 @@
 BEGIN;
 
+  DROP TABLE IF EXISTS bcfishpass.crossings_sidechannel_upstream_startpoints;
+  CREATE TABLE bcfishpass.crossings_sidechannel_upstream_startpoints (
+    aggregated_crossings_id text,
+    blue_line_key integer,
+    downstream_route_measure integer,
+    primary key (aggregated_crossings_id, blue_line_key)
+  );
+
   DROP MATERIALIZED VIEW IF EXISTS bcfishpass.crossings_wcrp_vw;
 
   DROP TABLE IF EXISTS bcfishpass.crossings_upstream_habitat_wcrp;
