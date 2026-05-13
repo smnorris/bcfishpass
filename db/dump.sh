@@ -2,7 +2,7 @@
 set -euo pipefail
 
 
-# tables from whse_basemapping not included in fwapg
+# required tables
 pg_dump $DATABASE_URL \
   --schema-only \
   --no-privileges \
@@ -14,7 +14,10 @@ pg_dump $DATABASE_URL \
   --table=whse_basemapping.transport_line_structure_code \
   --table=whse_basemapping.transport_line_surface_code \
   --table=whse_basemapping.transport_line_type_code \
-  --table=whse_basemapping.transport_line > schema.sql
+  --table=whse_basemapping.transport_line \
+  --table=whse_mineral_tenure.og_road_segment_permit_sp \
+  --table=whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp \
+  --table=whse_imagery_and_base_maps.mot_road_structure_sp > schema.sql
 
 # other bc whse schemas
 pg_dump $DATABASE_URL \
@@ -28,9 +31,7 @@ pg_dump $DATABASE_URL \
   --schema=whse_tantalis \
   --schema=whse_forest_tenure \
   --schema=whse_fish \
-  --schema=whse_forest_vegetation \
-  --schema=whse_imagery_and_base_map \
-  --schema=whse_mineral_tenure >> schema.sql
+  --schema=whse_forest_vegetation >> schema.sql
   
 # application schemas
 pg_dump $DATABASE_URL \
