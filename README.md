@@ -52,8 +52,8 @@ If you have shut down Docker or the container, start it up again with the same `
 
 Connect to the db from clients on your host OS (eg psql/QGIS/PgAdmin/etc) via `localhost` and `port=8000` (modify port as required via `.env` file):
 
-    psql postgresql://postgres@localhost:8001/fwapg
-    psql -p 8001 -U postgres fwapg                     # shorter
+    psql postgresql://postgres@localhost:8001/bcfishpass
+    psql -p 8001 -U postgres bcfishpass                     # shorter
 
 To run default habitat models on the watershed groups specified in `parameters/example_testing`:
 
