@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euxo pipefail
+
+PSQL="psql $DATABASE_URL -v ON_ERROR_STOP=1"
+
+#-------
+# apply any pending migrations
+#-------
+(cd db && ./migrate.sh)
+
+#-------
+# load FWA
+#-------
+(git clone https://github.com/smnorris/fwapg.git && cd fwapg && ./load.sh)
+rm -rf fwapg
+
+#-------
+# load other required data
+#-------
+jobs/load_monthly
+jobs/load_weekly
+jobs/load_observations
+
+$PSQL -c "vacuum full analyze"
+$PSQL -c "ALTER DATABASE fwapg SET search_path TO public,whse_basemapping,usgs,hydrosheds"
