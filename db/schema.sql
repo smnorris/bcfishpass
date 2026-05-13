@@ -17044,3 +17044,6 @@ ALTER TABLE ONLY bcfishpass.user_habitat_classification
 -- PostgreSQL database dump complete
 --
 
+
+-- db version, appended at dump time
+INSERT INTO bcfishpass.db_version (tag, applied_at) VALUES ('202604221627', now());
