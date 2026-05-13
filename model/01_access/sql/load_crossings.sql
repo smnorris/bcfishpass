@@ -659,6 +659,7 @@ with cft as (
               (upper(pscis_road_name) like '%RAIL%' and upper(pscis_road_name) not like '%TRAIL%') OR  -- road name in PSCIS indicates railway OR
               rail_owner_name is not null                                                              -- modelled crossing comes from rail line
           )
+        )
       then 'RAIL'
       -- RAIL, pscis crossings within 10m of rail line
       when
