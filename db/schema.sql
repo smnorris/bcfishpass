@@ -6,6 +6,7 @@ CREATE SCHEMA IF NOT EXISTS whse_imagery_and_base_maps;
 CREATE SCHEMA IF NOT EXISTS whse_legal_admin_boundaries;
 CREATE SCHEMA IF NOT EXISTS whse_mineral_tenure;
 CREATE SCHEMA IF NOT EXISTS whse_tantalis;
+CREATE SCHEMA IF NOT EXISTS bcdata;
 --
 -- PostgreSQL database dump
 --
@@ -5244,13 +5245,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: bcdata; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA bcdata;
-
-
---
 -- Name: bcfishobs; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -6547,144 +6541,6 @@ $$;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
-
---
--- Name: ften_range_poly_carto_vw; Type: MATERIALIZED VIEW; Schema: bcdata; Owner: -
---
-
-CREATE MATERIALIZED VIEW bcdata.ften_range_poly_carto_vw AS
- WITH rings AS (
-         SELECT public.st_exteriorring((public.st_dumprings((public.st_dump(ften_range_poly_svw.geom)).geom)).geom) AS geom
-           FROM whse_forest_tenure.ften_range_poly_svw
-        ), lines AS (
-         SELECT (public.st_dump(public.st_union(rings.geom, (0.1)::double precision))).geom AS geom
-           FROM rings
-        ), flattened AS (
-         SELECT (public.st_dump(public.st_polygonize(lines.geom))).geom AS geom
-           FROM lines
-        ), sorted AS (
-         SELECT d.objectid,
-            d.forest_file_id,
-            d.client_number,
-            d.client_name,
-            f.geom
-           FROM (flattened f
-             LEFT JOIN whse_forest_tenure.ften_range_poly_svw d ON (public.st_contains(d.geom, public.st_pointonsurface(f.geom))))
-          ORDER BY d.objectid
-        )
- SELECT row_number() OVER () AS id,
-    array_agg(forest_file_id ORDER BY objectid) AS forest_file_id,
-    array_agg(client_number ORDER BY objectid) AS client_number,
-    array_agg(client_name ORDER BY objectid) AS client_name,
-    (geom)::public.geometry(Polygon,3005) AS geom
-   FROM sorted
-  GROUP BY geom
-  WITH NO DATA;
-
-
---
--- Name: log; Type: TABLE; Schema: bcdata; Owner: -
---
-
-CREATE TABLE bcdata.log (
-    table_name text NOT NULL,
-    latest_download timestamp with time zone
-);
-
-
---
--- Name: parks; Type: MATERIALIZED VIEW; Schema: bcdata; Owner: -
---
-
-CREATE MATERIALIZED VIEW bcdata.parks AS
- SELECT row_number() OVER () AS id,
-    source,
-    designation,
-    name,
-    geom
-   FROM ( SELECT 'whse_admin_boundaries.clab_national_parks'::text AS source,
-            'NATIONAL PARK'::character varying AS designation,
-            clab_national_parks.english_name AS name,
-            (public.st_multi(public.st_union(clab_national_parks.geom)))::public.geometry(MultiPolygon,3005) AS geom
-           FROM whse_admin_boundaries.clab_national_parks
-          GROUP BY clab_national_parks.english_name
-        UNION ALL
-         SELECT 'whse_tantalis.ta_park_ecores_pa_svw'::text AS source,
-            ta_park_ecores_pa_svw.protected_lands_designation AS designation,
-            ta_park_ecores_pa_svw.protected_lands_name AS name,
-            (public.st_multi(ta_park_ecores_pa_svw.geom))::public.geometry(MultiPolygon,3005) AS geom
-           FROM whse_tantalis.ta_park_ecores_pa_svw
-        UNION ALL
-         SELECT 'whse_tantalis.ta_conservancy_areas_svw'::text AS source,
-            'CONSERVANCY'::character varying AS designation,
-            ta_conservancy_areas_svw.conservancy_area_name AS name,
-            (public.st_multi(ta_conservancy_areas_svw.geom))::public.geometry(MultiPolygon,3005) AS geom
-           FROM whse_tantalis.ta_conservancy_areas_svw
-        UNION ALL
-         SELECT 'whse_basemapping.gba_local_reg_greenspaces_sp'::text AS source,
-            ((upper((gba_local_reg_greenspaces_sp.park_type)::text) || ' '::text) || upper((gba_local_reg_greenspaces_sp.park_primary_use)::text)) AS designation,
-            gba_local_reg_greenspaces_sp.park_name AS name,
-            (public.st_multi(gba_local_reg_greenspaces_sp.geom))::public.geometry(MultiPolygon,3005) AS geom
-           FROM whse_basemapping.gba_local_reg_greenspaces_sp) p
-  WITH NO DATA;
-
-
---
--- Name: private; Type: TABLE; Schema: bcdata; Owner: -
---
-
-CREATE TABLE bcdata.private (
-    private_id integer NOT NULL,
-    name text,
-    geom public.geometry(Polygon,3005)
-);
-
-
---
--- Name: private_private_id_seq; Type: SEQUENCE; Schema: bcdata; Owner: -
---
-
-CREATE SEQUENCE bcdata.private_private_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: private_private_id_seq; Type: SEQUENCE OWNED BY; Schema: bcdata; Owner: -
---
-
-ALTER SEQUENCE bcdata.private_private_id_seq OWNED BY bcdata.private.private_id;
-
-
---
--- Name: veg_consolidated_cut_blocks_decade_vw; Type: VIEW; Schema: bcdata; Owner: -
---
-
-CREATE VIEW bcdata.veg_consolidated_cut_blocks_decade_vw AS
- SELECT vccb_sysid,
-    harvest_start_year_calendar AS harvest_year,
-    harvest_start_date,
-    harvest_end_date,
-    data_source,
-        CASE
-            WHEN (harvest_start_year_calendar < (1950)::numeric) THEN 0
-            WHEN ((harvest_start_year_calendar < (1960)::numeric) AND (harvest_start_year_calendar >= (1950)::numeric)) THEN 1
-            WHEN ((harvest_start_year_calendar < (1970)::numeric) AND (harvest_start_year_calendar >= (1960)::numeric)) THEN 2
-            WHEN ((harvest_start_year_calendar < (1980)::numeric) AND (harvest_start_year_calendar >= (1970)::numeric)) THEN 3
-            WHEN ((harvest_start_year_calendar < (1990)::numeric) AND (harvest_start_year_calendar >= (1980)::numeric)) THEN 4
-            WHEN ((harvest_start_year_calendar < (2000)::numeric) AND (harvest_start_year_calendar >= (1990)::numeric)) THEN 5
-            WHEN ((harvest_start_year_calendar < (2010)::numeric) AND (harvest_start_year_calendar >= (2000)::numeric)) THEN 6
-            WHEN ((harvest_start_year_calendar < (2020)::numeric) AND (harvest_start_year_calendar >= (2010)::numeric)) THEN 7
-            WHEN (harvest_start_year_calendar >= (2020)::numeric) THEN 8
-            ELSE NULL::integer
-        END AS harvest_decade_idx,
-    geom
-   FROM whse_forest_vegetation.veg_consolidated_cut_blocks_sp;
-
 
 --
 -- Name: fiss_fish_obsrvtn_events; Type: TABLE; Schema: bcfishobs; Owner: -
@@ -14763,13 +14619,6 @@ CREATE TABLE bcfishpass.wsg_species_presence (
 
 
 --
--- Name: private private_id; Type: DEFAULT; Schema: bcdata; Owner: -
---
-
-ALTER TABLE ONLY bcdata.private ALTER COLUMN private_id SET DEFAULT nextval('bcdata.private_private_id_seq'::regclass);
-
-
---
 -- Name: log model_run_id; Type: DEFAULT; Schema: bcfishpass; Owner: -
 --
 
@@ -14781,22 +14630,6 @@ ALTER TABLE ONLY bcfishpass.log ALTER COLUMN model_run_id SET DEFAULT nextval('b
 --
 
 ALTER TABLE ONLY bcfishpass.modelled_stream_crossings ALTER COLUMN modelled_crossing_id SET DEFAULT nextval('bcfishpass.modelled_stream_crossings_modelled_crossing_id_seq'::regclass);
-
-
---
--- Name: log log_pkey; Type: CONSTRAINT; Schema: bcdata; Owner: -
---
-
-ALTER TABLE ONLY bcdata.log
-    ADD CONSTRAINT log_pkey PRIMARY KEY (table_name);
-
-
---
--- Name: private private_pkey; Type: CONSTRAINT; Schema: bcdata; Owner: -
---
-
-ALTER TABLE ONLY bcdata.private
-    ADD CONSTRAINT private_pkey PRIMARY KEY (private_id);
 
 
 --
@@ -15573,20 +15406,6 @@ ALTER TABLE ONLY bcfishpass.wcrp_ranked_barriers
 
 ALTER TABLE ONLY bcfishpass.wcrp_rehabilitiated_structures
     ADD CONSTRAINT wcrp_rehabilitiated_structures_pkey PRIMARY KEY (aggregated_crossing_id);
-
-
---
--- Name: ften_range_poly_carto_vw_geom_idx; Type: INDEX; Schema: bcdata; Owner: -
---
-
-CREATE INDEX ften_range_poly_carto_vw_geom_idx ON bcdata.ften_range_poly_carto_vw USING gist (geom);
-
-
---
--- Name: parks_geom_idx; Type: INDEX; Schema: bcdata; Owner: -
---
-
-CREATE INDEX parks_geom_idx ON bcdata.parks USING gist (geom);
 
 
 --
