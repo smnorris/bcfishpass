@@ -58,3 +58,13 @@ pg_dump $DATABASE_URL \
   --schema=bcfishobs \
   --schema=cabd \
   --schema=bcfishpass >> schema.sql
+
+# Append current version so migrate.sh knows where to start
+CURRENT_TAG=$(psql "$DATABASE_URL" --no-psqlrc -t -A -c \
+  "SELECT tag FROM bcfishpass.db_version ORDER BY applied_at DESC LIMIT 1;")
+
+cat >> schema.sql <<-SQL
+
+-- db version, appended at dump time
+INSERT INTO bcfishpass.db_version (tag, applied_at) VALUES ('${CURRENT_TAG}', now());
+SQL

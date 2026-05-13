@@ -11689,6 +11689,53 @@ CREATE TABLE bcfishpass.log_replication (
 
 
 --
+-- Name: log_wcrp_habitat_connectivity; Type: TABLE; Schema: bcfishpass; Owner: -
+--
+
+CREATE TABLE bcfishpass.log_wcrp_habitat_connectivity (
+    model_run_id integer NOT NULL,
+    wcrp text NOT NULL,
+    watershed_group_code text NOT NULL,
+    total_spawning_ch numeric,
+    total_spawning_co numeric,
+    total_spawning_sk numeric,
+    total_spawning_st numeric,
+    total_spawning_wct numeric,
+    total_rearing_ch numeric,
+    total_rearing_co numeric,
+    total_rearing_sk numeric,
+    total_rearing_st numeric,
+    total_rearing_wct numeric,
+    total_spawningrearing_ch numeric,
+    total_spawningrearing_co numeric,
+    total_spawningrearing_sk numeric,
+    total_spawningrearing_st numeric,
+    total_spawningrearing_wct numeric,
+    total_spawning_all numeric,
+    total_rearing_all numeric,
+    total_spawningrearing_all numeric,
+    accessible_spawning_ch numeric,
+    accessible_spawning_co numeric,
+    accessible_spawning_sk numeric,
+    accessible_spawning_st numeric,
+    accessible_spawning_wct numeric,
+    accessible_rearing_ch numeric,
+    accessible_rearing_co numeric,
+    accessible_rearing_sk numeric,
+    accessible_rearing_st numeric,
+    accessible_rearing_wct numeric,
+    accessible_spawningrearing_ch numeric,
+    accessible_spawningrearing_co numeric,
+    accessible_spawningrearing_sk numeric,
+    accessible_spawningrearing_st numeric,
+    accessible_spawningrearing_wct numeric,
+    accessible_spawning_all numeric,
+    accessible_rearing_all numeric,
+    accessible_spawningrearing_all numeric
+);
+
+
+--
 -- Name: log_wsg_crossing_summary; Type: TABLE; Schema: bcfishpass; Owner: -
 --
 
@@ -13709,6 +13756,90 @@ CREATE VIEW bcfishpass.wcrp_habitat_connectivity_status_vw AS
 
 
 --
+-- Name: wcrp_habitat_connectivity_status_vw_v2; Type: VIEW; Schema: bcfishpass; Owner: -
+--
+
+CREATE VIEW bcfishpass.wcrp_habitat_connectivity_status_vw_v2 AS
+ SELECT DISTINCT ON (s.wcrp, s.watershed_group_code) s.wcrp,
+    s.watershed_group_code,
+    round(s.total_spawning_ch, 2) AS total_spawning_ch,
+    round(s.total_spawning_co, 2) AS total_spawning_co,
+    round(s.total_spawning_sk, 2) AS total_spawning_sk,
+    round(s.total_spawning_st, 2) AS total_spawning_st,
+    round(s.total_spawning_wct, 2) AS total_spawning_wct,
+    round(s.total_rearing_ch, 2) AS total_rearing_ch,
+    round(s.total_rearing_co, 2) AS total_rearing_co,
+    round(s.total_rearing_sk, 2) AS total_rearing_sk,
+    round(s.total_rearing_st, 2) AS total_rearing_st,
+    round(s.total_rearing_wct, 2) AS total_rearing_wct,
+    round(s.total_spawningrearing_ch, 2) AS total_spawningrearing_ch,
+    round(s.total_spawningrearing_co, 2) AS total_spawningrearing_co,
+    round(s.total_spawningrearing_sk, 2) AS total_spawningrearing_sk,
+    round(s.total_spawningrearing_st, 2) AS total_spawningrearing_st,
+    round(s.total_spawningrearing_wct, 2) AS total_spawningrearing_wct,
+    round(s.total_spawning_all, 2) AS total_spawning_all,
+    round(s.total_rearing_all, 2) AS total_rearing_all,
+    round(s.total_spawningrearing_all, 2) AS total_spawningrearing_all,
+    round(s.accessible_spawning_ch, 2) AS accessible_spawning_ch,
+    round(s.accessible_spawning_co, 2) AS accessible_spawning_co,
+    round(s.accessible_spawning_sk, 2) AS accessible_spawning_sk,
+    round(s.accessible_spawning_st, 2) AS accessible_spawning_st,
+    round(s.accessible_spawning_wct, 2) AS accessible_spawning_wct,
+    round(s.accessible_rearing_ch, 2) AS accessible_rearing_ch,
+    round(s.accessible_rearing_co, 2) AS accessible_rearing_co,
+    round(s.accessible_rearing_sk, 2) AS accessible_rearing_sk,
+    round(s.accessible_rearing_st, 2) AS accessible_rearing_st,
+    round(s.accessible_rearing_wct, 2) AS accessible_rearing_wct,
+    round(s.accessible_spawningrearing_ch, 2) AS accessible_spawningrearing_ch,
+    round(s.accessible_spawningrearing_co, 2) AS accessible_spawningrearing_co,
+    round(s.accessible_spawningrearing_sk, 2) AS accessible_spawningrearing_sk,
+    round(s.accessible_spawningrearing_st, 2) AS accessible_spawningrearing_st,
+    round(s.accessible_spawningrearing_wct, 2) AS accessible_spawningrearing_wct,
+    round(s.accessible_spawning_all, 2) AS accessible_spawning_all,
+    round(s.accessible_rearing_all, 2) AS accessible_rearing_all,
+    round(s.accessible_spawningrearing_all, 2) AS accessible_spawningrearing_all,
+    round((s.total_spawning_ch - s.accessible_spawning_ch), 2) AS disconnected_spawning_ch,
+    round((s.total_spawning_co - s.accessible_spawning_co), 2) AS disconnected_spawning_co,
+    round((s.total_spawning_sk - s.accessible_spawning_sk), 2) AS disconnected_spawning_sk,
+    round((s.total_spawning_st - s.accessible_spawning_st), 2) AS disconnected_spawning_st,
+    round((s.total_spawning_wct - s.accessible_spawning_wct), 2) AS disconnected_spawning_wct,
+    round((s.total_rearing_ch - s.accessible_rearing_ch), 2) AS disconnected_rearing_ch,
+    round((s.total_rearing_co - s.accessible_rearing_co), 2) AS disconnected_rearing_co,
+    round((s.total_rearing_sk - s.accessible_rearing_sk), 2) AS disconnected_rearing_sk,
+    round((s.total_rearing_st - s.accessible_rearing_st), 2) AS disconnected_rearing_st,
+    round((s.total_rearing_wct - s.accessible_rearing_wct), 2) AS disconnected_rearing_wct,
+    round((s.total_spawningrearing_ch - s.accessible_spawningrearing_ch), 2) AS disconnected_spawningrearing_ch,
+    round((s.total_spawningrearing_co - s.accessible_spawningrearing_co), 2) AS disconnected_spawningrearing_co,
+    round((s.total_spawningrearing_sk - s.accessible_spawningrearing_sk), 2) AS disconnected_spawningrearing_sk,
+    round((s.total_spawningrearing_st - s.accessible_spawningrearing_st), 2) AS disconnected_spawningrearing_st,
+    round((s.total_spawningrearing_wct - s.accessible_spawningrearing_wct), 2) AS disconnected_spawningrearing_wct,
+    round((s.total_spawning_all - s.accessible_spawning_all), 2) AS disconnected_spawning_all,
+    round((s.total_rearing_all - s.accessible_rearing_all), 2) AS disconnected_rearing_all,
+    round((s.total_spawningrearing_all - s.accessible_spawningrearing_all), 2) AS disconnected_spawningrearing_all,
+    round(((s.accessible_spawning_ch / NULLIF(s.total_spawning_ch, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawning_ch,
+    round(((s.accessible_spawning_co / NULLIF(s.total_spawning_co, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawning_co,
+    round(((s.accessible_spawning_sk / NULLIF(s.total_spawning_sk, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawning_sk,
+    round(((s.accessible_spawning_st / NULLIF(s.total_spawning_st, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawning_st,
+    round(((s.accessible_spawning_wct / NULLIF(s.total_spawning_wct, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawning_wct,
+    round(((s.accessible_rearing_ch / NULLIF(s.total_rearing_ch, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_rearing_ch,
+    round(((s.accessible_rearing_co / NULLIF(s.total_rearing_co, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_rearing_co,
+    round(((s.accessible_rearing_sk / NULLIF(s.total_rearing_sk, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_rearing_sk,
+    round(((s.accessible_rearing_st / NULLIF(s.total_rearing_st, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_rearing_st,
+    round(((s.accessible_rearing_wct / NULLIF(s.total_rearing_wct, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_rearing_wct,
+    round(((s.accessible_spawningrearing_ch / NULLIF(s.total_spawningrearing_ch, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawningrearing_ch,
+    round(((s.accessible_spawningrearing_co / NULLIF(s.total_spawningrearing_co, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawningrearing_co,
+    round(((s.accessible_spawningrearing_sk / NULLIF(s.total_spawningrearing_sk, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawningrearing_sk,
+    round(((s.accessible_spawningrearing_st / NULLIF(s.total_spawningrearing_st, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawningrearing_st,
+    round(((s.accessible_spawningrearing_wct / NULLIF(s.total_spawningrearing_wct, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawningrearing_wct,
+    round(((s.accessible_spawning_all / NULLIF(s.total_spawning_all, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawning_all,
+    round(((s.accessible_rearing_all / NULLIF(s.total_rearing_all, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_rearing_all,
+    round(((s.accessible_spawningrearing_all / NULLIF(s.total_spawningrearing_all, (0)::numeric)) * (100)::numeric), 2) AS pct_accessible_spawningrearing_all
+   FROM (bcfishpass.log_wcrp_habitat_connectivity s
+     JOIN bcfishpass.log l ON ((s.model_run_id = l.model_run_id)))
+  ORDER BY s.wcrp, s.watershed_group_code, l.date_completed DESC;
+
+
+--
 -- Name: wcrp_rehabilitiated_structures; Type: TABLE; Schema: bcfishpass; Owner: -
 --
 
@@ -15134,6 +15265,14 @@ ALTER TABLE ONLY bcfishpass.log
 
 ALTER TABLE ONLY bcfishpass.log_replication
     ADD CONSTRAINT log_replication_pkey PRIMARY KEY (object_name);
+
+
+--
+-- Name: log_wcrp_habitat_connectivity log_wcrp_habitat_connectivity_pkey; Type: CONSTRAINT; Schema: bcfishpass; Owner: -
+--
+
+ALTER TABLE ONLY bcfishpass.log_wcrp_habitat_connectivity
+    ADD CONSTRAINT log_wcrp_habitat_connectivity_pkey PRIMARY KEY (model_run_id, wcrp, watershed_group_code);
 
 
 --
@@ -17001,6 +17140,14 @@ ALTER TABLE ONLY bcfishpass.log_parameters_habitat_thresholds
 
 
 --
+-- Name: log_wcrp_habitat_connectivity log_wcrp_habitat_connectivity_model_run_id_fkey; Type: FK CONSTRAINT; Schema: bcfishpass; Owner: -
+--
+
+ALTER TABLE ONLY bcfishpass.log_wcrp_habitat_connectivity
+    ADD CONSTRAINT log_wcrp_habitat_connectivity_model_run_id_fkey FOREIGN KEY (model_run_id) REFERENCES bcfishpass.log(model_run_id);
+
+
+--
 -- Name: log_wsg_crossing_summary log_wsg_crossing_summary_model_run_id_fkey; Type: FK CONSTRAINT; Schema: bcfishpass; Owner: -
 --
 
@@ -17044,6 +17191,3 @@ ALTER TABLE ONLY bcfishpass.user_habitat_classification
 -- PostgreSQL database dump complete
 --
 
-
--- db version, appended at dump time
-INSERT INTO bcfishpass.db_version (tag, applied_at) VALUES ('202604221627', now());
