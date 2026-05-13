@@ -17,9 +17,12 @@ rm -rf fwapg
 #-------
 # load other required data
 #-------
-jobs/load_monthly
-jobs/load_weekly
-jobs/load_observations
+( 
+  cd jobs && \
+  ./load_monthly && \
+  ./load_weekly && \
+  ./load_observations 
+)
 
 $PSQL -c "vacuum full analyze"
 $PSQL -c "ALTER DATABASE fwapg SET search_path TO public,whse_basemapping,usgs,hydrosheds"

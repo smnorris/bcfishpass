@@ -28,7 +28,9 @@ pg_dump $DATABASE_URL \
   --schema=whse_tantalis \
   --schema=whse_forest_tenure \
   --schema=whse_fish \
-  --schema=whse_forest_vegetation >> schema.sql
+  --schema=whse_forest_vegetation \
+  --schema=whse_imagery_and_base_map \
+  --schema=whse_mineral_tenure >> schema.sql
   
 # application schemas
 pg_dump $DATABASE_URL \
