@@ -1,10 +1,17 @@
+CREATE SCHEMA IF NOT EXISTS whse_admin_boundaries;
+CREATE SCHEMA IF NOT EXISTS whse_cadastre;
+CREATE SCHEMA IF NOT EXISTS whse_fish;
+CREATE SCHEMA IF NOT EXISTS whse_forest_tenure;
+CREATE SCHEMA IF NOT EXISTS whse_imagery_and_base_maps;
+CREATE SCHEMA IF NOT EXISTS whse_legal_admin_boundaries;
+CREATE SCHEMA IF NOT EXISTS whse_mineral_tenure;
+CREATE SCHEMA IF NOT EXISTS whse_tantalis;
 --
 -- PostgreSQL database dump
 --
 
-
 -- Dumped from database version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
--- Dumped by pg_dump version 17.7 (Homebrew)
+-- Dumped by pg_dump version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,883 +23,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: gba_local_reg_greenspaces_sp; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.gba_local_reg_greenspaces_sp (
-    local_reg_greenspace_id integer NOT NULL,
-    park_name character varying(200),
-    park_type character varying(50),
-    park_primary_use character varying(50),
-    regional_district character varying(100),
-    municipality character varying(100),
-    civic_number numeric,
-    civic_number_suffix character varying(5),
-    street_name character varying(100),
-    latitude numeric,
-    longitude numeric,
-    when_updated date,
-    website_url character varying(254),
-    licence_comments character varying(500),
-    objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: TABLE gba_local_reg_greenspaces_sp; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON TABLE whse_basemapping.gba_local_reg_greenspaces_sp IS 'This dataset contains spatial and attribute information for local and regional greenspaces in British Columbia. Local and regional greenspaces are municipal or regional district lands designated by local government agencies and managed for public enjoyment, ecosystem or wildlife values. Spatial boundaries were sourced from various Open Data Sources. Boundaries of parks defined by cadastral parcels were edge-matched to ParcelMap BC.  This spatial layer contains multipart polygons.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.local_reg_greenspace_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.local_reg_greenspace_id IS 'LOCAL_REG_GREENSPACE_ID is a system-generated unique identification number.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.park_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.park_name IS 'PARK NAME is the name of the park, e.g., Allenby Park.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.park_type; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.park_type IS 'PARK_TYPE is the type of park, e.g., Local, Regional, Regional Reserve, Private.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.park_primary_use; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.park_primary_use IS 'PARK PRIMARY USE defines the primary use of a park, whether it is a general use park or there is a specific primary use, e.g., School, Pedestrian Walkway, Golf, Civic Plaza. The default value of Park is used for general use parks and where no specific primary use has been identified.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.regional_district; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.regional_district IS 'REGIONAL_DISTRICT is the name of the regional district in which the park resides, e.g., Capital Regional District.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.municipality; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.municipality IS 'MUNICIPALITY is the name of the municipality in which the park resides, or in which the majority of the park resides, e.g., Kamloops.  If the value is null, the park is not within municipal boundaries.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.civic_number; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.civic_number IS 'CIVIC_NUMBER is the street number or nearest estimate of a street number for the park.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.civic_number_suffix; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.civic_number_suffix IS 'CIVIC_NUMBER_SUFFIX is the letter or fraction that may come after the CIVIC NUMBER, e.g., A, 1/2.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.street_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.street_name IS 'STREET_NAME is the name of the street or nearest street to the park, e.g., Burnside Rd W.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.latitude; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.latitude IS 'LATITUDE is the geographic coordinate, in decimal degrees (dd.dddddd), of the location of the feature as measured from the equator, e.g., 55.323653.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.longitude; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.longitude IS 'LONGITUDE is the geographic coordinate, in decimal degrees (dd.dddddd), of the location of the feature as measured from the prime meridian, e.g., -123.093544.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.when_updated; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.when_updated IS 'WHEN_UPDATED is the date and time the record was last modified.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.website_url; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.website_url IS 'WEBSITE_URL contains a link to the home page of the park or the parks department, where available.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.licence_comments; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.licence_comments IS 'LICENCE_COMMENTS describes the source of the data where open data restrictions specify that attribution statements must be used, e.g., Contains information licensed under the Open Government Licence - City of Surrey.';
-
-
---
--- Name: COLUMN gba_local_reg_greenspaces_sp.objectid; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: dbm_mof_50k_grid; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.dbm_mof_50k_grid (
-    map_tile character varying(32) NOT NULL,
-    map_tile_display_name character varying(32),
-    feature_code character varying(10),
-    objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: COLUMN dbm_mof_50k_grid.map_tile; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.map_tile IS 'BCGS 1:50 000 Map number';
-
-
---
--- Name: COLUMN dbm_mof_50k_grid.map_tile_display_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.map_tile_display_name IS 'BCGS 1:50 000 Map number - conforms to BCGS Specifications Document';
-
-
---
--- Name: COLUMN dbm_mof_50k_grid.feature_code; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.feature_code IS 'The MOEP standard  numeric code to identify the type of feature represented by the spatial data.';
-
-
---
--- Name: COLUMN dbm_mof_50k_grid.objectid; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase. ';
-
-
---
--- Name: gba_railway_tracks_sp; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.gba_railway_tracks_sp (
-    railway_track_id integer NOT NULL,
-    nid character varying(32),
-    track_segment_id character varying(32),
-    track_name character varying(100),
-    track_classification character varying(20),
-    regulator character varying(10),
-    transport_type character varying(10),
-    use_type character varying(30),
-    gauge character varying(15),
-    number_of_tracks numeric,
-    electrification character varying(10),
-    status character varying(20),
-    design_speed_freight numeric,
-    design_speed_passenger numeric,
-    source_id character varying(50),
-    operator_english_name character varying(100),
-    operator_subdiv_portion_start numeric,
-    operator_subdiv_portion_end numeric,
-    owner_name character varying(100),
-    track_user1_english_name character varying(100),
-    track_user2_english_name character varying(100),
-    track_user3_english_name character varying(100),
-    track_user4_english_name character varying(100),
-    subdivision1_nid character varying(32),
-    subdivision1_name character varying(100),
-    subdivision1_start numeric,
-    subdivision1_end numeric,
-    subdivision2_nid character varying(32),
-    subdivision2_name character varying(100),
-    subdivision2_start numeric,
-    subdivision2_end numeric,
-    administrative_area character varying(50),
-    standards_version character varying(10),
-    security_classification character varying(15),
-    geometry_creation_date date,
-    geometry_revision_date date,
-    geometry_acquisition_technque character varying(30),
-    geometry_planimetric_accuracy numeric,
-    geometry_provider character varying(25),
-    attribute_creation_date date,
-    attribute_revision_date date,
-    attribute_acquisition_technque character varying(30),
-    attribute_provider character varying(30),
-    objectid numeric,
-    geom public.geometry(MultiLineString,3005)
-);
-
-
---
--- Name: TABLE gba_railway_tracks_sp; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON TABLE whse_basemapping.gba_railway_tracks_sp IS 'GBA RAILWAY TRACKS SP contains railway tracks within BC from the National Railway Network (NRWN) dataset. In the real world, a Track provides a guide for the movement of trains and other equipment. In general, one linear feature represents the two rails of a Track. A Track is bounded by two Junction points and is segmented at each change in attributes along its course. All attributes relating to distance are expressed in miles and attributes relating to speed are expressed in miles per hour.';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.railway_track_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.railway_track_id IS 'RAILWAY TRACK ID: An operationally generated unique identification number, e.g., 100';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.nid; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.nid IS 'NID: National identifier for the feature. This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string. e.g., b5654a8c9dd64509b7c33dec919d6615. It is not a unique identifier for Railway Tracks; multiple records may share the same NID.';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_segment_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_segment_id IS 'TRACK SEGMENT ID: Identifier assigned to the portion of a Track Segment with uniform characteristics. This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string.  e.g., b5654a8c9dd64509b7c33dec919d6614';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_name IS 'TRACK NAME: Name associated to the Track by a national or sub national agency. e.g., Seymour Industrial';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_classification; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_classification IS 'TRACK CLASSIFICATION: Functional classification based on the importance of the role that the Track performs in the connectivity of the rail network. e.g., Main';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.regulator; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.regulator IS 'REGULATOR: Level of the authority that issued the certificate of fitness to the Track Operator. e.g., Federal';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.transport_type; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.transport_type IS 'TRANSPORTTYPE: Type of railway transport used on the Track. e.g., Train';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.use_type; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.use_type IS 'USE TYPE: Identification of what is transported on the Track. e.g., Freight';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.gauge; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.gauge IS 'GAUGE: Nominal distance between the two outer rails (gauge) of a railway track. e.g., Standard';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.number_of_tracks; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.number_of_tracks IS 'NUMBER OF TRACKS: Number of Tracks represented by the Track geometry. e.g., 1';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.electrification; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.electrification IS 'ELECTRIFICATION: Indication whether the railway is provided with an electric system to power vehicles moving along it. e.g., Absence';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.status; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.status IS 'STATUS: Status of the Track feature. e.g., Operational';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.design_speed_freight; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.design_speed_freight IS 'DESIGN SPEED FREIGHT: Maximum speeds, in miles per hour, for which a Track is designed for Freight trains. e.g., 50';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.design_speed_passenger; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.design_speed_passenger IS 'DESIGN SPEED PASSENGER: Maximum speeds, in miles per hour, for which a Track is designed for Passenger trains. e.g., 60';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.source_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.source_id IS 'SOURCE ID: Unique identifier assigned to the Track and used internally by a national or sub national agency. e.g., Unknown';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.operator_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.operator_english_name IS 'OPERATOR ENGLISH NAME: Information relative to the rail company that operates the track. e.g., Canadian Pacific';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.operator_subdiv_portion_start; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.operator_subdiv_portion_start IS 'OPERATOR SUBDIV PORTION START: Location where the Subdivision or portion of a Subdivision starts (expressed as a distance in miles). e.g., 14.3';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.operator_subdiv_portion_end; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.operator_subdiv_portion_end IS 'OPERATOR SUBDIV PORTION END: Location where the Subdivision or portion of a Subdivision ends (expressed as a distance in miles). e.g., 178.4';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.owner_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.owner_name IS 'OWNER NAME: Name of the company that owns the track system. e.g., Canadian National';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_user1_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user1_english_name IS 'TRACK USER1 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., VIA Rail';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_user2_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user2_english_name IS 'TRACK USER2 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., Rocky Mountaineer Railtours';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_user3_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user3_english_name IS 'TRACK USER3 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., Rocky Mountaineer Railtours';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.track_user4_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user4_english_name IS 'TRACK USER4 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., Rocky Mountaineer Railtours';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision1_nid; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_nid IS 'SUBDIVISION1 NID: National Identifier of the first Railway Subdivision where the Structure is located.  This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string. e.g., b5654a8c9dd64509b7c33dec919d6613';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision1_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_name IS 'SUBDIVISION1 NAME: Name of the first Railway Subdivision where the Structure is located. e.g., Albreda';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision1_start; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_start IS 'SUBDIVISION1 START: Location where the first Railway Subdivision or portion of the first Railway Subdivision starts (expressed as a distance in miles). e.g., 45.7';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision1_end; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_end IS 'SUBDIVISION1 END: Location where the first Railway Subdivision or portion of the first Railway Subdivision ends (expressed as a distance in miles). e.g., 108.4';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision2_nid; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_nid IS 'SUBDIVISION2 NID: Unique identification number of the second Railway Subdivision where the Track is located. This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string. e.g., 22be2673d73b4bc2ae7ebe921b6b8e9c';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision2_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_name IS 'SUBDIVISION2 NAME: Name of the second Railway Subdivision where the Track is located. e.g., Yale';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision2_start; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_start IS 'SUBDIVISION2 START: Location where the second Railway Subdivision or portion of the second Railway Subdivision starts (expressed as a distance in miles). e.g., 85.5';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.subdivision2_end; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_end IS 'SUBDIVISION2 END: Location where the second Railway Subdivision or portion of the second Railway Subdivision ends (expressed as a distance in miles). e.g., 463.2';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.administrative_area; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.administrative_area IS 'ADMINISTRATIVE AREA: State, province, or territory covered by the dataset. e.g., British Columbia';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.standards_version; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.standards_version IS 'STANDARDS VERSION: Version number of the standards for the features. e.g., 1.0';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.security_classification; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.security_classification IS 'SECURITY CLASSIFICATION: Name of the handling restrictions of the dataset. e.g., Unclassified';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.geometry_creation_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_creation_date IS 'GEOMETRY CREATION DATE: Date identifies when the resource (feature) was brought into existence';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.geometry_revision_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_revision_date IS 'GEOMETRY REVISION DATE: Date identifies when the resource (feature) was examined or re-examined and improved or amended';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.geometry_acquisition_technque; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_acquisition_technque IS 'GEOMETRY ACQUISITION TECHNQUE: Type of data source or technique used to populate (create or revise) the object. e.g., Orthoimage';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.geometry_planimetric_accuracy; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_planimetric_accuracy IS 'GEOMETRY PLANIMETRIC ACCURACY: Planimetric accuracy of the object expressed in meters as a circular map accuracy standard (CMAS) e.g., 10';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.geometry_provider; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_provider IS 'GEOMETRY PROVIDER: Affiliation of the organization that generated (created or revised) the object. e.g., Provincial/Territorial';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.attribute_creation_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_creation_date IS 'ATTRIBUTE CREATION DATE: Date identifies when the resource (feature attributes) was brought into existence';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.attribute_revision_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_revision_date IS 'ATTRIBUTE REVISION DATE: Date identifies when the resource (feature attributes) was examined or re-examined and improved or amended';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.attribute_acquisition_technque; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_acquisition_technque IS 'ATTRIBUTE ACQUISITION TECHNQUE: Type of data source or technique used to populate (create or revise) the object. e.g., Vector Data';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.attribute_provider; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_provider IS 'ATTRIBUTE PROVIDER: Affiliation of the organization that generated (created or revised) the object. e.g., Federal';
-
-
---
--- Name: COLUMN gba_railway_tracks_sp.objectid; Type: COMMENT; Schema: whse_basemapping; Owner: -
---
-
-COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: transport_line; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.transport_line (
-    transport_line_id integer NOT NULL,
-    custodian_partner_org character varying(110),
-    data_capture_method_code character varying(30) NOT NULL,
-    capture_date timestamp with time zone,
-    transport_line_type_code character varying(3) NOT NULL,
-    transport_line_surface_code character varying(1) NOT NULL,
-    transport_line_structure_code character varying(1),
-    total_number_of_lanes smallint NOT NULL,
-    structured_name_1 character varying(100),
-    structured_name_2 character varying(100),
-    structured_name_3 character varying(100),
-    structured_name_4 character varying(100),
-    structured_name_5 character varying(100),
-    highway_route_1 character varying(5),
-    highway_exit_number character varying(5),
-    geom public.geometry(MultiLineStringZ,3005)
-);
-
-
---
--- Name: transport_line_type_code; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.transport_line_type_code (
-    transport_line_type_code character varying(3) NOT NULL,
-    description character varying(30) NOT NULL,
-    demographic_ind character varying(1) NOT NULL,
-    create_integration_session_id integer NOT NULL,
-    create_integration_date timestamp with time zone,
-    modify_integration_session_id integer NOT NULL,
-    modify_integration_date timestamp with time zone,
-    road_class character varying(12) NOT NULL
-);
-
-
---
--- Name: gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq; Type: SEQUENCE; Schema: whse_basemapping; Owner: -
---
-
-CREATE SEQUENCE whse_basemapping.gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_basemapping; Owner: -
---
-
-ALTER SEQUENCE whse_basemapping.gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq OWNED BY whse_basemapping.gba_local_reg_greenspaces_sp.local_reg_greenspace_id;
-
-
---
--- Name: gba_railway_tracks_sp_railway_track_id_seq; Type: SEQUENCE; Schema: whse_basemapping; Owner: -
---
-
-CREATE SEQUENCE whse_basemapping.gba_railway_tracks_sp_railway_track_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: gba_railway_tracks_sp_railway_track_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_basemapping; Owner: -
---
-
-ALTER SEQUENCE whse_basemapping.gba_railway_tracks_sp_railway_track_id_seq OWNED BY whse_basemapping.gba_railway_tracks_sp.railway_track_id;
-
-
---
--- Name: transport_line_divided_code; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.transport_line_divided_code (
-    transport_line_divided_code character varying(1) NOT NULL,
-    description character varying(20) NOT NULL,
-    create_integration_session_id integer NOT NULL,
-    create_integration_date timestamp with time zone,
-    modify_integration_session_id integer NOT NULL,
-    modify_integration_date timestamp with time zone
-);
-
-
---
--- Name: transport_line_structure_code; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.transport_line_structure_code (
-    transport_line_structure_code character varying(1) NOT NULL,
-    description character varying(20) NOT NULL,
-    create_integration_session_id integer NOT NULL,
-    create_integration_date timestamp with time zone,
-    modify_integration_session_id integer NOT NULL,
-    modify_integration_date timestamp with time zone
-);
-
-
---
--- Name: transport_line_surface_code; Type: TABLE; Schema: whse_basemapping; Owner: -
---
-
-CREATE TABLE whse_basemapping.transport_line_surface_code (
-    transport_line_surface_code character varying(1) NOT NULL,
-    description character varying(20) NOT NULL,
-    create_integration_session_id integer NOT NULL,
-    create_integration_date timestamp with time zone,
-    modify_integration_session_id integer NOT NULL,
-    modify_integration_date timestamp with time zone
-);
-
-
---
--- Name: transport_line_transport_line_id_seq; Type: SEQUENCE; Schema: whse_basemapping; Owner: -
---
-
-CREATE SEQUENCE whse_basemapping.transport_line_transport_line_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: transport_line_transport_line_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_basemapping; Owner: -
---
-
-ALTER SEQUENCE whse_basemapping.transport_line_transport_line_id_seq OWNED BY whse_basemapping.transport_line.transport_line_id;
-
-
---
--- Name: gba_local_reg_greenspaces_sp local_reg_greenspace_id; Type: DEFAULT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.gba_local_reg_greenspaces_sp ALTER COLUMN local_reg_greenspace_id SET DEFAULT nextval('whse_basemapping.gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq'::regclass);
-
-
---
--- Name: gba_railway_tracks_sp railway_track_id; Type: DEFAULT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.gba_railway_tracks_sp ALTER COLUMN railway_track_id SET DEFAULT nextval('whse_basemapping.gba_railway_tracks_sp_railway_track_id_seq'::regclass);
-
-
---
--- Name: transport_line transport_line_id; Type: DEFAULT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.transport_line ALTER COLUMN transport_line_id SET DEFAULT nextval('whse_basemapping.transport_line_transport_line_id_seq'::regclass);
-
-
---
--- Name: dbm_mof_50k_grid dbm_mof_50k_grid_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.dbm_mof_50k_grid
-    ADD CONSTRAINT dbm_mof_50k_grid_pkey PRIMARY KEY (map_tile);
-
-
---
--- Name: gba_local_reg_greenspaces_sp gba_local_reg_greenspaces_sp_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.gba_local_reg_greenspaces_sp
-    ADD CONSTRAINT gba_local_reg_greenspaces_sp_pkey PRIMARY KEY (local_reg_greenspace_id);
-
-
---
--- Name: gba_railway_tracks_sp gba_railway_tracks_sp_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.gba_railway_tracks_sp
-    ADD CONSTRAINT gba_railway_tracks_sp_pkey PRIMARY KEY (railway_track_id);
-
-
---
--- Name: transport_line_divided_code transport_line_divided_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.transport_line_divided_code
-    ADD CONSTRAINT transport_line_divided_code_pkey PRIMARY KEY (transport_line_divided_code);
-
-
---
--- Name: transport_line transport_line_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.transport_line
-    ADD CONSTRAINT transport_line_pkey PRIMARY KEY (transport_line_id);
-
-
---
--- Name: transport_line_structure_code transport_line_structure_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.transport_line_structure_code
-    ADD CONSTRAINT transport_line_structure_code_pkey PRIMARY KEY (transport_line_structure_code);
-
-
---
--- Name: transport_line_surface_code transport_line_surface_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.transport_line_surface_code
-    ADD CONSTRAINT transport_line_surface_code_pkey PRIMARY KEY (transport_line_surface_code);
-
-
---
--- Name: transport_line_type_code transport_line_type_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
---
-
-ALTER TABLE ONLY whse_basemapping.transport_line_type_code
-    ADD CONSTRAINT transport_line_type_code_pkey PRIMARY KEY (transport_line_type_code);
-
-
---
--- Name: idx_dbm_mof_50k_grid_geom; Type: INDEX; Schema: whse_basemapping; Owner: -
---
-
-CREATE INDEX idx_dbm_mof_50k_grid_geom ON whse_basemapping.dbm_mof_50k_grid USING gist (geom);
-
-
---
--- Name: idx_gba_local_reg_greenspaces_sp_geom; Type: INDEX; Schema: whse_basemapping; Owner: -
---
-
-CREATE INDEX idx_gba_local_reg_greenspaces_sp_geom ON whse_basemapping.gba_local_reg_greenspaces_sp USING gist (geom);
-
-
---
--- Name: idx_gba_railway_tracks_sp_geom; Type: INDEX; Schema: whse_basemapping; Owner: -
---
-
-CREATE INDEX idx_gba_railway_tracks_sp_geom ON whse_basemapping.gba_railway_tracks_sp USING gist (geom);
-
-
---
--- Name: transport_line_geom_geom_idx; Type: INDEX; Schema: whse_basemapping; Owner: -
---
-
-CREATE INDEX transport_line_geom_geom_idx ON whse_basemapping.transport_line USING gist (geom);
-
-
---
--- PostgreSQL database dump complete
---
-
-
---
--- PostgreSQL database dump
---
-
-
--- Dumped from database version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
--- Dumped by pg_dump version 17.7 (Homebrew)
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: whse_admin_boundaries; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_admin_boundaries;
-
-
---
--- Name: whse_cadastre; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_cadastre;
-
-
---
--- Name: whse_fish; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_fish;
-
-
---
--- Name: whse_forest_tenure; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_forest_tenure;
-
-
---
--- Name: whse_forest_vegetation; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_forest_vegetation;
-
-
---
--- Name: whse_legal_admin_boundaries; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_legal_admin_boundaries;
-
-
---
--- Name: whse_tantalis; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA whse_tantalis;
-
 
 SET default_tablespace = '';
 
@@ -1187,6 +317,142 @@ COMMENT ON COLUMN whse_admin_boundaries.clab_national_parks.objectid IS 'OBJECTI
 
 
 --
+-- Name: gba_local_reg_greenspaces_sp; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.gba_local_reg_greenspaces_sp (
+    local_reg_greenspace_id integer NOT NULL,
+    park_name character varying(200),
+    park_type character varying(50),
+    park_primary_use character varying(50),
+    regional_district character varying(100),
+    municipality character varying(100),
+    civic_number numeric,
+    civic_number_suffix character varying(5),
+    street_name character varying(100),
+    latitude numeric,
+    longitude numeric,
+    when_updated date,
+    website_url character varying(254),
+    licence_comments character varying(500),
+    objectid numeric,
+    geom public.geometry(MultiPolygon,3005)
+);
+
+
+--
+-- Name: TABLE gba_local_reg_greenspaces_sp; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON TABLE whse_basemapping.gba_local_reg_greenspaces_sp IS 'This dataset contains spatial and attribute information for local and regional greenspaces in British Columbia. Local and regional greenspaces are municipal or regional district lands designated by local government agencies and managed for public enjoyment, ecosystem or wildlife values. Spatial boundaries were sourced from various Open Data Sources. Boundaries of parks defined by cadastral parcels were edge-matched to ParcelMap BC.  This spatial layer contains multipart polygons.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.local_reg_greenspace_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.local_reg_greenspace_id IS 'LOCAL_REG_GREENSPACE_ID is a system-generated unique identification number.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.park_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.park_name IS 'PARK NAME is the name of the park, e.g., Allenby Park.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.park_type; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.park_type IS 'PARK_TYPE is the type of park, e.g., Local, Regional, Regional Reserve, Private.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.park_primary_use; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.park_primary_use IS 'PARK PRIMARY USE defines the primary use of a park, whether it is a general use park or there is a specific primary use, e.g., School, Pedestrian Walkway, Golf, Civic Plaza. The default value of Park is used for general use parks and where no specific primary use has been identified.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.regional_district; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.regional_district IS 'REGIONAL_DISTRICT is the name of the regional district in which the park resides, e.g., Capital Regional District.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.municipality; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.municipality IS 'MUNICIPALITY is the name of the municipality in which the park resides, or in which the majority of the park resides, e.g., Kamloops.  If the value is null, the park is not within municipal boundaries.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.civic_number; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.civic_number IS 'CIVIC_NUMBER is the street number or nearest estimate of a street number for the park.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.civic_number_suffix; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.civic_number_suffix IS 'CIVIC_NUMBER_SUFFIX is the letter or fraction that may come after the CIVIC NUMBER, e.g., A, 1/2.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.street_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.street_name IS 'STREET_NAME is the name of the street or nearest street to the park, e.g., Burnside Rd W.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.latitude; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.latitude IS 'LATITUDE is the geographic coordinate, in decimal degrees (dd.dddddd), of the location of the feature as measured from the equator, e.g., 55.323653.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.longitude; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.longitude IS 'LONGITUDE is the geographic coordinate, in decimal degrees (dd.dddddd), of the location of the feature as measured from the prime meridian, e.g., -123.093544.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.when_updated; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.when_updated IS 'WHEN_UPDATED is the date and time the record was last modified.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.website_url; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.website_url IS 'WEBSITE_URL contains a link to the home page of the park or the parks department, where available.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.licence_comments; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.licence_comments IS 'LICENCE_COMMENTS describes the source of the data where open data restrictions specify that attribution statements must be used, e.g., Contains information licensed under the Open Government Licence - City of Surrey.';
+
+
+--
+-- Name: COLUMN gba_local_reg_greenspaces_sp.objectid; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_local_reg_greenspaces_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
+
+
+--
 -- Name: ta_conservancy_areas_svw; Type: TABLE; Schema: whse_tantalis; Owner: -
 --
 
@@ -1301,135 +567,6 @@ CREATE TABLE whse_tantalis.ta_park_ecores_pa_svw (
 --
 
 COMMENT ON COLUMN whse_tantalis.ta_park_ecores_pa_svw.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase. ';
-
-
---
--- Name: veg_consolidated_cut_blocks_sp; Type: TABLE; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE TABLE whse_forest_vegetation.veg_consolidated_cut_blocks_sp (
-    vccb_sysid integer NOT NULL,
-    opening_id numeric,
-    harvest_start_date date,
-    harvest_end_date date,
-    harvest_start_year_calendar numeric,
-    harvest_mid_year_calendar numeric,
-    harvest_start_year_fiscal character varying(20),
-    harvest_mid_year_fiscal character varying(20),
-    percent_clearcut numeric,
-    percent_partial_cut numeric,
-    data_source character varying(255),
-    data_source_date date,
-    published_date date,
-    area_ha numeric,
-    objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.vccb_sysid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.vccb_sysid IS 'A system generated unique identification number.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.opening_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.opening_id IS 'A system generated value assigned by RESULTS to uniquely identify the opening. When DATA_SOURCE = Satellite Imagery - Change Detection, the field value is NULL. When DATA_SOURCE = VRI, the field value is NULL unless OPENING_ID is reported within the Veg Comp Poly, in which case it contains the reported OPENING_ID.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.harvest_start_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.harvest_start_date IS 'The estimated start date of the logging activity of an opening. For polygons where DATA_SOURCE = RESULTS, the field is populated using the activity treatment start date (e.g., ATU_START_DATE) of the earliest logging disturbance of an opening. For polygons where DATA_SOURCE = Satellite Imagery - Change Detection, the field value is estimated from dates of the satellite images used in  the change detection process.  For polygons where DATA_SOURCE = VRI, the  field is populated with the Veg Comp Poly Harvest_Year_Date field.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.harvest_end_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.harvest_end_date IS 'The estimated end date of logging activity of an opening. For polygons where DATA_SOURCE = RESULTS, the field is populated using the activity treatment completion date  (e.g., ATU_COMPLETION_DATE) of the last logging disturbance of an opening. For polygons where DATA_SOURCE = Satellite Imagery - Change Detection, the field value is estimated from dates of the satellite images used in  the change detection process.  For polygons where DATA_SOURCE = VRI, the  field is populated with the Veg Comp Poly Harvest_Year_Date field.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.harvest_start_year_calendar; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.harvest_start_year_calendar IS 'The calendar year of harvest start date of an opening. Derived from the HARVEST_START_DATE field.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.harvest_mid_year_calendar; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.harvest_mid_year_calendar IS 'The calendar year of the mid point between the harvest start date  and harvest end date of an opening. Derived from the HARVEST_START_DATE and HARVEST_END_DATE fields.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.harvest_start_year_fiscal; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.harvest_start_year_fiscal IS 'The fiscal year of harvest start date of an opening.  Derived from the HARVEST_START_DATE field.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.harvest_mid_year_fiscal; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.harvest_mid_year_fiscal IS 'The fiscal year of the mid point between the harvest start date  and harvest end date of an opening. Derived from the HARVEST_START_DATE and HARVEST_END_DATE fields.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.percent_clearcut; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.percent_clearcut IS 'The estimated percent of the polygon where clearcut was used as the silvicultural system. When DATA_SOURCE = RESULTS, it is calculated by dividing the treatment area of activities with CLEAR (clearcut) or CCRES (clearcut with reserves) silviculture system codes by the total treatment area of logging activities.  When DATA_SOURCE = VRI, it is assumed to be 100% unless OPENING_ID is present in the Veg Comp Poly, in which case the calculation method from RESULTS is used. When DATA_SOURCE = Satellite Imagery - Change Detection, the field value is assumed to be 100%.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.percent_partial_cut; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.percent_partial_cut IS 'The estimated percent of the opening where partial cut was used as the silvicultural system.  When DATA_SOURCE = RESULTS, it is calculated by dividing the treatment area of activities with PATCH (patch cut), SELEC (selection), RETEN (retention), SEEDT (seed tree), or SHELT (shelterwood) silviculture system codes by the total treatment area of logging activities. When DATA_SOURCE = VRI, it is assumed to be 0%, unless OPENING_ID is present in the Veg Comp Poly, in which case the calculation method from RESULTS is used. When DATA_SOURCE = Satellite Imagery - Change Detection, it is assumed to be 0%.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.data_source; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.data_source IS 'The data source of the polygon and corresponding attribute information. The possible data sources are VRI, RESULTS, and Satellite Imagery - Change Detection.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.data_source_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.data_source_date IS 'The date the data was retreived  from RESULTS when DATA_SOURCE = RESULTS.  When the DATA_SOURCE = VRI, it is the date the dataset was the projected to. When the DATA_SOURCE = Satellite Imagery - Change Detection, it is the date that satellite imagery was last processed on.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.published_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.published_date IS 'The date this dataset was published.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.area_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.area_ha IS 'The system calculated polygon area in Hectares, calculated to 2 decimal places.';
-
-
---
--- Name: COLUMN veg_consolidated_cut_blocks_sp.objectid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_consolidated_cut_blocks_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
 
 
 --
@@ -2184,6 +1321,455 @@ COMMENT ON COLUMN whse_legal_admin_boundaries.abms_regional_districts_sp.objecti
 
 
 --
+-- Name: dbm_mof_50k_grid; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.dbm_mof_50k_grid (
+    map_tile character varying(32) NOT NULL,
+    map_tile_display_name character varying(32),
+    feature_code character varying(10),
+    objectid numeric,
+    geom public.geometry(MultiPolygon,3005)
+);
+
+
+--
+-- Name: COLUMN dbm_mof_50k_grid.map_tile; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.map_tile IS 'BCGS 1:50 000 Map number';
+
+
+--
+-- Name: COLUMN dbm_mof_50k_grid.map_tile_display_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.map_tile_display_name IS 'BCGS 1:50 000 Map number - conforms to BCGS Specifications Document';
+
+
+--
+-- Name: COLUMN dbm_mof_50k_grid.feature_code; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.feature_code IS 'The MOEP standard  numeric code to identify the type of feature represented by the spatial data.';
+
+
+--
+-- Name: COLUMN dbm_mof_50k_grid.objectid; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.dbm_mof_50k_grid.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase. ';
+
+
+--
+-- Name: gba_railway_tracks_sp; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.gba_railway_tracks_sp (
+    railway_track_id integer NOT NULL,
+    nid character varying(32),
+    track_segment_id character varying(32),
+    track_name character varying(100),
+    track_classification character varying(20),
+    regulator character varying(10),
+    transport_type character varying(10),
+    use_type character varying(30),
+    gauge character varying(15),
+    number_of_tracks numeric,
+    electrification character varying(10),
+    status character varying(20),
+    design_speed_freight numeric,
+    design_speed_passenger numeric,
+    source_id character varying(50),
+    operator_english_name character varying(100),
+    operator_subdiv_portion_start numeric,
+    operator_subdiv_portion_end numeric,
+    owner_name character varying(100),
+    track_user1_english_name character varying(100),
+    track_user2_english_name character varying(100),
+    track_user3_english_name character varying(100),
+    track_user4_english_name character varying(100),
+    subdivision1_nid character varying(32),
+    subdivision1_name character varying(100),
+    subdivision1_start numeric,
+    subdivision1_end numeric,
+    subdivision2_nid character varying(32),
+    subdivision2_name character varying(100),
+    subdivision2_start numeric,
+    subdivision2_end numeric,
+    administrative_area character varying(50),
+    standards_version character varying(10),
+    security_classification character varying(15),
+    geometry_creation_date date,
+    geometry_revision_date date,
+    geometry_acquisition_technque character varying(30),
+    geometry_planimetric_accuracy numeric,
+    geometry_provider character varying(25),
+    attribute_creation_date date,
+    attribute_revision_date date,
+    attribute_acquisition_technque character varying(30),
+    attribute_provider character varying(30),
+    objectid numeric,
+    geom public.geometry(MultiLineString,3005)
+);
+
+
+--
+-- Name: TABLE gba_railway_tracks_sp; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON TABLE whse_basemapping.gba_railway_tracks_sp IS 'GBA RAILWAY TRACKS SP contains railway tracks within BC from the National Railway Network (NRWN) dataset. In the real world, a Track provides a guide for the movement of trains and other equipment. In general, one linear feature represents the two rails of a Track. A Track is bounded by two Junction points and is segmented at each change in attributes along its course. All attributes relating to distance are expressed in miles and attributes relating to speed are expressed in miles per hour.';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.railway_track_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.railway_track_id IS 'RAILWAY TRACK ID: An operationally generated unique identification number, e.g., 100';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.nid; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.nid IS 'NID: National identifier for the feature. This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string. e.g., b5654a8c9dd64509b7c33dec919d6615. It is not a unique identifier for Railway Tracks; multiple records may share the same NID.';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_segment_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_segment_id IS 'TRACK SEGMENT ID: Identifier assigned to the portion of a Track Segment with uniform characteristics. This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string.  e.g., b5654a8c9dd64509b7c33dec919d6614';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_name IS 'TRACK NAME: Name associated to the Track by a national or sub national agency. e.g., Seymour Industrial';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_classification; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_classification IS 'TRACK CLASSIFICATION: Functional classification based on the importance of the role that the Track performs in the connectivity of the rail network. e.g., Main';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.regulator; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.regulator IS 'REGULATOR: Level of the authority that issued the certificate of fitness to the Track Operator. e.g., Federal';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.transport_type; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.transport_type IS 'TRANSPORTTYPE: Type of railway transport used on the Track. e.g., Train';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.use_type; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.use_type IS 'USE TYPE: Identification of what is transported on the Track. e.g., Freight';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.gauge; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.gauge IS 'GAUGE: Nominal distance between the two outer rails (gauge) of a railway track. e.g., Standard';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.number_of_tracks; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.number_of_tracks IS 'NUMBER OF TRACKS: Number of Tracks represented by the Track geometry. e.g., 1';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.electrification; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.electrification IS 'ELECTRIFICATION: Indication whether the railway is provided with an electric system to power vehicles moving along it. e.g., Absence';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.status; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.status IS 'STATUS: Status of the Track feature. e.g., Operational';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.design_speed_freight; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.design_speed_freight IS 'DESIGN SPEED FREIGHT: Maximum speeds, in miles per hour, for which a Track is designed for Freight trains. e.g., 50';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.design_speed_passenger; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.design_speed_passenger IS 'DESIGN SPEED PASSENGER: Maximum speeds, in miles per hour, for which a Track is designed for Passenger trains. e.g., 60';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.source_id; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.source_id IS 'SOURCE ID: Unique identifier assigned to the Track and used internally by a national or sub national agency. e.g., Unknown';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.operator_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.operator_english_name IS 'OPERATOR ENGLISH NAME: Information relative to the rail company that operates the track. e.g., Canadian Pacific';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.operator_subdiv_portion_start; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.operator_subdiv_portion_start IS 'OPERATOR SUBDIV PORTION START: Location where the Subdivision or portion of a Subdivision starts (expressed as a distance in miles). e.g., 14.3';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.operator_subdiv_portion_end; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.operator_subdiv_portion_end IS 'OPERATOR SUBDIV PORTION END: Location where the Subdivision or portion of a Subdivision ends (expressed as a distance in miles). e.g., 178.4';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.owner_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.owner_name IS 'OWNER NAME: Name of the company that owns the track system. e.g., Canadian National';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_user1_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user1_english_name IS 'TRACK USER1 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., VIA Rail';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_user2_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user2_english_name IS 'TRACK USER2 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., Rocky Mountaineer Railtours';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_user3_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user3_english_name IS 'TRACK USER3 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., Rocky Mountaineer Railtours';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.track_user4_english_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.track_user4_english_name IS 'TRACK USER4 ENGLISH NAME: Name of a company that uses railway equipment and/or facilities. e.g., Rocky Mountaineer Railtours';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision1_nid; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_nid IS 'SUBDIVISION1 NID: National Identifier of the first Railway Subdivision where the Structure is located.  This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string. e.g., b5654a8c9dd64509b7c33dec919d6613';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision1_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_name IS 'SUBDIVISION1 NAME: Name of the first Railway Subdivision where the Structure is located. e.g., Albreda';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision1_start; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_start IS 'SUBDIVISION1 START: Location where the first Railway Subdivision or portion of the first Railway Subdivision starts (expressed as a distance in miles). e.g., 45.7';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision1_end; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision1_end IS 'SUBDIVISION1 END: Location where the first Railway Subdivision or portion of the first Railway Subdivision ends (expressed as a distance in miles). e.g., 108.4';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision2_nid; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_nid IS 'SUBDIVISION2 NID: Unique identification number of the second Railway Subdivision where the Track is located. This is a UUID (Universal Unique Identifier) represented by a 32-character hexadecimal string. e.g., 22be2673d73b4bc2ae7ebe921b6b8e9c';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision2_name; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_name IS 'SUBDIVISION2 NAME: Name of the second Railway Subdivision where the Track is located. e.g., Yale';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision2_start; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_start IS 'SUBDIVISION2 START: Location where the second Railway Subdivision or portion of the second Railway Subdivision starts (expressed as a distance in miles). e.g., 85.5';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.subdivision2_end; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.subdivision2_end IS 'SUBDIVISION2 END: Location where the second Railway Subdivision or portion of the second Railway Subdivision ends (expressed as a distance in miles). e.g., 463.2';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.administrative_area; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.administrative_area IS 'ADMINISTRATIVE AREA: State, province, or territory covered by the dataset. e.g., British Columbia';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.standards_version; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.standards_version IS 'STANDARDS VERSION: Version number of the standards for the features. e.g., 1.0';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.security_classification; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.security_classification IS 'SECURITY CLASSIFICATION: Name of the handling restrictions of the dataset. e.g., Unclassified';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.geometry_creation_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_creation_date IS 'GEOMETRY CREATION DATE: Date identifies when the resource (feature) was brought into existence';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.geometry_revision_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_revision_date IS 'GEOMETRY REVISION DATE: Date identifies when the resource (feature) was examined or re-examined and improved or amended';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.geometry_acquisition_technque; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_acquisition_technque IS 'GEOMETRY ACQUISITION TECHNQUE: Type of data source or technique used to populate (create or revise) the object. e.g., Orthoimage';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.geometry_planimetric_accuracy; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_planimetric_accuracy IS 'GEOMETRY PLANIMETRIC ACCURACY: Planimetric accuracy of the object expressed in meters as a circular map accuracy standard (CMAS) e.g., 10';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.geometry_provider; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.geometry_provider IS 'GEOMETRY PROVIDER: Affiliation of the organization that generated (created or revised) the object. e.g., Provincial/Territorial';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.attribute_creation_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_creation_date IS 'ATTRIBUTE CREATION DATE: Date identifies when the resource (feature attributes) was brought into existence';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.attribute_revision_date; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_revision_date IS 'ATTRIBUTE REVISION DATE: Date identifies when the resource (feature attributes) was examined or re-examined and improved or amended';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.attribute_acquisition_technque; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_acquisition_technque IS 'ATTRIBUTE ACQUISITION TECHNQUE: Type of data source or technique used to populate (create or revise) the object. e.g., Vector Data';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.attribute_provider; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.attribute_provider IS 'ATTRIBUTE PROVIDER: Affiliation of the organization that generated (created or revised) the object. e.g., Federal';
+
+
+--
+-- Name: COLUMN gba_railway_tracks_sp.objectid; Type: COMMENT; Schema: whse_basemapping; Owner: -
+--
+
+COMMENT ON COLUMN whse_basemapping.gba_railway_tracks_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
+
+
+--
+-- Name: transport_line; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.transport_line (
+    transport_line_id integer NOT NULL,
+    custodian_partner_org character varying(110),
+    data_capture_method_code character varying(30) NOT NULL,
+    capture_date timestamp with time zone,
+    transport_line_type_code character varying(3) NOT NULL,
+    transport_line_surface_code character varying(1) NOT NULL,
+    transport_line_structure_code character varying(1),
+    total_number_of_lanes smallint NOT NULL,
+    structured_name_1 character varying(100),
+    structured_name_2 character varying(100),
+    structured_name_3 character varying(100),
+    structured_name_4 character varying(100),
+    structured_name_5 character varying(100),
+    highway_route_1 character varying(5),
+    highway_exit_number character varying(5),
+    geom public.geometry(MultiLineStringZ,3005)
+);
+
+
+--
+-- Name: transport_line_type_code; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.transport_line_type_code (
+    transport_line_type_code character varying(3) NOT NULL,
+    description character varying(30) NOT NULL,
+    demographic_ind character varying(1) NOT NULL,
+    create_integration_session_id integer NOT NULL,
+    create_integration_date timestamp with time zone,
+    modify_integration_session_id integer NOT NULL,
+    modify_integration_date timestamp with time zone,
+    road_class character varying(12) NOT NULL
+);
+
+
+--
 -- Name: clab_indian_reserves; Type: TABLE; Schema: whse_admin_boundaries; Owner: -
 --
 
@@ -2455,6 +2041,108 @@ ALTER SEQUENCE whse_admin_boundaries.fadm_tfl_all_sp_tfl_all_sysid_seq OWNED BY 
 
 
 --
+-- Name: gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq; Type: SEQUENCE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE SEQUENCE whse_basemapping.gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_basemapping; Owner: -
+--
+
+ALTER SEQUENCE whse_basemapping.gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq OWNED BY whse_basemapping.gba_local_reg_greenspaces_sp.local_reg_greenspace_id;
+
+
+--
+-- Name: gba_railway_tracks_sp_railway_track_id_seq; Type: SEQUENCE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE SEQUENCE whse_basemapping.gba_railway_tracks_sp_railway_track_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gba_railway_tracks_sp_railway_track_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_basemapping; Owner: -
+--
+
+ALTER SEQUENCE whse_basemapping.gba_railway_tracks_sp_railway_track_id_seq OWNED BY whse_basemapping.gba_railway_tracks_sp.railway_track_id;
+
+
+--
+-- Name: transport_line_divided_code; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.transport_line_divided_code (
+    transport_line_divided_code character varying(1) NOT NULL,
+    description character varying(20) NOT NULL,
+    create_integration_session_id integer NOT NULL,
+    create_integration_date timestamp with time zone,
+    modify_integration_session_id integer NOT NULL,
+    modify_integration_date timestamp with time zone
+);
+
+
+--
+-- Name: transport_line_structure_code; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.transport_line_structure_code (
+    transport_line_structure_code character varying(1) NOT NULL,
+    description character varying(20) NOT NULL,
+    create_integration_session_id integer NOT NULL,
+    create_integration_date timestamp with time zone,
+    modify_integration_session_id integer NOT NULL,
+    modify_integration_date timestamp with time zone
+);
+
+
+--
+-- Name: transport_line_surface_code; Type: TABLE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE TABLE whse_basemapping.transport_line_surface_code (
+    transport_line_surface_code character varying(1) NOT NULL,
+    description character varying(20) NOT NULL,
+    create_integration_session_id integer NOT NULL,
+    create_integration_date timestamp with time zone,
+    modify_integration_session_id integer NOT NULL,
+    modify_integration_date timestamp with time zone
+);
+
+
+--
+-- Name: transport_line_transport_line_id_seq; Type: SEQUENCE; Schema: whse_basemapping; Owner: -
+--
+
+CREATE SEQUENCE whse_basemapping.transport_line_transport_line_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: transport_line_transport_line_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_basemapping; Owner: -
+--
+
+ALTER SEQUENCE whse_basemapping.transport_line_transport_line_id_seq OWNED BY whse_basemapping.transport_line.transport_line_id;
+
+
+--
 -- Name: pmbc_parcel_fabric_poly_svw_parcel_fabric_poly_id_seq; Type: SEQUENCE; Schema: whse_cadastre; Owner: -
 --
 
@@ -2472,866 +2160,6 @@ CREATE SEQUENCE whse_cadastre.pmbc_parcel_fabric_poly_svw_parcel_fabric_poly_id_
 --
 
 ALTER SEQUENCE whse_cadastre.pmbc_parcel_fabric_poly_svw_parcel_fabric_poly_id_seq OWNED BY whse_cadastre.pmbc_parcel_fabric_poly_svw.parcel_fabric_poly_id;
-
-
---
--- Name: fiss_obstacles_pnt_sp; Type: TABLE; Schema: whse_fish; Owner: -
---
-
-CREATE TABLE whse_fish.fiss_obstacles_pnt_sp (
-    fish_obstacle_point_id numeric,
-    agency_id numeric,
-    wbody_id numeric,
-    obstacle_code character varying(6),
-    obstacle_name character varying(60),
-    agency_name character varying(60),
-    source character varying(1000),
-    source_ref character varying(4000),
-    height numeric,
-    length numeric,
-    utm_zone numeric,
-    utm_easting numeric,
-    utm_northing numeric,
-    survey_date date,
-    waterbody_identifier character varying(9),
-    waterbody_type character varying(20),
-    gazetted_name character varying(30),
-    new_watershed_code character varying(56),
-    trimmed_watershed_code character varying(56),
-    acat_report_url character varying(254),
-    feature_code character varying(10),
-    objectid numeric,
-    geom public.geometry(MultiPoint,3005)
-);
-
-
---
--- Name: TABLE fiss_obstacles_pnt_sp; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON TABLE whse_fish.fiss_obstacles_pnt_sp IS 'FISS OBSTACLE PNT SP is an instantiated POINT layer of FISS_FISH_OBSTACLES_VW from the FISS operational system.  It is spatially-enabled using the UTM fields upon data load (FME).  It is the collection of all "obstructions" from FISS, FHIIP, and FDIS.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.fish_obstacle_point_id; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.fish_obstacle_point_id IS 'FISH OBSTACLE POINT ID is the primary key of the FISS POINTS record defining the location of this Obstacle.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.agency_id; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.agency_id IS 'AGENCY ID is a foreign key to AGENCIES.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.wbody_id; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.wbody_id IS 'WBODY ID is a foreign key to WDIC_WATERBODIES.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.obstacle_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.obstacle_code IS 'OBSTACLE CODE is a code used to identify the type of Obstacle.  Values depend on the source dataset for the data record.  The meaning of the OBSTACLE CODE is given in OBSTACLE NAME.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.obstacle_name; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.obstacle_name IS 'OBSTACLE NAME is the name of the type of Obstacle (e.g. Beaver Dam, Log Jam, etc.)';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.agency_name; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.agency_name IS 'AGENCY NAME is the name of the agency that reported the obstacle.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.source; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.source IS 'SOURCE is the name of the source dataset from which this record was obtained (FISS, FHIIP, or FDIS).';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.source_ref; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.source_ref IS 'SOURCE REF is the semi-colon delimited list of references from which this record was obtained.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.height; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.height IS 'HEIGHT is the height of the obstacle in meters.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.length; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.length IS 'LENGTH is the length of the obstacle in meters.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.utm_zone; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.utm_zone IS 'UTM ZONE is the NAD83 Universal Mercator (UTM) Zone coordinate for the downstream point of this obstacle.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.utm_easting; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.utm_easting IS 'UTM EASTING is the NAD83 Universal Mercator (UTM) Easting coordinate for the downstream point of this obstacle.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.utm_northing; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.utm_northing IS 'UTM NORTHING is the NAD83 Universal Mercator (UTM) Northing coordinate for the downstream point of this obstacle.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.survey_date; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.survey_date IS 'SURVEY DATE is the date on which the obstacle was recorded.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.waterbody_identifier; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.waterbody_identifier IS 'WATERBODY IDENTIFIER is a unique code identifying the waterbody in which the obstacle was recorded.  It is a 5-digit seqnce number followed by a 4-character watershed group code.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.waterbody_type; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.waterbody_type IS 'WATERBODY TYPE is a the type of waterbody in which the obstacle was recorded.  For example, Stream or Lake.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.gazetted_name; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.gazetted_name IS 'GAZETTED NAME is the gazetted name of the waterbody in which the obstacle was recorded.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.new_watershed_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.new_watershed_code IS 'NEW WATERSHED CODE is a watershed code, formatted with dashes, as assigned in the Watershed Atlas.  For example: 900-569800-08600-00000-0000-0000-000-000-000-000-000-000.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.trimmed_watershed_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.trimmed_watershed_code IS 'TRIMMED WATERSHED CODE is the NEW WATERSHED CODE, but with trailing zeros removed.  For example, if the NEW WATERSHED CODE is 100-005200-43400-50000-0000-0000-000-000-000-000-000-000, then the TRIMMED WATERSHED CODE will be 100-005200-43400-50000.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.acat_report_url; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.acat_report_url IS 'ACAT REPORT URL is a URL to the ACAT REPORT which provides additional information about the FISS OBSTACLE PNT SP.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.feature_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.feature_code IS 'FEATURE CODE contains a value based on the Canadian Council of Surveys and Mapping''s (CCSM) system for classification of geographic features.';
-
-
---
--- Name: COLUMN fiss_obstacles_pnt_sp.objectid; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_obstacles_pnt_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: fiss_stream_sample_sites_sp; Type: TABLE; Schema: whse_fish; Owner: -
---
-
-CREATE TABLE whse_fish.fiss_stream_sample_sites_sp (
-    stream_sample_site_id integer NOT NULL,
-    wbody_id numeric,
-    data_source character varying(1000),
-    source_ref character varying(4000),
-    reach_number numeric,
-    site_number numeric,
-    field_utm_zone numeric,
-    field_utm_easting numeric,
-    field_utm_northing numeric,
-    gis_utm_zone numeric,
-    gis_utm_easting numeric,
-    gis_utm_northing numeric,
-    survey_date date,
-    agency_name character varying(60),
-    surveyed_length numeric,
-    channel_width numeric,
-    channel_width_comment character varying(2000),
-    wetted_width numeric,
-    wetted_width_comment character varying(2000),
-    pool_depth numeric,
-    pool_depth_comment character varying(2000),
-    gradient numeric,
-    gradient_comment character varying(2000),
-    average_depth character varying(7),
-    dominant_bed_material character varying(150),
-    sub_dominant_bed_material character varying(150),
-    other_bed_material_comment character varying(2000),
-    dominant_size numeric,
-    bed_morphology character varying(50),
-    fisheries_sensitive_zone_ind character varying(3),
-    crown_cover character varying(20),
-    crown_closure_percent character varying(5),
-    crown_closure_comment character varying(2000),
-    channel_pattern character varying(30),
-    visible_channel_ind character varying(3),
-    stream_coupling_code character varying(30),
-    stream_confinement_code character varying(30),
-    confinement_comment character varying(2000),
-    dewatering_ind character varying(3),
-    intermittent_ind character varying(3),
-    site_access_code character varying(30),
-    debris_area character varying(40),
-    large_woody_debris_cover character varying(30),
-    large_woody_debris_amount character varying(30),
-    large_woody_debris_dstrbtn character varying(30),
-    small_woody_debris_cover character varying(30),
-    boulder_cover character varying(30),
-    undercut_cover character varying(30),
-    deep_pool_cover character varying(30),
-    overhanging_vegetation_cover character varying(30),
-    instream_vegetation_cover character varying(30),
-    instream_vegetation_code character varying(30),
-    ems_number character varying(15),
-    water_temperature numeric,
-    water_temperature_comment character varying(2000),
-    water_ph numeric,
-    water_conductivity numeric,
-    flood_signs character varying(30),
-    flood_signs_comment character varying(2000),
-    largest_moveable_particle_size numeric,
-    discharge_stage character varying(30),
-    discharge_comment character varying(2000),
-    turbidity character varying(30),
-    islands_code character varying(20),
-    right_bank_riparian_vgtn_code character varying(40),
-    right_bank_shape_code character varying(40),
-    right_bank_vgtn_stage_code character varying(60),
-    right_bank_texture character varying(120),
-    left_bank_riparian_vgtn_code character varying(40),
-    left_bank_shape_code character varying(40),
-    left_bank_vgtn_stage_code character varying(60),
-    left_bank_texture character varying(120),
-    site_comments character varying(4000),
-    gazetted_name character varying(100),
-    new_watershed_code character varying(56),
-    trimmed_watershed_code character varying(56),
-    acat_report_url character varying(254),
-    feature_code character varying(10),
-    objectid numeric,
-    geom public.geometry(MultiPoint,3005)
-);
-
-
---
--- Name: TABLE fiss_stream_sample_sites_sp; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON TABLE whse_fish.fiss_stream_sample_sites_sp IS 'FISS_STREAM_SAMPLE_SITES_SP is a survey of fish habitat information in a stream.  This object contains all the columns from the table FISS_STREAM_SAMPLE_SITES, plus additional columns from WDIC_WATERSHEDS and WDIC_WATERBODIES.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.stream_sample_site_id; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.stream_sample_site_id IS 'SAMPLE SITE ID is the unique identifier for a STREAM SAMPLE SITE.  The value is sourced from the FISS operational database.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.wbody_id; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.wbody_id IS 'WBODY_ID is a foreign key to WDIC_WATERBODIES.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.data_source; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.data_source IS 'DATA SOURCE is the abbreviation, and if appropriate, the primary key, of the dataset(s) from which the data were obtained.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.source_ref; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.source_ref IS 'SOURCE REF is the concatenation of all biographical references for the source data. This may include citations to reports that published the surveys or the name of a project under which the surveys were conducted.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.reach_number; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.reach_number IS 'REACH NUMBER is an agency-assigned number for the reach in which the survey occurred.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.site_number; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.site_number IS 'SITE NUMBER is an agency-assigned number for the site at which the survey occurred.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.field_utm_zone; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.field_utm_zone IS 'FIELD UTM ZONE is the zone of the site''s UTM location obtained in the field.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.field_utm_easting; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.field_utm_easting IS 'FIELD UTM EASTING is the easting coordinate of the site''s UTM location obtained in the field.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.field_utm_northing; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.field_utm_northing IS 'FIELD UTM NORTHING is the northing coordinate of the site''s UTM location obtained in the field.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.gis_utm_zone; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.gis_utm_zone IS 'GIS UTM ZONE is the zone of the site''s UTM location obtained in the field, then updated such that points are within 10 m of source line work on 1:20,000 scale maps.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.gis_utm_easting; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.gis_utm_easting IS 'GIS UTM EASTING is the easting coordinate of the site''s UTM location obtained in the field, then updated such that points are within 10 m of source line work on 1:20,000 scale maps.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.gis_utm_northing; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.gis_utm_northing IS 'GIS UTM NORTHING is the northing coordinate of the site''s UTM location obtained in the field, then updated such that points are within 10 m of source line work on 1:20,000 scale maps.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.survey_date; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.survey_date IS 'SURVEY DATE is the date that the stream site was surveyed.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.agency_name; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.agency_name IS 'AGENCY NAME is the name of the agency that conducted the stream survey.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.surveyed_length; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.surveyed_length IS 'SURVEYED LENGTH is the measured length of the site, in meters.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.channel_width; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.channel_width IS 'CHANNEL WIDTH is the width of the stream channel, in metres.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.channel_width_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.channel_width_comment IS 'CHANNEL WIDTH COMMENT is additional information about the method in which the channel width was estimated or pertaining to the accuracy of the channel width estimate.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.wetted_width; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.wetted_width IS 'WETTED WIDTH is the width of the stream measured at the water surface, in metres.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.wetted_width_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.wetted_width_comment IS 'WETTED WIDTH COMMENT is additional information about the method in which the wetted channel width was estimated or pertaining to the accuracy of the estimate.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.pool_depth; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.pool_depth IS 'POOL DEPTH is the depth of stream pools, in meters.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.pool_depth_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.pool_depth_comment IS 'POOL DEPTH COMMENT is additional information about the method in which the pool depth was estimated or pertaining to the accuracy of the estimate.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.gradient; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.gradient IS 'GRADIENT is the ratio of change in elevation to length of the stream segment, as a percentage.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.gradient_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.gradient_comment IS 'GRADIENT COMMENT is additional information about the method in which the stream gradient was estimated or pertaining to the accuracy of the estimate.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.average_depth; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.average_depth IS 'AVERAGE DEPTH is the average depth of the channel, in centimetres.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.dominant_bed_material; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.dominant_bed_material IS 'DOMINANT BED MATERIAL is the dominant stream bed material such as ''Boulders'', ''Cobble'', ''Gravels'', or ''Rock''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.sub_dominant_bed_material; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.sub_dominant_bed_material IS 'SUB DOMINANT BED MATERIAL is the subdominant stream bed material such as ''Boulders'', ''Cobble'', ''Gravels'', or ''Rock''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.other_bed_material_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.other_bed_material_comment IS 'OTHER BED MATERIAL COMMENT is a description of the stream bed material.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.dominant_size; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.dominant_size IS 'DOMINANT SIZE is the size of bed material larger than 95% of total substrate, in centimeters.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.bed_morphology; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.bed_morphology IS 'BED MORPHOLOGY is a description of the stream bed morphology. For example, ''Cascade Pool'', ''Large Channel'' or ''Riffle Pool''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.fisheries_sensitive_zone_ind; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.fisheries_sensitive_zone_ind IS 'FISHERIES SENSITIVE ZONE IND indicates whether the site provides a valuable fish spawning or fry rearing habitat.  Possible values are Yes or No.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.crown_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.crown_cover IS 'CROWN COVER is the total cover over of any structure in the wetted channel or within 1 m above the water surface that provides hiding, resting, or feeding places for fish. Stream cover estimates are obtained from a visual assessment of the type and amount of in-channel covers available for fish.Values are either given as percentages or as categorical data types, such as ''Abundant'', ''Moderate'' or ''None''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.crown_closure_percent; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.crown_closure_percent IS 'CROWN CLOSURE PERCENT is the approximate percentage of stream area with crown cover.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.crown_closure_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.crown_closure_comment IS 'CROWN CLOSURE COMMENT is a description of the crown cover.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.channel_pattern; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.channel_pattern IS 'CHANNEL PATTERN is a description of the channel pattern. For example, ''Irregular Meanders'', ''Sinuous'' or ''Straight''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.visible_channel_ind; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.visible_channel_ind IS 'VISIBLE CHANNEL IND indicates whether or not a channel is visible. Possible values are Yes or No.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.stream_coupling_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.stream_coupling_code IS 'STREAM COUPLING CODE is a description of the linkage between the hillslope and the channel. Possible values are: ''Coupled'', ''Decoupled'', ''Partially Coupled'' and ''Not Specified''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.stream_confinement_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.stream_confinement_code IS 'STREAM CONFINEMENT CODE specifies the stream confinement morphology. Possible values are: Entrenched, Unconfined, Occasionally Confined, Confined, Frequently Confined, Not Applicable, Not Specified.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.confinement_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.confinement_comment IS 'CONFINEMENT COMMENT is a descrition of the stream confinement morphology.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.dewatering_ind; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.dewatering_ind IS 'DEWATERING IND indicates whether or not dewatering was present. Possible values are Yes or No.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.intermittent_ind; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.intermittent_ind IS 'INTERMITTENT IND indicates whether or not water flow is seasonal. Possible values are Yes or No.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.site_access_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.site_access_code IS 'SITE ACCESS CODE is a description of the type of access available to the site. Possible values are: Helicopter, Vehicle (4WD), All Terrain Vehicle, Float Plane, Horseback, Quad, Vehicle (2WD), Fixed Wing, Horse, Motorcycle, Boat, 2 Wheel Drive, Not Applicable, Fixed Wing Plane, Foot, 4 Wheel Drive.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.debris_area; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.debris_area IS 'DEBRIS AREA is the amount of channel area covered by debris. Values are given as percentages or as categorical data types such as ''Isolated Bits'', ''Few Clumps'' or ''Greater than 25% of Channel Area''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.large_woody_debris_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.large_woody_debris_cover IS 'LARGE WOODY DEBRIS COVER is the amount of large woody debris at the site. Values are given either as percentages, or as categorical data types such as ''Dominant'', ''Sub-Dominant'' or ''None''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.large_woody_debris_amount; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.large_woody_debris_amount IS 'LARGE WOODY DEBRIS AMOUNT is a description of the amount of large woody debris. For example, ''Abundant'', ''Few'' or ''None''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.large_woody_debris_dstrbtn; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.large_woody_debris_dstrbtn IS 'LARGE WOODY DEBRIS DSTRBTN is a description of the distribution of large woody debris. For example, ''Evenly Distributed'' or ''Clumped''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.small_woody_debris_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.small_woody_debris_cover IS 'SMALL WOODY DEBRIS COVER is the amount of small woody debris at the site. Values are given either as percentages, or as categorical data types such as ''Dominant'', ''Sub-Dominant'' or ''None''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.boulder_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.boulder_cover IS 'BOULDER COVER is the amount of boulder cover, specified either as a percentage or as a categorical data type (such as ''Abundant'', ''Moderate'', etc.).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.undercut_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.undercut_cover IS 'UNDERCUT COVER is the amount of the stream covered by a bank that has had its base cut away by the water or has been man-made and overhangs part of the stream. The value is specified either as a percentage or as a categorical data type (such as ''Abundant'', ''Moderate'', etc.).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.deep_pool_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.deep_pool_cover IS 'DEEP POOL COVER is the amount of the stream with reduced current velocity at low flow that is deeper than the surrounding area, and usable by fish for resting or cover (therefore containing some surface cover of flow turbulence). The value is specified either as a percentage or as a categorical data type (such as ''Abundant'', ''Moderate'', etc.).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.overhanging_vegetation_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.overhanging_vegetation_cover IS 'OVERHANGING VEGETATION COVER is the amount of the stream covered by overhanging vegetation. The value is specified either as a percentage or as a categorical data type (such as ''Abundant'', ''Moderate'', etc.).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.instream_vegetation_cover; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.instream_vegetation_cover IS 'INSTREAM VEGETATION COVER is the amount of the stream in which vegetative materials such as attached, filamentous algae or other aquatic plants provide protection for fish. The value is specified either as a percentage or as a categorical data type (such as ''Abundant'', ''Moderate'', etc.).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.instream_vegetation_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.instream_vegetation_code IS 'INSTREAM VEGETATION CODE is the type of vegetative materials that provide protection for fish. Possible values are Algaea, Moss, None and Other.  A list of multiple types may be specified, separated by commas.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.ems_number; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.ems_number IS 'EMS NUMBER is the number assigned by the Environment Monitoring System (EMS). For example, E236773.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.water_temperature; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.water_temperature IS 'WATER TEMPERATURE is the temperature of the water in degrees Celsius.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.water_temperature_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.water_temperature_comment IS 'WATER TEMPERATURE COMMENT provides information about water temperature. In some cases this field also provides information about alkalinity, turbidity, air temperature or other measurables.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.water_ph; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.water_ph IS 'WATER PH is a measure of water pH.  The pH scale ranges from 0 to 14. A pH of 7 is neutral. A pH less than 7 is acidic. A pH greater than 7 is basic.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.water_conductivity; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.water_conductivity IS 'WATER CONDUCTIVITY is a measure of electrical current flow through a solution, expressed in units of microSiemens (uS). Conductivity is the reciprocal of electrical resistance (ohms).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.flood_signs; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.flood_signs IS 'FLOOD SIGNS is a description of signs of flooding in the local area.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.flood_signs_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.flood_signs_comment IS 'FLOOD SIGNS COMMENT is an additional comment about signs of flooding in the area.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.largest_moveable_particle_size; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.largest_moveable_particle_size IS 'LARGEST MOVEABLE PARTICLE SIZE is the size of the largest movable particle in the bed, in centimeters.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.discharge_stage; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.discharge_stage IS 'DISCHARGE STAGE is the stage of discharge compared to the bankful depth - Low, Medium, or High.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.discharge_comment; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.discharge_comment IS 'DISCHARGE COMMENT is additional information about the stream discharge, such as how it was estimated or why it was not possible to estimate the discharge.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.turbidity; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.turbidity IS 'TURBIDITY is a description of the turbidity of the water.  The value is specified either as a number (in units of cm) or as a categorical data type (''Clear'', ''Lightly Turbid'', ''Moderately Turbid'' or ''Turbid''.).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.islands_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.islands_code IS 'ISLANDS CODE describes the presence of islands. Possible values are: Occasional, Split, None, No, Frequent, Anastomosing, Yes, Irregular, Not Specified.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.right_bank_riparian_vgtn_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.right_bank_riparian_vgtn_code IS 'RIGHT BANK RIPARIAN VEGETATION CODE is the type of riparian vegetation on the right bank. Possible values are: Grass, Deciduous, Coniferous, Mixed C/D, None, Shrubs, Wetland, Not Specified.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.right_bank_shape_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.right_bank_shape_code IS 'RIGHT BANK SHAPE CODE is the shape of the right channel bank. Possible values are: Sloping (gradual or shallow sloping), Undercut, Overhanging bank, V - shaped (steep sloping or vertical).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.right_bank_vgtn_stage_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.right_bank_vgtn_stage_code IS 'RIGHT BANK VEGETATION STAGE CODE is the stage of vegetation development on the right bank. Possible values are: Non-vegetated or initial stage following disturbance, Mature forest, Shrub/herb stage, Pole-sapling stage, Young forest, Not Applicable, Not Specified.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.right_bank_texture; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.right_bank_texture IS 'RIGHT BANK TEXTURE is the texture of the right channel bank. For example, ''Anthropogenic (rip-rap, dikes, etc.)'', ''Boulders'', ''Bedrock'', or ''Gravels''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.left_bank_riparian_vgtn_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.left_bank_riparian_vgtn_code IS 'LEFT BANK RIPARIAN VEGETATION CODE is the type of riparian vegetation on the leftbank. Possible values are: Grass, Deciduous, Coniferous, Mixed C/D, None, Shrubs, Wetland, Not Specified.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.left_bank_shape_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.left_bank_shape_code IS 'LEFT BANK SHAPE CODE is the shape of the left channel bank. Possible values are: Sloping (gradual or shallow sloping), Undercut, Overhanging bank, V - shaped (steep sloping or vertical).';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.left_bank_vgtn_stage_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.left_bank_vgtn_stage_code IS 'LEFT BANK VEGETATION STAGE CODE is the stage of vegetation development on the left bank. Possible values are: Non-vegetated or initial stage following disturbance, Mature forest, Shrub/herb stage, Pole-sapling stage, Young forest, Not Applicable, Not Specified.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.left_bank_texture; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.left_bank_texture IS 'LEFT BANK TEXTURE the texture of the left channel bank. For example, ''Anthropogenic (rip-rap, dikes, etc.)'', ''Boulders'', ''Bedrock'', or ''Gravels''.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.site_comments; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.site_comments IS 'SITE COMMENTS is an additional comment about stream site.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.gazetted_name; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.gazetted_name IS 'GAZETTED NAME is the gazetted name of the waterbody in which the obstacle was recorded.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.new_watershed_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.new_watershed_code IS 'NEW WATERSHED CODE is a watershed code, formatted with dashes, as assigned in the Watershed Atlas. For example: 900-569800-08600-00000-0000-0000-000-000-000-000-000-000.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.trimmed_watershed_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.trimmed_watershed_code IS 'TRIMMED WATERSHED CODE is the NEW WATERSHED CODE, but with trailing zeros removed. For example, if the NEW WATERSHED CODE is 100-005200-43400-50000-0000-0000-000-000-000-000-000-000, then the TRIMMED WATERSHED CODE will be 100-005200-43400-50000.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.acat_report_url; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.acat_report_url IS 'ACAT REPORT URL is a URL to the ACAT REPORT which provides additional information about the STREAM SAMPLE SITE SP.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.feature_code; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.feature_code IS 'FEATURE CODE contains a value based on the Canadian Council of Surveys and Mapping''s (CCSM) system for classification of geographic features.';
-
-
---
--- Name: COLUMN fiss_stream_sample_sites_sp.objectid; Type: COMMENT; Schema: whse_fish; Owner: -
---
-
-COMMENT ON COLUMN whse_fish.fiss_stream_sample_sites_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: fiss_stream_sample_sites_sp_stream_sample_site_id_seq; Type: SEQUENCE; Schema: whse_fish; Owner: -
---
-
-CREATE SEQUENCE whse_fish.fiss_stream_sample_sites_sp_stream_sample_site_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: fiss_stream_sample_sites_sp_stream_sample_site_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_fish; Owner: -
---
-
-ALTER SEQUENCE whse_fish.fiss_stream_sample_sites_sp_stream_sample_site_id_seq OWNED BY whse_fish.fiss_stream_sample_sites_sp.stream_sample_site_id;
 
 
 --
@@ -4936,178 +3764,6 @@ CREATE TABLE whse_fish.wdic_waterbodies (
 
 
 --
--- Name: ften_managed_licence_poly_svw; Type: TABLE; Schema: whse_forest_tenure; Owner: -
---
-
-CREATE TABLE whse_forest_tenure.ften_managed_licence_poly_svw (
-    forest_file_id character varying(10),
-    map_block_id character varying(10),
-    ml_type_code character varying(10),
-    ml_comment character varying(255),
-    retirement_date date,
-    amendment_id numeric,
-    map_label character varying(30),
-    feature_area numeric,
-    feature_perimeter numeric,
-    client_number character varying(8),
-    client_name character varying(91),
-    feature_class_skey numeric,
-    file_status_code character varying(3),
-    admin_district_code character varying(6),
-    admin_district_name character varying(100),
-    life_cycle_status_code character varying(10),
-    objectid integer NOT NULL,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: TABLE ften_managed_licence_poly_svw; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON TABLE whse_forest_tenure.ften_managed_licence_poly_svw IS 'Community Forest Schedule A and B, Wood Lot License Schedule A and B. The Forest Tenures Section (FTS) is responsible for the creation and maintenance of digital Forest Atlas files for the province of British Columbia encompassing Forest and Range';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.forest_file_id; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.forest_file_id IS 'File identification assigned to Provincial Forest Use files. Assigned file number. Usually the Licence, Tenure or Private Mark number.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.map_block_id; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.map_block_id IS 'Identifier for a Managed Licence map block.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.ml_type_code; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.ml_type_code IS 'The type of Managed Licence.  Either Schedule A or Schedule B.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.ml_comment; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.ml_comment IS 'A comment about this managed licence.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.retirement_date; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.retirement_date IS 'The Date and time the managed licence feature was retired.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.amendment_id; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.amendment_id IS 'The amendment id for the instance';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.map_label; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.map_label IS 'The default label to be used when displaying the feature on a map.  Consists of the FOREST_FILE_ID, MAP_BLOCK_ID and ML_TYPE_CODE';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.feature_area; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.feature_area IS 'Spatial feature area in square metres. This value is calculated.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.feature_perimeter; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.feature_perimeter IS 'Spatial perimeter length in metres. This value is calculated.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.client_number; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.client_number IS 'Sequentially assigned number to identify a ministry client.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.client_name; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.client_name IS 'The name of the Ministry Client - Company or Individual.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.feature_class_skey; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.feature_class_skey IS 'Unique identifier for a spatial feature class.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.file_status_code; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.file_status_code IS 'The current status of the forest land use, eg., Pending - Planned, Harvesting - Suspended, Active. This is a subset of Timber_Status_Code.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.admin_district_code; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.admin_district_code IS 'The code of the district in which the road section is located.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.admin_district_name; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.admin_district_name IS 'The name of the district in which the road section is located.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.life_cycle_status_code; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.life_cycle_status_code IS 'The life cycle state of the item.  One of Pending, Active or Retired.';
-
-
---
--- Name: COLUMN ften_managed_licence_poly_svw.objectid; Type: COMMENT; Schema: whse_forest_tenure; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_tenure.ften_managed_licence_poly_svw.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase. ';
-
-
---
--- Name: ften_managed_licence_poly_svw_objectid_seq; Type: SEQUENCE; Schema: whse_forest_tenure; Owner: -
---
-
-CREATE SEQUENCE whse_forest_tenure.ften_managed_licence_poly_svw_objectid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: ften_managed_licence_poly_svw_objectid_seq; Type: SEQUENCE OWNED BY; Schema: whse_forest_tenure; Owner: -
---
-
-ALTER SEQUENCE whse_forest_tenure.ften_managed_licence_poly_svw_objectid_seq OWNED BY whse_forest_tenure.ften_managed_licence_poly_svw.objectid;
-
-
---
 -- Name: ften_range_poly_svw_objectid_seq; Type: SEQUENCE; Schema: whse_forest_tenure; Owner: -
 --
 
@@ -5328,170 +3984,146 @@ COMMENT ON COLUMN whse_forest_tenure.ften_road_section_lines_svw.objectid IS 'OB
 
 
 --
--- Name: ogsr_priority_def_area_cur_sp; Type: TABLE; Schema: whse_forest_vegetation; Owner: -
+-- Name: mot_road_structure_sp; Type: TABLE; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-CREATE TABLE whse_forest_vegetation.ogsr_priority_def_area_cur_sp (
-    ogsr_pdac_sysid integer NOT NULL,
-    current_priority_deferral_id numeric,
-    tap_priority_deferral_id numeric,
-    tap_classification_label character varying(100),
-    priority_big_treed_og_id numeric,
-    ancient_forest_id numeric,
-    remnant_old_ecosys_id numeric,
-    priority_big_treed_og_descr character varying(40),
-    ancient_forest_descr character varying(40),
-    remnant_old_ecosys_descr character varying(40),
-    region_name character varying(100),
-    district_name character varying(100),
-    landscape_unit_provid character varying(100),
-    landscape_unit_name character varying(100),
-    landscape_unit_number character varying(10),
-    bgc_label character varying(50),
-    source character varying(20),
+CREATE TABLE whse_imagery_and_base_maps.mot_road_structure_sp (
+    hwy_structure_class_id integer NOT NULL,
+    chris_hwy_structure_road_id character varying(50),
+    admin_unit_code character varying(10),
+    admin_unit_name character varying(80),
+    cross_section_position character varying(80),
+    bmis_structure_road_id character varying(50),
+    bmis_structure_number character varying(5),
+    bmis_structure_name character varying(40),
+    bmis_structure_type character varying(20),
+    bmis_struct_status_type_desc character varying(100),
+    chris_anchor_section_id numeric,
+    start_event_location numeric,
+    end_event_location numeric,
+    highway_number character varying(80),
     objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
+    geom public.geometry(MultiLineString,3005)
 );
 
 
 --
--- Name: TABLE ogsr_priority_def_area_cur_sp; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: TABLE mot_road_structure_sp; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON TABLE whse_forest_vegetation.ogsr_priority_def_area_cur_sp IS 'The current view of the priority old growth deferrals.  Includes updates from licensee field verification submissions.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.ogsr_pdac_sysid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.ogsr_pdac_sysid IS 'A system generated unique identification number.';
+COMMENT ON TABLE whse_imagery_and_base_maps.mot_road_structure_sp IS 'ROAD STRUCTURE SP represents the roads that the Structures are found on.  Structures include Bridges, Culverts (greater than or equal to 3m diameter), Marine, Retaining Walls (perpendicular height greater than or equal to 2m), Sign Bridges and Tunnels (includes Snowsheds).  It is a linear feature with measure values.';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.current_priority_deferral_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.hwy_structure_class_id; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.current_priority_deferral_id IS 'A unique ID for each polygon that is classified as priority old growth in this current view dataset.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.tap_priority_deferral_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.tap_priority_deferral_id IS 'The original ID for each polygon that were classified as priority old growth in the TAP Old Gorwth Priority Deferral dataset.';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.hwy_structure_class_id IS 'HWY STRUCTURE CLASS ID contains a system generated identifier to insure row uniqueness';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.tap_classification_label; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.chris_hwy_structure_road_id; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.tap_classification_label IS 'The type of deferral, i.e., Priority deferral area.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.priority_big_treed_og_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.priority_big_treed_og_id IS 'The unique ID of the Priority Big-Treed Old Growth polygon contained in the area';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.chris_hwy_structure_road_id IS 'CHRIS HWY STRUCTURE ROAD ID is the identifier of the Structure inventory item derived by the CHRIS application. e.g., 2455305';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.ancient_forest_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.admin_unit_code; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.ancient_forest_id IS 'The unique ID of the Ancient Forest polygon contained in the area';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.remnant_old_ecosys_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.remnant_old_ecosys_id IS 'The unique ID of the Remnant Ecosystem Forest polygon contained in the area';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.admin_unit_code IS 'ADMIN UNIT CODE contains the MoT Service Area identifier. There are 28 service areas in MoT''s jurisdiction. Each Service Area represents a geographic area within the province.  Example - 13.';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.priority_big_treed_og_descr; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.admin_unit_name; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.priority_big_treed_og_descr IS 'Identifying if an area is priority big-treed old growth, classified as either: Big-Treed Old Forest, Big-Treed Older Mature Forest, or Null.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.ancient_forest_descr; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.ancient_forest_descr IS 'Identifying if an area is ancient forest, classified as either: Ancient at 250+ years old, Ancient at 400+ years old or Null.';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.admin_unit_name IS 'ADMIN UNIT NAME contains the MoT Service Area Name identifier.  There are 28 service areas names in MoT''s jurisdiction. Each Service Area Name represent a geographic area within the province.  Example -  Lower Mainland';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.remnant_old_ecosys_descr; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.cross_section_position; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.remnant_old_ecosys_descr IS 'Identifying if an area is remnant old ecosystem, classified as either: Remnant at BEC subzone/variant scale, Remnant at landscape unit scale, or Null.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.region_name; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.region_name IS 'The long name of the Natural Resource Region e.g., Kootenay Boundary Region';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.cross_section_position IS 'CROSS SECTION POSITION contains the cross sectional position of structure in relationship to the road, example: over, under, through etc.';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.district_name; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.bmis_structure_road_id; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.district_name IS 'The long name of the Natural Resource District e.g., Selkirk District';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.landscape_unit_provid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.landscape_unit_provid IS 'The provincial identifier. Unique for any polygon (or collection of polygons for Landscape Units managed with distinct attribute values) that does not have a retirement date. Not unique for polygon features with multiple retirements. This identifier stays with the polygon feature over time as the feature changes.';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.bmis_structure_road_id IS 'BMIS STRUCTURE ROAD ID contains a number which identifies the section of road which is in relationship to the actual structure. The number is comes from the Bridge Management Information System (BMIS).';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.landscape_unit_name; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.bmis_structure_number; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.landscape_unit_name IS 'The name assigned to the unit, and the unit is a spatially identified area of land and/or water used for long-term planning of resource management activities e.g., Tatshenshini River.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.landscape_unit_number; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.landscape_unit_number IS 'The regional identifier, e.g. "C37", assigned to the unit';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.bmis_structure_number IS 'BMIS STRUCTURE NUMBER is the BMIS Number of the Structure in the form of nnnnA (the Alpha character is optional) that identifies the individual Structure. e.g., 1598S';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.bgc_label; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.bmis_structure_name; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.bgc_label IS 'A code uniquely identifying a Biogeoclimatic Zone in BEC version 12. It is a concatenation of zone, subzone and variant e.g., ICH mw 5.';
-
-
---
--- Name: COLUMN ogsr_priority_def_area_cur_sp.source; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.source IS 'The source of the priority old gorwth deferral, classified as either TAP Deferral or Field Verification.';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.bmis_structure_name IS 'BMIS STRUCTURE NAME contains the Structure Name as recorded in BMIS.';
 
 
 --
--- Name: COLUMN ogsr_priority_def_area_cur_sp.objectid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.bmis_structure_type; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-COMMENT ON COLUMN whse_forest_vegetation.ogsr_priority_def_area_cur_sp.objectid IS 'A column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.bmis_structure_type IS 'BMIS STRUCTURE TYPE contains the Structure Type description for example Bridge, Culvert, Retaining Walls, Tunnel, Snowshed and Sign Bridge.';
 
 
 --
--- Name: ogsr_priority_def_area_cur_sp_ogsr_pdac_sysid_seq; Type: SEQUENCE; Schema: whse_forest_vegetation; Owner: -
+-- Name: COLUMN mot_road_structure_sp.bmis_struct_status_type_desc; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-CREATE SEQUENCE whse_forest_vegetation.ogsr_priority_def_area_cur_sp_ogsr_pdac_sysid_seq
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.bmis_struct_status_type_desc IS 'BMIS STRUCT STATUS TYPE DESC is a textual description of  current status of the Structure. e.g. Open/In Use, In Design, Under Construction, etc.';
+
+
+--
+-- Name: COLUMN mot_road_structure_sp.chris_anchor_section_id; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
+--
+
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.chris_anchor_section_id IS 'CHRIS ANCHOR SECTION ID contains a CHRIS application internal unique identifier for the anchor section segment.';
+
+
+--
+-- Name: COLUMN mot_road_structure_sp.start_event_location; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
+--
+
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.start_event_location IS 'START EVENT LOCATION contains the start measure for MC event along the anchor section.  Measures are in km (example 42.2002 km).';
+
+
+--
+-- Name: COLUMN mot_road_structure_sp.end_event_location; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
+--
+
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.end_event_location IS 'END EVENT LOCATION contains the end measure for MC event along the anchor section.  Measures are in km (example 136.684 km).';
+
+
+--
+-- Name: COLUMN mot_road_structure_sp.highway_number; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
+--
+
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.highway_number IS 'HIGHWAY NUMBER is the MoT Numbered Route identifier only populated when the Structure is located on a MoT Numbered Route. e.g., 99. If the Structure is not on a Numbered Route the field is left blank.';
+
+
+--
+-- Name: COLUMN mot_road_structure_sp.objectid; Type: COMMENT; Schema: whse_imagery_and_base_maps; Owner: -
+--
+
+COMMENT ON COLUMN whse_imagery_and_base_maps.mot_road_structure_sp.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase. ';
+
+
+--
+-- Name: mot_road_structure_sp_hwy_structure_class_id_seq; Type: SEQUENCE; Schema: whse_imagery_and_base_maps; Owner: -
+--
+
+CREATE SEQUENCE whse_imagery_and_base_maps.mot_road_structure_sp_hwy_structure_class_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -5501,1762 +4133,10 @@ CREATE SEQUENCE whse_forest_vegetation.ogsr_priority_def_area_cur_sp_ogsr_pdac_s
 
 
 --
--- Name: ogsr_priority_def_area_cur_sp_ogsr_pdac_sysid_seq; Type: SEQUENCE OWNED BY; Schema: whse_forest_vegetation; Owner: -
+-- Name: mot_road_structure_sp_hwy_structure_class_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-ALTER SEQUENCE whse_forest_vegetation.ogsr_priority_def_area_cur_sp_ogsr_pdac_sysid_seq OWNED BY whse_forest_vegetation.ogsr_priority_def_area_cur_sp.ogsr_pdac_sysid;
-
-
---
--- Name: veg_burn_severity_same_yr_sp; Type: TABLE; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE TABLE whse_forest_vegetation.veg_burn_severity_same_yr_sp (
-    brn_svy_sy_sysid numeric,
-    fire_number character varying(10),
-    fire_year numeric,
-    burn_severity_rating character varying(10),
-    pre_fire_image character varying(254),
-    pre_fire_image_date date,
-    post_fire_image character varying(254),
-    post_fire_image_date date,
-    area_ha numeric,
-    comments character varying(254),
-    objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: TABLE veg_burn_severity_same_yr_sp; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON TABLE whse_forest_vegetation.veg_burn_severity_same_yr_sp IS 'Burn severity mapping for the same year wildfire season for fires that are 100 ha or greater in area.  The burn severity mapping is conducted using current season pre- and post-fire multispectral satellite imagery (Sentinel-2, Landsat-8/9).';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.brn_svy_sy_sysid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.brn_svy_sy_sysid IS 'A system generated unique identification number.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.fire_number; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.fire_number IS 'A composite of the following fields: Zone, Fire ID and Fire Centre. From BC Wildfire Service.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.fire_year; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.fire_year IS 'Represents the fire year.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.burn_severity_rating; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.burn_severity_rating IS 'A classification of wildfire impact on the landscape (Unburned, Low, Medium, High, and Unknown).';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.pre_fire_image; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.pre_fire_image IS 'The scene ID of the pre-fire image.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.pre_fire_image_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.pre_fire_image_date IS 'The acquisition date of the pre-fire image.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.post_fire_image; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.post_fire_image IS 'The scene ID of the post-fire image.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.post_fire_image_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.post_fire_image_date IS 'The acquisition date of the post-fire image.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.area_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.area_ha IS 'The system calculated area in hectares.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.comments; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.comments IS 'Describes why features have a value of unknown in the Burn Severity Rating or any additional data quality information.';
-
-
---
--- Name: COLUMN veg_burn_severity_same_yr_sp.objectid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_same_yr_sp.objectid IS 'A column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: veg_burn_severity_sp; Type: TABLE; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE TABLE whse_forest_vegetation.veg_burn_severity_sp (
-    veg_fs_sysid numeric,
-    fire_number character varying(6),
-    fire_year numeric,
-    burn_severity_rating character varying(10),
-    pre_fire_image character varying(254),
-    pre_fire_image_date date,
-    post_fire_image character varying(254),
-    post_fire_image_date date,
-    area_ha numeric,
-    comments character varying(254),
-    objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: TABLE veg_burn_severity_sp; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON TABLE whse_forest_vegetation.veg_burn_severity_sp IS 'Burn Severity Rating for multiple years, starting in 2015 for the province of BC.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.veg_fs_sysid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.veg_fs_sysid IS 'VEG_FS_SYSID is a system generated unique identification number.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.fire_number; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.fire_number IS 'FIRE_NUMBER is a composite of the following fields: Zone, Fire ID and Fire Centre.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.fire_year; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.fire_year IS 'FIRE_YEAR represents the fiscal year, April 1 to March 31.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.burn_severity_rating; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.burn_severity_rating IS 'BURN_SEVERITY_RATING is rating of the severity to the fire, i.e., High, Moderate, Low, Unburned, Unknown.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.pre_fire_image; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.pre_fire_image IS 'PRE_FIRE_IMAGE is the file name of the image used before the fire.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.pre_fire_image_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.pre_fire_image_date IS 'PRE_FIRE_IMAGE_DATE is the date of the image used before the fire.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.post_fire_image; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.post_fire_image IS 'POST_FIRE_IMAGE is the file name of the image used after the fire.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.post_fire_image_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.post_fire_image_date IS 'POST_FIRE_IMAGE_DATE is the date of the image used after the fire.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.area_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.area_ha IS 'AREA_HA contains the system calculated area in hectares.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.comments; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.comments IS 'COMMENTS is used to explain why features have a value of unknown in the Burn Severity Rating.';
-
-
---
--- Name: COLUMN veg_burn_severity_sp.objectid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_burn_severity_sp.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: veg_comp_lyr_r1_poly; Type: TABLE; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE TABLE whse_forest_vegetation.veg_comp_lyr_r1_poly (
-    feature_id integer NOT NULL,
-    map_id character varying(7),
-    polygon_id numeric,
-    opening_ind character varying(1),
-    opening_source character varying(5),
-    opening_number character varying(4),
-    feature_class_skey numeric,
-    inventory_standard_cd character varying(10),
-    polygon_area numeric,
-    non_productive_descriptor_cd character varying(5),
-    non_productive_cd character varying(10),
-    input_date date,
-    coast_interior_cd character varying(1),
-    surface_expression character varying(10),
-    modifying_process character varying(10),
-    site_position_meso character varying(10),
-    alpine_designation character varying(10),
-    soil_nutrient_regime character varying(10),
-    ecosys_class_data_src_cd character varying(10),
-    bclcs_level_1 character varying(10),
-    bclcs_level_2 character varying(10),
-    bclcs_level_3 character varying(10),
-    bclcs_level_4 character varying(10),
-    bclcs_level_5 character varying(10),
-    interpretation_date date,
-    project character varying(100),
-    reference_year numeric,
-    special_cruise_number numeric,
-    special_cruise_number_cd character varying(1),
-    inventory_region numeric,
-    compartment numeric,
-    compartment_letter character varying(1),
-    fiz_cd character varying(1),
-    for_mgmt_land_base_ind character varying(1),
-    attribution_base_date date,
-    projected_date date,
-    shrub_height numeric,
-    shrub_crown_closure numeric,
-    shrub_cover_pattern character varying(10),
-    herb_cover_type character varying(10),
-    herb_cover_pattern character varying(10),
-    herb_cover_pct numeric,
-    bryoid_cover_pct numeric,
-    non_veg_cover_pattern_1 character varying(10),
-    non_veg_cover_pct_1 numeric,
-    non_veg_cover_type_1 character varying(10),
-    non_veg_cover_pattern_2 character varying(10),
-    non_veg_cover_pct_2 numeric,
-    non_veg_cover_type_2 character varying(10),
-    non_veg_cover_pattern_3 character varying(10),
-    non_veg_cover_pct_3 numeric,
-    non_veg_cover_type_3 character varying(10),
-    land_cover_class_cd_1 character varying(10),
-    est_coverage_pct_1 numeric,
-    soil_moisture_regime_1 character varying(10),
-    land_cover_class_cd_2 character varying(10),
-    est_coverage_pct_2 numeric,
-    soil_moisture_regime_2 character varying(10),
-    land_cover_class_cd_3 character varying(10),
-    est_coverage_pct_3 numeric,
-    soil_moisture_regime_3 character varying(10),
-    avail_label_height numeric,
-    avail_label_width numeric,
-    full_label character varying(1000),
-    label_centre_x numeric,
-    label_centre_y numeric,
-    label_height numeric,
-    label_width numeric,
-    line_1_opening_number character varying(4),
-    line_1_opening_symbol_cd character varying(1),
-    line_2_polygon_id character varying(10),
-    line_3_tree_species character varying(50),
-    line_4_classes_indexes character varying(12),
-    line_5_vegetation_cover character varying(11),
-    line_6_site_prep_history character varying(10),
-    line_7_activity_hist_symbol character varying(1),
-    line_7a_stand_tending_history character varying(39),
-    line_7b_disturbance_history character varying(40),
-    line_8_planting_history character varying(80),
-    printable_ind character varying(1),
-    small_label character varying(200),
-    opening_id numeric,
-    org_unit_no numeric,
-    org_unit_code character varying(6),
-    adjusted_ind character varying(1),
-    bec_zone_code character varying(4),
-    bec_subzone character varying(3),
-    bec_variant character varying(1),
-    bec_phase character varying(1),
-    cfs_ecozone numeric,
-    earliest_nonlogging_dist_type character varying(10),
-    earliest_nonlogging_dist_date date,
-    stand_percentage_dead numeric,
-    free_to_grow_ind character varying(1),
-    harvest_date date,
-    layer_id character varying(10),
-    for_cover_rank_cd character varying(10),
-    non_forest_descriptor character varying(10),
-    interpreted_data_src_cd character varying(10),
-    quad_diam_125 numeric,
-    quad_diam_175 numeric,
-    quad_diam_225 numeric,
-    est_site_index_species_cd character varying(10),
-    est_site_index numeric,
-    est_site_index_source_cd character varying(10),
-    crown_closure numeric,
-    crown_closure_class_cd character varying(2),
-    reference_date date,
-    site_index numeric,
-    dbh_limit numeric,
-    basal_area numeric,
-    data_source_basal_area_cd character varying(10),
-    vri_live_stems_per_ha numeric,
-    data_src_vri_live_stem_ha_cd character varying(10),
-    vri_dead_stems_per_ha numeric,
-    tree_cover_pattern character varying(10),
-    vertical_complexity character varying(10),
-    species_cd_1 character varying(10),
-    species_pct_1 numeric,
-    species_cd_2 character varying(10),
-    species_pct_2 numeric,
-    species_cd_3 character varying(10),
-    species_pct_3 numeric,
-    species_cd_4 character varying(10),
-    species_pct_4 numeric,
-    species_cd_5 character varying(10),
-    species_pct_5 numeric,
-    species_cd_6 character varying(10),
-    species_pct_6 numeric,
-    proj_age_1 numeric,
-    proj_age_class_cd_1 character varying(1),
-    proj_age_2 numeric,
-    proj_age_class_cd_2 character varying(1),
-    data_source_age_cd character varying(10),
-    proj_height_1 numeric,
-    proj_height_class_cd_1 character varying(1),
-    proj_height_2 numeric,
-    proj_height_class_cd_2 character varying(1),
-    data_source_height_cd character varying(10),
-    live_vol_per_ha_spp1_125 numeric,
-    live_vol_per_ha_spp1_175 numeric,
-    live_vol_per_ha_spp1_225 numeric,
-    live_vol_per_ha_spp2_125 numeric,
-    live_vol_per_ha_spp2_175 numeric,
-    live_vol_per_ha_spp2_225 numeric,
-    live_vol_per_ha_spp3_125 numeric,
-    live_vol_per_ha_spp3_175 numeric,
-    live_vol_per_ha_spp3_225 numeric,
-    live_vol_per_ha_spp4_125 numeric,
-    live_vol_per_ha_spp4_175 numeric,
-    live_vol_per_ha_spp4_225 numeric,
-    live_vol_per_ha_spp5_125 numeric,
-    live_vol_per_ha_spp5_175 numeric,
-    live_vol_per_ha_spp5_225 numeric,
-    live_vol_per_ha_spp6_125 numeric,
-    live_vol_per_ha_spp6_175 numeric,
-    live_vol_per_ha_spp6_225 numeric,
-    dead_vol_per_ha_spp1_125 numeric,
-    dead_vol_per_ha_spp1_175 numeric,
-    dead_vol_per_ha_spp1_225 numeric,
-    dead_vol_per_ha_spp2_125 numeric,
-    dead_vol_per_ha_spp2_175 numeric,
-    dead_vol_per_ha_spp2_225 numeric,
-    dead_vol_per_ha_spp3_125 numeric,
-    dead_vol_per_ha_spp3_175 numeric,
-    dead_vol_per_ha_spp3_225 numeric,
-    dead_vol_per_ha_spp4_125 numeric,
-    dead_vol_per_ha_spp4_175 numeric,
-    dead_vol_per_ha_spp4_225 numeric,
-    dead_vol_per_ha_spp5_125 numeric,
-    dead_vol_per_ha_spp5_175 numeric,
-    dead_vol_per_ha_spp5_225 numeric,
-    dead_vol_per_ha_spp6_125 numeric,
-    dead_vol_per_ha_spp6_175 numeric,
-    dead_vol_per_ha_spp6_225 numeric,
-    live_stand_volume_125 numeric,
-    live_stand_volume_175 numeric,
-    live_stand_volume_225 numeric,
-    dead_stand_volume_125 numeric,
-    dead_stand_volume_175 numeric,
-    dead_stand_volume_225 numeric,
-    whole_stem_biomass_per_ha numeric,
-    branch_biomass_per_ha numeric,
-    foliage_biomass_per_ha numeric,
-    bark_biomass_per_ha numeric,
-    objectid numeric,
-    geom public.geometry(MultiPolygon,3005)
-);
-
-
---
--- Name: TABLE veg_comp_lyr_r1_poly; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON TABLE whse_forest_vegetation.veg_comp_lyr_r1_poly IS 'This instantiated table is a join between VEG_COMP_POLY and VEG_COMP_LYR_R1_VW on FEATURE_ID.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.feature_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.feature_id IS 'Provincially unique identifier for an instance of a spatial feature.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.map_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.map_id IS 'Identifies the Forest Cover Map corresponding to the FIP file.  It is the British Columbia Geographic System"s (BCGS) Key Reference Number of the Forest Cover Map.  The mapsheet most commonly used is the 6" X 12" BCGS mapsheet.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.polygon_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.polygon_id IS 'The polygon number is a reference  number ( non unique) assigned to each Vegetated or Non-Vegetated polygon after it is delineated. The polygon number provides a  link between the graphic and descriptive files. The business assigned unique identifier for a polygon. Typically this has been uniquely assigned within a BCGS 6 X 12 Mapsheet.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.opening_ind; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.opening_ind IS 'Indicates whether or not the polygon represents a silviculture opening.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.opening_source; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.opening_source IS 'Defines whether the opening came from ISIS or MLSIS  This field is not populated in the current data model.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.opening_number; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.opening_number IS 'A unique number assigned to each opening in the forest caused by a disturbance (e.g. fire, logging, etc.) for which there will be management activities.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.feature_class_skey; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.feature_class_skey IS 'Unique identifier for a feature class.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.inventory_standard_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.inventory_standard_cd IS 'Code indicating under which inventory standard the data was collected. Values are: "V:" for Vegetation Resources Inventory (VRI), "F" for Forest Inventory Planning (FIP) and "I" for Incomplete (when a full set of VRI attributes is not collected).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.polygon_area; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.polygon_area IS 'The area of a polygon; usually derived from geographic information system processing software.  The total area, in hectares, of the forest cover polygon.  The total area should be equal to the sum of the areas for all resultants in that polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_productive_descriptor_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_productive_descriptor_cd IS 'A unique code that references the classes or type of non-productive areas or land that is incapable of supporting commercial forests. This is a FIP classification based attribute only, and is retained for the purposes of business transition from FIP to Vegetation Inventory.  There is no expectation that this attribute would be updated or created under Vegetation Inventory classification practise.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_productive_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_productive_cd IS 'A unique numeric code that references the classes or type of non-productive areas. This is a FIP classification based attribute only, and is retained for the purposes of business transition from FIP to Vegetation Inventory.  There is no expectation that this attribute would be updated or created under Vegetation Inventory classification practise.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.input_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.input_date IS 'The date the forest cover information was entered into the Provincial Data Base.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.coast_interior_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.coast_interior_cd IS 'A code indicating that the stand is located in the Coast or Interior Region of the Province.  The Coast Region is defined as the mainland west of the Cascade and Coast Mountains, including the off-shore islands. Forest Inventory Zones (FIZ) A to C are included in the Coast region. The Interior Region is defined as the mainland east of the Cascade and Coast Mountains.  Forest Inventory Zones (FIZ) D to L are included in the Interior Region.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.surface_expression; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.surface_expression IS 'The form of surficial material apparent on the medium scale photography. A simplified attribution is used owing to the likelihood that the trees will mask surficial features. Description Source: p. 3-5, Photo Interpretation Procedures, Phase 1, May 14, 1996. Data Value Source: Table 3-2, from Description Source';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.modifying_process; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.modifying_process IS 'A natural mechanism of weathering, erosion and soil material deposition that result in the modification of surficial materials and landforms. Used for terrain classification, site classification, soil condition and identification of potential hazards such as avalanches, slope instability and flooding. Data Definition Source: p.3-7, Photo Interpretation Procedures, Phase 1, May 14, 1996 Data Value Source: Table 3-3, from Data Definition Source.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.site_position_meso; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.site_position_meso IS 'A code denoting the relative position of the sampling site within a catchment area with the intent to be consistent within the scale of topography affecting surface water flow. The vertical difference is usually between 3 and 300m, and the surface area generally exceeds 0.5 has in size. Also known as slope position or  meso site position. Definition Source: "Describing Ecosystems in the Field", MOE Manual 11, Province of B.C. 1990, p. 31.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.alpine_designation; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.alpine_designation IS 'The location of the land unit with respect to location and elevation. An interpretation is applied as to whether the tree unit is above or below the tree line, that is, the upper elevation limit of continuous tree, or potential tree if cut-over, cover. If the land unit is above the the elevation line, a code of ''A'' is applied, otherwise ''N'', the default.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.soil_nutrient_regime; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.soil_nutrient_regime IS 'A code to denote, on a relative scale, the available nutrient supply for plant growth.  The soil"s nutrient regime (trophotope) integrates many environmental and biotic parameters which, in combination, determine the actual amounts of available nutrients. Definition Source: Reference: "Describing Ecosystems in the Field", MOE Manual 11, Province of B.C. 1990, p37-40 Soil Nutrient Regime (SNR) refers to the amount of essential soil nutrients, particularly nitrogen, available to vascular plants over a period of several years.  SNR classes include A (very poor), B (poor), C (medium), D (rich), E (very rich) and F (ultra rich, saline).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.ecosys_class_data_src_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.ecosys_class_data_src_cd IS 'The source of the data used in the interpretation of the ecological attributes (Surface expression, modifying process, site position meso, alpine designation, and soil nutrient regime) that describe the polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bclcs_level_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bclcs_level_1 IS 'The code for the land cover classification.  The codes are approved by the Resource Inventory Committee, RIC.  Level 1 identifies a Vegetated or Non-vegetated state, with further dichotomous refinement to Level 5, which identifies the Vegetation Density Class related to Vegetated land, or specific Non-vegetated state cover such as beaches, mudflats etc.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bclcs_level_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bclcs_level_2 IS 'The second level of the BC land cover classification scheme classifies the polygon as to the land cover type: treed or non-treed for vegetated polygons; land or water for non-vegetated polygons.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bclcs_level_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bclcs_level_3 IS 'The location of the polygon relative to elevation and drainage, and is described as either alpine, wetland, or upland.  In rare cases, the polygon may be alpine wetland.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bclcs_level_4; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bclcs_level_4 IS 'Classifies the vegetation types and Non-Vegetated cover types (as described by the presence of distinct types upon the land base within the polygon).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bclcs_level_5; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bclcs_level_5 IS 'Classifies the vegetation density classes and Non-Vegetated categories.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.interpretation_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.interpretation_date IS 'The date on which the data was photo interpreted.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.project; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.project IS 'The business assigned name of the project.  The name typically reflects a Timber Supply Area, an initiating Agency, or a land area.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.reference_year; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.reference_year IS 'The year of the source data on which the interpretation is based. Known as the "Reference Year" in the VIF file.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.special_cruise_number; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.special_cruise_number IS 'The numeric code of the Public Sustained Yield Unit(s) (PSYU) that fall within the forest cover polygon.  PSYUs are areas of land, usually a natural topographic unit determined by drainage areas.  Includes PSYUs, Tree Farm Licences (TFL), Tree Farms (TF), Major Parks and Ecological Reserves, Woodlot licences, and miscellaneous areas.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.special_cruise_number_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.special_cruise_number_cd IS 'The numbers of the Public Sustained Yield Unit (PSYU) Block(s) that fall within the forest cover polygon.  PSYU Blocks are subdivisions of a PSYU, and indicate the presence of a sub-unit survey (i.e. 1:10,000 scale inventory).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.inventory_region; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.inventory_region IS 'The Inventory Region(s) that fall within the forest cover polygon. Inventory Regions are an administrative and planning level boundary used to subdivide the Province into 88 units.  Inventory Region is also part of the reference key for identifying the geographic location of all Inventory Branch samples.  Inventory Region, along with Inventory Compartment and Compartment Letter, form the key to identifying the Inventory samples.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.compartment; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.compartment IS 'The Inventory Compartment(s) that fall within the forest cover polygon. Inventory Compartments are a geographic subdivision of an Inventory Region, usually defining a watershed or part thereof.  Inventory Compartment is also part of the reference key for identifying the geographic location of all Inventory Branch samples.  Inventory Compartment, along with Compartment Letter and Inventory Region form the key to identifying Inventory samples.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.compartment_letter; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.compartment_letter IS 'The Compartment Letter(s) that fall within the forest cover polygon. Compartment Letter is a geographic subdivision of an Inventory Compartment.  Compartment Letter only applies to some Inventory Compartments (e.g. only in Inventory Regions 1, 3, 5, 6, 7, 9, 10, 11, 56).  Compartment Letter is also part of the reference key for identifying the geographic location of all Inventory Branch samples. Compartment Letter, along with Inventory Compartment and Inventory Region form the key to identifying Inventory samples.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.fiz_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.fiz_cd IS 'The Forest Inventory Zone(s) (FIZ) that fall within the forest cover polygon. FIZ zones were developed to provide a broadly based ecological classification of the forestland in British Columbia. FIZ zones closely follow the early Biogeoclimatic zones developed by Dr. Krajina. The province of British Columbia is split into 12 FIZ zones.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.for_mgmt_land_base_ind; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.for_mgmt_land_base_ind IS 'An indicator placing the polygon in the Forest Management Land Base.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.attribution_base_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.attribution_base_date IS 'The date that the information about this polygon is considered to be based on.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.projected_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.projected_date IS 'The date to which time dependent stand information is projected. Attributes that are projected to a future date include: - Age, - Age Class, - Height, - Height Class, - Type Identity, - Stocking Class, etc.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.shrub_height; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.shrub_height IS 'The average height of the shrubs contained in the polygon as interpreted from medium scale photography. Note that this attribute only applies to the Shrub component. Definition Source: p. 7-2, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.shrub_crown_closure; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.shrub_crown_closure IS 'Shrub crown closure is the percentage of ground area covered by the vertically projected crowns of the shrub cover visible to the photo interpreter. Shrub crown closure is expressed as a percentage of the entire polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.shrub_cover_pattern; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.shrub_cover_pattern IS 'Shrub cover pattern is a code that describes the spatial distribution of the shrubs within the polygon. Shrub cover pattern is used to describe the shrub layer spatial distribution. Examples include clumps of shrubs on rocky patches or individual shrubs or solid, continuous cover';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.herb_cover_type; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.herb_cover_type IS 'This set of attributes describes the portion of herb cover that is no obscured by the vertical projection of the crowns of either trees or shrubs. Herbs are defined as non-woody (vascular) plants, including graminoids (sedges, rushes, grasses), forbs (ferns, club mosses, and horsetails) and some low, woody species and intermediate life forms.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.herb_cover_pattern; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.herb_cover_pattern IS 'Herb cover pattern is a code that describes the spatial distribution of the herbaceous species within the polygon. Herb cover pattern is used to describe the herb layer spatial distribution. Examples include clumps of herbaceous species on rock outcrops, scattered patches or individual herbs or solid, continuous herbaceous cover.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.herb_cover_pct; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.herb_cover_pct IS 'Herb cover percent is the percentage of ground area covered by herbaceous cover visible to the photo interpreter. Herb cover percent is analogous to tree and shrub crown closures and is expressed as a percentage of the entire polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bryoid_cover_pct; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bryoid_cover_pct IS 'The percent cover of Bryoids: includes bryophytes (mosses, liverworts, hornworts) and non-crustose lichens.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_pattern_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_pattern_1 IS 'Non-vegetated cover pattern_1 describes the spatial distribution of the most prevalent non-vegetated cover type based on percent area covered within the polygon. Definition Source: pp.7-4 (fig. 7-2), 8-5 (fig. 8-2), same as pp. 10-7, fig. 10-2, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_pct_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_pct_1 IS 'The area the predominate non-vegetated portion covers expressed as a percentage of the entire polygons area. Definition Source: p. 10-5, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_type_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_type_1 IS 'Non-vegetated cover type_1 is the designation for the predominate   observable non-vegetated land cover within the polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_pattern_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_pattern_2 IS 'Non-vegetated cover pattern_2 describes the spatial distribution of the second most prevalent non-vegetated cover type based on percent area covered  within the polygon. Definition Source: pp. 7-4 (fig. 7-2), 8-5 (fig. 8-2), same as pp. 10-7, fig. 10-2, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_pct_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_pct_2 IS 'The area the second most prevalent non-vegetated portion covers expressed as a percentage of the entire polygons area. Definition Source: p. 10-5, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_type_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_type_2 IS 'Non-vegetated cover type_2 is the designation for the second most prevalent   observable non-vegetated land cover within the polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_pattern_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_pattern_3 IS 'Non-vegetated cover type_3 is the designation for the third most prevalent   observable non-vegetated land cover within the polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_pct_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_pct_3 IS 'The area the third most prevalent non-vegetated portion covers expressed as a percentage of the entire polygons area. Definition Source: p. 10-5, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_veg_cover_type_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_veg_cover_type_3 IS 'Non-vegetated cover type_3 is the designation for the third most prevalent   observable non-vegetated land cover within the polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.land_cover_class_cd_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.land_cover_class_cd_1 IS 'The Land Cover Classification Code_1 describes the predominate land cover type by percent area occupied within the polygon that contribute to the overall polygon description, but may be too small to be spatially identified. The sub-division of a polygon by a quantified Land Cover Component, allowing non-spatial resolution for modeling of wildlife habitat capability.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.est_coverage_pct_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.est_coverage_pct_1 IS 'The amount the polygon occupied by the predominate Land Cover Component.  The sub-division of a polygon by a quantified Land Cover Component allows a higher degree spatial resolution for modelling wildlife habitat capability. Generally, sizes under 10% would not be estimated. Definition Source: p. 4-6, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.soil_moisture_regime_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.soil_moisture_regime_1 IS 'The average amount of soil water annually available for evapotranspiration by vascular plants averaged over many years within the predominate cover type. Soil Moisture Regime is an interpretative attribute for estimation of site potential and site series classification. Definition Source: p. 4-7, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.land_cover_class_cd_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.land_cover_class_cd_2 IS 'The Land Cover Classification Code_2 describes the second most dominate land cover type by percent area occupied within the polygon that contribute to the overall polygon description, but may be too small to be spatially identified. The sub-division of a polygon by a quantified Land Cover Component, allowing non-spatial resolution for modelling of wildlife habitat capability.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.est_coverage_pct_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.est_coverage_pct_2 IS 'The amount the polygon occupied by the second most dominate Land Cover Component. The sub-division of a polygon by a quantified Land Cover Component allows a higher degree spatial resolution for modelling wildlife habitat capability. Generally, sizes under 10% would not be estimated. Definition Source: p. 4-6, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.soil_moisture_regime_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.soil_moisture_regime_2 IS 'The average amount of soil water annually available for evapotranspiration by vascular plants averaged over many years within the second most dominate cover type. Soil Moisture Regime is an interpretative attribute for estimation of site potential and site series classification. Definition Source: p. 4-7, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.land_cover_class_cd_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.land_cover_class_cd_3 IS 'The Land Cover Classification Code_3 describes the third most dominate land cover type by percent area occupied within the polygon that contribute to the overall polygon description, but may be too small to be spatially identified. The sub-division of a polygon by a quantified Land Cover Component, allowing non-spatial resolution for modelling of wildlife habitat capability.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.est_coverage_pct_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.est_coverage_pct_3 IS 'The amount the polygon occupied by the third most dominate Land Cover Component.  The sub-division of a polygon by a quantified Land Cover Component allows a higher degree spatial resolution for modelling wildlife habitat capability. Generally, sizes under 10% would not be estimated. Definition Source: p. 4-6, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.soil_moisture_regime_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.soil_moisture_regime_3 IS 'The average amount of soil water annually available for evapotranspiration by vascular plants averaged over many years within the second most dominate cover type. Soil Moisture Regime is an interpretative attribute for estimation of site potential and site series classification. Definition Source: p. 4-7, PIP';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.avail_label_height; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.avail_label_height IS 'The available height for a label, in meters for a 1:15,000 map presentation. This is derived during the label generation process to calculate if the VRI label will fit within a polygon shape or be written the map side.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.avail_label_width; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.avail_label_width IS 'The available width for a label, in meters for a 1:15,000 map presentation. This is derived during the label generation process to calculate if the VRI label will fit within a polygon shape or be written the map side.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.full_label; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.full_label IS 'The full Vegetation Map label. It contains the polygon id, Opening number, species composition, projected age, projected height, site index and crown closure, and indicator of shrub, herb, bryoid, or non vegetative components, and the historic disturbance and forest management activities. It is at most 8 lines. Back slashes represent carriage returns.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.label_centre_x; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.label_centre_x IS 'The x co-ordinate of the suggested centre of the label.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.label_centre_y; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.label_centre_y IS 'The y co-ordinate of the suggested centre of the label.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.label_height; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.label_height IS 'The height of the full label for a 1:15,000 map presentation in meters.  It is calculated as 30 times the number of lines in the full label.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.label_width; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.label_width IS 'The width of the full label for a 1:15,000 map presentation in meters.  It is calculated as 18 times the number of characters in the longest line.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_1_opening_number; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_1_opening_number IS 'The MOF District Silviculture opening number to which the polygon applies to.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_1_opening_symbol_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_1_opening_symbol_cd IS 'The opening symbol code is represented as one of the following characters: "x", "|", or "~".  If the opening number is null, line 1 is not populated, so there is no opening symbol.  If the adjoining NTS map number is in the form "num num num char num / char", it is an NTS number, the corresponding opening symbol is a hexagon with an "N" in it, and is represented here by "~".  If the adjoining NTS map number is in the form "num num num char num num num", it is a BCGS number, the corresponding opening symbol is a hexagon with an "X" in it, and is represented here by "|".  Otherwise the opening symbol is an empty hexagon, and is represented here by "x".';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_2_polygon_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_2_polygon_id IS 'The polygon ID for which this is the label.  This is followed by /L (a multi-layered stand) or /S (a separate silviculture description is available in the data base).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_3_tree_species; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_3_tree_species IS 'A list of major species (minor species), ordered by percentage.  The species symbols are F (Douglas fir), C (western red cedar), H (hemlock), B (balsam), S (spruce), Sb (black spruce), Yc (yellow cedar), Pw (western white pine), Pa (whitebark pine), Pf (limber pine), Pl (lodgepole pine), Pj (jack pine), Py (yellow pine), L (larch), Ac (cottonwood), D (red alder), Mb (broadleaf maple), E (birch), Al (aspen).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_4_classes_indexes; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_4_classes_indexes IS 'Line 4 is made up of 4 numerical characters followed by a hyphen, the site index, a slash, and the estimated site index. The four numerical characters represent projected age class, projected height class, projected stocking class, and crown closure class in that order.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_5_vegetation_cover; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_5_vegetation_cover IS 'A listing of the non-vegetated descriptors  or the non tree vegetative cover types ordered from most to least common. Possible values in the list are sh (shrub), he (herb), by (bryoid), or the non-vegetative cover codes.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_6_site_prep_history; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_6_site_prep_history IS 'The site preparation history represented by a list of abbreviations for the techniques used, followed by the years each technique was used.  Possible values for the abbreviations are B (broadcast burn) C (chemical), G (grass seeded), H (hand preparation), RB (range management burn), S (spot burn), M (mechanical), MS (mechanical and spot burn), and W (windrow).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_7_activity_hist_symbol; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_7_activity_hist_symbol IS 'A symbol representing what techniques where used in the labelled area.  The symbol is a circle with 0 to 4 radius lines.  Each line represents a technique applied to the labelled area.If RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST(stand tending)  then  & as circle with a radius line pointing leftIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = SI(regeneration/site preparation) then  %  draw as circle with a radius line pointing (up/down)If RESOURCE_INVENTORY_HISTORY.SILV_BASE = DI(disturbance) then  $  draw as circle with a radius line pointing rightIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = PL(regeneration/site preparation) then  %  draw as circle with a radius line pointing (up/down)If RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST  then  <  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST  then  `  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST  then  :  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = SI  then  *  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = SI  then  X  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = DI  then  ;  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST   then  ¿  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST   then  @  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = PL   then  [  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = SI   then  \  draw as combination of the above circles and radius linesIf RESOURCE_INVENTORY_HISTORY.SILV_BASE = ST    then  ^  draw as combination of the above circles and radius lines';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_7a_stand_tending_history; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_7a_stand_tending_history IS 'The stand tending history represented by a list of abbreviations for the techniques used followed by the years each technique was used.  Possible values for the abbreviations are F (fertilization), H (hand and squirt), J (juvenile spacing), M (mistletoe control), P (pruning), R (conifer realize), S (sanitation spacing), T (commercial thinning), W (brushing and weeding).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_7b_disturbance_history; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_7b_disturbance_history IS 'The disturbance history described as a list of abbreviations for the techniques along with the years each technique was employed.  Possible values are B (wildfire), BE (escaped burn), BG (ground burn), BR (range burn), BW (wildlife burn), D (disease), F (flooding), I (insect), K (fume kill), L (logging), L% (logged with percentage), R (site rehabilitation), S (slide), and W (wind throw).';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.line_8_planting_history; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.line_8_planting_history IS 'The planting (or regeneration) history described as a list of years during which artificial planting was performed.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.printable_ind; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.printable_ind IS '"Y" means print the label.  "N" means do not print the label.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.small_label; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.small_label IS 'The two-line (or Format 3) version of the label.  This label contains, at most, 2 lines build from the line 1 and 2 attributes.  A back slash represents a carriage return.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.opening_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.opening_id IS 'System generated value uniquely identifying the opening.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.org_unit_no; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.org_unit_no IS 'Number from Org Unit code table representing the organization that collected the data.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.org_unit_code; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.org_unit_code IS 'Identifies any office within the ministry.  First character identifies Exec, HQ branch, Region, or District.  Next two chars identify the office name; next two the section (HQ Branch) or program (Region or District); last char identifies the subsection.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.adjusted_ind; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.adjusted_ind IS 'Indicates whether or not the polygon has been adjusted.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bec_zone_code; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bec_zone_code IS 'Code indicating the polygon"s Biogeoclimatic Zone.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bec_subzone; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bec_subzone IS 'A code indicating the polygon"s biogeoclimatic sub zone.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bec_variant; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bec_variant IS 'A code indicating the polygon"s biogeoclimatic variant.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bec_phase; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bec_phase IS 'A code indicating the polygon"s biogeoclimatic phase.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.cfs_ecozone; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.cfs_ecozone IS 'A code indicating the polygon''s Canadian Forest Service (CFS) terrestrial ecozone.  It is used in the calculation of above-ground forest biomass using CFS volume-to-biomass models.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.earliest_nonlogging_dist_type; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.earliest_nonlogging_dist_type IS 'Represents the polygons earliest non-logging disturbance date.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.earliest_nonlogging_dist_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.earliest_nonlogging_dist_date IS 'Represents the polygons earliest non-logging disturbance date.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.stand_percentage_dead; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.stand_percentage_dead IS 'Represents the percent of the stand that has had an epidemic loss.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.free_to_grow_ind; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.free_to_grow_ind IS 'Indicates whether or not the polygon represents a Free To Grow opening.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.harvest_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.harvest_date IS 'The date in which the polygon was last harvested.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.layer_id; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.layer_id IS 'The unique business identification of a layer, or horizontal stratum, in a stand.  Each layer is normally characterized as a distinct canopy containing a common forest cover structure with timber of similar ages (at least 40 years between layers) and heights (at least 10 meters between layers).  Layers are assigned from the tallest layer downward.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.for_cover_rank_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.for_cover_rank_cd IS 'A numeric designation of the relative importance of the layer component in the stand as determined by the business. The level of importance decreases as the numeric designation increases. For Vegetation Cover originated data, this value is assigned via business rule based on the supplied order of the layer records as recorded by the interpreter. For FIP originated data, this value is known as the RANK CD, and is explicitly supplied by the interpreter. The RANK CD, or ranking, is based on Regional guidelines at the time of interpretation. This value is retained for FIP transition purposes, as tree volumes are only calculated by VDYP, the current software/mathematical model in production. The RANK CD will be superseded in time when Vegetation Inventory projection tools are developed.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.non_forest_descriptor; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.non_forest_descriptor IS 'Non commercial forest vegetation on a polygon that is capable of supporting commercial forests. Maps directly to the FIP attribute, NON FOREST DESCRIPTOR and is also utilized for the determination of the BC Land Cover Classification. This is a FIP classification based attribute only, and is retained for the purposes of business transition from FIP to Vegetation Inventory.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.interpreted_data_src_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.interpreted_data_src_cd IS 'The source of the data that contributed to the determination of the classification description.  All values taken from Table 3-1, PIP This list of values is similar, but not identical to the FIP DATA SOURCE which will be used to validate the FIP file prior to loading. Non-conforming FIP DATA SOURCE values will be converted to the VEGETATION DATA SOURCE values on load to the Vegetative Cover database.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.quad_diam_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.quad_diam_125 IS 'The quadratic mean stand diameter (breast height), at the projection date, based on the 12.5 cm utilization level. Calculated for Rank 1 stands only, type id (TYPID) 1 through 3.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.quad_diam_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.quad_diam_175 IS 'The quadratic mean stand diameter (breast height), at the projection date, based on the 17.5 cm utilization level. Calculated for Rank 1 stands only, Type id (TYPID) for 1 through 3.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.quad_diam_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.quad_diam_225 IS 'The quadratic mean stand diameter (breast height), at the projection date, based on the 22.5 cm utilization level.Calculated for Rank 1 stands only, type id (TYPID) 1 through 3.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.est_site_index_species_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.est_site_index_species_cd IS 'The species to which the estimated site index applies.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.est_site_index; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.est_site_index IS 'Estimated site index is an interpreter estimated site index for tree layers with a leading species age less than 31 years. Site index is the mean height of the dominant and codominant trees will attain at a base index age (50 years) used for the purposes of estimating forest site growth capability. The site index is based on a normalized set of coefficients calibrated to reflect the range of heights for a given tree species.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.est_site_index_source_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.est_site_index_source_cd IS 'Describes the process used to determine the estimated site index prediction for tree layers with a leading species age less than 31 years.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.crown_closure; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.crown_closure IS 'The percentage of ground area covered by the vertically projected crowns of the tree cover for each tree layer within the polygon.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.crown_closure_class_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.crown_closure_class_cd IS 'The percentage of ground area covered by the vertically projected crowns of the tree cover for each tree layer within the polygon. Represented by a code value in the code list.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.reference_date; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.reference_date IS 'The date of the source data on which the interpretation is based. Known as the "Reference Year" in the VIF file.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.site_index; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.site_index IS 'Site index is an estimate of site productivity for tree growth (height in metres at breast height age of 50 years). The mean height of the dominant and codominant trees will attain at a base index age used for the purposes of estimating forest site growth capability. The site index is based on a normalized set of coefficients calibrated to reflect the range of heights for a given tree species.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dbh_limit; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dbh_limit IS 'A code indicating the minimum diameter breast height (DBH) for measuring trees (i.e. stems) in the field sample.  For example, a code of 3 indicates that stems were measured if they had a DBH greater than or equal to 7.5cm.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.basal_area; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.basal_area IS 'Confidence indices are a subjective value that reflect confidence of the photo interpreter in the estimation of basal area for each layer.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.data_source_basal_area_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.data_source_basal_area_cd IS 'The source of data used for the interpretation of basal area.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.vri_live_stems_per_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.vri_live_stems_per_ha IS 'The average number of living trees visible to the photo interpreter in the dominant, codominant and high intermediate crown positions in each tree layer in the polygon.  It is expressed as stems per hectare.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.data_src_vri_live_stem_ha_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.data_src_vri_live_stem_ha_cd IS 'The source of data used for the interpretation of stand density.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.vri_dead_stems_per_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.vri_dead_stems_per_ha IS 'The number of VRI dead tree stems on an unitary per hectare basis.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.tree_cover_pattern; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.tree_cover_pattern IS 'The spatial distribution of the tree cover within each tree layer in the polygon. Definition Source: p 6-1, PIP Data Value Source; Figure 6-1';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.vertical_complexity; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.vertical_complexity IS 'The subjective classification that describes the form of each tree layer as indicated by the relative uniformity of the forest canopy as it appears on mid-scale aerial photographs.  Vertical complexity is influenced by stand age, species (succession as it relates to shade tolerance) and degree and age of past disturbances.  The tree height range is calculated as the total difference in height between the tallest and shortest visible dominant, codominant, and high intermediate trees. To most adequately represent the tree layer of interest, occasional occurrences of either very tall or very short trees should be ignored so that the vertical complexity indicated is for the majority of stems in the dominant, codominant, and high intermediate portion of each tree layer.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_cd_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_cd_1 IS 'The code indicating the type of tree species predominate or leading  in the tree layer. A "leading" species is identified as being the highest percent basal area or, if a very young stand, the relative number of stems per hectare.  Species are described in terms of Genus, Species and variety.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_pct_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_pct_1 IS 'Percentages of the layer that the leading species occupies. For older stands, tree species percentage is based on percent basal area or, if a very young stand, the relative number of stems per hectare.  Tree species percentage is estimated to the nearest percent for all living trees above a specified diameter.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_cd_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_cd_2 IS 'The code indicating the type of tree species second most dominate in the tree layer. A "second" species is identified in descending order of species percent from the "leading" species.  Species are described in terms of Genus, Species and variety.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_pct_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_pct_2 IS 'Percentages of the layer that the second most dominate species occupies. For older stands, tree species percentage is based on percent basal area or, if a very young stand, the relative number of stems per hectare.  Tree species percentage is estimated to the nearest percent for all living trees above a specified diameter.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_cd_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_cd_3 IS 'The code indicating the type of tree species third most dominate in the tree layer. A "third" species is identified in descending order of species percent from the "leading" species.  Species are described in terms of Genus, Species and variety.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_pct_3; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_pct_3 IS 'Percentages of the layer that the third most dominate species occupies. For older stands, tree species percentage is based on percent basal area or, if a very young stand, the relative number of stems per hectare.  Tree species percentage is estimated to the nearest percent for all living trees above a specified diameter.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_cd_4; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_cd_4 IS 'The code indicating the type of tree species fourth most dominate in the tree layer. The "fourth" species is identified in descending order of species percent from the "leading" species.  Species are described in terms of Genus, Species and variety.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_pct_4; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_pct_4 IS 'Percentages of the layer that the fourth most dominate species occupies. For older stands, tree species percentage is based on percent basal area or, if a very young stand, the relative number of stems per hectare.  Tree species percentage is estimated to the nearest percent for all living trees above a specified diameter.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_cd_5; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_cd_5 IS 'The code indicating the type of tree species fifth most dominate in the tree layer. The "fifth" species is identified in descending order of species percent from the "leading" species.  Species are described in terms of Genus, Species and variety.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_pct_5; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_pct_5 IS 'Percentages of the layer that the fifth most dominate species occupies. For older stands, tree species percentage is based on percent basal area or, if a very young stand, the relative number of stems per hectare.  Tree species percentage is estimated to the nearest percent for all living trees above a specified diameter.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_cd_6; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_cd_6 IS 'The code indicating the type of tree species sixth most dominate in the tree layer. The "sixth" species is identified in descending order of species percent from the "leading" species.  Species are described in terms of Genus, Species and variety.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.species_pct_6; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.species_pct_6 IS 'Percentages of the layer that the sixth most dominate species occupies. For older stands, tree species percentage is based on percent basal area or, if a very young stand, the relative number of stems per hectare.  Tree species percentage is estimated to the nearest percent for all living trees above a specified diameter.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_age_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_age_1 IS 'The age projected to the adjustment area ground sample date, for Species 1.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_age_class_cd_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_age_class_cd_1 IS 'The age projected to the adjustment area ground sample date, for Species 1. Classified by standard age classes.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_age_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_age_2 IS 'The age projected to the adjustment area ground sample date, for Species 2.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_age_class_cd_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_age_class_cd_2 IS 'The age projected to the adjustment area ground sample date, for Species 2. Classified by standard age classes.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.data_source_age_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.data_source_age_cd IS 'The source of data used for the interpretation of year of origin (age), for Species 1.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_height_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_height_1 IS 'The height projected to the adjustment area ground sample date, for Species 1.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_height_class_cd_1; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_height_class_cd_1 IS 'The height projected to the adjustment area ground sample date, for Species 1. Classified by standard height classes';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_height_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_height_2 IS 'The height projected to the adjustment area ground sample date, for Species 2.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.proj_height_class_cd_2; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.proj_height_class_cd_2 IS 'The height projected to the adjustment area ground sample date, for Species 2. Classified by standard height classes';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.data_source_height_cd; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.data_source_height_cd IS 'The source of data used for the interpretation of height, for Species 1.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp1_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp1_125 IS 'Net live volume per hectare of the leading species determined by percent basal area of the tree layer at the 12.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp1_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp1_175 IS 'Net live volume per hectare of the leading species determined by percent basal area of the tree layer at the 17.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp1_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp1_225 IS 'Net live volume per hectare of the leading species determined by percent basal area of the tree layer at the 22.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp2_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp2_125 IS 'Net live volume per hectare of the second species determined by percent basal area of the tree layer at the 12.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp2_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp2_175 IS 'Net live volume per hectare of the second species determined by percent basal area of the tree layer at the 17.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp2_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp2_225 IS 'Net live volume per hectare of the second species determined by percent basal area of the tree layer at the 22.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp3_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp3_125 IS 'Net live volume per hectare of the third species determined by percent basal area of the tree layer at the 12.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp3_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp3_175 IS 'Net live volume per hectare of the third species determined by percent basal area of the tree layer at the 17.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp3_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp3_225 IS 'Net live volume per hectare of the third species determined by percent basal area of the tree layer at the 22.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp4_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp4_125 IS 'Net live volume per hectare of the fourth species determined by percent basal area of the tree layer at the 12.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp4_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp4_175 IS 'Net live volume per hectare of the fourth species determined by percent basal area of the tree layer at the 17.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp4_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp4_225 IS 'Net live volume per hectare of the fourth species determined by percent basal area of the tree layer at the 22.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp5_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp5_125 IS 'Net live volume per hectare of the fifth species determined by percent basal area of the tree layer at the 12.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp5_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp5_175 IS 'Net live volume per hectare of the fifth species determined by percent basal area of the tree layer at the 17.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp5_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp5_225 IS 'Net live volume per hectare of the fifth species determined by percent basal area of the tree layer at the 22.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp6_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp6_125 IS 'Net live volume per hectare of the sixth species determined by percent basal area of the tree layer at the 12.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp6_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp6_175 IS 'Net live volume per hectare of the sixth species determined by percent basal area of the tree layer at the 17.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_vol_per_ha_spp6_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_vol_per_ha_spp6_225 IS 'Net live volume per hectare of the sixth species determined by percent basal area of the tree layer at the 22.5 cm utilization level.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp1_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp1_125 IS 'Net dead volume per hectare of the leading species determined by percent basal area of the tree layer at the 12.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp1_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp1_175 IS 'Net dead volume per hectare of the leading species determined by percent basal area of the tree layer at the 17.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp1_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp1_225 IS 'Net dead volume per hectare of the leading species determined by percent basal area of the tree layer at the 22.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp2_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp2_125 IS 'Net dead volume per hectare of the second species determined by percent basal area of the tree layer at the 12.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp2_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp2_175 IS 'Net dead volume per hectare of the second species determined by percent basal area of the tree layer at the 17.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp2_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp2_225 IS 'Net dead volume per hectare of the second species determined by percent basal area of the tree layer at the 22.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp3_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp3_125 IS 'Net dead volume per hectare of the third species determined by percent basal area of the tree layer at the 12.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp3_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp3_175 IS 'Net dead volume per hectare of the third species determined by percent basal area of the tree layer at the 17.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp3_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp3_225 IS 'Net dead volume per hectare of the third species determined by percent basal area of the tree layer at the 22.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp4_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp4_125 IS 'Net dead volume per hectare of the fourth species determined by percent basal area of the tree layer at the 12.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp4_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp4_175 IS 'Net dead volume per hectare of the fourth species determined by percent basal area of the tree layer at the 17.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp4_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp4_225 IS 'Net dead volume per hectare of the fourth species determined by percent basal area of the tree layer at the 22.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp5_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp5_125 IS 'Net dead volume per hectare of the fifth species determined by percent basal area of the tree layer at the 12.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp5_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp5_175 IS 'Net dead volume per hectare of the fifth species determined by percent basal area of the tree layer at the 17.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp5_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp5_225 IS 'Net dead volume per hectare of the fifth species determined by percent basal area of the tree layer at the 22.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp6_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp6_125 IS 'Net dead volume per hectare of the sixth species determined by percent basal area of the tree layer at the 12.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp6_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp6_175 IS 'Net dead volume per hectare of the sixth species determined by percent basal area of the tree layer at the 17.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_vol_per_ha_spp6_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_vol_per_ha_spp6_225 IS 'Net dead volume per hectare of the sixth species determined by percent basal area of the tree layer at the 22.5 cm utilization level and at the year of death.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_stand_volume_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_stand_volume_125 IS 'Total net volume per hectare of all live species determined by percent basal area of the tree layer at the 12.5 cm utilization level';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_stand_volume_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_stand_volume_175 IS 'Total net volume per hectare of all live species determined by percent basal area of the tree layer at the 17.5 cm utilization level';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.live_stand_volume_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.live_stand_volume_225 IS 'Total net volume per hectare of all live species determined by percent basal area of the tree layer at the 22.5 cm utilization level';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_stand_volume_125; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_stand_volume_125 IS 'Total net volume per hectare of all dead species determined by percent basal area of the tree layer at the 12.5 cm utilization level at the year of death for the stand';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_stand_volume_175; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_stand_volume_175 IS 'Total net volume per hectare of all dead species determined by percent basal area of the tree layer at the 17.5 cm utilization level at the year of death for the stand';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.dead_stand_volume_225; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.dead_stand_volume_225 IS 'Total net volume per hectare of all dead species determined by percent basal area of the tree layer at the 22.5 cm utilization level at the year of death for the stand';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.whole_stem_biomass_per_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.whole_stem_biomass_per_ha IS 'The total stem biomass per hectare of all species on a minimum diameter utilization of 4.0cm  expressed as tonnes/ha.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.branch_biomass_per_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.branch_biomass_per_ha IS 'The total branch biomass per hectare of all species on a minimum diameter utilization of 4.0cm  expressed as tonnes/ha.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.foliage_biomass_per_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.foliage_biomass_per_ha IS 'The total foliage biomass per hectare of all species on a minimum diameter utilization of 4.0cm  expressed as tonnes/ha.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.bark_biomass_per_ha; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.bark_biomass_per_ha IS 'The total bark biomass per hectare of all species on a minimum diameter utilization of 4.0cm  expressed as tonnes/ha.';
-
-
---
--- Name: COLUMN veg_comp_lyr_r1_poly.objectid; Type: COMMENT; Schema: whse_forest_vegetation; Owner: -
---
-
-COMMENT ON COLUMN whse_forest_vegetation.veg_comp_lyr_r1_poly.objectid IS 'OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.';
-
-
---
--- Name: veg_comp_lyr_r1_poly_feature_id_seq; Type: SEQUENCE; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE SEQUENCE whse_forest_vegetation.veg_comp_lyr_r1_poly_feature_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: veg_comp_lyr_r1_poly_feature_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_forest_vegetation; Owner: -
---
-
-ALTER SEQUENCE whse_forest_vegetation.veg_comp_lyr_r1_poly_feature_id_seq OWNED BY whse_forest_vegetation.veg_comp_lyr_r1_poly.feature_id;
-
-
---
--- Name: veg_consolidated_cut_blocks_sp_vccb_sysid_seq; Type: SEQUENCE; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE SEQUENCE whse_forest_vegetation.veg_consolidated_cut_blocks_sp_vccb_sysid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: veg_consolidated_cut_blocks_sp_vccb_sysid_seq; Type: SEQUENCE OWNED BY; Schema: whse_forest_vegetation; Owner: -
---
-
-ALTER SEQUENCE whse_forest_vegetation.veg_consolidated_cut_blocks_sp_vccb_sysid_seq OWNED BY whse_forest_vegetation.veg_consolidated_cut_blocks_sp.vccb_sysid;
+ALTER SEQUENCE whse_imagery_and_base_maps.mot_road_structure_sp_hwy_structure_class_id_seq OWNED BY whse_imagery_and_base_maps.mot_road_structure_sp.hwy_structure_class_id;
 
 
 --
@@ -7277,6 +4157,286 @@ CREATE SEQUENCE whse_legal_admin_boundaries.abms_municipalities_sp_lgl_admin_are
 --
 
 ALTER SEQUENCE whse_legal_admin_boundaries.abms_municipalities_sp_lgl_admin_area_id_seq OWNED BY whse_legal_admin_boundaries.abms_municipalities_sp.lgl_admin_area_id;
+
+
+--
+-- Name: og_petrlm_dev_rds_pre06_pub_sp; Type: TABLE; Schema: whse_mineral_tenure; Owner: -
+--
+
+CREATE TABLE whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp (
+    og_petrlm_dev_rd_pre06_pub_id integer NOT NULL,
+    ogc_file_number character varying(8),
+    application_received_date date,
+    petrlm_development_road_status character varying(20),
+    petrlm_development_road_num character varying(5),
+    petrlm_development_road_type character varying(9),
+    petrlm_development_road_name character varying(50),
+    proponent character varying(60),
+    source_data character varying(10),
+    feature_code character varying(10),
+    objectid numeric,
+    geom public.geometry(MultiLineString,3005)
+);
+
+
+--
+-- Name: TABLE og_petrlm_dev_rds_pre06_pub_sp; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON TABLE whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp IS 'PETRLM DEV RDS PRE06 PUB SP is a line layer representing spatial data for Petroleum Development Road Regulation (PDR) applications received before October 30, 2006 with a status of Approved, In Progress or Interim Approval.  Petroleum Development Road (PDR) applications can apply to proposed construction or to existing non status tenured roads over any Crown Land without disposition preventing road construction, and/or use of non-status, unencumbered existing access roads on Crown Land. These applications are approved under the Petroleum Natural Gas Act, Section 8 and subject to the Petroleum Development Road Regulation. Only sections of the proposed PDR located on Crown Land will be issued status under the Petroleum and Natural Gas Act, Section 8.  PDR status does not apply to sections of road located on private lands or Indian Reserve lands.   This is not a multipart feature class.';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.og_petrlm_dev_rd_pre06_pub_id; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.og_petrlm_dev_rd_pre06_pub_id IS 'OG PETRLM DEV RD PRE06 PUB ID is a system generated identifier to ensure row uniqueness.';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.ogc_file_number; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.ogc_file_number IS 'OGC FILE NUMBER is the file number assigned to each application for tracking purposes within the Oil and Gas Commission. E.g., 9632012';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.application_received_date; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.application_received_date IS 'APPLICATION RECEIVED DATE is the date the application is received and recorded into the Commission database.';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_status; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_status IS 'PETRLM DEVELOPMENT ROAD STATUS indicates the status of the Petroleum Development Road application. E.g., Approved';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_num; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_num IS 'PETRLM DEVELOPMENT ROAD NUM is a unique business identifier for a Petroleum Development Road.  E.g., 00616';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_type; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_type IS 'PETRLM DEVELOPMENT ROAD TYPE indicates winter access (frozen), low-grade access, or permanent all-weather (high-grade) access (WINTER, LOW or HIGH).';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_name; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.petrlm_development_road_name IS 'PETRLM DEVELOPMENT ROAD NAME is the name of the Petroleum Development Road as indicated by the operator on the application. E.g., Windflower Road';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.proponent; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.proponent IS 'PROPONENT is the organization name of the oil and gas operator.';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.source_data; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.source_data IS 'SOURCE DATA is the type of source file the spatial data was downloaded from.  E.g., ANSII';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.feature_code; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.feature_code IS 'FEATURE CODE contains a value based on the Canadian Council of Surveys and Mapping''s (CCSM) system for classification of geographic features. E.g., AR82000110';
+
+
+--
+-- Name: COLUMN og_petrlm_dev_rds_pre06_pub_sp.objectid; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase. ';
+
+
+--
+-- Name: og_petrlm_dev_rds_pre06_pub_s_og_petrlm_dev_rd_pre06_pub_id_seq; Type: SEQUENCE; Schema: whse_mineral_tenure; Owner: -
+--
+
+CREATE SEQUENCE whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_s_og_petrlm_dev_rd_pre06_pub_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: og_petrlm_dev_rds_pre06_pub_s_og_petrlm_dev_rd_pre06_pub_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_mineral_tenure; Owner: -
+--
+
+ALTER SEQUENCE whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_s_og_petrlm_dev_rd_pre06_pub_id_seq OWNED BY whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp.og_petrlm_dev_rd_pre06_pub_id;
+
+
+--
+-- Name: og_road_segment_permit_sp; Type: TABLE; Schema: whse_mineral_tenure; Owner: -
+--
+
+CREATE TABLE whse_mineral_tenure.og_road_segment_permit_sp (
+    og_road_segment_permit_id integer NOT NULL,
+    road_number character varying(10),
+    segment_number character varying(6),
+    road_width numeric,
+    road_type character varying(8),
+    road_type_desc character varying(80),
+    status character varying(40),
+    application_determination_num character varying(18),
+    activity_approval_date date,
+    activity_cancel_date date,
+    legacy_ogc_file_number character varying(16),
+    proponent character varying(120),
+    authority_type character varying(8),
+    data_source character varying(10),
+    objectid numeric,
+    geom public.geometry(MultiLineString,3005)
+);
+
+
+--
+-- Name: TABLE og_road_segment_permit_sp; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON TABLE whse_mineral_tenure.og_road_segment_permit_sp IS 'Road centre-lines associated with oil and gas road activity and falling within the area representing the road right of way.  This dataset contains line features for approved road centre-line locations collected on or after October 30, 2006.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.og_road_segment_permit_id; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.og_road_segment_permit_id IS 'OG_ROAD_SEGMENT_PERMIT_ID is a system generated unique identifier number.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.road_number; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.road_number IS 'ROAD_NUMBER is a unique business identifier for a road, e.g., 04167.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.segment_number; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.segment_number IS 'SEGMENT_NUMBER is a system generated identification number assigned to each road segment within a road area, e.g., 2.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.road_width; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.road_width IS 'ROAD_WIDTH is the proposed road width measured in metres to be constructed within the right of way.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.road_type; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.road_type IS 'ROAD_TYPE is the code indicating the specific type of oil and gas road, e.g., LTAW (Long-Term - All-Weather).';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.road_type_desc; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.road_type_desc IS 'ROAD_TYPE_DESC is the description indicating the specific type of oil and gas road, e.g., Long-Term - All-Weather (LTAW).';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.status; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.status IS 'STATUS is the status of the activity during the approval process, e.g., Approved.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.application_determination_num; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.application_determination_num IS 'APPLICATION_DETERMINATION_NUM is a number assigned to an approved or permitted activity or to a set of activities included in a multi-activity application, e.g., 100082189.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.activity_approval_date; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.activity_approval_date IS 'ACTIVITY_APPROVAL_DATE is the date the activity was approved by the Oil and Gas Commission.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.activity_cancel_date; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.activity_cancel_date IS 'ACTIVITY_CANCEL_DATE is the date the activity was cancelled by the Oil and Gas Commission.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.legacy_ogc_file_number; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.legacy_ogc_file_number IS 'LEGACY_OGC_FILE_NUMBER is the legacy OGC file number used for referencing applications submitted prior to July 11, 2016, e.g., 9631141.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.proponent; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.proponent IS 'PROPONENT is the organization name of the oil and gas operator, e.g., ARC Resources Ltd.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.authority_type; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.authority_type IS 'AUTHORITY_TYPE is the type of authorization issued by the Commission.  Authorizations are issued either under the Oil and Gas Activities Act (OGAA) or the National Energy Board (NEB), e.g., OGAA.';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.data_source; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.data_source IS 'DATA_SOURCE is the data capture method used to collect the spatial application data submitted to the Commission, i.e., GPSD (GPS-Differential), GPSND (GPS-Non Differential), ORTHO (Ortho Photography), CGWC (Coordinate Geometry With Control), SNK (Source Not Known).';
+
+
+--
+-- Name: COLUMN og_road_segment_permit_sp.objectid; Type: COMMENT; Schema: whse_mineral_tenure; Owner: -
+--
+
+COMMENT ON COLUMN whse_mineral_tenure.og_road_segment_permit_sp.objectid IS 'OBJECTID is a required attribute of feature classes and object classes in a geodatabase.';
+
+
+--
+-- Name: og_road_segment_permit_sp_og_road_segment_permit_id_seq; Type: SEQUENCE; Schema: whse_mineral_tenure; Owner: -
+--
+
+CREATE SEQUENCE whse_mineral_tenure.og_road_segment_permit_sp_og_road_segment_permit_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: og_road_segment_permit_sp_og_road_segment_permit_id_seq; Type: SEQUENCE OWNED BY; Schema: whse_mineral_tenure; Owner: -
+--
+
+ALTER SEQUENCE whse_mineral_tenure.og_road_segment_permit_sp_og_road_segment_permit_id_seq OWNED BY whse_mineral_tenure.og_road_segment_permit_sp.og_road_segment_permit_id;
 
 
 --
@@ -7530,17 +4690,31 @@ ALTER TABLE ONLY whse_admin_boundaries.fadm_tfl_all_sp ALTER COLUMN tfl_all_sysi
 
 
 --
+-- Name: gba_local_reg_greenspaces_sp local_reg_greenspace_id; Type: DEFAULT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.gba_local_reg_greenspaces_sp ALTER COLUMN local_reg_greenspace_id SET DEFAULT nextval('whse_basemapping.gba_local_reg_greenspaces_sp_local_reg_greenspace_id_seq'::regclass);
+
+
+--
+-- Name: gba_railway_tracks_sp railway_track_id; Type: DEFAULT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.gba_railway_tracks_sp ALTER COLUMN railway_track_id SET DEFAULT nextval('whse_basemapping.gba_railway_tracks_sp_railway_track_id_seq'::regclass);
+
+
+--
+-- Name: transport_line transport_line_id; Type: DEFAULT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.transport_line ALTER COLUMN transport_line_id SET DEFAULT nextval('whse_basemapping.transport_line_transport_line_id_seq'::regclass);
+
+
+--
 -- Name: pmbc_parcel_fabric_poly_svw parcel_fabric_poly_id; Type: DEFAULT; Schema: whse_cadastre; Owner: -
 --
 
 ALTER TABLE ONLY whse_cadastre.pmbc_parcel_fabric_poly_svw ALTER COLUMN parcel_fabric_poly_id SET DEFAULT nextval('whse_cadastre.pmbc_parcel_fabric_poly_svw_parcel_fabric_poly_id_seq'::regclass);
-
-
---
--- Name: fiss_stream_sample_sites_sp stream_sample_site_id; Type: DEFAULT; Schema: whse_fish; Owner: -
---
-
-ALTER TABLE ONLY whse_fish.fiss_stream_sample_sites_sp ALTER COLUMN stream_sample_site_id SET DEFAULT nextval('whse_fish.fiss_stream_sample_sites_sp_stream_sample_site_id_seq'::regclass);
 
 
 --
@@ -7572,13 +4746,6 @@ ALTER TABLE ONLY whse_fish.pscis_remediation_svw ALTER COLUMN stream_crossing_id
 
 
 --
--- Name: ften_managed_licence_poly_svw objectid; Type: DEFAULT; Schema: whse_forest_tenure; Owner: -
---
-
-ALTER TABLE ONLY whse_forest_tenure.ften_managed_licence_poly_svw ALTER COLUMN objectid SET DEFAULT nextval('whse_forest_tenure.ften_managed_licence_poly_svw_objectid_seq'::regclass);
-
-
---
 -- Name: ften_range_poly_svw objectid; Type: DEFAULT; Schema: whse_forest_tenure; Owner: -
 --
 
@@ -7586,24 +4753,10 @@ ALTER TABLE ONLY whse_forest_tenure.ften_range_poly_svw ALTER COLUMN objectid SE
 
 
 --
--- Name: ogsr_priority_def_area_cur_sp ogsr_pdac_sysid; Type: DEFAULT; Schema: whse_forest_vegetation; Owner: -
+-- Name: mot_road_structure_sp hwy_structure_class_id; Type: DEFAULT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-ALTER TABLE ONLY whse_forest_vegetation.ogsr_priority_def_area_cur_sp ALTER COLUMN ogsr_pdac_sysid SET DEFAULT nextval('whse_forest_vegetation.ogsr_priority_def_area_cur_sp_ogsr_pdac_sysid_seq'::regclass);
-
-
---
--- Name: veg_comp_lyr_r1_poly feature_id; Type: DEFAULT; Schema: whse_forest_vegetation; Owner: -
---
-
-ALTER TABLE ONLY whse_forest_vegetation.veg_comp_lyr_r1_poly ALTER COLUMN feature_id SET DEFAULT nextval('whse_forest_vegetation.veg_comp_lyr_r1_poly_feature_id_seq'::regclass);
-
-
---
--- Name: veg_consolidated_cut_blocks_sp vccb_sysid; Type: DEFAULT; Schema: whse_forest_vegetation; Owner: -
---
-
-ALTER TABLE ONLY whse_forest_vegetation.veg_consolidated_cut_blocks_sp ALTER COLUMN vccb_sysid SET DEFAULT nextval('whse_forest_vegetation.veg_consolidated_cut_blocks_sp_vccb_sysid_seq'::regclass);
+ALTER TABLE ONLY whse_imagery_and_base_maps.mot_road_structure_sp ALTER COLUMN hwy_structure_class_id SET DEFAULT nextval('whse_imagery_and_base_maps.mot_road_structure_sp_hwy_structure_class_id_seq'::regclass);
 
 
 --
@@ -7611,6 +4764,20 @@ ALTER TABLE ONLY whse_forest_vegetation.veg_consolidated_cut_blocks_sp ALTER COL
 --
 
 ALTER TABLE ONLY whse_legal_admin_boundaries.abms_municipalities_sp ALTER COLUMN lgl_admin_area_id SET DEFAULT nextval('whse_legal_admin_boundaries.abms_municipalities_sp_lgl_admin_area_id_seq'::regclass);
+
+
+--
+-- Name: og_petrlm_dev_rds_pre06_pub_sp og_petrlm_dev_rd_pre06_pub_id; Type: DEFAULT; Schema: whse_mineral_tenure; Owner: -
+--
+
+ALTER TABLE ONLY whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp ALTER COLUMN og_petrlm_dev_rd_pre06_pub_id SET DEFAULT nextval('whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_s_og_petrlm_dev_rd_pre06_pub_id_seq'::regclass);
+
+
+--
+-- Name: og_road_segment_permit_sp og_road_segment_permit_id; Type: DEFAULT; Schema: whse_mineral_tenure; Owner: -
+--
+
+ALTER TABLE ONLY whse_mineral_tenure.og_road_segment_permit_sp ALTER COLUMN og_road_segment_permit_id SET DEFAULT nextval('whse_mineral_tenure.og_road_segment_permit_sp_og_road_segment_permit_id_seq'::regclass);
 
 
 --
@@ -7667,19 +4834,75 @@ ALTER TABLE ONLY whse_admin_boundaries.fadm_tfl_all_sp
 
 
 --
+-- Name: dbm_mof_50k_grid dbm_mof_50k_grid_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.dbm_mof_50k_grid
+    ADD CONSTRAINT dbm_mof_50k_grid_pkey PRIMARY KEY (map_tile);
+
+
+--
+-- Name: gba_local_reg_greenspaces_sp gba_local_reg_greenspaces_sp_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.gba_local_reg_greenspaces_sp
+    ADD CONSTRAINT gba_local_reg_greenspaces_sp_pkey PRIMARY KEY (local_reg_greenspace_id);
+
+
+--
+-- Name: gba_railway_tracks_sp gba_railway_tracks_sp_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.gba_railway_tracks_sp
+    ADD CONSTRAINT gba_railway_tracks_sp_pkey PRIMARY KEY (railway_track_id);
+
+
+--
+-- Name: transport_line_divided_code transport_line_divided_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.transport_line_divided_code
+    ADD CONSTRAINT transport_line_divided_code_pkey PRIMARY KEY (transport_line_divided_code);
+
+
+--
+-- Name: transport_line transport_line_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.transport_line
+    ADD CONSTRAINT transport_line_pkey PRIMARY KEY (transport_line_id);
+
+
+--
+-- Name: transport_line_structure_code transport_line_structure_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.transport_line_structure_code
+    ADD CONSTRAINT transport_line_structure_code_pkey PRIMARY KEY (transport_line_structure_code);
+
+
+--
+-- Name: transport_line_surface_code transport_line_surface_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.transport_line_surface_code
+    ADD CONSTRAINT transport_line_surface_code_pkey PRIMARY KEY (transport_line_surface_code);
+
+
+--
+-- Name: transport_line_type_code transport_line_type_code_pkey; Type: CONSTRAINT; Schema: whse_basemapping; Owner: -
+--
+
+ALTER TABLE ONLY whse_basemapping.transport_line_type_code
+    ADD CONSTRAINT transport_line_type_code_pkey PRIMARY KEY (transport_line_type_code);
+
+
+--
 -- Name: pmbc_parcel_fabric_poly_svw pmbc_parcel_fabric_poly_svw_pkey; Type: CONSTRAINT; Schema: whse_cadastre; Owner: -
 --
 
 ALTER TABLE ONLY whse_cadastre.pmbc_parcel_fabric_poly_svw
     ADD CONSTRAINT pmbc_parcel_fabric_poly_svw_pkey PRIMARY KEY (parcel_fabric_poly_id);
-
-
---
--- Name: fiss_stream_sample_sites_sp fiss_stream_sample_sites_sp_pkey; Type: CONSTRAINT; Schema: whse_fish; Owner: -
---
-
-ALTER TABLE ONLY whse_fish.fiss_stream_sample_sites_sp
-    ADD CONSTRAINT fiss_stream_sample_sites_sp_pkey PRIMARY KEY (stream_sample_site_id);
 
 
 --
@@ -7739,14 +4962,6 @@ ALTER TABLE ONLY whse_fish.wdic_waterbodies
 
 
 --
--- Name: ften_managed_licence_poly_svw ften_managed_licence_poly_svw_pkey; Type: CONSTRAINT; Schema: whse_forest_tenure; Owner: -
---
-
-ALTER TABLE ONLY whse_forest_tenure.ften_managed_licence_poly_svw
-    ADD CONSTRAINT ften_managed_licence_poly_svw_pkey PRIMARY KEY (objectid);
-
-
---
 -- Name: ften_range_poly_svw ften_range_poly_svw_pkey; Type: CONSTRAINT; Schema: whse_forest_tenure; Owner: -
 --
 
@@ -7755,27 +4970,11 @@ ALTER TABLE ONLY whse_forest_tenure.ften_range_poly_svw
 
 
 --
--- Name: ogsr_priority_def_area_cur_sp ogsr_priority_def_area_cur_sp_pkey; Type: CONSTRAINT; Schema: whse_forest_vegetation; Owner: -
+-- Name: mot_road_structure_sp mot_road_structure_sp_pkey; Type: CONSTRAINT; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-ALTER TABLE ONLY whse_forest_vegetation.ogsr_priority_def_area_cur_sp
-    ADD CONSTRAINT ogsr_priority_def_area_cur_sp_pkey PRIMARY KEY (ogsr_pdac_sysid);
-
-
---
--- Name: veg_comp_lyr_r1_poly veg_comp_lyr_r1_poly_pkey; Type: CONSTRAINT; Schema: whse_forest_vegetation; Owner: -
---
-
-ALTER TABLE ONLY whse_forest_vegetation.veg_comp_lyr_r1_poly
-    ADD CONSTRAINT veg_comp_lyr_r1_poly_pkey PRIMARY KEY (feature_id);
-
-
---
--- Name: veg_consolidated_cut_blocks_sp veg_consolidated_cut_blocks_sp_pkey; Type: CONSTRAINT; Schema: whse_forest_vegetation; Owner: -
---
-
-ALTER TABLE ONLY whse_forest_vegetation.veg_consolidated_cut_blocks_sp
-    ADD CONSTRAINT veg_consolidated_cut_blocks_sp_pkey PRIMARY KEY (vccb_sysid);
+ALTER TABLE ONLY whse_imagery_and_base_maps.mot_road_structure_sp
+    ADD CONSTRAINT mot_road_structure_sp_pkey PRIMARY KEY (hwy_structure_class_id);
 
 
 --
@@ -7784,6 +4983,22 @@ ALTER TABLE ONLY whse_forest_vegetation.veg_consolidated_cut_blocks_sp
 
 ALTER TABLE ONLY whse_legal_admin_boundaries.abms_municipalities_sp
     ADD CONSTRAINT abms_municipalities_sp_pkey PRIMARY KEY (lgl_admin_area_id);
+
+
+--
+-- Name: og_petrlm_dev_rds_pre06_pub_sp og_petrlm_dev_rds_pre06_pub_sp_pkey; Type: CONSTRAINT; Schema: whse_mineral_tenure; Owner: -
+--
+
+ALTER TABLE ONLY whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp
+    ADD CONSTRAINT og_petrlm_dev_rds_pre06_pub_sp_pkey PRIMARY KEY (og_petrlm_dev_rd_pre06_pub_id);
+
+
+--
+-- Name: og_road_segment_permit_sp og_road_segment_permit_sp_pkey; Type: CONSTRAINT; Schema: whse_mineral_tenure; Owner: -
+--
+
+ALTER TABLE ONLY whse_mineral_tenure.og_road_segment_permit_sp
+    ADD CONSTRAINT og_road_segment_permit_sp_pkey PRIMARY KEY (og_road_segment_permit_id);
 
 
 --
@@ -7853,6 +5068,34 @@ CREATE INDEX idx_fadm_tfl_all_sp_geom ON whse_admin_boundaries.fadm_tfl_all_sp U
 
 
 --
+-- Name: idx_dbm_mof_50k_grid_geom; Type: INDEX; Schema: whse_basemapping; Owner: -
+--
+
+CREATE INDEX idx_dbm_mof_50k_grid_geom ON whse_basemapping.dbm_mof_50k_grid USING gist (geom);
+
+
+--
+-- Name: idx_gba_local_reg_greenspaces_sp_geom; Type: INDEX; Schema: whse_basemapping; Owner: -
+--
+
+CREATE INDEX idx_gba_local_reg_greenspaces_sp_geom ON whse_basemapping.gba_local_reg_greenspaces_sp USING gist (geom);
+
+
+--
+-- Name: idx_gba_railway_tracks_sp_geom; Type: INDEX; Schema: whse_basemapping; Owner: -
+--
+
+CREATE INDEX idx_gba_railway_tracks_sp_geom ON whse_basemapping.gba_railway_tracks_sp USING gist (geom);
+
+
+--
+-- Name: transport_line_geom_geom_idx; Type: INDEX; Schema: whse_basemapping; Owner: -
+--
+
+CREATE INDEX transport_line_geom_geom_idx ON whse_basemapping.transport_line USING gist (geom);
+
+
+--
 -- Name: idx_pmbc_parcel_fabric_poly_svw_geom; Type: INDEX; Schema: whse_cadastre; Owner: -
 --
 
@@ -7864,20 +5107,6 @@ CREATE INDEX idx_pmbc_parcel_fabric_poly_svw_geom ON whse_cadastre.pmbc_parcel_f
 --
 
 CREATE INDEX idx_fiss_fish_obsrvtn_pnt_sp_geom ON whse_fish.fiss_fish_obsrvtn_pnt_sp USING gist (geom);
-
-
---
--- Name: idx_fiss_obstacles_pnt_sp_geom; Type: INDEX; Schema: whse_fish; Owner: -
---
-
-CREATE INDEX idx_fiss_obstacles_pnt_sp_geom ON whse_fish.fiss_obstacles_pnt_sp USING gist (geom);
-
-
---
--- Name: idx_fiss_stream_sample_sites_sp_geom; Type: INDEX; Schema: whse_fish; Owner: -
---
-
-CREATE INDEX idx_fiss_stream_sample_sites_sp_geom ON whse_fish.fiss_stream_sample_sites_sp USING gist (geom);
 
 
 --
@@ -7923,13 +5152,6 @@ CREATE INDEX wdic_waterbodies_wbtrimidx ON whse_fish.wdic_waterbodies USING btre
 
 
 --
--- Name: idx_ften_managed_licence_poly_svw_geom; Type: INDEX; Schema: whse_forest_tenure; Owner: -
---
-
-CREATE INDEX idx_ften_managed_licence_poly_svw_geom ON whse_forest_tenure.ften_managed_licence_poly_svw USING gist (geom);
-
-
---
 -- Name: idx_ften_range_poly_svw_geom; Type: INDEX; Schema: whse_forest_tenure; Owner: -
 --
 
@@ -7944,122 +5166,10 @@ CREATE INDEX idx_ften_road_section_lines_svw_geom ON whse_forest_tenure.ften_roa
 
 
 --
--- Name: idx_ogsr_priority_def_area_cur_sp_geom; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
+-- Name: idx_mot_road_structure_sp_geom; Type: INDEX; Schema: whse_imagery_and_base_maps; Owner: -
 --
 
-CREATE INDEX idx_ogsr_priority_def_area_cur_sp_geom ON whse_forest_vegetation.ogsr_priority_def_area_cur_sp USING gist (geom);
-
-
---
--- Name: idx_veg_burn_severity_same_yr_sp_geom; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX idx_veg_burn_severity_same_yr_sp_geom ON whse_forest_vegetation.veg_burn_severity_same_yr_sp USING gist (geom);
-
-
---
--- Name: idx_veg_burn_severity_sp_geom; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX idx_veg_burn_severity_sp_geom ON whse_forest_vegetation.veg_burn_severity_sp USING gist (geom);
-
-
---
--- Name: idx_veg_comp_lyr_r1_poly_geom; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX idx_veg_comp_lyr_r1_poly_geom ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING gist (geom);
-
-
---
--- Name: idx_veg_consolidated_cut_blocks_sp_geom; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX idx_veg_consolidated_cut_blocks_sp_geom ON whse_forest_vegetation.veg_consolidated_cut_blocks_sp USING gist (geom);
-
-
---
--- Name: veg_comp_lyr_r1_poly_bclcs_level_1_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_bclcs_level_1_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (bclcs_level_1);
-
-
---
--- Name: veg_comp_lyr_r1_poly_bclcs_level_2_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_bclcs_level_2_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (bclcs_level_2);
-
-
---
--- Name: veg_comp_lyr_r1_poly_bclcs_level_3_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_bclcs_level_3_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (bclcs_level_3);
-
-
---
--- Name: veg_comp_lyr_r1_poly_bclcs_level_4_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_bclcs_level_4_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (bclcs_level_4);
-
-
---
--- Name: veg_comp_lyr_r1_poly_bclcs_level_5_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_bclcs_level_5_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (bclcs_level_5);
-
-
---
--- Name: veg_comp_lyr_r1_poly_for_mgmt_land_base_ind_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_for_mgmt_land_base_ind_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (for_mgmt_land_base_ind);
-
-
---
--- Name: veg_comp_lyr_r1_poly_inventory_standard_cd_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_inventory_standard_cd_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (inventory_standard_cd);
-
-
---
--- Name: veg_comp_lyr_r1_poly_map_id_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_map_id_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (map_id);
-
-
---
--- Name: veg_comp_lyr_r1_poly_non_productive_descriptor_cd_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_non_productive_descriptor_cd_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (non_productive_descriptor_cd);
-
-
---
--- Name: veg_comp_lyr_r1_poly_site_index_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_site_index_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (site_index);
-
-
---
--- Name: veg_comp_lyr_r1_poly_species_cd_1_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_species_cd_1_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (species_cd_1);
-
-
---
--- Name: veg_comp_lyr_r1_poly_species_pct_1_idx; Type: INDEX; Schema: whse_forest_vegetation; Owner: -
---
-
-CREATE INDEX veg_comp_lyr_r1_poly_species_pct_1_idx ON whse_forest_vegetation.veg_comp_lyr_r1_poly USING btree (species_pct_1);
+CREATE INDEX idx_mot_road_structure_sp_geom ON whse_imagery_and_base_maps.mot_road_structure_sp USING gist (geom);
 
 
 --
@@ -8074,6 +5184,20 @@ CREATE INDEX idx_abms_municipalities_sp_geom ON whse_legal_admin_boundaries.abms
 --
 
 CREATE INDEX idx_abms_regional_districts_sp_geom ON whse_legal_admin_boundaries.abms_regional_districts_sp USING gist (geom);
+
+
+--
+-- Name: idx_og_petrlm_dev_rds_pre06_pub_sp_geom; Type: INDEX; Schema: whse_mineral_tenure; Owner: -
+--
+
+CREATE INDEX idx_og_petrlm_dev_rds_pre06_pub_sp_geom ON whse_mineral_tenure.og_petrlm_dev_rds_pre06_pub_sp USING gist (geom);
+
+
+--
+-- Name: idx_og_road_segment_permit_sp_geom; Type: INDEX; Schema: whse_mineral_tenure; Owner: -
+--
+
+CREATE INDEX idx_og_road_segment_permit_sp_geom ON whse_mineral_tenure.og_road_segment_permit_sp USING gist (geom);
 
 
 --
@@ -8101,14 +5225,12 @@ CREATE INDEX idx_ta_park_ecores_pa_svw_geom ON whse_tantalis.ta_park_ecores_pa_s
 -- PostgreSQL database dump complete
 --
 
-
 --
 -- PostgreSQL database dump
 --
 
-
 -- Dumped from database version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
--- Dumped by pg_dump version 17.7 (Homebrew)
+-- Dumped by pg_dump version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20102,5 +17224,4 @@ ALTER TABLE ONLY bcfishpass.user_habitat_classification
 --
 -- PostgreSQL database dump complete
 --
-
 

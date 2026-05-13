@@ -9,7 +9,8 @@ CREATE SCHEMA IF NOT EXISTS whse_forest_tenure;
 CREATE SCHEMA IF NOT EXISTS whse_imagery_and_base_maps;
 CREATE SCHEMA IF NOT EXISTS whse_legal_admin_boundaries;
 CREATE SCHEMA IF NOT EXISTS whse_mineral_tenure;
-CREATE SCHEMA IF NOT EXISTS whse_tantalis;" > schema.sql
+CREATE SCHEMA IF NOT EXISTS whse_tantalis;
+CREATE SCHEMA IF NOT EXISTS bcdata;" > schema.sql
 
 # required tables not loaded via fwapg
 pg_dump $DATABASE_URL \
@@ -54,7 +55,6 @@ pg_dump $DATABASE_URL \
   --schema-only \
   --no-privileges \
   --no-owner \
-  --schema=bcdata \
   --schema=bcfishobs \
   --schema=cabd \
   --schema=bcfishpass >> schema.sql
