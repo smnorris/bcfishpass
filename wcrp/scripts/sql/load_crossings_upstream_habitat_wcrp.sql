@@ -113,12 +113,12 @@ BEGIN;
     s.watershed_group_code,
     
     -- *CHINOOK
-    coalesce(((sum(length_metre) filter (where s.spawning_ch > 0) / 1000))::numeric, 0) as ch_spawning_km,
-    coalesce(((sum(length_metre) filter (where s.rearing_ch > 0) / 1000))::numeric, 0) as ch_rearing_km,
-    coalesce(((sum(length_metre) filter (where s.spawning_ch > 0 OR s.rearing_ch > 0) / 1000))::numeric, 0) as ch_spawningrearing_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_ch > 0) / 1000))::numeric, 0), 2) as ch_spawning_km,
+    round(coalesce(((sum(length_metre) filter (where s.rearing_ch > 0) / 1000))::numeric, 0), 2) as ch_rearing_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_ch > 0 OR s.rearing_ch > 0) / 1000))::numeric, 0), 2) as ch_spawningrearing_km,
 
     -- *COHO
-    coalesce(((sum(length_metre) filter (where s.spawning_co > 0) / 1000))::numeric, 0) as co_spawning_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_co > 0) / 1000))::numeric, 0), 2) as co_spawning_km,
     -- coho rearing gets 50% boost in wetlands
     round(
       (
@@ -139,7 +139,7 @@ BEGIN;
     ) AS co_spawingrearing_km,
 
     -- *SOCKEYE
-    coalesce(((sum(length_metre) filter (where s.spawning_sk > 0) / 1000))::numeric, 0) as sk_spawning_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_sk > 0) / 1000))::numeric, 0), 2) as sk_spawning_km,
     -- all sockeye rearing gets 50% boost
     round(
       (
@@ -159,14 +159,14 @@ BEGIN;
     ) as sk_spawningrearing_km,
    
     -- *STEELHEAD
-    coalesce(((sum(length_metre) filter (where s.spawning_st > 0) / 1000))::numeric, 0) as st_spawning_km,
-    coalesce(((sum(length_metre) filter (where s.rearing_st > 0) / 1000))::numeric, 0) as st_rearing_km,
-    coalesce(((sum(length_metre) filter (where s.spawning_st > 0 OR s.rearing_st > 0) / 1000))::numeric, 0) as st_spawningrearing_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_st > 0) / 1000))::numeric, 0), 2) as st_spawning_km,
+    round(coalesce(((sum(length_metre) filter (where s.rearing_st > 0) / 1000))::numeric, 0), 2) as st_rearing_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_st > 0 OR s.rearing_st > 0) / 1000))::numeric, 0), 2) as st_spawningrearing_km,
     
     -- *WCT
-    coalesce(((sum(length_metre) filter (where s.spawning_wct > 0) / 1000))::numeric, 0) as wct_spawning_km,
-    coalesce(((sum(length_metre) filter (where s.rearing_wct > 0) / 1000))::numeric, 0) as wct_rearing_km,
-    coalesce(((sum(length_metre) filter (where s.spawning_wct > 0 OR s.rearing_wct > 0) / 1000))::numeric, 0) as wct_spawningrearing_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_wct > 0) / 1000))::numeric, 0), 2) as wct_spawning_km,
+    round(coalesce(((sum(length_metre) filter (where s.rearing_wct > 0) / 1000))::numeric, 0), 2) as wct_rearing_km,
+    round(coalesce(((sum(length_metre) filter (where s.spawning_wct > 0 OR s.rearing_wct > 0) / 1000))::numeric, 0), 2) as wct_spawningrearing_km,
 
     -- all spawning
     coalesce(round(((sum(length_metre) filter (
