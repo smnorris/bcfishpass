@@ -111,6 +111,26 @@ BEGIN;
   FROM bcfishpass.barriers_sidechannel_upstr_streams
   GROUP BY segmented_stream_id;
 
+  -- With list of streams having these barriers downstream collected above, update the access table accordingly
+  -- ***NOTES***
+  -- - ASSUMES ANY/ALL CROSSING RECORDS IN SIDECHANNEL WORKAROUND TABLE ARE PSCIS BARRIERS
+  -- - ASSUMES NO OTHER ANTHROPOGENIC BARRIERS ARE PRESENT DOWNSTREAM OF THE GIVEN PSCIS BARRIER 
+  --  (the side channel crossing is appended to the end of the barrier downstream list)
+  -- - does not update crossings_dnstr (this may already hold the crossing of interest)
+  -- - does not update remediated_dnst_ind 
+  UPDATE bcfishpass.streams_access a
+  SET
+    barriers_anthropogenic_dnstr = CASE
+      WHEN a.barriers_anthropogenic_dnstr IS NULL AND b.barriers_anthropogenic_dnstr IS NULL THEN NULL
+      ELSE COALESCE(a.barriers_anthropogenic_dnstr, '{}') || COALESCE(b.barriers_anthropogenic_dnstr, '{}')
+    END,
+    barriers_pscis_dnstr = CASE
+      WHEN a.barriers_pscis_dnstr IS NULL AND b.barriers_anthropogenic_dnstr IS NULL THEN NULL
+      ELSE COALESCE(a.barriers_pscis_dnstr, '{}') || COALESCE(b.barriers_anthropogenic_dnstr, '{}')
+    END
+  FROM bcfishpass.streams_dnstr_barriers_sidechannel b
+  WHERE a.segmented_stream_id = b.segmented_stream_id;
+
 
   -- find crossings upstream
   DROP TABLE IF EXISTS bcfishpass.barriers_sidechannel_upstr_barriers_anthropogenic;
