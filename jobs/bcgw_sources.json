@@ -78,12 +78,6 @@
         "primary_key": "geographical_names_id"
     },
     {
-        "source": "whse_environmental_monitoring.envcan_hydrometric_stn_sp",
-        "query": "",
-        "schedule": "M",
-        "primary_key": "hydrometric_station_id"
-    },
-    {
         "source": "whse_fish.fiss_stream_sample_sites_sp",
         "query": "",
         "schedule": "M",

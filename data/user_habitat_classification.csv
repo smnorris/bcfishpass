@@ -4118,7 +4118,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356336173,0,117,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356337463,0,5,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356337575,0,69,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
-356340139,71,756,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356341517,27,33,LNIC,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356341782,0,509,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356343581,0,26,LNIC,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
@@ -10435,17 +10434,12 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360886969,47400,47500,LNAR,CO,1,,SN,2023-08-17,FISS spawning points,
 360886969,47665,47765,LNAR,CO,1,,SN,2023-08-17,FISS spawning points,
 360886969,51298,51398,LNAR,CH,1,,SN,2023-08-17,FISS spawning points,
-356007932,167,267,LNIC,CO,1,,SN,2023-08-17,FISS spawning points,
-356007932,167,267,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
 356306914,110,210,LNIC,CH,1,,SN,2023-08-17,FISS spawning points,
 356334450,0,100,LNIC,CH,1,,SN,2023-08-17,FISS spawning points,
 356334450,0,100,LNIC,CO,1,,SN,2023-08-17,FISS spawning points,
 356334450,0,100,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
 356334450,3142,3242,LNIC,ST,1,,SN,2023-08-17,"Pacific Salmon Foundation; Clare Atkinson, Salmon Watersheds Program",source point snapped to closest stream within 250m
 356334450,3410,3510,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
-356340139,20,120,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
-356340139,705,805,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
-356340139,3209,3309,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,CH,1,,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,CO,1,,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
@@ -15212,7 +15206,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356357913,7230,7706,SAJR,CO,,-1,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
 356357913,7885,8068,SAJR,CO,,-1,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
 356357913,8300,10197,SAJR,CO,,-1,LB,2025-06-04,Cornice Assessment,"source indicates stream is susceptible to high summer water temps and low flows, no salmon in this area"
-356272780,784,1918,TAKL,SK,-1,,MC,2025-06-04,WSP report/Workshop,Habitat quality described as low due to steepness.  Lower 50m is likely on suitable for sockeye.
 356330991,875,1576,TAKL,SK,-1,,MC,2025-06-04,WSP report/Workshop,Numerous falls identified 0.6-0.8km upstream.  Channel in a confined gully and its suggested that sockeye only use first 200m.
 356343575,23919,27399,TAKL,SK,1,,MC,2025-06-04,WSP report/Workshop,Sockeye expected to travel 6km upstream to beaver dams.
 356348849,5880,23769,TAKL,SK,1,1,MC,2025-06-04,WSP report/Workshop,No barriers or falls identified.  Suggestion states sockeye likely use the lower 24km of stream
@@ -15629,3 +15622,68 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360604866,249,614,BELA,CO,,-1,LB,2026-04-24,Tracking table QA/QC,Mapped as intermittent stream but seasonal coho presense has been confirmed from mouth to end of accessible habitat.
 356352213,19283,19527,LNIC,ST,,1,LB,2026-04-24,Tracking table QA/QC,steelhead rearing confirmed to exist up to chattaway lake
 356334818,0,9030,LNIC,ST,,1,LB,2026-04-24,Tracking table QA/QC,steelhead rearing confirmed to exist up to chattaway lake
+360582427,513,800,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360582427,513,800,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360548556,0,50,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,no stream present
+360553627,237,832,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360553627,237,832,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,Only modeled habitat is through highway ballast
+360572049,132,1171,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360572049,132,1171,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,1600,1706,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,grassy swale
+360765090,400,900,LSKE,CH,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,CM,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,CO,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,PK,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,SK,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360765090,400,900,LSKE,ST,-1,-1,SN,2026-05-03,BR rail review,no stream or culvert
+360781260,484,4776,MORR,ST,,-1,MC,2026-05-01,Tracking table QA/QC,
+360398644,884,1683,MORR,ST,,-1,MC,2026-05-01,Tracking table QA/QC,
+360781260,1714,4776,MORR,CO,-1,-1,MC,2026-05-04,Tracking table QA/QC,
+360642299,0,2659,LDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360642299,0,2369,LDEN,CO,-1,,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360642299,0,2369,LDEN,CH,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360876735,2207,3639,UDEN,CH,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360876735,2207,3639,UDEN,CO,-1,,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360876735,2207,5324,UDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360876735,5581,5639,UDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360865801,320,483,UDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+360622669,229,266,UDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
+356334078,939,1422,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356342278,6504,6885,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356286343,794,916,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356363119,3025,3131,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356327057,1365,1429,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356255278,2371,2404,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356334088,0,1505,HORS,CO,,1,MC,2026-05-06,Tracking table QA/QC,
+356109181,239,679,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356354615,788,884,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356331732,548,573,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356174024,1181,1278,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356348664,503,2685,LNIC,ST,,-1,LB,2026-05-06,field assessment,"No suitable spawning habitat for salmon, excellent rearing habitat but too steep to access from Coldwater River."
+356276550,83,3873,LNIC,CO,1,,LB,2026-05-08,Tracking table QA/QC,
+356007932,0,167,LNIC,CO,1,,LB,2026-05-11,fish observation point,
+356007932,0,217,LNIC,CH,1,,LB,2026-05-11,fish observation point,
+356007932,0,167,LNIC,ST,1,,LB,2026-05-11,fish observation point,
+356340139,0,528,LNIC,ST,1,,LB,2026-05-11,,steelhead does not extend upstream of falls on Shackan Creek.

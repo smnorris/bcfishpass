@@ -3638,3 +3638,15 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 197967,1800050,,BULK,MC,Matching to correct modelled crossing
 203621,,,LNIC,LB,Linking this point to nothing to remove it from model.Removing duplicate
 203624,,,LNIC,LB,Linking this point to nothing to remove it from model.Removing duplicate
+203640,,,LNIC,LB,"Linking this point to nothing to remove it from model.  Feature does not exist, confirmed in PSCIS assessment comment."
+197761,6800240,,HORS,MC,Linking modelled crossing to lower ID
+198872,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
+197762,6800487,,HORS,MC,Linking modelled crossing to lower ID
+198873,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
+197763,6800657,,HORS,MC,Linking modelled crossing to lower ID
+198874,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
+198160,6800581,,HORS,MC,Linking modelled crossing to lower ID
+198161,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
+197764,6800648,,HORS,MC,Linking modelled crossing to lower ID
+198875,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
+198876,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate

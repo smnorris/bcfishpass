@@ -1,24 +1,5 @@
 BEGIN;
 
-  -- ---------------------------------
-  -- first, special handling for a few high impact crossings on side channels
-  -- ---------------------------------
-  DROP TABLE IF EXISTS bcfishpass.barriers_sidechannel_upstr_startpoints;
-
-  -- ** note all crossings on side channels of interest, plus starting point(s) on the network to be considered upstream**
-  -- For each crossing on side channel, add crossing id, blue line key and starting measure for any network position to be considered 
-  -- above the crossing in question. (Upstream habitat on the same blkey as the crossing will automatically be included)
-  CREATE TABLE bcfishpass.barriers_sidechannel_upstr_startpoints AS (
-    SELECT * FROM (VALUES 
-      ('197665', 360869846, 0),
-      ('198090', 360746107, 0),
-      ('198090', 360765936, 0),
-      ('203334', 360732514, 0),
-      ('203323', 360613085, 0),
-      ('203323', 360732514, 0)
-    ) as t(aggregated_crossings_id, blue_line_key, measure)
-  );
-
   -- note that this table doesn't exist in the standard load_crossings_upstream_habitat, data is generated in the query
   -- we retain it here for conveneince when working with barriers on FWA side channels
   DROP TABLE IF EXISTS bcfishpass.barriers_sidechannel_upstr_streams;
@@ -48,7 +29,7 @@ BEGIN;
       w.wct,
       s.edge_type,
       st_length(s.geom) as length_metre
-    from bcfishpass.barriers_sidechannel_upstr_startpoints a
+    from bcfishpass.crossings_sidechannel_upstream_startpoints a
     inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id
     inner join bcfishpass.streams s
       on c.blue_line_key = s.blue_line_key and (c.downstream_route_measure - .01) < s.downstream_route_measure
@@ -90,11 +71,11 @@ BEGIN;
       w.wct,
       s2.edge_type,
       st_length(s2.geom) as length_metre
-    from bcfishpass.barriers_sidechannel_upstr_startpoints a
-    inner join bcfishpass.streams s1 on a.blue_line_key = s1.blue_line_key and a.measure = s1.downstream_route_measure
+    from bcfishpass.crossings_sidechannel_upstream_startpoints a
+    inner join bcfishpass.streams s1 on a.blue_line_key = s1.blue_line_key and a.downstream_route_measure = s1.downstream_route_measure
     inner join bcfishpass.streams s2 on fwa_upstream(
       a.blue_line_key,
-      a.measure,
+      a.downstream_route_measure,
       s1.wscode_ltree,
       s1.localcode_ltree,
       s2.blue_line_key,
@@ -141,7 +122,7 @@ BEGIN;
       c2.localcode_ltree,
       c2.downstream_route_measure,
       c2.aggregated_crossings_id as features_upstr
-    from bcfishpass.barriers_sidechannel_upstr_startpoints a
+    from bcfishpass.crossings_sidechannel_upstream_startpoints a
     inner join bcfishpass.crossings c1 on a.aggregated_crossings_id = c1.aggregated_crossings_id
     inner join bcfishpass.crossings c2 on c1.blue_line_key = c2.blue_line_key and c1.downstream_route_measure < c2.downstream_route_measure and c2.aggregated_crossings_id != c1.aggregated_crossings_id
   ),
@@ -154,11 +135,11 @@ BEGIN;
       c.localcode_ltree,
       c.downstream_route_measure,
       c.aggregated_crossings_id as feature_upstr
-    from bcfishpass.barriers_sidechannel_upstr_startpoints a
-    inner join bcfishpass.streams s on a.blue_line_key = s.blue_line_key and a.measure = s.downstream_route_measure
+    from bcfishpass.crossings_sidechannel_upstream_startpoints a
+    inner join bcfishpass.streams s on a.blue_line_key = s.blue_line_key and a.downstream_route_measure = s.downstream_route_measure
     inner join bcfishpass.crossings c on fwa_upstream(
       a.blue_line_key,
-      a.measure,
+      a.downstream_route_measure,
       s.wscode_ltree,
       s.localcode_ltree,
       c.blue_line_key,

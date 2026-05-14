@@ -88,26 +88,18 @@ BEGIN;
     ch_spawning_belowupstrbarriers_km,
     ch_rearing_belowupstrbarriers_km,
     ch_spawningrearing_belowupstrbarriers_km,
-    cm_spawning_km,
-    cm_spawning_belowupstrbarriers_km,
     co_spawning_km,
     co_rearing_km,
     co_spawningrearing_km,
-    co_rearing_ha,
     co_spawning_belowupstrbarriers_km,
     co_rearing_belowupstrbarriers_km,
     co_spawningrearing_belowupstrbarriers_km,
-    co_rearing_belowupstrbarriers_ha,
-    pk_spawning_km,
-    pk_spawning_belowupstrbarriers_km,
     sk_spawning_km,
     sk_rearing_km,
     sk_spawningrearing_km,
-    sk_rearing_ha,
     sk_spawning_belowupstrbarriers_km,
     sk_rearing_belowupstrbarriers_km,
     sk_spawningrearing_belowupstrbarriers_km,
-    sk_rearing_belowupstrbarriers_ha,
     st_spawning_km,
     st_rearing_km,
     st_spawningrearing_km,
@@ -173,26 +165,18 @@ BEGIN;
    h.ch_spawning_belowupstrbarriers_km,
    h.ch_rearing_belowupstrbarriers_km,
    h.ch_spawningrearing_belowupstrbarriers_km,
-   h.cm_spawning_km,
-   h.cm_spawning_belowupstrbarriers_km,
    h.co_spawning_km,
-   h_wcrp.co_rearing_km,
-   h_wcrp.co_spawningrearing_km,
-   h.co_rearing_ha,
+   h.co_rearing_km,
+   h.co_spawningrearing_km,
    h.co_spawning_belowupstrbarriers_km,
-   h_wcrp.co_rearing_belowupstrbarriers_km,
-   h_wcrp.co_spawningrearing_belowupstrbarriers_km,
-   h.co_rearing_belowupstrbarriers_ha,
-   h.pk_spawning_km,
-   h.pk_spawning_belowupstrbarriers_km,
+   h.co_rearing_belowupstrbarriers_km,
+   h.co_spawningrearing_belowupstrbarriers_km,
    h.sk_spawning_km,
-   h_wcrp.sk_rearing_km,
-   h_wcrp.sk_spawningrearing_km,
-   h.sk_rearing_ha,
+   h.sk_rearing_km,
+   h.sk_spawningrearing_km,
    h.sk_spawning_belowupstrbarriers_km,
-   h_wcrp.sk_rearing_belowupstrbarriers_km,
-   h_wcrp.sk_spawningrearing_belowupstrbarriers_km,
-   h.sk_rearing_belowupstrbarriers_ha,
+   h.sk_rearing_belowupstrbarriers_km,
+   h.sk_spawningrearing_belowupstrbarriers_km,
    h.st_spawning_km,
    h.st_rearing_km,
    h.st_spawningrearing_km,
@@ -205,25 +189,24 @@ BEGIN;
    h.wct_spawning_belowupstrbarriers_km,
    h.wct_rearing_belowupstrbarriers_km,
    h.wct_spawningrearing_belowupstrbarriers_km,
-   h_wcrp.all_spawning_km,
-   h_wcrp.all_spawning_belowupstrbarriers_km,
-   h_wcrp.all_rearing_km,
-   h_wcrp.all_rearing_belowupstrbarriers_km,
-   h_wcrp.all_spawningrearing_km,
-   h_wcrp.all_spawningrearing_belowupstrbarriers_km,
+   h.all_spawning_km,
+   h.all_spawning_belowupstrbarriers_km,
+   h.all_rearing_km,
+   h.all_rearing_belowupstrbarriers_km,
+   h.all_spawningrearing_km,
+   h.all_spawningrearing_belowupstrbarriers_km,
    c.geom
-     FROM ((((((((((((bcfishpass.crossings c
-       JOIN bcfishpass.wcrp_watersheds w ON ((c.watershed_group_code = (w.watershed_group_code)::text)))
-       LEFT JOIN bcfishpass.crossings_dnstr_observations cdo ON ((c.aggregated_crossings_id = cdo.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_upstr_observations cuo ON ((c.aggregated_crossings_id = cuo.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_dnstr_crossings cd ON ((c.aggregated_crossings_id = cd.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_dnstr_barriers_anthropogenic ad ON ((c.aggregated_crossings_id = ad.aggregated_crossings_id)))
-       LEFT JOIN upstr_wcrp_barriers_list uwbl ON ((c.aggregated_crossings_id = uwbl.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_upstream_access a ON ((c.aggregated_crossings_id = a.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_upstream_habitat h ON ((c.aggregated_crossings_id = h.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.crossings_upstream_habitat_wcrp h_wcrp ON ((c.aggregated_crossings_id = h_wcrp.aggregated_crossings_id)))
-       LEFT JOIN bcfishpass.streams s ON ((c.linear_feature_id = s.linear_feature_id)))
-       LEFT JOIN whse_basemapping.dbm_mof_50k_grid t ON (public.st_intersects(c.geom, t.geom))))
+   FROM bcfishpass.crossings c
+   JOIN bcfishpass.wcrp_watersheds w ON c.watershed_group_code = w.watershed_group_code
+   LEFT JOIN bcfishpass.crossings_dnstr_observations cdo ON c.aggregated_crossings_id = cdo.aggregated_crossings_id
+   LEFT JOIN bcfishpass.crossings_upstr_observations cuo ON c.aggregated_crossings_id = cuo.aggregated_crossings_id
+   LEFT JOIN bcfishpass.crossings_dnstr_crossings cd ON c.aggregated_crossings_id = cd.aggregated_crossings_id
+   LEFT JOIN bcfishpass.crossings_dnstr_barriers_anthropogenic ad ON c.aggregated_crossings_id = ad.aggregated_crossings_id
+   LEFT JOIN upstr_wcrp_barriers_list uwbl ON c.aggregated_crossings_id = uwbl.aggregated_crossings_id
+   LEFT JOIN bcfishpass.crossings_upstream_access a ON c.aggregated_crossings_id = a.aggregated_crossings_id
+   LEFT JOIN bcfishpass.crossings_upstream_habitat_wcrp h ON c.aggregated_crossings_id = h.aggregated_crossings_id
+   LEFT JOIN bcfishpass.streams s ON c.linear_feature_id = s.linear_feature_id
+   LEFT JOIN whse_basemapping.dbm_mof_50k_grid t ON st_intersects(c.geom, t.geom)
   -- remove these PSCIS crossings from ranking/reporting
   WHERE (COALESCE(c.stream_crossing_id, 0) <> ALL (ARRAY[199427, 197789, 197838, 197861, 197805, 125961, 199428, 197891, 203633, 198883 ]))
   ORDER BY c.aggregated_crossings_id, s.downstream_route_measure;

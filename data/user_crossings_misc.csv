@@ -1,5 +1,4 @@
 user_crossing_misc_id,blue_line_key,downstream_route_measure,crossing_type,crossing_subtype,barrier_status,watershed_group_code,reviewer_name,review_date,source,notes
-1,356334818,3697,OTHER,WEIR,BARRIER,LNIC,FINS CONSULTING,2021-01-01,field assessment,0.8m high and 5m wide concrete weir with a concrete foot is impassable to fish. Located 25m u/s of culvert
 3,356348405,211,CBS,CULVERT,BARRIER,QUES,AL,2023-05-15,local knowledge,Long culvert based on information provided by Bo and Jake at LDN workshop.
 4,356348405,3235,CBS,CULVERT,BARRIER,QUES,AL,2023-05-15,local knowledge,"Culvert based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
 5,356136908,163,CBS,CULVERT,BARRIER,BOWR,AL,2023-05-15,local knowledge,"Ditch line crossing based on information provided by participants at LDN workshop (Chris Elden, West Fraser)."
@@ -25,3 +24,4 @@ user_crossing_misc_id,blue_line_key,downstream_route_measure,crossing_type,cross
 34,356360979,74145,OTHER,BEAVER_DAM,BARRIER,LTRE,MC,2026-03-10,Tuzistol meeting,
 35,356359054,8246,OTHER,BEAVER_DAM,BARRIER,TAKL,MC,2026-03-10,Tuzistol meeting,
 36,356535716,435,CBS,CULVERT,POTENTIAL,ELKR,MC,2026-04-01,imagery review,unmapped road with clearly visible culvert
+37,356342748,115,CBS,CULVERT,POTENTIAL,HORS,MC,2026-05-06,imagery review,

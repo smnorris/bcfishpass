@@ -75,17 +75,10 @@ def build_query(plan):
         sk_rearing_multiplier = "1.5" if "SK" in target_species else "1.0"
 
         if "CO" in target_species or "SK" in target_species:
+            co_sk_case = "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 when h.rearing_sk > 0 then 1.5 else 1.0 end"
             lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
-            lines.append(
-                f"{indent}sum(st_length(s.geom) * {co_all_multiplier}) filter (where greatest({rearing_expr}) > 0 {condition})"
-                + (f" + coalesce(sum(st_length(s.geom) * 0.5) filter (where h.rearing_sk > 0 {condition}), 0)" if "SK" in target_species else "")
-                + f" as {prefix}_rearing_all"
-            )
-            lines.append(
-                f"{indent}sum(st_length(s.geom) * {co_spawningrearing_multiplier if 'CO' in target_species else '1.0'}) filter (where greatest({spawning_rearing_expr}) > 0 {condition})"
-                + (f" + coalesce(sum(st_length(s.geom) * 0.5) filter (where h.rearing_sk > 0 {condition}), 0)" if "SK" in target_species else "")
-                + f" as {prefix}_spawningrearing_all"
-            )
+            lines.append(f"{indent}sum(st_length(s.geom) * {co_sk_case}) filter (where greatest({rearing_expr}) > 0 {condition}) as {prefix}_rearing_all")
+            lines.append(f"{indent}sum(st_length(s.geom) * {co_sk_case}) filter (where greatest({spawning_rearing_expr}) > 0 {condition}) as {prefix}_spawningrearing_all")
         else:
             lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
             lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({rearing_expr}) > 0 {condition}) as {prefix}_rearing_all")
