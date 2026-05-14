@@ -136,7 +136,7 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356284960,383,1048,HORS,CO,,-1,SH,2021-01-01,CWF WCRP,Very doubtful
 356285424,194,778,HORS,CO,,-1,SH,2021-01-01,CWF WCRP,"Molybdenite Creek - no record of salmon here, poor habitat"
 356286838,380,3804,HORS,CO,-1,-1,SH,2021-01-01,CWF WCRP,Tisdall Lake inlet
-356292307,45,510,HORS,CH,,1,SH,2021-01-01,CWF WCRP,Green Lake outlet
+356292307,45,178,HORS,CH,,1,MC,2026-05-14,Tracking table QA/QC,
 356294881,335,1524,HORS,CH,-1,-1,NMW,2021-01-01,DWB field assessment,
 356294881,335,1524,HORS,CO,-1,-1,NMW,2021-01-01,DWB field assessment,
 356294881,335,1524,HORS,SK,-1,-1,NMW,2021-01-01,DWB field assessment,
@@ -15142,7 +15142,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360871856,963,2637,BULK,CH,,-1,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2023,Gramophone Creek
 360871856,963,2637,BULK,CO,,-1,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2026,Gramophone Creek
 360884108,1057,1397,BULK,CO,,-1,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2028,Side channel off Gramophone Creek
-356292307,1813,1821,HORS,CO,,-1,MC,2024-12-09,Horsefly wcrp,Mckinley lake dam
 356362373,0,4061,LNIC,CH,1,,SN,2025-03-05,CWF,Chinook cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
 356362373,0,100,LNIC,ST,1,,SN,2025-03-05,CWF,
 356292659,822,1472,BONP,CO,,-1,LS,2025-03-11,Thompson Shuswap WCRP,No habitat in its current state. Runs through farm. Rainbow Trout records usptream.
@@ -15687,3 +15686,5 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356007932,0,217,LNIC,CH,1,,LB,2026-05-11,fish observation point,
 356007932,0,167,LNIC,ST,1,,LB,2026-05-11,fish observation point,
 356340139,0,528,LNIC,ST,1,,LB,2026-05-11,,steelhead does not extend upstream of falls on Shackan Creek.
+356292307,178,1850,HORS,CH,,-1,MC,2026-05-14,Tracking table QA/QC,
+356292307,178,1850,HORS,CO,,-1,MC,2026-05-14,Tracking table QA/QC,
