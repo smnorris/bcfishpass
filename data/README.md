@@ -76,7 +76,7 @@ add all unique starting points required to make an upstream trace. Do not includ
 |--------|------|-------------|
 | `aggregatred_crossings_id` | `text` | bcfishpass crossing id |
 | `blue_line_key` | `integer` | blue_line_key of stream(s) to consider as upstream of given crossing |
-| `blue_line_key` | `integer` | Starting point measure on the upstream stream/blue_line_key of interest |
+| `downstream_route_measure` | `integer` | Starting point measure on the upstream stream/blue_line_key of interest |
 
 
 ## dfo_known_sockeye_lakes.csv
