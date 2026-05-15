@@ -510,8 +510,14 @@ def generate_output_vw_species_cols(species:str) -> str:
     """
     return species_cols
 
+def filter_mining_altered_query(species:str) -> str:
+    species_cols = f"""
+            AND (rearing_{species} in (-4,-5) OR spawning_{species} in (-4,-5))
+    """
+    return species_cols
 
-def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, conn):
+
+def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_species, conn):
     """
     Runs the set of queries to rank barriers
 
@@ -618,6 +624,31 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, conn):
 
             """
         cursor.execute(q_make_table)
+
+        # Remove barriers on mining altered streams
+        q_mining_altered = f"""
+            with wsg as (
+                select watershed_group_code
+                from bcfishpass.wcrp_watersheds
+                where wcrp = '{wcrp_schema}'
+            )
+            ,mining_altered as (
+                select *
+                from bcfishpass.streams_vw
+                where watershed_group_code in (select * from wsg)
+
+        """
+        for species in target_species:
+            q_mining_altered += filter_mining_altered_query(species)
+        q_mining_altered += f"""
+            )
+            delete 
+            from bcfishpass.ranked_barriers rb
+            using mining_altered ma
+            where st_dwithin(ma.geom, rb.geom, 0.001);
+        """
+        cursor.execute(q_mining_altered);
+
 
         q_wcrp_rank_table = f"""
             -- Create a table to join crossings_wcrp_vw and wcrp_ranked_barriers fields in wcrp schema
@@ -889,11 +920,11 @@ def main():
     for wcrp in wcrp_process:
         print(f"Ranking barriers for WCRP: {wcrp}...")
         condition = '(' + str(plan_config_dict[str(wcrp)]['filter_clause']) + ')'
-        # condition = str(plan_config_dict[str(wcrp)]['filter_clause'])
+        target_species = [f"{s.lower()}" for s in plan_config_dict[str(wcrp)]['target_species']]
         wcrp_schema = str(plan_config_dict[str(wcrp)]['plan_schema'])
         connectivity_status_types = plan_config_dict[str(wcrp)]['connectivity_status_types']
         f_connectivity_status_types = [f"{s.split('_')[1]}_{s.split('_')[0]}" for s in connectivity_status_types] # need to reformat lifestage_species -> species_lifestage
-        runQuery(condition, wcrp, wcrp_schema, f_connectivity_status_types, conn)
+        runQuery(condition, wcrp, wcrp_schema, f_connectivity_status_types, target_species, conn)
         print("Done!")
 
 
