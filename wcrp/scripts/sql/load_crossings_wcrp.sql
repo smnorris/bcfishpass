@@ -3,48 +3,22 @@ BEGIN;
   TRUNCATE bcfishpass.crossings_wcrp;
 
   -- update crossings_upstr_barriers_anthropogenic with fixed upstream barriers for side channels (vs entire upstr watershed)
-  WITH adjusted_upstr_barriers_anthropogenic AS (
-
-    SELECT
-      aggregated_crossings_id,
-      array_agg(features_upstr) as features_upstr
-    FROM bcfishpass.barriers_sidechannel_upstr_barriers_anthropogenic AS b
-    GROUP BY aggregated_crossings_id
-
-    UNION ALL
-
-    SELECT 
-      aggregated_crossings_id, 
-      features_upstr
-    FROM bcfishpass.crossings_upstr_barriers_anthropogenic  AS a
-    WHERE NOT EXISTS (
-      SELECT 1 FROM bcfishpass.barriers_sidechannel_upstr_barriers_anthropogenic AS b
-      WHERE b.aggregated_crossings_id = a.aggregated_crossings_id
-    )
-  ),
-
-  -- find upstream crossings with wcrp 'all spawning rearing habitat' upstream   
-  upstr_wcrp_barriers AS (    
-    SELECT DISTINCT 
-      b.aggregated_crossings_id,
-      h.aggregated_crossings_id AS upstr_barriers
-     FROM adjusted_upstr_barriers_anthropogenic b
-     JOIN bcfishpass.crossings_upstream_habitat_wcrp h ON h.aggregated_crossings_id = ANY (b.features_upstr)
-    WHERE h.all_spawningrearing_km > (0)::double precision
-    ORDER BY b.aggregated_crossings_id, h.aggregated_crossings_id
-  ), 
-  
-  -- aggregate the upstream wcrp crossings into a list and count
-  upstr_wcrp_barriers_list AS (
-  
-      SELECT aggregated_crossings_id,
-        array_to_string(array_agg(upstr_barriers), ';'::text) AS barriers_anthropogenic_habitat_wcrp_upstr,
-        COALESCE(array_length(array_agg(upstr_barriers), 1), 0) AS barriers_anthropogenic_habitat_wcrp_upstr_count
-       FROM upstr_wcrp_barriers
-      GROUP BY aggregated_crossings_id
-      ORDER BY aggregated_crossings_id
-  )
-
+ WITH upstr_wcrp_barriers AS MATERIALIZED (
+         SELECT DISTINCT ba.aggregated_crossings_id,
+            h_1.aggregated_crossings_id AS upstr_barriers,
+            h_1.all_spawningrearing_km
+           FROM (bcfishpass.crossings_upstr_barriers_anthropogenic ba
+             JOIN bcfishpass.crossings_upstream_habitat_wcrp h_1 ON ((h_1.aggregated_crossings_id = ANY (ba.features_upstr))))
+          WHERE (h_1.all_spawningrearing_km > (0)::double precision)
+          ORDER BY ba.aggregated_crossings_id, h_1.aggregated_crossings_id
+        ), upstr_wcrp_barriers_list AS (
+         SELECT upstr_wcrp_barriers.aggregated_crossings_id,
+            array_to_string(array_agg(upstr_wcrp_barriers.upstr_barriers), ';'::text) AS barriers_anthropogenic_habitat_wcrp_upstr,
+            COALESCE(array_length(array_agg(upstr_wcrp_barriers.upstr_barriers), 1), 0) AS barriers_anthropogenic_habitat_wcrp_upstr_count
+           FROM upstr_wcrp_barriers
+          GROUP BY upstr_wcrp_barriers.aggregated_crossings_id
+          ORDER BY upstr_wcrp_barriers.aggregated_crossings_id
+        )
 
   INSERT INTO bcfishpass.crossings_wcrp (
     aggregated_crossings_id,

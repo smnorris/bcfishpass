@@ -261,28 +261,7 @@ BEGIN;
   -- ------------------
   -- now update sum for barriers with other barriers upstream
   -- ------------------
-  
-  with dnstr_barriers_anthropogenic AS (
-
-    -- update crossings_dnstr_barriers_anthropogenic with the side channel barriers
-    SELECT
-      aggregated_crossings_id,
-      features_dnstr
-    FROM bcfishpass.barriers_anthropogenic_dnstr_barriers_sidechannel AS b
-
-    UNION ALL
-
-    SELECT 
-      aggregated_crossings_id, 
-      features_dnstr
-    FROM bcfishpass.crossings_dnstr_barriers_anthropogenic AS a
-    WHERE NOT EXISTS (
-      SELECT 1 FROM bcfishpass.barriers_anthropogenic_dnstr_barriers_sidechannel AS b
-      WHERE b.aggregated_crossings_id = a.aggregated_crossings_id
-    )
-  ),
-
-  barriers as (
+  with barriers as (
     select
       h.aggregated_crossings_id,
       h.ch_spawning_km,
@@ -308,7 +287,7 @@ BEGIN;
     -- barriers only
     inner join bcfishpass.barriers_anthropogenic b on h.aggregated_crossings_id = b.barriers_anthropogenic_id
     -- get the dnstr barrier ids
-    left outer join dnstr_barriers_anthropogenic ad on h.aggregated_crossings_id = ad.aggregated_crossings_id
+    left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on h.aggregated_crossings_id = ad.aggregated_crossings_id
   ),
 
   above_upstream_barriers as
@@ -336,7 +315,6 @@ BEGIN;
     from bcfishpass.crossings_upstream_habitat_wcrp a
     inner join barriers b on a.aggregated_crossings_id = b.barriers_anthropogenic_dnstr[1]
     inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id
-    where c.blue_line_key = c.watershed_key  -- do not update crossings on side channels
     group by a.aggregated_crossings_id
   )
 
