@@ -341,4 +341,81 @@ BEGIN;
   from above_upstream_barriers b
   where a.aggregated_crossings_id = b.aggregated_crossings_id;
 
+  
+  -- update non-barriers with barrier upstream
+  with crossings as (
+    select
+      c.aggregated_crossings_id,
+      c.blue_line_key,
+      c.downstream_route_measure,
+      c.wscode_ltree,
+      c.localcode_ltree,
+      c.barrier_status,
+      ad.features_dnstr as barriers_anthropogenic_dnstr
+    from bcfishpass.crossings c
+    left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
+    and c.barrier_status in ('PASSABLE','UNKNOWN')  -- passable features / fords only
+    order by aggregated_crossings_id
+  ),
+
+  above_upstr_barriers as
+  (
+    select
+      c.aggregated_crossings_id,
+      sum(h.ch_spawning_km) as ch_spawning_km,
+      sum(h.ch_rearing_km) as ch_rearing_km,
+      sum(h.ch_spawningrearing_km) as ch_spawningrearing_km,
+      sum(h.co_spawning_km) as co_spawning_km,
+      sum(h.co_rearing_km) as co_rearing_km,
+      sum(h.co_spawningrearing_km) as co_spawningrearing_km,
+      sum(h.sk_spawning_km) as sk_spawning_km,
+      sum(h.sk_rearing_km) as sk_rearing_km,
+      sum(h.sk_spawningrearing_km) as sk_spawningrearing_km,
+      sum(h.st_spawning_km) as st_spawning_km,
+      sum(h.st_rearing_km) as st_rearing_km,
+      sum(h.st_spawningrearing_km) as st_spawningrearing_km,
+      
+      sum(h.wct_spawning_km) as wct_spawning_km,
+      sum(h.wct_rearing_km) as wct_rearing_km,
+      sum(h.wct_spawningrearing_km) as wct_spawningrearing_km,
+
+      sum(h.all_spawning_km) as all_spawning_km,
+      sum(h.all_rearing_km) as all_rearing_km,
+      sum(h.all_spawningrearing_km) as all_spawningrearing_km
+      
+    from crossings c
+    -- join to upstream barriers
+    inner join bcfishpass.barriers_anthropogenic b on
+       fwa_upstream(c.blue_line_key, c.downstream_route_measure, c.wscode_ltree, c.localcode_ltree, b.blue_line_key, b.downstream_route_measure, b.wscode_ltree, b.localcode_ltree)
+    left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on b.barriers_anthropogenic_id = ad.aggregated_crossings_id
+    inner join bcfishpass.crossings_upstream_habitat_wcrp h on b.barriers_anthropogenic_id = h.aggregated_crossings_id
+    -- upstream barriers must have the same next downstream crossing as the crossing of interest (or no crossing downstream)
+    where c.barriers_anthropogenic_dnstr[1] = ad.features_dnstr[1] or ad.features_dnstr is null
+    group by c.aggregated_crossings_id
+  )
+
+  update bcfishpass.crossings_upstream_habitat_wcrp a
+  set
+    ch_spawning_belowupstrbarriers_km = round((a.ch_spawning_km - b.ch_spawning_km)::numeric, 2),
+    ch_rearing_belowupstrbarriers_km = round((a.ch_rearing_km - b.ch_rearing_km)::numeric, 2),
+    ch_spawningrearing_belowupstrbarriers_km = round((a.ch_spawningrearing_km - b.ch_spawningrearing_km)::numeric, 2),
+    co_spawning_belowupstrbarriers_km = round((a.co_spawning_km - b.co_spawning_km)::numeric, 2),
+    co_rearing_belowupstrbarriers_km = round((a.co_rearing_km - b.co_rearing_km)::numeric, 2),
+    co_spawningrearing_belowupstrbarriers_km = round((a.co_spawningrearing_km - b.co_spawningrearing_km)::numeric, 2),
+    sk_spawning_belowupstrbarriers_km = round((a.sk_spawning_km - b.sk_spawning_km)::numeric, 2),
+    sk_rearing_belowupstrbarriers_km = round((a.sk_rearing_km - b.sk_rearing_km)::numeric, 2),
+    sk_spawningrearing_belowupstrbarriers_km = round((a.sk_spawningrearing_km - b.sk_spawningrearing_km)::numeric, 2),
+    st_spawning_belowupstrbarriers_km = round((a.st_spawning_km - b.st_spawning_km)::numeric, 2),
+    st_rearing_belowupstrbarriers_km = round((a.st_rearing_km - b.st_rearing_km)::numeric, 2),
+    st_spawningrearing_belowupstrbarriers_km = round((a.st_spawningrearing_km - b.st_spawningrearing_km)::numeric, 2),
+    wct_spawning_belowupstrbarriers_km = round((a.wct_spawning_km - b.wct_spawning_km)::numeric, 2),
+    wct_rearing_belowupstrbarriers_km = round((a.wct_rearing_km - b.wct_rearing_km)::numeric, 2),
+    wct_spawningrearing_belowupstrbarriers_km = round((a.wct_spawningrearing_km - b.wct_spawningrearing_km)::numeric, 2),
+
+    all_spawning_belowupstrbarriers_km = round((a.all_spawning_km - b.all_spawning_km)::numeric, 2),
+    all_rearing_belowupstrbarriers_km = round((a.all_rearing_km - b.all_rearing_km)::numeric, 2),
+    all_spawningrearing_belowupstrbarriers_km = round((a.all_spawningrearing_km - b.all_spawningrearing_km)::numeric, 2)
+   
+  from above_upstr_barriers b
+  where a.aggregated_crossings_id = b.aggregated_crossings_id;
 COMMIT;  
