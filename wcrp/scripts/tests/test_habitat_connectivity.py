@@ -48,6 +48,16 @@ def test_targeted_species_are_not_null():
 
 def test_sk_rearing_all_uses_case_statement():
     sql = build_query(make_plan(["SK"]))
+    assert "case when h.rearing_sk > 0 then 1.5 else 1.0 end" in sql
+
+
+def test_co_rearing_all_uses_case_statement():
+    sql = build_query(make_plan(["CO"]))
+    assert "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 else 1.0 end" in sql
+
+
+def test_skco_rearing_all_uses_case_statement():
+    sql = build_query(make_plan(["CO","SK"]))
     assert "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 when h.rearing_sk > 0 then 1.5 else 1.0 end" in sql
 
 
