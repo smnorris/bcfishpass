@@ -71,16 +71,22 @@ def build_query(plan):
                 lines.append(f"{indent}null as {prefix}_spawningrearing_{sp}")
 
         # _all aggregates
-        co_all_multiplier = f"case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 else 1.0 end" if "CO" in target_species else "1.0"
-        sk_rearing_multiplier = "1.5" if "SK" in target_species else "1.0"
-
+        lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
+        
+        # apply co/sk 1.5x only if present in the target species
         if "CO" in target_species or "SK" in target_species:
-            co_sk_case = "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 when h.rearing_sk > 0 then 1.5 else 1.0 end"
-            lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
+            # if both are target species
+            if "CO" in target_species and "SK" in target_species:
+                co_sk_case = "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 when h.rearing_sk > 0 then 1.5 else 1.0 end"
+            # if CO a target species but not SK
+            if "SK" not in target_species:
+                co_sk_case = "case when h.rearing_co > 0 and s.edge_type = 1050 then 1.5 else 1.0 end"
+            # if SK a target species but not CO
+            if "CO" not in target_species:
+                co_sk_case = "case when h.rearing_sk > 0 then 1.5 else 1.0 end"
             lines.append(f"{indent}sum(st_length(s.geom) * {co_sk_case}) filter (where greatest({rearing_expr}) > 0 {condition}) as {prefix}_rearing_all")
             lines.append(f"{indent}sum(st_length(s.geom) * {co_sk_case}) filter (where greatest({spawning_rearing_expr}) > 0 {condition}) as {prefix}_spawningrearing_all")
         else:
-            lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
             lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({rearing_expr}) > 0 {condition}) as {prefix}_rearing_all")
             lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_rearing_expr}) > 0 {condition}) as {prefix}_spawningrearing_all")
 
