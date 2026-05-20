@@ -74,6 +74,8 @@ def build_query(plan):
         lines.append(f"{indent}sum(st_length(s.geom)) filter (where greatest({spawning_expr}) > 0 {condition}) as {prefix}_spawning_all")
         
         # apply co/sk 1.5x only if present in the target species
+        # note that we don't have to worry about species presence in these summaries because
+        # presence is handled by the modelling - if species is not present in given wsg, no habitat is modelled or summarized
         if "CO" in target_species or "SK" in target_species:
             # if both are target species
             if "CO" in target_species and "SK" in target_species:
