@@ -134,53 +134,56 @@ BEGIN;
 
  -- update crossings_dnstr_barriers_anthropogenic, adding the side channel barriers where needed
  -- note that only barriers get updated/inserted
- 
+ -- truncate bcfishpass.crossings_dnstr_barriers_anthropogenic;
+ -- insert into bcfishpass.crossings_dnstr_barriers_anthropogenic select * from temp.crossings_dnstr_barriers_anthropogenic_bk;
  -- same bl (will only be other crossings on the same side channel)
  WITH same_bl AS (
     SELECT DISTINCT on (a.aggregated_crossings_id, c2.aggregated_crossings_id)
-      a.aggregated_crossings_id,
-      c2.aggregated_crossings_id as upstr
       
+      c2.aggregated_crossings_id,
+      a.aggregated_crossings_id as dnstr
     from bcfishpass.crossings_sidechannel_upstream_startpoints a
     inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id
     inner join bcfishpass.crossings c2
       on c.blue_line_key = c2.blue_line_key and (c.downstream_route_measure - .01) < c2.downstream_route_measure
     where a.aggregated_crossings_id != c2.aggregated_crossings_id
-    order by a.aggregated_crossings_id, c2.aggregated_crossings_id, c2.downstream_route_measure
+    order by a.aggregated_crossings_id, c2.aggregated_crossings_id, c2.downstream_route_measure desc
   ),
 
   -- upstream on different bl - ie, non sidechannel
   other_bl as (
    select
-      a.aggregated_crossings_id,
-      c.barriers_anthropogenic_id as upstr
+      b.barriers_anthropogenic_id as aggregated_crossings_id,
+      a.aggregated_crossings_id as dnstr
     from bcfishpass.crossings_sidechannel_upstream_startpoints a
     inner join bcfishpass.streams s1 on a.blue_line_key = s1.blue_line_key and a.downstream_route_measure = s1.downstream_route_measure
-    inner join bcfishpass.barriers_anthropogenic c on fwa_upstream(
+    inner join bcfishpass.bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id -- get measure of side channel barrier so we can order correctly
+    inner join bcfishpass.barriers_anthropogenic b on fwa_upstream(
       a.blue_line_key,
       a.downstream_route_measure,
       s1.wscode_ltree,
       s1.localcode_ltree,
-      c.blue_line_key,
-      c.downstream_route_measure,
-      c.wscode_ltree,
-      c.localcode_ltree,
+      b.blue_line_key,
+      b.downstream_route_measure,
+      b.wscode_ltree,
+      b.localcode_ltree,
       true,
       1
     )
+    order by b.barriers_anthropogenic_id, c.downstream_route_measure desc
   ),
 
   to_upsert as (
     select 
-      upstr as aggregated_crossings_id,
-      array_agg(aggregated_crossings_id) as features_dnstr
-    from 
-    (
-      SELECT * FROM same_bl
-      UNION ALL
-      SELECT * FROM other_bl
-    ) as f
-    group by f.upstr
+        aggregated_crossings_id,
+        array_agg(dnstr) as features_dnstr
+      from 
+      (
+        SELECT * FROM same_bl
+        UNION ALL
+        SELECT * FROM other_bl
+      ) as f
+    group by aggregated_crossings_id
   )
 
  INSERT INTO bcfishpass.crossings_dnstr_barriers_anthropogenic (aggregated_crossings_id, features_dnstr)

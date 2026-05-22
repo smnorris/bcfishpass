@@ -284,10 +284,11 @@ BEGIN;
       h.all_spawningrearing_km,
       ad.features_dnstr as barriers_anthropogenic_dnstr
     from bcfishpass.crossings_upstream_habitat_wcrp h
-    -- barriers only
-    inner join bcfishpass.barriers_anthropogenic b on h.aggregated_crossings_id = b.barriers_anthropogenic_id
+    -- get barrier status from crossings table (not barriers_anthropogenic, because that doesn't include side channel features)
+    inner join bcfishpass.crossings c on h.aggregated_crossings_id = c.aggregated_crossings_id
     -- get the dnstr barrier ids
     left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on h.aggregated_crossings_id = ad.aggregated_crossings_id
+    where c.barrier_status IN ('BARRIER', 'POTENTIAL')
   ),
 
   above_upstream_barriers as
@@ -342,6 +343,9 @@ BEGIN;
   where a.aggregated_crossings_id = b.aggregated_crossings_id;
 
   
+
+
+
   -- update non-barriers with barrier upstream
   with crossings as (
     select
@@ -354,7 +358,7 @@ BEGIN;
       ad.features_dnstr as barriers_anthropogenic_dnstr
     from bcfishpass.crossings c
     left outer join bcfishpass.crossings_dnstr_barriers_anthropogenic ad on c.aggregated_crossings_id = ad.aggregated_crossings_id
-    and c.barrier_status in ('PASSABLE','UNKNOWN')  -- passable features / fords only
+    where c.barrier_status in ('PASSABLE','UNKNOWN')  -- passable features / fords only
     order by aggregated_crossings_id
   ),
 
