@@ -22,7 +22,7 @@ $PSQL -f wcrp/scripts/sql/load_crossings_wcrp.sql
 python wcrp/scripts/habitat_connectivity.py load
 
 # rank barriers
-python jobs/rank_barriers.py 
+python wcrp/scripts/rank_barriers.py
 
 # generate token for azcopy
 expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
