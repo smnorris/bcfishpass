@@ -87,5 +87,5 @@ jobs:
         run:  |
           for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah ulkatcho takla
           do
-            python jobs/auto_rank.py $wcrp
+            python jobs/rank_barriers.py $wcrp
           done
