@@ -1,7 +1,7 @@
 watershed_group_code,bt,ch,cm,co,pk,sk,st,wct,notes,wcrp
 ATNA,,t,,t,,t,,,,bela_atna_necl
 BELA,,t,,t,,t,,,,bela_atna_necl
-BONP,,t,,t,,t,t,,,tho_shu
+BONP,,t,,t,,,t,,,tho_shu
 BOWR,,t,,t,,t,,,,bowr_ques_carr
 BULK,,t,,t,,t,t,,,bulk
 MORR,,t,,t,,t,t,,,morr

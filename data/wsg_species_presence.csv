@@ -169,7 +169,7 @@ PCEA,t,,,,,t,t,,t,,,,Mackenzie basin
 PINE,t,,,,,t,t,,t,,,,Mackenzie basin
 PITR,,,,,,t,,,t,,,,No target species observations
 PORI,,,t,t,t,t,,t,t,,t,,
-QUES,t,t,,t,,t,,t,t,t,,,
+QUES,t,t,,t,,t,,t,t,t,t,,
 REVL,t,,,,t,t,,,t,,,t,
 SAHD,,,,,,,t,,,,,,Mackenzie basin
 SAHT,,,,,,,,,,,,,Mackenzie basin
@@ -240,7 +240,7 @@ USHU,t,t,,t,t,t,,t,t,t,,t,
 USIK,t,,,,,,t,,t,,,,Mackenzie basin
 USKE,t,t,,t,,t,,,t,t,t,,
 USTK,,,,,t,t,t,,t,,t,,
-UTRE,t,,,,,t,,,t,t,,,
+UTRE,t,t,,,,t,,,t,t,,,
 VICT,,t,t,t,t,t,,,t,,t,,
 WILL,t,t,,t,t,t,,,t,,,,
 WORC,,t,t,t,t,t,,t,t,,t,,

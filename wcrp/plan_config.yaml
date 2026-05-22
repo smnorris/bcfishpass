@@ -72,7 +72,7 @@
 - plan_name: Thompson-Shuswap - Bonaparte
   plan_code: tho_shu_bonp
   plan_schema: tho_shu
-  target_species: [CH, CO, SK, ST]
+  target_species: [CH, CO, ST]
   connectivity_status_types: [spawningrearing_all]
   filter_clause: >-
     watershed_group_code = 'BONP'

@@ -5037,7 +5037,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 354154570,0,18451,TAHS,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 354155158,59,8652,TAHS,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356356462,3843,10116,TAKL,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
-356356811,28679,38669,TAKL,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356356811,28716,38612,TAKL,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356344651,4731,10876,TASR,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356361990,580,1380,TASR,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
@@ -5858,7 +5857,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356363594,62,162,BONP,PK,1,,SN,2023-08-17,FISS spawning points,
 356363594,62,162,BONP,ST,1,,SN,2023-08-17,FISS spawning points,
 356363594,1511,1611,BONP,PK,1,,SN,2023-08-17,FISS spawning points,
-356363594,1511,1611,BONP,SK,1,,SN,2023-08-17,FISS spawning points,
 356363594,2223,2323,BONP,CH,1,,SN,2023-08-17,FISS spawning points,
 356363594,2223,2323,BONP,CO,1,,SN,2023-08-17,FISS spawning points,
 356363594,2223,2323,BONP,PK,1,,SN,2023-08-17,FISS spawning points,
@@ -12958,7 +12956,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360878812,673,773,PORI,PK,1,,SN,2023-08-17,FISS spawning points,
 360878812,1022,1122,PORI,CO,1,,SN,2023-08-17,FISS spawning points,
 356028119,0,8,QUES,SK,1,,SN,2023-08-17,Pacific Salmon Foundation,
-356273721,880,980,QUES,ST,1,,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 356300713,751,3185,QUES,SK,1,,SN,2023-08-17,Pacific Salmon Foundation,
 356300713,1980,2080,QUES,CO,1,,SN,2023-08-17,FISS spawning points,
 356300713,3134,3234,QUES,SK,1,,SN,2023-08-17,FISS spawning points,
