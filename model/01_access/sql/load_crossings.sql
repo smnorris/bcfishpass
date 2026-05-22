@@ -644,7 +644,7 @@ with cft as (
     case
       when crossing_subtype_code = 'WEIR' then 'WEIR'
       when crossing_subtype_code = 'DAM' then 'DAM'
-      -- RAIL, pscis crossings within 50m of rail line and with RAIL in the road name
+      -- RAIL, pscis crossings within 50m of rail line and with RAIL in the road name OR modelled crossing comes from the rail line
       when
         rail_owner_name is not null
         and aggregated_crossings_id in (
@@ -654,7 +654,11 @@ with cft as (
           inner join whse_basemapping.gba_railway_tracks_sp r
           on st_dwithin(c.geom, r.geom, 50)
           where crossing_source = 'PSCIS'
-          and upper(pscis_road_name) like '%RAIL%' and upper(pscis_road_name) not like '%TRAIL%'
+          and 
+            (
+              (upper(pscis_road_name) like '%RAIL%' and upper(pscis_road_name) not like '%TRAIL%') OR  -- road name in PSCIS indicates railway OR
+              rail_owner_name is not null                                                              -- modelled crossing comes from rail line
+          )
         )
       then 'RAIL'
       -- RAIL, pscis crossings within 10m of rail line

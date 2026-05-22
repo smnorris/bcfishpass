@@ -511,7 +511,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 4800030,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
 4800017,NONE,EUCL,AL,2021-01-01,Bing/Google/ESRI imagery,no crossing
 1400183,OBS,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,
-1400300,NONE,BONP,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 500623,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 500624,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
 500646,NONE,BABL,NMW,2021-01-01,Bing/Google/ESRI imagery,no road/structure
@@ -20334,7 +20333,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 14000258,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14001634,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14000257,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
-1802044,PASSABLE,BULK,MC,2026-04-23,Tracking table QA/QC,
+1802044,OBS,BULK,MC,2026-05-08,Tracking table QA/QC,
 14001738,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14000178,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
 14001681,NONE,MORR,KK,2022-03-28,Bing/Google/ESRI imagery,no visible road
@@ -21850,3 +21849,6 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 24725561,NONE,UDEN,LB,2026-05-05,Satellite imagery review,
 22000905,NONE,UDEN,LB,2026-05-05,Satellite imagery review,
 24725596,NONE,UDEN,LB,2026-05-05,Satellite imagery review,
+1800752,FORD,BULK,MC,2026-05-08,Tracking table QA/QC,
+8800088,OBS,KLUM,SN,2026-05-11,MOT structures,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
+8800044,OBS,KLUM,SN,2026-05-11,MOT structures,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary

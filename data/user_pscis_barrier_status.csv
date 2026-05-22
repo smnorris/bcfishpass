@@ -1275,7 +1275,7 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 123776,PASSABLE,BULK,TMK,2022-12-20,recent bridge replacement
 197955,PASSABLE,BULK,TMK,2022-12-20,ford
 197914,PASSABLE,BULK,TMK,2022-12-20,ford crossing
-197964,PASSABLE,BULK,TMK,2022-12-20,based on assessment comments (and imagery review where required)
+197964,BARRIER,BULK,MC,2026-05-08,Tracking table QA/QC
 197913,PASSABLE,BULK,TMK,2022-12-20,ford crossing
 1006800298,PASSABLE,HORS,TMK,2022-02-07,no crossing
 1006800581,PASSABLE,HORS,TMK,2022-02-07,passable in PSCIS
@@ -1380,3 +1380,9 @@ stream_crossing_id,user_barrier_status,watershed_group_code,reviewer_name,review
 199424,BARRIER,HORS,MC,2026-05-06,Tracking table QA/QC
 126602,BARRIER,HORS,MC,2026-05-06,Tracking table QA/QC
 126597,PASSABLE,HORS,MC,2026-05-06,Tracking table QA/QC
+123393,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
+123392,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
+123426,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
+195498,PASSABLE,BULK,MC,2026-05-08,Tracking table QA/QC
+203151,PASSABLE,BULK,MC,2026-05-12,Tracking table QA/QC
+203142,BARRIER,BULK,MC,2026-05-12,Tracking table QA/QC

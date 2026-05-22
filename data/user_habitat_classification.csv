@@ -136,7 +136,7 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356284960,383,1048,HORS,CO,,-1,SH,2021-01-01,CWF WCRP,Very doubtful
 356285424,194,778,HORS,CO,,-1,SH,2021-01-01,CWF WCRP,"Molybdenite Creek - no record of salmon here, poor habitat"
 356286838,380,3804,HORS,CO,-1,-1,SH,2021-01-01,CWF WCRP,Tisdall Lake inlet
-356292307,45,510,HORS,CH,,1,SH,2021-01-01,CWF WCRP,Green Lake outlet
+356292307,45,178,HORS,CH,,1,MC,2026-05-14,Tracking table QA/QC,
 356294881,335,1524,HORS,CH,-1,-1,NMW,2021-01-01,DWB field assessment,
 356294881,335,1524,HORS,CO,-1,-1,NMW,2021-01-01,DWB field assessment,
 356294881,335,1524,HORS,SK,-1,-1,NMW,2021-01-01,DWB field assessment,
@@ -4118,7 +4118,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356336173,0,117,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356337463,0,5,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356337575,0,69,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
-356340139,71,756,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356341517,27,33,LNIC,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356341782,0,509,LNIC,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356343581,0,26,LNIC,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
@@ -5038,7 +5037,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 354154570,0,18451,TAHS,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 354155158,59,8652,TAHS,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356356462,3843,10116,TAKL,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
-356356811,28679,38669,TAKL,CO,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356356811,28716,38612,TAKL,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356344651,4731,10876,TASR,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356361990,580,1380,TASR,CH,1,,SN,2023-08-11,Pacific Salmon Foundation,
@@ -5859,7 +5857,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356363594,62,162,BONP,PK,1,,SN,2023-08-17,FISS spawning points,
 356363594,62,162,BONP,ST,1,,SN,2023-08-17,FISS spawning points,
 356363594,1511,1611,BONP,PK,1,,SN,2023-08-17,FISS spawning points,
-356363594,1511,1611,BONP,SK,1,,SN,2023-08-17,FISS spawning points,
 356363594,2223,2323,BONP,CH,1,,SN,2023-08-17,FISS spawning points,
 356363594,2223,2323,BONP,CO,1,,SN,2023-08-17,FISS spawning points,
 356363594,2223,2323,BONP,PK,1,,SN,2023-08-17,FISS spawning points,
@@ -10435,17 +10432,12 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360886969,47400,47500,LNAR,CO,1,,SN,2023-08-17,FISS spawning points,
 360886969,47665,47765,LNAR,CO,1,,SN,2023-08-17,FISS spawning points,
 360886969,51298,51398,LNAR,CH,1,,SN,2023-08-17,FISS spawning points,
-356007932,167,267,LNIC,CO,1,,SN,2023-08-17,FISS spawning points,
-356007932,167,267,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
 356306914,110,210,LNIC,CH,1,,SN,2023-08-17,FISS spawning points,
 356334450,0,100,LNIC,CH,1,,SN,2023-08-17,FISS spawning points,
 356334450,0,100,LNIC,CO,1,,SN,2023-08-17,FISS spawning points,
 356334450,0,100,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
 356334450,3142,3242,LNIC,ST,1,,SN,2023-08-17,"Pacific Salmon Foundation; Clare Atkinson, Salmon Watersheds Program",source point snapped to closest stream within 250m
 356334450,3410,3510,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
-356340139,20,120,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
-356340139,705,805,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
-356340139,3209,3309,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,CH,1,,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,CO,1,,SN,2023-08-17,FISS spawning points,
 356344024,0,100,LNIC,ST,1,,SN,2023-08-17,FISS spawning points,
@@ -12964,7 +12956,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360878812,673,773,PORI,PK,1,,SN,2023-08-17,FISS spawning points,
 360878812,1022,1122,PORI,CO,1,,SN,2023-08-17,FISS spawning points,
 356028119,0,8,QUES,SK,1,,SN,2023-08-17,Pacific Salmon Foundation,
-356273721,880,980,QUES,ST,1,,SN,2023-08-17,Pacific Salmon Foundation; survey stream,source point snapped to closest stream within 250m
 356300713,751,3185,QUES,SK,1,,SN,2023-08-17,Pacific Salmon Foundation,
 356300713,1980,2080,QUES,CO,1,,SN,2023-08-17,FISS spawning points,
 356300713,3134,3234,QUES,SK,1,,SN,2023-08-17,FISS spawning points,
@@ -15148,7 +15139,6 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360871856,963,2637,BULK,CH,,-1,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2023,Gramophone Creek
 360871856,963,2637,BULK,CO,,-1,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2026,Gramophone Creek
 360884108,1057,1397,BULK,CO,,-1,LB,2024-10-23,Bulkley Watershed Fish Passage Restoration Planning 2028,Side channel off Gramophone Creek
-356292307,1813,1821,HORS,CO,,-1,MC,2024-12-09,Horsefly wcrp,Mckinley lake dam
 356362373,0,4061,LNIC,CH,1,,SN,2025-03-05,CWF,Chinook cannot currently pass falls 988edf7b-b0ca-4fc7-b2f6-7b241b1c629c
 356362373,0,100,LNIC,ST,1,,SN,2025-03-05,CWF,
 356292659,822,1472,BONP,CO,,-1,LS,2025-03-11,Thompson Shuswap WCRP,No habitat in its current state. Runs through farm. Rainbow Trout records usptream.
@@ -15677,7 +15667,7 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 360865801,320,483,UDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
 360622669,229,266,UDEN,CO,,-1,LB,2026-05-05,Satellite imagery review,this stream does not exist
 356334078,939,1422,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
-356342278,6532,6885,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
+356342278,6504,6885,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
 356286343,794,916,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
 356363119,3025,3131,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
 356327057,1365,1429,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
@@ -15688,3 +15678,21 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356331732,548,573,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
 356174024,1181,1278,HORS,CO,,-1,MC,2026-05-06,Tracking table QA/QC,
 356348664,503,2685,LNIC,ST,,-1,LB,2026-05-06,field assessment,"No suitable spawning habitat for salmon, excellent rearing habitat but too steep to access from Coldwater River."
+356276550,83,3873,LNIC,CO,1,,LB,2026-05-08,Tracking table QA/QC,
+356007932,0,167,LNIC,CO,1,,LB,2026-05-11,fish observation point,
+356007932,0,217,LNIC,CH,1,,LB,2026-05-11,fish observation point,
+356007932,0,167,LNIC,ST,1,,LB,2026-05-11,fish observation point,
+356340139,0,528,LNIC,ST,1,,LB,2026-05-11,,steelhead does not extend upstream of falls on Shackan Creek.
+356292307,178,1850,HORS,CH,,-1,MC,2026-05-14,Tracking table QA/QC,
+356292307,178,1850,HORS,CO,,-1,MC,2026-05-14,Tracking table QA/QC,
+360865296,0,187,BELA,CH,1,,LB,2026-05-15,fish observation point,
+360834784,0,308,BELA,CH,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360878501,22792,22933,BELA,CH,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360878501,22792,22933,BELA,CO,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360878501,17754,18736,BELA,SK,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360883188,923,955,BELA,CH,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360219377,208,376.4409316,BELA,CO,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360686071,0,367,BELA,CO,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+360880012,0,4872,BELA,SK,1,,LB,2026-05-15,fish observation point,Fish observed at this point or zone
+356342626,279,308,BONP,CO,,-1,LB,2026-05-21,PSCIS assessment point,"The stream is dry. 15m downstream from culvert stream disapates into a small wetland with no channel/no continuous channel. Seasonal flow only. Culvert is placed in non classified drainage. Watercourse in 150m has discontinoued 10m distinct channel section does't have aluvium, isnt scoured to mineral soil. Not fish baring."
+356342626,368,407,BONP,CO,,-1,LB,2026-05-22,PSCIS assessment point,"The stream is dry. 15m downstream from culvert stream disapates into a small wetland with no channel/no continuous channel. Seasonal flow only. Culvert is placed in non classified drainage. Watercourse in 150m has discontinoued 10m distinct channel section does't have aluvium, isnt scoured to mineral soil. Not fish baring."
