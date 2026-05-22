@@ -19,12 +19,11 @@ $PSQL -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
 # (only crossings with wcrp habitat upstream are included)
 $PSQL -f wcrp/scripts/sql/load_crossings_wcrp.sql
 
-# rank the crossings
-python wcrp/scripts/auto_rank.py 
-
 # summarize and log connectivity
 python wcrp/scripts/habitat_connectivity.py load
 
+# rank the crossings
+python wcrp/scripts/auto_rank.py 
 
 # generate token for azcopy
 expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
