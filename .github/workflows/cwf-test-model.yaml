@@ -98,4 +98,4 @@ jobs:
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
           psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_wcrp.sql
           python wcrp/scripts/habitat_connectivity.py load        
-          python wcrp/rank_barriers.py
+          python wcrp/scripts/rank_barriers.py
