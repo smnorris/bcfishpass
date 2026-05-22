@@ -25,9 +25,6 @@ def makeParser():
         help="WCRP that will be processed. Can be any in list form but, default is set to all."
     )
     return p
-
-
-def buildCondition(wcrp:str):
     """
     Builds the where clause to pass into the
     query as the condition
@@ -653,7 +650,7 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
         q_wcrp_rank_table = f"""
             -- Create a table to join crossings_wcrp_vw and wcrp_ranked_barriers fields in wcrp schema
 
-            DROP TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp}_all_species CASCADE;
+            DROP TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp} CASCADE;
 
             with crossings as (
                 select *
@@ -762,7 +759,7 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
 
         q_wcrp_rank_table += f"""
                 ,cv.geom
-            into wcrp_{wcrp_schema}.ranked_barriers_{wcrp}_all_species
+            into wcrp_{wcrp_schema}.ranked_barriers_{wcrp}
             from crossings c
             inner join bcfishpass.ranked_barriers r
                 on c.aggregated_crossings_id = r.aggregated_crossings_id
@@ -772,112 +769,6 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
         """
         cursor.execute(q_wcrp_rank_table)
 
-        # cursor.execute("""
-        #             DROP TABLE bcfishpass.ranked_barriers;
-        #                """)
-        
-        output_vw_species_cols = ''
-        output_vw_rank_cols = ''
-        for species_lifestage in connectivity_status_types:
-            output_vw_species_cols += generate_output_vw_species_cols(species_lifestage)
-            output_vw_rank_cols += wcrp_rank_table_cols(species_lifestage)
-        
-        condition_wcrp_vw = condition.replace('_ltree', '') # have to replace _ltree in yaml filter clause when filtering on crossings_wcrp_vw
-        q_replace_vw = f"""
-                    drop table if exists wcrp_{wcrp_schema}.crossings_wcrp_vw_copy cascade;
-
-                    select c.*
-                    into wcrp_{wcrp_schema}.crossings_wcrp_vw_copy
-                    from bcfishpass.crossings_wcrp_vw c
-                    WHERE {condition_wcrp_vw};
-
-                    CREATE OR REPLACE VIEW wcrp_{wcrp_schema}.combined_output_table_all_species_vw
-                    AS
-                    SELECT cv.aggregated_crossings_id
-                        ,tt.barrier_id
-                        ,tt.internal_name
-                        ,cv.crossing_source
-                        ,cv.crossing_feature_type
-                        ,cv.crossing_type_code
-                        ,cv.barrier_status
-                        ,cv.transport_line_structured_name_1
-                        ,cv.rail_track_name
-                        ,cv.blue_line_key
-                        ,tt.watercourse_name
-                        ,tt.road_name
-                        ,tt.structure_type
-                        ,tt.structure_owner
-                        ,tt.private_owner_details
-                        ,tt.structure_list_status
-                        ,tt.assessment_type_completed
-                        ,tt.reason_for_exclusion
-                        ,tt.method_of_exclusion
-                        ,tt.partial_passability
-                        ,tt.partial_passability_notes
-                        ,tt.upstream_habitat_quality
-                        ,tt.constructability
-                        ,tt."estimated_cost_$"
-                        ,tt.priority
-                        ,tt.type_of_rehabilitation
-                        ,tt.rehabilitated_by
-                        ,tt.rehabilitated_date
-                        ,tt."estimated_rehabilitation_cost_$"
-                        ,tt."actual_project_cost_$"
-                        ,tt.next_steps
-                        ,tt.timeline_for_next_steps
-                        ,tt.lead_for_next_steps
-                        ,tt.others_involved_in_next_steps
-                        ,tt.reason
-                        ,tt.notes
-                        ,tt.supporting_links
-                        ,cv.modelled_crossing_id
-                        ,cv.pscis_status
-                        ,cv.crossing_subtype_code
-                        ,cv.pscis_road_name
-                        ,cv.pscis_stream_name
-                        ,cv.pscis_assessment_comment
-                        ,cv.pscis_assessment_date
-                        ,cv.dam_name
-                        ,cv.dam_height
-                        ,cv.dam_owner
-                        ,cv.dam_use
-                        ,cv.dam_operating_status
-                        ,cv.utm_zone
-                        ,cv.utm_easting
-                        ,cv.utm_northing
-                        ,cv.downstream_route_measure
-                        ,cv.watershed_group_code
-                        ,cv.gnis_stream_name
-                        ,cv.barriers_anthropogenic_dnstr
-                        ,cv.barriers_anthropogenic_dnstr_count
-                        ,cv.barriers_anthropogenic_habitat_wcrp_upstr
-                        ,cv.barriers_anthropogenic_habitat_wcrp_upstr_count
-                        ,cv.barriers_ch_cm_co_pk_sk_dnstr
-                        ,cv.barriers_st_dnstr
-                        ,cv.barriers_wct_dnstr
-
-                        {output_vw_species_cols}
-                        
-                        {output_vw_rank_cols}
-
-                        ,CASE
-                            WHEN r.all_spawningrearing_rank_combined <= 20::numeric
-                                OR tt.structure_list_status = 'Priority barrier'::wcrp_hors.tt_structure_list_status_type
-                                OR tt.structure_list_status = 'Rehabilitated barrier'::wcrp_hors.tt_structure_list_status_type
-                                THEN 'yes'::wcrp_hors.label_in_wcrp
-                            ELSE 'no'::wcrp_hors.label_in_wcrp
-                        END AS label_in_wcrp
-                        ,cv.geom
-                    FROM wcrp_{wcrp_schema}.crossings_wcrp_vw_copy cv 
-                    LEFT JOIN wcrp_{wcrp_schema}.ranked_barriers_{wcrp}_all_species r ON cv.aggregated_crossings_id = r.aggregated_crossings_id
-                        FULL JOIN wcrp_{wcrp_schema}.tracking_table_{wcrp_schema} tt ON tt.barrier_id::text = cv.aggregated_crossings_id
-                    WHERE cv.all_spawningrearing_km > 0::double precision OR tt.barrier_id IS NOT NULL;
-
-                    grant select on wcrp_{wcrp_schema}.crossings_wcrp_vw_copy to cwf_user;
-                    GRANT SELECT ON wcrp_{wcrp_schema}.ranked_barriers_{wcrp}_all_species to cwf_user; 
-                     """
-        cursor.execute(q_replace_vw)
-    
     conn.commit()
 
 
@@ -917,15 +808,24 @@ def main():
     
     plan_config_dict = {config['plan_code']: config for config in plan_config}
 
+    wcrp_schemas = set()    # set of schemas (distinct values only)
+
     for wcrp in wcrp_process:
         print(f"Ranking barriers for WCRP: {wcrp}...")
         condition = '(' + str(plan_config_dict[str(wcrp)]['filter_clause']) + ')'
         target_species = [f"{s.lower()}" for s in plan_config_dict[str(wcrp)]['target_species']]
         wcrp_schema = str(plan_config_dict[str(wcrp)]['plan_schema'])
+        wcrp_schemas.add(wcrp_schema)   # add schema to set if it is not already in set
         connectivity_status_types = plan_config_dict[str(wcrp)]['connectivity_status_types']
         f_connectivity_status_types = [f"{s.split('_')[1]}_{s.split('_')[0]}" for s in connectivity_status_types] # need to reformat lifestage_species -> species_lifestage
         runQuery(condition, wcrp, wcrp_schema, f_connectivity_status_types, target_species, conn)
         print("Done!")
+
+    # create a combined output view for each wcrp
+    for schema in wcrp_schemas:
+        with conn.cursor() as cursor:
+            cursor.execute(f'CALL wcrp_{schema}.create_combined_output_table_vw()')
+        conn.commit()
 
 
 if __name__ == "__main__":
