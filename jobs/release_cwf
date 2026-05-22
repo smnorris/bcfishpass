@@ -9,7 +9,7 @@ $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_st TO cwf_user;"
 $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_wct TO cwf_user;"
 
 # rank barriers
-python jobs/auto_rank.py 
+python jobs/rank_barriers.py 
 
 # log connectivity
 python wcrp/scripts/habitat_connectivity.py load
