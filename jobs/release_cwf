@@ -8,7 +8,6 @@ $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_ch_cm_co_pk_sk TO cwf_user;"
 $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_st TO cwf_user;"
 $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_wct TO cwf_user;"
 
-
 # pre-process side channel barriers and note streams/barriers upstream of the side channel barriers
 $PSQL -f wcrp/scripts/sql/barriers_sidechannel.sql
 
@@ -22,8 +21,8 @@ $PSQL -f wcrp/scripts/sql/load_crossings_wcrp.sql
 # summarize and log connectivity
 python wcrp/scripts/habitat_connectivity.py load
 
-# rank the crossings
-python wcrp/scripts/auto_rank.py 
+# rank barriers
+python jobs/rank_barriers.py 
 
 # generate token for azcopy
 expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
