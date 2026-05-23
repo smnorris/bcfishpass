@@ -157,7 +157,7 @@ BEGIN;
       a.aggregated_crossings_id as dnstr
     from bcfishpass.crossings_sidechannel_upstream_startpoints a
     inner join bcfishpass.streams s1 on a.blue_line_key = s1.blue_line_key and a.downstream_route_measure = s1.downstream_route_measure
-    inner join bcfishpass.bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id -- get measure of side channel barrier so we can order correctly
+    inner join bcfishpass.crossings c on a.aggregated_crossings_id = c.aggregated_crossings_id -- get measure of side channel barrier so we can order correctly
     inner join bcfishpass.barriers_anthropogenic b on fwa_upstream(
       a.blue_line_key,
       a.downstream_route_measure,
