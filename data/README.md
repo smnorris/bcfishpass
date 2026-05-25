@@ -64,6 +64,21 @@ Update the passability_status_code (within bcfishpass) of existing CABD features
 | `notes` | `text` | Reviewer notes on rationale for fix and/or how the source(s) were interpreted |
 
 
+## crossings_sidechannel_upstream_startpoints
+
+By default, bcfishpass does not report on crossings/barriers on side-channels. 
+First, they may be accessible via an alternate path. Secondly, all habitat upstream of the primary channel would be 
+selected if reporting on habitat upstream of the side channel - this is generally not desired.
+This table enables determining what stream is upstream of the given crossing. For each crossing of interest,
+add all unique starting points required to make an upstream trace. Do not include starting points on the side channel itself.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `aggregatred_crossings_id` | `text` | bcfishpass crossing id |
+| `blue_line_key` | `integer` | blue_line_key of stream(s) to consider as upstream of given crossing |
+| `downstream_route_measure` | `integer` | Starting point measure on the upstream stream/blue_line_key of interest |
+
+
 ## dfo_known_sockeye_lakes.csv
 
 `waterbody_poly_id` of FWA lakes known to potentially support Sockeye

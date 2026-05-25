@@ -83,9 +83,19 @@ jobs:
           jobs/connect
           cd model/02_habitat_linear
           ./habitat_linear.sh
+  wcrp-reporting:
+    runs-on: ubuntu-latest
+    environment: cwf-test
+    container: ghcr.io/smnorris/bcfishpass-runner:main
+    needs: model-habitat-linear
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Rank crossings
         run:  |
-          for wcrp in bela_atna_necl bessette bonp bowr_ques_carr bulk eagle elkr_dnstr elkr_upstr hors lnic morr tuzistol_tah ulkatcho takla
-          do
-            python jobs/rank_barriers.py $wcrp
-          done
+          jobs/connect
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/barriers_sidechannel.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_upstream_habitat_wcrp.sql
+          psql $DATABASE_URL -v ON_ERROR_STOP=1 -f wcrp/scripts/sql/load_crossings_wcrp.sql
+          python wcrp/scripts/habitat_connectivity.py load
+          python wcrp/scripts/rank_barriers.py

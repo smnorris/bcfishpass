@@ -36,12 +36,8 @@ do
     $PSQL -f sql/load_crossings_upstream_habitat_02.sql -v wsg=$wsg
 done
 
-# load wcrp specific upstream habitat summaries (co/sk 1.5x factors, 'all_species' columns)
-$PSQL -f sql/load_crossings_upstream_habitat_wcrp.sql
-
-# refresh crossings views
+# refresh crossings view
 #$PSQL -c "refresh materialized view bcfishpass.crossings_admin"  # generate admin as needed for now, this query is too resource intensive
-$PSQL -c "refresh materialized view bcfishpass.crossings_wcrp_vw"
 $PSQL -c "refresh materialized view bcfishpass.crossings_vw"
 
 # Finished processing!

@@ -9,6 +9,7 @@ This populates the wcrp_ranked_barriers table with whichever wcrp is specified.
 
 import os
 import argparse
+from pathlib import Path
 import psycopg2 as pg2
 import yaml
 from urllib.parse import urlparse
@@ -806,8 +807,8 @@ def main():
     conn = pg2.connect(**pg_conn_dict)
 
     # parse config file with WCRP configurations
-    with open ('wcrp/plan_config.yaml', 'r') as file:
-        plan_config = yaml.safe_load(file)
+    base = Path(__file__).parent.parent
+    plan_config = yaml.safe_load(open(base / "plan_config.yaml"))
     
     plan_config_dict = {config['plan_code']: config for config in plan_config}
 
