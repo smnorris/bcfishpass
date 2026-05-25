@@ -767,6 +767,9 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
             inner join bcfishpass.crossings_wcrp_vw cv
                 on c.aggregated_crossings_id = cv.aggregated_crossings_id
             order by rank_combined;
+
+            ALTER TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp}
+                OWNER TO simonn;
         """
         cursor.execute(q_wcrp_rank_table)
 
