@@ -803,7 +803,7 @@ def main():
     conn = pg2.connect(**pg_conn_dict)
 
     # parse config file with WCRP configurations
-    with open ('../wcrp/plan_config.yaml', 'r') as file:
+    with open ('wcrp/plan_config.yaml', 'r') as file:
         plan_config = yaml.safe_load(file)
     
     plan_config_dict = {config['plan_code']: config for config in plan_config}
