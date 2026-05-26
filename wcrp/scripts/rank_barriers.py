@@ -596,7 +596,7 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
 
             ,cv.geom
             into bcfishpass.ranked_barriers
-            from bcfishpass.crossings_wcrp_vw cv
+            from bcfishpass.crossings_wcrp cv
             join bcfishpass.crossings c 
                 using(aggregated_crossings_id, watershed_group_code, blue_line_key, downstream_route_measure)
                 --on c.aggregated_crossings_id = cv.aggregated_crossings_id
@@ -649,7 +649,7 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
 
 
         q_wcrp_rank_table = f"""
-            -- Create a table to join crossings_wcrp_vw and wcrp_ranked_barriers fields in wcrp schema
+            -- Create a table to join crossings_wcrp and wcrp_ranked_barriers fields in wcrp schema
 
             DROP TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp} CASCADE;
 
@@ -764,9 +764,8 @@ def runQuery(condition, wcrp, wcrp_schema, connectivity_status_types, target_spe
             from crossings c
             inner join bcfishpass.ranked_barriers r
                 on c.aggregated_crossings_id = r.aggregated_crossings_id
-            inner join bcfishpass.crossings_wcrp_vw cv
-                on c.aggregated_crossings_id = cv.aggregated_crossings_id
-            order by rank_combined;
+            inner join bcfishpass.crossings_wcrp cv
+                on c.aggregated_crossings_id = cv.aggregated_crossings_id;
 
             ALTER TABLE IF EXISTS wcrp_{wcrp_schema}.ranked_barriers_{wcrp}
                 OWNER TO simonn;
