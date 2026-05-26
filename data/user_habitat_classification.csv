@@ -2529,7 +2529,7 @@ blue_line_key,downstream_route_measure,upstream_route_measure,watershed_group_co
 356164164,27,65,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356165729,0,52,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356166504,0,72,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
-356166895,0,128,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
+356166895,0,128,BONP,ST,-1,,SN,2026-05-26,This stream no longer exists.,
 356169629,0,5,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356169629,5,60,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
 356177307,7,57,BONP,ST,1,,SN,2023-08-11,Pacific Salmon Foundation,
