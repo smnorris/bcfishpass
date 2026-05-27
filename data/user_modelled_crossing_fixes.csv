@@ -21852,3 +21852,4 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1800752,FORD,BULK,MC,2026-05-08,Tracking table QA/QC,
 8800088,OBS,KLUM,SN,2026-05-11,MOT structures,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
 8800044,OBS,KLUM,SN,2026-05-11,MOT structures,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
+24762608,NONE,KITR,SN,2026-05-27,rail report review,duplicate crossing - drop in favour of crossing 1008501815 (railway)
