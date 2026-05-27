@@ -9,6 +9,9 @@ $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_st TO cwf_user;"
 $PSQL -c "GRANT SELECT ON TABLE bcfishpass.barriers_wct TO cwf_user;"
 
 # pre-process side channel barriers and note streams/barriers upstream of the side channel barriers
+# ** note ** 
+# this appends new ids to various upstream/downstream tables, 
+# do not run more than 1x after model processing is complete
 $PSQL -f wcrp/scripts/sql/barriers_sidechannel.sql
 
 # load habitat upstream of crossings in form required by WCRP reporting
@@ -25,10 +28,10 @@ python wcrp/scripts/habitat_connectivity.py load
 python wcrp/scripts/rank_barriers.py
 
 # generate token for azcopy
-expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
 az login --service-principal -u $AZCOPY_SPA_APPLICATION_ID -p $AZCOPY_SPA_CLIENT_SECRET --tenant $AZCOPY_TENANT_ID
 
 set +x  # do not echo this command before executing (so token is not written to logs)
+expiry=$(date -u --date="1 hour" +"%Y-%m-%dT%H:%MZ")
 export AZURE_STORAGE_SAS_TOKEN=$(\
     az storage container generate-sas \
         --account-name cabdbcfishpassstorage \
@@ -127,90 +130,14 @@ do
 
   ogr2ogr \
     -f GPKG \
-    crossings.gpkg.zip \
+    structures.gpkg.zip \
     PG:$DATABASE_URL \
     --debug ON \
-    -nln crossings \
-    -sql "SELECT
-      c.aggregated_crossings_id,
-      c.modelled_crossing_id,
-      c.crossing_source,
-      c.crossing_feature_type,
-      c.pscis_status,
-      c.crossing_type_code,
-      c.crossing_subtype_code,
-      c.barrier_status,
-      c.pscis_road_name,
-      c.pscis_stream_name,
-      c.pscis_assessment_comment,
-      c.pscis_assessment_date,
-      c.transport_line_structured_name_1,
-      c.rail_track_name,
-      c.dam_name,
-      c.dam_height,
-      c.dam_owner,
-      c.dam_use,
-      c.dam_operating_status,
-      c.utm_zone,
-      c.utm_easting,
-      c.utm_northing,
-      c.blue_line_key,
-      c.downstream_route_measure,
-      c.wscode::text as wscode,
-      c.localcode::text as localcode,
-      c.watershed_group_code,
-      c.gnis_stream_name,
-      c.barriers_anthropogenic_dnstr,
-      c.barriers_anthropogenic_dnstr_count,
-      c.barriers_anthropogenic_habitat_wcrp_upstr,
-      c.barriers_anthropogenic_habitat_wcrp_upstr_count,
-      c.barriers_ch_cm_co_pk_sk_dnstr,
-      c.barriers_st_dnstr,
-      c.barriers_wct_dnstr,
-      c.ch_spawning_km,
-      c.ch_rearing_km,
-      c.ch_spawning_belowupstrbarriers_km,
-      c.ch_rearing_belowupstrbarriers_km,
-      c.co_spawning_km,
-      c.co_rearing_km,
-      c.co_spawning_belowupstrbarriers_km,
-      c.co_rearing_belowupstrbarriers_km,
-      c.sk_spawning_km,
-      c.sk_rearing_km,      
-      c.sk_spawning_belowupstrbarriers_km,
-      c.sk_rearing_belowupstrbarriers_km,
-      c.st_spawning_km,
-      c.st_rearing_km,
-      c.st_spawning_belowupstrbarriers_km,
-      c.st_rearing_belowupstrbarriers_km,
-      c.wct_spawning_km,
-      c.wct_rearing_km,
-      c.wct_spawning_belowupstrbarriers_km,
-      c.wct_rearing_belowupstrbarriers_km,
-      c.all_spawning_km,
-      c.all_spawning_belowupstrbarriers_km,
-      c.all_rearing_km,
-      c.all_rearing_belowupstrbarriers_km,
-      c.all_spawningrearing_km,
-      c.all_spawningrearing_belowupstrbarriers_km,
-      c.set_id,
-      c.total_hab_gain_set,
-      c.num_barriers_set,
-      c.avg_gain_per_barrier,
-      array_to_string(c.dnstr_set_ids, ';') as dnstr_set_ids,
-      c.rank_avg_gain_per_barrier,
-      c.rank_avg_gain_tiered,
-      c.rank_total_upstr_hab,
-      c.rank_combined,
-      c.tier_combined,
-      c.geom as geom
-      FROM bcfishpass.crossings_wcrp_vw c
-      INNER JOIN bcfishpass.wcrp_watersheds w
-      ON c.watershed_group_code = w.watershed_group_code
-      WHERE w.wcrp = '$wcrp'"
+    -nln structures \
+    -sql "SELECT * FROM wcrp_$wcrp.combined_output_table_vw"
 
   # upload
-  for layer in streams crossings; do
+  for layer in streams structures; do
 
     file_name=${layer}.gpkg.zip
     object_name=${wcrp}/${file_name}
@@ -235,7 +162,7 @@ do
       ON CONFLICT (model_run_id, object_name) DO UPDATE 
       SET version_id = EXCLUDED.version_id, etag = EXCLUDED.etag;"
   done
-  rm crossings.gpkg.zip && rm streams.gpkg.zip
+  rm structures.gpkg.zip && rm streams.gpkg.zip
 
 done
 
