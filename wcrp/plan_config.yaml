@@ -176,7 +176,7 @@
     - spawning_st
     - rearing_st
   filter_clause: >-
-    watershed_group_code in ('TAKL', 'MIDR', 'DRIR', 'MSKE', 'SUST', 'USKE') OR
+    watershed_group_code in ('TAKL', 'MIDR', 'DRIR', 'SUST', 'USKE') OR
     FWA_Upstream(
       360887278, 
       464069.527166015,
