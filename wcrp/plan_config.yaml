@@ -208,3 +208,11 @@
       localcode_ltree
     ) OR 
     blue_line_key = 360781053
+
+- plan_name: Ulkatcho
+  plan_code: ulkatcho
+  plan_schema: ulkatcho
+  target_species: [CH, CO, SK, ST]
+  connectivity_status_types: [spawning_all, rearing_all, spawningrearing_all]
+  filter_clause: >-
+    watershed_group_code in ('LDEN', 'UDEN')
