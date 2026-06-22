@@ -97,13 +97,10 @@ WITH at_point AS
   left outer join bcfishpass.streams s
   ON a.blue_line_key = s.blue_line_key
   AND a.downstream_route_measure > s.downstream_route_measure - .001
-  AND a.downstream_route_measure + .001 < s.upstream_route_measure
+  AND a.downstream_route_measure < s.upstream_route_measure + .001
   AND a.watershed_group_code = s.watershed_group_code
-  left outer join whse_basemapping.fwa_stream_networks_sp s2
-  ON a.blue_line_key = s2.blue_line_key
-  AND a.downstream_route_measure > s2.downstream_route_measure - .001
-  AND a.downstream_route_measure + .001 < s2.upstream_route_measure
-  AND a.watershed_group_code = s2.watershed_group_code
+  inner join whse_basemapping.fwa_stream_networks_sp s2
+  ON s.linear_feature_id = s2.linear_feature_id
   left outer join bcfishpass.streams_access ac on s.segmented_stream_id = ac.segmented_stream_id
   WHERE a.watershed_group_code = :'wsg'
   order by aggregated_crossings_id, s.linear_feature_id
