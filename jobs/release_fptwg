@@ -251,3 +251,279 @@ sozip \
   freshwater_fish_habitat_accessibility_MODEL.gpkg
 
 aws s3 cp freshwater_fish_habitat_accessibility_MODEL.gpkg.zip s3://bchamp --acl public-read
+
+
+
+# -- 
+# -- release a test/draft/undocumented full dump of salmon/steelhead/bull trout/wct
+# -- 
+ogr2ogr \
+  -f Parquet \
+  bcfishpass_streams.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln bcfishpass_streams \
+  -sql "SELECT
+  segmented_stream_id,
+  linear_feature_id,
+  edge_type,
+  blue_line_key,
+  watershed_key,
+  watershed_group_code,
+  downstream_route_measure,
+  length_metre,
+  waterbody_key,
+  wscode::text as wscode,
+  localcode::text as localcode,
+  gnis_name,
+  stream_order,
+  stream_magnitude,
+  gradient,
+  feature_code,
+  upstream_route_measure,
+  upstream_area_ha,
+  stream_order_parent,
+  stream_order_max,
+  map_upstream,
+  channel_width,
+  mad_m3s,
+  barriers_anthropogenic_dnstr,
+  barriers_pscis_dnstr,
+  barriers_dams_dnstr,
+  barriers_dams_hydro_dnstr,
+  barriers_bt_dnstr,
+  crossings_dnstr,
+  dam_dnstr_ind,
+  dam_hydro_dnstr_ind,
+  remediated_dnstr_ind,
+  observation_key_upstr,
+  obsrvtn_species_codes_upstr,
+  species_codes_dnstr,
+  access_bt,
+  access_ch,
+  access_cm,
+  access_co,
+  access_pk,
+  access_sk,
+  access_st,
+  access_wct,
+  access_salmon,
+  spawning_bt,
+  spawning_ch,
+  spawning_cm,
+  spawning_co,
+  spawning_pk,
+  spawning_sk,
+  spawning_st,
+  spawning_wct,
+  rearing_bt,
+  rearing_ch,
+  rearing_co,
+  rearing_sk,
+  rearing_st,
+  rearing_wct,
+  geom
+FROM bcfishpass.streams_vw
+WHERE 
+  access_bt > 0 OR
+  access_ch > 0 OR
+  access_cm > 0 OR
+  access_co > 0 OR
+  access_pk > 0 OR
+  access_sk > 0 OR
+  access_st > 0 OR
+  access_wct > 0"
+
+ogr2ogr \
+  -f Parquet \
+  bcfishpass_crossings.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln bcfishpass_crossings \
+  -nlt PointZ \
+  -sql "SELECT * FROM bcfishpass.crossings_vw"
+
+# plus a spreadsheet
+psql $DATABASE_URL -c "SELECT 
+ aggregated_crossings_id,
+ stream_crossing_id,
+ dam_id,
+ user_crossing_misc_id,
+ modelled_crossing_id,
+ crossing_source,
+ crossing_feature_type,
+ pscis_status,
+ crossing_type_code,
+ crossing_subtype_code,
+ modelled_crossing_type_source,
+ barrier_status,
+ pscis_road_name,
+ pscis_stream_name,
+ pscis_assessment_comment,
+ pscis_assessment_date,
+ pscis_final_score,
+ transport_line_structured_name_1,
+ transport_line_type_description,
+ transport_line_surface_description,
+ ften_forest_file_id,
+ ften_road_section_id,
+ ften_file_type_description,
+ ften_client_number,
+ ften_client_name,
+ ften_life_cycle_status_code,
+ ften_map_label,
+ rail_track_name,
+ rail_owner_name,
+ rail_operator_english_name,
+ ogc_proponent,
+ dam_name,
+ dam_height,
+ dam_owner,
+ dam_use,
+ dam_operating_status,
+ linear_feature_id,
+ blue_line_key,
+ watershed_key,
+ downstream_route_measure,
+ wscode,
+ localcode,
+ watershed_group_code,
+ gnis_stream_name,
+ stream_order,
+ stream_magnitude,
+ access_bt,
+ access_ch,
+ access_cm,
+ access_co,
+ access_pk,
+ access_sk,
+ access_salmon,
+ access_ct_dv_rb,
+ access_st,
+ access_wct,
+ observedspp_dnstr,
+ observedspp_upstr,
+ crossings_dnstr,
+ barriers_anthropogenic_dnstr_count,
+ barriers_anthropogenic_upstr_count,
+ barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count,
+ barriers_anthropogenic_st_upstr_count,
+ ch_spawning_km,
+ ch_rearing_km,
+ ch_spawningrearing_km,
+ ch_spawning_belowupstrbarriers_km,
+ ch_rearing_belowupstrbarriers_km,
+ ch_spawningrearing_belowupstrbarriers_km,
+ cm_spawning_km,
+ cm_spawning_belowupstrbarriers_km,
+ co_spawning_km,
+ co_rearing_km,
+ co_spawningrearing_km,
+ co_rearing_ha,
+ co_spawning_belowupstrbarriers_km,
+ co_rearing_belowupstrbarriers_km,
+ co_rearing_belowupstrbarriers_ha,
+ co_spawningrearing_belowupstrbarriers_km,
+ pk_spawning_km,
+ pk_spawning_belowupstrbarriers_km,
+ sk_spawning_km,
+ sk_rearing_km,
+ sk_rearing_ha,
+ sk_spawningrearing_km,
+ sk_spawning_belowupstrbarriers_km,
+ sk_rearing_belowupstrbarriers_km,
+ sk_rearing_belowupstrbarriers_ha,
+ sk_spawningrearing_belowupstrbarriers_km,
+ st_spawning_km,
+ st_rearing_km,
+ st_spawningrearing_km,
+ st_spawning_belowupstrbarriers_km,
+ st_rearing_belowupstrbarriers_km,
+ st_spawningrearing_belowupstrbarriers_km,
+ salmon_spawningrearing_km,
+ salmon_spawningrearing_belowupstrbarriers_km,
+ salmonsteelhead_spawningrearing_km,
+ salmonsteelhead_spawningrearing_belowupstrbarriers_km
+FROM bcfishpass.crossings_vw
+WHERE barrier_status in ('BARRIER','POTENTIAL')
+AND salmonsteelhead_spawningrearing_belowupstrbarriers_km > 0
+order by salmonsteelhead_spawningrearing_belowupstrbarriers_km desc
+limit 5000" --csv > bcfishpass_barriers_salmonsteelhead.csv    
+
+aws s3 cp bcfishpass_streams.parquet s3://bchamp/test/bcfishpass_streams.parquet --acl public-read
+aws s3 cp bcfishpass_crossings.parquet s3://bchamp/test/bcfishpass_crossings.parquet --acl public-read
+aws s3 cp bcfishpass_barriers_salmonsteelhead.csv s3://bchamp/test/bcfishpass_barriers_salmonsteelhead.csv --acl public-read
+
+# also dump natural barriers to salmon/steelhead/bt as parquet
+ogr2ogr \
+  -f Parquet \
+  naturalbarriers_ch_cm_co_pk_sk.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln barriersnatural_ch_cm_co_pk_sk \
+  -sql "SELECT * from bcfishpass.barriers_ch_cm_co_pk_sk"
+
+  ogr2ogr \
+  -f Parquet \
+  naturalbarriers_st.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln naturalbarriers_st \
+  -sql "SELECT * from bcfishpass.barriers_st"
+
+ogr2ogr \
+  -f Parquet \
+  naturalbarriers_bt.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln naturalbarriers_bt \
+  -sql "SELECT * from bcfishpass.barriers_bt"
+
+# and for testing completeness, dump CABD falls as linked to FWA (temp spot for this, it should be dumped and logged as per other sources)
+ogr2ogr \
+  -f Parquet \
+  falls.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln falls \
+  -sql "SELECT * from bcfishpass.falls"
+
+# plus bcfishpass.observations, (only observations used in model)
+ogr2ogr \
+  -f Parquet \
+  observations.parquet \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -lco COMPRESSION=ZSTD \
+  -lco COMPRESSION_LEVEL=15 \
+  -lco SORT_BY_BBOX=YES \
+  -nln observations \
+  -sql "SELECT * from bcfishpass.observations"
+
+
+# upload to nrs objectstore with test prefix
+aws s3 cp naturalbarriers_bt.parquet s3://bchamp/test/naturalbarriers_bt.parquet --acl public-read
+aws s3 cp naturalbarriers_ch_cm_co_pk_sk.parquet s3://bchamp/test/naturalbarriers_ch_cm_co_pk_sk.parquet --acl public-read
+aws s3 cp naturalbarriers_st.parquet s3://bchamp/test/naturalbarriers_st.parquet --acl public-read
+aws s3 cp falls.parquet s3://bchamp/test/falls.parquet --acl public-read
+aws s3 cp observations.parquet s3://bchamp/test/observations.parquet --acl public-read
+
+

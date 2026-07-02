@@ -78,6 +78,16 @@ WITH at_point AS
     a.aggregated_crossings_id,
     a.watershed_group_code,
     coalesce(s.gradient, s2.gradient) as gradient,
+    ac.access_bt,
+    ac.access_ch,
+    ac.access_cm,
+    ac.access_co,
+    ac.access_pk,
+    ac.access_sk,
+    ac.access_salmon,
+    ac.access_ct_dv_rb,
+    ac.access_st,
+    ac.access_wct,
     ac.barriers_bt_dnstr,
     ac.barriers_ch_cm_co_pk_sk_dnstr,
     ac.barriers_ct_dv_rb_dnstr,
@@ -87,19 +97,10 @@ WITH at_point AS
   left outer join bcfishpass.streams s
   ON a.blue_line_key = s.blue_line_key
   AND a.downstream_route_measure > s.downstream_route_measure - .001
-  AND a.downstream_route_measure + .001 < s.upstream_route_measure
-  -- ON a.blue_line_key = s.blue_line_key
-  -- AND round(s.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
-  -- AND round(s.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
+  AND a.downstream_route_measure < s.upstream_route_measure + .001
   AND a.watershed_group_code = s.watershed_group_code
-  left outer join whse_basemapping.fwa_stream_networks_sp s2
-  ON a.blue_line_key = s2.blue_line_key
-  AND a.downstream_route_measure > s2.downstream_route_measure - .001
-  AND a.downstream_route_measure + .001 < s2.upstream_route_measure
-  -- ON a.blue_line_key = s.blue_line_key
-  -- AND round(s2.downstream_route_measure::numeric, 4) <= round(a.downstream_route_measure::numeric, 4)
-  -- AND round(s2.upstream_route_measure::numeric, 4) > round(a.downstream_route_measure::numeric, 4)
-  AND a.watershed_group_code = s2.watershed_group_code
+  inner join whse_basemapping.fwa_stream_networks_sp s2
+  ON s.linear_feature_id = s2.linear_feature_id
   left outer join bcfishpass.streams_access ac on s.segmented_stream_id = ac.segmented_stream_id
   WHERE a.watershed_group_code = :'wsg'
   order by aggregated_crossings_id, s.linear_feature_id
@@ -304,7 +305,17 @@ insert into bcfishpass.crossings_upstream_access
   wct_slopeclass08_km,
   wct_slopeclass15_km,
   wct_slopeclass22_km,
-  wct_slopeclass30_km
+  wct_slopeclass30_km,
+  access_bt,
+  access_ch,
+  access_cm,
+  access_co,
+  access_pk,
+  access_sk,
+  access_salmon,
+  access_ct_dv_rb,
+  access_st,
+  access_wct
 )
 
 select
@@ -381,7 +392,17 @@ select
   a.wct_slopeclass08_km,
   a.wct_slopeclass15_km,
   a.wct_slopeclass22_km,
-  a.wct_slopeclass30_km
+  a.wct_slopeclass30_km,
+  p.access_bt,
+  p.access_ch,
+  p.access_cm,
+  p.access_co,
+  p.access_pk,
+  p.access_sk,
+  p.access_salmon,
+  p.access_ct_dv_rb,
+  p.access_st,
+  p.access_wct
 from at_point p
 left outer join upstr_length_sum a on p.aggregated_crossings_id = a.aggregated_crossings_id
 left outer join upstr_area_sum b on a.aggregated_crossings_id = b.aggregated_crossings_id;
