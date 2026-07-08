@@ -36,7 +36,7 @@ Per species spawning and rearing discharge/channel width thresholds are taken fr
 Discharge is modelled within the Fraser, Columbia and Peace basins:  
 
 - [PCIC source](https://www.pacificclimate.org/data/gridded-hydrologic-model-output)
-- [upsampling of source to FWA streams](https://github.com/smnorris/fwapg/tree/main/extras/discharge)
+- [linking of source to FWA streams](https://github.com/smnorris/fwapg/tree/main/extras/discharge)
 
 Channel width is modelled for all of BC:  
 
