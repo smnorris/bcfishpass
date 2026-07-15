@@ -22,14 +22,14 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -nln crossings \
   -nlt PointZ \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "SELECT 
     c.aggregated_crossings_id,
     c.stream_crossing_id,
     c.dam_id,
-    c.user_crossing_misc_id,
+    c.user_crossing_misc_id::integer as user_crossing_misc_id,
     c.modelled_crossing_id,
     c.crossing_source,
     c.crossing_feature_type,
@@ -134,11 +134,11 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -append \
   -update \
   -nlt LINESTRING \
   -nln streams \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "SELECT
   s.segmented_stream_id,
   s.linear_feature_id::integer as linear_feature_id,
@@ -210,11 +210,11 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -append \
   -update \
   -nlt PointZ \
   -nln naturalbarriers_salmon \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "SELECT
    barriers_ch_cm_co_pk_sk_id,
    barrier_type,
@@ -234,11 +234,11 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -append \
   -update \
   -nlt PointZ \
   -nln naturalbarriers_st \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "SELECT 
    barriers_st_id,
    barrier_type,
@@ -259,11 +259,11 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -append \
   -update \
   -nlt PointZ \
   -nln observations \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "SELECT 
      o.observation_key,
      o.fish_observation_point_id,
@@ -302,11 +302,11 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -append \
   -update \
   -nlt PointZ \
   -nln cabd_falls \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "SELECT 
     falls_id,
     linear_feature_id::integer as linear_feature_id,
@@ -328,10 +328,10 @@ ogr2ogr \
   bcfishpass.gdb \
   PG:$DATABASE_URL \
   --debug ON \
-  --config OPENFILEGDB_DEFAULT_STRING_WIDTH 255 \
   -append \
   -update \
   -nln streams_summary \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
   -sql "select
   b.watershed_feature_id as assmnt_watershed_id,
   a.length_naturallyaccessible_obsrvd_ch,
