@@ -172,7 +172,6 @@ ogr2ogr \
   s.dam_dnstr_ind,
   s.dam_hydro_dnstr_ind,
   s.remediated_dnstr_ind,
-  s.observation_key_upstr,
   s.obsrvtn_species_codes_upstr,
   s.species_codes_dnstr,
   s.access_ch,
@@ -413,6 +412,4 @@ from bcfishpass.aw_linear_summary_current a
 full outer join whse_basemapping.fwa_assessment_watersheds_poly b
 on a.assessment_watershed_id = b.watershed_feature_id"
 
-zip -r bcfishpass.gdb.zip bcfishpass.gdb
-
-aws s3 cp bcfishpass.gdb.zip s3://bchamp/fabmaps/bcfishpass.gdb.zip --acl public-read
+aws s3 sync bcfishpass.gdb s3://bchamp/fabmaps/bcfishpass.gdb --delete
