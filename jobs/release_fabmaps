@@ -412,5 +412,7 @@ from bcfishpass.aw_linear_summary_current a
 full outer join whse_basemapping.fwa_assessment_watersheds_poly b
 on a.assessment_watershed_id = b.watershed_feature_id"
 
+
 zip -r bcfishpass.gdb.zip bcfishpass.gdb
-aws s3 cp bcfishpass.gdb.zip s3://bchamp/fabmaps/bcfishpass.gdb.zip
+aws s3 sync bcfishpass.gdb s3://bchamp/fabmaps/bcfishpass.gdb --delete
+
