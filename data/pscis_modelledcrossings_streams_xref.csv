@@ -3651,3 +3651,6 @@ stream_crossing_id,modelled_crossing_id,linear_feature_id,watershed_group_code,r
 198875,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
 198876,,,HORS,MC,Linking this point to nothing to remove it from model. Removing duplicate
 203838,8501815,84042066,KITR,SN,PSCIS assessment indicates external crossing reference 8501815
+7849,,,MORK,SN,PSCIS crossing not on a mapped FWA stream (and probably just a drainage ditch)
+7850,,,MORK,SN,PSCIS crossing not on a mapped FWA stream (and probably just a drainage ditch)
+8209,,,MORK,SN,PSCIS crossing not on a mapped FWA stream (and probably just a drainage ditch)
