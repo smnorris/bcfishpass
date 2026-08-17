@@ -1,0 +1,415 @@
+#!/bin/bash
+
+# Copyright 2026 Province of British Columbia
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set -euxo pipefail
+
+# crossings
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -nln crossings \
+  -nlt PointZ \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "SELECT 
+    c.aggregated_crossings_id,
+    c.stream_crossing_id,
+    c.dam_id,
+    c.user_crossing_misc_id::integer as user_crossing_misc_id,
+    c.modelled_crossing_id,
+    c.crossing_source,
+    c.crossing_feature_type,
+    c.pscis_status,
+    c.crossing_type_code,
+    c.crossing_subtype_code,
+    c.modelled_crossing_type_source,
+    c.barrier_status,
+    c.pscis_road_name,
+    c.pscis_stream_name,
+    c.pscis_assessment_comment,
+    c.pscis_assessment_date,
+    c.pscis_final_score,
+    c.transport_line_structured_name_1,
+    c.transport_line_type_description,
+    c.transport_line_surface_description,
+    c.ften_forest_file_id,
+    c.ften_road_section_id,
+    c.ften_file_type_description,
+    c.ften_client_number,
+    c.ften_client_name,
+    c.ften_life_cycle_status_code,
+    c.ften_map_label,
+    c.rail_track_name,
+    c.rail_owner_name,
+    c.rail_operator_english_name,
+    c.ogc_proponent,
+    c.dam_name,
+    c.dam_height,
+    c.dam_owner,
+    c.dam_use,
+    c.dam_operating_status,
+    c.linear_feature_id::integer as linear_feature_id,
+    c.blue_line_key,
+    c.watershed_key,
+    l.assmnt_watershed_id,
+    c.downstream_route_measure,
+    c.wscode,
+    c.localcode,
+    c.watershed_group_code,
+    c.gnis_stream_name,
+    c.stream_order,
+    c.stream_magnitude,
+    c.access_ch,
+    c.access_cm,
+    c.access_co,
+    c.access_pk,
+    c.access_sk,
+    c.access_salmon,
+    c.access_st,
+    c.observedspp_dnstr,
+    c.observedspp_upstr,
+    c.crossings_dnstr,
+    c.barriers_anthropogenic_dnstr_count,
+    c.barriers_anthropogenic_upstr_count,
+    c.barriers_anthropogenic_ch_cm_co_pk_sk_upstr_count,
+    c.barriers_anthropogenic_st_upstr_count,
+    c.ch_spawning_km,
+    c.ch_rearing_km,
+    c.ch_spawningrearing_km,
+    c.ch_spawning_belowupstrbarriers_km,
+    c.ch_rearing_belowupstrbarriers_km,
+    c.ch_spawningrearing_belowupstrbarriers_km,
+    c.cm_spawning_km,
+    c.cm_spawning_belowupstrbarriers_km,
+    c.co_spawning_km,
+    c.co_rearing_km,
+    c.co_spawningrearing_km,
+    c.co_rearing_ha,
+    c.co_spawning_belowupstrbarriers_km,
+    c.co_rearing_belowupstrbarriers_km,
+    c.co_rearing_belowupstrbarriers_ha,
+    c.co_spawningrearing_belowupstrbarriers_km,
+    c.pk_spawning_km,
+    c.pk_spawning_belowupstrbarriers_km,
+    c.sk_spawning_km,
+    c.sk_rearing_km,
+    c.sk_rearing_ha,
+    c.sk_spawningrearing_km,
+    c.sk_spawning_belowupstrbarriers_km,
+    c.sk_rearing_belowupstrbarriers_km,
+    c.sk_rearing_belowupstrbarriers_ha,
+    c.sk_spawningrearing_belowupstrbarriers_km,
+    c.st_spawning_km,
+    c.st_rearing_km,
+    c.st_spawningrearing_km,
+    c.st_spawning_belowupstrbarriers_km,
+    c.st_rearing_belowupstrbarriers_km,
+    c.st_spawningrearing_belowupstrbarriers_km,
+    c.salmon_spawningrearing_km,
+    c.salmon_spawningrearing_belowupstrbarriers_km,
+    c.salmonsteelhead_spawningrearing_km,
+    c.salmonsteelhead_spawningrearing_belowupstrbarriers_km,
+    c.geom
+  FROM bcfishpass.crossings_vw c 
+  LEFT OUTER JOIN whse_basemapping.fwa_assessment_watersheds_streams_lut l ON c.linear_feature_id = l.linear_feature_id
+  WHERE c.access_salmon >= 0 or c.access_st >= 0"
+
+# streams
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt LINESTRING \
+  -nln streams \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "SELECT
+  s.segmented_stream_id,
+  s.linear_feature_id::integer as linear_feature_id,
+  s.edge_type,
+  s.blue_line_key,
+  s.watershed_key,
+  l.assmnt_watershed_id,
+  s.watershed_group_code,
+  s.downstream_route_measure,
+  s.length_metre,
+  s.waterbody_key,
+  s.wscode::text as wscode,
+  s.localcode::text as localcode,
+  s.gnis_name,
+  s.stream_order,
+  s.stream_magnitude,
+  s.gradient,
+  s.feature_code,
+  s.upstream_route_measure,
+  s.upstream_area_ha,
+  s.stream_order_parent,
+  s.stream_order_max,
+  s.map_upstream,
+  s.channel_width,
+  s.mad_m3s,
+  s.barriers_anthropogenic_dnstr,
+  s.barriers_pscis_dnstr,
+  s.barriers_dams_dnstr,
+  s.barriers_dams_hydro_dnstr,
+  s.crossings_dnstr,
+  s.dam_dnstr_ind,
+  s.dam_hydro_dnstr_ind,
+  s.remediated_dnstr_ind,
+  s.obsrvtn_species_codes_upstr,
+  s.species_codes_dnstr,
+  s.access_ch,
+  s.access_cm,
+  s.access_co,
+  s.access_pk,
+  s.access_sk,
+  s.access_st,
+  s.access_salmon,
+  s.spawning_ch,
+  s.spawning_cm,
+  s.spawning_co,
+  s.spawning_pk,
+  s.spawning_sk,
+  s.spawning_st,
+  s.rearing_ch,
+  s.rearing_co,
+  s.rearing_sk,
+  s.rearing_st,
+  s.geom
+FROM bcfishpass.streams_vw s
+LEFT OUTER JOIN whse_basemapping.fwa_assessment_watersheds_streams_lut l ON s.linear_feature_id = l.linear_feature_id
+WHERE 
+  access_ch > 0 OR
+  access_cm > 0 OR
+  access_co > 0 OR
+  access_pk > 0 OR
+  access_sk > 0 OR
+  access_st > 0"
+
+
+# natural barriers 
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt PointZ \
+  -nln naturalbarriers_salmon \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "SELECT
+   barriers_ch_cm_co_pk_sk_id,
+   barrier_type,
+   barrier_name,
+   linear_feature_id::integer as linear_feature_id,
+   blue_line_key,
+   watershed_key,
+   downstream_route_measure,
+   wscode_ltree::text as wscode,
+   localcode_ltree::text as localcode,
+   watershed_group_code,
+   geom
+  FROM bcfishpass.barriers_ch_cm_co_pk_sk"
+
+  ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt PointZ \
+  -nln naturalbarriers_st \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "SELECT 
+   barriers_st_id,
+   barrier_type,
+   barrier_name,
+   linear_feature_id::integer as linear_feature_id,
+   blue_line_key,
+   watershed_key,
+   downstream_route_measure,
+   wscode_ltree::text as wscode,
+   localcode_ltree as localcode,
+   watershed_group_code,
+   geom
+ FROM bcfishpass.barriers_st"
+
+# bcfishpass.observations (only observations used in model)
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt PointZ \
+  -nln observations \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "SELECT 
+     o.observation_key,
+     o.fish_observation_point_id,
+     o.wbody_id,
+     o.species_code,
+     o.agency_id,
+     o.point_type_code,
+     o.observation_date,
+     o.agency_name,
+     o.source,
+     o.source_ref,
+     o.activity_code,
+     o.activity,
+     o.life_stage_code,
+     o.life_stage,
+     o.species_name,
+     o.acat_report_url,
+     o.linear_feature_id::integer as linear_feature_id,
+     o.wscode::text as wscode,
+     o.localcode::text as localcode,
+     o.blue_line_key,
+     l.assmnt_watershed_id,
+     o.watershed_group_code,
+     o.downstream_route_measure,
+     o.match_type,
+     o.distance_to_stream,
+     o.release,
+     o.geom
+   FROM bcfishpass.observations o 
+   LEFT OUTER JOIN whse_basemapping.fwa_assessment_watersheds_streams_lut l ON o.linear_feature_id = l.linear_feature_id
+   WHERE species_code in ('CH','CM','CO','PK','SK','ST')"
+
+# all falls
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt PointZ \
+  -nln cabd_falls \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "SELECT 
+    falls_id,
+    linear_feature_id::integer as linear_feature_id,
+    blue_line_key,
+    downstream_route_measure,
+    wscode_ltree::text as wscode,
+    localcode_ltree::text as localcode,
+    distance_to_stream,
+    watershed_group_code,
+    falls_name,
+    height_m,
+    barrier_ind,
+    geom
+   FROM bcfishpass.falls"
+
+# summary of habitat per assessment watershed 
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nln streams_summary \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "select
+  b.watershed_feature_id as assmnt_watershed_id,
+  a.length_naturallyaccessible_obsrvd_ch,
+  a.length_naturallyaccessible_obsrvd_ch_access_b,
+  a.length_naturallyaccessible_model_ch,
+  a.length_naturallyaccessible_model_ch_access_b,
+  a.length_naturallyaccessible_obsrvd_cm,
+  a.length_naturallyaccessible_obsrvd_cm_access_b,
+  a.length_naturallyaccessible_model_cm,
+  a.length_naturallyaccessible_model_cm_access_b,
+  a.length_naturallyaccessible_obsrvd_co,
+  a.length_naturallyaccessible_obsrvd_co_access_b,
+  a.length_naturallyaccessible_model_co,
+  a.length_naturallyaccessible_model_co_access_b,
+  a.length_naturallyaccessible_obsrvd_pk,
+  a.length_naturallyaccessible_obsrvd_pk_access_b,
+  a.length_naturallyaccessible_model_pk,
+  a.length_naturallyaccessible_model_pk_access_b,
+  a.length_naturallyaccessible_obsrvd_sk,
+  a.length_naturallyaccessible_obsrvd_sk_access_b,
+  a.length_naturallyaccessible_model_sk,
+  a.length_naturallyaccessible_model_sk_access_b,
+  a.length_naturallyaccessible_obsrvd_salmon,
+  a.length_naturallyaccessible_obsrvd_salmon_access_b,
+  a.length_naturallyaccessible_model_salmon,
+  a.length_naturallyaccessible_model_salmon_access_b,
+  a.length_naturallyaccessible_obsrvd_st,
+  a.length_naturallyaccessible_obsrvd_st_access_b,
+  a.length_naturallyaccessible_model_st,
+  a.length_naturallyaccessible_model_st_access_b,
+  a.length_spawningrearing_obsrvd_ch,
+  a.length_spawningrearing_obsrvd_ch_access_b,
+  a.length_spawningrearing_model_ch,
+  a.length_spawningrearing_model_ch_access_b,
+  a.length_spawningrearing_obsrvd_cm,
+  a.length_spawningrearing_obsrvd_cm_access_b,
+  a.length_spawningrearing_model_cm,
+  a.length_spawningrearing_model_cm_access_b,
+  a.length_spawningrearing_obsrvd_co,
+  a.length_spawningrearing_obsrvd_co_access_b,
+  a.length_spawningrearing_model_co,
+  a.length_spawningrearing_model_co_access_b,
+  a.length_spawningrearing_obsrvd_pk,
+  a.length_spawningrearing_obsrvd_pk_access_b,
+  a.length_spawningrearing_model_pk,
+  a.length_spawningrearing_model_pk_access_b,
+  a.length_spawningrearing_obsrvd_sk,
+  a.length_spawningrearing_obsrvd_sk_access_b,
+  a.length_spawningrearing_model_sk,
+  a.length_spawningrearing_model_sk_access_b,
+  a.length_spawningrearing_obsrvd_st,
+  a.length_spawningrearing_obsrvd_st_access_b,
+  a.length_spawningrearing_model_st,
+  a.length_spawningrearing_model_st_access_b,
+  a.length_spawningrearing_obsrvd_salmon,
+  a.length_spawningrearing_obsrvd_salmon_access_b,
+  a.length_spawningrearing_model_salmon,
+  a.length_spawningrearing_model_salmon_access_b,
+  a.length_spawningrearing_obsrvd_salmon_st,
+  a.length_spawningrearing_obsrvd_salmon_st_access_b,
+  a.length_spawningrearing_model_salmon_st,
+  a.length_spawningrearing_model_salmon_st_access_b,
+  a.pct_naturallyaccessible_ch_access_b,
+  a.pct_naturallyaccessible_cm_access_b,
+  a.pct_naturallyaccessible_co_access_b,
+  a.pct_naturallyaccessible_pk_access_b,
+  a.pct_naturallyaccessible_sk_access_b,
+  a.pct_naturallyaccessible_salmon_access_b,
+  a.pct_naturallyaccessible_st_access_b,
+  a.pct_spawningrearing_ch_access_b,
+  a.pct_spawningrearing_cm_access_b,
+  a.pct_spawningrearing_co_access_b,
+  a.pct_spawningrearing_pk_access_b,
+  a.pct_spawningrearing_sk_access_b,
+  a.pct_spawningrearing_st_access_b,
+  a.pct_spawningrearing_salmon_access_b,
+  a.pct_spawningrearing_salmon_st_access_b
+from bcfishpass.aw_linear_summary_current a
+full outer join whse_basemapping.fwa_assessment_watersheds_poly b
+on a.assessment_watershed_id = b.watershed_feature_id"
+
+aws s3 sync bcfishpass.gdb s3://bchamp/fabmaps/bcfishpass.gdb --delete
