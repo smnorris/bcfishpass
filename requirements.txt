@@ -1,6 +1,6 @@
 click
 numpy
-bcdata==0.16.0
+bcdata==0.17.0
 scikit-image
 jsonschema
 psycopg2-binary

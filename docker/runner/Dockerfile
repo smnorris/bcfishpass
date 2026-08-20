@@ -1,11 +1,7 @@
-FROM ghcr.io/osgeo/gdal:ubuntu-full-3.12.3
+FROM ghcr.io/osgeo/gdal:ubuntu-full-3.13.1
 
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
-    && curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb \
-    && rm packages-microsoft-prod.deb \
-    && apt-get update && apt-get --assume-yes upgrade \
-    && apt-get install azcopy \
+RUN apt-get update && apt-get --assume-yes upgrade \
+    && apt-get -qq install -y --no-install-recommends curl \
     && apt-get -qq install -y --no-install-recommends postgresql-common \
     && apt-get -qq install -y --no-install-recommends yes \
     && apt-get -qq install -y --no-install-recommends gnupg \
@@ -25,6 +21,12 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && apt-get -qq install -y --no-install-recommends autossh \
     && apt-get -qq install -y --no-install-recommends less \
     && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
+    && curl -L https://aka.ms/downloadazcopy-v10-linux -o azcopy.tar.gz \
+    && tar -xf azcopy.tar.gz --strip-components=1 -C /usr/local/bin --wildcards '*/azcopy' \
+    && rm azcopy.tar.gz \
+    && chmod +x /usr/local/bin/azcopy
 
 RUN ARCH=$(uname -m) \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}-2.22.21.zip" -o "awscliv2.zip" \
