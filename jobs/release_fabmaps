@@ -126,7 +126,7 @@ ogr2ogr \
     c.geom
   FROM bcfishpass.crossings_vw c 
   LEFT OUTER JOIN whse_basemapping.fwa_assessment_watersheds_streams_lut l ON c.linear_feature_id = l.linear_feature_id
-  WHERE c.access_salmon >= 0 or c.access_st >= 0"
+  WHERE c.access_salmon >= 0 or c.access_st >= 0" # salmon and steelhead watersheds only
 
 # streams
 ogr2ogr \
@@ -200,7 +200,7 @@ WHERE
   access_co > 0 OR
   access_pk > 0 OR
   access_sk > 0 OR
-  access_st > 0"
+  access_st > 0"  # naturally accessible to salmon and/or steelhead
 
 
 # natural barriers 
@@ -247,7 +247,7 @@ ogr2ogr \
    watershed_key,
    downstream_route_measure,
    wscode_ltree::text as wscode,
-   localcode_ltree as localcode,
+   localcode_ltree::text as localcode,
    watershed_group_code,
    geom
  FROM bcfishpass.barriers_st"
