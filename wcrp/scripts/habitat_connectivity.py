@@ -154,6 +154,7 @@ def process_plan(cur, plan):
             accessible_rearing_all,
             accessible_spawningrearing_all
         )
+        ON CONFLICT (model_run_id, wcrp, watershed_group_code) DO NOTHING
         {query}
     """)
     cur.execute(insert)
