@@ -8,6 +8,7 @@ on:
     paths:
       - 'docker/db/Dockerfile'
       - 'docker/runner/Dockerfile'
+      - 'requirements.txt'
     tags:
       - 'v*'
   pull_request:
@@ -16,6 +17,7 @@ on:
     paths:
       - 'docker/db/Dockerfile'
       - 'docker/runner/Dockerfile'
+      - 'requirements.txt'
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
