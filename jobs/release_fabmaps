@@ -16,6 +16,7 @@
 
 set -euxo pipefail
 
+
 # crossings
 ogr2ogr \
   -f OpenFileGDB \
@@ -321,6 +322,493 @@ ogr2ogr \
     geom
    FROM bcfishpass.falls"
 
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt MultiPolygon \
+  -nln assessment_watersheds \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "WITH counts AS
+(
+  select
+    assessment_watershed_id,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as total_barriers_dam,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'RAIL') as total_barriers_railway,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as total_barriers_demographicroad,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as total_barriers_resourceroad,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'TRAIL') as total_barriers_trail,
+
+    -- salmon access models are all equivalent (placeholder for salmon species specific access models)
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as ch_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as ch_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as ch_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as ch_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as ch_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as cm_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as cm_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as cm_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as cm_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as cm_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as co_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as co_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as co_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as co_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as co_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as pk_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as pk_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as pk_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as pk_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as pk_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as sk_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as sk_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as sk_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as sk_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as sk_naturallyaccessible_barriers_trail,
+
+    -- steelhead access model
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as st_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'RAIL') as st_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as st_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as st_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'TRAIL') as st_naturallyaccessible_barriers_trail,
+
+    -- ch
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as ch_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'RAIL') as ch_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as ch_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as ch_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'TRAIL') as ch_spawningrearing_barriers_trail,
+
+    -- cm
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as cm_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'RAIL') as cm_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as cm_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as cm_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'TRAIL') as cm_spawningrearing_barriers_trail,
+
+    -- co
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as co_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'RAIL') as co_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as co_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as co_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'TRAIL') as co_spawningrearing_barriers_trail,
+
+    -- pk
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as pk_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'RAIL') as pk_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as pk_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as pk_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'TRAIL') as pk_spawningrearing_barriers_trail,
+
+    -- sk
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as sk_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'RAIL') as sk_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as sk_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as sk_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'TRAIL') as sk_spawningrearing_barriers_trail,
+
+    -- st
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as st_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'RAIL') as st_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as st_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as st_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'TRAIL') as st_spawningrearing_barriers_trail
+  from bcfishpass.aw_crossing_summary_current
+  group by assessment_watershed_id
+
+)
+
+SELECT
+  a.watershed_feature_id,
+  a.watershed_group_id,
+  a.watershed_type,
+  a.gnis_name_1,
+  a.gnis_name_2,
+  a.gnis_name_3,
+  round(a.area_ha::numeric, 2) as area_ha,
+
+  coalesce(c.total_barriers_dam,0) as total_nbarriers_dam,
+  coalesce(c.total_barriers_railway,0) as total_nbarriers_railway,
+  coalesce(c.total_barriers_demographicroad,0) as total_nbarriers_demographicroad,
+  coalesce(c.total_barriers_resourceroad,0) as total_nbarriers_resourceroad,
+  coalesce(c.total_barriers_trail,0) as total_nbarriers_trail,
+
+  -- ch
+  coalesce(c.ch_naturallyaccessible_barriers_dam,0) as ch_naturallyaccessible_nbarriers_dam,
+  coalesce(c.ch_naturallyaccessible_barriers_railway,0) as ch_naturallyaccessible_nbarriers_railway,
+  coalesce(c.ch_naturallyaccessible_barriers_demographicroad,0) as ch_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.ch_naturallyaccessible_barriers_resourceroad,0) as ch_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.ch_naturallyaccessible_barriers_trail,0) as ch_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.ch_spawningrearing_barriers_dam,0) as ch_spawningrearing_nbarriers_dam,
+  coalesce(c.ch_spawningrearing_barriers_railway,0) as ch_spawningrearing_nbarriers_railway,
+  coalesce(c.ch_spawningrearing_barriers_demographicroad,0) as ch_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.ch_spawningrearing_barriers_resourceroad,0) as ch_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.ch_spawningrearing_barriers_trail,0) as ch_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_ch + b.length_naturallyaccessible_model_ch), 2) as ch_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_ch_access_b + b.length_naturallyaccessible_model_ch_access_b), 2) as ch_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_ch_access_b + b.length_naturallyaccessible_model_ch_access_b) / nullif((b.length_naturallyaccessible_obsrvd_ch + b.length_naturallyaccessible_model_ch), 0)),2),0) as ch_naturallyaccessible_pctconnected,
+  round(((length_spawningrearing_obsrvd_ch + length_spawningrearing_model_ch)), 2) as ch_spawningrearing_km_total,
+  round(((length_spawningrearing_model_ch_access_b + length_spawningrearing_obsrvd_ch_access_b)), 2) as ch_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_ch_access_b + length_spawningrearing_obsrvd_ch_access_b) / nullif((length_spawningrearing_obsrvd_ch + length_spawningrearing_model_ch), 0)),2),0) as ch_spawningrearing_km_connected,
+
+  -- cm
+  coalesce(c.cm_naturallyaccessible_barriers_dam,0) as cm_naturallyaccessible_nbarriers_dam,
+  coalesce(c.cm_naturallyaccessible_barriers_railway,0) as cm_naturallyaccessible_nbarriers_railway,
+  coalesce(c.cm_naturallyaccessible_barriers_demographicroad,0) as cm_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.cm_naturallyaccessible_barriers_resourceroad,0) as cm_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.cm_naturallyaccessible_barriers_trail,0) as cm_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.cm_spawningrearing_barriers_dam,0) as cm_spawningrearing_nbarriers_dam,
+  coalesce(c.cm_spawningrearing_barriers_railway,0) as cm_spawningrearing_nbarriers_railway,
+  coalesce(c.cm_spawningrearing_barriers_demographicroad,0) as cm_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.cm_spawningrearing_barriers_resourceroad,0) as cm_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.cm_spawningrearing_barriers_trail,0) as cm_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_cm + b.length_naturallyaccessible_model_cm), 2) as cm_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_cm_access_b + b.length_naturallyaccessible_model_cm_access_b), 2) as cm_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_cm_access_b + b.length_naturallyaccessible_model_cm_access_b) / nullif((b.length_naturallyaccessible_obsrvd_cm + b.length_naturallyaccessible_model_cm), 0)),2),0) as cm_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_cm + length_spawningrearing_model_cm)), 2) as cm_spawningrearing_km_total,
+  round(((length_spawningrearing_model_cm_access_b + length_spawningrearing_obsrvd_cm_access_b)), 2) as cm_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_cm_access_b + length_spawningrearing_obsrvd_cm_access_b) / nullif((length_spawningrearing_obsrvd_cm + length_spawningrearing_model_cm), 0)),2),0) as cm_spawningrearing_pct_connected,
+
+  -- co
+  coalesce(c.co_naturallyaccessible_barriers_dam,0) as co_naturallyaccessible_nbarriers_dam,
+  coalesce(c.co_naturallyaccessible_barriers_railway,0) as co_naturallyaccessible_nbarriers_railway,
+  coalesce(c.co_naturallyaccessible_barriers_demographicroad,0) as co_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.co_naturallyaccessible_barriers_resourceroad,0) as co_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.co_naturallyaccessible_barriers_trail,0) as co_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.co_spawningrearing_barriers_dam,0) as co_spawningrearing_nbarriers_dam,
+  coalesce(c.co_spawningrearing_barriers_railway,0) as co_spawningrearing_nbarriers_railway,
+  coalesce(c.co_spawningrearing_barriers_demographicroad,0) as co_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.co_spawningrearing_barriers_resourceroad,0) as co_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.co_spawningrearing_barriers_trail,  0) as co_spawningrearinng_barriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_co + b.length_naturallyaccessible_model_co), 2) as co_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_co_access_b + b.length_naturallyaccessible_model_co_access_b), 2) as co_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_co_access_b + b.length_naturallyaccessible_model_co_access_b) / nullif((b.length_naturallyaccessible_obsrvd_co + b.length_naturallyaccessible_model_co), 0)),2),0) as co_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_co + length_spawningrearing_model_co)), 2) as co_spawningrearing_km_total,
+  round(((length_spawningrearing_model_co_access_b + length_spawningrearing_obsrvd_co_access_b)), 2) as co_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_co_access_b + length_spawningrearing_obsrvd_co_access_b) / nullif((length_spawningrearing_obsrvd_co + length_spawningrearing_model_pk), 0)),2),0) as co_spawningrearing_pct_connected,
+
+  -- pk
+  coalesce(c.pk_naturallyaccessible_barriers_dam,0) as pk_naturallyaccessible_nbarriers_dam,
+  coalesce(c.pk_naturallyaccessible_barriers_railway,0) as pk_naturallyaccessible_nbarriers_railway,
+  coalesce(c.pk_naturallyaccessible_barriers_demographicroad,0) as pk_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.pk_naturallyaccessible_barriers_resourceroad,0) as pk_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.pk_naturallyaccessible_barriers_trail,0) as pk_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.pk_spawningrearing_barriers_dam,0) as pk_spawningrearing_nbarriers_dam,
+  coalesce(c.pk_spawningrearing_barriers_railway,0) as pk_spawningrearing_nbarriers_railway,
+  coalesce(c.pk_spawningrearing_barriers_demographicroad,0) as pk_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.pk_spawningrearing_barriers_resourceroad,0) as pk_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.pk_spawningrearing_barriers_trail,0) as pk_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_pk + b.length_naturallyaccessible_model_pk), 2) as pk_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_pk_access_b + b.length_naturallyaccessible_model_pk_access_b), 2) as pk_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_pk_access_b + b.length_naturallyaccessible_model_pk_access_b) / nullif((b.length_naturallyaccessible_obsrvd_pk + b.length_naturallyaccessible_model_pk), 0)),2),0) as pk_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_pk + length_spawningrearing_model_pk)), 2) as pk_spawningrearing_km_total,
+  round(((length_spawningrearing_model_pk_access_b + length_spawningrearing_obsrvd_pk_access_b)), 2) as pk_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_pk_access_b + length_spawningrearing_obsrvd_pk_access_b) / nullif((length_spawningrearing_obsrvd_pk + length_spawningrearing_model_pk), 0)),2),0) as pk_spawningrearing_pct_connected,
+
+  -- sk
+  coalesce(c.sk_naturallyaccessible_barriers_dam,0) as sk_naturallyaccessible_nbarriers_dam,
+  coalesce(c.sk_naturallyaccessible_barriers_railway,0) as sk_naturallyaccessible_nbarriers_railway,
+  coalesce(c.sk_naturallyaccessible_barriers_demographicroad,0) as sk_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.sk_naturallyaccessible_barriers_resourceroad,0) as sk_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.sk_naturallyaccessible_barriers_trail,0) as sk_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.sk_spawningrearing_barriers_dam,0) as sk_spawningrearing_nbarriers_dam,
+  coalesce(c.sk_spawningrearing_barriers_railway,0) as sk_spawningrearing_nbarriers_railway,
+  coalesce(c.sk_spawningrearing_barriers_demographicroad,0) as sk_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.sk_spawningrearing_barriers_resourceroad,0) as sk_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.sk_spawningrearing_barriers_trail,0) as sk_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_sk + b.length_naturallyaccessible_model_sk), 2) as sk_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_sk_access_b + b.length_naturallyaccessible_model_sk_access_b), 2) as sk_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_sk_access_b + b.length_naturallyaccessible_model_sk_access_b) / nullif((b.length_naturallyaccessible_obsrvd_sk + b.length_naturallyaccessible_model_sk), 0)),2),0) as sk_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_sk + length_spawningrearing_model_sk)), 2) as sk_spawningrearing_km_total,
+  round(((length_spawningrearing_model_sk_access_b + length_spawningrearing_obsrvd_sk_access_b)), 2) as sk_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_sk_access_b + length_spawningrearing_obsrvd_sk_access_b) / nullif((length_spawningrearing_obsrvd_sk + length_spawningrearing_model_sk), 0)),2),0) as sk_spawningrearing_pct_connected,
+
+  -- st
+  coalesce(c.st_naturallyaccessible_barriers_dam,0) as st_naturallyaccessible_nbarriers_dam,
+  coalesce(c.st_naturallyaccessible_barriers_railway,0) as st_naturallyaccessible_nbarriers_railway,
+  coalesce(c.st_naturallyaccessible_barriers_demographicroad,0) as st_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.st_naturallyaccessible_barriers_resourceroad,0) as st_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.st_naturallyaccessible_barriers_trail,0) as st_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.st_spawningrearing_barriers_dam,0) as st_spawningrearing_nbarriers_dam,
+  coalesce(c.st_spawningrearing_barriers_railway,0) as st_spawningrearing_nbarriers_railway,
+  coalesce(c.st_spawningrearing_barriers_demographicroad,0) as st_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.st_spawningrearing_barriers_resourceroad,0) as st_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.st_spawningrearing_barriers_trail,0) as st_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_st + b.length_naturallyaccessible_model_st), 2) as st_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_st_access_b + b.length_naturallyaccessible_model_st_access_b), 2) as st_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_st_access_b + b.length_naturallyaccessible_model_st_access_b) / nullif((b.length_naturallyaccessible_obsrvd_st + b.length_naturallyaccessible_model_st), 0)),2),0) as st_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_st + length_spawningrearing_model_st)), 2) as st_spawningrearing_km_total,
+  round(((length_spawningrearing_model_st_access_b + length_spawningrearing_obsrvd_st_access_b)), 2) as st_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_st_access_b + length_spawningrearing_obsrvd_st_access_b) / nullif((length_spawningrearing_obsrvd_st + length_spawningrearing_model_st), 0)),2),0) as st_spawningrearing_pct_connected,
+  a.geom
+ FROM whse_basemapping.fwa_assessment_watersheds_poly a
+ LEFT OUTER JOIN bcfishpass.aw_linear_summary_current b ON a.watershed_feature_id = b.assessment_watershed_id
+ LEFT OUTER JOIN counts c ON a.watershed_feature_id = c.assessment_watershed_id"
+
+
+
+ogr2ogr \
+  -f OpenFileGDB \
+  bcfishpass.gdb \
+  PG:$DATABASE_URL \
+  --debug ON \
+  -append \
+  -update \
+  -nlt MultiPolygon \
+  -nln watershed_groups \
+  -lco TARGET_ARCGIS_VERSION=ARCGIS_PRO_3_2_OR_LATER \
+  -sql "WITH counts AS
+(
+  select
+    watershed_group_code,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as total_barriers_dam,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'RAIL') as total_barriers_railway,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as total_barriers_demographicroad,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as total_barriers_resourceroad,
+    sum(n_barriers_total + n_potential_total) filter (where crossing_feature_type = 'TRAIL') as total_barriers_trail,
+
+    -- salmon access models are all equivalent (placeholder for salmon species specific access models)
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as ch_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as ch_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as ch_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as ch_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as ch_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as cm_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as cm_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as cm_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as cm_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as cm_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as co_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as co_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as co_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as co_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as co_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as pk_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as pk_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as pk_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as pk_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as pk_naturallyaccessible_barriers_trail,
+
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as sk_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'RAIL') as sk_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as sk_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as sk_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_ch_cm_co_pk_sk + n_potential_accessible_ch_cm_co_pk_sk) filter (where crossing_feature_type = 'TRAIL') as sk_naturallyaccessible_barriers_trail,
+
+    -- steelhead access model
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as st_naturallyaccessible_barriers_dam,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'RAIL') as st_naturallyaccessible_barriers_railway,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as st_naturallyaccessible_barriers_demographicroad,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as st_naturallyaccessible_barriers_resourceroad,
+    sum(n_barriers_accessible_st + n_potential_accessible_st) filter (where crossing_feature_type = 'TRAIL') as st_naturallyaccessible_barriers_trail,
+
+    -- ch
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as ch_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'RAIL') as ch_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as ch_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as ch_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_ch + n_potential_habitat_ch) filter (where crossing_feature_type = 'TRAIL') as ch_spawningrearing_barriers_trail,
+
+    -- cm
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as cm_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'RAIL') as cm_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as cm_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as cm_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_cm + n_potential_habitat_cm) filter (where crossing_feature_type = 'TRAIL') as cm_spawningrearing_barriers_trail,
+
+    -- co
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as co_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'RAIL') as co_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as co_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as co_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_co + n_potential_habitat_co) filter (where crossing_feature_type = 'TRAIL') as co_spawningrearing_barriers_trail,
+
+    -- pk
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as pk_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'RAIL') as pk_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as pk_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as pk_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_pk + n_potential_habitat_pk) filter (where crossing_feature_type = 'TRAIL') as pk_spawningrearing_barriers_trail,
+
+    -- sk
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as sk_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'RAIL') as sk_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as sk_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as sk_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_sk + n_potential_habitat_sk) filter (where crossing_feature_type = 'TRAIL') as sk_spawningrearing_barriers_trail,
+
+    -- st
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type IN ('DAM', 'WEIR')) as st_spawningrearing_barriers_dam,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'RAIL') as st_spawningrearing_barriers_railway,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'ROAD, DEMOGRAPHIC') as st_spawningrearing_barriers_demographicroad,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'ROAD, RESOURCE/OTHER') as st_spawningrearing_barriers_resourceroad,
+    sum(n_barriers_habitat_st + n_potential_habitat_st) filter (where crossing_feature_type = 'TRAIL') as st_spawningrearing_barriers_trail
+  from bcfishpass.wsg_crossing_summary_current
+  group by watershed_group_code
+
+)
+
+SELECT
+  a.watershed_group_id,
+  a.watershed_group_code,
+  a.watershed_group_name,
+
+  round(a.area_ha::numeric, 2) as area_ha,
+
+  coalesce(c.total_barriers_dam,0) as total_nbarriers_dam,
+  coalesce(c.total_barriers_railway,0) as total_nbarriers_railway,
+  coalesce(c.total_barriers_demographicroad,0) as total_nbarriers_demographicroad,
+  coalesce(c.total_barriers_resourceroad,0) as total_nbarriers_resourceroad,
+  coalesce(c.total_barriers_trail,0) as total_nbarriers_trail,
+
+  -- ch
+  coalesce(c.ch_naturallyaccessible_barriers_dam,0) as ch_naturallyaccessible_nbarriers_dam,
+  coalesce(c.ch_naturallyaccessible_barriers_railway,0) as ch_naturallyaccessible_nbarriers_railway,
+  coalesce(c.ch_naturallyaccessible_barriers_demographicroad,0) as ch_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.ch_naturallyaccessible_barriers_resourceroad,0) as ch_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.ch_naturallyaccessible_barriers_trail,0) as ch_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.ch_spawningrearing_barriers_dam,0) as ch_spawningrearing_nbarriers_dam,
+  coalesce(c.ch_spawningrearing_barriers_railway,0) as ch_spawningrearing_nbarriers_railway,
+  coalesce(c.ch_spawningrearing_barriers_demographicroad,0) as ch_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.ch_spawningrearing_barriers_resourceroad,0) as ch_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.ch_spawningrearing_barriers_trail,0) as ch_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_ch + b.length_naturallyaccessible_model_ch), 2) as ch_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_ch_access_b + b.length_naturallyaccessible_model_ch_access_b), 2) as ch_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_ch_access_b + b.length_naturallyaccessible_model_ch_access_b) / nullif((b.length_naturallyaccessible_obsrvd_ch + b.length_naturallyaccessible_model_ch), 0)),2),0) as ch_naturallyaccessible_pctconnected,
+  round(((length_spawningrearing_obsrvd_ch + length_spawningrearing_model_ch)), 2) as ch_spawningrearing_km_total,
+  round(((length_spawningrearing_model_ch_access_b + length_spawningrearing_obsrvd_ch_access_b)), 2) as ch_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_ch_access_b + length_spawningrearing_obsrvd_ch_access_b) / nullif((length_spawningrearing_obsrvd_ch + length_spawningrearing_model_ch), 0)),2),0) as ch_spawningrearing_km_connected,
+
+  -- cm
+  coalesce(c.cm_naturallyaccessible_barriers_dam,0) as cm_naturallyaccessible_nbarriers_dam,
+  coalesce(c.cm_naturallyaccessible_barriers_railway,0) as cm_naturallyaccessible_nbarriers_railway,
+  coalesce(c.cm_naturallyaccessible_barriers_demographicroad,0) as cm_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.cm_naturallyaccessible_barriers_resourceroad,0) as cm_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.cm_naturallyaccessible_barriers_trail,0) as cm_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.cm_spawningrearing_barriers_dam,0) as cm_spawningrearing_nbarriers_dam,
+  coalesce(c.cm_spawningrearing_barriers_railway,0) as cm_spawningrearing_nbarriers_railway,
+  coalesce(c.cm_spawningrearing_barriers_demographicroad,0) as cm_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.cm_spawningrearing_barriers_resourceroad,0) as cm_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.cm_spawningrearing_barriers_trail,0) as cm_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_cm + b.length_naturallyaccessible_model_cm), 2) as cm_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_cm_access_b + b.length_naturallyaccessible_model_cm_access_b), 2) as cm_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_cm_access_b + b.length_naturallyaccessible_model_cm_access_b) / nullif((b.length_naturallyaccessible_obsrvd_cm + b.length_naturallyaccessible_model_cm), 0)),2),0) as cm_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_cm + length_spawningrearing_model_cm)), 2) as cm_spawningrearing_km_total,
+  round(((length_spawningrearing_model_cm_access_b + length_spawningrearing_obsrvd_cm_access_b)), 2) as cm_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_cm_access_b + length_spawningrearing_obsrvd_cm_access_b) / nullif((length_spawningrearing_obsrvd_cm + length_spawningrearing_model_cm), 0)),2),0) as cm_spawningrearing_pct_connected,
+
+  -- co
+  coalesce(c.co_naturallyaccessible_barriers_dam,0) as co_naturallyaccessible_nbarriers_dam,
+  coalesce(c.co_naturallyaccessible_barriers_railway,0) as co_naturallyaccessible_nbarriers_railway,
+  coalesce(c.co_naturallyaccessible_barriers_demographicroad,0) as co_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.co_naturallyaccessible_barriers_resourceroad,0) as co_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.co_naturallyaccessible_barriers_trail,0) as co_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.co_spawningrearing_barriers_dam,0) as co_spawningrearing_nbarriers_dam,
+  coalesce(c.co_spawningrearing_barriers_railway,0) as co_spawningrearing_nbarriers_railway,
+  coalesce(c.co_spawningrearing_barriers_demographicroad,0) as co_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.co_spawningrearing_barriers_resourceroad,0) as co_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.co_spawningrearing_barriers_trail,  0) as co_spawningrearinng_barriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_co + b.length_naturallyaccessible_model_co), 2) as co_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_co_access_b + b.length_naturallyaccessible_model_co_access_b), 2) as co_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_co_access_b + b.length_naturallyaccessible_model_co_access_b) / nullif((b.length_naturallyaccessible_obsrvd_co + b.length_naturallyaccessible_model_co), 0)),2),0) as co_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_co + length_spawningrearing_model_co)), 2) as co_spawningrearing_km_total,
+  round(((length_spawningrearing_model_co_access_b + length_spawningrearing_obsrvd_co_access_b)), 2) as co_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_co_access_b + length_spawningrearing_obsrvd_co_access_b) / nullif((length_spawningrearing_obsrvd_co + length_spawningrearing_model_pk), 0)),2),0) as co_spawningrearing_pct_connected,
+
+  -- pk
+  coalesce(c.pk_naturallyaccessible_barriers_dam,0) as pk_naturallyaccessible_nbarriers_dam,
+  coalesce(c.pk_naturallyaccessible_barriers_railway,0) as pk_naturallyaccessible_nbarriers_railway,
+  coalesce(c.pk_naturallyaccessible_barriers_demographicroad,0) as pk_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.pk_naturallyaccessible_barriers_resourceroad,0) as pk_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.pk_naturallyaccessible_barriers_trail,0) as pk_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.pk_spawningrearing_barriers_dam,0) as pk_spawningrearing_nbarriers_dam,
+  coalesce(c.pk_spawningrearing_barriers_railway,0) as pk_spawningrearing_nbarriers_railway,
+  coalesce(c.pk_spawningrearing_barriers_demographicroad,0) as pk_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.pk_spawningrearing_barriers_resourceroad,0) as pk_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.pk_spawningrearing_barriers_trail,0) as pk_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_pk + b.length_naturallyaccessible_model_pk), 2) as pk_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_pk_access_b + b.length_naturallyaccessible_model_pk_access_b), 2) as pk_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_pk_access_b + b.length_naturallyaccessible_model_pk_access_b) / nullif((b.length_naturallyaccessible_obsrvd_pk + b.length_naturallyaccessible_model_pk), 0)),2),0) as pk_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_pk + length_spawningrearing_model_pk)), 2) as pk_spawningrearing_km_total,
+  round(((length_spawningrearing_model_pk_access_b + length_spawningrearing_obsrvd_pk_access_b)), 2) as pk_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_pk_access_b + length_spawningrearing_obsrvd_pk_access_b) / nullif((length_spawningrearing_obsrvd_pk + length_spawningrearing_model_pk), 0)),2),0) as pk_spawningrearing_pct_connected,
+
+  -- sk
+  coalesce(c.sk_naturallyaccessible_barriers_dam,0) as sk_naturallyaccessible_nbarriers_dam,
+  coalesce(c.sk_naturallyaccessible_barriers_railway,0) as sk_naturallyaccessible_nbarriers_railway,
+  coalesce(c.sk_naturallyaccessible_barriers_demographicroad,0) as sk_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.sk_naturallyaccessible_barriers_resourceroad,0) as sk_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.sk_naturallyaccessible_barriers_trail,0) as sk_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.sk_spawningrearing_barriers_dam,0) as sk_spawningrearing_nbarriers_dam,
+  coalesce(c.sk_spawningrearing_barriers_railway,0) as sk_spawningrearing_nbarriers_railway,
+  coalesce(c.sk_spawningrearing_barriers_demographicroad,0) as sk_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.sk_spawningrearing_barriers_resourceroad,0) as sk_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.sk_spawningrearing_barriers_trail,0) as sk_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_sk + b.length_naturallyaccessible_model_sk), 2) as sk_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_sk_access_b + b.length_naturallyaccessible_model_sk_access_b), 2) as sk_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_sk_access_b + b.length_naturallyaccessible_model_sk_access_b) / nullif((b.length_naturallyaccessible_obsrvd_sk + b.length_naturallyaccessible_model_sk), 0)),2),0) as sk_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_sk + length_spawningrearing_model_sk)), 2) as sk_spawningrearing_km_total,
+  round(((length_spawningrearing_model_sk_access_b + length_spawningrearing_obsrvd_sk_access_b)), 2) as sk_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_sk_access_b + length_spawningrearing_obsrvd_sk_access_b) / nullif((length_spawningrearing_obsrvd_sk + length_spawningrearing_model_sk), 0)),2),0) as sk_spawningrearing_pct_connected,
+
+  -- st
+  coalesce(c.st_naturallyaccessible_barriers_dam,0) as st_naturallyaccessible_nbarriers_dam,
+  coalesce(c.st_naturallyaccessible_barriers_railway,0) as st_naturallyaccessible_nbarriers_railway,
+  coalesce(c.st_naturallyaccessible_barriers_demographicroad,0) as st_naturallyaccessible_nbarriers_demographicroad,
+  coalesce(c.st_naturallyaccessible_barriers_resourceroad,0) as st_naturallyaccessible_nbarriers_resourceroad,
+  coalesce(c.st_naturallyaccessible_barriers_trail,0) as st_naturallyaccessible_nbarriers_trail,
+
+  coalesce(c.st_spawningrearing_barriers_dam,0) as st_spawningrearing_nbarriers_dam,
+  coalesce(c.st_spawningrearing_barriers_railway,0) as st_spawningrearing_nbarriers_railway,
+  coalesce(c.st_spawningrearing_barriers_demographicroad,0) as st_spawningrearing_nbarriers_demographicroad,
+  coalesce(c.st_spawningrearing_barriers_resourceroad,0) as st_spawningrearing_nbarriers_resourceroad,
+  coalesce(c.st_spawningrearing_barriers_trail,0) as st_spawningrearing_nbarriers_trail,
+
+  round((b.length_naturallyaccessible_obsrvd_st + b.length_naturallyaccessible_model_st), 2) as st_naturallyaccessible_km_total,
+  round((b.length_naturallyaccessible_obsrvd_st_access_b + b.length_naturallyaccessible_model_st_access_b), 2) as st_naturallyaccessible_km_connected,
+  coalesce(round(((b.length_naturallyaccessible_obsrvd_st_access_b + b.length_naturallyaccessible_model_st_access_b) / nullif((b.length_naturallyaccessible_obsrvd_st + b.length_naturallyaccessible_model_st), 0)),2),0) as st_naturallyaccessible_pct_connected,
+  round(((length_spawningrearing_obsrvd_st + length_spawningrearing_model_st)), 2) as st_spawningrearing_km_total,
+  round(((length_spawningrearing_model_st_access_b + length_spawningrearing_obsrvd_st_access_b)), 2) as st_spawningrearing_km_connected,
+  coalesce(round(((length_spawningrearing_model_st_access_b + length_spawningrearing_obsrvd_st_access_b) / nullif((length_spawningrearing_obsrvd_st + length_spawningrearing_model_st), 0)),2),0) as st_spawningrearing_pct_connected,
+  a.geom
+ FROM whse_basemapping.fwa_watershed_groups_poly a
+ LEFT OUTER JOIN bcfishpass.wsg_linear_summary_current b ON a.watershed_group_code = b.watershed_group_code
+ LEFT OUTER JOIN counts c ON a.watershed_group_code = c.watershed_group_code"
+
+
 # summary of habitat per assessment watershed 
 ogr2ogr \
   -f OpenFileGDB \
@@ -412,7 +900,6 @@ from bcfishpass.aw_linear_summary_current a
 full outer join whse_basemapping.fwa_assessment_watersheds_poly b
 on a.assessment_watershed_id = b.watershed_feature_id"
 
-
 zip -r bcfishpass.gdb.zip bcfishpass.gdb
-aws s3 sync bcfishpass.gdb s3://bchamp/fabmaps/bcfishpass.gdb --delete
+aws s3 cp bcfishpass.gdb.zip s3://bchamp/fabmaps/bcfishpass.gdb.zip
 
