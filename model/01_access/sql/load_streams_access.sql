@@ -117,8 +117,8 @@ begin;
      end as access_ct_dv_rb,
      case
        when wsg_st.watershed_group_code is null then -9
-       when b.barriers_st_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
-       when b.barriers_st_dnstr is null and 'SK' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
+       when b.barriers_st_dnstr is null and 'ST' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) then 2
+       when b.barriers_st_dnstr is null and 'ST' = any(coalesce(ou.obsrvtn_species_codes_upstr, array[]::text[])) is false then 1
        when b.barriers_st_dnstr is not null and wsg_st.watershed_group_code is not null then 0
      end as access_st,
      case
