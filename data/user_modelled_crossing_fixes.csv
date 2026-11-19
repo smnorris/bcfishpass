@@ -21853,4 +21853,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 8800088,OBS,KLUM,SN,2026-05-11,MOT structures,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
 8800044,OBS,KLUM,SN,2026-05-11,MOT structures,formerly flagged as OBS via MOT structure data but MOT linework has shifted away from the creek making this fix necessary
 24762608,NONE,KITR,SN,2026-05-27,rail report review,duplicate crossing - drop in favour of crossing 1008501815 (railway)
+3505581,OBS,COTR,AL,2026-08-06,Bing/Google/ESRI imagery,bridge confirmed via Google Satellite imagery
+24759287,NONE,COTR,AL,2026-08-06,Bing/Google/ESRI imagery,no road present
+3500663,NONE,COTR,AL,2026-08-06,Bing/Google/ESRI imagery,road deactivated and overgrown - no structure
 16700026,FORD,PCEA,AI,2026-09-17,Field,"Ford on a narrow trail too small for a truck; seen from beside it, and confirmed by hunters using the trail."
