@@ -155,6 +155,7 @@ def process_plan(cur, plan):
             accessible_spawningrearing_all
         )
         {query}
+        ON CONFLICT (model_run_id, wcrp, watershed_group_code) DO NOTHING
     """)
     cur.execute(insert)
     print(f"Inserted {cur.rowcount} row(s) for plan '{plan['plan_code']}'")

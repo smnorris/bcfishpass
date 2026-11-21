@@ -84,7 +84,7 @@ $PSQL -c "insert into bcfishpass.log_parameters_habitat_thresholds (
 
 # log summaries
 $PSQL -c "insert into bcfishpass.log_aw_linear_summary select $model_run_id as model_run_id, * from bcfishpass.aw_linear_summary()"
-$PSQL -c "insert into bcfishpass.log_wsg_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.wsg_crossing_summary()"
+$PSQL -c "insert into bcfishpass.log_aw_crossing_summary select $model_run_id as model_run_id, * from bcfishpass.aw_crossing_summary()"
 
 # log primary data sources associated with the model run
 # todo - add FWA and bcfishobs file versions
