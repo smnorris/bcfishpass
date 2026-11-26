@@ -1,12 +1,9 @@
 name: test-data-fwa
 run-name: ${{ github.actor }} Load data files to test databases
+# Manual trigger only. Preliminary work: loads FWA, but no FWA checks of the CSVs
+# exist yet, and the hosted runner runs out of disk during the FWA load.
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - 'main'
-    paths:
-      - 'data/*.csv'
 env:
   DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
 jobs:
