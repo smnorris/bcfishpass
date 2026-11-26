@@ -14,7 +14,7 @@ jobs:
   cwf-test:
     runs-on: ubuntu-latest
     environment: cwf-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     concurrency:
       group: cwf
     steps:
@@ -26,7 +26,7 @@ jobs:
   cwf-prod:
     runs-on: ubuntu-latest
     environment: cwf-prod
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     concurrency:
       group: cwf
     needs: cwf-test
@@ -39,7 +39,7 @@ jobs:
   ng-test:
     runs-on: ubuntu-latest
     environment: ng-test
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     concurrency:
       group: ng-test
     steps:
@@ -51,7 +51,7 @@ jobs:
   ng-prod:
     runs-on: ubuntu-latest
     environment: ng-prod
-    container: ghcr.io/smnorris/bcfishpass:main
+    container: ghcr.io/smnorris/bcfishpass-runner:main
     concurrency:
       group: ng-prod
     needs: ng-test
