@@ -2,7 +2,7 @@ FROM ghcr.io/osgeo/gdal:ubuntu-full-3.12.3
 
 # gdals arrow libs are already installed, drop the repo rather than dealing with sig verification/updates
 RUN rm -f /etc/apt/sources.list.d/apache-arrow* \
-    curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
+    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
