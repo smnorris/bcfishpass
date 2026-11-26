@@ -21670,7 +21670,7 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 1804239,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
 1806259,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
 1801813,NONE,BULK,MC,2026-04-23,Tracking table QA/QC,
-20001379,NONE,TAKL,LB,2026-04-30,Satellite imagery,this feature does not exist in satellite imagery 
+20001379,NONE,TAKL,LB,2026-04-30,Satellite imagery,this feature does not exist in satellite imagery
 12401294,NONE,LSKE,SN,2026-05-03,BR rail crossing review,outlets to adjacent stream upstream of CN Rail bridge
 10100010,NONE,LDEN,LB,2026-05-05,Satellite imagery review,
 10100012,NONE,LDEN,LB,2026-05-05,Satellite imagery review,
@@ -21865,3 +21865,5 @@ modelled_crossing_id,structure,watershed_group_code,reviewer_name,review_date,so
 16700878,NONE,PCEA,AI,2026-11-19,Satellite imagery review,No crossing present.
 16700893,NONE,PCEA,AI,2026-11-19,Satellite imagery review,No crossing present.
 16701632,NONE,PCEA,AI,2026-11-19,Satellite imagery review,No crossing present. Road appears overgrown.
+17803730,NONE,SANJ,SN,2026-11-16,EJ/CM field visit,mapping error - road does not cross the Gordon
+17803729,NONE,SANJ,SN,2026-11-16,EJ/CM field visit,mapping error - road does not cross the Gordon
