@@ -1,6 +1,8 @@
 FROM ghcr.io/osgeo/gdal:ubuntu-full-3.12.3
 
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
+# gdals arrow libs are already installed, drop the repo rather than dealing with sig verification/updates
+RUN rm -f /etc/apt/sources.list.d/apache-arrow* \
+    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
@@ -33,6 +35,8 @@ RUN ARCH=$(uname -m) \
     && rm -rf awscliv2.zip aws
 
 RUN curl -L https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64 -o /usr/bin/yq && chmod +x /usr/bin/yq
+
+COPY --from=ghcr.io/astral-sh/uv:0.13.10 /uv /uvx /bin/
 
 WORKDIR /home/bcfishpass
 RUN git config --global --add safe.directory /home/bcfishpass
