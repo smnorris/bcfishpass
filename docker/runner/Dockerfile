@@ -44,3 +44,5 @@ RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/python -m pip install --no-cache-dir -r requirements.txt
 
 ENV PATH="/opt/venv/bin:$PATH"
+
+COPY --from=ghcr.io/astral-sh/uv:0.13.10 /uv /uvx /bin/
