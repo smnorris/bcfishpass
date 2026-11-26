@@ -2,8 +2,17 @@ name: replicate
 run-name: ${{ github.actor }} Replicate data from BC WFS / DRA to S3
 on:
   schedule:
-    - cron: '10 05 * * *'
+    # github.event.schedule is matched against these strings in the job conditions below,
+    # if editing a cron expression, update the matching condition
+    - cron: '10 5 15 * *'   # monthly: 15th
+    - cron: '10 5 * * 2'    # weekly: Tuesday UTC (Monday evening Pacific)
   workflow_dispatch:
+    inputs:
+      replicate:
+        description: Which replication to run
+        type: choice
+        options: [weekly, monthly, both]
+        default: weekly
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -21,29 +30,34 @@ env:
 concurrency:
   group: ng-prod
 jobs:
-  replicate:
+  monthly:
+    if: github.event.schedule == '10 5 15 * *' || inputs.replicate == 'monthly' || inputs.replicate == 'both'
     runs-on: ubuntu-latest
     environment: ng-prod
     container: ghcr.io/smnorris/bcfishpass:main
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Run the jobs
+      - name: Monthly replication
         run: |
           jobs/connect
+          cd jobs && ./replicate_bcgw M && ./replicate_dra
 
-          DAY_OF_MONTH=$(date +'%d')
-          DAY_OF_WEEK=$(date +'%u') # Monday = 1
-
-          if [ "$DAY_OF_MONTH" = "15" ]; then
-            echo "It is the 1st of the month, running monthly replication"
-            cd jobs && ./replicate_bcgw M && ./replicate_dra
-          fi
-
-          if [ "$DAY_OF_WEEK" = "2" ]; then
-            echo "It is Tuesday (UTC, Monday evening Pacific), running weekly replication and bcfishobs"
-            cd jobs && ./replicate_bcgw W
-            git clone https://github.com/smnorris/bcfishobs.git
-            cd bcfishobs && git checkout v0.3.2
-            ./process.sh
-          fi
+  weekly:
+    needs: monthly
+    if: >-
+      !cancelled() &&
+      (github.event.schedule == '10 5 * * 2' || inputs.replicate == 'weekly' || inputs.replicate == 'both')
+    runs-on: ubuntu-latest
+    environment: ng-prod
+    container: ghcr.io/smnorris/bcfishpass:main
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Weekly replication and bcfishobs
+        run: |
+          jobs/connect
+          cd jobs && ./replicate_bcgw W
+          git clone https://github.com/smnorris/bcfishobs.git
+          cd bcfishobs && git checkout v0.3.2
+          ./process.sh
