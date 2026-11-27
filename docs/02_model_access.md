@@ -42,10 +42,11 @@ Pacific salmon (all)      | 15%
 Steelhead                 | 20%
 Westslope Cutthroat Trout | 20%
 Bull trout                | 25%
+Coastal Cutthroat Trout   | 20%
 
 ## 3. Filter natural barriers 
 
-For anadromous species, natural barriers downstream of [Known Fish Observations](https://github.com/smnorris/bcfishobs) are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead assume all natural barrier features with 5 or more observations upstream since 1990 are not currently barriers to fish passage.
+For anadromous species, natural barriers downstream of [Known Fish Observations](https://github.com/smnorris/bcfishobs) are removed from the model - we presume that if there are observations of the given species upstream of a natural feature, it cannot be a barrier to that species. To correct for species misidentification or other issues in the observations dataset a count and or date threshold can be set. For example, current access models for Pacific Salmon and Steelhead assume all natural barrier features with 5 or more observations upstream since 1990 are not currently barriers to fish passage. The Coastal Cutthroat Trout access model excludes barriers with any number of upstream fish observations.
 
 For potamodromous (freshwater migration only) species such as Bull Trout and Westslope Cutthroat Trout, models remove any natural barrier below an observation.
 
